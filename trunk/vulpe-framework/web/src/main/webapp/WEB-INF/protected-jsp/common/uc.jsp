@@ -30,7 +30,7 @@
 				<%@include file="/WEB-INF/protected-jsp/common/report.jsp" %>
 			</c:when>
 			<c:when test="${actionConfig.type == 'FRONTEND'}">
-				<%@include file="/WEB-INF/protected-jsp/common/frontend/default.jsp" %>
+				<%@include file="/WEB-INF/protected-jsp/common/frontend.jsp" %>
 			</c:when>
 		</c:choose>
 	</div>

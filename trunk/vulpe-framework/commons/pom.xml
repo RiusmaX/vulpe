@@ -49,7 +49,7 @@
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
 										<pathelement
-											location="${maven.repo}/ant-contrib/ant-contrib/1.0b2/ant-contrib-1.0b2.jar" />
+											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<if>

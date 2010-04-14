@@ -37,7 +37,7 @@
 	<classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.5/commons-lang-2.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar"/>
@@ -45,17 +45,17 @@
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate/3.2.1.ga/hibernate-3.2.1.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/lowagie/itext/1.3.1/itext-1.3.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.0/itext-2.1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/jasperreports/jasperreports/3.5.3/jasperreports-3.5.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/jboss/javassist/3.3.ga/javassist-3.3.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.1.3/jaxb-impl-2.1.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jboss/jboss-annotations-ejb3/4.2.1.GA/jboss-annotations-ejb3-4.2.1.GA.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jboss/jboss-annotations-ejb3/4.2.3.GA/jboss-annotations-ejb3-4.2.3.GA.jar"/>
 	<classpathentry kind="var" path="M2_REPO/jboss/jboss-archive-browsing/5.0.0alpha-200607201-119/jboss-archive-browsing-5.0.0alpha-200607201-119.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.2/jcommon-1.0.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.15/jcommon-1.0.15.jar"/>
 	<classpathentry kind="var" path="M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.9/jfreechart-1.0.9.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.12/jfreechart-1.0.12.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/jsp-api/2.0/jsp-api-2.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/jws/jsr181-api/1.0-MR1/jsr181-api-1.0-MR1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar"/>
@@ -69,7 +69,7 @@
 	<classpathentry kind="var" path="M2_REPO/javax/xml/stream/stax-api/1.0-2/stax-api-1.0-2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-core/2.0.14/struts2-core-2.0.14.jar" sourcepath="/M2_REPO/org/apache/struts/struts2-core/2.0.14/struts2-core-2.0.14-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-jasperreports-plugin/2.0.14/struts2-jasperreports-plugin-2.0.14.jar"/>
-	<classpathentry kind="var" path="M2_REPO/xerces/xercesImpl/2.8.1/xercesImpl-2.8.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/xml-apis/xml-apis/1.3.03/xml-apis-1.3.03.jar"/>
 	<classpathentry kind="var" path="M2_REPO/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.3/xstream-1.3.jar"/>
@@ -77,14 +77,14 @@
 	<classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.14/freemarker-2.3.14.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/tools/1.6.0_07/tools-1.6.0_07.jar"/>
 	<classpathentry kind="var" path="M2_REPO/opensymphony/sitemesh/2.4.2/sitemesh-2.4.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/db4o/db4o/7.4/db4o-7.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/db4o/db4o/7.12/db4o-7.12.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-acl/2.0.4/spring-security-acl-2.0.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core/2.0.4/spring-security-core-2.0.4.jar" sourcepath="/SPRING_SECURITY_SRC/spring-security-core/2.0.4/spring-security-core-2.0.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core-tiger/2.0.4/spring-security-core-tiger-2.0.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-taglibs/2.0.4/spring-security-taglibs-2.0.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/scannotation/scannotation/1.0.2/scannotation-1.0.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/opensymphony/xwork/2.0.7/xwork-2.0.7.jar" sourcepath="/M2_REPO/com/opensymphony/xwork/2.0.7/xwork-2.0.7-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/ognl/ognl/2.7.3/ognl-2.7.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-json-plugin/2.1.8.1/struts2-json-plugin-2.1.8.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/ognl/ognl/2.7.3/ognl-2.7.3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

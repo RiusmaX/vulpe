@@ -26,4 +26,11 @@
 		<module>web</module>
 		<module>web-struts</module>
 	</modules>
+	<distributionManagement>
+		<repository>
+			<id>activerepo</id>
+			<name>Active Thread Maven2 Repository</name>
+			<url>http://www.activethread.com.br/archiva/repository/maven2</url>
+		</repository>
+	</distributionManagement>
 </project>
