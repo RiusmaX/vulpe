@@ -545,6 +545,7 @@ h1 {
 	padding: 0;
 	line-height: 1em;
 	letter-spacing: 0px;
+	display: inline-table;
 }
 
 h2 {
@@ -575,26 +576,6 @@ hr {
 		top: -2px;
 		background: #ddd;
 		padding-bottom: 2px;
-	}
-
-	#menuleft {
-		position: relative;
-		height: 142px;
-		background: url('../../images/frontend/menu-left.png') no-repeat top right;
-		width: 12px;
-		top: -81px;
-		left: -44px;
-		float: left;
-	}
-
-	#menuright {
-		position: relative;
-		height: 142px;
-		background: url('../../images/frontend/menu-right.png') no-repeat top right;
-		width: 12px;
-		top: -81px;
-		right: -315px;
-		float: right;
 	}
 
 	#vulpe {
@@ -659,6 +640,7 @@ hr {
 	#frontend #bottom ul h1 {
 		font-weight: bold;
 		font-size: 11px;
+		margin-bottom: -7px;
 	}
 
 	#frontend #bottom hr {
@@ -682,6 +664,26 @@ hr {
 	color: #E0E0E0;
 	background: #143D55 url('../../images/frontend/vulpe-bg.png') repeat-x;
 	width: 100%;
+}
+
+#menuleft {
+	position: relative;
+	height: 142px;
+	background: url('../../images/frontend/menu-left.png') no-repeat top right;
+	width: 12px;
+	top: -137px;
+	left: -6px;
+	float: left;
+}
+
+#menuright {
+	position: relative;
+	height: 142px;
+	background: url('../../images/frontend/menu-right.png') no-repeat top right;
+	width: 12px;
+	top: -137px;
+	right: -6px;
+	float: right;
 }
 
 #menu {

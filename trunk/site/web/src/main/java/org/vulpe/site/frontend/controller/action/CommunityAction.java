@@ -8,9 +8,9 @@ import org.vulpe.controller.annotations.Controller.ControllerType;
 
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.FRONTEND)
-public class IndexAction extends AbstractVulpeBaseSimpleAction {
+public class CommunityAction extends AbstractVulpeBaseSimpleAction {
 
-	Logger log = Logger.getLogger(IndexAction.class);
+	Logger log = Logger.getLogger(CommunityAction.class);
 
 	@Override
 	public boolean isShowTitle() {

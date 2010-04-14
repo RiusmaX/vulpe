@@ -1,18 +1,16 @@
 <%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
-<div id="menuleft"></div>
 <li><a href="javascript:void(0);" class="current"
-	onclick="vulpe.view.request.submitMenu('/core/TipoPublicacao/tabular/prepare/ajax.action');"
-	title="Vulpe"><span>Vulpe</span></a></li>
+	onclick="vulpe.view.request.submitMenu('/Index/frontend/ajax.action');"
+	title="<fmt:message key='label.site.menu.Index'/>"><span><fmt:message key='label.site.menu.Index'/></span></a></li>
 <li><a href="javascript:void(0);"
-	onclick="vulpe.view.request.submitMenu('/core/Publicacao/select/prepare/ajax.action');"
-	title="Learn"><span>Learn</span></a></li>
+	onclick="vulpe.view.request.submitMenu('/Learn/frontend/ajax.action');"
+	title="<fmt:message key='label.site.menu.Learn'/>"><span><fmt:message key='label.site.menu.Learn'/></span></a></li>
 <li><a href="javascript:void(0);"
-	onclick="vulpe.view.request.submitMenu('/core/Publicador/select/prepare/ajax.action');"
-	title="Community"><span>Community</span></a></li>
+	onclick="vulpe.view.request.submitMenu('/Community/frontend/ajax.action');"
+	title="<fmt:message key='label.site.menu.Community'/>"><span><fmt:message key='label.site.menu.Community'/></span></a></li>
 <li><a href="javascript:void(0);"
-	onclick="vulpe.view.request.submitMenu('/core/Pedido/select/prepare/ajax.action');"
-	title="Code"><span>Code</span></a></li>
+	onclick="vulpe.view.request.submitMenu('/Code/frontend/ajax.action');"
+	title="<fmt:message key='label.site.menu.Code'/>"><span><fmt:message key='label.site.menu.Code'/></span></a></li>
 <li><a href="javascript:void(0);"
-	onclick="vulpe.view.request.submitMenu('/core/Pedido/select/prepare/ajax.action');"
-	title="Modules"><span>Modules</span></a></li>
-<div id="menuright"></div>
+	onclick="vulpe.view.request.submitMenu('/Modules/frontend/ajax.action');"
+	title="<fmt:message key='label.site.menu.Modules'/>"><span><fmt:message key='label.site.menu.Modules'/></span></a></li>
