@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe.site</groupId>
-	<artifactId>config</artifactId>
+	<artifactId>site-config</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>Site - Config</name>

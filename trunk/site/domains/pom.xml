@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe.site</groupId>
-	<artifactId>domains</artifactId>
+	<artifactId>site-domains</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>Site - Domains</name>
@@ -34,7 +34,7 @@
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
 										<pathelement
-											location="${maven.repo}/ant-contrib/ant-contrib/1.0b2/ant-contrib-1.0b2.jar" />
+											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<property name="tools.dir"
@@ -80,7 +80,7 @@
 					</dependency>
 					<dependency>
 						<groupId>org.vulpe.site</groupId>
-						<artifactId>config</artifactId>
+						<artifactId>site-config</artifactId>
 						<version>1.0</version>
 					</dependency>
 				</dependencies>
