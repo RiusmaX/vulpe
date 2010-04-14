@@ -1,0 +1,44 @@
+<settings>
+
+<localRepository>/Users/felipe/Desenvolvimento/Repositorio</localRepository>
+	<servers>
+		<server>
+			<id>activerepo</id>
+			<username>activethread01</username>
+			<password>mavendeploy01</password>
+		</server>
+	</servers>
+	<profiles>
+		<profile>
+			<id>activethread</id>
+			<repositories>
+				<repository>
+					<id>activerepo</id>
+					<name>Active Thread Repository</name>
+					<url>http://www.activethread.com.br/archiva/repository/maven2</url>
+					<snapshots>
+						<updatePolicy>interval:60</updatePolicy> 
+					</snapshots>
+				</repository>
+				<repository>
+					<id>jboss</id>
+					<name>JBoss</name>
+					<url>http://repository.jboss.org/maven2</url>
+					<snapshots>
+						<updatePolicy>interval:60</updatePolicy> 
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>activethread</id>
+					<name>Active Thread Plugin Repository</name>
+					<url>http://www.activethread.com.br/archiva/repository/maven2</url>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	<activeProfiles>
+		<activeProfile>activethread</activeProfile>
+	</activeProfiles>
+</settings>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>fox</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>Vulpe Framework - FOX Code Generator</name>
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.14</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.5.0_11</version>
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>delete</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+								<property name="maven.repo" value="${env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement
+											location="${maven.repo}/ant-contrib/ant-contrib/1.0b2/ant-contrib-1.0b2.jar" />
+									</classpath>
+								</taskdef>
+								<property name="tools.dir"
+									value="${maven.repo}/org/vulpe/fox/1.0/fox-1.0/tools" />
+								<available file="${tools.dir}" property="tools.dir.present"
+									type="dir" />
+								<if>
+									<equals arg1="${tools.dir.present}" arg2="true" />
+									<then>
+										<delete
+											dir="${maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

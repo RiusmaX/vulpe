@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd"
+	default-lazy-init="true" default-autowire="byName">
+
+	<!-- ======================== FILTER CHAIN ======================= -->
+	<bean id="springSecurityFilterChain"
+		class="org.vulpe.security.controller.filter.VulpeFilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value> 
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+				/j_spring_security_check*=httpSessionContextIntegrationFilter,authenticationProcessingFilter
+				/**/*=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+			</value>
+		</property>
+	</bean>
+
+	<!-- ======================== AUTHENTICATION ======================= -->
+	<bean id="httpSessionContextIntegrationFilter"
+		class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
+	</bean>
+
+	<bean id="logoutFilter" class="org.springframework.security.ui.logout.LogoutFilter">
+		<constructor-arg value="/index.jsp" />
+		<!-- URL redirected to after logout -->
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="authenticationProcessingFilter"
+		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="authenticationFailureUrl">
+			<value>/authenticator.action?login_error=1</value>
+		</property>
+		<property name="defaultTargetUrl">
+			<value>/</value>
+		</property>
+		<property name="filterProcessesUrl">
+			<value>/j_spring_security_check</value>
+		</property>
+	</bean>
+
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+
+	<util:properties id="anonymousConfig" location="classpath:anonymousConfig.properties" />
+
+	<bean id="anonymousProcessingFilter"
+		class="org.vulpe.security.providers.anonymous.VulpeAnonymousProcessingFilter">
+		<property name="anonymousConfig">
+			<ref local="anonymousConfig" />
+		</property>
+	</bean>
+
+	<bean id="exceptionTranslationFilter"
+		class="org.springframework.security.ui.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint">
+			<ref local="authenticationProcessingFilterEntryPoint" />
+		</property>
+		<property name="accessDeniedHandler">
+			<bean class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+				<property name="errorPage" value="/authenticator.action?access_denied=true" />
+			</bean>
+		</property>
+	</bean>
+
+	<!--
+		=== Custom filterInvocationInterceptor implementation starts here ===
+	-->
+	<bean id="filterInvocationInterceptor"
+		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+		<property name="accessDecisionManager">
+			<ref local="httpRequestAccessDecisionManager" />
+		</property>
+		<property name="objectDefinitionSource">
+			<ref local="dbdrivenFilterInvocationDefinitionSource" />
+		</property>
+	</bean>
+
+	<bean id="dbdrivenFilterInvocationDefinitionSource"
+		class="org.vulpe.security.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
+		<property name="authorizationService">
+			<ref local="authorizationService" />
+		</property>
+	</bean>
+
+	<bean id="authorizationService"
+		class="org.vulpe.security.authorization.model.services.impl.AuthorizationServiceImpl">
+		<property name="authorizationDAO">
+			<ref local="authorizationDAO" />
+		</property>
+	</bean>
+
+	<bean id="authorizationDAO"
+		class="org.vulpe.security.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
+
+	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref local="daoAuthenticationProvider" />
+				<ref local="anonymousAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+
+	<!--
+		==== Custom AuthenticationProvider implementation begins here ====
+	-->
+	<bean id="daoAuthenticationProvider"
+		class="org.vulpe.security.authentication.VulpeSecurityAuthenticationProvider">
+		<property name="authenticationService">
+			<ref local="userAuthenticationService" />
+		</property>
+	</bean>
+
+	<bean id="userAuthenticationService"
+		class="org.vulpe.security.authentication.model.services.impl.UserAuthenticationServiceImpl">
+		<property name="authenticationDAO">
+			<ref local="userAuthenticationDAO" />
+		</property>
+	</bean>
+
+	<bean id="userAuthenticationDAO"
+		class="org.vulpe.security.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
+
+	<!--
+		==== Custom AuthenticationProvider implementation ends here ====
+	-->
+	<bean id="anonymousAuthenticationProvider"
+		class="org.vulpe.security.providers.anonymous.VulpeAnonymousAuthenticationProvider">
+		<property name="anonymousConfig">
+			<ref local="anonymousConfig" />
+		</property>
+	</bean>
+
+	<!-- Automatically receives AuthenticationEvent messages -->
+	<bean id="loggerListener"
+		class="org.springframework.security.event.authentication.LoggerListener" />
+	<!--
+		===================== HTTP REQUEST SECURITY ====================
+	-->
+	<bean id="authenticationProcessingFilterEntryPoint"
+		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+		<property name="loginFormUrl">
+			<value>/authenticator.action</value>
+		</property>
+		<property name="forceHttps">
+			<value>false</value>
+		</property>
+	</bean>
+
+	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions">
+			<value>false</value>
+		</property>
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="roleVoter" class="org.springframework.security.vote.RoleVoter" />
+
+</beans>
