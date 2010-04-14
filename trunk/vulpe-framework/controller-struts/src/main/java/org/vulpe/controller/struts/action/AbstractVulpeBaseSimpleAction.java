@@ -83,6 +83,11 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	private final Calendar calendar = Calendar.getInstance();
 
 	/**
+	 *  Show Title
+	 */
+	private boolean showTitle = true;
+	
+	/**
 	 * Method returns current date time of system.
 	 *
 	 * @since 1.0
@@ -784,8 +789,15 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * Define Result Forward to render normal or AJAX request
 	 */
 	protected void controlResultForward() {
-		// setResultForward(isAjax() ? Layout.UC : Layout.MAIN);
 		setResultForward(Layout.PROTECTED_JSP_COMMON.concat(Layout.UC_JSP));
+	}
+	
+	public boolean isShowTitle() {
+		return showTitle;
+	}
+
+	public void setShowTitle(boolean showTitle) {
+		this.showTitle = showTitle;
 	}
 
 }

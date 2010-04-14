@@ -13,13 +13,14 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.beanutils.locale.LocaleBeanUtils;
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.vulpe.controller.util.ControllerUtil;
 
 import com.opensymphony.xwork2.ActionContext;
 
 /**
  * Class to provide multiple Resource Bundle in application.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -37,7 +38,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Gets all bundles in application
-	 *
+	 * 
 	 * @return list of bundles in application
 	 */
 	@SuppressWarnings("unchecked")
@@ -45,8 +46,12 @@ public class MultipleResourceBundle extends ResourceBundle {
 		if (servletContext == null) {
 			servletContext = ControllerUtil.getInstance().getServletContext();
 		}
-		if (locale == null) {
-			locale = ActionContext.getContext().getLocale();
+		final Locale requestLocale = ServletActionContext.getRequest() == null ? ActionContext
+				.getContext().getLocale()
+				: ServletActionContext.getRequest().getLocale();
+		if (locale == null
+				|| !locale.getLanguage().equals(requestLocale.getLanguage())) {
+			locale = requestLocale;
 		}
 		List<ResourceBundle> list = null;
 		if (servletContext != null) {
@@ -70,7 +75,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.ResourceBundle#getKeys()
 	 */
 	@Override
@@ -91,7 +96,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
 	 */
 	@Override
@@ -120,7 +125,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Method to get key description.
-	 *
+	 * 
 	 * @param servletContext
 	 * @param key
 	 * @return
@@ -133,7 +138,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public ServletContext getServletContext() {
@@ -141,7 +146,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param servletContext
 	 */
 	public void setServletContext(final ServletContext servletContext) {
@@ -149,7 +154,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param locale
 	 */
 	public void setLocale(final Locale locale) {
