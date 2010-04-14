@@ -5,10 +5,12 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
-import com.db4o.config.Configuration;
+import com.db4o.config.ConfigScope;
+import com.db4o.cs.Db4oClientServer;
+import com.db4o.cs.config.ServerConfiguration;
+import com.db4o.io.MemoryStorage;
 
 public class DB4OUtil {
 
@@ -33,7 +35,7 @@ public class DB4OUtil {
 	private static final ThreadLocal<ObjectContainer> DATABASE = new ThreadLocal<ObjectContainer>();
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public ObjectContainer getObjectContainer() {
@@ -77,7 +79,7 @@ public class DB4OUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public ObjectServer getObjectServer() {
@@ -102,7 +104,7 @@ public class DB4OUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param databasename
 	 * @param port
 	 * @return
@@ -111,22 +113,23 @@ public class DB4OUtil {
 			final int port) {
 		final File parentDir = getDataDirectory();
 		final File dbfile = new File(parentDir, databasename);
-
-		final Configuration config = Db4o.newConfiguration();
+		final ServerConfiguration config = Db4oClientServer
+				.newServerConfiguration();
+		config.file().storage(new MemoryStorage());
 
 		// for replication
-		// config.generateUUIDs(Integer.MAX_VALUE);
-		// config.generateVersionNumbers(Integer.MAX_VALUE);
+		config.file().generateUUIDs(ConfigScope.GLOBALLY);
+		config.file().generateVersionNumbers(ConfigScope.GLOBALLY);
 
-		config.exceptionsOnNotStorable(true);
-		config.objectClass("java.math.BigDecimal").translate(
+		config.common().exceptionsOnNotStorable(true);
+		config.common().objectClass("java.math.BigDecimal").translate(
 				new com.db4o.config.TSerializable());
 
-		return Db4o.openServer(config, dbfile.getPath(), port);
+		return Db4oClientServer.openServer(config, dbfile.getPath(), port);
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private File getDataDirectory() {
