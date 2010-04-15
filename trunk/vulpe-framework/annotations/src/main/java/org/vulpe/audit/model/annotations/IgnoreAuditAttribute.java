@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * @author Andrei
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  *
  */
 @Target( {FIELD} )

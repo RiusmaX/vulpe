@@ -16,8 +16,6 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.controller.util.ControllerUtil;
 
-import com.opensymphony.xwork2.ActionContext;
-
 /**
  * Class to provide multiple Resource Bundle in application.
  * 
@@ -46,18 +44,18 @@ public class MultipleResourceBundle extends ResourceBundle {
 		if (servletContext == null) {
 			servletContext = ControllerUtil.getInstance().getServletContext();
 		}
-		final Locale requestLocale = ServletActionContext.getRequest() == null ? ActionContext
-				.getContext().getLocale()
+		final Locale requestLocale = ServletActionContext.getRequest() == null ? null
 				: ServletActionContext.getRequest().getLocale();
-		if (locale == null
-				|| !locale.getLanguage().equals(requestLocale.getLanguage())) {
+		final boolean checkLocale = (locale == null || (requestLocale != null && !locale
+				.getLanguage().equals(requestLocale.getLanguage())));
+		if (checkLocale) {
 			locale = requestLocale;
 		}
 		List<ResourceBundle> list = null;
 		if (servletContext != null) {
 			list = (List<ResourceBundle>) servletContext
 					.getAttribute(BUNDLES_KEY);
-			if (list == null) {
+			if (list == null || checkLocale) {
 				final String modules[] = servletContext.getInitParameter(
 						"project.bundle.modules").split(",");
 				list = new ArrayList<ResourceBundle>(modules.length);
