@@ -99,6 +99,7 @@ public interface Constants {
 		String DOWNLOAD = "download";
 
 		interface URI {
+			String AJAX = "/ajax";
 			String CREATE = "/create";
 			String CREATE_AJAX = "/create/ajax";
 			String CREATE_POST = "/createPost";

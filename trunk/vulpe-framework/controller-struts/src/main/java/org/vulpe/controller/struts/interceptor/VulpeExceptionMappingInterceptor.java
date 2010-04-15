@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings("serial")
-public class ExceptionMappingInterceptor extends
+public class VulpeExceptionMappingInterceptor extends
 		com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
 
 	/*

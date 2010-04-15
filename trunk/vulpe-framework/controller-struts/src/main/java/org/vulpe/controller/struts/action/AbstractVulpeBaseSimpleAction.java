@@ -40,6 +40,7 @@ import org.springframework.security.providers.anonymous.AnonymousAuthenticationT
 import org.springframework.security.userdetails.UserDetails;
 import org.vulpe.common.Constants;
 import org.vulpe.common.Constants.Action.Forward;
+import org.vulpe.common.Constants.Action.URI;
 import org.vulpe.common.Constants.View.Layout;
 import org.vulpe.common.beans.AbstractVulpeBeanFactory;
 import org.vulpe.common.beans.DownloadInfo;
@@ -63,14 +64,14 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Action base for Struts2
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implements
-		VulpeBaseSimpleController {
+public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
+		implements VulpeBaseSimpleController {
 
 	/**
 	 *
@@ -83,13 +84,13 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	private final Calendar calendar = Calendar.getInstance();
 
 	/**
-	 *  Show Title
+	 * Show Title
 	 */
 	private boolean showTitle = true;
-	
+
 	/**
 	 * Method returns current date time of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return VulpeDate.
 	 */
@@ -99,7 +100,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method returns current year from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Year.
 	 */
@@ -109,7 +110,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method returns current month from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Month.
 	 */
@@ -119,7 +120,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method returns current day from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Day.
 	 */
@@ -129,7 +130,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Return current action configuration.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -139,7 +140,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to read report.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected DownloadInfo doReadReportLoad() {
@@ -164,7 +165,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to prepare show.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -178,7 +179,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		if (getActionConfig().getType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
 				setResultForward(getActionConfig().getPrimitiveActionName()
-						.concat(""));
+						.concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();
@@ -194,7 +195,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to prepare show.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void onFrontend() {
@@ -217,7 +218,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to upload file.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -234,7 +235,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to upload.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void onUpload() {
@@ -243,7 +244,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to code before upload.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void uploadAfter() {
@@ -252,7 +253,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to code after upload.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void uploadBefore() {
@@ -261,7 +262,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to download file.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -278,7 +279,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to download.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void onDownload() {
@@ -288,7 +289,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to code before download.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void downloadAfter() {
@@ -297,7 +298,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to code after download.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	protected void downloadBefore() {
@@ -306,7 +307,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Extension point to prepare download.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	@SuppressWarnings("static-access")
@@ -337,7 +338,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
 	@Override
@@ -356,7 +357,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to invoke services.
-	 *
+	 * 
 	 * @param eventName
 	 *            Name of event
 	 * @param serviceName
@@ -365,7 +366,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 *            Types of arguments
 	 * @param argsValues
 	 *            Arguments values
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Object
 	 */
@@ -384,7 +385,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns current action service configured.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Service Implementation.
 	 * @see Services
@@ -395,7 +396,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 *
+	 * 
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -408,7 +409,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 					serviceClass.getSimpleName());
 		} catch (NoSuchBeanDefinitionException e) {
 			if (service == null) {
-				service = VulpeServiceLocator.getInstance().getEJB(serviceClass);
+				service = VulpeServiceLocator.getInstance()
+						.getEJB(serviceClass);
 			}
 		}
 		return service;
@@ -416,12 +418,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to add error message.
-	 *
+	 * 
 	 * @param key
 	 *            Key in resource bundle
 	 * @param args
 	 *            arguments
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void addActionError(final String key, final String... args) {
@@ -430,10 +432,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to add error message.
-	 *
+	 * 
 	 * @param key
 	 *            Key in resource bundle
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void addActionErrorKey(final String key) {
@@ -442,12 +444,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to add warning message.
-	 *
+	 * 
 	 * @param key
 	 *            Key in resource bundle
 	 * @param args
 	 *            arguments
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void addActionMessage(final String key, final String... args) {
@@ -456,10 +458,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to add warning message.
-	 *
+	 * 
 	 * @param key
 	 *            Key in resource bundle
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void addActionMessageKey(final String key) {
@@ -468,7 +470,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method to retrieve download info.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return DownlodInfo object.
 	 */
@@ -478,10 +480,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Set download info.
-	 *
+	 * 
 	 * @param downloadInfo
 	 *            Download Info.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void setDownloadInfo(final DownloadInfo downloadInfo) {
@@ -552,7 +554,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Method retrieve forward.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Result Forward.
 	 */
@@ -646,7 +648,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getPopupKey() {
@@ -654,7 +656,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 *
+	 * 
 	 * @param popupKey
 	 */
 	public void setPopupKey(final String popupKey) {
@@ -662,7 +664,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public boolean isPopup() {
@@ -671,7 +673,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns map of cached class
-	 *
+	 * 
 	 * @return Map with cached classes
 	 */
 	public Map<String, Object> getCachedClass() {
@@ -681,7 +683,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns map of cached enumeration
-	 *
+	 * 
 	 * @return Map with cached enumerations
 	 */
 	public Map<String, Object> getCachedEnum() {
@@ -691,7 +693,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns map of cached enumeration in array to checkbox list
-	 *
+	 * 
 	 * @return Map with cached enumerations array
 	 */
 	public Map<String, String> getCachedEnumArray() {
@@ -701,7 +703,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns form parameters
-	 *
+	 * 
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
@@ -719,7 +721,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns current HTTP Session.
-	 *
+	 * 
 	 * @return Http Session
 	 */
 	public HttpSession getSession() {
@@ -728,7 +730,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns current HTTP Request.
-	 *
+	 * 
 	 * @return Http Servlet Request
 	 */
 	public HttpServletRequest getRequest() {
@@ -737,7 +739,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns current HTTP Response.
-	 *
+	 * 
 	 * @return Http Servlet Reponse
 	 */
 	public HttpServletResponse getResponse() {
@@ -754,7 +756,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Verified if user is authenticated.
-	 *
+	 * 
 	 * @return true if authenticated
 	 */
 	public boolean isAuthenticated() {
@@ -766,7 +768,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns user name.
-	 *
+	 * 
 	 * @return User Name
 	 */
 	public String getUserName() {
@@ -778,7 +780,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 	/**
 	 * Returns controller type
-	 *
+	 * 
 	 * @return Controller Type
 	 */
 	protected ControllerType getControllerType() {
@@ -791,7 +793,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	protected void controlResultForward() {
 		setResultForward(Layout.PROTECTED_JSP_COMMON.concat(Layout.UC_JSP));
 	}
-	
+
 	public boolean isShowTitle() {
 		return showTitle;
 	}

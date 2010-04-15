@@ -28,11 +28,11 @@
 
 			<!-- exception interceptor -->
 			<interceptor name="exception"
-				class="org.vulpe.controller.struts.interceptor.ExceptionMappingInterceptor" />
+				class="org.vulpe.controller.struts.interceptor.VulpeExceptionMappingInterceptor" />
 
 			<!-- chain interceptor -->
 			<interceptor name="chain"
-				class="org.vulpe.controller.struts.interceptor.ChainingInterceptor" />
+				class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
 
 			<!-- params interceptor -->
 			<interceptor name="params"
@@ -210,7 +210,6 @@
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
 			</result>
 		</action>
 
@@ -223,7 +222,6 @@
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
 			</result>
 		</action>
 
@@ -235,7 +233,6 @@
 				<param name="actionName">${resultForward}</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
 			</result>
 		</action>
 
@@ -247,7 +244,6 @@
 				<param name="actionName">${resultForward}</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
 			</result>
 		</action>
 

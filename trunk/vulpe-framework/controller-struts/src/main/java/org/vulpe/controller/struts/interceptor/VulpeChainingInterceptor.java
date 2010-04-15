@@ -17,7 +17,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ChainingInterceptor extends
+public class VulpeChainingInterceptor extends
 		com.opensymphony.xwork2.interceptor.ChainingInterceptor {
 
 	/*
