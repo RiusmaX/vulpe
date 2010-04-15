@@ -544,6 +544,10 @@ thead th,.header {
 	padding-top: 3px;
 }
 
+#error #message {
+	padding: 10px;
+}
+
 #error h1 {
 	color: #d00;
 	background-color: #ddd;

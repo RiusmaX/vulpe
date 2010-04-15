@@ -12,8 +12,4 @@ public class CommunityAction extends AbstractVulpeBaseSimpleAction {
 
 	Logger log = Logger.getLogger(CommunityAction.class);
 
-	@Override
-	public boolean isShowTitle() {
-		return false;
-	}
 }

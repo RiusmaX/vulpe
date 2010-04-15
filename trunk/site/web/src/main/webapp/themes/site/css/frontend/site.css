@@ -243,13 +243,15 @@ td .titulo{
 */
 .ucTitle {
 	background-color: #fff;
-	display: block;
-	font-size: 11px;
+	display: table;
+	font-size: 30px;
 	font-weight: bold;
-	height: 15px;
-	padding: 5px 10px 5px 10px;
+	height: 24px;
+	padding: 0;
 	width: 97%;
 	color: #143D55;
+	text-align: left;
+	margin-top: 18px;
 }
 
 .userAuthenticated {
@@ -505,6 +507,10 @@ html,body {
 	padding-top: 3px;
 }
 
+#error #message {
+	padding: 10px;
+}
+
 #error h1 {
 	color: #d00;
 	background-color: #ddd;
@@ -512,7 +518,7 @@ html,body {
 	font-size: 30px;
 	height: auto;
 	margin: 0px;
-	padding-left: 20px;
+	padding-left: 8px;
 	padding-top: 3px;
 }
 
@@ -521,7 +527,7 @@ html,body {
 	font-size: 20px;
 	height: auto;
 	margin: 0px;
-	padding-left: 20px;
+	padding-left: 8px;
 	padding-top: 3px;
 }
 
@@ -543,7 +549,7 @@ h1 {
 	font-size: 30px;
 	margin: 0;
 	padding: 0;
-	line-height: 1em;
+	line-height: 1.3em;
 	letter-spacing: 0px;
 	display: inline-table;
 }
@@ -553,7 +559,7 @@ h2 {
 	font-size: 20px;
 	margin: 0;
 	padding: 0;
-	line-height: 1em;
+	line-height: 1.3em;
 }
 
 hr {
@@ -695,7 +701,7 @@ hr {
 	background:#fff url('../../images/frontend/menu-bg.gif') repeat-x bottom left;
 	padding:0 0 0 20px;
 	top: -56px;
-	right: 162px;
+	right: 138px;
 	width: 600px;
 	float: right;
 }
@@ -706,6 +712,7 @@ hr {
 	list-style-type:none;
 	width:auto;
 	float:left;
+	font-size: 12px;
 }
 
 #menu ul li {
@@ -756,6 +763,6 @@ hr {
 /* ---------------------- END menu ---------------------- */
 
 ol, ul {
-	font-size: 12px;
-	margin: 10px 40px;
+	font-size: 13px;
+	margin: 0px 40px;
 }

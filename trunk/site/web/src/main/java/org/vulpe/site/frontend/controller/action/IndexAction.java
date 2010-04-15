@@ -12,8 +12,4 @@ public class IndexAction extends AbstractVulpeBaseSimpleAction {
 
 	Logger log = Logger.getLogger(IndexAction.class);
 
-	@Override
-	public boolean isShowTitle() {
-		return false;
-	}
 }

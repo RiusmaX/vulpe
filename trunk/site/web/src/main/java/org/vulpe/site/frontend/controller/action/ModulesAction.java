@@ -12,8 +12,4 @@ public class ModulesAction extends AbstractVulpeBaseSimpleAction {
 
 	Logger log = Logger.getLogger(ModulesAction.class);
 
-	@Override
-	public boolean isShowTitle() {
-		return false;
-	}
 }

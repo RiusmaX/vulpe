@@ -12,8 +12,4 @@ public class LearnAction extends AbstractVulpeBaseSimpleAction {
 
 	Logger log = Logger.getLogger(LearnAction.class);
 
-	@Override
-	public boolean isShowTitle() {
-		return false;
-	}
 }

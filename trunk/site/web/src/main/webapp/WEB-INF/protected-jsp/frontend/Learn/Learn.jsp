@@ -1,7 +1,15 @@
 <%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
 <div id="content">
-<h1>Learn</h1>
-<br>
-<h2>Let me tell you a little about me:</h2>
+<h2><fmt:message key="label.site.Learn.frontend.h2"/></h2>
 </div>
 <jsp:include page="../bottom.jsp"/>
+<script type="text/javascript">
+$(document).ready(function() {
+	vulpe.util.get("menuVulpe").removeClass("current");
+	vulpe.util.get("menuCode").removeClass("current");
+	vulpe.util.get("menuCommunity").removeClass("current");
+	vulpe.util.get("menuModules").removeClass("current");
+	vulpe.util.get("menuLearn").removeClass("current");
+	vulpe.util.get("menuLearn").addClass("current");
+});
+</script>
