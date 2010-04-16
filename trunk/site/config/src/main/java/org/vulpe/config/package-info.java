@@ -3,10 +3,11 @@
 		view = @VulpeView(
 				showButtonAsImage = true,
 				showButtonIcon = false,
-				showButtonText = false
+				showButtonText = false,
+				frontendCenteredLayout = true
 		),
 		theme = "site",
-		menuType = MenuType.NONE
+		frontendMenuType = MenuType.NONE
 )
 package org.vulpe.config;
 
