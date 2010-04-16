@@ -1,0 +1,119 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${package}</groupId>
+	<artifactId>${rootArtifactId}-core</artifactId>
+	<version>${version}</version>
+	<packaging>jar</packaging>
+	<name>${rootArtifactId} - Core</name>
+
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unjar-fox</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
+								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<property name="tools.dir" value="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0/tools" />
+								<property name="tools.dir.present" value="false" />
+								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present" type="dir" />
+								<if>
+									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
+									<then>
+										<unjar src="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0.jar" dest="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<configuration>
+					<factory>net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory</factory>
+					<options>
+						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/fox/1.0/fox-1.0/tools/services/templates/plugin.ftl</param>
+						<param>component=core</param>
+						<param>package=${package}.core.model</param>
+						<param>services=POJO</param>
+						<param>serviceLookup=SPRING</param>
+						<param>applicationServer=TOMCAT</param>
+					</options>
+					<outputDirectory>${symbol_dollar}{basedir}/generated/main/java</outputDirectory>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.apt-jelly</groupId>
+						<artifactId>apt-jelly</artifactId>
+						<version>2.3</version>
+					</dependency>
+					<dependency>
+						<groupId>freemarker</groupId>
+						<artifactId>freemarker</artifactId>
+						<version>2.3.8</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<configuration>
+					<sources>
+						<source>${symbol_dollar}{basedir}/generated/main/java</source>
+						<source>${symbol_dollar}{basedir}/generated/main/resources</source>
+					</sources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
