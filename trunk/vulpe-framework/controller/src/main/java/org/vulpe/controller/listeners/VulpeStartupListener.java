@@ -25,7 +25,7 @@ import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * Class to manager startup of application.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
@@ -35,7 +35,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seejavax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
 	 * ServletContextEvent)
 	 */
@@ -48,7 +48,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
 	 * .ServletContextEvent)
@@ -91,10 +91,20 @@ public class VulpeStartupListener implements ServletContextListener {
 		evt.getServletContext().setAttribute(
 				Constants.Context.SECURITY_ENABLED,
 				VulpeConfigHelper.isSecurityEnabled());
-		evt.getServletContext().setAttribute(Constants.Context.MENU_TYPE,
-				vulpeProject.menuType());
+		evt.getServletContext().setAttribute(
+				Constants.Context.FRONTEND_MENU_TYPE,
+				vulpeProject.frontendMenuType());
+		evt.getServletContext().setAttribute(
+				Constants.Context.BACKEND_MENU_TYPE,
+				vulpeProject.backendMenuType());
 
 		if (vulpeProject.view() != null) {
+			evt.getServletContext().setAttribute(
+					Constants.Context.View.BACKEND_CENTERED_LAYOUT,
+					vulpeProject.view().backendCenteredLayout());
+			evt.getServletContext().setAttribute(
+					Constants.Context.View.FRONTEND_CENTERED_LAYOUT,
+					vulpeProject.view().frontendCenteredLayout());
 			evt.getServletContext().setAttribute(
 					Constants.Context.View.SHOW_BUTTON_AS_IMAGE,
 					vulpeProject.view().showButtonAsImage());

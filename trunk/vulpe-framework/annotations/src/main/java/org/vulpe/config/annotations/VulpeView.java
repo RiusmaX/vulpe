@@ -26,5 +26,9 @@ public @interface VulpeView {
 	int heightButtonIcon() default 16;
 
 	int heightMobileButtonIcon() default 32;
+	
+	boolean backendCenteredLayout() default false;
+	
+	boolean frontendCenteredLayout() default false;
 
 }

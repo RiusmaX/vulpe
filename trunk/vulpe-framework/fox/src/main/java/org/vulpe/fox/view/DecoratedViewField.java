@@ -31,6 +31,7 @@ public class DecoratedViewField implements Serializable {
 	private boolean showBlank;
 	private boolean autoLoad;
 	private boolean argument;
+	private boolean autoComplete = false;
 
 	public String getName() {
 		return name;
@@ -238,6 +239,14 @@ public class DecoratedViewField implements Serializable {
 
 	public boolean isArgument() {
 		return argument;
+	}
+
+	public void setAutoComplete(boolean autoComplete) {
+		this.autoComplete = autoComplete;
+	}
+
+	public boolean isAutoComplete() {
+		return autoComplete;
 	}
 
 }

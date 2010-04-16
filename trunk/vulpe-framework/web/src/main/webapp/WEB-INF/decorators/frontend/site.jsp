@@ -17,7 +17,7 @@
 		<script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.accordion.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
-		<c:if test="${vulpeMenuType == 'DROPPY'}">
+		<c:if test="${vulpeFrontendMenuType == 'DROPPY'}">
 		<script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script>
 		</c:if>
 		<script src="${pageContext.request.contextPath}/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
@@ -55,7 +55,7 @@
 			@import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/${vulpeTheme}.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.accordion.css";
-			<c:if test="${vulpeMenuType == 'DROPPY'}">
+			<c:if test="${vulpeFrontendMenuType == 'DROPPY'}">
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.droppy.css";
 			</c:if>
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.lightbox.css";
@@ -75,6 +75,9 @@
 		<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
 	</head>
 	<body>
+		<c:if test="${vulpeFrontendCenteredLayout}">
+		<center>
+		</c:if>
 		<div id="container">
 			<div id="loading" style="display: none;"></div>
 			<div id="modalMessages" style="display: none;" class="messages"></div>
@@ -114,5 +117,8 @@
 				<%@include file="/WEB-INF/protected-jsp/common/frontend/footer.jsp" %>
 			</div>
 		</div>
+		<c:if test="${vulpeFrontendCenteredLayout}">
+		</center>
+		</c:if>
 	</body>
 </html>

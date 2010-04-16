@@ -30,6 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.common.ReflectUtil;
 import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.VulpeBaseSimpleEntity;
 import org.vulpe.view.annotations.View.ViewType;
@@ -49,7 +50,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * net.sf.jelly.apt.strategies.TemplateBlockStrategy#preProcess(net.sf.jelly
 	 * .apt.TemplateBlock, net.sf.jelly.apt.TemplateOutput,
@@ -270,6 +271,9 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		final VulpeSelectPopup selectPopup = fDeclaration == null ? field
 				.getAnnotation(VulpeSelectPopup.class) : fDeclaration
 				.getAnnotation(VulpeSelectPopup.class);
+		final AutoComplete autoComplete = fDeclaration == null ? field
+				.getAnnotation(AutoComplete.class) : fDeclaration
+				.getAnnotation(AutoComplete.class);
 		if (selectPopup != null) {
 			name = selectPopup.name();
 			decoratedViewField.setArgument(selectPopup.argument());
@@ -279,6 +283,9 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setSize(selectPopup.size());
 			decoratedViewField.setPopupWidth(selectPopup.popupWidth());
 			decoratedViewField.setType("selectPopup");
+		}
+		if (autoComplete != null) {
+			decoratedViewField.setAutoComplete(true);
 		}
 		decoratedViewField.setName(StringUtils.isNotBlank(name) ? name
 				: fDeclaration == null ? field.getName() : fDeclaration

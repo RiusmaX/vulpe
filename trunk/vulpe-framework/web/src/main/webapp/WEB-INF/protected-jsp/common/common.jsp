@@ -20,7 +20,7 @@ if (request.getAttribute("ENCODING_SETED") == null){
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		vulpe.util.focusFirst();
-		<c:if test="${vulpeMenuType == 'DROPPY'}">
+		<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && actionConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && actionConfig.type != 'FRONTEND')}">
 		$("#nav").droppy();
 		</c:if>
 		<c:if test="${pageContext.request.locale ne 'en_US'}">

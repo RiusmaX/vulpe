@@ -37,9 +37,12 @@ public interface Constants {
 		String THEME = "vulpeTheme";
 		String AUDIT_ENABLED = "vulpeAuditEnabled";
 		String SECURITY_ENABLED = "vulpeSecurityEnabled";
-		String MENU_TYPE = "vulpeMenuType";
+		String FRONTEND_MENU_TYPE = "vulpeFrontendMenuType";
+		String BACKEND_MENU_TYPE = "vulpeBackendMenuType";
 
 		interface View {
+			String BACKEND_CENTERED_LAYOUT = "vulpeBackendCenteredLayout";
+			String FRONTEND_CENTERED_LAYOUT = "vulpeFrontendCenteredLayout";
 			String SHOW_BUTTON_AS_IMAGE = "vulpeShowButtonAsImage";
 			String SHOW_BUTTON_ICON = "vulpeShowButtonIcon";
 			String SHOW_BUTTON_TEXT = "vulpeShowButtonText";

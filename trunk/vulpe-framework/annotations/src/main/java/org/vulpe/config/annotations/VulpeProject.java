@@ -27,7 +27,9 @@ public @interface VulpeProject {
 
 	boolean security() default true;
 
-	MenuType menuType() default MenuType.DROPPY;
+	MenuType frontendMenuType() default MenuType.DROPPY;
+	
+	MenuType backendMenuType() default MenuType.DROPPY;
 
 	enum MenuType {
 		DROPPY, NONE
