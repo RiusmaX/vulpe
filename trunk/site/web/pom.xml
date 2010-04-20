@@ -48,6 +48,12 @@
 		</dependency>
 	</dependencies>
 
+	<description>Vulpe Framework Site - Web</description>
+	<url>http://vulpe.org/site</url>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 	<build>
 		<plugins>
 			<plugin>

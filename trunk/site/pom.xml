@@ -9,6 +9,12 @@
 	<packaging>pom</packaging>
 	<name>Site - Componente POM</name>
 
+	<description>Vulpe Framework Site</description>
+	<url>http://vulpe.org/site</url>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 	<modules>
 		<module>config</module>
 		<module>domains</module>
