@@ -43,6 +43,13 @@
 		</dependency>
 	</dependencies>
 
+	<description>Vulpe Framework ;) Quick and Smart - Fox Code Generator</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 	<build>
 		<plugins>
 			<plugin>
@@ -72,8 +79,7 @@
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="true" />
 									<then>
-										<delete
-											dir="${maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+										<delete dir="${maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
 									</then>
 								</if>
 							</tasks>
@@ -92,4 +98,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

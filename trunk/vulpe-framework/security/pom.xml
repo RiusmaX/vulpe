@@ -47,6 +47,13 @@
 			<version>2.0.4</version>
 		</dependency>
 	</dependencies>
+	<description>Vulpe Framework ;) Quick and Smart - Security</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 	<build>
 		<plugins>
 			<plugin>

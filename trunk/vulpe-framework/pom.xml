@@ -26,6 +26,13 @@
 		<module>web</module>
 		<module>web-struts</module>
 	</modules>
+	<description>Vulpe Framework ;) Quick and Smart</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 	<distributionManagement>
 		<repository>
 			<id>activerepo</id>

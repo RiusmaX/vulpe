@@ -15,4 +15,11 @@
 		<artifactId>parent</artifactId>
 		<version>1.0</version>
 	</parent>
+	<description>Vulpe Framework ;) Quick and Smart - Web Content</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
 </project>
