@@ -2,11 +2,18 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.vulpe.archetypes.vulpe-struts2-db4o</groupId>
+  <groupId>org.vulpe.archetypes</groupId>
   <artifactId>vulpe-struts2-db4o-archetype</artifactId>
   <version>1.0</version>
   <packaging>maven-archetype</packaging>
   <name>vulpe-struts2-db4o-archetype</name>
+  <description>Vulpe Struts 2 db4o POJO Archetype</description>
+  <url>http://vulpe.org</url>
+  <inceptionYear>2010</inceptionYear>
+  <organization>
+  	<name>Active Thread</name>
+  	<url>http://www.activethread.com.br</url>
+  </organization>
   <build>
     <extensions>
       <extension>
