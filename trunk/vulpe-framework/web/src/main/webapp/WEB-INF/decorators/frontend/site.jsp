@@ -36,6 +36,7 @@
 		<!--[if IE]>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/WCH.js" charset="utf-8"></script>
 		<![endif]-->
+		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
 		<script type="text/javascript" charset="utf-8">
 			var contextPath = '${pageContext.request.contextPath}';
 			var _vulpeTheme = '${vulpeTheme}';

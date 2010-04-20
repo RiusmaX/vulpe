@@ -7,6 +7,11 @@
 			<username>activethread01</username>
 			<password>mavendeploy01</password>
 		</server>
+		<server>
+			<id>ftp-activethread</id>
+			<username>activethread01</username>
+			<password>manager</password>
+		</server>
 	</servers>
 	<profiles>
 		<profile>
@@ -16,6 +21,14 @@
 					<id>activerepo</id>
 					<name>Active Thread Repository</name>
 					<url>http://www.activethread.com.br/archiva/repository/maven2</url>
+					<snapshots>
+						<updatePolicy>interval:60</updatePolicy> 
+					</snapshots>
+				</repository>
+				<repository>
+					<id>activethread</id>
+					<name>Active Thread Repository</name>
+					<url>http://repository.activethread.com.br/maven2</url>
 					<snapshots>
 						<updatePolicy>interval:60</updatePolicy> 
 					</snapshots>
