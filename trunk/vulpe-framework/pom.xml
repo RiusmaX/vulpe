@@ -35,9 +35,9 @@
 	</organization>
 	<distributionManagement>
 		<repository>
-			<id>activerepo</id>
+			<id>ftp-activethread</id>
 			<name>Active Thread Maven2 Repository</name>
-			<url>http://www.activethread.com.br/archiva/repository/maven2</url>
+			<url>ftp://activethread.com.br</url>
 		</repository>
 	</distributionManagement>
 </project>
