@@ -613,7 +613,11 @@ hr {
 		background: #fff;
 		width: 97%;
 	}
-
+	
+	#frontend #content a {
+		color: #000;
+	}
+	
 	#frontend #bottom {
 		position: relative;
 		top: 0px;

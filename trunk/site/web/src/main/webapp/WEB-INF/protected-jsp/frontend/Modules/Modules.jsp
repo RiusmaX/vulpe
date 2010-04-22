@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
 <div id="content">
-<h2><fmt:message key="label.site.Modules.frontend.h2"/></h2>
+<h2><fmt:message key="label.site.Modules.frontend.h2"/></h2><br>
+<h3><fmt:message key="label.site.Modules.frontend.h3"/></h3>
 </div>
 <jsp:include page="../bottom.jsp"/>
 <script type="text/javascript">
