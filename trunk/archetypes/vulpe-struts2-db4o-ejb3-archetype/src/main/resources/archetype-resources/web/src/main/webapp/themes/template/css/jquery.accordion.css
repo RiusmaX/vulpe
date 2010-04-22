@@ -1,0 +1,42 @@
+/************************************************************************
+* CSS - JQuery - Accordion 												*
+************************************************************************/
+
+.accordion dt { /* activated */
+	cursor: pointer;
+}
+
+dt,dd {
+	margin: 0;
+	margin-left: 28px;
+}
+
+dt {
+	background: #e1e4d7 url(../images/accordion-collapsed.gif) 6px no-repeat;
+	padding: 3px;
+	font-weight: bold;
+	font-size: 11px;
+	margin-top: 1px;
+	padding-left: 20px;
+	width: auto;
+}
+
+.expanded {
+	background: #e1e4d7 url(../images/accordion-expanded.gif) 6px no-repeat;
+}
+
+.collapsed {
+	background: #e1e4d7 url(../images/accordion-collapsed.gif) 6px no-repeat;
+}
+
+dd {
+	border: 1px solid #e1e4d7;
+	width: auto;
+	padding-top: 5px;
+	padding-bottom: 15px;
+	background-color: #fff;
+}
+
+dd p {
+	padding-left: 27px;
+}
