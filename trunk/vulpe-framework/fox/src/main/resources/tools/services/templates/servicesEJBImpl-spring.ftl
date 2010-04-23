@@ -38,7 +38,7 @@ public class ${baseClassName}ServicesEJBImpl implements ${baseClassName}Services
 <@forAllValidClasses ; type, signatureClass>
 	@Qualifier("${type.simpleName?uncap_first}")
 	@Autowired
-	private final ${signatureClass} ${type.simpleName?uncap_first};
+	private ${signatureClass} ${type.simpleName?uncap_first};
 
 </@forAllValidClasses>
 <@forAllValidMethods ; type, method, methodTransaction, methodName, signatureClass>

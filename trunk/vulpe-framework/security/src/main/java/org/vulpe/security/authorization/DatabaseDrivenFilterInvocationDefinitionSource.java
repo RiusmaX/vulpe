@@ -1,12 +1,13 @@
 package org.vulpe.security.authorization;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.ConfigAttributeEditor;
-import org.springframework.security.intercept.web.FilterInvocation;
-import org.springframework.security.intercept.web.FilterInvocationDefinitionSource;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.vulpe.security.authorization.model.services.AuthorizationService;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
@@ -14,18 +15,18 @@ import org.vulpe.security.model.entity.SecureResource;
 /**
  * This <code>FilterInvocationDefinitionSource</code> implementation uses
  * database and in turn is used for dynamic authorization.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
- *
+ * 
  */
 public class DatabaseDrivenFilterInvocationDefinitionSource implements
-		FilterInvocationDefinitionSource {
+		FilterInvocationSecurityMetadataSource {
 
 	private AuthorizationService authorizationService;
 
-	public ConfigAttributeDefinition lookupAttributes(final String url) {
+	public Collection<ConfigAttribute> lookupAttributes(final String url) {
 		String newUrl = url;
 		// Strip anything after a question mark symbol, as per SEC-161. See also
 		// SEC-321
@@ -44,13 +45,15 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 				.getSecureObjectRoles(secureObject);
 		// creating ConfigAttributeDefinition
 		if (secureObjectRoles != null && !secureObjectRoles.isEmpty()) {
-			final ConfigAttributeEditor cfe = new ConfigAttributeEditor();
 			final StringBuffer roles = new StringBuffer();
 			for (Role sor : secureObjectRoles) {
 				roles.append(sor.getName()).append(",");
 			}
-			cfe.setAsText(roles.toString().substring(0, roles.length() - 1));
-			return (ConfigAttributeDefinition) cfe.getValue();
+			Collection<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
+			ConfigAttribute config = new SecurityConfig(roles.toString()
+					.substring(0, roles.length() - 1));
+			list.add(config);
+			return list;
 		}
 		return null;
 
@@ -58,45 +61,13 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.springframework.security.intercept.ObjectDefinitionSource#
 	 * getConfigAttributeDefinitions()
 	 */
 	@SuppressWarnings("unchecked")
 	public Collection getConfigAttributeDefinitions() {
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.springframework.security.intercept.ObjectDefinitionSource#getAttributes
-	 * (java.lang.Object)
-	 */
-	@Override
-	public ConfigAttributeDefinition getAttributes(final Object object)
-			throws IllegalArgumentException {
-		if ((object == null) || !this.supports(object.getClass())) {
-			throw new IllegalArgumentException(
-					"Object must be a FilterInvocation");
-		}
-
-		return this.lookupAttributes(((FilterInvocation) object)
-				.getRequestUrl());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.springframework.security.intercept.ObjectDefinitionSource#supports
-	 * (java.lang.Class)
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean supports(final Class clazz) {
-		return true;
 	}
 
 	public AuthorizationService getAuthorizationService() {
@@ -106,6 +77,35 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 	public void setAuthorizationService(
 			final AuthorizationService authorizationService) {
 		this.authorizationService = authorizationService;
+	}
+
+	@Override
+	public Collection<ConfigAttribute> getAllConfigAttributes() {
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.security.access.SecurityMetadataSource#supports(java
+	 * .lang.Class)
+	 */
+	@Override
+	public boolean supports(Class<?> arg0) {
+		return true;
+	}
+
+	@Override
+	public Collection<ConfigAttribute> getAttributes(Object object)
+			throws IllegalArgumentException {
+		if ((object == null) || !this.supports(object.getClass())) {
+			throw new IllegalArgumentException(
+					"Object must be a FilterInvocation");
+		}
+
+		return this.lookupAttributes(((FilterInvocation) object)
+				.getRequestUrl());
 	}
 
 }

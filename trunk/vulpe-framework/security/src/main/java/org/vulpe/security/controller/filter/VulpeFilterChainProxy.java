@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.springframework.security.util.FilterChainProxy;
+import org.springframework.security.web.FilterChainProxy;
 import org.vulpe.common.helper.VulpeConfigHelper;
 
 /**

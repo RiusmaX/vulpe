@@ -3,14 +3,14 @@ package org.vulpe.security.authentication;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.BadCredentialsException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.providers.AuthenticationProvider;
-import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
 import org.vulpe.security.authentication.model.services.UserAuthenticationService;
 import org.vulpe.security.exception.VulpeSecurityException;
@@ -21,12 +21,12 @@ import org.vulpe.security.model.entity.UserRole;
  * This is a customized <code>AuthenticationProvider</code> used for dynamic
  * data based authentication. Here authentication is externalized and is
  * performed by a common authentication service.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  * @see {@link org.springframework.security.providers.AuthenticationProvider}
- *
+ * 
  */
 public class VulpeSecurityAuthenticationProvider implements
 		AuthenticationProvider {
@@ -35,7 +35,7 @@ public class VulpeSecurityAuthenticationProvider implements
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.springframework.security.providers.AuthenticationProvider#
 	 * authenticate(org. acegisecurity.Authentication)
 	 */
@@ -63,14 +63,10 @@ public class VulpeSecurityAuthenticationProvider implements
 				}
 			}
 
-			final GrantedAuthority toReturn[] = { new GrantedAuthorityImpl(
-					"demo") };
-			user = new org.springframework.security.userdetails.User(
+			user = new org.springframework.security.core.userdetails.User(
 					authentication.getPrincipal().toString(), authentication
 							.getCredentials().toString(), true, true, true,
-					true, list.isEmpty() ? toReturn
-							: (GrantedAuthority[]) (GrantedAuthority[]) list
-									.toArray(toReturn));
+					true, list);
 		} else {
 			throw new BadCredentialsException("Bad Credentials",
 					((Object) (user)));
@@ -84,7 +80,7 @@ public class VulpeSecurityAuthenticationProvider implements
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.springframework.security.providers.AuthenticationProvider#supports
 	 * (java.lang .Class)
@@ -97,7 +93,7 @@ public class VulpeSecurityAuthenticationProvider implements
 
 	/**
 	 * Sets the authService
-	 *
+	 * 
 	 * @param authService
 	 *            The authService to set.
 	 */

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.springframework.security.providers.anonymous.AnonymousProcessingFilter;
-import org.springframework.security.userdetails.memory.UserAttribute;
+import org.springframework.security.core.userdetails.memory.UserAttribute;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.util.StringUtils;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  *
  */
-public class VulpeAnonymousProcessingFilter extends AnonymousProcessingFilter {
+public class VulpeAnonymousProcessingFilter extends AnonymousAuthenticationFilter {
 
 	private Properties anonymousConfig;
 

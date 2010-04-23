@@ -2,7 +2,7 @@ package org.vulpe.security.providers.anonymous;
 
 import java.util.Properties;
 
-import org.springframework.security.providers.anonymous.AnonymousAuthenticationProvider;
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 
 /**
  *

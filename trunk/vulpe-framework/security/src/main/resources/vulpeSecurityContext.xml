@@ -6,64 +6,63 @@
 	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
-			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
-			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
-			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd"
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
 	default-lazy-init="true" default-autowire="byName">
 
 	<!-- ======================== FILTER CHAIN ======================= -->
 	<bean id="springSecurityFilterChain"
 		class="org.vulpe.security.controller.filter.VulpeFilterChainProxy">
-		<property name="filterInvocationDefinitionSource">
-			<value> 
-				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
-				PATTERN_TYPE_APACHE_ANT
-				/j_spring_security_check*=httpSessionContextIntegrationFilter,authenticationProcessingFilter
-				/**/*=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
-			</value>
-		</property>
+		<!--
+			<property name="filterInvocationDefinitionSource"> <value>
+			CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON PATTERN_TYPE_APACHE_ANT
+			/j_spring_security_check*=securityContextPersistenceFilter,authenticationProcessingFilter
+			/**/*=securityContextPersistenceFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+			</value> </property>
+		-->
+		<security:filter-chain-map path-type="ant">
+			<security:filter-chain pattern="/j_spring_security_check*"
+				filters="securityContextPersistenceFilter,authenticationProcessingFilter" />
+			<security:filter-chain pattern="/**/*"
+				filters="securityContextPersistenceFilter,logoutFilter,authenticationProcessingFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+		</security:filter-chain-map>
 	</bean>
+
+	<security:global-method-security
+		secured-annotations="disabled" jsr250-annotations="disabled" />
 
 	<!-- ======================== AUTHENTICATION ======================= -->
-	<bean id="httpSessionContextIntegrationFilter"
-		class="org.springframework.security.context.HttpSessionContextIntegrationFilter">
+	<bean id="securityContextPersistenceFilter"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
 	</bean>
 
-	<bean id="logoutFilter" class="org.springframework.security.ui.logout.LogoutFilter">
+	<bean id="logoutFilter"
+		class="org.springframework.security.web.authentication.logout.LogoutFilter">
 		<constructor-arg value="/index.jsp" />
 		<!-- URL redirected to after logout -->
 		<constructor-arg>
 			<list>
 				<bean
-					class="org.springframework.security.ui.logout.SecurityContextLogoutHandler" />
+					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
 			</list>
 		</constructor-arg>
 	</bean>
 
-	<bean id="authenticationProcessingFilter"
-		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilter">
-		<property name="authenticationManager">
-			<ref bean="authenticationManager" />
-		</property>
-		<property name="authenticationFailureUrl">
-			<value>/authenticator.action?login_error=1</value>
-		</property>
-		<property name="defaultTargetUrl">
-			<value>/</value>
-		</property>
-		<property name="filterProcessesUrl">
-			<value>/j_spring_security_check</value>
-		</property>
-	</bean>
+	<security:http>
+		<security:form-login authentication-failure-url="/authenticator.action?login_error=1"
+			default-target-url="/" login-processing-url="/j_spring_security_check" />
+	</security:http>
 
 	<bean id="securityContextHolderAwareRequestFilter"
-		class="org.springframework.security.wrapper.SecurityContextHolderAwareRequestFilter" />
+		class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />
 
-	<util:properties id="anonymousConfig" location="classpath:anonymousConfig.properties" />
+	<util:properties id="anonymousConfig"
+		location="classpath:anonymousConfig.properties" />
 
 	<bean id="anonymousProcessingFilter"
 		class="org.vulpe.security.providers.anonymous.VulpeAnonymousProcessingFilter">
@@ -73,12 +72,13 @@
 	</bean>
 
 	<bean id="exceptionTranslationFilter"
-		class="org.springframework.security.ui.ExceptionTranslationFilter">
+		class="org.springframework.security.web.access.ExceptionTranslationFilter">
 		<property name="authenticationEntryPoint">
-			<ref local="authenticationProcessingFilterEntryPoint" />
+			<ref local="loginUrlAuthenticationEntryPoint" />
 		</property>
 		<property name="accessDeniedHandler">
-			<bean class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+			<bean
+				class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
 				<property name="errorPage" value="/authenticator.action?access_denied=true" />
 			</bean>
 		</property>
@@ -88,7 +88,7 @@
 		=== Custom filterInvocationInterceptor implementation starts here ===
 	-->
 	<bean id="filterInvocationInterceptor"
-		class="org.springframework.security.intercept.web.FilterSecurityInterceptor">
+		class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<property name="authenticationManager">
 			<ref bean="authenticationManager" />
 		</property>
@@ -117,14 +117,12 @@
 	<bean id="authorizationDAO"
 		class="org.vulpe.security.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
 
-	<bean id="authenticationManager" class="org.springframework.security.providers.ProviderManager">
-		<property name="providers">
-			<list>
-				<ref local="daoAuthenticationProvider" />
-				<ref local="anonymousAuthenticationProvider" />
-			</list>
-		</property>
-	</bean>
+	<security:authentication-manager>
+		<security:authentication-provider
+			ref="daoAuthenticationProvider" />
+		<security:authentication-provider
+			ref="anonymousAuthenticationProvider" />
+	</security:authentication-manager>
 
 	<!--
 		==== Custom AuthenticationProvider implementation begins here ====
@@ -158,12 +156,12 @@
 
 	<!-- Automatically receives AuthenticationEvent messages -->
 	<bean id="loggerListener"
-		class="org.springframework.security.event.authentication.LoggerListener" />
+		class="org.springframework.security.authentication.event.LoggerListener" />
 	<!--
 		===================== HTTP REQUEST SECURITY ====================
 	-->
-	<bean id="authenticationProcessingFilterEntryPoint"
-		class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+	<bean id="loginUrlAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
 		<property name="loginFormUrl">
 			<value>/authenticator.action</value>
 		</property>

@@ -50,7 +50,7 @@
 
 	<!-- Spring Security Listener -->
 	<listener>
-		<listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 
 	<!-- Session Timeout : 30 minutes -->
