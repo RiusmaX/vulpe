@@ -11,7 +11,7 @@
 	
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>parent-struts</artifactId>
 		<version>1.0</version>
 	</parent>
 	
