@@ -1,8 +1,11 @@
+
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
+#set(
+$symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>${package}</groupId>
@@ -65,6 +68,7 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>jars</id>
 						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
@@ -75,7 +79,51 @@
 								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
-										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+										<pathelement
+											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<if>
+									<equals arg1="${symbol_dollar}{deployServer}" arg2="jboss" />
+									<then>
+										<unwar
+											src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}.war"
+											dest="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}_unpack" />
+										<copy
+											todir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}_unpack/WEB-INF/lib"
+											preservelastmodified="true">
+											<fileset
+												dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}/WEB-INF/lib"
+												includes="**/sitemesh-*.jar,**/spring-security-taglibs-*.jar" />
+										</copy>
+										<war
+											destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}.war"
+											webxml="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}/WEB-INF/web.xml"
+											manifest="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}_unpack/META-INF/MANIFEST.MF">
+											<fileset
+												dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}_unpack" />
+										</war>
+										<delete
+											dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}_unpack" />
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>deploy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement
+											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<if>
@@ -85,27 +133,39 @@
 										<if>
 											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
 											<then>
-												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												<copy
+													todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/"
+													overwrite="true">
+													<fileset
+														dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/"
+														excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${symbol_dollar}{deployMode}" arg2="quick-restart" />
 												<then>
-													<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar" />
+													<copy
+														todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/"
+														overwrite="true">
+														<fileset
+															dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/"
+															excludes="**/*.jar" />
 													</copy>
 												</then>
 											</elseif>
 											<else>
-												<delete dir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{projectName}" />
+												<delete
+													dir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{projectName}" />
 												<if>
 													<equals arg1="${symbol_dollar}{deleteWork}" arg2="true" />
 													<then>
-														<delete dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${rootArtifactId}" />
+														<delete
+															dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${rootArtifactId}" />
 													</then>
 												</if>
-												<unwar src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" dest="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
+												<unwar
+													src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war"
+													dest="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
 											</else>
 										</if>
 									</then>
