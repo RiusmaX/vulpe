@@ -50,6 +50,7 @@
           <directory>src/main/resources</directory>
           <includes>
             <include>**/*.deleteme</include>
+            <include>**/*.xml</include>
           </includes>
         </fileSet>
         <fileSet filtered="true" encoding="UTF-8">

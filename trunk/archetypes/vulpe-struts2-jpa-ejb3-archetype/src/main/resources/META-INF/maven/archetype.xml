@@ -13,7 +13,8 @@
     <resource>domains\pom-view.xml</resource>
     <resource>domains\pom.xml</resource>
     <resource>domains\src\main\java\org\vulpe\config\domains\package-info.java</resource>
-    <resource>domains\src\main\java\template\vulpe_struts2_jpa\core\model\entity\.deleteme</resource>
+    <resource>domains\src\main\java\template\vulpe_struts2_jpa_ejb3\core\model\entity\.deleteme</resource>
+    <resource>domains\src\main\resources\META-INF\persistence.xml</resource>
     <resource>ear\pom.xml</resource>
     <resource>ear\src\main\resources\applicationContext.xml</resource>
     <resource>ear\src\main\resources\log4j.properties</resource>
