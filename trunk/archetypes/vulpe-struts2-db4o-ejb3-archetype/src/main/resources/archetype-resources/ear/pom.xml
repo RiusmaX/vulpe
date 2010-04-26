@@ -130,10 +130,8 @@
 												</delete>
 											</then>
 											<else>
-												<then>
-													<delete
-														dir="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear" />
-												</then>
+												<delete
+													dir="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear" />
 											</else>
 										</if>
 									</then>
@@ -188,14 +186,12 @@
 													dest="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear" />
 											</then>
 											<else>
-												<then>
-													<copy
-														tofile="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear"
-														preservelastmodified="true">
-														<fileset dir="${symbol_dollar}{project.build.directory}"
-															includes="${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear" />
-													</copy>
-												</then>
+												<copy
+													tofile="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear"
+													preservelastmodified="true">
+													<fileset dir="${symbol_dollar}{project.build.directory}"
+														includes="${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear" />
+												</copy>
 											</else>
 										</if>
 									</then>
