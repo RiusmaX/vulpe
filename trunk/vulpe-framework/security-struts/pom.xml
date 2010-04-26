@@ -65,7 +65,7 @@
 									</classpath>
 								</taskdef>
 								<if>
-									<equals arg1="${server}" arg2="tomcat" />
+									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
 										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
 										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/"
