@@ -75,7 +75,6 @@
 						<configuration>
 							<tasks>
 								<property environment="env" />
-								<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
 								<property name="maven.repo" value="${env.M2_REPO}" />
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
@@ -84,38 +83,44 @@
 									</classpath>
 								</taskdef>
 								<if>
-									<equals arg1="${deployMode}" arg2="quick" />
+									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
-										<copy todir="${tomcat.home}/webapps/${projectName}/"
-											overwrite="true">
-											<fileset
-												dir="${project.build.directory}/${artifactId}-${version}/"
-												excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
-										</copy>
-									</then>
-									<elseif>
-										<equals arg1="${deployMode}" arg2="quick-restart" />
-										<then>
-											<copy todir="${tomcat.home}/webapps/${projectName}/"
-												overwrite="true">
-												<fileset
-													dir="${project.build.directory}/${artifactId}-${version}/"
-													excludes="**/*.jar" />
-											</copy>
-										</then>
-									</elseif>
-									<else>
-										<delete dir="${tomcat.home}/webapps/${projectName}" />
+										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
 										<if>
-											<equals arg1="${deleteWork}" arg2="true" />
+											<equals arg1="${deployMode}" arg2="quick" />
 											<then>
-												<delete
-													dir="${tomcat.home}/work/Catalina/localhost/${projectName}" />
+												<copy todir="${tomcat.home}/webapps/${projectName}/"
+													overwrite="true">
+													<fileset
+														dir="${project.build.directory}/${artifactId}-${version}/"
+														excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												</copy>
 											</then>
+											<elseif>
+												<equals arg1="${deployMode}" arg2="quick-restart" />
+												<then>
+													<copy todir="${tomcat.home}/webapps/${projectName}/"
+														overwrite="true">
+														<fileset
+															dir="${project.build.directory}/${artifactId}-${version}/"
+															excludes="**/*.jar" />
+													</copy>
+												</then>
+											</elseif>
+											<else>
+												<delete dir="${tomcat.home}/webapps/${projectName}" />
+												<if>
+													<equals arg1="${deleteWork}" arg2="true" />
+													<then>
+														<delete
+															dir="${tomcat.home}/work/Catalina/localhost/${projectName}" />
+													</then>
+												</if>
+												<unwar src="${project.build.directory}/${projectName}.war"
+													dest="${tomcat.home}/webapps/${projectName}" />
+											</else>
 										</if>
-										<unwar src="${project.build.directory}/${projectName}.war"
-											dest="${tomcat.home}/webapps/${projectName}" />
-									</else>
+									</then>
 								</if>
 							</tasks>
 						</configuration>
