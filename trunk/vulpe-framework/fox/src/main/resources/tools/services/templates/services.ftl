@@ -10,7 +10,7 @@ import org.vulpe.model.services.Services;
 /**
  * Service Interface of ${baseClassName}Services.
  * 
- * @author Active Thread Framework
+ * @author Vulpe Framework
  */
 @Remote
 public interface ${baseClassName}Services extends Services {

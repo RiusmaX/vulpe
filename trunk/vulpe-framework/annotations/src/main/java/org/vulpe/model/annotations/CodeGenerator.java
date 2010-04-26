@@ -26,4 +26,5 @@ public @interface CodeGenerator {
 	
 	boolean manager() default false;
 
+	boolean ignoreDAO() default false;
 }

@@ -11,7 +11,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 
 <#if JBOSS == true>
-import org.jboss.annotation.ejb.RemoteBinding;
+import org.jboss.ejb3.annotation.RemoteBinding;
 </#if>
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +23,7 @@ import ${basePackageName}.services.${baseClassName}Services;
 /**
  * Services implementation of component "${baseClassName}".
  *
- * @author Active Thread Framework
+ * @author Vulpe Framework
  */
 @Stateless(name = "${baseClassName}Services")
 <#if JBOSS == true>

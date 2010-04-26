@@ -21,6 +21,7 @@ import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.SODAQueries;
 import org.vulpe.model.annotations.db4o.SODAQuery;
 import org.vulpe.model.annotations.db4o.SODAQueryAttribute;
@@ -38,8 +39,11 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		if (super.preProcess(block, output, model)
 				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
+			final CodeGenerator codeGenerator = clazz
+					.getAnnotation(CodeGenerator.class);
 			if (getClassName(clazz.getSuperclass()).equals(
-					VulpeBaseSimpleEntity.class.getName())) {
+					VulpeBaseSimpleEntity.class.getName())
+					|| (codeGenerator != null && codeGenerator.ignoreDAO())) {
 				return false;
 			}
 			final DecoratedDAO dao = new DecoratedDAO();

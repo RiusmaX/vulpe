@@ -16,7 +16,7 @@ import ${basePackageName}.services.${baseClassName}Services;
 /**
  * Services implementation of component "${baseClassName}".
  *
- * @author Active Thread Framework
+ * @author Vulpe Framework
  */
 @Service("${baseClassName}Services")
 @Transactional
