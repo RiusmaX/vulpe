@@ -56,7 +56,7 @@
 							<groupId>${package}</groupId>
 							<artifactId>${rootArtifactId}-web</artifactId>
 							<contextRoot>/${rootArtifactId}</contextRoot>
-							<unpack>true</unpack>
+							<!-- <unpack>true</unpack> -->
 						</webModule>
 						<jarModule>
 							<groupId>org.vulpe</groupId>
@@ -84,7 +84,7 @@
 						<unauthenticated-principal>guest</unauthenticated-principal>
 					</jboss>
 					<ejbVersion>3.0</ejbVersion>
-					<unpackTypes>war</unpackTypes>
+					<!-- <unpackTypes>war</unpackTypes> -->
 				</configuration>
 			</plugin>
 			<plugin>

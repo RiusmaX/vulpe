@@ -10,6 +10,7 @@
 	<version>${version}</version>
 	<packaging>war</packaging>
 	<name>${rootArtifactId} - Web</name>
+	<description>${rootArtifactId}</description>
 
 	<dependencies>
 		<dependency>
