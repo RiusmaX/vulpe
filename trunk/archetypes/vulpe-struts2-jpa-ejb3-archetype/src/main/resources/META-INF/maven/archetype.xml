@@ -13,15 +13,14 @@
     <resource>domains\pom-view.xml</resource>
     <resource>domains\pom.xml</resource>
     <resource>domains\src\main\java\org\vulpe\config\domains\package-info.java</resource>
-    <resource>domains\src\main\java\template\vulpe_struts2_db4o\core\model\entity\.deleteme</resource>
+    <resource>domains\src\main\java\template\vulpe_struts2_jpa\core\model\entity\.deleteme</resource>
     <resource>ear\pom.xml</resource>
     <resource>ear\src\main\resources\applicationContext.xml</resource>
     <resource>ear\src\main\resources\log4j.properties</resource>
     <resource>web\pom.xml</resource>
-    <resource>web\src\main\java\template\vulpe_struts2_db4o\frontend\controller\action\IndexAction.java</resource>
+    <resource>web\src\main\java\template\vulpe_struts2_jpa\frontend\controller\action\IndexAction.java</resource>
     <resource>web\src\main\resources\ApplicationResources.properties</resource>
     <resource>web\src\main\resources\ApplicationResources_en_US.properties</resource>
-    <resource>web\src\main\resources\db4o.properties</resource>
     <resource>web\src\main\resources\security.properties</resource>
     <resource>web\src\main\resources\struts-application.xml</resource>
     <resource>web\src\main\webapp\index.jsp</resource>

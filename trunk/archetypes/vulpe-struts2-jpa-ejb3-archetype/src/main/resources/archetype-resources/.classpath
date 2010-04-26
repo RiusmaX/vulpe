@@ -10,6 +10,7 @@
 	<classpathentry kind="src" path="core/src/main/java"/>
 	<classpathentry kind="src" path="domains/src/main/resources"/>
 	<classpathentry kind="src" path="domains/src/main/java"/>
+	<classpathentry kind="src" path="ear/src/main/resources"/>
 	<classpathentry excluding="**/**" kind="src" path="web/src/main/webapp"/>
 	<classpathentry kind="src" path="web/src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
