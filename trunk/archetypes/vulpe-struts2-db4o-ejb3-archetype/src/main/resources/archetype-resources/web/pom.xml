@@ -94,7 +94,7 @@ $symbol_escape = '\' )
 											preservelastmodified="true">
 											<fileset
 												dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}/WEB-INF/lib"
-												includes="**/sitemesh-*.jar,**/spring-security-taglibs-*.jar" />
+												includes="**/${symbol_dollar}{rootArtifactId}-domains-*.jar,**/sitemesh-*.jar,**/spring-security-taglibs-*.jar" />
 										</copy>
 										<war
 											destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}.war"
