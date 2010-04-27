@@ -1,5 +1,6 @@
 package org.vulpe.security.model.entity;
 
+import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
 @SuppressWarnings("serial")
@@ -9,6 +10,7 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 
 	private String name;
 
+	@AutoComplete
 	private String description;
 
 	public Role() {

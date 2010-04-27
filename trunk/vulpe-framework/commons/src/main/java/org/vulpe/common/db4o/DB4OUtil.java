@@ -10,7 +10,7 @@ import com.db4o.ObjectServer;
 import com.db4o.config.ConfigScope;
 import com.db4o.cs.Db4oClientServer;
 import com.db4o.cs.config.ServerConfiguration;
-import com.db4o.io.MemoryStorage;
+import com.db4o.io.FileStorage;
 
 public class DB4OUtil {
 
@@ -115,7 +115,7 @@ public class DB4OUtil {
 		final File dbfile = new File(parentDir, databasename);
 		final ServerConfiguration config = Db4oClientServer
 				.newServerConfiguration();
-		config.file().storage(new MemoryStorage());
+		config.file().storage(new FileStorage());
 
 		// for replication
 		config.file().generateUUIDs(ConfigScope.GLOBALLY);

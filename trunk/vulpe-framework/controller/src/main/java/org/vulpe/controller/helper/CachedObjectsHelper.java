@@ -113,8 +113,8 @@ public final class CachedObjectsHelper {
 	@SuppressWarnings("unchecked")
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
 		final Set<String> cachedClasses = loadCachedClasses(servletContext);
+		final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
 		if (cachedClasses != null && !cachedClasses.isEmpty()) {
-			final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
 			for (String cachedClass : cachedClasses) {
 				try {
 					final Class classicClass = Class.forName(cachedClass);
@@ -128,9 +128,9 @@ public final class CachedObjectsHelper {
 					LOG.error(e);
 				}
 			}
-			VulpeCacheHelper.getInstance().put(Constants.CACHED_CLASS,
-					mapCachedClass);
 		}
+		VulpeCacheHelper.getInstance().put(Constants.CACHED_CLASS,
+				mapCachedClass);
 		final Set<String> cachedEnums = loadCachedEnums(servletContext);
 		if (cachedEnums != null && !cachedEnums.isEmpty()) {
 			final Map<String, Object> mapCachedEnum = new HashMap<String, Object>();
@@ -196,8 +196,8 @@ public final class CachedObjectsHelper {
 	public static void putObjectsInCache(final ServletContext servletContext) {
 		final Class<? extends VulpeBaseEntity<?>>[] cachedClass = VulpeConfigHelper.get(
 				VulpeDomains.class).cachedClass();
+		final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
 		if (cachedClass != null) {
-			final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
 			for (Class<? extends VulpeBaseEntity<?>> clazz : cachedClass) {
 				try {
 					mapCachedClass.put(clazz.getSimpleName(),
@@ -207,9 +207,9 @@ public final class CachedObjectsHelper {
 					LOG.error(e);
 				}
 			}
-			VulpeCacheHelper.getInstance().put(Constants.CACHED_CLASS,
-					mapCachedClass);
 		}
+		VulpeCacheHelper.getInstance().put(Constants.CACHED_CLASS,
+				mapCachedClass);
 		final Class[] cachedEnum = VulpeConfigHelper.get(VulpeDomains.class)
 				.cachedEnum();
 		if (cachedEnum != null) {
