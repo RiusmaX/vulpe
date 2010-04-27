@@ -170,7 +170,7 @@
 		</property>
 	</bean>
 
-	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<property name="allowIfAllAbstainDecisions">
 			<value>false</value>
 		</property>
@@ -181,6 +181,6 @@
 		</property>
 	</bean>
 
-	<bean id="roleVoter" class="org.springframework.security.vote.RoleVoter" />
+	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter" />
 
 </beans>

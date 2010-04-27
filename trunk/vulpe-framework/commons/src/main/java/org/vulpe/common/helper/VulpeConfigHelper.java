@@ -6,7 +6,7 @@ import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Framework configuration helper.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @since 1.0
  */
@@ -18,11 +18,12 @@ public final class VulpeConfigHelper {
 
 	private static final Logger LOG = Logger.getLogger(VulpeConfigHelper.class);
 	private static final String DOMAINS_CONFIG_CLASS = "org.vulpe.config.domains.package-info";
+	private static final String DOMAINS_CONFIG_BASE_CLASS = "org.vulpe.config.base.domains.package-info";
 	private static final String CONFIG_CLASS = "org.vulpe.config.package-info";
 	private static final String CONFIG_BASE_CLASS = "org.vulpe.config.base.package-info";
 
 	/**
-	 *
+	 * 
 	 * @param classPath
 	 */
 	private static void forceClassloader(final String classPath) {
@@ -38,7 +39,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for audit enabled e false to audit disabled.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -60,7 +61,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for security enabled e false to audit disabled.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -81,7 +82,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -104,7 +105,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method returns name of theme to application use.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -125,7 +126,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static String getProjectName() {
@@ -145,7 +146,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Class getConfig() {
@@ -169,7 +170,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Class getDomainsConfig() {
@@ -180,6 +181,14 @@ public final class VulpeConfigHelper {
 			domainsConfig = Class.forName(DOMAINS_CONFIG_CLASS);
 		} catch (Exception e) {
 			LOG.error("Error in load config application class.");
+		}
+		if (domainsConfig == null) {
+			try {
+				forceClassloader(DOMAINS_CONFIG_BASE_CLASS);
+				domainsConfig = Class.forName(DOMAINS_CONFIG_BASE_CLASS);
+			} catch (Exception e) {
+				LOG.error("Error in load domain config base framework class.");
+			}
 		}
 		return domainsConfig;
 	}
