@@ -6,6 +6,7 @@
 
 <struts>
 
+
 	<package name="security" extends="struts-default">
 
 		<result-types>
@@ -176,6 +177,22 @@
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
+
+		<global-results>
+			<result name="upload">/WEB-INF/protected-jsp/common/upload.jsp</result>
+			<result name="report">/WEB-INF/protected-jsp/common/reportDownload.jsp
+			</result>
+			<result name="json">/WEB-INF/protected-jsp/common/json.jsp</result>
+			<result name="download" type="stream">
+				<param name="contentType">${downloadInfo.contentType}</param>
+				<param name="contentLength">${downloadInfo.contentLength}</param>
+				<param name="contentDisposition">${downloadInfo.contentDisposition}</param>
+				<param name="inputName">downloadInfo.inputStream</param>
+			</result>
+			<result name="messages">/WEB-INF/protected-jsp/common/messages.jsp
+			</result>
+			<result name="errors">layout.vulpe.errors</result>
+		</global-results>
 
 		<!--
 			<action name="login"
