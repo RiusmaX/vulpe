@@ -92,9 +92,5 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.0.2.RELEASE/spring-tx-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.2.RELEASE/spring-web-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jboss/ejb3/jboss-ejb3-ext-api/1.1.1/jboss-ejb3-ext-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-metadata-1.0.4.jar" sourcepath="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-metadata-1.0.4-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-deployers-core-spi-2.0.9.GA.jar" sourcepath="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-deployers-core-spi-2.0.9.GA-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-deployers-core-2.0.9.GA.jar"/>
-	<classpathentry kind="lib" path="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-deployers-impl-2.0.9.GA.jar" sourcepath="C:/Documents and Settings/felipematos/Meus documentos/Downloads/jboss-deployers-impl-2.0.9.GA-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
