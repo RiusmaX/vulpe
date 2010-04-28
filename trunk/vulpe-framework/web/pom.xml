@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>web</artifactId>
+	<artifactId>vulpe-web</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 	<name>Vulpe Framework - Web Content</name>

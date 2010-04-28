@@ -95,7 +95,7 @@
 				</property>
 			</bean>
 		</property>
-		<property name="objectDefinitionSource">
+		<property name="securityMetadataSource">
 			<bean id="dbdrivenFilterInvocationDefinitionSource"
 				class="org.vulpe.security.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
 				<property name="authorizationService">

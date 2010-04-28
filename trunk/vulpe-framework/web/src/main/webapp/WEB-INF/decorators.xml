@@ -1,7 +1,7 @@
 <decorators defaultdir="/WEB-INF/decorators">
 	<excludes>
 		<pattern>*/ajax*</pattern>
-		<pattern>/authenticator*</pattern>
+		<!-- <pattern>/authenticator*</pattern> -->
 		<pattern>/login.jsp*</pattern>
 		<pattern>/accessDenied.jsp*</pattern>
 		<pattern>/exclude/*</pattern>
@@ -11,5 +11,8 @@
 	</decorator>
 	<decorator name="frontend" page="frontend/site.jsp">
 		<pattern>*/frontend*</pattern>
+	</decorator>
+	<decorator name="authenticator" page="authenticator.jsp">
+		<pattern>*/authenticator*</pattern>
 	</decorator>
 </decorators>

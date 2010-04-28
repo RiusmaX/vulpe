@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>fox</artifactId>
+	<artifactId>vulpe-fox</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - FOX Code Generator</name>
@@ -73,13 +73,13 @@
 									</classpath>
 								</taskdef>
 								<property name="tools.dir"
-									value="${maven.repo}/org/vulpe/fox/1.0/fox-1.0/tools" />
+									value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<available file="${tools.dir}" property="tools.dir.present"
 									type="dir" />
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="true" />
 									<then>
-										<delete dir="${maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+										<delete dir="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>

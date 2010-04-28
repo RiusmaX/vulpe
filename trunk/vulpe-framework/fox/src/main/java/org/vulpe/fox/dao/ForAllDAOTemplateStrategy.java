@@ -43,7 +43,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 					.getAnnotation(CodeGenerator.class);
 			if (getClassName(clazz.getSuperclass()).equals(
 					VulpeBaseSimpleEntity.class.getName())
-					|| (codeGenerator != null && codeGenerator.ignoreDAO())) {
+					|| (codeGenerator != null && codeGenerator.dao())) {
 				return false;
 			}
 			final DecoratedDAO dao = new DecoratedDAO();

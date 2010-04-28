@@ -1,6 +1,7 @@
 package org.vulpe.security.model.entity;
 
 import org.vulpe.model.annotations.AutoComplete;
+import org.vulpe.model.annotations.db4o.Like;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
 @SuppressWarnings("serial")
@@ -8,8 +9,10 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 
 	private Long id;
 
+	@Like
 	private String name;
 
+	@Like
 	@AutoComplete
 	private String description;
 

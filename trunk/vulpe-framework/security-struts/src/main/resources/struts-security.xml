@@ -201,21 +201,18 @@
 		-->
 		<action name="authenticator"
 			class="org.vulpe.security.controller.action.VulpeLoginAction" method="define">
-			<result name="success">/WEB-INF/protected-jsp/security/login.jsp
-			</result>
-			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp
-			</result>
-			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp
-			</result>
+			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
 		</action>
-		<!--
-			<action name="login">
-			<result>/WEB-INF/protected-jsp/security/login.jsp</result> </action>
-
-			<action name="accessDenied">
-			<result>/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
-			</action>
-		-->
+		
+		<action name="authenticator/ajax"
+			class="org.vulpe.security.controller.action.VulpeLoginAction" method="define">
+			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
+		</action>
+		
 		<!-- Selection -->
 		<action name="security/User/select/*"
 			class="org.vulpe.security.controller.action.UserSelectAction" method="{1}">

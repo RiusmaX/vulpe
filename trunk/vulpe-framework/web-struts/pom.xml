@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>web-struts</artifactId>
+	<artifactId>vulpe-web-struts</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 	<name>Vulpe Framework - Web Content Struts</name>
@@ -25,7 +25,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>web</artifactId>
+			<artifactId>vulpe-web</artifactId>
 			<version>1.0</version>
 			<type>war</type>
 		</dependency>
