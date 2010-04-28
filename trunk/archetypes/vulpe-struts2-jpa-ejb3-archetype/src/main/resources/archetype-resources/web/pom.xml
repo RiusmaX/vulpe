@@ -18,7 +18,7 @@ $symbol_escape = '\' )
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>web-struts</artifactId>
+			<artifactId>vulpe-web-struts</artifactId>
 			<version>1.0</version>
 			<type>war</type>
 		</dependency>

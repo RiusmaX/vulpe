@@ -51,8 +51,8 @@ $symbol_escape = '\' )
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
 										<unjar
-											src="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0.jar"
-											dest="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+											src="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
+											dest="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>
@@ -66,14 +66,14 @@ $symbol_escape = '\' )
 				<configuration>
 					<factory>org.vulpe.fox.manager.ManagerProcessorFactory</factory>
 					<options>
-						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/fox/1.0/fox-1.0/tools/manager/templates/plugin.ftl</param>
+						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/manager/templates/plugin.ftl</param>
 					</options>
 					<outputDirectory>${symbol_dollar}{basedir}/../</outputDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.vulpe</groupId>
-						<artifactId>fox</artifactId>
+						<artifactId>vulpe-fox</artifactId>
 						<version>1.0</version>
 						<exclusions>
 							<exclusion>

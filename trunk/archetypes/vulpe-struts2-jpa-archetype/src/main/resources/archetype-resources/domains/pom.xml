@@ -32,13 +32,13 @@
 										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
-								<property name="tools.dir" value="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0/tools" />
+								<property name="tools.dir" value="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0.jar" dest="${symbol_dollar}{maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+										<unjar src="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>
@@ -52,7 +52,7 @@
 				<configuration>
 					<factory>org.vulpe.fox.dao.DAOProcessorFactory</factory>
 					<options>
-						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/fox/1.0/fox-1.0/tools/dao/templates/plugin.ftl</param>
+						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/dao/templates/plugin.ftl</param>
 						<param>SGDB=JPA</param>
 					</options>
 					<outputDirectory>${symbol_dollar}{basedir}/generated/main/java</outputDirectory>
@@ -60,7 +60,7 @@
 				<dependencies>
 					<dependency>
 						<groupId>org.vulpe</groupId>
-						<artifactId>fox</artifactId>
+						<artifactId>vulpe-fox</artifactId>
 						<version>1.0</version>
 						<exclusions>
 							<exclusion>
