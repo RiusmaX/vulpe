@@ -146,6 +146,7 @@ public interface Constants {
 	}
 
 	interface View {
+		String APPLICATION_LOCALE = "vulpeApplicationLocale";
 		String LAYER_URL_BACK = "layerUrlBack";
 		String URL_BACK = "urlBack";
 		String LABEL = "label.";

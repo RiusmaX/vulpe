@@ -13,7 +13,8 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.beanutils.locale.LocaleBeanUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
+import org.vulpe.common.Constants;
+import org.vulpe.common.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ControllerUtil;
 
 /**
@@ -42,10 +43,11 @@ public class MultipleResourceBundle extends ResourceBundle {
 	@SuppressWarnings("unchecked")
 	protected List<ResourceBundle> getBundles() {
 		if (servletContext == null) {
-			servletContext = ControllerUtil.getInstance().getServletContext();
+			servletContext = ControllerUtil.getServletContext();
 		}
-		final Locale requestLocale = ServletActionContext.getRequest() == null ? null
-				: ServletActionContext.getRequest().getLocale();
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		final Locale requestLocale = cache
+				.get(Constants.View.APPLICATION_LOCALE);
 		final boolean checkLocale = (locale == null || (requestLocale != null && !locale
 				.getLanguage().equals(requestLocale.getLanguage())));
 		if (checkLocale) {

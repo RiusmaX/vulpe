@@ -6,9 +6,8 @@ import java.util.Map;
 import org.vulpe.common.Constants;
 import org.vulpe.common.ValidationUtil;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.util.ControllerUtil;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
-
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.OgnlContextState;
@@ -23,7 +22,7 @@ public class SessionParametersInterceptor extends
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
 
-		final String key = ControllerUtil.getInstance().getCurrentActionName()
+		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
 				.concat(Constants.PARAMS_SESSION_KEY);
 		if (isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
@@ -60,7 +59,7 @@ public class SessionParametersInterceptor extends
 	protected boolean isMethodReset(final Object action) {
 		try {
 			final ResetSession resetSession = action.getClass().getMethod(
-					ControllerUtil.getInstance().getCurrentMethod())
+					StrutsControllerUtil.getInstance().getCurrentMethod())
 					.getAnnotation(ResetSession.class);
 			return resetSession != null && resetSession.before();
 		} catch (Exception e) {

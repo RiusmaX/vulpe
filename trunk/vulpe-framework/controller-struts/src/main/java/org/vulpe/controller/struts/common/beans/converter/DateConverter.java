@@ -1,6 +1,6 @@
-package org.vulpe.common.beans.converter;
+package org.vulpe.controller.struts.common.beans.converter;
 
-import java.sql.Date;
+import java.util.Date;
 
 import ognl.TypeConverter;
 
@@ -9,22 +9,19 @@ import org.vulpe.common.DateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements
-		TypeConverter {
+public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
-	private static final Logger LOG = Logger.getLogger(SqlDateConverter.class);
+	private static final Logger LOG = Logger.getLogger(DateConverter.class);
 
 	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
 				if (!value.toString().equals("")) {
-					final java.util.Date date = DateUtil.convertStringToDate(value
-							.toString());
-					return new Date(date.getTime());
+					return DateUtil.convertStringToDate(value.toString());
 				}
 			} else if (value instanceof Date && String.class.equals(type)) {
-				return DateUtil.convertDateTimeToString((Date) value);
+				return DateUtil.convertDateToString((Date) value);
 			} else if (value instanceof Date) {
 				return (Date) value;
 			}

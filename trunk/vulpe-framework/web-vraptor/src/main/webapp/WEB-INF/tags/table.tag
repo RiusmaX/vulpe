@@ -24,10 +24,10 @@
 <c:set var="scope" scope="request" value="${scope}"/>
 
 <c:set var="exibe" value="${true}"/>
-<c:if test="${not empty logged && logged eq true && util:isLogged() eq false}">
+<c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
 	<c:set var="exibe" value="${false}"/>
 </c:if>
-<c:if test="${not empty role && util:isRole(role) eq false}">
+<c:if test="${not empty role && util:isRole(pageContext, role) eq false}">
 	<c:set var="exibe" value="${false}"/>
 </c:if>
 

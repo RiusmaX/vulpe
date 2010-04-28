@@ -18,11 +18,9 @@ package org.vulpe.controller;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -101,7 +99,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseSimpleActionConfig getActionConfig() {
-		return ControllerUtil.getInstance().getActionConfig(this);
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		return controllerUtil.getActionConfig(this);
 	}
 
 	/**
@@ -344,24 +344,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	public Map<String, String> getCachedEnumArray() {
 		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
 				Constants.CACHED_ENUM_ARRAY);
-	}
-
-	/**
-	 * Returns form parameters
-	 *
-	 * @return Map with form parameters
-	 */
-	public Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance()
-				.getCurrentActionName().concat(Constants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession()
-				.getAttribute(keyForm);
-		if (formParams == null) {
-			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(
-					keyForm, formParams);
-		}
-		return formParams;
 	}
 
 	/**

@@ -51,8 +51,8 @@ import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.common.VulpeBaseSimpleActionConfig;
-import org.vulpe.controller.util.ControllerUtil;
-import org.vulpe.controller.util.ReportUtil;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.struts.util.StrutsReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -135,7 +135,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseSimpleActionConfig getActionConfig() {
-		return ControllerUtil.getInstance().getActionConfig(this);
+		return StrutsControllerUtil.getInstance().getActionConfig(this);
 	}
 
 	/**
@@ -147,14 +147,14 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 		try {
 			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils
 					.getProperty(this, getActionConfig().getReportDataSource());
-			return StringUtils.isNotBlank(getActionConfig().getReportName()) ? ReportUtil
+			return StringUtils.isNotBlank(getActionConfig().getReportName()) ? StrutsReportUtil
 					.getInstance().getDownloadInfo(list,
 							getActionConfig().getReportFile(),
 							getActionConfig().getSubReports(),
 							getActionConfig().getReportFormat(),
 							getActionConfig().getReportName(),
 							getActionConfig().isReportDownload())
-					: ReportUtil.getInstance().getDownloadInfo(list,
+					: StrutsReportUtil.getInstance().getDownloadInfo(list,
 							getActionConfig().getReportFile(),
 							getActionConfig().getSubReports(),
 							getActionConfig().getReportFormat());
@@ -707,7 +707,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance()
+		final String keyForm = StrutsControllerUtil.getInstance()
 				.getCurrentActionName().concat(Constants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession()
 				.getAttribute(keyForm);

@@ -1,27 +1,16 @@
 package org.vulpe.controller.listeners;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.common.Constants;
-import org.vulpe.common.beans.converter.BigDecimalConverter;
-import org.vulpe.common.beans.converter.DateConverter;
-import org.vulpe.common.beans.converter.DecimalConverter;
-import org.vulpe.common.beans.converter.EnumConverter;
-import org.vulpe.common.beans.converter.SqlDateConverter;
 import org.vulpe.common.db4o.DB4OUtil;
 import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.helper.CachedObjectsHelper;
-
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * Class to manager startup of application.
@@ -58,17 +47,6 @@ public class VulpeStartupListener implements ServletContextListener {
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 			DB4OUtil.getInstance().getObjectServer();
 		}
-
-		// register converters to struts
-		ConvertUtils.register(new DateConverter(), Date.class);
-		ConvertUtils.register(new SqlDateConverter(), java.sql.Date.class);
-		ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
-		ConvertUtils.register(new DecimalConverter(), Double.class);
-		ConvertUtils.register(new EnumConverter(), Enum.class);
-
-		// configuration bundle
-		LocalizedTextUtil.addDefaultResourceBundle(evt.getServletContext()
-				.getInitParameter(Constants.InitParameter.PROJECT_BUNDLE));
 
 		// sets scopes as attributes to use in tags and JSPs
 		evt.getServletContext().setAttribute(

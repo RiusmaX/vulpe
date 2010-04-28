@@ -11,7 +11,7 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-dependencies</artifactId>
+		<artifactId>vulpe-parent</artifactId>
 		<version>1.0</version>
 	</parent>
 
@@ -20,21 +20,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-commons</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-model</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security</artifactId>
-			<version>1.0</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>

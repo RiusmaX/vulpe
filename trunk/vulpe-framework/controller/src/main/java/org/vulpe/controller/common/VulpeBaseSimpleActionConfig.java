@@ -10,6 +10,7 @@ import org.vulpe.common.Constants.View.Layout;
 import org.vulpe.common.Constants.View.Logic;
 import org.vulpe.common.Constants.View.Report;
 import org.vulpe.common.annotations.DetailConfig;
+import org.vulpe.common.cache.VulpeCacheHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -37,7 +38,9 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	public VulpeBaseSimpleActionConfig(final Class<?> classAction) {
 		this.controller = ReflectUtil.getInstance().getAnnotationInClass(
 				Controller.class, classAction);
-		this.actionName = ControllerUtil.getInstance().getCurrentActionName();
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		this.actionName = controllerUtil.getCurrentActionName();
 
 		this.actionBaseName = StringUtils.replace(this.actionName,
 				Logic.FRONTEND, "");
@@ -148,7 +151,9 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	public String getMethod() {
-		return ControllerUtil.getInstance().getCurrentMethod();
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		return controllerUtil.getCurrentMethod();
 	}
 
 	public String getActionBaseName() {
@@ -221,7 +226,7 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	private String getProjectName() {
-		return ControllerUtil.getInstance().getCurrentProject();
+		return ControllerUtil.getCurrentProject();
 	}
 
 	public Controller getController() {

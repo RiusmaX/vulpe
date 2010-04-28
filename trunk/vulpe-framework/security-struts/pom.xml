@@ -11,7 +11,7 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-dependencies</artifactId>
+		<artifactId>vulpe-parent-struts</artifactId>
 		<version>1.0</version>
 	</parent>
 
@@ -23,11 +23,6 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>

@@ -20,9 +20,6 @@ import org.apache.log4j.Logger;
 import org.vulpe.common.cache.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.XWorkBasicConverter;
-
 @SuppressWarnings("unchecked")
 public class ReflectUtil {
 
@@ -797,33 +794,4 @@ public class ReflectUtil {
 		}
 	}
 
-	/**
-	 * Invoke method in object by name.
-	 *
-	 * @param <T>
-	 * @param object
-	 * @param methodName
-	 * @param arguments
-	 * @return
-	 */
-	public <T> T invokeMethod(final Object object, final String methodName,
-			final Object... arguments) {
-		if (object == null) {
-			return null;
-		}
-		final XWorkBasicConverter basicConverter = new XWorkBasicConverter();
-		try {
-			final Method method = getMethod(object.getClass(), methodName);
-			final Object args[] = new Object[method.getParameterTypes().length];
-			for (int i = 0; i < method.getParameterTypes().length; i++) {
-				final Type type = method.getGenericParameterTypes()[i];
-				args[i] = basicConverter.convertValue(ActionContext
-						.getContext().getContextMap(), arguments[i],
-						getDeclaredType(object.getClass(), type).getType());
-			}
-			return (T) method.invoke(object, args);
-		} catch (Exception e) {
-			throw new VulpeSystemException(e);
-		}
-	}
 }

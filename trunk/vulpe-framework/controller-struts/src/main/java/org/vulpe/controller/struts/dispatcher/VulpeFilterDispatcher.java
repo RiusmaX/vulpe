@@ -15,8 +15,8 @@ import org.apache.struts2.dispatcher.FilterDispatcher;
 import org.vulpe.controller.struts.util.GenericsNullHandler;
 import org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer;
 import org.vulpe.controller.struts.util.GenericsPropertyAccessor;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.controller.struts.util.XWorkSetPropertyAccessor;
-import org.vulpe.controller.util.ControllerUtil;
 
 import com.opensymphony.xwork2.util.ObjectTypeDeterminerFactory;
 
@@ -69,7 +69,7 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 	public void doFilter(final ServletRequest request, final ServletResponse response,
 			final FilterChain chain) throws IOException, ServletException {
 		try {
-			ControllerUtil.getInstance().setServletContext(
+			StrutsControllerUtil.getInstance().setServletContext(
 					this.filterConfig.getServletContext());
 
 			request.setCharacterEncoding("UTF-8");

@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
-<%@ attribute name="property" required="true" rtexprvalue="true" %>
+<%@ attribute name="property" required="false" rtexprvalue="true" %>
 <%@ attribute name="readonly" required="false" rtexprvalue="true" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
 <%@ attribute name="showPassword" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

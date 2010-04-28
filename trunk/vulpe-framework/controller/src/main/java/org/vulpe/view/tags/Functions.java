@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -22,38 +19,29 @@ import javax.swing.ImageIcon;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.beans.ValueBean;
 import org.vulpe.controller.common.VulpeBaseDetailConfig;
-import org.vulpe.controller.util.ControllerUtil;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
-import com.opensymphony.xwork2.util.XWorkConverter;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
 @SuppressWarnings("unchecked")
-public final class Functions {
-
-	private Functions() {
-		// default constructor
-	}
+public class Functions {
 
 	private static final Logger LOG = Logger.getLogger(Functions.class
 			.getName());
 
+	public Functions() {
+		// default constructor
+	}
+
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @return
@@ -64,77 +52,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
-	 * @param bean
-	 * @param field
-	 * @return
-	 * @throws JspException
-	 */
-	public static List listInField(final Object bean, final String field)
-			throws JspException {
-		try {
-			if (bean == null) {
-				return null;
-			}
-
-			final List list = new ArrayList();
-			final Class<?> fieldClass = ReflectUtil.getInstance()
-					.getFieldClass(bean.getClass(), field.replace(".id", ""));
-			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
-				for (Object item : fieldClass.getEnumConstants()) {
-					key = fieldClass.getName().concat(".").concat(
-							item.toString());
-					value = findText(key);
-					list.add(new ValueBean(item.toString(), value));
-				}
-			}
-			return list;
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	/**
-	 *
-	 * @param bean
-	 * @param field
-	 * @return
-	 * @throws JspException
-	 */
-	public static Object enumInField(final Object bean, final String field,
-			final Object fieldValue) throws JspException {
-		try {
-			if (bean == null) {
-				return null;
-			}
-
-			final Class<?> fieldClass = ReflectUtil.getInstance()
-					.getFieldClass(bean.getClass(), field.replace(".id", ""));
-			if (fieldClass == null) {
-				return null;
-			}
-			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
-				for (Object item : fieldClass.getEnumConstants()) {
-					if (item.equals(fieldValue)) {
-						key = fieldClass.getName().concat(".").concat(
-								item.toString());
-						value = findText(key);
-						return value;
-					}
-				}
-			}
-			return null;
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -151,66 +69,9 @@ public final class Functions {
 		}
 	}
 
-	/**
-	 *
-	 * @param pageContext
-	 * @param expression
-	 * @return
-	 * @throws JspException
-	 */
-	public static String evalString(final PageContext pageContext,
-			final String expression) throws JspException {
-		try {
-			final Object value = eval(pageContext, expression);
-			return toString(value);
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
 
 	/**
-	 *
-	 * @param value
-	 * @return
-	 * @throws JspException
-	 */
-	public static String toString(final Object value) throws JspException {
-		return (String) XWorkConverter.getInstance()
-				.convertValue(ActionContext.getContext().getContextMap(),
-						value, String.class);
-	}
-
-	/**
-	 *
-	 * @param value
-	 * @param toValue
-	 * @return
-	 * @throws JspException
-	 */
-	public static String booleanTo(final Boolean value, final String toValue)
-			throws JspException {
-		final StringTokenizer values = new StringTokenizer(toValue, "|");
-		String valueTrue = values.nextToken();
-		String valueFalse = values.nextToken();
-		char openBrace = "{".charAt(0);
-		char closeBrace = "}".charAt(0);
-		if (valueTrue.charAt(0) == openBrace
-				&& valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
-			valueTrue = findText(valueTrue.substring(1, valueTrue.length() - 1));
-		}
-		if (valueFalse.charAt(0) == openBrace
-				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
-			valueFalse = findText(valueFalse.substring(1,
-					valueFalse.length() - 1));
-		}
-		if (value) {
-			return valueTrue;
-		}
-		return valueFalse;
-	}
-
-	/**
-	 *
+	 * 
 	 * @param bean
 	 * @return
 	 */
@@ -231,7 +92,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param url
 	 * @return
 	 * @throws JspException
@@ -249,7 +110,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param string
 	 * @param chars
 	 * @return
@@ -264,7 +125,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param value
@@ -278,7 +139,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param string
 	 * @param begin
 	 * @param end
@@ -298,163 +159,7 @@ public final class Functions {
 	}
 
 	/**
-	 *
-	 * @param role
-	 * @return
-	 */
-	public static Boolean isRole(final String role) {
-		return ServletActionContext.getRequest().isUserInRole(role);
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static Boolean isLogged() {
-		return ServletActionContext.getRequest().getUserPrincipal() != null;
-	}
-
-	/**
-	 *
-	 * @param key
-	 * @param contentType
-	 * @param contentDisposition
-	 * @return
-	 * @throws JspException
-	 */
-	public static String linkKey(final String key, final String contentType,
-			final String contentDisposition) throws JspException {
-		final String link = ServletActionContext.getRequest().getContextPath()
-				.concat("/").concat(
-						ControllerUtil.getInstance().getCurrentActionName()
-								.replace(".", "/")).concat(
-						"/download.action?downloadKey=").concat(urlEncode(key))
-				.concat("&downloadContentType=").concat(contentType).concat(
-						"&downloadContentDisposition=").concat(
-						contentDisposition).concat("&access=").concat(
-						String.valueOf(System.currentTimeMillis()));
-		return link;
-	}
-
-	/**
-	 *
-	 * @param pageContext
-	 * @param property
-	 * @param contentType
-	 * @param contentDisposition
-	 * @return
-	 * @throws JspException
-	 */
-	public static String linkProperty(final PageContext pageContext,
-			final String property, final String contentType,
-			final String contentDisposition) throws JspException {
-		String baseName = "entity.";
-		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(
-				pageContext, "${targetConfig}");
-		if (detailConfig != null) {
-			final Number index = (Number) eval(pageContext, "${".concat(
-					detailConfig.getBaseName()).concat("_status.index}"));
-			baseName = eval(pageContext, "${targetConfigPropertyName}")
-					.toString().concat("[").concat(index.toString()).concat(
-							"].");
-		}
-
-		final String key = (property.contains(baseName)) ? property : baseName
-				.concat(property);
-
-		final Object value = getProperty(pageContext, property);
-		if (ValidationUtil.getInstance().isNotEmpty(value)) {
-			final String keyForm = ControllerUtil.getInstance()
-					.getCurrentActionName()
-					.concat(Constants.PARAMS_SESSION_KEY);
-			final Map formParams = (Map) ServletActionContext.getRequest()
-					.getSession().getAttribute(keyForm);
-			if (formParams == null || !formParams.containsKey(key)) {
-				saveInSession(key, value, false);
-			}
-		}
-
-		return linkKey(key, contentType, contentDisposition);
-	}
-
-	/**
-	 *
-	 * @param pageContext
-	 * @param key
-	 * @param contentType
-	 * @param contentDisposition
-	 * @param width
-	 * @param thumbWidth
-	 * @return
-	 * @throws JspException
-	 */
-	public static String linkImage(final PageContext pageContext,
-			final String key, final String contentType,
-			final String contentDisposition, final Integer width,
-			final Integer thumbWidth) throws JspException {
-		Object value = getProperty(pageContext, key);
-		if (value != null) {
-			value = saveImageInSession(key, value, false, thumbWidth);
-			saveInSession(key, value, false);
-			if (thumbWidth != null && thumbWidth > 0) {
-				saveImageInSession(key.concat(Constants.Upload.Image.THUMB),
-						value, false, thumbWidth);
-			}
-		}
-		return linkKey(key, contentType, contentDisposition);
-	}
-
-	/**
-	 *
-	 * @param key
-	 * @param value
-	 * @param expire
-	 * @return
-	 */
-	public static Object saveInSession(final String key, final Object value,
-			final Boolean expire) {
-		final Object newValue = value;
-		if (ValidationUtil.getInstance().isNotEmpty(newValue)) {
-			getFormParams().put(key, new Object[] { expire, newValue });
-		} else {
-			getFormParams().remove(key);
-		}
-		return newValue;
-	}
-
-	/**
-	 *
-	 * @param key
-	 * @param value
-	 * @param expire
-	 * @param width
-	 * @return
-	 */
-	public static Object saveImageInSession(final String key,
-			final Object value, final Boolean expire, final Integer width) {
-		final Object newValue = value;
-		if (ValidationUtil.getInstance().isNotEmpty(newValue)) {
-			final Byte[] bytes = (Byte[]) newValue;
-			byte[] imageData = new byte[bytes.length];
-			for (int i = 0; i < bytes.length; i++) {
-				imageData[i] = bytes[i].byteValue();
-			}
-			try {
-				getFormParams().put(
-						key,
-						new Object[] { expire,
-								resizeImageAsJPG(imageData, width) });
-			} catch (IOException e) {
-				LOG.error(e);
-			}
-		} else {
-			getFormParams().remove(key);
-		}
-		return newValue;
-	}
-
-	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param property
 	 * @return
@@ -480,7 +185,7 @@ public final class Functions {
 	 * JPG, PNG and possibly other formats) and resizes it to have a width no
 	 * greater than the pMaxWidth parameter in pixels. It converts the image to
 	 * a standard quality JPG and returns the byte array of that JPG image.
-	 *
+	 * 
 	 * @param imageData
 	 *            the image data.
 	 * @param maxWidth
@@ -532,29 +237,23 @@ public final class Functions {
 	}
 
 	/**
-	 *
+	 * 
+	 * @param role
 	 * @return
 	 */
-	private static Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance()
-				.getCurrentActionName().concat(Constants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession()
-				.getAttribute(keyForm);
-		if (formParams == null) {
-			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(
-					keyForm, formParams);
-		}
-		return formParams;
+	public static Boolean isRole(final PageContext pageContext,
+			final String role) {
+		return ((HttpServletRequest) pageContext.getRequest())
+				.isUserInRole(role);
 	}
 
-	@SuppressWarnings("unused")
-	private static HttpServletRequest getRequest() {
-		return ServletActionContext.getRequest();
+	/**
+	 * 
+	 * @return
+	 */
+	public static Boolean isLogged(final PageContext pageContext) {
+		return ((HttpServletRequest) pageContext.getRequest())
+				.getUserPrincipal() != null;
 	}
 
-	private static String findText(final String key) {
-		return LocalizedTextUtil.findText(Functions.class, key, ActionContext
-				.getContext().getLocale());
-	}
 }

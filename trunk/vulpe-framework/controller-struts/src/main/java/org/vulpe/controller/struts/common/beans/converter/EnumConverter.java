@@ -1,4 +1,4 @@
-package org.vulpe.common.beans.converter;
+package org.vulpe.controller.struts.common.beans.converter;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.common.Constants;
 import org.vulpe.common.ValidationUtil;
 import org.vulpe.common.cache.VulpeCacheHelper;
@@ -14,6 +16,8 @@ import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
 import org.vulpe.security.model.entity.SecureResourceRole;
 
+@Repository("AuthorizationDAO")
+@Transactional
 public class AuthorizationDAOImpl extends
 		VulpeBaseCRUDDAODB4OImpl<SecureResource, Long> implements AuthorizationDAO {
 

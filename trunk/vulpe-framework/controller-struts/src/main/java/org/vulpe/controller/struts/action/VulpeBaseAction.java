@@ -39,10 +39,10 @@ import org.vulpe.common.beans.Paging;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.common.DuplicatedBean;
 import org.vulpe.controller.common.VulpeBaseActionConfig;
 import org.vulpe.controller.common.VulpeBaseDetailConfig;
-import org.vulpe.controller.common.DuplicatedBean;
-import org.vulpe.controller.util.ControllerUtil;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -153,7 +153,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseActionConfig<ENTITY, ID> getActionConfig() {
-		return ControllerUtil.getInstance().getActionConfig(this);
+		return StrutsControllerUtil.getInstance().getActionConfig(this);
 	}
 
 	/**
@@ -1183,7 +1183,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 */
 	protected void despiseDetailItens(final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
-		ControllerUtil.getInstance().despiseItens(beans,
+		StrutsControllerUtil.getInstance().despiseItens(beans,
 				detailConfig.getDespiseFields(),
 				getControllerType().equals(ControllerType.TABULAR));
 	}
@@ -1198,7 +1198,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 			final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
-		final Collection<DuplicatedBean> duplicatedBeans = ControllerUtil
+		final Collection<DuplicatedBean> duplicatedBeans = StrutsControllerUtil
 				.getInstance().duplicatedItens(beans, despiseFields);
 		if (duplicatedBeans != null && !duplicatedBeans.isEmpty()) {
 			if (getControllerType().equals(ControllerType.TABULAR)

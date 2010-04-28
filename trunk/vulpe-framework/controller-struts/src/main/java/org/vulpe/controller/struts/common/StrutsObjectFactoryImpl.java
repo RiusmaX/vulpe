@@ -1,11 +1,10 @@
 package org.vulpe.controller.struts.common;
 
 import org.apache.struts2.impl.StrutsObjectFactory;
-import org.vulpe.controller.util.ControllerUtil;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
 
 /**
- * Classe criada para corrigir o nome da classe quando esta tem algum parametro
- * pré-configurado.
+ * Created to fix name of class with wildcards
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
@@ -16,7 +15,7 @@ public class StrutsObjectFactoryImpl extends StrutsObjectFactory {
 	@SuppressWarnings("unchecked")
 	public Class getClassInstance(final String className)
 			throws ClassNotFoundException {
-		if (ControllerUtil.getInstance().getServletContext() == null) {
+		if (StrutsControllerUtil.getServletContext() == null) {
 			return super.getClassInstance(className);
 		}
 
@@ -26,7 +25,7 @@ public class StrutsObjectFactoryImpl extends StrutsObjectFactory {
 		while (newClassName.contains("{") && newClassName.contains("}")) {
 			expression = className.substring(className.indexOf("{".charAt(0)) + 1,
 					className.indexOf("}".charAt(0)));
-			value = ControllerUtil.getInstance().getServletContext()
+			value = StrutsControllerUtil.getServletContext()
 					.getInitParameter(expression);
 			newClassName = className.replace("{".concat(expression)
 					.concat("}"), value == null ? "" : value);

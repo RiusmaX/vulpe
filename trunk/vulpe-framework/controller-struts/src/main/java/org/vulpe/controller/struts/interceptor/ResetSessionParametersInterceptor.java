@@ -2,7 +2,7 @@ package org.vulpe.controller.struts.interceptor;
 
 import org.vulpe.common.Constants;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.util.ControllerUtil;
+import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -24,7 +24,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(final ActionInvocation invocation)
 			throws Exception {
 		final Object action = invocation.getAction();
-		final String key = ControllerUtil.getInstance().getCurrentActionName()
+		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
 				.concat(Constants.PARAMS_SESSION_KEY);
 		if (ActionContext.getContext().getSession().containsKey(key)
 				&& isMethodReset(action)) {
@@ -43,7 +43,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 			return action instanceof ValidationAware
 					&& (((ValidationAware) action).hasActionErrors() || ((ValidationAware) action)
 							.hasFieldErrors()) ? false : action.getClass()
-					.getMethod(ControllerUtil.getInstance().getCurrentMethod())
+					.getMethod(StrutsControllerUtil.getInstance().getCurrentMethod())
 					.isAnnotationPresent(ResetSession.class);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);

@@ -10,6 +10,7 @@ import org.vulpe.common.Constants.View;
 import org.vulpe.common.Constants.View.Layout;
 import org.vulpe.common.Constants.View.Logic;
 import org.vulpe.common.Constants.View.Report;
+import org.vulpe.common.cache.VulpeCacheHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -33,7 +34,9 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		this.idClass = (Class<ID>) ReflectUtil.getInstance().getIndexClass(
 				classAction, 1);
 		this.details = details;
-		setActionName(ControllerUtil.getInstance().getCurrentActionName());
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		setActionName(controllerUtil.getCurrentActionName());
 
 		setActionBaseName(StringUtils.replace(getActionName(), Logic.CRUD, ""));
 		setActionBaseName(StringUtils.replace(getActionBaseName(),
@@ -178,7 +181,7 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	}
 
 	private String getProjectName() {
-		return ControllerUtil.getInstance().getCurrentProject();
+		return ControllerUtil.getCurrentProject();
 	}
 
 }

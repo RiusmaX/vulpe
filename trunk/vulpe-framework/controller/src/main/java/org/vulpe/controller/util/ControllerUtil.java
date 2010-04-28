@@ -23,44 +23,26 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.vulpe.common.Constants;
 import org.vulpe.common.ReflectUtil;
 import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.Constants.View;
-import org.vulpe.common.Constants.View.Logic;
 import org.vulpe.common.annotations.DetailConfig;
 import org.vulpe.common.cache.VulpeCacheHelper;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.VulpeBaseSimpleController;
+import org.vulpe.controller.common.DuplicatedBean;
 import org.vulpe.controller.common.VulpeBaseActionConfig;
 import org.vulpe.controller.common.VulpeBaseDetailConfig;
 import org.vulpe.controller.common.VulpeBaseSimpleActionConfig;
-import org.vulpe.controller.common.DuplicatedBean;
 import org.vulpe.model.entity.VulpeBaseEntity;
-
-import com.opensymphony.xwork2.ActionContext;
 
 /**
  * Utility class to controller
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
-public class ControllerUtil {
-
-	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
-
-	/**
-	 * Returns instance of ControllerUtil
-	 */
-	public static ControllerUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(ControllerUtil.class)) {
-			cache.put(ControllerUtil.class, new ControllerUtil());
-		}
-		return cache.get(ControllerUtil.class);
-	}
+public abstract class ControllerUtil {
 
 	/**
 	 *
@@ -72,18 +54,18 @@ public class ControllerUtil {
 	/**
 	 *
 	 */
-	private transient final ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
+	private transient final static ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public ServletContext getServletContext() {
+	public static ServletContext getServletContext() {
 		return servletCurrent.get();
 	}
 
 	/**
-	 *
+	 * 
 	 * @param servletContext
 	 */
 	public void setServletContext(final ServletContext servletContext) {
@@ -92,7 +74,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 *
+	 * 
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -108,7 +90,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 *
+	 * 
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
@@ -138,7 +120,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 *
+	 * 
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
@@ -180,13 +162,14 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 *
+	 * 
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
 	 */
 	public Collection<DuplicatedBean> duplicatedItens(
-			final Collection<VulpeBaseEntity<?>> beans, final String despiseFields[]) {
+			final Collection<VulpeBaseEntity<?>> beans,
+			final String despiseFields[]) {
 		final Collection<DuplicatedBean> duplicatedBeans = new ArrayList<DuplicatedBean>();
 		if (beans == null) {
 			return null;
@@ -207,16 +190,16 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public String getCurrentProject() {
+	public static String getCurrentProject() {
 		return getServletContext().getInitParameter(
 				Constants.InitParameter.PROJECT_NAME);
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getCurrentActionKey() {
@@ -226,54 +209,25 @@ public class ControllerUtil {
 		return projectName.concat("/").concat(base);
 	}
 
-	/**
-	 *
-	 * @return
-	 */
-	public String getCurrentActionName() {
-		String base = StringUtils.replace(ActionContext.getContext().getName(),
-				"/", ".");
-		if (base.contains(Logic.AJAX)) {
-			base = base.replace(Logic.AJAX, "");
-		}
-		return (base.contains(Logic.FRONTEND) || base
-				.contains(View.AUTHENTICATOR)) ? base : base.substring(0,
-				StringUtils.lastIndexOf(base, '.'));
-	}
+	public abstract String getCurrentActionName();
+
+	public abstract String getCurrentMethod();
 
 	/**
-	 *
-	 * @return
-	 */
-	public String getCurrentMethod() {
-		String method = null;
-		try {
-			method = ActionContext.getContext().getActionInvocation()
-					.getProxy().getMethod();
-		} catch (Exception e) {
-			LOG.error(e);
-		}
-		if (StringUtils.isEmpty(method)) {
-			method = ActionContext.getContext().getName();
-			method = method.substring(StringUtils.lastIndexOf(method, '.') + 1);
-		}
-		return method;
-	}
-
-	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseActionConfig getActionConfig(final VulpeBaseController controller) {
+	public VulpeBaseActionConfig getActionConfig(
+			final VulpeBaseController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
 			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseActionConfig config = new VulpeBaseActionConfig(controller
-				.getClass(), details);
+		final VulpeBaseActionConfig config = new VulpeBaseActionConfig(
+				controller.getClass(), details);
 		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
 
 		int count = 0;
@@ -289,7 +243,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
