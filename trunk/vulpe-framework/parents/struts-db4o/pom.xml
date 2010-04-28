@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>web-struts</artifactId>
+	<artifactId>vulpe-parent-struts-db4o</artifactId>
 	<version>1.0</version>
-	<packaging>war</packaging>
-	<name>Vulpe Framework - Web Content Struts</name>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - Parent Struts db4o</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
@@ -15,7 +15,7 @@
 		<version>1.0</version>
 	</parent>
 
-	<description>Vulpe Framework ;) Quick and Smart - Web Content Struts 2</description>
+	<description>Vulpe Framework ;) Quick and Smart - Parent Struts db4o</description>
 	<url>http://vulpe.org</url>
 	<inceptionYear>2010</inceptionYear>
 	<organization>
@@ -25,28 +25,23 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>web</artifactId>
-			<version>1.0</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-struts</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-security-dao-db4o</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
-
 </project>

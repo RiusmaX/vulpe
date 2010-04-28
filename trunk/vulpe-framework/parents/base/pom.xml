@@ -4,18 +4,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>web-struts</artifactId>
+	<artifactId>vulpe-parent</artifactId>
 	<version>1.0</version>
-	<packaging>war</packaging>
-	<name>Vulpe Framework - Web Content Struts</name>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - Parent</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent</artifactId>
+		<artifactId>vulpe-dependencies</artifactId>
 		<version>1.0</version>
 	</parent>
 
-	<description>Vulpe Framework ;) Quick and Smart - Web Content Struts 2</description>
+	<description>Vulpe Framework ;) Quick and Smart - Parent</description>
 	<url>http://vulpe.org</url>
 	<inceptionYear>2010</inceptionYear>
 	<organization>
@@ -25,28 +25,38 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>web</artifactId>
+			<artifactId>vulpe-interfaces</artifactId>
 			<version>1.0</version>
-			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-controller-struts</artifactId>
+			<artifactId>vulpe-annotations</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-audit-struts</artifactId>
+			<artifactId>vulpe-commons</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security-struts</artifactId>
+			<artifactId>vulpe-model</artifactId>
 			<version>1.0</version>
-			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-audit</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-security</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
-
 </project>

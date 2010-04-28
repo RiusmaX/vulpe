@@ -1,5 +1,7 @@
 package org.vulpe.security.authentication.model.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
 import org.vulpe.security.authentication.model.dao.UserAuthenticationDAO;
 import org.vulpe.security.authentication.model.services.UserAuthenticationService;
@@ -15,6 +17,8 @@ import org.vulpe.security.exception.VulpeSecurityException;
  */
 public class UserAuthenticationServiceImpl implements UserAuthenticationService {
 
+	@Qualifier("UserAuthenticationDAO")
+	@Autowired
 	private transient UserAuthenticationDAO authenticationDAO;
 
 	/*

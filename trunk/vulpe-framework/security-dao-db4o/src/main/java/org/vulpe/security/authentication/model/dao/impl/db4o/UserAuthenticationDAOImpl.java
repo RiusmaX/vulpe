@@ -1,5 +1,7 @@
 package org.vulpe.security.authentication.model.dao.impl.db4o;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseCRUDDAODB4OImpl;
 import org.vulpe.security.authentication.SecurityConstants;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
@@ -20,6 +22,8 @@ import org.vulpe.security.model.entity.User;
  * @since 1.0
  *
  */
+@Repository("UserAuthenticationDAO")
+@Transactional
 public class UserAuthenticationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<User, Long>
 		implements UserAuthenticationDAO {
 

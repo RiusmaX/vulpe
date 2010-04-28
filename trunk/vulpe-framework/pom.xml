@@ -20,8 +20,12 @@
 		<module>audit</module>
 		<module>audit-struts</module>
 		<module>security</module>
+		<module>security-dao-db4o</module>
+		<module>security-dao-jpa</module>
 		<module>security-struts</module>
-		<module>parent</module>
+		<module>parents/base</module>
+		<module>parents/struts-db4o</module>
+		<module>parents/struts-jpa</module>
 		<module>fox</module>
 		<module>web</module>
 		<module>web-struts</module>

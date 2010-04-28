@@ -10,7 +10,7 @@
 	<name>Vulpe Framework - FOX Code Generator</name>
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>vulpe-parent</artifactId>
 		<version>1.0</version>
 	</parent>
 	<dependencies>
