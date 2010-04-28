@@ -11,12 +11,6 @@
 	<packaging>jar</packaging>
 	<name>${rootArtifactId} - Core</name>
 
-	<parent>
-		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.0</version>
-	</parent>
-
 	<dependencies>
 		<dependency>
 			<groupId>${package}</groupId>

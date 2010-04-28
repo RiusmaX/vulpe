@@ -8,10 +8,4 @@
 	<packaging>jar</packaging>
 	<name>${rootArtifactId} - Config</name>
 
-	<parent>
-		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.0</version>
-	</parent>
-
 </project>

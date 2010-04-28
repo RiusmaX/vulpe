@@ -10,7 +10,7 @@
         <groupId>${groupId}</groupId>
         <version>${version}</version>
     </parent>
-    
+  
 	<groupId>${package}</groupId>
 	<artifactId>${rootArtifactId}-domains</artifactId>
 	<version>${version}</version>

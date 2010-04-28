@@ -41,7 +41,18 @@
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-annotations/3.2.1.ga/hibernate-annotations-3.2.1.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-jasperreports-plugin/2.0.14/struts2-jasperreports-plugin-2.0.14.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.5.6/spring-2.5.6.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-acl/3.0.2.RELEASE/spring-security-acl-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core/3.0.2.RELEASE/spring-security-core-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/security/spring-security-core/3.0.2.RELEASE/spring-security-core-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-config/3.0.2.RELEASE/spring-security-config-3.0.2.RELEASE.jar" sourcepath="/SPRING_SECURITY_SRC/spring-security-config/3.0.2.RELEASE/spring-security-config-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-taglibs/3.0.2.RELEASE/spring-security-taglibs-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-web/3.0.2.RELEASE/spring-security-web-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/security/spring-security-web/3.0.2.RELEASE/spring-security-web-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-aop/3.0.2.RELEASE/spring-aop-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/spring-aop/3.0.2.RELEASE/spring-aop-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.0.2.RELEASE/spring-core-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/spring-core/3.0.2.RELEASE/spring-core-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/3.0.2.RELEASE/spring-beans-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/spring-beans/3.0.2.RELEASE/spring-beans-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.2.RELEASE/spring-context-3.0.2.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/spring-context/3.0.2.RELEASE/spring-context-3.0.2.RELEASE-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.0.2.RELEASE/spring-orm-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.0.2.RELEASE/spring-tx-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.2.RELEASE/spring-web-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-annotations/1.0/vulpe-annotations-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.3/xstream-1.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-commons/${version}/vulpe-commons-${version}.jar"/>

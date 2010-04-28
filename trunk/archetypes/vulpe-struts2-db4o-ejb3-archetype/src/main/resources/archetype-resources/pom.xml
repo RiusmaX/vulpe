@@ -11,7 +11,7 @@
 	
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>parent-struts</artifactId>
+		<artifactId>vulpe-parent-struts-db4o-ejb3</artifactId>
 		<version>1.0</version>
 	</parent>
 	
