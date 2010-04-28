@@ -31,9 +31,13 @@
 	value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" />
 <v:password elementId="j_password" name="j_password" targetName=""
 	labelKey="label.vulpe.security.login.password" />
-<p><input name="submit" type="submit" id="submitLoginForm"
+<p>
+<input name="submit" type="submit" id="buttonSubmitLoginForm1"
 	value="<fmt:message key='label.vulpe.security.login'/>"
-	onclick="vulpe.view.request.submitLoginForm('login', 'login', '', 'body', false, '', ''); return false;">&nbsp;
+	onclick="vulpe.view.request.submitLoginForm('login', 'login', '', 'body', false, '', ''); return false;">
+<input name="submit" type="submit" id="buttonSubmitLoginForm2"
+	value="<fmt:message key='label.vulpe.security.login'/>"
+	style="display:none">&nbsp;
 <input name="reset" type="reset"
 	value="<fmt:message key='label.vulpe.security.login.clear'/>"></p>
 </form>
@@ -52,8 +56,10 @@
 		} else if (j_password.value == '') {
 			j_password.focus();
 		}
+		
 		if (vulpe.util.get('authenticator')) {
-			vulpe.util.get('submitLoginForm').click(function (){return true;});
+			vulpe.util.get('buttonSubmitLoginForm1').hide();
+			vulpe.util.get('buttonSubmitLoginForm2').show();
 		}
 	});
 </script>
