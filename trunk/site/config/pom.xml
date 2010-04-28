@@ -12,7 +12,7 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>vulpe-parent-struts-db4o</artifactId>
 		<version>1.0</version>
 	</parent>
 	<description>Vulpe Framework Site - Config</description>

@@ -11,7 +11,7 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>vulpe-parent-struts-db4o</artifactId>
 		<version>1.0</version>
 	</parent>
 
@@ -38,7 +38,7 @@
 									</classpath>
 								</taskdef>
 								<property name="tools.dir"
-									value="${maven.repo}/org/vulpe/fox/1.0/fox-1.0/tools" />
+									value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${tools.dir}" property="tools.dir.present"
 									type="dir" />
@@ -46,8 +46,8 @@
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
 										<unjar
-											src="${maven.repo}/org/vulpe/fox/1.0/fox-1.0.jar"
-											dest="${maven.repo}/org/vulpe/fox/1.0/fox-1.0" />
+											src="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
+											dest="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>
@@ -61,14 +61,14 @@
 				<configuration>
 					<factory>org.vulpe.fox.controller.ControllerProcessorFactory</factory>
 					<options>
-						<param>template=${env.M2_REPO}/org/vulpe/fox/1.0/fox-1.0/tools/controller/templates/plugin.ftl</param>
+						<param>template=${env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/controller/templates/plugin.ftl</param>
 					</options>
 					<outputDirectory>${basedir}/../web/src/main/java</outputDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>
 						<groupId>org.vulpe</groupId>
-						<artifactId>fox</artifactId>
+						<artifactId>vulpe-fox</artifactId>
 						<version>1.0</version>
 						<exclusions>
 							<exclusion>
