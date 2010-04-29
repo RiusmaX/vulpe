@@ -1157,7 +1157,24 @@ var vulpe = {
 				}
 			}
 			return valid;
-		}
+		},
+		
+		validateLoginForm: function(formName) {
+			var form = vulpe.util.getElement(formName);
+			var j_username = vulpe.util.getElement("j_username");
+			var j_password = vulpe.util.getElement("j_password");
+			if (j_username.value != '' && j_password.value != '') {
+				return true;
+			} else {
+				if (j_username.value == '') {
+					j_username.focus();
+				} else if (j_password.value == '') {
+					j_password.focus();
+				}
+			}
+			return false;
+		},
+
 	},
 
 	view: { // vulpe.view
@@ -1665,17 +1682,9 @@ var vulpe = {
 
 			submitLoginForm: function(formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				var form = vulpe.util.getElement(formName);
-				var j_username = vulpe.util.getElement("j_username");
-				var j_password = vulpe.util.getElement("j_password");
-				if (j_username.value != '' && j_password.value != '') {
+				if (vulpe.validate.validateLoginForm(formName)) {
 					form.action = contextPath + '/' + _vulpeSpringSecurityCheck;
 					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
-				} else {
-					if (j_username.value == '') {
-						j_username.focus();
-					} else if (j_password.value == '') {
-						j_password.focus();
-					}
 				}
 			},
 

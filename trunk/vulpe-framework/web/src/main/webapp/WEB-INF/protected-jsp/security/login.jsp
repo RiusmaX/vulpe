@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
 <form
 	action="${pageContext.request.contextPath}/j_spring_security_check"
-	method="POST" id="login">
+	method="POST" id="loginForm">
 <div id="${actionConfig.formName}_uc_title"
 	class="ucTitle ${uc_title_class}"><fmt:message>vulpe.security.login.title.application</fmt:message></div>
 <div id="${actionConfig.formName}_uc" class="uc">
@@ -32,17 +32,14 @@
 <v:password elementId="j_password" name="j_password" targetName=""
 	labelKey="label.vulpe.security.login.password" />
 <p>
-<input name="submit" type="submit" id="buttonSubmitLoginForm1"
-	value="<fmt:message key='label.vulpe.security.login'/>"
-	onclick="vulpe.view.request.submitLoginForm('login', 'login', '', 'body', false, '', ''); return false;">
-<input name="submit" type="submit" id="buttonSubmitLoginForm2"
-	value="<fmt:message key='label.vulpe.security.login'/>"
-	style="display:none">&nbsp;
+<input name="submit" type="submit" id="buttonSubmitLoginForm"
+	value="<fmt:message key='label.vulpe.security.login'/>">&nbsp;
 <input name="reset" type="reset"
 	value="<fmt:message key='label.vulpe.security.login.clear'/>"></p>
 </form>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var URLRequested = "${vulpeSecurityURLRequested}";
 		vulpe.util.get('j_username').focus(function() {
 			$(this).effect("highlight");
 		});
@@ -57,9 +54,15 @@
 			j_password.focus();
 		}
 		
-		if (vulpe.util.get('authenticator')) {
-			vulpe.util.get('buttonSubmitLoginForm1').hide();
-			vulpe.util.get('buttonSubmitLoginForm2').show();
+		if (URLRequested && URLRequested.indexOf('/ajax.action') != -1) {
+			vulpe.util.get('buttonSubmitLoginForm').click(function() {
+				vulpe.view.request.submitLoginForm('loginForm', 'loginForm', '', 'body', false, '', ''); 
+				return false;
+			});
+		} else {
+			vulpe.util.get('buttonSubmitLoginForm').click(function() {
+				return vulpe.validate.validateLoginForm('loginForm'); 
+			});
 		}
 	});
 </script>

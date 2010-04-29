@@ -100,8 +100,11 @@ public interface Constants {
 		String PERSIST = "persist";
 		String UPLOAD = "upload";
 		String DOWNLOAD = "download";
-
+		
+		String ACTION_SUFFIX = ".action";
+		
 		interface URI {
+			String AUTHENTICATOR = "/authenticator";
 			String AJAX = "/ajax";
 			String CREATE = "/create";
 			String CREATE_AJAX = "/create/ajax";
@@ -172,15 +175,15 @@ public interface Constants {
 			String PROTECTED_JSP_COMMON = PROTECTED_JSP + "common/";
 			String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
 			String JSP = ".jsp";
-			String SUFIX_JSP_TABULAR = "Tabular.jsp";
-			String SUFIX_JSP_OTHER = ".jsp";
-			String SUFIX_JSP_FRONTEND = ".jsp";
-			String SUFIX_JSP_DETAIL = "Detail.jsp";
-			String SUFIX_JSP_SELECT = "Select.jsp";
-			String SUFIX_JSP_SELECT_ITEMS = "SelectItems.jsp";
-			String SUFIX_JSP_REPORT = "Report.jsp";
-			String SUFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
-			String SUFIX_JSP_CRUD = "CRUD.jsp";
+			String SUFFIX_JSP_TABULAR = "Tabular.jsp";
+			String SUFFIX_JSP_OTHER = ".jsp";
+			String SUFFIX_JSP_FRONTEND = ".jsp";
+			String SUFFIX_JSP_DETAIL = "Detail.jsp";
+			String SUFFIX_JSP_SELECT = "Select.jsp";
+			String SUFFIX_JSP_SELECT_ITEMS = "SelectItems.jsp";
+			String SUFFIX_JSP_REPORT = "Report.jsp";
+			String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
+			String SUFFIX_JSP_CRUD = "CRUD.jsp";
 
 			String UC_JSP = "uc.jsp";
 			String UC_CRUD_JSP = "crud.jsp";
@@ -211,6 +214,10 @@ public interface Constants {
 			String PATH = "/WEB-INF/reports/";
 			String JASPER = ".jasper";
 		}
+	}
+	
+	interface Security {
+		String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
 	}
 
 	interface Model {

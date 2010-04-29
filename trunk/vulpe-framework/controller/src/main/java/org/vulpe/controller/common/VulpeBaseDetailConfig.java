@@ -103,7 +103,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 		this.viewPath = config.getViewPath().substring(0,
 				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/")
-				.concat(getBaseName()).concat(Layout.SUFIX_JSP_DETAIL);
+				.concat(getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
 
 		if (StringUtils.isEmpty(getTitleKey())
 				&& StringUtils.isNotEmpty(getPropertyName())) {

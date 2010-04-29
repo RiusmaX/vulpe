@@ -72,7 +72,7 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 			if (getType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFIX_JSP_SELECT_ITEMS);
+								name).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 		} else {
 			final String module = parts.nextToken();
@@ -81,22 +81,22 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 			this.viewPath += module.concat("/").concat(name).concat("/")
 					.concat(name);
 			if (getType().equals(ControllerType.CRUD)) {
-				this.viewPath += Layout.SUFIX_JSP_CRUD;
+				this.viewPath += Layout.SUFFIX_JSP_CRUD;
 			}
 			if (getType().equals(ControllerType.TABULAR)) {
-				this.viewPath += Layout.SUFIX_JSP_TABULAR;
+				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
 			}
 			if (getType().equals(ControllerType.SELECT)) {
-				this.viewPath += Layout.SUFIX_JSP_SELECT;
+				this.viewPath += Layout.SUFFIX_JSP_SELECT;
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFIX_JSP_SELECT_ITEMS);
+								name).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 			if (getType().equals(ControllerType.REPORT)) {
-				this.viewPath += Layout.SUFIX_JSP_REPORT;
+				this.viewPath += Layout.SUFFIX_JSP_REPORT;
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFIX_JSP_REPORT_ITEMS);
+								name).concat(Layout.SUFFIX_JSP_REPORT_ITEMS);
 			}
 		}
 		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(

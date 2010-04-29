@@ -32,8 +32,18 @@ public class MultipleResourceBundle extends ResourceBundle {
 	private final static String BUNDLES_KEY = MultipleResourceBundle.class
 			.getName().concat(".bundles");
 
+	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
+	
 	private ServletContext servletContext;
 	private Locale locale;
+
+	/**
+	 * 
+	 * @return Instance of MultipleResourceBundle
+	 */
+	public static MultipleResourceBundle getInstance() {
+		return INSTANCE;
+	}
 
 	/**
 	 * Gets all bundles in application
@@ -160,4 +170,5 @@ public class MultipleResourceBundle extends ResourceBundle {
 	public void setLocale(final Locale locale) {
 		this.locale = locale;
 	}
+
 }

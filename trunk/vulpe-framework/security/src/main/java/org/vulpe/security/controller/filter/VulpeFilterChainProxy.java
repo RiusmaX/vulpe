@@ -6,8 +6,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.FilterChainProxy;
+import org.vulpe.common.Constants.Action;
+import org.vulpe.common.Constants.Security;
 import org.vulpe.common.helper.VulpeConfigHelper;
 
 /**
@@ -33,6 +36,15 @@ public class VulpeFilterChainProxy extends FilterChainProxy {
 		if (!VulpeConfigHelper.isSecurityEnabled()) {
 			chain.doFilter(request, response);
 			return;
+		}
+		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+		if (httpRequest != null
+				&& httpRequest.getRequestURI().contains(Action.ACTION_SUFFIX)
+				&& !httpRequest.getRequestURI().contains(
+						Action.URI.AUTHENTICATOR + Action.ACTION_SUFFIX)) {
+			httpRequest.getSession().setAttribute(
+					Security.VULPE_SECURITY_URL_REQUESTED,
+					httpRequest.getRequestURI());
 		}
 		super.doFilter(request, response, chain);
 	}

@@ -66,7 +66,7 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/")
 								.concat(name).concat(
-										Layout.SUFIX_JSP_SELECT_ITEMS)));
+										Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 		} else {
 			final String module = parts.nextToken();
@@ -75,24 +75,24 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name)));
 			if (getType().equals(ControllerType.CRUD)) {
-				setViewPath(getViewPath().concat(Layout.SUFIX_JSP_CRUD));
+				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_CRUD));
 			}
 			if (getType().equals(ControllerType.TABULAR)) {
-				setViewPath(getViewPath().concat(Layout.SUFIX_JSP_TABULAR));
+				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_TABULAR));
 			}
 			if (getType().equals(ControllerType.SELECT)) {
-				setViewPath(getViewPath().concat(Layout.SUFIX_JSP_SELECT));
+				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_SELECT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/")
 								.concat(name).concat(
-										Layout.SUFIX_JSP_SELECT_ITEMS)));
+										Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 			if (getType().equals(ControllerType.REPORT)) {
-				setViewPath(getViewPath().concat(Layout.SUFIX_JSP_REPORT));
+				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_REPORT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/")
 								.concat(name).concat(
-										Layout.SUFIX_JSP_REPORT_ITEMS)));
+										Layout.SUFFIX_JSP_REPORT_ITEMS)));
 			}
 		}
 

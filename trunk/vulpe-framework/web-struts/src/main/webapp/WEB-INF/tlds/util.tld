@@ -49,7 +49,7 @@
 
 	<function>
 		<name>booleanTo</name>
-		<function-class>org.vulpe.view.struts.tags.StrutsFunctions</function-class>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.String booleanTo(java.lang.Boolean, java.lang.String)</function-signature>
 	</function>
 

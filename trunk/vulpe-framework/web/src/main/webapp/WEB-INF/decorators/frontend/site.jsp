@@ -63,12 +63,6 @@
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.simplemodal.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.rte.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.ui.css";
-			<!--[if IE 6]>
-			@import "${pageContext.request.contextPath}/css/frontend/vulpe_IE6.css";
-			<![endif]-->
-			<!--[if IE 7]>
-			@import "${pageContext.request.contextPath}/css/frontend/vulpe_IE7.css";
-			<![endif]-->
 			<!--[if lt IE 7]>
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/jquery.simplemodal_ie.css?media=screen";
 			<![endif]-->

@@ -22,6 +22,12 @@
 		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.Object eval(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
 	</function>
+	
+	<function>
+		<name>booleanTo</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String booleanTo(java.lang.Boolean, java.lang.String)</function-signature>
+	</function>
 
 	<function>
 		<name>fieldsInBean</name>

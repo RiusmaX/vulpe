@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -20,6 +21,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
+import org.vulpe.controller.common.MultipleResourceBundle;
 import org.vulpe.controller.common.VulpeBaseDetailConfig;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -256,4 +258,36 @@ public class Functions {
 				.getUserPrincipal() != null;
 	}
 
+	protected static String findText(final String key) {
+		return MultipleResourceBundle.getInstance().getString(key);
+	}
+
+	/**
+	 * 
+	 * @param value
+	 * @param toValue
+	 * @return
+	 * @throws JspException
+	 */
+	public static String booleanTo(final Boolean value, final String toValue)
+			throws JspException {
+		final StringTokenizer values = new StringTokenizer(toValue, "|");
+		String valueTrue = values.nextToken();
+		String valueFalse = values.nextToken();
+		char openBrace = "{".charAt(0);
+		char closeBrace = "}".charAt(0);
+		if (valueTrue.charAt(0) == openBrace
+				&& valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
+			valueTrue = findText(valueTrue.substring(1, valueTrue.length() - 1));
+		}
+		if (valueFalse.charAt(0) == openBrace
+				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
+			valueFalse = findText(valueFalse.substring(1,
+					valueFalse.length() - 1));
+		}
+		if (value) {
+			return valueTrue;
+		}
+		return valueFalse;
+	}
 }

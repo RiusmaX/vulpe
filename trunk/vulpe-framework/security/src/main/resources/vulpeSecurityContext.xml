@@ -18,22 +18,45 @@
 		<security:form-login authentication-failure-url="/authenticator.action?loginError=1"
 			default-target-url="/" login-processing-url="/j_spring_security_check"
 			login-page="/authenticator.action" />
-		<security:custom-filter ref="exceptionTranslationFilter"
-			before="EXCEPTION_TRANSLATION_FILTER" />
-		<security:custom-filter ref="anonymousProcessingFilter"
-			before="ANONYMOUS_FILTER" />
-		<security:custom-filter ref="logoutFilter"
-			before="LOGOUT_FILTER" />
-		<security:custom-filter ref="filterInvocationInterceptor"
+		<!--
+			<security:custom-filter ref="exceptionTranslationFilter"
+			before="EXCEPTION_TRANSLATION_FILTER" /> <security:custom-filter
+			ref="anonymousProcessingFilter" before="ANONYMOUS_FILTER" />
+			<security:custom-filter ref="logoutFilter" before="LOGOUT_FILTER" />
+			<security:custom-filter ref="filterInvocationInterceptor"
 			before="FILTER_SECURITY_INTERCEPTOR" />
+		-->
 	</security:http>
 
-	<security:filter-security-metadata-source>
-		<security:intercept-url pattern="" />
-	</security:filter-security-metadata-source>
+	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
+
+	<bean id="filterChainProxy"
+		class="org.vulpe.security.controller.filter.VulpeFilterChainProxy">
+		<security:filter-chain-map path-type="ant">
+			<security:filter-chain pattern="/images/*"
+				filters="none" />
+			<security:filter-chain pattern="/j_spring_security_check*"
+				filters="securityContextPersistenceFilter,usernamePasswordAuthenticationFilter" />
+			<security:filter-chain pattern="/**"
+				filters="securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+		</security:filter-chain-map>
+	</bean>
 
 	<security:global-method-security
 		secured-annotations="disabled" jsr250-annotations="disabled" />
+
+	<bean id="usernamePasswordAuthenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager">
+			<ref bean="authenticationManager" />
+		</property>
+	</bean>
+
+	<bean id="securityContextPersistenceFilter"
+		class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
+
+	<bean id="securityContextHolderAwareRequestFilter"
+		class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />
 
 	<bean id="logoutFilter"
 		class="org.springframework.security.web.authentication.logout.LogoutFilter">

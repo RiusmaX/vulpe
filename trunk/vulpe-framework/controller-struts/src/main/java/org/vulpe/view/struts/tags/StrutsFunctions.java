@@ -1,11 +1,10 @@
 package org.vulpe.view.struts.tags;
 
-import java.io.IOException;
+ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -22,7 +21,6 @@ import org.vulpe.view.struts.form.beans.SessionPaging;
 import org.vulpe.view.tags.Functions;
 
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
 import com.opensymphony.xwork2.util.XWorkConverter;
 
 @SuppressWarnings("unchecked")
@@ -105,39 +103,7 @@ public final class StrutsFunctions extends Functions {
 		}
 	}
 
-	/**
-	 * 
-	 * @param value
-	 * @param toValue
-	 * @return
-	 * @throws JspException
-	 */
-	public static String booleanTo(final Boolean value, final String toValue)
-			throws JspException {
-		final StringTokenizer values = new StringTokenizer(toValue, "|");
-		String valueTrue = values.nextToken();
-		String valueFalse = values.nextToken();
-		char openBrace = "{".charAt(0);
-		char closeBrace = "}".charAt(0);
-		if (valueTrue.charAt(0) == openBrace
-				&& valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
-			valueTrue = findText(valueTrue.substring(1, valueTrue.length() - 1));
-		}
-		if (valueFalse.charAt(0) == openBrace
-				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
-			valueFalse = findText(valueFalse.substring(1,
-					valueFalse.length() - 1));
-		}
-		if (value) {
-			return valueTrue;
-		}
-		return valueFalse;
-	}
-
-	private static String findText(final String key) {
-		return LocalizedTextUtil.findText(Functions.class, key, ActionContext
-				.getContext().getLocale());
-	}
+	
 
 	/**
 	 * 
