@@ -28,6 +28,6 @@
 	<li>
 	<h1><fmt:message key='label.site.menu.Download' /></h1>
 	</li>
-	<li><fmt:message key='label.site.bottom.coming.soon' /></li>
+	<li><a href="http://repository.vulpeforge.org/packages/all-in-one/vulpe-all-in-one-1.0-win32.7z" target="_blank">Vulpe 1.0 All-in-one (Windows 32bit)</a></li>
 </ul>
 </div>

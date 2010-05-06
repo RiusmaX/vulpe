@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
 <div id="content">
-<h2><fmt:message key="label.site.Index.frontend.h2"/></h2><br>
+<h2><fmt:message key="label.site.Index.frontend.h2"/></h2>
+<p><fmt:message key="label.site.Index.frontend.pStart"/></p> 
 <ul>
 	<li><fmt:message key="label.site.Index.frontend.ul.li1"/></li>
 	<li><fmt:message key="label.site.Index.frontend.ul.li2"/></li>
@@ -42,6 +43,7 @@
 	</ul>
 	</li>
 </ul>
+<p><fmt:message key="label.site.Index.frontend.pEnd"/></p>
 </div>
 <jsp:include page="../bottom.jsp"/>
 <script type="text/javascript">
