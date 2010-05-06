@@ -5,8 +5,8 @@
 <#assign applicationServer = aptOptions["-AapplicationServer"]>
 <#assign POJO = servicesType?contains('POJO')>
 <#assign EJB = servicesType?contains('EJB')>
-<#assign springServiceLookup = serviceLookup?contains('SPRING')>
-<#assign JBOSS = applicationServer?contains('JBOSS')>
+<#assign springServiceLookup = serviceLookup?contains('spring')>
+<#assign JBOSS = applicationServer?contains('jboss')>
 
 <#macro toJavaDoc doc="" ident=""><#if doc!="">${ident}/**
 <#list doc?split("\n") as line>
