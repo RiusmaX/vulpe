@@ -64,8 +64,8 @@
 						<param>component=core</param>
 						<param>package=${package}.core.model</param>
 						<param>services=POJO</param>
-						<param>serviceLookup=SPRING</param>
-						<param>applicationServer=TOMCAT</param>
+						<param>serviceLookup=spring</param>
+						<param>applicationServer=${symbol_dollar}{deployServer}</param>
 					</options>
 					<outputDirectory>${symbol_dollar}{basedir}/generated/main/java</outputDirectory>
 				</configuration>
