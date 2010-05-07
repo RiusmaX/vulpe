@@ -60,7 +60,7 @@ public class VulpeStartupListener implements ServletContextListener {
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
 		evt.getServletContext().setAttribute(Constants.Context.I18N_MANAGER,
-				vulpeProject.i18nClass());
+				vulpeProject.i18nManager());
 		evt.getServletContext().setAttribute(Constants.Context.THEME, VulpeConfigHelper.getTheme());
 		evt.getServletContext().setAttribute(Constants.Context.AUDIT_ENABLED,
 				VulpeConfigHelper.isAuditEnabled());

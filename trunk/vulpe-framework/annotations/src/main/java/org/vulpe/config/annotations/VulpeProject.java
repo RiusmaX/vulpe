@@ -17,7 +17,7 @@ public @interface VulpeProject {
 	
 	String[] i18n() default { "VulpeResources", "VulpeSecurityResources", "ApplicationResources" };
 
-	String i18nClass() default "org.vulpe.controller.common.MultipleResourceBundle";
+	String i18nManager() default "org.vulpe.controller.common.MultipleResourceBundle";
 
 	VulpeView view() default @VulpeView;
 

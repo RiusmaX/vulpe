@@ -37,7 +37,7 @@ public class VulpeStrutsStartupListener extends VulpeStartupListener {
 	public void contextInitialized(final ServletContextEvent evt) {
 		super.contextInitialized(evt);
 		// configuration bundle
-		LocalizedTextUtil.addDefaultResourceBundle(VulpeConfigHelper.getI18n().toString());
+		LocalizedTextUtil.addDefaultResourceBundle(VulpeConfigHelper.getI18nManager());
 
 		// register converters to struts
 		ConvertUtils.register(new DateConverter(), Date.class);

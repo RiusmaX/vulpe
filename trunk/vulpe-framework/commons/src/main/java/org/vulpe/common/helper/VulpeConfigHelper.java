@@ -166,6 +166,25 @@ public final class VulpeConfigHelper {
 	 * 
 	 * @return
 	 */
+	public static String getI18nManager() {
+		try {
+			final Class config = getConfig();
+			if (config != null) {
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+				if (project != null) {
+					return project.i18nManager();
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public static String getProjectPackage() {
 		try {
 			final Class config = getConfig();
