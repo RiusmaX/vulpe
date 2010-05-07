@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 <jsp:include page="${actionConfig.viewItemsPath}" />
 <c:if test="${not empty downloadInfo}">
 	<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>

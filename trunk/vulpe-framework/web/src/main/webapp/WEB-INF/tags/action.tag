@@ -1,12 +1,11 @@
+<%@ attribute name="accesskey" required="false" rtexprvalue="true"%>
 <%@ attribute name="icon" required="false" rtexprvalue="true"%>
-<%@ attribute name="showButtonAsImage" required="false"
-	rtexprvalue="true"%>
+<%@ attribute name="showButtonAsImage" required="false" rtexprvalue="true"%>
 <%@ attribute name="showButtonIcon" required="false" rtexprvalue="true"%>
 <%@ attribute name="showButtonText" required="false" rtexprvalue="true"%>
 <%@ attribute name="layer" required="false" rtexprvalue="true"%>
 <%@ attribute name="action" required="false" rtexprvalue="true"%>
-<%@ attribute name="noSubmitForm" required="false" rtexprvalue="true"
-	type="java.lang.Boolean"%>
+<%@ attribute name="noSubmitForm" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="queryString" required="false" rtexprvalue="true"%>
 <%@ attribute name="labelKey" required="true" rtexprvalue="true"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true"%>
@@ -15,8 +14,7 @@
 <%@ attribute name="borderIcon" required="false" rtexprvalue="true"%>
 <%@ attribute name="style" required="false" rtexprvalue="true"%>
 <%@ attribute name="elementId" required="false" rtexprvalue="true"%>
-<%@ attribute name="validate" required="false" rtexprvalue="true"
-	type="java.lang.Boolean"%>
+<%@ attribute name="validate" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="beforeJs" required="false" rtexprvalue="true"%>
 <%@ attribute name="afterJs" required="false" rtexprvalue="true"%>
 <%@ attribute name="javascript" required="false" rtexprvalue="true"%>
@@ -24,10 +22,9 @@
 <%@ attribute name="styleClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="iconClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="role" required="false" rtexprvalue="true"%>
-<%@ attribute name="logged" required="false" rtexprvalue="true"
-	type="java.lang.Boolean"%>
+<%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
 
 <c:set var="exibe" value="${true}" />
 <c:if test="${empty showButtonAsImage}">
@@ -40,14 +37,17 @@
 	<c:set var="showButtonText" value="${false}" />
 </c:if>
 
-<c:if
-	test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
+<c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
 	<c:set var="exibe" value="${false}" />
 </c:if>
 <c:if test="${not empty role && util:isRole(pageContext, role) eq false}">
 	<c:set var="exibe" value="${false}" />
 </c:if>
 
+<c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmExclusion()')}">
+	<c:set var="showDeleteConfirmation" value="true"/>
+	<c:set var="beforeJs" value=""/>
+</c:if>
 <c:if test="${exibe eq true}">
 	<c:if test="${empty layerFields}">
 		<c:set var="layerFields" value="${actionConfig.formName}" />
@@ -71,15 +71,15 @@
 		<c:choose>
 			<c:when test="${empty action}">
 				<c:set var="javascript"
-					value="vulpe.view.request.submitForm('${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}', false);" />
+					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitForm('${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}', false);${showDeleteConfirmation ? '})': ''}" />
 			</c:when>
 			<c:when test="${!noSubmitForm}">
 				<c:set var="javascript"
-					value="vulpe.view.request.submitFormAction('${action}', '${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');" />
+					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitFormAction('${action}', '${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');${showDeleteConfirmation ? '})': ''}" />
 			</c:when>
 			<c:otherwise>
 				<c:set var="javascript"
-					value="vulpe.view.request.submitPage('${action}', '${queryString}', '${layer}', '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');" />
+					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitPage('${action}', '${queryString}', '${layer}', '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');${showDeleteConfirmation ? '})': ''}" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>
@@ -89,9 +89,8 @@
 			<c:if test="${empty styleClass}">
 				<c:set var="styleClass" value="submit" />
 			</c:if>
-			<input style="${style}" id="${elementId}" type="button"
-				value="<fmt:message key="${labelKey}"/>" class="${styleClass}"
-				onclick="${javascript}"
+			<input style="${style}" id="${elementId}" type="button" value="<fmt:message key="${labelKey}"/>"
+				class="${styleClass}" onclick="${javascript}"
 				title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 		</c:when>
 		<c:otherwise>
@@ -109,10 +108,9 @@
 			</c:if>
 			<c:choose>
 				<c:when test="${showButtonAsImage}">
-					<a class="${styleClass}" style="${style}" id="${elementId}"
-						href="javascript:void(0);" onclick="${javascript}"> <img
-						class="${iconClass}" src="${icon}"
-						title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
+					<a class="${styleClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
+						href="javascript:void(0);" onclick="${javascript}"> <img class="${iconClass}"
+						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
 						width="${widthIcon}" height="${heightIcon}" border="${borderIcon}" /><c:if
 						test="${showButtonText}">&nbsp;
 						<fmt:message key="${labelKey}" />
@@ -121,22 +119,19 @@
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${showButtonIcon}">
-							<button style="${style}" id="${elementId}" type="button"
-								value="<fmt:message key="${labelKey}"/>" class="${styleClass}"
-								onclick="${javascript}"
-								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>">
-							<img class="${iconClass}" src="${icon}"
-								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
-								width="${widthIcon}" height="${heightIcon}"
-								border="${borderIcon}" /> <c:if test="${showButtonText}">&nbsp;
+							<button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}"
+								value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}"
+								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img
+								class="${iconClass}" src="${icon}"
+								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${widthIcon}"
+								height="${heightIcon}" border="${borderIcon}" /> <c:if test="${showButtonText}">&nbsp;
 						<fmt:message key="${labelKey}" />
 							</c:if></button>
 						</c:when>
 						<c:otherwise>
 							<c:set var="styleClass" value="submit" />
-							<input style="${style}" id="${elementId}" type="button"
-								value="<fmt:message key="${labelKey}"/>" class="${styleClass}"
-								onclick="${javascript}"
+							<input style="${style}" id="${elementId}" type="button" accesskey="${accesskey}"
+								value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}"
 								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 						</c:otherwise>
 					</c:choose>

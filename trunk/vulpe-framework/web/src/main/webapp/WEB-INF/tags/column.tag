@@ -21,7 +21,7 @@
 <%@ attribute name="listName" required="false" rtexprvalue="true" %>
 <%@ attribute name="booleanTo" required="false" rtexprvalue="true" type="java.lang.String" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 
 <c:set var="exibe" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">

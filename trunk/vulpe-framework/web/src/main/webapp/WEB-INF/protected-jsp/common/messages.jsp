@@ -1,11 +1,4 @@
-<%@ taglib uri="/struts-tags" prefix="s" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="v" %>
-<%@ taglib uri="/WEB-INF/util" prefix="util" %>
-<fmt:setBundle basename="${initParam['project.bundle']}"/>
-
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 <c:if test="${not empty actionErrors || not empty actionMessages || not empty fieldErrors}">
 	<c:if test="${not empty fieldErrors}">
 		<script charset="utf-8">

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 <li><a href="javascript:void(0);" title="<fmt:message key='label.vulpe.menu.Security'/>"><fmt:message key='label.vulpe.menu.Security'/></a>
 <ul>
 	<li><a href="javascript:void(0);"

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 
 <div id="${actionConfig.formName}_select">
 	<div id="${actionConfig.formName}_select_actions" class="actions">

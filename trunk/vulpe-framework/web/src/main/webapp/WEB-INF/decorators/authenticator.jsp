@@ -2,7 +2,7 @@
 <%@taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setBundle basename="${initParam['project.bundle']}"/>
+<fmt:setBundle basename="${vulpeI18nManager}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -40,7 +40,7 @@
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.ui.css";
 		</style>
 		<decorator:head/>
-		<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+		<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 	</head>
 	<body>
 		<c:if test="${vulpeBackendCenteredLayout}">

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 
 <v:text labelKey="label.vulpe.audit.Occurrence.crud.id" property="id" showAsText="true"/>
 <v:text labelKey="label.vulpe.audit.Occurrence.crud.occurrenceType" property="occurrenceType" showAsText="true"/>

@@ -8,18 +8,6 @@
 
 	<!-- APP General Configuration -->
 	<context-param>
-		<param-name>project.name</param-name>
-		<param-value>@project.name@</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle</param-name>
-		<param-value>org.vulpe.controller.struts.common.MultipleResourceBundle</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle.modules</param-name>
-		<param-value>VulpeResources,VulpeSecurityResources,ApplicationResources,@project.modules.bundles@</param-value>
-	</context-param>
-	<context-param>
 		<param-name>project.package</param-name>
 		<param-value>@project.package@</param-value>
 	</context-param>
@@ -40,7 +28,7 @@
 
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.struts.listeners.StartupListener</listener-class>
+		<listener-class>org.vulpe.controller.listeners.VulpeStartupListener</listener-class>
 	</listener>
 
 	<!-- Spring Initialization Listener -->

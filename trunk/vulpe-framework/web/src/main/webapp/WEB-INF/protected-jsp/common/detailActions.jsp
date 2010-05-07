@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
 
 <c:set var="index" value="" />
 <c:if test="${not empty targetConfig.parentDetailConfig}">
