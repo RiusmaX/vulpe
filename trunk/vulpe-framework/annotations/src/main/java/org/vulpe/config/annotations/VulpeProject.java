@@ -13,6 +13,12 @@ public @interface VulpeProject {
 
 	String name();
 
+	String projectPackage();
+	
+	String[] i18n() default { "VulpeResources", "VulpeSecurityResources", "ApplicationResources" };
+
+	String i18nClass() default "org.vulpe.controller.common.MultipleResourceBundle";
+
 	VulpeView view() default @VulpeView;
 
 	VulpeUpload upload() default @VulpeUpload;
@@ -28,7 +34,7 @@ public @interface VulpeProject {
 	boolean security() default true;
 
 	MenuType frontendMenuType() default MenuType.DROPPY;
-	
+
 	MenuType backendMenuType() default MenuType.DROPPY;
 
 	enum MenuType {

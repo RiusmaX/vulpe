@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.util.ObjectTypeDeterminerFactory;
 /**
  * Implementation of struts2 filter to inject utility classes of generic types
  * and converters.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">F·bio Viana</a>
  */
 public class VulpeFilterDispatcher extends FilterDispatcher {
@@ -32,7 +32,7 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.apache.struts2.dispatcher.FilterDispatcher#init(javax.servlet.
 	 * FilterConfig)
 	 */
@@ -42,24 +42,21 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 		super.init(filterConfig);
 		this.filterConfig = filterConfig;
 		// sets ObjectTypeDeterminer to control generic types
-		ObjectTypeDeterminerFactory
-				.setInstance(new GenericsObjectTypeDeterminer());
+		ObjectTypeDeterminerFactory.setInstance(new GenericsObjectTypeDeterminer());
 
 		// sets access to properties with generics
-		OgnlRuntime.setPropertyAccessor(Object.class,
-				new GenericsPropertyAccessor());
+		OgnlRuntime.setPropertyAccessor(Object.class, new GenericsPropertyAccessor());
 
 		// sets manager of generic types to struts2
 		OgnlRuntime.setNullHandler(Object.class, new GenericsNullHandler());
 
 		// sets PropertyAccessor to HashSet
-		OgnlRuntime.setPropertyAccessor(Set.class,
-				new XWorkSetPropertyAccessor());
+		OgnlRuntime.setPropertyAccessor(Set.class, new XWorkSetPropertyAccessor());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.apache.struts2.dispatcher.FilterDispatcher#doFilter(javax.servlet
 	 * .ServletRequest, javax.servlet.ServletResponse,
@@ -69,8 +66,7 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 	public void doFilter(final ServletRequest request, final ServletResponse response,
 			final FilterChain chain) throws IOException, ServletException {
 		try {
-			StrutsControllerUtil.getInstance().setServletContext(
-					this.filterConfig.getServletContext());
+			StrutsControllerUtil.setServletContext(this.filterConfig.getServletContext());
 
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");

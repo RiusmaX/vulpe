@@ -7,7 +7,7 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.common.Constants;
+import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.controller.listeners.VulpeStartupListener;
 import org.vulpe.controller.struts.common.beans.converter.BigDecimalConverter;
 import org.vulpe.controller.struts.common.beans.converter.DateConverter;
@@ -25,8 +25,7 @@ import com.opensymphony.xwork2.util.LocalizedTextUtil;
 public class VulpeStrutsStartupListener extends VulpeStartupListener {
 
 	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger
-			.getLogger(VulpeStrutsStartupListener.class);
+	private static final Logger LOG = Logger.getLogger(VulpeStrutsStartupListener.class);
 
 	/*
 	 * (non-Javadoc)
@@ -38,8 +37,7 @@ public class VulpeStrutsStartupListener extends VulpeStartupListener {
 	public void contextInitialized(final ServletContextEvent evt) {
 		super.contextInitialized(evt);
 		// configuration bundle
-		LocalizedTextUtil.addDefaultResourceBundle(evt.getServletContext()
-				.getInitParameter(Constants.InitParameter.PROJECT_BUNDLE));
+		LocalizedTextUtil.addDefaultResourceBundle(VulpeConfigHelper.getI18n().toString());
 
 		// register converters to struts
 		ConvertUtils.register(new DateConverter(), Date.class);

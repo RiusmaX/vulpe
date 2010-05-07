@@ -11,6 +11,7 @@ import org.vulpe.common.Constants.View.Layout;
 import org.vulpe.common.Constants.View.Logic;
 import org.vulpe.common.Constants.View.Report;
 import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -27,24 +28,18 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public VulpeBaseActionConfig(final Class<?> classAction,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(ReflectUtil.getInstance().getAnnotationInClass(
-				Controller.class, classAction));
-		this.entityClass = (Class<ENTITY>) ReflectUtil.getInstance()
-				.getIndexClass(classAction, 0);
-		this.idClass = (Class<ID>) ReflectUtil.getInstance().getIndexClass(
-				classAction, 1);
+		setController(ReflectUtil.getInstance().getAnnotationInClass(Controller.class, classAction));
+		this.entityClass = (Class<ENTITY>) ReflectUtil.getInstance().getIndexClass(classAction, 0);
+		this.idClass = (Class<ID>) ReflectUtil.getInstance().getIndexClass(classAction, 1);
 		this.details = details;
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		setActionName(controllerUtil.getCurrentActionName());
 
 		setActionBaseName(StringUtils.replace(getActionName(), Logic.CRUD, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(),
-				Logic.SELECTION, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(),
-				Logic.TABULAR, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(),
-				Logic.REPORT, ""));
+		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.SELECTION, ""));
+		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.TABULAR, ""));
+		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.REPORT, ""));
 
 		if (StringUtils.lastIndexOf(getActionBaseName(), '.') >= 0) {
 			setSimpleActionName(getActionBaseName().substring(
@@ -60,13 +55,11 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
 			setViewPath(getViewPath().concat(
-					module.concat("/").concat(name).concat("/").concat(name)
-							.concat(Layout.JSP)));
+					module.concat("/").concat(name).concat("/").concat(name).concat(Layout.JSP)));
 			if (getType().equals(ControllerType.SELECT)) {
 				setViewItemsPath(getViewItemsPath().concat(
-						module.concat("/").concat(name).concat("/")
-								.concat(name).concat(
-										Layout.SUFFIX_JSP_SELECT_ITEMS)));
+						module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 		} else {
 			final String module = parts.nextToken();
@@ -83,43 +76,38 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			if (getType().equals(ControllerType.SELECT)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_SELECT));
 				setViewItemsPath(getViewItemsPath().concat(
-						module.concat("/").concat(name).concat("/")
-								.concat(name).concat(
-										Layout.SUFFIX_JSP_SELECT_ITEMS)));
+						module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 			if (getType().equals(ControllerType.REPORT)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_REPORT));
 				setViewItemsPath(getViewItemsPath().concat(
-						module.concat("/").concat(name).concat("/")
-								.concat(name).concat(
-										Layout.SUFFIX_JSP_REPORT_ITEMS)));
+						module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_REPORT_ITEMS)));
 			}
 		}
 
-		setTitleKey(View.LABEL.concat(getProjectName()).concat(".").concat(
-				getActionName()));
+		setTitleKey(View.LABEL.concat(getProjectName()).concat(".").concat(getActionName()));
 
 		setReportFile(getController().report().reportFile());
 		if (getReportFile().equals("")) {
-			setReportFile(Report.PATH.concat(
-					StringUtils.replace(getActionBaseName(), ".", "/")).concat(
-					"/").concat(getSimpleActionName()).concat(Report.JASPER));
+			setReportFile(Report.PATH.concat(StringUtils.replace(getActionBaseName(), ".", "/"))
+					.concat("/").concat(getSimpleActionName()).concat(Report.JASPER));
 		}
 		setSubReports(getController().report().subReports());
 		if (getSubReports() != null && getSubReports().length > 0) {
 			int count = 0;
 			for (String subReport : getSubReports()) {
 				getSubReports()[count] = Report.PATH.concat(
-						StringUtils.replace(getActionBaseName(), ".", "/"))
-						.concat("/").concat(subReport).concat(Report.JASPER);
+						StringUtils.replace(getActionBaseName(), ".", "/")).concat("/").concat(
+						subReport).concat(Report.JASPER);
 				count++;
 			}
 		}
 
 		if (getController().controllerType().equals(ControllerType.TABULAR)) {
 			final int detailNews = getController().tabularDetailNews();
-			final String[] despiseFields = getController()
-					.tabularDespiseFields();
+			final String[] despiseFields = getController().tabularDespiseFields();
 			String name = "entities";
 			String propertyName = name;
 			if (!getController().tabularName().equals("")) {
@@ -129,8 +117,8 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			if (!getController().tabularPropertyName().equals("")) {
 				propertyName = getController().tabularPropertyName();
 			}
-			this.details.add(new VulpeBaseDetailConfig(name, propertyName,
-					detailNews, despiseFields));
+			this.details.add(new VulpeBaseDetailConfig(name, propertyName, detailNews,
+					despiseFields));
 		}
 	}
 
@@ -165,8 +153,8 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			return detailConfig;
 		}
 
-		final String name = Functions.clearChars(Functions.replaceSequence(
-				detail, "[", "]", ""), ".");
+		final String name = Functions.clearChars(Functions.replaceSequence(detail, "[", "]", ""),
+				".");
 		detailConfig = getDetail(name);
 		if (detailConfig != null) {
 			return detailConfig;
@@ -174,14 +162,13 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 		String propertyName = detail;
 		if (StringUtils.lastIndexOf(detail, '.') >= 0) {
-			propertyName = detail.substring(StringUtils
-					.lastIndexOf(detail, '.') + 1);
+			propertyName = detail.substring(StringUtils.lastIndexOf(detail, '.') + 1);
 		}
 		return getDetail(propertyName);
 	}
 
 	private String getProjectName() {
-		return ControllerUtil.getCurrentProject();
+		return VulpeConfigHelper.getProjectName();
 	}
 
 }

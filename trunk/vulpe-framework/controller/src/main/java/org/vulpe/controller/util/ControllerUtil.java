@@ -20,14 +20,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.common.Constants;
 import org.vulpe.common.ReflectUtil;
 import org.vulpe.common.ValidationUtil;
 import org.vulpe.common.annotations.DetailConfig;
 import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.common.DuplicatedBean;
@@ -52,35 +51,13 @@ public abstract class ControllerUtil {
 	}
 
 	/**
-	 *
-	 */
-	private transient final static ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static ServletContext getServletContext() {
-		return servletCurrent.get();
-	}
-
-	/**
-	 * 
-	 * @param servletContext
-	 */
-	public void setServletContext(final ServletContext servletContext) {
-		servletCurrent.set(servletContext);
-	}
-
-	/**
 	 * Checks if detail must be despised
 	 * 
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(bean,
-					fieldName);
+			final Object value = ReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (ValidationUtil.getInstance().isEmpty(value)) {
 				return true;
 			}
@@ -102,12 +79,11 @@ public abstract class ControllerUtil {
 			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(bean,
-					fieldName);
+			final Object value = ReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
-					final Object valueRealBean = ReflectUtil.getInstance()
-							.getFieldValue(realBean, fieldName);
+					final Object valueRealBean = ReflectUtil.getInstance().getFieldValue(realBean,
+							fieldName);
 					if (StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
@@ -133,8 +109,7 @@ public abstract class ControllerUtil {
 			return;
 		}
 
-		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator
-				.hasNext();) {
+		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
 			final VulpeBaseEntity<?> bean = iterator.next();
 			if (bean == null) {
 				iterator.remove();
@@ -167,8 +142,7 @@ public abstract class ControllerUtil {
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
 	 */
-	public Collection<DuplicatedBean> duplicatedItens(
-			final Collection<VulpeBaseEntity<?>> beans,
+	public Collection<DuplicatedBean> duplicatedItens(final Collection<VulpeBaseEntity<?>> beans,
 			final String despiseFields[]) {
 		final Collection<DuplicatedBean> duplicatedBeans = new ArrayList<DuplicatedBean>();
 		if (beans == null) {
@@ -193,19 +167,10 @@ public abstract class ControllerUtil {
 	 * 
 	 * @return
 	 */
-	public static String getCurrentProject() {
-		return getServletContext().getInitParameter(
-				Constants.InitParameter.PROJECT_NAME);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
 	public String getCurrentActionKey() {
 		final String base = getCurrentActionName();
 		final String projectName = base.contains(Constants.AUDIT) ? Constants.ACTIVE
-				: getCurrentProject();
+				: VulpeConfigHelper.getProjectName();
 		return projectName.concat("/").concat(base);
 	}
 
@@ -219,15 +184,14 @@ public abstract class ControllerUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseActionConfig getActionConfig(
-			final VulpeBaseController controller) {
+	public VulpeBaseActionConfig getActionConfig(final VulpeBaseController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
 			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseActionConfig config = new VulpeBaseActionConfig(
-				controller.getClass(), details);
+		final VulpeBaseActionConfig config = new VulpeBaseActionConfig(controller.getClass(),
+				details);
 		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
 
 		int count = 0;
@@ -247,14 +211,13 @@ public abstract class ControllerUtil {
 	 * @param controller
 	 * @return
 	 */
-	public VulpeBaseSimpleActionConfig getActionConfig(
-			final VulpeBaseSimpleController controller) {
+	public VulpeBaseSimpleActionConfig getActionConfig(final VulpeBaseSimpleController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
 			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
 		}
 
-		final VulpeBaseSimpleActionConfig config = new VulpeBaseSimpleActionConfig(
-				controller.getClass());
+		final VulpeBaseSimpleActionConfig config = new VulpeBaseSimpleActionConfig(controller
+				.getClass());
 		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
 
 		return config;

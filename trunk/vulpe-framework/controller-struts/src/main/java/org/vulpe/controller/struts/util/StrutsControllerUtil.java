@@ -17,6 +17,8 @@ package org.vulpe.controller.struts.util;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
@@ -35,8 +37,7 @@ import com.opensymphony.xwork2.ActionContext;
  */
 public class StrutsControllerUtil extends ControllerUtil {
 
-	private static final Logger LOG = Logger
-			.getLogger(StrutsControllerUtil.class);
+	private static final Logger LOG = Logger.getLogger(StrutsControllerUtil.class);
 
 	/**
 	 * Returns instance of StrutsControllerUtil
@@ -64,14 +65,12 @@ public class StrutsControllerUtil extends ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentActionName() {
-		String base = StringUtils.replace(ActionContext.getContext().getName(),
-				"/", ".");
+		String base = StringUtils.replace(ActionContext.getContext().getName(), "/", ".");
 		if (base.contains(Logic.AJAX)) {
 			base = base.replace(Logic.AJAX, "");
 		}
-		return (base.contains(Logic.FRONTEND) || base
-				.contains(View.AUTHENTICATOR)) ? base : base.substring(0,
-				StringUtils.lastIndexOf(base, '.'));
+		return (base.contains(Logic.FRONTEND) || base.contains(View.AUTHENTICATOR)) ? base : base
+				.substring(0, StringUtils.lastIndexOf(base, '.'));
 	}
 
 	/**
@@ -81,8 +80,7 @@ public class StrutsControllerUtil extends ControllerUtil {
 	public String getCurrentMethod() {
 		String method = null;
 		try {
-			method = ActionContext.getContext().getActionInvocation()
-					.getProxy().getMethod();
+			method = ActionContext.getContext().getActionInvocation().getProxy().getMethod();
 		} catch (Exception e) {
 			LOG.error(e);
 		}
@@ -91,5 +89,26 @@ public class StrutsControllerUtil extends ControllerUtil {
 			method = method.substring(StringUtils.lastIndexOf(method, '.') + 1);
 		}
 		return method;
+	}
+
+	/**
+	 *
+	 */
+	private transient static final ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static ServletContext getServletContext() {
+		return servletCurrent.get();
+	}
+
+	/**
+	 * 
+	 * @param servletContext
+	 */
+	public static void setServletContext(final ServletContext servletContext) {
+		servletCurrent.set(servletContext);
 	}
 }

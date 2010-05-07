@@ -11,6 +11,7 @@ import org.vulpe.common.Constants.View.Logic;
 import org.vulpe.common.Constants.View.Report;
 import org.vulpe.common.annotations.DetailConfig;
 import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.common.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -36,26 +37,21 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	public VulpeBaseSimpleActionConfig(final Class<?> classAction) {
-		this.controller = ReflectUtil.getInstance().getAnnotationInClass(
-				Controller.class, classAction);
+		this.controller = ReflectUtil.getInstance().getAnnotationInClass(Controller.class,
+				classAction);
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		this.actionName = controllerUtil.getCurrentActionName();
 
-		this.actionBaseName = StringUtils.replace(this.actionName,
-				Logic.FRONTEND, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName,
-				Logic.CRUD, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName,
-				Logic.SELECTION, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName,
-				Logic.TABULAR, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName,
-				Logic.REPORT, "");
+		this.actionBaseName = StringUtils.replace(this.actionName, Logic.FRONTEND, "");
+		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.CRUD, "");
+		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.SELECTION, "");
+		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.TABULAR, "");
+		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.REPORT, "");
 
 		if (StringUtils.lastIndexOf(actionBaseName, '.') >= 0) {
-			this.simpleActionName = actionBaseName.substring(StringUtils
-					.lastIndexOf(actionBaseName, '.') + 1);
+			this.simpleActionName = actionBaseName.substring(StringUtils.lastIndexOf(
+					actionBaseName, '.') + 1);
 		} else {
 			this.simpleActionName = actionBaseName;
 		}
@@ -67,19 +63,18 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 		if (getType().equals(ControllerType.FRONTEND)) {
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
-			this.viewPath += module.concat("/").concat(name).concat("/")
-					.concat(name).concat(Layout.JSP);
+			this.viewPath += module.concat("/").concat(name).concat("/").concat(name).concat(
+					Layout.JSP);
 			if (getType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
+						+ module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 		} else {
 			final String module = parts.nextToken();
 			final String name = parts.nextToken();
 			// final String type = parts.nextToken();
-			this.viewPath += module.concat("/").concat(name).concat("/")
-					.concat(name);
+			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
 			if (getType().equals(ControllerType.CRUD)) {
 				this.viewPath += Layout.SUFFIX_JSP_CRUD;
 			}
@@ -89,32 +84,31 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 			if (getType().equals(ControllerType.SELECT)) {
 				this.viewPath += Layout.SUFFIX_JSP_SELECT;
 				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
+						+ module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 			if (getType().equals(ControllerType.REPORT)) {
 				this.viewPath += Layout.SUFFIX_JSP_REPORT;
 				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(
-								name).concat(Layout.SUFFIX_JSP_REPORT_ITEMS);
+						+ module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_REPORT_ITEMS);
 			}
 		}
-		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(
-				actionName);
+		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(actionName);
 
 		this.reportFile = this.controller.report().reportFile();
 		if (this.reportFile.equals("")) {
-			this.reportFile = Report.PATH.concat(
-					StringUtils.replace(this.actionBaseName, ".", "/")).concat(
-					"/").concat(this.simpleActionName).concat(Report.JASPER);
+			this.reportFile = Report.PATH
+					.concat(StringUtils.replace(this.actionBaseName, ".", "/")).concat("/").concat(
+							this.simpleActionName).concat(Report.JASPER);
 		}
 		this.subReports = this.controller.report().subReports();
 		if (this.subReports != null && this.subReports.length > 0) {
 			int count = 0;
 			for (String subReport : this.subReports) {
 				this.subReports[count] = Report.PATH.concat(
-						StringUtils.replace(this.actionBaseName, ".", "/"))
-						.concat("/").concat(subReport).concat(Report.JASPER);
+						StringUtils.replace(this.actionBaseName, ".", "/")).concat("/").concat(
+						subReport).concat(Report.JASPER);
 				count++;
 			}
 		}
@@ -165,16 +159,14 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	public String getPrimitiveActionName() {
-		this.primitiveActionName = StringUtils.replace(getActionName(), ".",
-				"/");
+		this.primitiveActionName = StringUtils.replace(getActionName(), ".", "/");
 		return this.primitiveActionName;
 	}
 
 	public String getPrimitiveReportActionName() {
-		this.primitiveReportActionName = StringUtils.replace(getActionName(),
-				".", "/");
-		this.primitiveReportActionName = StringUtils.replace(
-				this.primitiveReportActionName, "/select", "/report");
+		this.primitiveReportActionName = StringUtils.replace(getActionName(), ".", "/");
+		this.primitiveReportActionName = StringUtils.replace(this.primitiveReportActionName,
+				"/select", "/report");
 		return this.primitiveReportActionName;
 	}
 
@@ -187,8 +179,7 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	public String getFormName() {
-		final String formName = StringUtils.replace(getActionName(),
-				Logic.FRONTEND, "");
+		final String formName = StringUtils.replace(getActionName(), Logic.FRONTEND, "");
 		return StringUtils.replace(formName, ".", "");
 	}
 
@@ -226,7 +217,7 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	private String getProjectName() {
-		return ControllerUtil.getCurrentProject();
+		return VulpeConfigHelper.getProjectName();
 	}
 
 	public Controller getController() {

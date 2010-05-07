@@ -22,13 +22,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.views.jasperreports.JasperReportConstants;
 import org.vulpe.common.beans.DownloadInfo;
 import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
-public class StrutsReportUtil extends ReportUtil implements
-		JasperReportConstants {
+public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
 	 * Returns StrutsReportUtil instance
 	 */
@@ -45,34 +43,29 @@ public class StrutsReportUtil extends ReportUtil implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public byte[] getJasperReport(final String fileName,
-			final String[] subReports,
+	public byte[] getJasperReport(final String fileName, final String[] subReports,
 			final Collection<VulpeBaseEntity<?>> collection, final String format) {
 		try {
 			String fullFileName = fileName;
-			if (ControllerUtil.getServletContext() != null) {
-				fullFileName = ControllerUtil.getServletContext().getRealPath(
-						fileName);
+			if (StrutsControllerUtil.getServletContext() != null) {
+				fullFileName = StrutsControllerUtil.getServletContext().getRealPath(fileName);
 			}
-			final JasperReport jasperReport = (JasperReport) JRLoader
-					.loadObject(fullFileName);
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(
-					collection);
+			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
+			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
 
 			final Map parameters = new HashMap();
-			parameters.put("BASEDIR", StringUtils.replace(fullFileName,
-					StringUtils.replace(fileName, "/", File.separator), ""));
+			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(
+					fileName, "/", File.separator), ""));
 			if (subReports != null && subReports.length > 0) {
 				int count = 0;
 				for (String subReport : subReports) {
-					parameters.put("SUBREPORT_".concat(String.valueOf(count)),
-							ControllerUtil.getServletContext().getRealPath(
-									subReport));
+					parameters.put("SUBREPORT_".concat(String.valueOf(count)), StrutsControllerUtil
+							.getServletContext().getRealPath(subReport));
 					count++;
 				}
 			}
-			final JasperPrint jasperPrint = JasperFillManager.fillReport(
-					jasperReport, parameters, dataSource);
+			final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
+					dataSource);
 			if (jasperPrint == null || jasperPrint.getPages().isEmpty()) {
 				return null;
 			}
@@ -101,10 +94,8 @@ public class StrutsReportUtil extends ReportUtil implements
 		}
 	}
 
-	public DownloadInfo getDownloadInfo(
-			final Collection<VulpeBaseEntity<?>> collection,
-			final String fileName, final String[] subReports,
-			final String format) {
+	public DownloadInfo getDownloadInfo(final Collection<VulpeBaseEntity<?>> collection,
+			final String fileName, final String[] subReports, final String format) {
 		String contentType = null;
 		if (format.equals(StrutsReportUtil.FORMAT_CSV)) {
 			contentType = "text/plain";
@@ -120,25 +111,19 @@ public class StrutsReportUtil extends ReportUtil implements
 			contentType = "application/pdf";
 		}
 
-		final byte data[] = getJasperReport(fileName, subReports, collection,
-				format);
+		final byte data[] = getJasperReport(fileName, subReports, collection, format);
 
 		return data == null ? null : new DownloadInfo(data, contentType);
 	}
 
-	public DownloadInfo getDownloadInfo(
-			final Collection<VulpeBaseEntity<?>> collection,
-			final String fileName, final String[] subReports,
-			final String format, final String reportName,
-			final boolean reportDownload) {
-		DownloadInfo downloadInfo = getDownloadInfo(collection, fileName,
-				subReports, format);
-		downloadInfo.setName(reportName.concat(".")
-				.concat(format.toLowerCase()));
-		String contentDisposition = reportDownload ? "attachment; "
-				: "inline; ";
-		downloadInfo.setContentDisposition(contentDisposition.concat(
-				"filename=\"").concat(downloadInfo.getName()).concat("\""));
+	public DownloadInfo getDownloadInfo(final Collection<VulpeBaseEntity<?>> collection,
+			final String fileName, final String[] subReports, final String format,
+			final String reportName, final boolean reportDownload) {
+		DownloadInfo downloadInfo = getDownloadInfo(collection, fileName, subReports, format);
+		downloadInfo.setName(reportName.concat(".").concat(format.toLowerCase()));
+		String contentDisposition = reportDownload ? "attachment; " : "inline; ";
+		downloadInfo.setContentDisposition(contentDisposition.concat("filename=\"").concat(
+				downloadInfo.getName()).concat("\""));
 		return downloadInfo;
 	}
 }

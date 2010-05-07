@@ -19,7 +19,8 @@ public interface Constants {
 	String JS_REDIRECT_LOGIN = "vulpe.view.redirectLogin()";
 	String AJAX = "ajax";
 	String ON_HIDE_MESSAGES = "onHideMessages";
-	String PRINT_MSG = "PRINT_MSG";
+	String VULPE_SHOW_ACTIONS = "vulpeShowActions";
+	String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
 	String ERROR_GERAL = "vulpe.error.general";
 	String CLEAR_PARAMS = "vulpe.clearParams";
 	String PARAMS_SESSION_KEY = "_params";
@@ -29,12 +30,17 @@ public interface Constants {
 	String FRAMEWORK = "vulpe";
 	String DOMAINS = "domains";
 
+	interface Expression {
+		String PROJECT_PACKAGE = "{project.package}";
+	}
+	
 	interface Context {
 		String APPLICATION_SCOPE = "APPLICATION_SCOPE";
 		String PAGE_SCOPE = "PAGE_SCOPE";
 		String REQUEST_SCOPE = "REQUEST_SCOPE";
 		String SESSION_SCOPE = "SESSION_SCOPE";
 		String THEME = "vulpeTheme";
+		String I18N_MANAGER = "vulpeI18nManager";
 		String AUDIT_ENABLED = "vulpeAuditEnabled";
 		String SECURITY_ENABLED = "vulpeSecurityEnabled";
 		String FRONTEND_MENU_TYPE = "vulpeFrontendMenuType";
@@ -79,11 +85,6 @@ public interface Constants {
 		}
 	}
 
-	interface InitParameter {
-		String PROJECT_BUNDLE = "project.bundle";
-		String PROJECT_NAME = "project.name";
-	}
-
 	interface Action {
 		String CREATE = "create";
 		String CREATE_POST = "createPost";
@@ -100,9 +101,9 @@ public interface Constants {
 		String PERSIST = "persist";
 		String UPLOAD = "upload";
 		String DOWNLOAD = "download";
-		
+
 		String ACTION_SUFFIX = ".action";
-		
+
 		interface URI {
 			String AUTHENTICATOR = "/authenticator";
 			String AJAX = "/ajax";
@@ -215,7 +216,7 @@ public interface Constants {
 			String JASPER = ".jasper";
 		}
 	}
-	
+
 	interface Security {
 		String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
 	}

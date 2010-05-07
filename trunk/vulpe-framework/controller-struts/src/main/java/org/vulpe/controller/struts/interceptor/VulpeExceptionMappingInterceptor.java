@@ -126,7 +126,7 @@ public class VulpeExceptionMappingInterceptor extends
 		if (action.isAjax()) {
 			return Constants.Action.Forward.MESSAGES;
 		} else {
-			request.setAttribute(Constants.PRINT_MSG, Boolean.TRUE);
+			request.setAttribute(Constants.VULPE_SHOW_MESSAGES, true);
 			return Constants.Action.Forward.ERRORS;
 		}
 	}

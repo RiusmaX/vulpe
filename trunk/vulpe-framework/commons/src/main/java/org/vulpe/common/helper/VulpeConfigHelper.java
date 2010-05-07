@@ -30,8 +30,7 @@ public final class VulpeConfigHelper {
 		try {
 			final Class config = Class.forName(classPath);
 			@SuppressWarnings("unused")
-			final VulpeProject project = (VulpeProject) config
-					.getAnnotation(VulpeProject.class);
+			final VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
 		} catch (ClassNotFoundException e) {
 			LOG.error(e);
 		}
@@ -133,10 +132,47 @@ public final class VulpeConfigHelper {
 		try {
 			final Class config = getConfig();
 			if (config != null) {
-				VulpeProject project = (VulpeProject) config
-						.getAnnotation(VulpeProject.class);
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
 				if (project != null) {
 					return project.name();
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getI18n() {
+		try {
+			final Class config = getConfig();
+			if (config != null) {
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+				if (project != null) {
+					return project.i18n().toString();
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static String getProjectPackage() {
+		try {
+			final Class config = getConfig();
+			if (config != null) {
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+				if (project != null) {
+					return project.projectPackage();
 				}
 			}
 		} catch (Exception e) {

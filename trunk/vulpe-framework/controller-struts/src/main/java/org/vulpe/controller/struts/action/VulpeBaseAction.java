@@ -1304,16 +1304,16 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 */
 	private Integer detailIndex;
 
-	private boolean createShow;
-	private boolean createPostShow;
-	private boolean updateShow;
-	private boolean updatePostShow;
-	private boolean deleteShow;
-	private boolean readShow;
-	private boolean reportShow;
-	private boolean prepareShow;
-	private boolean tabularPostShow;
-	private boolean clearShow;
+	private boolean createShow = false;
+	private boolean createPostShow = false;
+	private boolean updateShow = false;
+	private boolean updatePostShow = false;
+	private boolean deleteShow = false;
+	private boolean readShow = false;
+	private boolean reportShow = false;
+	private boolean prepareShow = false;
+	private boolean tabularPostShow = false;
+	private boolean clearShow = false;
 
 	public boolean isClearShow() {
 		return clearShow;

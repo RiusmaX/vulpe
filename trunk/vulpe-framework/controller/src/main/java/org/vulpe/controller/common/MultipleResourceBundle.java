@@ -9,13 +9,12 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.beanutils.locale.LocaleBeanUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.common.Constants;
 import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.controller.util.ControllerUtil;
+import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Class to provide multiple Resource Bundle in application.
@@ -26,15 +25,13 @@ import org.vulpe.controller.util.ControllerUtil;
  */
 public class MultipleResourceBundle extends ResourceBundle {
 
-	private static final Logger LOG = Logger
-			.getLogger(MultipleResourceBundle.class);
+	private static final Logger LOG = Logger.getLogger(MultipleResourceBundle.class);
 
-	private final static String BUNDLES_KEY = MultipleResourceBundle.class
-			.getName().concat(".bundles");
+	private final static String BUNDLES_KEY = MultipleResourceBundle.class.getName().concat(
+			".bundles");
 
 	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
-	
-	private ServletContext servletContext;
+
 	private Locale locale;
 
 	/**
@@ -50,35 +47,27 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 * 
 	 * @return list of bundles in application
 	 */
-	@SuppressWarnings("unchecked")
 	protected List<ResourceBundle> getBundles() {
-		if (servletContext == null) {
-			servletContext = ControllerUtil.getServletContext();
-		}
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		final Locale requestLocale = cache
-				.get(Constants.View.APPLICATION_LOCALE);
+		final Locale requestLocale = cache.get(Constants.View.APPLICATION_LOCALE);
 		final boolean checkLocale = (locale == null || (requestLocale != null && !locale
 				.getLanguage().equals(requestLocale.getLanguage())));
 		if (checkLocale) {
 			locale = requestLocale;
 		}
-		List<ResourceBundle> list = null;
-		if (servletContext != null) {
-			list = (List<ResourceBundle>) servletContext
-					.getAttribute(BUNDLES_KEY);
-			if (list == null || checkLocale) {
-				final String modules[] = servletContext.getInitParameter(
-						"project.bundle.modules").split(",");
-				list = new ArrayList<ResourceBundle>(modules.length);
-				for (String module : modules) {
-					final ResourceBundle resourceBundle = ResourceBundle
-							.getBundle(module, locale);
-					list.add(resourceBundle);
-				}
-				Collections.reverse(list);
-				servletContext.setAttribute(BUNDLES_KEY, list);
+		List<ResourceBundle> list = cache.get(BUNDLES_KEY);
+		if (list == null || checkLocale) {
+			VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
+			// final String modules[] = servletContext.getInitParameter(
+			// "project.bundle.modules").split(",");
+			final String modules[] = project.i18n();
+			list = new ArrayList<ResourceBundle>(modules.length);
+			for (String module : modules) {
+				final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, locale);
+				list.add(resourceBundle);
 			}
+			Collections.reverse(list);
+			cache.put(BUNDLES_KEY, list);
 		}
 		return list;
 	}
@@ -140,27 +129,9 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 * @param key
 	 * @return
 	 */
-	public Object getKeyDescription(final ServletContext servletContext,
-			final String key) {
-		setServletContext(servletContext);
+	public Object getKeyDescription(final String key) {
 		setLocale(LocaleBeanUtils.getDefaultLocale());
 		return getObject(key);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public ServletContext getServletContext() {
-		return servletContext;
-	}
-
-	/**
-	 * 
-	 * @param servletContext
-	 */
-	public void setServletContext(final ServletContext servletContext) {
-		this.servletContext = servletContext;
 	}
 
 	/**
