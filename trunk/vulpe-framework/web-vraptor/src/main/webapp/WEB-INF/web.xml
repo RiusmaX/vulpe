@@ -13,7 +13,7 @@
 	</context-param>
 	<context-param>
 		<param-name>project.bundle</param-name>
-		<param-value>org.vulpe.controller.struts.common.MultipleResourceBundle</param-value>
+		<param-value>org.vulpe.controller.common.MultipleResourceBundle</param-value>
 	</context-param>
 	<context-param>
 		<param-name>project.bundle.modules</param-name>
@@ -40,7 +40,7 @@
 
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.struts.listeners.StartupListener</listener-class>
+		<listener-class>org.vulpe.controller.listener.VulpeStartupListener</listener-class>
 	</listener>
 
 	<!-- Spring Initialization Listener -->
