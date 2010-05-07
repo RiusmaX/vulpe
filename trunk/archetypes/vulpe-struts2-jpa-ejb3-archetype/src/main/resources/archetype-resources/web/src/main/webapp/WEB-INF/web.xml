@@ -5,20 +5,8 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-	<description>Vulpe</description>
+	<description>${rootArtifactId}</description>
 	<!-- APP General Configuration -->
-	<context-param>
-		<param-name>project.name</param-name>
-		<param-value>${rootArtifactId}</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle</param-name>
-		<param-value>org.vulpe.controller.common.MultipleResourceBundle</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle.modules</param-name>
-		<param-value>VulpeResources,VulpeSecurityResources,ApplicationResources</param-value>
-	</context-param>
 	<context-param>
 		<param-name>project.package</param-name>
 		<param-value>${package}</param-value>
@@ -80,7 +68,7 @@
 	</filter-mapping>
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.listeners.VulpeStartupListener</listener-class>
+		<listener-class>org.vulpe.controller.struts.listener.VulpeStrutsStartupListener</listener-class>
 	</listener>
 	<!-- Spring Initialization Listener -->
 	<listener>

@@ -2,7 +2,8 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 @VulpeProject(
-		name = "template",
+		name = "${rootArtifactId}",
+		projectPackage = "${package}",
 		view = @VulpeView(
 				showButtonAsImage = true,
 				showButtonIcon = false,
