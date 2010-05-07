@@ -5,18 +5,6 @@
 	<description>Vulpe</description>
 	<!-- APP General Configuration -->
 	<context-param>
-		<param-name>project.name</param-name>
-		<param-value>site</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle</param-name>
-		<param-value>org.vulpe.controller.common.MultipleResourceBundle</param-value>
-	</context-param>
-	<context-param>
-		<param-name>project.bundle.modules</param-name>
-		<param-value>VulpeResources,VulpeSecurityResources,ApplicationResources</param-value>
-	</context-param>
-	<context-param>
 		<param-name>project.package</param-name>
 		<param-value>org.vulpe.site</param-value>
 	</context-param>
@@ -77,7 +65,7 @@
 	</filter-mapping>
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.listeners.VulpeStartupListener</listener-class>
+		<listener-class>org.vulpe.controller.struts.listener.VulpeStrutsStartupListener</listener-class>
 	</listener>
 	<!-- Spring Initialization Listener -->
 	<listener>

@@ -1,5 +1,6 @@
 @VulpeProject(
 		name = "site",
+		projectPackage = "org.vulpe.site",
 		view = @VulpeView(
 				showButtonAsImage = true,
 				showButtonIcon = false,
