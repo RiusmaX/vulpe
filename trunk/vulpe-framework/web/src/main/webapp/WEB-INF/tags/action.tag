@@ -23,6 +23,7 @@
 <%@ attribute name="iconClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="role" required="false" rtexprvalue="true"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
+<%@ attribute name="hotKey" required="false" rtexprvalue="true"%>
 
 <%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
 
@@ -45,8 +46,8 @@
 </c:if>
 
 <c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmExclusion()')}">
-	<c:set var="showDeleteConfirmation" value="true"/>
-	<c:set var="beforeJs" value=""/>
+	<c:set var="showDeleteConfirmation" value="true" />
+	<c:set var="beforeJs" value="" />
 </c:if>
 <c:if test="${exibe eq true}">
 	<c:if test="${empty layerFields}">
@@ -139,4 +140,13 @@
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
+	<c:if test="${not empty hotKey}">
+	<script type="text/javascript">
+	jQuery(document).bind('keydown', '${hotKey}', function (evt){
+		if (vulpe.util.get("${elementId}").css("style") !== "none") {
+			vulpe.util.get("${elementId}").click(); return false;
+		}
+	});
+	</script>
+	</c:if>
 </c:if>

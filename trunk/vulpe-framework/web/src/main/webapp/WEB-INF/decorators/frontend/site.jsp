@@ -37,21 +37,6 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/WCH.js" charset="utf-8"></script>
 		<![endif]-->
 		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
-		<script type="text/javascript" charset="utf-8">
-			var contextPath = '${pageContext.request.contextPath}';
-			var _vulpeTheme = '${vulpeTheme}';
-			var _vulpeMsgSelectedExclusion = '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>';
-			var _vulpeMsgExclusion = '<fmt:message key="vulpe.msg.confirm.exclusion"/>';
-			var _vulpeMsgSelectRecordsExclusion = '<fmt:message key="vulpe.msg.select.records.exclusion"/>';
-			var _vulpeMsgUpload = '<fmt:message key="vulpe.error.upload"/>';
-			var lightboxImageText = '<fmt:message key="vulpe.lightbox.image.text"/>';
-			var lightboxOfText = '<fmt:message key="vulpe.lightbox.of.text"/>';
-			<c:if test="${vulpeShowAsMobile}">
-			_vulpePopupMobile = true;
-			</c:if>
-			var _vulpeMsgFieldRequired = '<fmt:message key="vulpe.js.error.required"/>';
-			var _vulpeMsgKeyRequired = '<fmt:message key="vulpe.js.error.key.required"/>';
-		</script>
 		<style media="all" type="text/css">
 			@import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/${vulpeTheme}.css";
@@ -70,10 +55,7 @@
 		<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 	</head>
 	<body>
-		<c:if test="${vulpeFrontendCenteredLayout}">
-		<center>
-		</c:if>
-		<div id="container">
+		<div id="container" align="${vulpeFrontendCenteredLayout ? 'center' : ''}">
 			<div id="loading" style="display: none;"></div>
 			<div id="modalMessages" style="display: none;" class="messages"></div>
 			<div id="confirmationDialog" title="<fmt:message key='vulpe.dialog.confirmation.title'/>" style="display: none">
@@ -112,8 +94,5 @@
 				<%@include file="/WEB-INF/protected-jsp/common/frontend/footer.jsp" %>
 			</div>
 		</div>
-		<c:if test="${vulpeFrontendCenteredLayout}">
-		</center>
-		</c:if>
 	</body>
 </html>

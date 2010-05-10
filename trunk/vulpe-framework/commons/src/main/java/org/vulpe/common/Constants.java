@@ -147,6 +147,17 @@ public interface Constants {
 			String ERRORS = "errors";
 			String MESSAGES = "messages";
 		}
+		
+		interface Shortcut {
+			String CLEAN = "vulpeShortcutActionClean";
+			String CREATE = "vulpeShortcutActionCreate";
+			String CREATE_POST = "vulpeShortcutActionCreatePost";
+			String PREPARE = "vulpeShortcutActionPrepare";
+			String READ = "vulpeShortcutActionRead";
+			String REPORT = "vulpeShortcutActionReport";
+			String UPDATE = "vulpeShortcutActionUpdate";
+			String UPDATE_POST = "vulpeShortcutActionUpdatePost";
+		}
 	}
 
 	interface View {

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 
 <v:form id="${actionConfig.formName}" name="${actionConfig.formName}" theme="simple" validate="true" enctype="multipart/form-data" method="post">
 	<c:if test="${!onlyToSee}">

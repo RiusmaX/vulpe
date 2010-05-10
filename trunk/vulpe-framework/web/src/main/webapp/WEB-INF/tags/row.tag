@@ -69,7 +69,6 @@
 		</c:choose>
 	</c:if>
 
-	<%-- só terá botão de update se for seleção - pagingList ou items preenchido --%>
 	<c:if test="${empty updateValue && isSelect_table_tag && updateShow}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
@@ -87,16 +86,13 @@
 		</c:choose>
 	</c:if>
 
-	<%-- botão de delete --%>
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<%-- se for seleção pagingList ou items estará com lista, daí deleteShow deverá ter true/false --%>
 			<c:when test="${isSelect_table_tag && deleteShow}">
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="select"/>
 			</c:when>
-			<%-- se for detalhe/tabular detailConfig estará com lista, daí deleteShow deverá ter true/false --%>
 			<c:when test="${not empty targetConfig}">
 				<c:set var="deleteShowEL" value="${'${'}deleteShow${targetConfig.baseName}${'}'}"/>
 				<c:if test="${util:eval(pageContext, deleteShowEL)}">

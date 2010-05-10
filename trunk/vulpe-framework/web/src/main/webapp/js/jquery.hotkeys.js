@@ -189,7 +189,7 @@ Note:
                 mapPoint = null;
 
             for (var x=0; x < ids.length; x++){
-                if (hotkeys.triggersMap[ids[x]][type]){
+                if (hotkeys.triggersMap[ids[x]] && hotkeys.triggersMap[ids[x]][type]){
                     mapPoint = hotkeys.triggersMap[ids[x]][type];
                     break;
                 }

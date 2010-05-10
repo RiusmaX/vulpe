@@ -17,6 +17,7 @@
 		<script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.maskedinput.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${pageContext.request.contextPath}/js/jquery.simplemodal.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/jquery.validation.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
@@ -24,18 +25,9 @@
 		<script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${pageContext.request.contextPath}/themes/${vulpeTheme}/js/${vulpeTheme}.js" type="text/javascript" charset="utf-8"></script>
 		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
-		<script type="text/javascript" charset="utf-8">
-			var contextPath = '${pageContext.request.contextPath}';
-			var _vulpeTheme = '${vulpeTheme}';
-			<c:if test="${vulpeShowAsMobile}">
-			_vulpePopupMobile = true;
-			</c:if>
-			var _vulpeMsgFieldRequired = '<fmt:message key="vulpe.js.error.required"/>';
-			var _vulpeMsgKeyRequired = '<fmt:message key="vulpe.js.error.key.required"/>';
-		</script>
 		<style media="all" type="text/css">
 			@import "${pageContext.request.contextPath}/css/vulpe.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${vulpeTheme}.css";
+			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/authenticator.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.simplemodal.css";
 			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.ui.css";
 		</style>
@@ -43,17 +35,11 @@
 		<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 	</head>
 	<body>
-		<c:if test="${vulpeBackendCenteredLayout}">
-		<center>
-		</c:if>
-		<div id="authenticator">
+		<div id="authenticator" align="${vulpeBackendCenteredLayout ? 'center' : ''}">
 			<div id="loading" style="display: none;"></div>
 			<div id="body">
 				<decorator:body/>
 			</div>
 		</div>
-		<c:if test="${vulpeBackendCenteredLayout}">
-		</center>
-		</c:if>
 	</body>
 </html>

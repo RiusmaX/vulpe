@@ -435,10 +435,14 @@ var webtoolkit = {
 	}
 };
 
+var _vulpeContextPath = "";
+var _vulpeLightboxImageText = "";
+var _vulpeLightboxOfText = "";
 var _vulpeViewIsSelection = false;
 var _vulpeLogicPrepareName = "";
 var _vulpePopups = new Array();
 var _vulpePopupMobile = false;
+var _vulpeClosePopupTitle = "Close (Shortcut: Esc)";
 var _vulpeValidateForms = new Array();
 var _vulpeValidateMessages = {};
 var _vulpeShowLoading = true;
@@ -464,7 +468,7 @@ var _vulpeIdentifier = "_id";
 var _vulpePagingPage = "_paging.page";
 var _vulpeEntity = "_entity.";
 var _command = function() {};
-var _iPhone = (BrowserDetect.OS == 'iPhone/iPod');
+var _iPhone = (BrowserDetect.OS == "iPhone/iPod");
 var _iPhonePopupTop = 0;
 var _firefox = (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla");
 var _ie = (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer");
@@ -509,8 +513,8 @@ var vulpe = {
 		},
 
 		getURLComplete: function(url) {
-			if (url.indexOf(contextPath) == -1) {
-				url = contextPath + '/' + url;
+			if (url.indexOf(_vulpeContextPath) == -1) {
+				url = _vulpeContextPath + '/' + url;
 			}
 			if (url.indexOf(_vulpeSpringSecurityCheck) == -1 && url.indexOf(_vulpeActionSufix) == -1) {
 				url = url + _vulpeActionSufix;
@@ -1206,7 +1210,7 @@ var vulpe = {
 		},
 
 		redirectLogin: function() {
-			window.location = contextPath + "/login.action";
+			window.location = _vulpeContextPath + "/login.action";
 		},
 
 		confirmExclusion: function(command) {
@@ -1346,7 +1350,7 @@ var vulpe = {
 				} else {
 					value = webtoolkit.url.decode(value);
 				}
-				vulpe.util.get(webtoolkit.url.decode(c)).val(value);
+				vulpe.util.get(webtoolkit.url.decode(c)).val(value.replace(/\+/g, " "));
 			});
 
 			var popupExpressions = popup.attr('popupExpressions');
@@ -1356,7 +1360,7 @@ var vulpe = {
 				if (typeof value == "undefined") {
 					value = '';
 				} else {
-					value = webtoolkit.url.decode(value);
+					value = webtoolkit.url.decode(value).replace(/\+/g, " ");
 				}
 				if (vulpe.util.isEmpty(layerParent)) {
 					jQuery(webtoolkit.url.decode(c)).val(value);
@@ -1410,9 +1414,9 @@ var vulpe = {
 
 		showPopup: function(elementId, popupWidth) {
 			var popup = vulpe.util.get(elementId).modal({
-				closeTitle: 'Fechar',
-				overlayId: 'overlay'+elementId,
-				containerId: 'container'+elementId,
+				closeTitle: _vulpeClosePopupTitle,
+				overlayId: 'overlay' + elementId,
+				containerId: 'container' + elementId,
 				iframeCss: {zIndex: 2000},
 				overlayCss: {zIndex: 2001},
 				containerCss: {zIndex: 2002, width: popupWidth},
@@ -1422,6 +1426,10 @@ var vulpe = {
 					vulpe.util.get(elementId).remove();
 					vulpe.util.removeArray(_vulpePopups, vulpe.util.getVulpePopup(elementId));
 				}
+			});
+			jQuery(document).bind("keydown", "Esc", function(evt) {
+				vulpe.view.hidePopup(elementId); 
+				return false; 
 			});
 			return popup;
 		},
@@ -1673,8 +1681,8 @@ var vulpe = {
 					}
 				}
 				var form = vulpe.util.getElement(formName);
-				if (actionURL.indexOf(contextPath) == -1 && actionURL.indexOf(_vulpeActionSufix) == -1) {
-					actionURL = contextPath + '/' + actionURL + _vulpeActionSufix;
+				if (actionURL.indexOf(_vulpeContextPath) == -1 && actionURL.indexOf(_vulpeActionSufix) == -1) {
+					actionURL = _vulpeContextPath + '/' + actionURL + _vulpeActionSufix;
 				}
 				form.action = actionURL;
 				vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
@@ -1683,7 +1691,7 @@ var vulpe = {
 			submitLoginForm: function(formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				var form = vulpe.util.getElement(formName);
 				if (vulpe.validate.validateLoginForm(formName)) {
-					form.action = contextPath + '/' + _vulpeSpringSecurityCheck;
+					form.action = _vulpeContextPath + '/' + _vulpeSpringSecurityCheck;
 					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
 				}
 			},
@@ -1763,7 +1771,7 @@ var vulpe = {
 
 			submitMenu: function(url, beforeJs, afterJs) {
 				jQuery(_vulpeMessages).hide();
-				return vulpe.view.request.submitPage(contextPath+url, '', 'body', beforeJs, afterJs);
+				return vulpe.view.request.submitPage(_vulpeContextPath + url, '', 'body', beforeJs, afterJs);
 			},
 
 			submitPopup: function(url, queryString, popupName, popupLayerParent, paramLayerParent, popupProperties, popupExpressions, paramProperties, paramExpressions, requiredParamProperties, requiredParamExpressions, styleClass, beforeJs, afterJs, popupWidth) {
@@ -1788,7 +1796,7 @@ var vulpe = {
 					//alert(e);
 					return false;
 				}
-				if (!vulpe.view.request.submitPage(contextPath+url, queryString, popupName, beforeJs, afterJs)) {
+				if (!vulpe.view.request.submitPage(_vulpeContextPath + url, queryString, popupName, beforeJs, afterJs)) {
 					popup.remove();
 					return false;
 				} else {
@@ -1871,6 +1879,11 @@ var vulpe = {
 					queryString = 'ajax=true';
 				}
 
+				var popup = jQuery('[id$=Popup]');
+				if (!popup || popup.length == 0) {
+					hotkeys.triggersMap = {};
+				}
+				
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",
@@ -1921,7 +1934,7 @@ var vulpe = {
 
 			submitAjax: function(formName, uri, id, beforeJs, afterJs, individualLoading) {
 				var form = vulpe.util.getElement(formName);
-				form.action = contextPath + uri;
+				form.action = _vulpeContextPath + uri;
 				var layerFields = formName;
 
 				if (individualLoading) {
