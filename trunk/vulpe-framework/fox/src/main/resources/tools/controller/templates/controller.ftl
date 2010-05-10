@@ -9,8 +9,8 @@ package ${controller.controllerPackageName};
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.controller.struts.annotations.Controller;
-import org.vulpe.controller.struts.annotations.Controller.ControllerType;
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**
@@ -30,8 +30,8 @@ package ${controller.controllerPackageName};
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.controller.struts.annotations.Controller;
-import org.vulpe.controller.struts.annotations.Controller.ControllerType;
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**
@@ -52,8 +52,8 @@ package ${controller.controllerPackageName};
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.controller.struts.annotations.Controller;
-import org.vulpe.controller.struts.annotations.Controller.ControllerType;
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**
