@@ -200,26 +200,14 @@
 }
 
 .tooltip {
-	display: none;
-	position: absolute;
-	padding: 5px;
-	font-weight: normal;
-	color: #000;
-	border: 1px solid #888;
-	background: #ffc;
-	width: 150px;
-	z-index: 10;
-	margin-left: -22px;
-	margin-top: 25px;
-}
-
-.tooltip em {
-	position: relative;
-	display: block;
-	background: url(../images/tooltip.gif) no-repeat;
-	width: 11px;
-	height: 11px;
-	margin-top: -11px
+	display:none;
+	background:url(../images/tooltip/black-arrow.png);
+	font-size:12px;
+	height:70px;
+	width:160px;
+	padding:25px;
+	color:#fff;	
+	border:0px;
 }
 
 .uc {

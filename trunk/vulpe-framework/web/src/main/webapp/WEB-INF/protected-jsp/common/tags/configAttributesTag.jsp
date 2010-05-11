@@ -16,6 +16,10 @@
 
 <c:set var="styleClass" value="${styleClass} focused"/>
 
+<c:if test="${required}">
+	<c:set var="styleClass" value="${styleClass} required"/>
+</c:if>
+
 <c:if test="${not empty vulpeShowAsMobile}">
 	<c:set var="breakLabel" value="${true}"/>
 </c:if>
@@ -68,7 +72,7 @@
 	<c:if test="${empty labelClass}">
 		<c:set var="labelClass" value="blocklabel"/>
 	</c:if>
-	<label for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}:</label>
+	<label id="${elementId}_label" for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}</label>
 	<c:if test="${breakLabel}">
 		<br/>
 	</c:if>

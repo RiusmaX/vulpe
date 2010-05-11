@@ -101,9 +101,17 @@ public interface Constants {
 		String PERSIST = "persist";
 		String UPLOAD = "upload";
 		String DOWNLOAD = "download";
-
 		String ACTION_SUFFIX = ".action";
 
+		interface Validate {
+			interface Cardinality {
+				String ZERO = "0";
+				String ZERO_OR_MORE = "0..*";
+				String ONE = "1";
+				String ONE_OR_MORE = "1..*";
+			}
+		}
+		
 		interface URI {
 			String AUTHENTICATOR = "/authenticator";
 			String AJAX = "/ajax";

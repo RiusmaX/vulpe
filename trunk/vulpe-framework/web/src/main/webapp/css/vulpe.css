@@ -9,3 +9,7 @@ body, form, html {
 	width: 100%;
 	height: 10px;
 }
+
+.required {
+	border: 1px solid #ffccbc;
+}

@@ -1133,7 +1133,8 @@ var vulpe = {
 						if (element) {
 							if (element.value == "") {
 								var messageRequired = _vulpeValidateMessages.required;
-								vulpe.exception.setupError((elementIdLookup != null ? elementIdLookup : elementId), messageRequired.replace("{0}", (attributeLabel)));
+								//vulpe.exception.setupError((elementIdLookup != null ? elementIdLookup : elementId), messageRequired.replace("{0}", (attributeLabel)));
+								vulpe.exception.setupError((elementIdLookup != null ? elementIdLookup : elementId), messageRequired);
 								valid = false;
 							} else {
 								if (attributeLookup != null) {
@@ -1160,6 +1161,45 @@ var vulpe = {
 					}
 				}
 			}
+			if (valid) {
+				var parent = "";
+				if (vulpe.util.existsVulpePopups()) {
+					parent += "Popup_" + vulpe.util.getLastVulpePopup();
+				}
+				var fields = jQuery("input[type!=checkbox][class*='required']", parent);
+				if (fields && fields.length > 0) {
+					for (var i = 0; i < fields.length; i++) {
+						var field = jQuery(fields[i]);
+						if (field) {
+							var type = field.attr("type");
+							if (type == "text" || type == "password" || type == "select-one") {
+								if (field.val() == "") {
+									var messageRequired = _vulpeValidateMessages.required;
+									var idField = field.attr("id");
+									vulpe.exception.setupError(idField, messageRequired);
+									valid = false;
+								}
+							}
+						}
+					}
+					if (!valid) {
+						vulpe.exception.focusFirstError(formName);
+						var msgLayer = _vulpeMessages;
+						if (vulpe.util.existsVulpePopups()) {
+							msgLayer += "Popup_" + vulpe.util.getLastVulpePopup();
+						}
+						$(msgLayer).removeClass("error");
+						$(msgLayer).removeClass("success");
+						$(msgLayer).addClass("validation");
+						$(msgLayer).html("<ul><li class='alertError'>" + _vulpeValidateMessages.validate + "</li></ul>");
+						$(msgLayer).slideDown("slow");
+						setTimeout(function() {
+						  $(msgLayer).slideUp("slow");
+						}, 5000);
+					}
+				}
+			}
+
 			return valid;
 		},
 		
@@ -1182,33 +1222,6 @@ var vulpe = {
 	},
 
 	view: { // vulpe.view
-		openTooltip: function(id, cont) {
-			var tooltip = vulpe.util.get(id);
-			if (_webkit) {
-				var elementId = id.replace(_vulpeErrorMsgSufix, "_Error");
-				var element = vulpe.util.get(elementId);
-				var left = element.attr("offsetLeft") + 19;
-				var top = element.attr("offsetTop");
-				tooltip.css("left", left);
-				tooltip.css("top", top);
-			}
-			tooltip.show();
-			try {
-				WCH.Apply(id, cont);
-			} catch(eWCH) {
-				// do nothing
-			}
-		},
-
-		closeTooltip: function(id, cont) {
-			vulpe.util.get(id).hide();
-			try {
-				WCH.Discard(id, cont);
-			} catch(eWCH) {
-				// do nothing
-			}
-		},
-
 		redirectLogin: function() {
 			window.location = _vulpeContextPath + "/login.action";
 		},
@@ -1957,17 +1970,41 @@ var vulpe = {
 		focusFirstError: function(layerFields) {
 			var fields = jQuery("." + _vulpeFieldError, vulpe.util.get(layerFields));
 			if (fields && fields.length > 0) {
-				jQuery(fields[0]).focus();
+				for (var i = 0; i < fields.length; i++) {
+					var field = jQuery(fields[i]);
+					if (field.attr("className").indexOf("hasDatepicker") == -1) {
+						field.focus();
+						break;
+					}
+				}
 			}
 		},
 
 		setupError: function(fieldName, msgs) {
-			var html = vulpe.util.get(fieldName + _vulpeErrorMsgSufix).html();
-			if (html.indexOf(msgs) == -1) {
-				vulpe.util.get(fieldName + _vulpeErrorMsgSufix).html(html + msgs);
-			}
 			vulpe.util.get(fieldName + _vulpeErrorSufix).show();
+			var msgSuffix = fieldName + _vulpeErrorMsgSufix;
+			vulpe.util.get(msgSuffix).attr("title", msgs);
 			vulpe.util.get(fieldName).addClass(_vulpeFieldError);
+			vulpe.util.get(msgSuffix).tooltip({
+				opacity: 0.7,
+				effect: 'slide'
+			}).dynamic({
+				bottom: { 
+					direction: 'down', 
+					bounce: true 
+				}
+			});
+			//vulpe.util.get(msgSuffix).tooltip({opacity: 0.7});
+			/*
+			vulpe.util.get(fieldName).attr("title", msgs);
+			vulpe.util.get(fieldName).tooltip({
+				events: {
+				input:"mouseover,mouseout"
+				},
+				opacity: 0.7
+				}
+			);
+			*/
 
 			var errorController = function () {
 				if (this.value.length == 0) {

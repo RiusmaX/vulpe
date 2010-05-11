@@ -33,3 +33,4 @@
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showAsText" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="onlyToSee" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="required" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

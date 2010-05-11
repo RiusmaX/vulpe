@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.common.Constants.View.Layout;
 import org.vulpe.common.annotations.DetailConfig;
+import org.vulpe.common.annotations.DetailConfig.CardinalityType;
 import org.vulpe.view.tags.Functions;
 
 @SuppressWarnings("serial")
@@ -19,6 +20,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private int detailNews;
 	private String[] despiseFields;
 	private String viewPath;
+	private CardinalityType cardinalityType;
 	private VulpeBaseDetailConfig parentDetailConfig;
 	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
 
@@ -42,9 +44,19 @@ public class VulpeBaseDetailConfig implements Serializable {
 		setSimpleName();
 	}
 
+	public VulpeBaseDetailConfig(final String name, final String propertyName,
+			final int detailNews, final String[] despiseFields,
+			final CardinalityType cardinalityType) {
+		this.name = name;
+		this.propertyName = propertyName;
+		this.detailNews = detailNews;
+		this.despiseFields = despiseFields.clone();
+		this.cardinalityType = cardinalityType;
+		setSimpleName();
+	}
+
 	public String getBaseName() {
-		return Functions.clearChars(Functions.replaceSequence(name, "[", "]",
-				""), ".");
+		return Functions.clearChars(Functions.replaceSequence(name, "[", "]", ""), ".");
 	}
 
 	public String getName() {
@@ -84,8 +96,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setupDetail(final VulpeBaseActionConfig config,
-			final DetailConfig detail) {
+	public void setupDetail(final VulpeBaseActionConfig config, final DetailConfig detail) {
 		if (detail == null) {
 			return;
 		}
@@ -102,11 +113,10 @@ public class VulpeBaseDetailConfig implements Serializable {
 		}
 
 		this.viewPath = config.getViewPath().substring(0,
-				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/")
-				.concat(getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
+				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/").concat(
+				getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
 
-		if (StringUtils.isEmpty(getTitleKey())
-				&& StringUtils.isNotEmpty(getPropertyName())) {
+		if (StringUtils.isEmpty(getTitleKey()) && StringUtils.isNotEmpty(getPropertyName())) {
 			setTitleKey(config.getTitleKey().concat(".").concat(getBaseName()));
 		}
 
@@ -118,13 +128,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.detailNews = detail.detailNews();
 		}
 
+		this.cardinalityType = detail.cardinalityType();
+
 		if (!detail.parentDetailName().equals("")) {
 			if (config.getDetail(detail.parentDetailName()) == null) {
-				config.getDetails().add(
-						new VulpeBaseDetailConfig(detail.parentDetailName()));
+				config.getDetails().add(new VulpeBaseDetailConfig(detail.parentDetailName()));
 			}
-			this.parentDetailConfig = (VulpeBaseDetailConfig) config
-					.getDetail(detail.parentDetailName());
+			this.parentDetailConfig = (VulpeBaseDetailConfig) config.getDetail(detail
+					.parentDetailName());
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
 	}
@@ -132,8 +143,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private void setSimpleName() {
 		if (StringUtils.isNotEmpty(this.propertyName)) {
 			if (StringUtils.lastIndexOf(this.propertyName, '.') >= 0) {
-				this.simpleName = this.propertyName.substring(StringUtils
-						.lastIndexOf(this.propertyName, '.') + 1);
+				this.simpleName = this.propertyName.substring(StringUtils.lastIndexOf(
+						this.propertyName, '.') + 1);
 			} else {
 				this.simpleName = this.propertyName;
 			}
@@ -147,4 +158,13 @@ public class VulpeBaseDetailConfig implements Serializable {
 	public String getViewPath() {
 		return viewPath;
 	}
+
+	public void setCardinalityType(CardinalityType cardinalityType) {
+		this.cardinalityType = cardinalityType;
+	}
+
+	public CardinalityType getCardinalityType() {
+		return cardinalityType;
+	}
+
 }

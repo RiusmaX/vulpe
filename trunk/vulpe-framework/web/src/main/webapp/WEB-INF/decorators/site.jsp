@@ -1,7 +1,6 @@
 <%@taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 <fmt:setBundle basename="${vulpeI18nManager}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,46 +13,10 @@
 		</c:if>
 		<title><fmt:message key="vulpe.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icon.png" rel="shortcut icon"/>
-		<script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.accordion.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
-		<c:if test="${vulpeBackendMenuType == 'DROPPY'}">
-		<script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script>
-		</c:if>
-		<script src="${pageContext.request.contextPath}/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.hotkeys.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.lightbox.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.maskedinput.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.simplemodal.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.rte.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.i18n.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/jquery.validation.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/vulpe.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
-		<script src="${pageContext.request.contextPath}/themes/${vulpeTheme}/js/${vulpeTheme}.js" type="text/javascript" charset="utf-8"></script>
-		<!--[if IE]>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/WCH.js" charset="utf-8"></script>
-		<![endif]-->
+		<c:set var="vulpeCurrentLayout" value="BACKEND" scope="request"/>
 		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
-		<style media="all" type="text/css">
-			@import "${pageContext.request.contextPath}/css/vulpe.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${vulpeTheme}.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.accordion.css";
-			<c:if test="${vulpeBackendMenuType == 'DROPPY'}">
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.droppy.css";
-			</c:if>
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.lightbox.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.simplemodal.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.rte.css";
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.ui.css";
-			<!--[if lt IE 7]>
-			@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/jquery.simplemodal_ie.css?media=screen";
-			<![endif]-->
-		</style>
+		<%@include file="/WEB-INF/protected-jsp/common/css.jsp" %>
 		<decorator:head/>
-		<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
 	</head>
 	<body>
 		<div id="container" align="${vulpeBackendCenteredLayout ? 'center' : ''}">

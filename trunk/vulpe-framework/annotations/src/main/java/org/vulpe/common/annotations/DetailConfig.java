@@ -42,4 +42,23 @@ public @interface DetailConfig {
 	 * Parent Detail Name
 	 */
 	String parentDetailName() default "";
+
+	CardinalityType cardinalityType() default CardinalityType.ZERO;
+
+	enum CardinalityType {
+		ZERO, ZERO_OR_MORE, ONE, ONE_OR_MORE;
+		public String getValue() {
+			switch (this) {
+			case ZERO:
+				return "0";
+			case ZERO_OR_MORE:
+				return "0..1";
+			case ONE:
+				return "1";
+			case ONE_OR_MORE:
+				return "1..*";
+			}
+			return "0";
+		}
+	}
 }
