@@ -65,13 +65,13 @@ jQuery.extend({
 				}
 
 				if (vulpe.util.trim(response) != 'true'){
-					jQuery("#messages").html(_vulpeMsgUpload);
+					jQuery("#messages").html(_vulpeMessageUpload);
 					vulpe.view.showMessages();
 				}else{
 					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, true);
 				}
 			}catch(e){
-				jQuery("#messages").html(_vulpeMsgUpload);
+				jQuery("#messages").html(_vulpeMessageUpload);
 				vulpe.view.showMessages();
 			}
 			form.remove();
@@ -96,7 +96,7 @@ jQuery.extend({
 			}
 			jQuery(form).submit();
 		} catch(e) {
-			jQuery("#messages").html(_vulpeMsgUpload);
+			jQuery("#messages").html(_vulpeMessageUpload);
 			vulpe.view.showMessages();
 			return;
 		}

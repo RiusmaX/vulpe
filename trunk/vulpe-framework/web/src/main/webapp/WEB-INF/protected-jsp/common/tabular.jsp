@@ -12,9 +12,9 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		_vulpeLogicPrepareName = "entities";
+		vulpe.config.logic.prepareName = "entities";
 		var formIndex = vulpe.util.getVulpeValidateForms("${actionConfig.formName}");
 		var vulpeValidateAttributes = new Array();
-		_vulpeValidateForms[formIndex] = {name: "${actionConfig.formName}", attributes: vulpeValidateAttributes};
+		vulpe.validate.forms[formIndex] = {name: "${actionConfig.formName}", attributes: vulpeValidateAttributes};
 	});
 </script>

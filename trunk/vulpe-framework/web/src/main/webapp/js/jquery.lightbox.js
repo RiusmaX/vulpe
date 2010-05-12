@@ -27,17 +27,17 @@
 			// Configuration related to navigation
 			fixedNavigation:		false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
 			// Configuration related to images
-			imageLoading:			_vulpeContextPath + '/themes/' + _vulpeTheme + '/images/lightbox-ico-loading.gif',		// (string) Path and the name of the loading icon
-			imageBtnPrev:			_vulpeContextPath + '/themes/' + _vulpeTheme + '/images/lightbox-btn-prev.gif',			// (string) Path and the name of the prev button image
-			imageBtnNext:			_vulpeContextPath + '/themes/' + _vulpeTheme + '/images/lightbox-btn-next.gif',			// (string) Path and the name of the next button image
-			imageBtnClose:			_vulpeContextPath + '/themes/' + _vulpeTheme + '/images/lightbox-btn-close.gif',		// (string) Path and the name of the close btn
-			imageBlank:				_vulpeContextPath + '/themes/' + _vulpeTheme + '/images/lightbox-blank.gif',			// (string) Path and the name of a blank image (one pixel)
+			imageLoading:			vulpe.config.contextPath + '/themes/' + vulpe.config.theme + '/images/lightbox-ico-loading.gif',		// (string) Path and the name of the loading icon
+			imageBtnPrev:			vulpe.config.contextPath + '/themes/' + vulpe.config.theme + '/images/lightbox-btn-prev.gif',			// (string) Path and the name of the prev button image
+			imageBtnNext:			vulpe.config.contextPath + '/themes/' + vulpe.config.theme + '/images/lightbox-btn-next.gif',			// (string) Path and the name of the next button image
+			imageBtnClose:			vulpe.config.contextPath + '/themes/' + vulpe.config.theme + '/images/lightbox-btn-close.gif',		// (string) Path and the name of the close btn
+			imageBlank:				vulpe.config.contextPath + '/themes/' + vulpe.config.theme + '/images/lightbox-blank.gif',			// (string) Path and the name of a blank image (one pixel)
 			// Configuration related to container image box
 			containerBorderSize:	10,			// (integer) If you adjust the padding in the CSS for the container, #lightbox-container-image-box, you will need to update this value
 			containerResizeSpeed:	400,		// (integer) Specify the resize duration of container image. These number are miliseconds. 400 is default.
 			// Configuration related to texts in caption. For example: Image 2 of 8. You can alter either "Image" and "of" texts.
-			txtImage:				_vulpeLightboxImageText,	// (string) Specify text "Image"
-			txtOf:					_vulpeLightboxOfText,		// (string) Specify text "of"
+			txtImage:				vulpe.config.lightbox.imageText,	// (string) Specify text "Image"
+			txtOf:					vulpe.config.lightbox.ofText,		// (string) Specify text "of"
 			// Configuration related to keyboard navigation
 			keyToClose:				'c',		// (string) (c = close) Letter to close the jQuery lightBox interface. Beyond this letter, the letter X and the SCAPE key is used to.
 			keyToPrev:				'p',		// (string) (p = previous) Letter to show the previous image

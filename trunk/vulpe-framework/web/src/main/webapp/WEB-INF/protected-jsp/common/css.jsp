@@ -1,10 +1,14 @@
 <c:set var="layout" value="${vulpeCurrentLayout == 'FRONTEND' ? 'frontend/' : ''}"/>
 <style media="all" type="text/css">
 	@import "${pageContext.request.contextPath}/css/${layout}vulpe.css";
-	<c:if test="${vulpeCurrentLayout == 'AUTHENTICATOR'}">
+	<c:choose>
+	<c:when test="${vulpeCurrentLayout == 'AUTHENTICATOR'}">
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/authenticator.css";
-	</c:if>
+	</c:when>
+	<c:otherwise>
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}${vulpeTheme}.css";
+	</c:otherwise>
+	</c:choose>
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.accordion.css";
 	<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && vulpeFrontendMenuType == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && vulpeBackendMenuType == 'DROPPY')}">
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.droppy.css";

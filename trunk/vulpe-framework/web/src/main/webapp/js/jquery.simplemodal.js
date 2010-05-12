@@ -196,8 +196,8 @@
 
 			pLeft += (wnd.width() - this.dialog.container.outerWidth()) / 2;
 			pTop += (wnd.height() - this.dialog.container.outerHeight()) / 2;
-			if (_iPhone) {
-				pTop = _iPhonePopupTop;
+			if (vulpe.config.os.iPhone) {
+				pTop = vulpe.config.iPhone.popupTop;
 			}
 			this.dialog.container.css( {
 				top : pTop,

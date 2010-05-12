@@ -215,21 +215,21 @@ function selectItem(select, value){
 					</select>\
 				</p>\
 				<p>\
-					<a href='#' class='rte-bold' title='Negrito'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-bold.png' /></a>\
-					<a href='#' class='rte-italic' title='It&aacute;lico'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-italic.png' /></a>\
-					<a href='#' class='rte-underline' title='Sublinhado'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-underline.png' /></a>\
-					<a href='#' class='rte-justifyleft' title='&Agrave; esquerda'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-justify-left.jpg' /></a>\
-					<a href='#' class='rte-justifycenter' title='Centralizado'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-justify-center.jpg' /></a>\
-					<a href='#' class='rte-justifyright' title='&Agrave; direita'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-justify-right.jpg' /></a>\
-					<a href='#' class='rte-insertorderedlist' title='Marcador'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-insert-ordered-list.jpg' /></a>\
-					<a href='#' class='rte-insertunorderedlist' title='Lista num&eacute;rica'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-insert-unordered-list.jpg' /></a>\
-					<a href='#' class='rte-link' title='Link'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-link.png' /></a>\
-					<a href='#' class='rte-image' title='Imagem'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-image.png' /></a>\
+					<a href='#' class='rte-bold' title='Negrito'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-bold.png' /></a>\
+					<a href='#' class='rte-italic' title='It&aacute;lico'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-italic.png' /></a>\
+					<a href='#' class='rte-underline' title='Sublinhado'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-underline.png' /></a>\
+					<a href='#' class='rte-justifyleft' title='&Agrave; esquerda'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-justify-left.jpg' /></a>\
+					<a href='#' class='rte-justifycenter' title='Centralizado'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-justify-center.jpg' /></a>\
+					<a href='#' class='rte-justifyright' title='&Agrave; direita'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-justify-right.jpg' /></a>\
+					<a href='#' class='rte-insertorderedlist' title='Marcador'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-insert-ordered-list.jpg' /></a>\
+					<a href='#' class='rte-insertunorderedlist' title='Lista num&eacute;rica'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-insert-unordered-list.jpg' /></a>\
+					<a href='#' class='rte-link' title='Link'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-link.png' /></a>\
+					<a href='#' class='rte-image' title='Imagem'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-image.png' /></a>\
 				</p>\
 				</div>\
 				<div class='rte-toolbar-tm'>\
 				<p>\
-					<a href='#' class='rte-disable' title='Modo HTML'><img src='"+_vulpeContextPath+"/themes/"+_vulpeTheme+"/images/rte-switch.png' /></a>\
+					<a href='#' class='rte-disable' title='Modo HTML'><img src='"+vulpe.config.contextPath+"/themes/"+vulpe.config.theme+"/images/rte-switch.png' /></a>\
 				</p></div></div>");
 			
 			// eventos do toolbar

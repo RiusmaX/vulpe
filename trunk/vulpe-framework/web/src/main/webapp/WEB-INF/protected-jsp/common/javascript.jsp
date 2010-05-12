@@ -1,3 +1,4 @@
+<script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
 <c:if test="${(vulpeCurrentLayout == 'FRONTEND' && vulpeFrontendMenuType == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && vulpeBackendMenuType == 'DROPPY')}">
@@ -13,27 +14,35 @@
 <script src="${pageContext.request.contextPath}/js/jquery.ui.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ui.datepicker.i18n.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.validation.js" type="text/javascript" charset="utf-8"></script>
-<script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/vulpe.browser.detect.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/vulpe.webtoolkit.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/vulpe.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/themes/${vulpeTheme}/js/frontend/${vulpeTheme}.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
-_vulpeContextPath = '${pageContext.request.contextPath}';
-_vulpeTheme = '${vulpeTheme}';
-_vulpeMsgSelectedExclusion = '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>';
-_vulpeMsgExclusion = '<fmt:message key="vulpe.msg.confirm.exclusion"/>';
-_vulpeMsgSelectRecordsExclusion = '<fmt:message key="vulpe.msg.select.records.exclusion"/>';
-_vulpeMsgUpload = '<fmt:message key="vulpe.error.upload"/>';
-_vulpeLightboxImageText = '<fmt:message key="vulpe.lightbox.image.text"/>';
-_vulpeLightboxOfText = '<fmt:message key="vulpe.lightbox.of.text"/>';
+vulpe.config.contextPath = '${pageContext.request.contextPath}';
+vulpe.config.theme = '${vulpeTheme}';
+vulpe.config.messages = {
+		exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',
+		fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
+		keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
+		selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
+		selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
+		required: "<fmt:message key='vulpe.error.required.simple'/>",
+		upload: '<fmt:message key="vulpe.error.upload"/>',
+		validate: "<fmt:message key='vulpe.error.validate'/>", 
+		validateMany: "<fmt:message key='vulpe.error.validate'/>"
+}
+vulpe.config.lightbox = {
+		imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
+		ofText: '<fmt:message key="vulpe.lightbox.of.text"/>',
+}
+vulpe.config.messageSlideUpTime = '${vulpeMessageSlideUpTime}';
 <c:if test="${vulpeShowAsMobile}">
-_vulpePopupMobile = true;
+vulpe.config.popup.mobile = true;
 </c:if>
-_vulpeMsgFieldRequired = '<fmt:message key="vulpe.js.error.required"/>';
-_vulpeMsgKeyRequired = '<fmt:message key="vulpe.js.error.key.required"/>';
-_vulpeClosePopupTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
-_vulpeValidateMessages = {validate: "<fmt:message key='vulpe.error.validate'/>", required: "<fmt:message key='vulpe.error.required.simple'/>"}
+vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 
 $("#alertDialog").dialog({
 	autoOpen: false,
@@ -59,8 +68,8 @@ $("#confirmationDialog").dialog({
 	buttons: {
 		Ok: function() {
 			$(this).dialog('close');
-			if (_command) {
-				_command();
+			if (vulpe.command) {
+				vulpe.command();
 			}
 		},
 		Cancel: function() {

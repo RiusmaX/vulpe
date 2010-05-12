@@ -81,6 +81,31 @@
 	padding: 1px;
 }
 
+.imageErrorMessage{
+	border: 0;
+	cursor: pointer;	
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.imageFieldLoading {
+	border: 0;
+	cursor: pointer;	
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;	
+}
+
+.imagePopupButton {
+	cursor: pointer;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
 .info, .success, .warning, .error, .validation {
     border: 1px solid;
     margin: 0px 0px 1px 0px;

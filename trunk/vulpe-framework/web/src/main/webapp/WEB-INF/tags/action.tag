@@ -109,6 +109,19 @@
 			</c:if>
 			<c:choose>
 				<c:when test="${showButtonAsImage}">
+					<c:choose>
+					<c:when test="${fn:contains(javascript, 'Popup')}">
+					<c:if test="${empty iconClass}">
+						<c:set var="iconClass" value="imagePopupButton"/>
+					</c:if>
+					<img class="${iconClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
+						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
+						width="${widthIcon}" height="${heightIcon}" border="${borderIcon}" onclick="${javascript}"/><c:if
+						test="${showButtonText}">&nbsp;
+						<fmt:message key="${labelKey}" />
+					</c:if>
+					</c:when>
+					<c:otherwise>
 					<a class="${styleClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
 						href="javascript:void(0);" onclick="${javascript}"> <img class="${iconClass}"
 						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
@@ -116,6 +129,8 @@
 						test="${showButtonText}">&nbsp;
 						<fmt:message key="${labelKey}" />
 					</c:if></a>
+					</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<c:choose>

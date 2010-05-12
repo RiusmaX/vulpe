@@ -1,480 +1,85 @@
-var BrowserDetect = {
-	init: function () {
-		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
-		this.version = this.searchVersion(navigator.userAgent)
-			|| this.searchVersion(navigator.appVersion)
-			|| "an unknown version";
-		this.OS = this.searchString(this.dataOS) || "an unknown OS";
-	},
-	searchString: function (data) {
-		for (var i=0;i<data.length;i++)	{
-			var dataString = data[i].string;
-			var dataProp = data[i].prop;
-			this.versionSearchString = data[i].versionSearch || data[i].identity;
-			if (dataString) {
-				if (dataString.indexOf(data[i].subString) != -1) {
-					return data[i].identity;
-				}
-			} else if (dataProp) {
-				return data[i].identity;
-			}
-		}
-	},
-	searchVersion: function (dataString) {
-		var index = dataString.indexOf(this.versionSearchString);
-		if (index == -1) {
-			return;
-		}
-		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
-	},
-	dataBrowser: [
-		{
-			string: navigator.userAgent,
-			subString: "Chrome",
-			identity: "Chrome"
-		},
-		{ 	string: navigator.userAgent,
-			subString: "OmniWeb",
-			versionSearch: "OmniWeb/",
-			identity: "OmniWeb"
-		},
-		{
-			string: navigator.vendor,
-			subString: "Apple",
-			identity: "Safari",
-			versionSearch: "Version"
-		},
-		{
-			prop: window.opera,
-			identity: "Opera"
-		},
-		{
-			string: navigator.vendor,
-			subString: "iCab",
-			identity: "iCab"
-		},
-		{
-			string: navigator.vendor,
-			subString: "KDE",
-			identity: "Konqueror"
-		},
-		{
-			string: navigator.userAgent,
-			subString: "Firefox",
-			identity: "Firefox"
-		},
-		{
-			string: navigator.vendor,
-			subString: "Camino",
-			identity: "Camino"
-		},
-		{		// for newer Netscapes (6+)
-			string: navigator.userAgent,
-			subString: "Netscape",
-			identity: "Netscape"
-		},
-		{
-			string: navigator.userAgent,
-			subString: "MSIE",
-			identity: "Explorer",
-			versionSearch: "MSIE"
-		},
-		{
-			string: navigator.userAgent,
-			subString: "Gecko",
-			identity: "Mozilla",
-			versionSearch: "rv"
-		},
-		{ 		// for older Netscapes (4-)
-			string: navigator.userAgent,
-			subString: "Mozilla",
-			identity: "Netscape",
-			versionSearch: "Mozilla"
-		}
-	],
-	dataOS : [
-		{
-			string: navigator.platform,
-			subString: "Win",
-			identity: "Windows"
-		},
-		{
-			string: navigator.platform,
-			subString: "Mac",
-			identity: "Mac"
-		},
-		{
-			   string: navigator.userAgent,
-			   subString: "iPhone",
-			   identity: "iPhone/iPod"
-	    },
-		{
-			string: navigator.platform,
-			subString: "Linux",
-			identity: "Linux"
-		}
-	]
-
-};
-BrowserDetect.init();
-
-var webtoolkit = {
-
-	/**
-	*
-	*  Unselectable text
-	*  http://www.webtoolkit.info/
-	*
-	**/
-	unselectable: {
-		enable : function(e) {
-			var e = e ? e : window.event;
-			if (e.button != 1) {
-				if (e.target) {
-					var targer = e.target;
-				} else if (e.srcElement) {
-					var targer = e.srcElement;
-				}
-
-				var targetTag = targer.tagName.toLowerCase();
-				if ((targetTag != "input") && (targetTag != "textarea")) {
-					return false;
-				}
-			}
-		},
-
-		disable : function () {
-			return true;
-		}
-	}
-	/*
-	if (typeof(document.onselectstart) != "undefined") {
-		document.onselectstart = Unselectable.enable;
-	} else {
-		document.onmousedown = Unselectable.enable;
-		document.onmouseup = Unselectable.disable;
-	}
-	*/,
-	/**
-	*
-	*  Base64 encode / decode
-	*  http://www.webtoolkit.info/
-	*
-	**/
-	base64: {
-		// private property
-		_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-
-		// public method for encoding
-		encode : function (input) {
-			var output = "";
-			var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-			var i = 0;
-
-			input = Base64._utf8_encode(input);
-
-			while (i < input.length) {
-
-				chr1 = input.charCodeAt(i++);
-				chr2 = input.charCodeAt(i++);
-				chr3 = input.charCodeAt(i++);
-
-				enc1 = chr1 >> 2;
-				enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-				enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-				enc4 = chr3 & 63;
-
-				if (isNaN(chr2)) {
-					enc3 = enc4 = 64;
-				} else if (isNaN(chr3)) {
-					enc4 = 64;
-				}
-
-				output = output +
-				this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
-				this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
-
-			}
-
-			return output;
-		},
-
-		// public method for decoding
-		decode : function (input) {
-			var output = "";
-			var chr1, chr2, chr3;
-			var enc1, enc2, enc3, enc4;
-			var i = 0;
-
-			input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-
-			while (i < input.length) {
-
-				enc1 = this._keyStr.indexOf(input.charAt(i++));
-				enc2 = this._keyStr.indexOf(input.charAt(i++));
-				enc3 = this._keyStr.indexOf(input.charAt(i++));
-				enc4 = this._keyStr.indexOf(input.charAt(i++));
-
-				chr1 = (enc1 << 2) | (enc2 >> 4);
-				chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-				chr3 = ((enc3 & 3) << 6) | enc4;
-
-				output = output + String.fromCharCode(chr1);
-
-				if (enc3 != 64) {
-					output = output + String.fromCharCode(chr2);
-				}
-				if (enc4 != 64) {
-					output = output + String.fromCharCode(chr3);
-				}
-
-			}
-
-			output = Base64._utf8_decode(output);
-
-			return output;
-		},
-
-		// private method for UTF-8 encoding
-		_utf8_encode : function (string) {
-			string = string.replace(/\r\n/g,"\n");
-			var utftext = "";
-
-			for (var n = 0; n < string.length; n++) {
-
-				var c = string.charCodeAt(n);
-
-				if (c < 128) {
-					utftext += String.fromCharCode(c);
-				}
-				else if((c > 127) && (c < 2048)) {
-					utftext += String.fromCharCode((c >> 6) | 192);
-					utftext += String.fromCharCode((c & 63) | 128);
-				}
-				else {
-					utftext += String.fromCharCode((c >> 12) | 224);
-					utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-					utftext += String.fromCharCode((c & 63) | 128);
-				}
-
-			}
-
-			return utftext;
-		},
-
-		// private method for UTF-8 decoding
-		_utf8_decode : function (utftext) {
-			var string = "";
-			var i = 0;
-			var c = c1 = c2 = 0;
-
-			while ( i < utftext.length ) {
-
-				c = utftext.charCodeAt(i);
-
-				if (c < 128) {
-					string += String.fromCharCode(c);
-					i++;
-				}
-				else if((c > 191) && (c < 224)) {
-					c2 = utftext.charCodeAt(i+1);
-					string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-					i += 2;
-				}
-				else {
-					c2 = utftext.charCodeAt(i+1);
-					c3 = utftext.charCodeAt(i+2);
-					string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-					i += 3;
-				}
-
-			}
-
-			return string;
-		}
-
-	},
-	/**
-	*
-	*  UTF-8 data encode / decode
-	*  http://www.webtoolkit.info/
-	*
-	**/
-	utf8: {
-		// public method for url encoding
-		encode : function (string) {
-			string = string.replace(/\r\n/g,"\n");
-			var utftext = "";
-
-			for (var n = 0; n < string.length; n++) {
-
-				var c = string.charCodeAt(n);
-
-				if (c < 128) {
-					utftext += String.fromCharCode(c);
-				}
-				else if((c > 127) && (c < 2048)) {
-					utftext += String.fromCharCode((c >> 6) | 192);
-					utftext += String.fromCharCode((c & 63) | 128);
-				}
-				else {
-					utftext += String.fromCharCode((c >> 12) | 224);
-					utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-					utftext += String.fromCharCode((c & 63) | 128);
-				}
-
-			}
-
-			return utftext;
-		},
-
-		// public method for url decoding
-		decode : function (utftext) {
-			var string = "";
-			var i = 0;
-			var c = c1 = c2 = 0;
-
-			while ( i < utftext.length ) {
-
-				c = utftext.charCodeAt(i);
-
-				if (c < 128) {
-					string += String.fromCharCode(c);
-					i++;
-				}
-				else if((c > 191) && (c < 224)) {
-					c2 = utftext.charCodeAt(i+1);
-					string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-					i += 2;
-				}
-				else {
-					c2 = utftext.charCodeAt(i+1);
-					c3 = utftext.charCodeAt(i+2);
-					string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-					i += 3;
-				}
-
-			}
-
-			return string;
-		}
-
-	},
-
-	/**
-	*
-	*  URL encode / decode
-	*  http://www.webtoolkit.info/
-	*
-	**/
-	url: {
-
-		// public method for url encoding
-		encode : function (string) {
-			return escape(this._utf8_encode(string));
-		},
-
-		// public method for url decoding
-		decode : function (string) {
-			return this._utf8_decode(unescape(string));
-		},
-
-		// private method for UTF-8 encoding
-		_utf8_encode : function (string) {
-			string = string.replace(/\r\n/g,"\n");
-			var utftext = "";
-
-			for (var n = 0; n < string.length; n++) {
-
-				var c = string.charCodeAt(n);
-
-				if (c < 128) {
-					utftext += String.fromCharCode(c);
-				} else if((c > 127) && (c < 2048)) {
-					utftext += String.fromCharCode((c >> 6) | 192);
-					utftext += String.fromCharCode((c & 63) | 128);
-				} else {
-					utftext += String.fromCharCode((c >> 12) | 224);
-					utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-					utftext += String.fromCharCode((c & 63) | 128);
-				}
-
-			}
-
-			return utftext;
-		},
-
-		// private method for UTF-8 decoding
-		_utf8_decode : function (utftext) {
-			var string = "";
-			var i = 0;
-			var c = c1 = c2 = 0;
-
-			while ( i < utftext.length ) {
-
-				c = utftext.charCodeAt(i);
-
-				if (c < 128) {
-					string += String.fromCharCode(c);
-					i++;
-				} else if((c > 191) && (c < 224)) {
-					c2 = utftext.charCodeAt(i+1);
-					string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-					i += 2;
-				} else {
-					c2 = utftext.charCodeAt(i+1);
-					c3 = utftext.charCodeAt(i+2);
-					string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-					i += 3;
-				}
-
-			}
-
-			return string;
-		}
-	}
-};
-
-var _vulpeContextPath = "";
-var _vulpeLightboxImageText = "";
-var _vulpeLightboxOfText = "";
-var _vulpeViewIsSelection = false;
-var _vulpeLogicPrepareName = "";
-var _vulpePopups = new Array();
-var _vulpePopupMobile = false;
-var _vulpeClosePopupTitle = "Close (Shortcut: Esc)";
-var _vulpeValidateForms = new Array();
-var _vulpeValidateMessages = {};
-var _vulpeShowLoading = true;
-var _vulpeErrorSufix = "_Error";
-var _vulpeErrorMsgSufix = "_ErrorMsg";
-var _vulpeModalMessages = "#modalMessages";
-var _vulpeMessages = "#messages";
-var _vulpeAlertMessage = "#alertMessage";
-var _vulpeAlertDialog = "#alertDialog";
-var _vulpeConfirmationMessage = "#confirmationMessage";
-var _vulpeConfirmationDialog = "#confirmationDialog";
-var _vulpeFieldError = "fieldError";
-var _vulpeMsgFieldRequired = " is required.";
-var _vulpeMsgKeyRequired = "Key is required.";
-var _vulpeMsgExclusion = "";
-var _vulpeMsgSelectRecordsExclusion = "";
-var _vulpeMsgSelectedExclusion = "";
-var _vulpeMsgUpload = "";
-var _vulpeTheme = "";
-var _vulpeActionSufix = ".action";
-var _vulpeSpringSecurityCheck = "j_spring_security_check";
-var _vulpeIdentifier = "_id";
-var _vulpePagingPage = "_paging.page";
-var _vulpeEntity = "_entity.";
-var _command = function() {};
-var _iPhone = (BrowserDetect.OS == "iPhone/iPod");
-var _iPhonePopupTop = 0;
-var _firefox = (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla");
-var _ie = (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer");
-var _webkit = (BrowserDetect.browser == "Chrome" || BrowserDetect.browser == "Safari");
+/**
+ * Vulpe Framework - Copyright 2010 Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 var vulpe = {
-	util: { // vulpe.util
+	command: function() {},
+	//vulpe.config
+	config: {
+		browser: {
+			firefox: (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla"),
+			ie: (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer"),
+			webkit: (BrowserDetect.browser == "Chrome" || BrowserDetect.browser == "Safari")
+		},
+		contextPath: '',
+		css: {
+			fieldError: 'fieldError'
+		},
+		entity: '_entity.',
+		identifier: '_id',
+		iPhone: {
+			popupTop: 0
+		},
+		layers: {
+			alertDialog: "#alertDialog",
+			alertMessage: "#alertMessage",
+			confirmationDialog: "#confirmationDialog",
+			confirmationMessage: "#confirmationMessage",
+			messages: "#messages",
+			modalMessages: "#modalMessages"
+		},
+		lightbox: {
+			imageText: 'vulpe.lightbox.image.text',
+			ofText: 'vulpe.lightbox.of.text'
+		},
+		logic: {
+			prepareName: ''
+		},
+		messages: {
+			exclusion: 'vulpe.msg.confirm.exclusion',
+			fieldRequired: 'vulpe.js.error.required',
+			keyRequired: 'vulpe.js.error.key.required',
+			selectedExclusion: 'vulpe.msg.confirm.selected.exclusion',
+			selectRecordsExclusion: 'vulpe.msg.select.records.exclusion',
+			required:'vulpe.error.required.simple',
+			upload: 'vulpe.error.upload',
+			validate: 'vulpe.error.validate', 
+			validateMany: 'vulpe.error.validate'
+		},
+		messageSlideUpTime: 10000,
+		os: {
+			iPhone: (BrowserDetect.OS == "iPhone/iPod")
+		},
+		pagingPage: '_paging.page',
+		prefix: {
+			popup: "Popup_"
+		},
+		popup: {
+			closeTitle: "Close (Shortcut: Esc)",
+			mobile: false
+		},
+		showLoading: true,
+		springSecurityCheck: "j_spring_security_check",
+		suffix: {
+			action: '.action',
+			errorMessage: '_ErrorMessage',
+			selectTab: '_selectedTab'
+		},
+		theme: 'default'
+	},
+	// vulpe.util
+	util: { 
 		get: function(id, parent) {
 			if (vulpe.util.isEmpty(id)) {
 				return null;
@@ -496,7 +101,7 @@ var vulpe = {
 		},
 
 		getPrefixId: function(formName) {
-			var prefix = formName + "_" + (_vulpeLogicPrepareName == "" ? "" : _vulpeLogicPrepareName + ".");
+			var prefix = formName + "_" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + ".");
 			return prefix
 		},
 
@@ -513,29 +118,30 @@ var vulpe = {
 		},
 
 		getURLComplete: function(url) {
-			if (url.indexOf(_vulpeContextPath) == -1) {
-				url = _vulpeContextPath + '/' + url;
+			if (url.indexOf(vulpe.config.contextPath) == -1) {
+				url = vulpe.config.contextPath + '/' + url;
 			}
-			if (url.indexOf(_vulpeSpringSecurityCheck) == -1 && url.indexOf(_vulpeActionSufix) == -1) {
-				url = url + _vulpeActionSufix;
+			if (url.indexOf(vulpe.config.springSecurityCheck) == -1 && url.indexOf(vulpe.config.suffix.action) == -1) {
+				url = url + vulpe.config.suffix.action;
 			}
 			return url;
 		},
 
-		focusFirst: function() {
-			var fields = jQuery('input[type!=checkbox][class$=focused]');
+		focusFirst: function(layer) {
+			var token = "input[type!=checkbox][class*=focused]";
+			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
 			if (fields && fields.length > 0) {
-				var index = 0;
-				var field = jQuery(fields[index]);
-				if (field) {
+				for (var i = 0; i < fields.length; i++) {
+					var field = jQuery(fields[i]);
 					var type = field.attr("type");
-					if (type == "text" || type == "password" || type == "select-one") {
+					if ((type == "text" || type == "password" || type == "select-one") && field.val() == "") {
 						field.focus();
+						break;
 					}
 				}
 			}
 		},
-
+		
 		controlMultiselect: function(id, check) {
 			var multiselect = vulpe.util.get(id);
 			var content = multiselect.val();
@@ -550,7 +156,7 @@ var vulpe = {
 		},
 
 		selectTab: function(formName, index) {
-			var selectedTab = vulpe.util.get(formName + "_selectedTab");
+			var selectedTab = vulpe.util.get(formName + vulpe.config.suffix.selectedTab);
 			selectedTab.val(index);
 		},
 
@@ -596,7 +202,7 @@ var vulpe = {
 				var value = list[i].split(delimValue);
 				var elementId = value[0];
 				var element = vulpe.util.getElement(elementId);
-				if (element != null && element.className.indexOf(_vulpeFieldError) != -1) {
+				if (element != null && element.className.indexOf(vulpe.config.css.fieldError) != -1) {
 					vulpe.exception.hideFieldError(element);
 				}
 				var returnedValue = null;
@@ -651,45 +257,47 @@ var vulpe = {
 		},
 
 		getVulpeValidateForms: function(formName) {
-			for (i = 0; i < _vulpeValidateForms.length; i++) {
-				if (_vulpeValidateForms[i].name == formName) {
+			for (i = 0; i < vulpe.validate.forms.length; i++) {
+				if (vulpe.validate.forms[i].name == formName) {
 					return i;
 				}
 			}
-			return _vulpeValidateForms.length;
+			return vulpe.validate.forms.length;
 		},
 
 		getVulpePopup: function(popupName) {
-			for (i = 0; i < _vulpePopups.length; i++) {
-				if (_vulpePopups[i] == popupName) {
+			for (i = 0; i < vulpe.view.popups.length; i++) {
+				if (vulpe.view.popups[i] == popupName) {
 					return i;
 				}
 			}
-			return _vulpePopups.length;
+			return vulpe.view.popups.length;
 		},
 
 		setVulpePopup: function(popupName) {
-			_vulpePopups[_vulpePopups.length] = popupName;
+			vulpe.view.popups[vulpe.view.popups.length] = popupName;
 		},
 
 		existsVulpePopups: function(popupName) {
 			if (vulpe.util.isNotEmpty(popupName)) {
-				var vulpePopup = _vulpePopups[vulpe.util.getVulpePopup(popupName)];
+				var vulpePopup = vulpe.view.popups[vulpe.util.getVulpePopup(popupName)];
 				if (vulpePopup && vulpePopup != null) {
 					return true;
 				}
-			} else if (_vulpePopups.length > 0) {
+			} else if (vulpe.view.popups.length > 0) {
 				return true;
 			}
 			return false;
 		},
 
 		getLastVulpePopup: function() {
-			return _vulpePopups[_vulpePopups.length-1];
+			return vulpe.view.popups[vulpe.view.popups.length-1];
 		}
 	},
-
-	validate: { // vulpe.validate
+	// vulpe.validate
+	validate: { 
+		forms: new Array(),
+		
 		isArray: function(obj) {
 			if (obj.length) {
 				return true;
@@ -812,7 +420,7 @@ var vulpe = {
 				return false;
 			}
 
-			var atomPat = new RegExp(atom,"g");
+			var atomPat = new RegExp(atom, "g");
 			var domArr = domain.match(atomPat);
 			var len = domArr.length;
 			if ((domArr[domArr.length-1].length < 2) || (domArr[domArr.length-1].length > 3)) {
@@ -1108,14 +716,14 @@ var vulpe = {
 
 		validateAttributes: function(formName) {
 			var valid = true;
-			if (_vulpeValidateForms && _vulpeValidateForms.length > 0) {
-				var vulpeValidateAttributes = _vulpeValidateForms[vulpe.util.getVulpeValidateForms(formName)].attributes;
+			if (vulpe.validate.forms && vulpe.validate.forms.length > 0) {
+				var vulpeValidateAttributes = vulpe.validate.forms[vulpe.util.getVulpeValidateForms(formName)].attributes;
 				if (vulpeValidateAttributes && vulpeValidateAttributes.length > 0) {
 					for (i = 0; i < vulpeValidateAttributes.length; i++) {
 						var attributeName = vulpeValidateAttributes[i].name;
 						var attributeLabel = vulpeValidateAttributes[i].label;
 						var attributeDescription = vulpeValidateAttributes[i].description;
-						var elementId = formName + _vulpeEntity + attributeName;
+						var elementId = formName + vulpe.config.entity + attributeName;
 
 						var elementIdPk = null;
 						var elementIdLookup = null;
@@ -1132,8 +740,7 @@ var vulpe = {
 						var element = vulpe.util.getElement((elementIdPk != null ? elementIdPk : elementId));
 						if (element) {
 							if (element.value == "") {
-								var messageRequired = _vulpeValidateMessages.required;
-								//vulpe.exception.setupError((elementIdLookup != null ? elementIdLookup : elementId), messageRequired.replace("{0}", (attributeLabel)));
+								var messageRequired = vulpe.config.messages.required;
 								vulpe.exception.setupError((elementIdLookup != null ? elementIdLookup : elementId), messageRequired);
 								valid = false;
 							} else {
@@ -1146,25 +753,25 @@ var vulpe = {
 					}
 					if (!valid) {
 						vulpe.exception.focusFirstError(formName);
-						var msgLayer = _vulpeMessages;
+						var messageLayer = vulpe.config.layers.messages;
 						if (vulpe.util.existsVulpePopups()) {
-							msgLayer += "Popup_" + vulpe.util.getLastVulpePopup();
+							messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 						}
-						$(msgLayer).removeClass("error");
-						$(msgLayer).removeClass("success");
-						$(msgLayer).addClass("validation");
-						$(msgLayer).html("<ul><li class='alertError'>" + _vulpeValidateMessages.validate + "</li></ul>");
-						$(msgLayer).slideDown("slow");
+						$(messageLayer).removeClass("error");
+						$(messageLayer).removeClass("success");
+						$(messageLayer).addClass("validation");
+						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.validate + "</li></ul>");
+						$(messageLayer).slideDown("slow");
 						setTimeout(function() {
-						  $(msgLayer).slideUp("slow");
-						}, 5000);
+							$(messageLayer).slideUp("slow");
+						}, vulpe.config.messageSlideUpTime);
 					}
 				}
 			}
 			if (valid) {
 				var parent = "";
 				if (vulpe.util.existsVulpePopups()) {
-					parent += "Popup_" + vulpe.util.getLastVulpePopup();
+					parent += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 				}
 				var fields = jQuery("input[type!=checkbox][class*='required']", parent);
 				if (fields && fields.length > 0) {
@@ -1173,8 +780,8 @@ var vulpe = {
 						if (field) {
 							var type = field.attr("type");
 							if (type == "text" || type == "password" || type == "select-one") {
-								if (field.val() == "") {
-									var messageRequired = _vulpeValidateMessages.required;
+								if (field.val() == "" || (field.attr("class").indexOf("hasDatepicker") != -1 && field.val() == "__/__/____")) {
+									var messageRequired = vulpe.config.messages.required;
 									var idField = field.attr("id");
 									vulpe.exception.setupError(idField, messageRequired);
 									valid = false;
@@ -1184,18 +791,18 @@ var vulpe = {
 					}
 					if (!valid) {
 						vulpe.exception.focusFirstError(formName);
-						var msgLayer = _vulpeMessages;
+						var messageLayer = vulpe.config.layers.messages;
 						if (vulpe.util.existsVulpePopups()) {
-							msgLayer += "Popup_" + vulpe.util.getLastVulpePopup();
+							messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 						}
-						$(msgLayer).removeClass("error");
-						$(msgLayer).removeClass("success");
-						$(msgLayer).addClass("validation");
-						$(msgLayer).html("<ul><li class='alertError'>" + _vulpeValidateMessages.validate + "</li></ul>");
-						$(msgLayer).slideDown("slow");
+						$(messageLayer).removeClass("error");
+						$(messageLayer).removeClass("success");
+						$(messageLayer).addClass("validation");
+						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.validate + "</li></ul>");
+						$(messageLayer).slideDown("slow");
 						setTimeout(function() {
-						  $(msgLayer).slideUp("slow");
-						}, 5000);
+							$(messageLayer).slideUp("slow");
+						}, vulpe.config.messageSlideUpTime);
 					}
 				}
 			}
@@ -1220,25 +827,21 @@ var vulpe = {
 		},
 
 	},
-
-	view: { // vulpe.view
-		redirectLogin: function() {
-			window.location = _vulpeContextPath + "/login.action";
-		},
-
+	// vulpe.view
+	view: { 
 		confirmExclusion: function(command) {
-			_command = command;
-			$(_vulpeConfirmationMessage).html(_vulpeMsgExclusion);
-			$(_vulpeConfirmationDialog).dialog('open');
+			vulpe.command = command;
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.exclusion);
+			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 
 		confirmSelectedExclusion: function() {
-			$(_vulpeConfirmationMessage).html(_vulpeMsgSelectedExclusion);
-			$(_vulpeConfirmationDialog).dialog('open');
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 
 		prepareRead: function(formName) {
-			vulpe.util.getElement(formName + _vulpePagingPage).value = '';
+			vulpe.util.getElement(formName + vulpe.config.pagingPage).value = '';
 			return true;
 		},
 
@@ -1250,6 +853,10 @@ var vulpe = {
 			jQuery(':input', vulpe.util.get(layer)).clearFields();
 		},
 
+		isSelection: false,
+		
+		popups: new Array(),
+		
 		resetFields: function(formName) {
 			vulpe.util.get(formName).resetForm();
 			return true;
@@ -1266,7 +873,7 @@ var vulpe = {
 
 		sortTable: function(sortPropertyInfo, property) {
 			var columns = vulpe.util.getElement(sortPropertyInfo).value.split(',');
-			var eraDesc = false;
+			var oldDesc = false;
 			var order = '';
 			var i=0;
 			var value = '';
@@ -1280,7 +887,7 @@ var vulpe = {
 							value = value + ',' + vulpe.util.trim(columns[i]) + ' desc';
 						}
 					} else {
-						eraDesc = true;
+						oldDesc = true;
 					}
 				} else {
 					if (value == '') {
@@ -1297,7 +904,7 @@ var vulpe = {
 				} else {
 					value = value + ', ' + property;
 				}
-			} else if (order == 'desc' && eraDesc) {
+			} else if (order == 'desc' && oldDesc) {
 				order = '';
 			}
 			vulpe.util.getElement(sortPropertyInfo).value = value;
@@ -1305,7 +912,7 @@ var vulpe = {
 		},
 
 		setSelectCheckbox: function(select) {
-			_vulpeViewIsSelection = select;
+			vulpe.view.isSelection = select;
 		},
 
 		markUnmarkAll: function(controller) {
@@ -1388,7 +995,7 @@ var vulpe = {
 		loading: null,
 
 		showLoading: function() {
-			if (_vulpeShowLoading) {
+			if (vulpe.config.showLoading) {
 				vulpe.view.loading = jQuery('#loading').modal({
 					overlayId: 'overlayLoading',
 					containerId: 'containerLoading',
@@ -1405,8 +1012,8 @@ var vulpe = {
 		},
 
 		showMessages: function() {
-			jQuery(_vulpeModalMessages).modal({
-				closeTitle: 'Fechar',
+			jQuery(vulpe.config.layers.modalMessages).modal({
+				closeTitle: vulpe.config.popup.closeTitle,
 				overlayId: 'overlayMessages',
 				containerId: 'containerMessages',
 				onClose: function (dialog) {
@@ -1427,7 +1034,7 @@ var vulpe = {
 
 		showPopup: function(elementId, popupWidth) {
 			var popup = vulpe.util.get(elementId).modal({
-				closeTitle: _vulpeClosePopupTitle,
+				closeTitle: vulpe.config.popup.closeTitle,
 				overlayId: 'overlay' + elementId,
 				containerId: 'container' + elementId,
 				iframeCss: {zIndex: 2000},
@@ -1437,7 +1044,7 @@ var vulpe = {
 					this.close(true);
 					eval('window.' + elementId + ' = undefined;');
 					vulpe.util.get(elementId).remove();
-					vulpe.util.removeArray(_vulpePopups, vulpe.util.getVulpePopup(elementId));
+					vulpe.util.removeArray(vulpe.view.popups, vulpe.util.getVulpePopup(elementId));
 				}
 			});
 			jQuery(document).bind("keydown", "Esc", function(evt) {
@@ -1453,10 +1060,8 @@ var vulpe = {
 
 		request: { // vulpe.view.request
 			openPopup: function(url, width, height, popupName) {
-				// define center screen
-				var left = (screen.width - width)/2;
-				var top = (screen.height - height)/2;
-				// open new window
+				var left = (screen.width - width) / 2;
+				var top = (screen.height - height) / 2;
 				return window.open(url, popupName, 'height=' + height + ', width=' + width + ', top=' + top + ', left=' + left);
 			},
 
@@ -1470,7 +1075,7 @@ var vulpe = {
 
 			registerFunctions: function(v_array, v_callback, v_key, v_layerFields) {
 				if (typeof v_key == "undefined") {
-					throw _vulpeMsgKeyRequired;
+					throw vulpe.config.messages.keyRequired;
 				}
 				if (typeof v_layerFields == "undefined") {
 					v_layerFields = '';
@@ -1502,7 +1107,7 @@ var vulpe = {
 
 			removeFunctions: function(v_array, v_key, v_layerFields) {
 				if (typeof v_key == "undefined") {
-					throw _vulpeMsgKeyRequired;
+					throw vulpe.config.messages.keyRequired;
 				}
 				if (typeof v_layerFields == "undefined") {
 					v_layerFields = '';
@@ -1564,34 +1169,34 @@ var vulpe = {
 
 			submitPaging: function(page, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
 				vulpe.view.resetFields(formName);
-				vulpe.util.getElement(formName + _vulpePagingPage).value = page;
+				vulpe.util.getElement(formName + vulpe.config.pagingPage).value = page;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
 			submitView: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
-				if (_vulpeViewIsSelection) {
+				if (vulpe.view.isSelection) {
 					return false;
 				}
-				vulpe.util.getElement(formName + _vulpeIdentifier).value = id;
-				paging = vulpe.util.getElement(formName + _vulpePagingPage);
+				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;
+				paging = vulpe.util.getElement(formName + vulpe.config.pagingPage);
 				if (paging) {
-					vulpe.util.getElement(formName + _vulpePagingPage).value = 0;
+					vulpe.util.getElement(formName + vulpe.config.pagingPage).value = 0;
 				}
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
 			submitUpdate: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
-				if (_vulpeViewIsSelection) {
+				if (vulpe.view.isSelection) {
 					return false;
 				}
 				vulpe.view.resetFields(formName);
-				vulpe.util.getElement(formName + _vulpeIdentifier).value = id;
+				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
 			submitDelete: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
 				vulpe.view.resetFields(formName);
-				vulpe.util.getElement(formName + _vulpeIdentifier).value = id;
+				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
@@ -1608,8 +1213,8 @@ var vulpe = {
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
 				if (count > 0) {
-					$(_vulpeConfirmationMessage).html(_vulpeMsgSelectedExclusion);
-					$(_vulpeConfirmationDialog).dialog({
+					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
 						bgiframe: true,
 						resizable: false,
@@ -1635,10 +1240,10 @@ var vulpe = {
 							}
 						}
 					});
-					$(_vulpeConfirmationDialog).dialog('open');
+					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					$(_vulpeAlertMessage).html(_vulpeMsgSelectRecordsExclusion);
-					$(_vulpeAlertDialog).dialog('open');
+					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},
 
@@ -1651,8 +1256,8 @@ var vulpe = {
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
 				if (count > 0) {
-					$(_vulpeConfirmationMessage).html(_vulpeMsgSelectedExclusion);
-					$(_vulpeConfirmationDialog).dialog({
+					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
 						bgiframe: true,
 						resizable: false,
@@ -1679,11 +1284,10 @@ var vulpe = {
 							}
 						}
 					});
-					$(_vulpeConfirmationDialog).dialog('open');
+					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					//alert(_vulpeMsgSelectRecordsExclusion);
-					$(_vulpeAlertMessage).html(_vulpeMsgSelectRecordsExclusion);
-					$(_vulpeAlertDialog).dialog('open');
+					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},
 
@@ -1694,8 +1298,8 @@ var vulpe = {
 					}
 				}
 				var form = vulpe.util.getElement(formName);
-				if (actionURL.indexOf(_vulpeContextPath) == -1 && actionURL.indexOf(_vulpeActionSufix) == -1) {
-					actionURL = _vulpeContextPath + '/' + actionURL + _vulpeActionSufix;
+				if (actionURL.indexOf(vulpe.config.contextPath) == -1 && actionURL.indexOf(vulpe.config.suffix.action) == -1) {
+					actionURL = vulpe.config.contextPath + '/' + actionURL + vulpe.config.suffix.action;
 				}
 				form.action = actionURL;
 				vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
@@ -1704,7 +1308,7 @@ var vulpe = {
 			submitLoginForm: function(formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				var form = vulpe.util.getElement(formName);
 				if (vulpe.validate.validateLoginForm(formName)) {
-					form.action = _vulpeContextPath + '/' + _vulpeSpringSecurityCheck;
+					form.action = vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck;
 					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
 				}
 			},
@@ -1729,10 +1333,11 @@ var vulpe = {
 			},
 
 			submitForm: function(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, isFile) {
-				jQuery(_vulpeMessages).hide();
+				jQuery(vulpe.config.layers.messages).hide();
 				// verifier if exists validations before submit
-				if (!vulpe.view.request.submitBefore(beforeJs))
+				if (!vulpe.view.request.submitBefore(beforeJs)) {
 					return false;
+				}
 				beforeJs = ''; // set empty do not validate on submitPage
 				try {
 					vulpe.view.request.invokeGlobalsBeforeJs(layerFields);
@@ -1752,7 +1357,7 @@ var vulpe = {
 						// do nothing
 					}
 
-					jQuery("." + _vulpeFieldError, vulpe.util.get(layerFields)).each(function (i) {
+					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(layerFields)).each(function (i) {
 						vulpe.exception.hideError(this);
 					});
 
@@ -1783,8 +1388,8 @@ var vulpe = {
 			},
 
 			submitMenu: function(url, beforeJs, afterJs) {
-				jQuery(_vulpeMessages).hide();
-				return vulpe.view.request.submitPage(_vulpeContextPath + url, '', 'body', beforeJs, afterJs);
+				jQuery(vulpe.config.layers.messages).hide();
+				return vulpe.view.request.submitPage(vulpe.config.contextPath + url, '', 'body', beforeJs, afterJs);
 			},
 
 			submitPopup: function(url, queryString, popupName, popupLayerParent, paramLayerParent, popupProperties, popupExpressions, paramProperties, paramExpressions, requiredParamProperties, requiredParamExpressions, styleClass, beforeJs, afterJs, popupWidth) {
@@ -1809,7 +1414,7 @@ var vulpe = {
 					//alert(e);
 					return false;
 				}
-				if (!vulpe.view.request.submitPage(_vulpeContextPath + url, queryString, popupName, beforeJs, afterJs)) {
+				if (!vulpe.view.request.submitPage(vulpe.config.contextPath + url, queryString, popupName, beforeJs, afterJs)) {
 					popup.remove();
 					return false;
 				} else {
@@ -1827,7 +1432,7 @@ var vulpe = {
 					if (vulpe.util.isEmpty(value)) {
 						var name = (element.attr('title') ? element.attr('title') : 'Value');
 						element.focus();
-						throw name + _vulpeMsgFieldRequired;
+						throw name + vulpe.config.messages.fieldRequired;
 					}
 					queryParam = queryParam + '&' + c + '=' + escape(value);
 				});
@@ -1842,7 +1447,7 @@ var vulpe = {
 					if (vulpe.util.isEmpty(value)) {
 						var name = (element.attr('title') ? element.attr('title') : 'Value');
 						element.focus();
-						throw name + _vulpeMsgFieldRequired;
+						throw name + vulpe.config.messages.fieldRequired;
 					}
 					queryParam = queryParam + '&' + c + '=' + escape(value);
 				});
@@ -1906,17 +1511,15 @@ var vulpe = {
 					data: queryString,
 					success: function (data, status) {
 						vulpe.view.hideLoading();
-						_vulpeShowLoading = true;
+						vulpe.config.showLoading = true;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						//} else if (data.indexOf('j_username') != -1) {
-						//	vulpe.view.redirectLogin();
 						} else {
 							try {
 								var html = "";
 								if (vulpe.util.existsVulpePopups(layer)) {
-									var msgPopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"messages\"></div>";
-									html = msgPopup + data;
+									var messagePopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"messages\"></div>";
+									html = messagePopup + data;
 								} else {
 									html = data;
 								}
@@ -1947,11 +1550,11 @@ var vulpe = {
 
 			submitAjax: function(formName, uri, id, beforeJs, afterJs, individualLoading) {
 				var form = vulpe.util.getElement(formName);
-				form.action = _vulpeContextPath + uri;
+				form.action = vulpe.config.contextPath + uri;
 				var layerFields = formName;
 
 				if (individualLoading) {
-					_vulpeShowLoading = false;
+					vulpe.config.showLoading = false;
 					var elements = jQuery("select,input,span", "#" + id);
 					for (var i = 0; i < elements.length; i++) {
 						var elementId = elements[i].id;
@@ -1965,47 +1568,26 @@ var vulpe = {
 			}
 		}
 	},
-
-	exception: { // vulpe.exception
+	// vulpe.exception
+	exception: { 
 		focusFirstError: function(layerFields) {
-			var fields = jQuery("." + _vulpeFieldError, vulpe.util.get(layerFields));
+			var fields = jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(layerFields));
 			if (fields && fields.length > 0) {
-				for (var i = 0; i < fields.length; i++) {
-					var field = jQuery(fields[i]);
-					if (field.attr("className").indexOf("hasDatepicker") == -1) {
-						field.focus();
-						break;
-					}
+				var field = jQuery(fields[0]);
+				if (field) {
+					field.focus();
 				}
 			}
 		},
 
-		setupError: function(fieldName, msgs) {
-			vulpe.util.get(fieldName + _vulpeErrorSufix).show();
-			var msgSuffix = fieldName + _vulpeErrorMsgSufix;
-			vulpe.util.get(msgSuffix).attr("title", msgs);
-			vulpe.util.get(fieldName).addClass(_vulpeFieldError);
-			vulpe.util.get(msgSuffix).tooltip({
-				opacity: 0.7,
-				effect: 'slide'
-			}).dynamic({
-				bottom: { 
-					direction: 'down', 
-					bounce: true 
-				}
+		setupError: function(fieldName, message) {
+			var messageSuffix = fieldName + vulpe.config.suffix.errorMessage;
+			vulpe.util.get(messageSuffix).attr("title", message);
+			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
+			vulpe.util.get(messageSuffix).tooltip({
+				opacity: 0.9
 			});
-			//vulpe.util.get(msgSuffix).tooltip({opacity: 0.7});
-			/*
-			vulpe.util.get(fieldName).attr("title", msgs);
-			vulpe.util.get(fieldName).tooltip({
-				events: {
-				input:"mouseover,mouseout"
-				},
-				opacity: 0.7
-				}
-			);
-			*/
-
+			vulpe.util.get(messageSuffix).show();
 			var errorController = function () {
 				if (this.value.length == 0) {
 					vulpe.exception.showFieldError(this);
@@ -2021,8 +1603,8 @@ var vulpe = {
 
 		showFieldError: function(element) {
 			if (element) {
-				jQuery(element).addClass(_vulpeFieldError);
-				var error = vulpe.util.get(element.id + _vulpeErrorSufix);
+				jQuery(element).addClass(vulpe.config.css.fieldError);
+				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
 				if (error) {
 					error.show();
 				}
@@ -2031,8 +1613,8 @@ var vulpe = {
 
 		hideFieldError: function(element) {
 			if (element) {
-				jQuery(element).removeClass(_vulpeFieldError);
-				var error = vulpe.util.get(element.id + _vulpeErrorSufix);
+				jQuery(element).removeClass(vulpe.config.css.fieldError);
+				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
 				if (error) {
 					error.hide();
 				}
@@ -2040,8 +1622,8 @@ var vulpe = {
 		},
 
 		hideError: function(element) {
-			jQuery(element).removeClass(_vulpeFieldError);
-			vulpe.util.get(element.id + _vulpeErrorSufix).hide();
+			jQuery(element).removeClass(vulpe.config.css.fieldError);
+			vulpe.util.get(element.id + vulpe.config.suffix.errorMessage).hide();
 		},
 
 		handlerError: function(data, status, e) {
@@ -2050,33 +1632,28 @@ var vulpe = {
 					data = data.responseText;
 				}
 				if (data.indexOf("\"alertError\"") != -1) {
-					jQuery(_vulpeMessages).html(data);
+					jQuery(vulpe.config.layers.messages).html(data);
 				} else {
-					jQuery(_vulpeModalMessages).html(data);
+					jQuery(vulpe.config.layers.modalMessages).html(data);
 				}
 			} else {
-				jQuery(_vulpeMessages).html("Erro fatal: " + e);
+				jQuery(vulpe.config.layers.messages).html("Erro fatal: " + e);
 			}
 			if (data.indexOf("\"alertError\"") == -1) {
-				jQuery(_vulpeModalMessages).removeClass("success");
-				jQuery(_vulpeModalMessages).removeClass("validation");
-				jQuery(_vulpeModalMessages).addClass("error");
+				jQuery(vulpe.config.layers.modalMessages).removeClass("success");
+				jQuery(vulpe.config.layers.modalMessages).removeClass("validation");
+				jQuery(vulpe.config.layers.modalMessages).addClass("error");
 				vulpe.view.showMessages();
 			}
 		},
 
 		showError: function(config) {
-			vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorSufix).style.display = 'inline';
-			if (vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorMsgSufix).innerHTML.length == 9) {
-				vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorMsgSufix).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorMsgSufix).innerHTML + config.msg;
+			vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).style.display = 'inline';
+			if (vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML.length == 9) {
+				vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML + config.msg;
 			} else {
-				vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorMsgSufix).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + _vulpeErrorMsgSufix).innerHTML + '<br>' + config.msg;
+				vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML + '<br>' + config.msg;
 			}
-		},
-
-		prepareError: function(form, name) {
-			vulpe.util.getElement(form + '_' + name + _vulpeErrorSufix).style.display = 'none';
-			vulpe.util.getElement(form + '_' + name + _vulpeErrorMsgSufix).innerHTML = '<em></em>';
 		}
 	}
 };
