@@ -21,6 +21,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 <#else>
 	property="${field.name}"
 </#if>
+<#if field.required>
+	required="${field.required}"
+</#if>
 <#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
 	mask="${field.mask}"
@@ -88,6 +91,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 				<#else>
 				property="${field.name}"
 				</#if>
+				<#if field.required>
+				required="${field.required}"
+				</#if>
 				<#if field.width?has_content>
 				width="${field.width}"
 				</#if>
@@ -125,6 +131,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	property="${field.name}.${field.itemKey}"
 <#else>
 	property="${field.name}"
+</#if>
+<#if field.required>
+	required="${field.required}"
 </#if>
 <#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
@@ -193,6 +202,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 			<#list detail.fields as detailField>
 			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
 				<v:${detailField.type} property="${detailField.name}"
+				<#if detailField.required>
+				required="${detailField.required}"
+				</#if>			
 				<#if detailField.type == 'selectPopup'>
 					identifier="${detailField.identifier}" description="${detailField.description}"
 					action="${detailField.action}" popupId="${detailField.name}SelectPopup"
@@ -273,6 +285,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					property="${field.name}.${field.itemKey}"
 				<#else>
 					property="${field.name}"
+				</#if>
+				<#if field.required>
+					required="${field.required}"
 				</#if>
 				<#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 					<#if field.mask?has_content>

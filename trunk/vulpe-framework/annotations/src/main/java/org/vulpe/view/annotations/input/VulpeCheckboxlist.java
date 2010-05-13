@@ -24,7 +24,7 @@ public @interface VulpeCheckboxlist {
 
 	String enumeration() default "";
 
-	boolean validate() default false;
+	boolean required() default false;
 
 	boolean argument() default false;
 

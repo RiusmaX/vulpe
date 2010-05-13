@@ -20,13 +20,12 @@ import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
 import com.sun.mirror.declaration.FieldDeclaration;
 
-public class ForAllControllerTemplateStrategy extends
-		VulpeForAllTemplateStrategy {
+public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	@Override
 	public boolean preProcess(final TemplateBlock block,
-			final TemplateOutput<TemplateBlock> output,
-			final TemplateModel model) throws IOException, TemplateException {
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model)
+			throws IOException, TemplateException {
 		if (super.preProcess(block, output, model)
 				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
@@ -34,34 +33,28 @@ public class ForAllControllerTemplateStrategy extends
 					"org.vulpe.model.entity.VulpeBaseSimpleEntity")) {
 				return false;
 			}
-			final CodeGenerator codeGenerator = clazz
-					.getAnnotation(CodeGenerator.class);
+			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
 			if (codeGenerator == null
-					|| (codeGenerator.controller().length == 1 && codeGenerator
-							.controller()[0].controllerType().equals(
-							ControllerType.NONE))) {
+					|| (codeGenerator.controller().length == 1 && codeGenerator.controller()[0]
+							.controllerType().equals(ControllerType.NONE))) {
 				return false;
 			}
 			final DecoratedController controller = new DecoratedController();
 			controller.setName(clazz.getSimpleName());
 			controller.setPackageName(clazz.getPackage().toString());
-			controller.setServicePackageName(StringUtils.replace(clazz
-					.getPackage().toString(), ".entity", ".services"));
-			controller.setControllerPackageName(StringUtils.replace(clazz
-					.getPackage().toString(), ".model.entity",
-					".controller.action"));
+			controller.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(),
+					".entity", ".services"));
+			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),
+					".model.entity", ".controller.action"));
 			controller.setModuleName(getModuleName(clazz));
 
 			if (clazz.getSuperclass() != null
-					&& !getClassName(clazz.getSuperclass()).equals(
-							Object.class.getName())
+					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
 					&& !getClassName(clazz.getSuperclass()).equals(
 							AbstractVulpeBaseEntityImpl.class.getName())) {
-				controller
-						.setSuperclassName(getClassName(clazz.getSuperclass()));
-				controller.setControllerSuperclassName(StringUtils.replace(
-						controller.getSuperclassName(), ".model.entity",
-						".controller.action"));
+				controller.setSuperclassName(getClassName(clazz.getSuperclass()));
+				controller.setControllerSuperclassName(StringUtils.replace(controller
+						.getSuperclassName(), ".model.entity", ".controller.action"));
 			}
 
 			final List<String> types = new ArrayList<String>();
@@ -87,8 +80,7 @@ public class ForAllControllerTemplateStrategy extends
 						detail.setDespiseFields(despiseFields.toString());
 						detail.setDetailNews(detailConfig.detailNews());
 						detail.setName(detailConfig.name());
-						detail.setParentDetailName(detailConfig
-								.parentDetailName());
+						detail.setParentDetailName(detailConfig.parentDetailName());
 						detail.setPropertyName(detailConfig.propertyName());
 						detail.setView(detailConfig.view());
 						details.add(detail);
@@ -109,19 +101,19 @@ public class ForAllControllerTemplateStrategy extends
 							}
 						}
 					}
-					controller.setTabularDespiseFields(tabularDespise
-							.toString());
-					controller
-							.setTabularDetailNews(control.tabularDetailNews());
+					controller.setTabularDespiseFields(tabularDespise.toString());
+					controller.setTabularDetailNews(control.tabularDetailNews());
 					controller.setTabularName(control.tabularName());
-					controller.setTabularPropertyName(control
-							.tabularPropertyName());
+					controller.setTabularPropertyName(control.tabularPropertyName());
 				}
 			}
 			controller.setTypes(types);
 
-			final FieldDeclaration field = getField(clazz, "id");
-			controller.setIdType(field.getType().toString());
+			controller.setIdType(getIDType(clazz.getSuperclass()));
+			if (controller.getIdType() == null) {
+				final FieldDeclaration field = getField(clazz, "id");
+				controller.setIdType(field.getType().toString());
+			}
 
 			prepareMethods(clazz, controller);
 

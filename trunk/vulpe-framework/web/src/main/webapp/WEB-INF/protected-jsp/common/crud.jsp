@@ -99,12 +99,3 @@
 		</script>
 	</c:if>
 </div>
-<script type="text/javascript">
-	$(document).ready(function() {
-		vulpe.config.logic.prepareName = "entity";
-		var formIndex = vulpe.util.getVulpeValidateForms("${actionConfig.formName}");
-		var vulpeValidateAttributes = new Array();
-		<c:forEach var="validate" items="${entity.attributesToValidateInCRUD}" varStatus="status">vulpeValidateAttributes[vulpeValidateAttributes.length] = {name: "${validate.name}", label: "<fmt:message key='${validate.label}'/>", identifier: "${validate.identifier}", description: "${validate.description}", type: "${validate.type}", size:"${validate.size}"};</c:forEach>
-		vulpe.validate.forms[formIndex] = {name: "${actionConfig.formName}", attributes: vulpeValidateAttributes};
-	});
-</script>

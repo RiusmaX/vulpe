@@ -16,7 +16,7 @@ public @interface VulpeSelectPopup {
 
 	String name() default "";
 
-	boolean validate() default false;
+	boolean required() default false;
 	
 	boolean argument() default false;
 

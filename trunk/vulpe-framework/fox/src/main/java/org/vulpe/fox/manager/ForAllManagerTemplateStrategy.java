@@ -19,8 +19,8 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	@Override
 	public boolean preProcess(final TemplateBlock block,
-			final TemplateOutput<TemplateBlock> output,
-			final TemplateModel model) throws IOException, TemplateException {
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model)
+			throws IOException, TemplateException {
 		if (super.preProcess(block, output, model)
 				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
@@ -28,47 +28,44 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 					"org.vulpe.model.entity.VulpeBaseSimpleEntity")) {
 				return false;
 			}
-			final CodeGenerator codeGenerator = clazz
-					.getAnnotation(CodeGenerator.class);
+			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
 			if (codeGenerator == null || !codeGenerator.manager()) {
 				return false;
 			}
-			final DecoratedManager controller = new DecoratedManager();
-			controller.setName(clazz.getSimpleName().concat("Manager"));
-			controller.setEntityName(clazz.getSimpleName());
-			controller.setPackageName(clazz.getPackage().toString());
-			controller.setDaoPackageName(StringUtils.replace(clazz.getPackage()
-					.toString(), ".entity", ".dao"));
-			controller.setManagerPackageName(StringUtils
-					.replace(clazz.getPackage().toString(), ".model.entity",
-							".model.manager"));
-			controller.setModuleName(getModuleName(clazz));
+			final DecoratedManager manager = new DecoratedManager();
+			manager.setName(clazz.getSimpleName().concat("Manager"));
+			manager.setEntityName(clazz.getSimpleName());
+			manager.setPackageName(clazz.getPackage().toString());
+			manager.setDaoPackageName(StringUtils.replace(clazz.getPackage().toString(), ".entity",
+					".dao"));
+			manager.setManagerPackageName(StringUtils.replace(clazz.getPackage().toString(),
+					".model.entity", ".model.manager"));
+			manager.setModuleName(getModuleName(clazz));
 
 			if (clazz.getSuperclass() != null
-					&& !getClassName(clazz.getSuperclass()).equals(
-							Object.class.getName())
+					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
 					&& !getClassName(clazz.getSuperclass()).equals(
 							AbstractVulpeBaseEntityImpl.class.getName())) {
-				controller
-						.setSuperclassName(getClassName(clazz.getSuperclass()));
-				controller.setManagerSuperclassName(StringUtils.replace(
-						controller.getSuperclassName(), ".model.entity",
-						".model.manager"));
+				manager.setSuperclassName(getClassName(clazz.getSuperclass()));
+				manager.setManagerSuperclassName(StringUtils.replace(manager.getSuperclassName(),
+						".model.entity", ".model.manager"));
 			}
 
-			final FieldDeclaration field = getField(clazz, "id");
-			controller.setIdType(field.getType().toString());
+			manager.setIdType(getIDType(clazz.getSuperclass()));
+			if (manager.getIdType() == null) {
+				final FieldDeclaration field = getField(clazz, "id");
+				manager.setIdType(field.getType().toString());
+			}
 
-			prepareMethods(clazz, controller);
+			prepareMethods(clazz, manager);
 
-			model.setVariable(getVar(), controller);
+			model.setVariable(getVar(), manager);
 			return true;
 		}
 		return false;
 	}
 
-	protected void prepareMethods(final DecoratedClassDeclaration clazz,
-			final DecoratedManager dao) {
+	protected void prepareMethods(final DecoratedClassDeclaration clazz, final DecoratedManager dao) {
 		// prepare methods for manager
 	}
 

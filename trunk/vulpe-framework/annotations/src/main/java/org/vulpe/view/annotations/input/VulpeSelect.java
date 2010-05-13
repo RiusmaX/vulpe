@@ -26,7 +26,7 @@ public @interface VulpeSelect {
 	
 	boolean showBlank() default true;
 	
-	boolean validate() default false;
+	boolean required() default false;
 	
 	boolean argument() default false;
 

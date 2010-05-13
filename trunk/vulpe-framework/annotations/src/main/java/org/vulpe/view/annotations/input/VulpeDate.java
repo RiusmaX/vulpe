@@ -20,7 +20,7 @@ public @interface VulpeDate {
 
 	int maxlength() default 0;
 
-	boolean validate() default false;
+	boolean required() default false;
 
 	boolean argument() default false;
 

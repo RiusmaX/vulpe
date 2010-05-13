@@ -10,11 +10,3 @@
 		<jsp:include page="${actionConfig.viewPath}" />
 	</div>
 </div>
-<script type="text/javascript">
-	$(document).ready(function() {
-		vulpe.config.logic.prepareName = "entities";
-		var formIndex = vulpe.util.getVulpeValidateForms("${actionConfig.formName}");
-		var vulpeValidateAttributes = new Array();
-		vulpe.validate.forms[formIndex] = {name: "${actionConfig.formName}", attributes: vulpeValidateAttributes};
-	});
-</script>

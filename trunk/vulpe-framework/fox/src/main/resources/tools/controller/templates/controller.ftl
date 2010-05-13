@@ -39,7 +39,6 @@ import org.vulpe.controller.annotations.Controller.ControllerType;
  */
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.CRUD, serviceClass = ${controller.moduleName?capitalize}Services.class<#if controller.details?has_content>, detailsConfig = { <#list controller.details as detail>@DetailConfig(<#if detail.name?has_content>name = "${detail.name}"</#if><#if detail.propertyName?has_content>, propertyName = "${detail.propertyName}"</#if><#if detail.despiseFields?has_content>, despiseFields = "${detail.despiseFields}"</#if><#if (detail.detailNews > 0)>, detailNews = ${detail.detailNews}</#if><#if detail.parentDetailName?has_content>, parentDetailName = "${detail.parentDetailName}"</#if>)${detail.next}</#list> }</#if>)
-@Controller(controllerType = ControllerType.CRUD, serviceClass = PublicacoesServices.class)
 public class ${controller.name}CRUDAction extends VulpeBaseAction<${controller.name}, ${controller.idType}> {
 
 }

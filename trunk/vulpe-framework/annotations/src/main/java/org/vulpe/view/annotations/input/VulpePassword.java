@@ -22,7 +22,7 @@ public @interface VulpePassword {
 	
 	String mask() default "";
 	
-	boolean validate() default false;
+	boolean required() default false;
 	
 	boolean argument() default false;
 	

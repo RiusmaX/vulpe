@@ -18,7 +18,7 @@ public @interface VulpeCheckbox {
 
 	String fieldValue();
 	
-	boolean validate() default false;
+	boolean required() default false;
 	
 	boolean argument() default false;
 
