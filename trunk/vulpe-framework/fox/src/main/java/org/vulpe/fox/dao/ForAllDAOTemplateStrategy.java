@@ -34,15 +34,13 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	@Override
 	public boolean preProcess(final TemplateBlock block,
-			final TemplateOutput<TemplateBlock> output,
-			final TemplateModel model) throws IOException, TemplateException {
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model)
+			throws IOException, TemplateException {
 		if (super.preProcess(block, output, model)
 				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
-			final CodeGenerator codeGenerator = clazz
-					.getAnnotation(CodeGenerator.class);
-			if (getClassName(clazz.getSuperclass()).equals(
-					VulpeBaseSimpleEntity.class.getName())
+			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
+			if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())
 					|| (codeGenerator != null && codeGenerator.dao())) {
 				return false;
 			}
@@ -50,31 +48,31 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			dao.setName(clazz.getSimpleName());
 			dao.setDaoName(clazz.getSimpleName() + "DAO");
 			dao.setPackageName(clazz.getPackage().toString());
-			dao.setDaoPackageName(StringUtils.replace(clazz.getPackage()
-					.toString(), ".entity", ".dao"));
+			dao.setDaoPackageName(StringUtils.replace(clazz.getPackage().toString(), ".entity",
+					".dao"));
 
 			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
-					|| clazz
-							.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
+					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
 				dao.setInheritance(true);
-				dao.setDaoSuperclassPackageName(StringUtils.replace(clazz
-						.getSuperclass().getDeclaration().getPackage()
-						.toString(), ".entity", ".dao"));
+				dao.setDaoSuperclassPackageName(StringUtils.replace(clazz.getSuperclass()
+						.getDeclaration().getPackage().toString(), ".entity", ".dao"));
 			}
 			// if super class isn't Object
 			if (clazz.getSuperclass() != null
-					&& !getClassName(clazz.getSuperclass()).equals(
-							Object.class.getName())
+					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
 					&& !getClassName(clazz.getSuperclass()).equals(
 							AbstractVulpeBaseEntityImpl.class.getName())) {
 				dao.setSuperclassName(getClassName(clazz.getSuperclass()));
-				dao.setDaoSuperclassName(StringUtils.replace(dao
-						.getSuperclassName(), ".entity", ".dao")
+				dao.setDaoSuperclassName(StringUtils.replace(dao.getSuperclassName(), ".entity",
+						".dao")
 						+ "DAO");
 			}
 
-			final FieldDeclaration field = getField(clazz, "id");
-			dao.setIdType(field.getType().toString());
+			dao.setIdType(getIDType(clazz.getSuperclass()));
+			if (dao.getIdType() == null) {
+				final FieldDeclaration field = getField(clazz, "id");
+				dao.setIdType(field.getType().toString());
+			}
 
 			prepareMethods(clazz, dao);
 
@@ -84,11 +82,9 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		return false;
 	}
 
-	protected void prepareMethods(final DecoratedClassDeclaration clazz,
-			final DecoratedDAO dao) {
+	protected void prepareMethods(final DecoratedClassDeclaration clazz, final DecoratedDAO dao) {
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
-			final SODAQueries sodaQueries = clazz
-					.getAnnotation(SODAQueries.class);
+			final SODAQueries sodaQueries = clazz.getAnnotation(SODAQueries.class);
 			if (sodaQueries != null) {
 				for (SODAQuery sq : sodaQueries.value()) {
 					putMethod(dao, sq.name(), sq.unique(), sq.attributes());
@@ -96,12 +92,10 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			final SODAQuery sodaQuery = clazz.getAnnotation(SODAQuery.class);
 			if (sodaQuery != null) {
-				putMethod(dao, sodaQuery.name(), sodaQuery.unique(), sodaQuery
-						.attributes());
+				putMethod(dao, sodaQuery.name(), sodaQuery.unique(), sodaQuery.attributes());
 			}
 		} else {
-			final NamedQueries namedQueries = clazz
-					.getAnnotation(NamedQueries.class);
+			final NamedQueries namedQueries = clazz.getAnnotation(NamedQueries.class);
 			if (namedQueries != null) {
 				for (NamedQuery nq : namedQueries.value()) {
 					putMethod(clazz, dao, nq.query(), nq.name(), nq.hints());
@@ -109,8 +103,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			final NamedQuery namedQuery = clazz.getAnnotation(NamedQuery.class);
 			if (namedQuery != null) {
-				putMethod(clazz, dao, namedQuery.query(), namedQuery.name(),
-						namedQuery.hints());
+				putMethod(clazz, dao, namedQuery.query(), namedQuery.name(), namedQuery.hints());
 			}
 			final NamedNativeQueries namedNativeQueries = clazz
 					.getAnnotation(NamedNativeQueries.class);
@@ -119,18 +112,16 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 					putMethod(clazz, dao, nnq.query(), nnq.name(), nnq.hints());
 				}
 			}
-			final NamedNativeQuery namedNativeQuery = clazz
-					.getAnnotation(NamedNativeQuery.class);
+			final NamedNativeQuery namedNativeQuery = clazz.getAnnotation(NamedNativeQuery.class);
 			if (namedNativeQuery != null) {
-				putMethod(clazz, dao, namedNativeQuery.query(),
-						namedNativeQuery.name(), namedNativeQuery.hints());
+				putMethod(clazz, dao, namedNativeQuery.query(), namedNativeQuery.name(),
+						namedNativeQuery.hints());
 			}
 		}
 	}
 
-	private void putMethod(final DecoratedClassDeclaration clazz,
-			final DecoratedDAO dao, final String query, final String queryName,
-			final QueryHint[] hints) {
+	private void putMethod(final DecoratedClassDeclaration clazz, final DecoratedDAO dao,
+			final String query, final String queryName, final QueryHint[] hints) {
 		if (queryName.equals(dao.getName().concat(".read"))) {
 			return;
 		}
@@ -138,14 +129,13 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		final DecoratedDAOMethod method = new DecoratedDAOMethod();
 
 		if (StringUtils.indexOf(queryName, dao.getName().concat(".")) > -1) {
-			method.setName(StringUtils.substring(queryName, StringUtils
-					.indexOf(queryName, dao.getName().concat("."))
+			method.setName(StringUtils.substring(queryName, StringUtils.indexOf(queryName, dao
+					.getName().concat("."))
 					+ new String(dao.getName().concat(".")).length()));
 		} else {
 			throw new VulpeSystemException(
-					"Name of definition in the query is incorrect. Must be on format: "
-							.concat(dao.getName()).concat(".")
-							.concat(queryName));
+					"Name of definition in the query is incorrect. Must be on format: ".concat(
+							dao.getName()).concat(".").concat(queryName));
 		}
 
 		boolean unique = false;
@@ -166,9 +156,8 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			if (type == null) {
 				final FieldDeclaration field = getField(clazz, param);
 				if (field == null) {
-					throw new VulpeSystemException("Parameter [".concat(param)
-							.concat("] not found on class: ").concat(
-									dao.getName()));
+					throw new VulpeSystemException("Parameter [".concat(param).concat(
+							"] not found on class: ").concat(dao.getName()));
 				} else {
 					if (param.equals("id")) {
 						unique = true;
@@ -181,8 +170,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 							unique = column.unique();
 						}
 						if (!unique) {
-							final JoinColumn joinColumn = field
-									.getAnnotation(JoinColumn.class);
+							final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
 							if (field.getAnnotation(JoinColumn.class) != null) {
 								unique = joinColumn.unique();
 							}
@@ -202,8 +190,8 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		dao.getMethods().add(method);
 	}
 
-	private void putMethod(final DecoratedDAO dao, final String queryName,
-			final boolean unique, final SODAQueryAttribute[] atributes) {
+	private void putMethod(final DecoratedDAO dao, final String queryName, final boolean unique,
+			final SODAQueryAttribute[] atributes) {
 		if (queryName.equals(dao.getName().concat(".read"))) {
 			return;
 		}
@@ -223,13 +211,11 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 	}
 
 	protected void setupReturn(final DecoratedDAO dao, final String queryName,
-			final QueryHint[] hints, final DecoratedDAOMethod method,
-			final boolean unique) {
+			final QueryHint[] hints, final DecoratedDAOMethod method, final boolean unique) {
 		if (unique || isReturnEntity(hints)) {
 			method.setReturnType(dao.getName());
 		} else {
-			method.setReturnType("java.util.List<".concat(dao.getName())
-					.concat(">"));
+			method.setReturnType("java.util.List<".concat(dao.getName()).concat(">"));
 		}
 	}
 
@@ -238,8 +224,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		if (unique) {
 			method.setReturnType(dao.getName());
 		} else {
-			method.setReturnType("java.util.List<".concat(dao.getName())
-					.concat(">"));
+			method.setReturnType("java.util.List<".concat(dao.getName()).concat(">"));
 		}
 	}
 

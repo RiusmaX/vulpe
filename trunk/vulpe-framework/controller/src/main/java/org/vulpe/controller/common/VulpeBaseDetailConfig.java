@@ -20,7 +20,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private int detailNews;
 	private String[] despiseFields;
 	private String viewPath;
-	private CardinalityType cardinalityType;
+	private CardinalityType cardinalityType = CardinalityType.ZERO;
 	private VulpeBaseDetailConfig parentDetailConfig;
 	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
 

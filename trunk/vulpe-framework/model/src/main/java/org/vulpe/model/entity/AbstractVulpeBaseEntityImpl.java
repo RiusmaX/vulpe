@@ -12,8 +12,7 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.audit.model.annotations.IgnoreAuditAttribute;
-import org.vulpe.audit.model.annotations.IgnoreAuditEntity;
+import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
 import org.vulpe.common.ReflectUtil;
 import org.vulpe.common.helper.VulpeConfigHelper;
@@ -27,16 +26,17 @@ import org.vulpe.view.annotations.input.VulpeText;
 import com.thoughtworks.xstream.XStream;
 
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comparable>
-		implements VulpeBaseEntity<ID> {
+public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comparable> implements
+		VulpeBaseEntity<ID> {
 
-	private static final Logger LOG = Logger
-			.getLogger(AbstractVulpeBaseEntityImpl.class);
+	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntityImpl.class);
 
-	@IgnoreAuditAttribute
+	private ID id;
+
+	@IgnoreAudit
 	private transient boolean selected;
 
-	@IgnoreAuditAttribute
+	@IgnoreAudit
 	private transient String orderBy;
 
 	public AbstractVulpeBaseEntityImpl() {
@@ -75,8 +75,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 	@Override
 	public String toString() {
 		return getClass().getSimpleName().concat(
-				this.getId() == null ? "" : ".id: ".concat(this.getId()
-						.toString()));
+				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
 	public int compareTo(final VulpeBaseEntity<ID> entity) {
@@ -97,7 +96,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 
 	@Transient
 	public boolean isAuditable() {
-		return this.getClass().getAnnotation(IgnoreAuditEntity.class) == null;
+		return this.getClass().getAnnotation(IgnoreAudit.class) == null;
 	}
 
 	@Transient
@@ -110,8 +109,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 		String strXml = "";
 		final XStream xstream = new XStream();
 		try {
-			for (Field attribute : ReflectUtil.getInstance().getFields(
-					this.getClass())) {
+			for (Field attribute : ReflectUtil.getInstance().getFields(this.getClass())) {
 				if (!isConvertible(attribute)) {
 					xstream.omitField(this.getClass(), attribute.getName());
 				}
@@ -125,17 +123,13 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 	}
 
 	protected boolean isConvertible(final Field attribute) {
-		if (attribute.getAnnotation(IgnoreAuditAttribute.class) != null) {
+		if (attribute.getAnnotation(IgnoreAudit.class) != null) {
 			return false;
 		}
-		if (attribute.getType().isPrimitive()
-				|| attribute.getType() == String.class
-				|| attribute.getType() == Character.class
-				|| attribute.getType() == Integer.class
-				|| attribute.getType() == Short.class
-				|| attribute.getType() == Long.class
-				|| attribute.getType() == Double.class
-				|| attribute.getType() == Date.class
+		if (attribute.getType().isPrimitive() || attribute.getType() == String.class
+				|| attribute.getType() == Character.class || attribute.getType() == Integer.class
+				|| attribute.getType() == Short.class || attribute.getType() == Long.class
+				|| attribute.getType() == Double.class || attribute.getType() == Date.class
 				|| attribute.getType() == java.sql.Date.class
 				|| attribute.getType() == java.sql.Timestamp.class) {
 			return true;
@@ -146,49 +140,42 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 	private String getModuleName() {
 		final String className = this.getClass().getName();
 		final String classSimpleName = this.getClass().getSimpleName();
-		final String moduleName = className.substring(0, className
-				.indexOf(".model.entity.".concat(classSimpleName)));
+		final String moduleName = className.substring(0, className.indexOf(".model.entity."
+				.concat(classSimpleName)));
 		final char dot = ".".charAt(0);
 		return moduleName.substring(moduleName.lastIndexOf(dot) + 1);
 	}
 
-	private String getLabel(final String label, final String name,
-			final String type) {
+	private String getLabel(final String label, final String name, final String type) {
 		final String classSimpleName = this.getClass().getSimpleName();
 		return StringUtils.isNotBlank(label) ? label : "label.".concat(
-				VulpeConfigHelper.getProjectName()).concat(".").concat(
-				getModuleName()).concat(".").concat(classSimpleName)
-				.concat(".").concat(type).concat(".").concat(name);
+				VulpeConfigHelper.getProjectName()).concat(".").concat(getModuleName()).concat(".")
+				.concat(classSimpleName).concat(".").concat(type).concat(".").concat(name);
 	}
 
 	public List<EntityAttributeValidate> getAttributesToValidateInCRUD() {
 		final List<EntityAttributeValidate> list = new ArrayList<EntityAttributeValidate>();
-		for (Field attribute : ReflectUtil.getInstance().getFields(
-				this.getClass())) {
-			final EntityAttributeValidate eav = new EntityAttributeValidate(
-					attribute.getName(), attribute.getType().getSimpleName());
+		for (Field attribute : ReflectUtil.getInstance().getFields(this.getClass())) {
+			final EntityAttributeValidate eav = new EntityAttributeValidate(attribute.getName(),
+					attribute.getType().getSimpleName());
 			String type = "crud";
 			final VulpeText text = attribute.getAnnotation(VulpeText.class);
-			final VulpeSelectPopup selectPopup = attribute
-					.getAnnotation(VulpeSelectPopup.class);
+			final VulpeSelectPopup selectPopup = attribute.getAnnotation(VulpeSelectPopup.class);
 			if (text != null && text.validate()) {
 				eav.setLabel(getLabel(text.label(), eav.getName(), type));
 				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 					eav.setSize(text.size());
 				} else {
 					final Column column = attribute.getAnnotation(Column.class);
-					final JoinColumn joinColumn = attribute
-							.getAnnotation(JoinColumn.class);
+					final JoinColumn joinColumn = attribute.getAnnotation(JoinColumn.class);
 					if ((column != null && !column.nullable())
 							|| (joinColumn != null && !joinColumn.nullable())) {
-						eav.setSize(column == null ? text.size() : column
-								.length());
+						eav.setSize(column == null ? text.size() : column.length());
 					}
 				}
 			}
 			if (selectPopup != null && selectPopup.validate()) {
-				eav.setLabel(getLabel(selectPopup.label(), eav.getName(),
-						type));
+				eav.setLabel(getLabel(selectPopup.label(), eav.getName(), type));
 				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 					if (StringUtils.isNotBlank(selectPopup.identifier())) {
 						eav.setIdentifier(selectPopup.identifier());
@@ -198,17 +185,14 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 					}
 				} else {
 					final Column column = attribute.getAnnotation(Column.class);
-					final JoinColumn joinColumn = attribute
-							.getAnnotation(JoinColumn.class);
+					final JoinColumn joinColumn = attribute.getAnnotation(JoinColumn.class);
 					if ((column != null && !column.nullable())
 							|| (joinColumn != null && !joinColumn.nullable())) {
 						if (joinColumn != null) {
-							if (StringUtils
-									.isNotBlank(selectPopup.identifier())) {
+							if (StringUtils.isNotBlank(selectPopup.identifier())) {
 								eav.setIdentifier(selectPopup.identifier());
 							}
-							if (StringUtils.isNotBlank(selectPopup
-									.description())) {
+							if (StringUtils.isNotBlank(selectPopup.description())) {
 								eav.setDescription(selectPopup.description());
 							}
 						}
@@ -225,11 +209,10 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 
 	public List<EntityAttributeValidate> getAttributesToValidateInSelect() {
 		final List<EntityAttributeValidate> list = new ArrayList<EntityAttributeValidate>();
-		for (Field attribute : ReflectUtil.getInstance().getFields(
-				this.getClass())) {
+		for (Field attribute : ReflectUtil.getInstance().getFields(this.getClass())) {
 			String type = "select";
-			final EntityAttributeValidate eav = new EntityAttributeValidate(
-					attribute.getName(), attribute.getType().getSimpleName());
+			final EntityAttributeValidate eav = new EntityAttributeValidate(attribute.getName(),
+					attribute.getType().getSimpleName());
 			final VulpeText text = attribute.getAnnotation(VulpeText.class);
 			if (text != null && text.argument() && text.validate()) {
 				eav.setLabel(getLabel(text.label(), eav.getName(), type));
@@ -245,6 +228,14 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 			}
 		}
 		return list;
+	}
+
+	public ID getId() {
+		return id;
+	}
+
+	public void setId(ID id) {
+		this.id = id;
 	}
 
 }

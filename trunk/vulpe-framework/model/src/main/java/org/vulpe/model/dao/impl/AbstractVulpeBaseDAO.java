@@ -66,7 +66,7 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeBaseEntity<ID>, I
 
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Auditing object"
-						+ (occurrenceParent == null ? " filho" : "")
+						+ (occurrenceParent == null ? " son" : "")
 						+ ": ".concat(entity.toString()));
 			}
 			if (entity.isHistoryAuditable()) {
