@@ -15,8 +15,8 @@ vulpe.config.elements["${elementId}"] = {
 	<c:if test="${not empty validateRange}">,range: '${validateRange}'</c:if>
 	<c:if test="${not empty validateMin}">,min: '${validateMin}'</c:if>
 	<c:if test="${not empty validateMax}">,max: '${validateMax}'</c:if>
-	<c:if test="${not empty validateMinLength}">,minLength: '${validateMinLength}'</c:if>
-	<c:if test="${not empty validateMaxLength}">,maxLength: '${validateMaxLength}'</c:if>
+	<c:if test="${not empty validateMinLength}">,minlength: '${validateMinLength}'</c:if>
+	<c:if test="${not empty validateMaxLength}">,maxlength: '${validateMaxLength}'</c:if>
 	<c:if test="${not empty validateMask}">,mask: '${validateMask}'</c:if>
 	<c:if test="${not empty validateDatePattern}">,datePattern: '${validateDatePattern}'</c:if>
 }

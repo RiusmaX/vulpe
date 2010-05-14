@@ -59,6 +59,7 @@ var vulpe = {
 					integer:'vulpe.error.validate.integer',
 					integerRange:'vulpe.error.validate.integer.range',
 					long:'vulpe.error.validate.long',
+					mask:'vulpe.error.validate.mask',
 					maxlength:'vulpe.error.validate.maxlength',
 					minlength:'vulpe.error.validate.minlength',
 					required:'vulpe.error.validate.required'	
@@ -352,7 +353,10 @@ var vulpe = {
 		},
 
 		matchPattern: function(value, mask) {
-			return mask.exec(value);
+			if (typeof mask === "string") {
+				return eval(mask).test(value);
+			}
+			return new RegExp(mask).exec(value);
 		},
 
 		isAllDigits: function(argvalue) {
@@ -504,17 +508,17 @@ var vulpe = {
 		},
 
 		/**
-		 * config = {field = {}, minLength = 1}
+		 * config = {field = {}, minlength = 1}
 		 */
 		validateMinLength: function(config) {
 			var isValid = true;
 			var idField = config.field.attr("id");
 			var typeField = config.field.attr("type");
-			var message = vulpe.config.messages.error.validate.minLength;
+			var message = vulpe.config.messages.error.validate.minlength;
 			if (typeField == 'text' || typeField == 'textarea') {
 				if (vulpe.util.trim(config.field.val()).length > 0 && vulpe.util.trim(config.field.val()).length < parseInt(config.minlength)) {
 					isValid = false;
-					vulpe.exception.setupError(idField, message);
+					vulpe.exception.setupError(idField, message.replace("{0}", config.minlength));
 				}
 			}
 			return isValid;
@@ -524,11 +528,11 @@ var vulpe = {
 			var isValid = true;
 			var idField = config.field.attr("id");
 			var typeField = config.field.attr("type");
-			var message = vulpe.config.messages.error.validate.maxLength;
+			var message = vulpe.config.messages.error.validate.maxlength;
 			if (typeField == 'text' || typeField == 'textarea') {
 				if (vulpe.util.trim(config.field.val()).length > parseInt(config.maxlength)) {
 					isValid = false;
-					vulpe.exception.setupError(idField, message);
+					vulpe.exception.setupError(idField, message.replace("{0}", config.maxlength));
 				}
 			}
 			return isValid;
@@ -760,67 +764,97 @@ var vulpe = {
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
 					var idField = field.attr("id");
-					valid = vulpe.validate.validateRequired({
-						field: field
-					});
+					if (!vulpe.validate.validateRequired({field: field})) {
+						valid = false;
+					}
 					if (valid) {
-						var config = vulpe.util.getElementConfig(idField);
-						if (config) {
-							if (config.type == "DATE") {
-								valid = vulpe.validate.validateDate({
-									field: field, 
-									datePatternStrict: config.datePattern
-								});
-							} else if (config.type == "INTEGER") {
-								valid = vulpe.validate.validateInteger({
-									field: field
-								});
-							} else if (config.type == "LONG") {
-								valid = vulpe.validate.validateLong({
-									field: field
-								});
-							} else if (config.type == "DOUBLE") {
-								valid = vulpe.validate.validateDouble({
-									field: field
-								});
-							} else if (config.type == "FLOAT") {
-								valid = vulpe.validate.validateFloat({
-									field: field
-								});
-							} else if (config.type == "EMAIL") {
-								valid = vulpe.validate.validateEmail({
-									field: field
-								});
-							} else if (config.type == "STRING") {
-								valid = vulpe.validate.validateMinLength({
-									field: field,
-									minLength: config.minLength
-								});
-							}
+						if (!vulpe.validate.validateAttribute(field)) {
+							valid = false;
 						}
 					}
 				}
-				if (!valid) {
-					vulpe.exception.focusFirstError(formName);
-					var messageLayer = vulpe.config.layers.messages;
-					if (vulpe.util.existsVulpePopups()) {
-						messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
+			} else {
+				fields = jQuery("input", parent);
+				for (var i = 0; i < fields.length; i++) {
+					var field = jQuery(fields[i]);
+					if (!vulpe.validate.validateAttribute(field)) {
+						valid = false;
 					}
-					$(messageLayer).removeClass("error");
-					$(messageLayer).removeClass("success");
-					$(messageLayer).addClass("validation");
-					if (fields.length > 1) {
-						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
-					} else {
-						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
-					}
-					$(messageLayer).slideDown("slow");
-					setTimeout(function() {
-						$(messageLayer).slideUp("slow");
-					}, vulpe.config.messageSlideUpTime);
 				}
 			}
-
+			if (!valid) {
+				vulpe.exception.focusFirstError(formName);
+				var messageLayer = vulpe.config.layers.messages;
+				if (vulpe.util.existsVulpePopups()) {
+					messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
+				}
+				$(messageLayer).removeClass("error");
+				$(messageLayer).removeClass("success");
+				$(messageLayer).addClass("validation");
+				if (fields.length > 1) {
+					$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
+				} else {
+					$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
+				}
+				$(messageLayer).slideDown("slow");
+				setTimeout(function() {
+					$(messageLayer).slideUp("slow");
+				}, vulpe.config.messageSlideUpTime);
+			}
+			return valid;
+		},
+		
+		validateAttribute: function(field) {
+			var valid = true;
+			var idField = field.attr("id");
+			var config = vulpe.util.getElementConfig(idField);
+			if (config) {
+				if (config.type == "DATE") {
+					valid = vulpe.validate.validateDate({
+						field: field, 
+						datePatternStrict: config.datePattern
+					});
+				} else if (config.type == "INTEGER") {
+					valid = vulpe.validate.validateInteger({
+						field: field
+					});
+				} else if (config.type == "LONG") {
+					valid = vulpe.validate.validateLong({
+						field: field
+					});
+				} else if (config.type == "DOUBLE") {
+					valid = vulpe.validate.validateDouble({
+						field: field
+					});
+				} else if (config.type == "FLOAT") {
+					valid = vulpe.validate.validateFloat({
+						field: field
+					});
+				} else if (config.type == "EMAIL") {
+					valid = vulpe.validate.validateEmail({
+						field: field
+					});
+				} else if (config.type == "STRING") {
+					if (valid && config.minlength) {
+						valid = vulpe.validate.validateMinLength({
+							field: field,
+							minlength: config.minlength
+						});
+					}
+					if (valid && config.maxlength) {
+						valid = vulpe.validate.validateMaxLength({
+							field: field,
+							maxlength: config.maxlength
+						});
+					}
+					if (valid && config.mask) {
+						valid = vulpe.validate.validateMask({
+							field: field,
+							mask: config.mask
+						});
+					}
+				}
+			}
 			return valid;
 		},
 		
@@ -1610,11 +1644,44 @@ var vulpe = {
 			});
 			vulpe.util.get(messageSuffix).show();
 			var errorController = function () {
-				if (this.value.length == 0) {
-					vulpe.exception.showFieldError(this);
+				var config = vulpe.config.elements[fieldName];
+				if (!vulpe.config.elements[fieldName]) {
+					if (this.value.length == 0) {
+						vulpe.exception.showFieldError(this);
+					} else {
+						if (this.value != "__/__/_____") {
+							vulpe.exception.hideFieldError(this);
+						}
+					}
 				} else {
-					if (this.value != "__/__/_____") {
-						vulpe.exception.hideFieldError(this);
+					var field = vulpe.util.get(fieldName);
+					if (config.min) {
+						if (field.val() >= config.min) {
+							vulpe.exception.hideFieldError(this);
+						} else {
+							vulpe.exception.showFieldError(this);
+						}
+					}
+					if (config.max) {
+						if (field.val() <= config.max) {
+							vulpe.exception.hideFieldError(this);
+						} else {
+							vulpe.exception.showFieldError(this);
+						}
+					}
+					if (config.minlength) {
+						if (vulpe.util.trim(field.val()).length >= config.minlength) {
+							vulpe.exception.hideFieldError(this);
+						} else {
+							vulpe.exception.showFieldError(this);
+						}
+					}
+					if (config.maxlength) {
+						if (vulpe.util.trim(field.val()).length <= config.maxlength) {
+							vulpe.exception.hideFieldError(this);
+						} else {
+							vulpe.exception.showFieldError(this);
+						}
 					}
 				}
 			}
@@ -1667,15 +1734,6 @@ var vulpe = {
 				jQuery(vulpe.config.layers.modalMessages).removeClass("validation");
 				jQuery(vulpe.config.layers.modalMessages).addClass("error");
 				vulpe.view.showMessages();
-			}
-		},
-
-		showError: function(config) {
-			vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).style.display = 'inline';
-			if (vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML.length == 9) {
-				vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML + config.msg;
-			} else {
-				vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML = vulpe.util.getElement(config.form + '_' + config.name + vulpe.config.suffix.errorMessage).innerHTML + '<br>' + config.msg;
 			}
 		}
 	}

@@ -35,6 +35,7 @@ vulpe.config.messages = {
 			integer:'<fmt:message key="vulpe.error.validate.integer"/>',
 			integerRange:'<fmt:message key="vulpe.error.validate.integer.range"/>',
 			long:'<fmt:message key="vulpe.error.validate.long"/>',
+			mask:'<fmt:message key="vulpe.error.validate.mask"/>',
 			maxlength:'<fmt:message key="vulpe.error.validate.maxlength"/>',
 			minlength:'<fmt:message key="vulpe.error.validate.minlength"/>',
 			required:'<fmt:message key="vulpe.error.validate.required"/>'	
