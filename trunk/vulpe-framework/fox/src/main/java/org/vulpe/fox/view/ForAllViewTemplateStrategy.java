@@ -41,6 +41,7 @@ import org.vulpe.view.annotations.input.VulpePassword;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
+import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
@@ -270,6 +271,71 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		}
 		if (autoComplete != null) {
 			decoratedViewField.setAutoComplete(true);
+		}
+		final VulpeValidate validate = fDeclaration == null ? field
+				.getAnnotation(VulpeValidate.class) : fDeclaration
+				.getAnnotation(VulpeValidate.class);
+		if (validate != null) {
+			decoratedViewField.setValidateType(validate.type().name());
+			switch (validate.type()) {
+			case STRING:
+				if (validate.minlength() > 0) {
+					decoratedViewField.setValidateMinLength(validate.minlength());
+				}
+				if (validate.maxlength() > 0) {
+					decoratedViewField.setValidateMaxLength(validate.maxlength());
+				}
+				break;
+			case DATE:
+				decoratedViewField.setValidateDatePattern(validate.datePattern());
+				break;
+			case INTEGER:
+				if (validate.min() > 1) {
+					decoratedViewField.setValidateMin(validate.min());
+				}
+				if (validate.max() > 1) {
+					decoratedViewField.setValidateMax(validate.max());
+				}
+				if (validate.range()[0] > 0 && validate.range()[1] > 0) {
+					decoratedViewField.setValidateRange(validate.range());
+				}
+				break;
+			case LONG:
+				if (validate.min() > 1) {
+					decoratedViewField.setValidateMin(validate.min());
+				}
+				if (validate.max() > 1) {
+					decoratedViewField.setValidateMax(validate.max());
+				}
+				if (validate.range()[0] > 0 && validate.range()[1] > 0) {
+					decoratedViewField.setValidateRange(validate.range());
+				}
+				break;
+			case DOUBLE:
+				if (validate.min() > 1) {
+					decoratedViewField.setValidateMin(validate.min());
+				}
+				if (validate.max() > 1) {
+					decoratedViewField.setValidateMax(validate.max());
+				}
+				if (validate.range()[0] > 0 && validate.range()[1] > 0) {
+					decoratedViewField.setValidateRange(validate.range());
+				}
+				break;
+			case FLOAT:
+				if (validate.min() > 1) {
+					decoratedViewField.setValidateMin(validate.min());
+				}
+				if (validate.max() > 1) {
+					decoratedViewField.setValidateMax(validate.max());
+				}
+				if (validate.range()[0] > 0 && validate.range()[1] > 0) {
+					decoratedViewField.setValidateRange(validate.range());
+				}
+				break;
+			default:
+				decoratedViewField.setValidateType("");
+			}
 		}
 		decoratedViewField.setName(StringUtils.isNotBlank(name) ? name
 				: fDeclaration == null ? field.getName() : fDeclaration.getSimpleName());

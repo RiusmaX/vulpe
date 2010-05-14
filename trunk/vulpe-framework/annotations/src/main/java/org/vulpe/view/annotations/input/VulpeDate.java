@@ -25,4 +25,5 @@ public @interface VulpeDate {
 	boolean argument() default false;
 
 	String label() default "";
+
 }

@@ -17,18 +17,19 @@ public @interface VulpeSelect {
 	String name() default "";
 
 	String items() default "";
-	
+
 	String itemKey() default "";
-	
+
 	String itemLabel() default "";
-	
+
 	boolean autoLoad() default false;
-	
+
 	boolean showBlank() default true;
-	
+
 	boolean required() default false;
-	
+
 	boolean argument() default false;
 
 	String label() default "";
+
 }

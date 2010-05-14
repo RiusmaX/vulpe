@@ -24,19 +24,32 @@
 vulpe.config.contextPath = '${pageContext.request.contextPath}';
 vulpe.config.theme = '${vulpeTheme}';
 vulpe.config.messages = {
-		exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',
-		fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
-		keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
-		selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
-		selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
-		required: "<fmt:message key='vulpe.error.required.simple'/>",
-		upload: '<fmt:message key="vulpe.error.upload"/>',
-		validate: "<fmt:message key='vulpe.error.validate'/>", 
-		validateMany: "<fmt:message key='vulpe.error.validate'/>"
+	error: {
+		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>', 
+		checkfields: '<fmt:message key="vulpe.error.validate.checkfields"/>',
+		validate: {
+			date:'<fmt:message key="vulpe.error.validate.date"/>',
+			double:'<fmt:message key="vulpe.error.validate.double"/>',
+			float:'<fmt:message key="vulpe.error.validate.float"/>',
+			floatRange:'<fmt:message key="vulpe.error.validate.float.range"/>',
+			integer:'<fmt:message key="vulpe.error.validate.integer"/>',
+			integerRange:'<fmt:message key="vulpe.error.validate.integer.range"/>',
+			long:'<fmt:message key="vulpe.error.validate.long"/>',
+			maxlength:'<fmt:message key="vulpe.error.validate.maxlength"/>',
+			minlength:'<fmt:message key="vulpe.error.validate.minlength"/>',
+			required:'<fmt:message key="vulpe.error.validate.required"/>'	
+		}
+	},
+	exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',
+	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
+	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
+	selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
+	selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
+	upload: '<fmt:message key="vulpe.error.upload"/>'
 }
 vulpe.config.lightbox = {
-		imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
-		ofText: '<fmt:message key="vulpe.lightbox.of.text"/>',
+	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
+	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>',
 }
 vulpe.config.messageSlideUpTime = '${vulpeMessageSlideUpTime}';
 <c:if test="${vulpeShowAsMobile}">

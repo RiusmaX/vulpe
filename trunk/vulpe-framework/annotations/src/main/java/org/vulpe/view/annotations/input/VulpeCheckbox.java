@@ -17,10 +17,11 @@ public @interface VulpeCheckbox {
 	String name() default "";
 
 	String fieldValue();
-	
+
 	boolean required() default false;
-	
+
 	boolean argument() default false;
 
 	String label() default "";
+
 }

@@ -19,13 +19,13 @@ public @interface VulpePassword {
 	int size() default 0;
 
 	int maxlength() default 0;
-	
+
 	String mask() default "";
-	
+
 	boolean required() default false;
-	
+
 	boolean argument() default false;
-	
+
 	String label() default "";
 
 }

@@ -33,6 +33,14 @@ public class DecoratedViewField implements Serializable {
 	private boolean argument;
 	private boolean autoComplete = false;
 	private boolean required = false;
+	private String validateType;
+	private String validateMask;
+	private String validateDatePattern;
+	private int validateMin;
+	private int validateMax;
+	private int validateMinLength;
+	private int validateMaxLength;
+	private int[] validateRange;
 
 	public String getName() {
 		return name;
@@ -256,6 +264,70 @@ public class DecoratedViewField implements Serializable {
 
 	public boolean isRequired() {
 		return required;
+	}
+
+	public String getValidateType() {
+		return validateType;
+	}
+
+	public void setValidateType(String validateType) {
+		this.validateType = validateType;
+	}
+
+	public String getValidateMask() {
+		return validateMask;
+	}
+
+	public void setValidateMask(String validateMask) {
+		this.validateMask = validateMask;
+	}
+
+	public int getValidateMin() {
+		return validateMin;
+	}
+
+	public void setValidateMin(int validateMin) {
+		this.validateMin = validateMin;
+	}
+
+	public int getValidateMax() {
+		return validateMax;
+	}
+
+	public void setValidateMax(int validateMax) {
+		this.validateMax = validateMax;
+	}
+
+	public int getValidateMinLength() {
+		return validateMinLength;
+	}
+
+	public void setValidateMinLength(int validateMinLength) {
+		this.validateMinLength = validateMinLength;
+	}
+
+	public int getValidateMaxLength() {
+		return validateMaxLength;
+	}
+
+	public void setValidateMaxLength(int validateMaxLength) {
+		this.validateMaxLength = validateMaxLength;
+	}
+
+	public int[] getValidateRange() {
+		return validateRange;
+	}
+
+	public void setValidateRange(int[] validateRange) {
+		this.validateRange = validateRange;
+	}
+
+	public void setValidateDatePattern(String validateDatePattern) {
+		this.validateDatePattern = validateDatePattern;
+	}
+
+	public String getValidateDatePattern() {
+		return validateDatePattern;
 	}
 
 }

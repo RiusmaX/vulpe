@@ -21,9 +21,6 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 <#else>
 	property="${field.name}"
 </#if>
-<#if field.required>
-	required="${field.required}"
-</#if>
 <#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
 	mask="${field.mask}"
@@ -71,6 +68,37 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	enumeration="${field.enumeration}"
 	</#if>
 </#if>
+<#if field.required>
+	required="${field.required}"
+</#if>
+<#if field.validateType?has_content>
+	validateType="${field.validateType}"
+	<#if field.validateMas?has_content>
+	validateMask="${field.validateMask}"
+	</#if>
+	<#if field.validateType == 'DATE'>
+	validateDatePattern="${field.validateDatePattern}"
+	</#if>
+	<#if field.validateType == 'STRING'>
+	<#if field.validateMinLength?has_content>
+	validateMinLength="${field.validateMinLength}"
+	</#if>
+	<#if field.validateMaxLength?has_content>
+	validateMaxLength="${field.validateMaxLength}"
+	</#if>
+	</#if>
+	<#if field.validateType == 'INTEGER' || field.validateType == 'LONG' || field.validateType == 'DOUBLE' || field.validateType == 'FLOAT'>
+	<#if field.validateRange?has_content>
+	validateRange="${field.validateRange}"
+	</#if>
+	<#if field.validateMin?has_content>
+	validateMin="${field.validateMin}"
+	</#if>
+	<#if field.validateMax?has_content>
+	validateMax="${field.validateMax}"
+	</#if>
+	</#if>
+</#if>
 />
 </#list>
 </@file>
@@ -90,9 +118,6 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 				property="${field.name}.${field.attribute}"
 				<#else>
 				property="${field.name}"
-				</#if>
-				<#if field.required>
-				required="${field.required}"
 				</#if>
 				<#if field.width?has_content>
 				width="${field.width}"
@@ -131,9 +156,6 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	property="${field.name}.${field.itemKey}"
 <#else>
 	property="${field.name}"
-</#if>
-<#if field.required>
-	required="${field.required}"
 </#if>
 <#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
@@ -182,6 +204,37 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	enumeration="${field.enumeration}"
 	</#if>
 </#if>
+<#if field.required>
+	required="${field.required}"
+</#if>
+<#if field.validateType?has_content>
+	validateType="${field.validateType}"
+	<#if field.validateMas?has_content>
+	validateMask="${field.validateMask}"
+	</#if>
+	<#if field.validateType == 'DATE'>
+	validateDatePattern="${field.validateDatePattern}"
+	</#if>
+	<#if field.validateType == 'STRING'>
+	<#if field.validateMinLength?has_content>
+	validateMinLength="${field.validateMinLength}"
+	</#if>
+	<#if field.validateMaxLength?has_content>
+	validateMaxLength="${field.validateMaxLength}"
+	</#if>
+	</#if>
+	<#if field.validateType == 'INTEGER' || field.validateType == 'LONG' || field.validateType == 'DOUBLE' || field.validateType == 'FLOAT'>
+	<#if field.validateRange?has_content>
+	validateRange="${field.validateRange}"
+	</#if>
+	<#if field.validateMin?has_content>
+	validateMin="${field.validateMin}"
+	</#if>
+	<#if field.validateMax?has_content>
+	validateMax="${field.validateMax}"
+	</#if>
+	</#if>
+</#if>
 />
 </#list>
 </@file>
@@ -202,9 +255,6 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 			<#list detail.fields as detailField>
 			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
 				<v:${detailField.type} property="${detailField.name}"
-				<#if detailField.required>
-				required="${detailField.required}"
-				</#if>			
 				<#if detailField.type == 'selectPopup'>
 					identifier="${detailField.identifier}" description="${detailField.description}"
 					action="${detailField.action}" popupId="${detailField.name}SelectPopup"
@@ -252,6 +302,37 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					enumeration="${detailField.enumeration}"
 					</#if>
 				</#if>
+				<#if field.required>
+					required="${field.required}"
+				</#if>
+				<#if field.validateType?has_content>
+					validateType="${field.validateType}"
+					<#if field.validateMas?has_content>
+					validateMask="${field.validateMask}"
+					</#if>
+					<#if field.validateType == 'DATE'>
+					validateDatePattern="${field.validateDatePattern}"
+					</#if>
+					<#if field.validateType == 'STRING'>
+					<#if field.validateMinLength?has_content>
+					validateMinLength="${field.validateMinLength}"
+					</#if>
+					<#if field.validateMaxLength?has_content>
+					validateMaxLength="${field.validateMaxLength}"
+					</#if>
+					</#if>
+					<#if field.validateType == 'INTEGER' || field.validateType == 'LONG' || field.validateType == 'DOUBLE' || field.validateType == 'FLOAT'>
+					<#if field.validateRange?has_content>
+					validateRange="${field.validateRange}"
+					</#if>
+					<#if field.validateMin?has_content>
+					validateMin="${field.validateMin}"
+					</#if>
+					<#if field.validateMax?has_content>
+					validateMax="${field.validateMax}"
+					</#if>
+					</#if>
+				</#if>
 				/>
 			</v:column>
 			</#list>
@@ -285,9 +366,6 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					property="${field.name}.${field.itemKey}"
 				<#else>
 					property="${field.name}"
-				</#if>
-				<#if field.required>
-					required="${field.required}"
 				</#if>
 				<#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
 					<#if field.mask?has_content>
@@ -333,6 +411,37 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					</#if>
 					<#if field.enumeration?has_content>
 					enumeration="${field.enumeration}"
+					</#if>
+				</#if>
+				<#if field.required>
+					required="${field.required}"
+				</#if>
+				<#if field.validateType?has_content>
+					validateType="${field.validateType}"
+					<#if field.validateMas?has_content>
+					validateMask="${field.validateMask}"
+					</#if>
+					<#if field.validateType == 'DATE'>
+					validateDatePattern="${field.validateDatePattern}"
+					</#if>
+					<#if field.validateType == 'STRING'>
+					<#if field.validateMinLength?has_content>
+					validateMinLength="${field.validateMinLength}"
+					</#if>
+					<#if field.validateMaxLength?has_content>
+					validateMaxLength="${field.validateMaxLength}"
+					</#if>
+					</#if>
+					<#if field.validateType == 'INTEGER' || field.validateType == 'LONG' || field.validateType == 'DOUBLE' || field.validateType == 'FLOAT'>
+					<#if field.validateRange?has_content>
+					validateRange="${field.validateRange}"
+					</#if>
+					<#if field.validateMin?has_content>
+					validateMin="${field.validateMin}"
+					</#if>
+					<#if field.validateMax?has_content>
+					validateMax="${field.validateMax}"
+					</#if>
 					</#if>
 				</#if>
 				/>

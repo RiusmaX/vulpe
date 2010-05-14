@@ -29,4 +29,5 @@ public @interface VulpeCheckboxlist {
 	boolean argument() default false;
 
 	String label() default "";
+
 }

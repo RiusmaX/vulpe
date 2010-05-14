@@ -17,7 +17,7 @@ public @interface VulpeSelectPopup {
 	String name() default "";
 
 	boolean required() default false;
-	
+
 	boolean argument() default false;
 
 	String label() default "";
@@ -25,11 +25,11 @@ public @interface VulpeSelectPopup {
 	String identifier();
 
 	String description();
-	
+
 	String action();
-	
+
 	int size() default 40;
-	
+
 	int popupWidth() default 600;
 
 }

@@ -26,6 +26,7 @@ var vulpe = {
 		css: {
 			fieldError: 'fieldError'
 		},
+		elements: new Array(),
 		entity: '_entity.',
 		identifier: '_id',
 		iPhone: {
@@ -47,15 +48,28 @@ var vulpe = {
 			prepareName: ''
 		},
 		messages: {
+			error: {
+				checkfield: 'vulpe.error.validate.checkfield', 
+				checkfields: 'vulpe.error.validate.checkfield',
+				validate: {
+					date:'vulpe.error.validate.date',
+					double:'vulpe.error.validate.double',
+					float:'vulpe.error.validate.float',
+					floatRange:'vulpe.error.validate.float.range',
+					integer:'vulpe.error.validate.integer',
+					integerRange:'vulpe.error.validate.integer.range',
+					long:'vulpe.error.validate.long',
+					maxlength:'vulpe.error.validate.maxlength',
+					minlength:'vulpe.error.validate.minlength',
+					required:'vulpe.error.validate.required'	
+				}
+			},
 			exclusion: 'vulpe.msg.confirm.exclusion',
 			fieldRequired: 'vulpe.js.error.required',
 			keyRequired: 'vulpe.js.error.key.required',
 			selectedExclusion: 'vulpe.msg.confirm.selected.exclusion',
 			selectRecordsExclusion: 'vulpe.msg.select.records.exclusion',
-			required:'vulpe.error.required.simple',
 			upload: 'vulpe.error.upload',
-			validate: 'vulpe.error.validate', 
-			validateMany: 'vulpe.error.validate'
 		},
 		messageSlideUpTime: 10000,
 		os: {
@@ -115,6 +129,10 @@ var vulpe = {
 			var id = element.id.substring(0, element.id.lastIndexOf(":"));
 			var index = id.substring(id.lastIndexOf(":") + 1, id.length);
 			return index;
+		},
+		
+		getElementConfig: function(id) {
+			return vulpe.config.elements[id];
 		},
 
 		getURLComplete: function(url) {
@@ -434,63 +452,69 @@ var vulpe = {
 
 		validateRequired: function(config) {
 			var isValid = true;
+			var message = vulpe.config.messages.error.validate.required;
 			if (vulpe.validate.isArray(config.field)) {
-				if (config.field[0].type == 'radio') {
+				var field = jQuery(config.field[0]);
+				var idField = field.attr("id");
+				var typeField = field.attr("type");
+				if (typeField == 'radio') {
 					isValid = false;
-					var i = 0;
-					for (i=0; i<config.field.length; i++) {
-						if (config.field[i].checked) {
+					for (var i = 0; i < config.field.length; i++) {
+						field = jQuery(config.field[i]); 
+						if (field.attr("checked")) {
 							isValid = true;
 							break;
 						}
 					}
 					if (!isValid) {
-						vulpe.exception.showError(config);
+						vulpe.exception.setupError(idField, message);
 					}
 					return isValid;
 				}
 			}
 
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea' ||
-				config.field.type == 'file' ||
-				config.field.type == 'select-one' ||
-				config.field.type == 'radio' ||
-				config.field.type == 'checkbox' ||
-				config.field.type == 'password') {
-
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			if (typeField == 'text' || typeField == 'textarea' || typeField == 'file' ||
+					typeField == 'select-one' || typeField == 'radio' || typeField == 'checkbox' ||
+					typeField == 'password') {
 				var value = '';
-				if (config.field.type == "select-one") {
-					var si = config.field.selectedIndex;
+				if (typeField == "select-one") {
+					var si = config.field.attr("selectedIndex");
 					if (si >= 0) {
-						value = config.field.options[si].value;
+						var options = config.field.attr("options");
+						value = options[si].value;
 					}
-				} else if (config.field.type == "checkbox") {
-					isValid = config.field.checked;
+				} else if (typeField == "checkbox") {
+					isValid = config.field.attr("checked");
 					if (!isValid) {
-						vulpe.exception.showError(config);
+						vulpe.exception.setupError(idField, message);
 					}
 					return isValid;
 				} else {
-					value = config.field.value;
+					value = config.field.val();
 				}
 
 				if (vulpe.util.trim(value).length == 0) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
 		},
 
+		/**
+		 * config = {field = {}, minLength = 1}
+		 */
 		validateMinLength: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (vulpe.util.trim(config.field.value).length > 0 && vulpe.util.trim(config.field.value).length < parseInt(config.minlength)) {
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.minLength;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (vulpe.util.trim(config.field.val()).length > 0 && vulpe.util.trim(config.field.val()).length < parseInt(config.minlength)) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
@@ -498,12 +522,13 @@ var vulpe = {
 
 		validateMaxLength: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (vulpe.util.trim(config.field.value).length > parseInt(config.maxlength)) {
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.maxLength;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (vulpe.util.trim(config.field.val()).length > parseInt(config.maxlength)) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
@@ -511,12 +536,13 @@ var vulpe = {
 
 		validateMask: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (!vulpe.validate.matchPattern(config.field.value, config.mask)) {
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.mask;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (!vulpe.validate.matchPattern(config.field.val(), config.mask)) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
@@ -524,20 +550,21 @@ var vulpe = {
 
 		validateInteger: function(config) {
 			var bValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (config.field.value.length > 0) {
-					var value = vulpe.util.replaceAll(config.field.value, '.', '');
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.integer;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (config.field.val().length > 0) {
+					var value = vulpe.util.replaceAll(config.field.val(), '.', '');
 					value = vulpe.util.replaceAll(value, ',', '.');
 					if (!vulpe.validate.isAllDigits(value)) {
 						bValid = false;
-						vulpe.exception.showError(config);
+						vulpe.exception.setupError(idField, message);
 					} else {
 						var iValue = parseInt(value);
 						if (isNaN(iValue) || !(iValue >= -2147483648 && iValue <= 2147483647)) {
 							bValid = false;
-							vulpe.exception.showError(config);
+							vulpe.exception.setupError(idField, message);
 						}
 					}
 				}
@@ -551,20 +578,21 @@ var vulpe = {
 
 		validateFloat: function(config) {
 			var bValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (config.field.value.length > 0) {
-					var value = vulpe.util.replaceAll(config.field.value, '.', '');
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.float;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (config.field.val().length > 0) {
+					var value = vulpe.util.replaceAll(config.field.val(), '.', '');
 					value = vulpe.util.replaceAll(value, ',', '.');
 					if (!vulpe.validate.isAllDigits(value)) {
 						bValid = false;
-						vulpe.exception.showError(config);
+						vulpe.exception.setupError(idField, message);
 					} else {
 						var iValue = parseFloat(value);
 						if (isNaN(iValue)) {
 							bValid = false;
-							vulpe.exception.showError(config);
+							vulpe.exception.setupError(idField, message);
 						}
 					}
 				}
@@ -578,10 +606,11 @@ var vulpe = {
 
 		validateDate: function(config) {
 			var bValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (config.field.value.length > 0) {
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.date;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (config.field.val().length > 0) {
 					var MONTH = "MM";
 					var DAY = "dd";
 					var YEAR = "yyyy";
@@ -590,7 +619,7 @@ var vulpe = {
 					var orderDay = datePattern.indexOf(DAY);
 					var orderYear = datePattern.indexOf(YEAR);
 					var dateRegexp = null;
-					var value = config.field.value;
+					var value = config.field.val();
 					if ((orderDay < orderYear && orderDay > orderMonth)) {
 						var iDelim1 = orderMonth + MONTH.length;
 						var iDelim2 = orderDay + DAY.length;
@@ -609,11 +638,11 @@ var vulpe = {
 						if(matched != null) {
 							if (!vulpe.validate.isValidDate(matched[2], matched[1], matched[3])) {
 								bValid =  false;
-								vulpe.exception.showError(config);
+								vulpe.exception.setupError(idField, message);
 							}
 						} else {
 							bValid =  false;
-							vulpe.exception.showError(config);
+							vulpe.exception.setupError(idField, message);
 						}
 					} else
 					if ((orderMonth < orderYear && orderMonth > orderDay)) {
@@ -634,11 +663,11 @@ var vulpe = {
 						if(matched != null) {
 							if (!vulpe.validate.isValidDate(matched[1], matched[2], matched[3])) {
 								bValid =  false;
-								vulpe.exception.showError(config);
+								vulpe.exception.setupError(idField, message);
 							}
 						} else {
 							bValid =  false;
-							vulpe.exception.showError(config);
+							vulpe.exception.setupError(idField, message);
 						}
 					} else if ((orderMonth > orderYear && orderMonth < orderDay)) {
 						var iDelim1 = orderYear + YEAR.length;
@@ -658,30 +687,34 @@ var vulpe = {
 						if(matched != null) {
 							if (!vulpe.validate.isValidDate(matched[3], matched[2], matched[1])) {
 								bValid =  false;
-								vulpe.exception.showError(config);
+								vulpe.exception.setupError(idField, message);
 							}
 						} else {
 							bValid =  false;
-							vulpe.exception.showError(config);
+							vulpe.exception.setupError(idField, message);
 						}
 					} else {
 						bValid =  false;
-						vulpe.exception.showError(config);
+						vulpe.exception.setupError(idField, message);
 					}
 				}
+			}
+			if (!bValid) {
+				config.field.val("");
 			}
 			return bValid;
 		},
 
 		validateIntRange: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				var value = parseInt(config.field.value);
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.integerRange;
+			if (typeField == 'text' || typeField == 'textarea') {
+				var value = parseInt(config.field.val());
 				if (!(value >= parseInt(config.min) && value <= parseInt(config.max))) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
@@ -689,13 +722,14 @@ var vulpe = {
 
 		validateFloatRange: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				var value = parseFloat(config.field.value);
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.floatRange;
+			if (typeField == 'text' || typeField == 'textarea') {
+				var value = parseFloat(config.field.val());
 				if (!(value >= parseFloat(config.min) && value <= parseFloat(config.max))) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
@@ -703,35 +737,65 @@ var vulpe = {
 
 		validateEmail: function(config) {
 			var isValid = true;
-			if (config.field.type == 'text' ||
-				config.field.type == 'textarea') {
-
-				if (!vulpe.validate.checkEmail(config.field.value)) {
+			var idField = config.field.attr("id");
+			var typeField = config.field.attr("type");
+			var message = vulpe.config.messages.error.validate.email;
+			if (typeField == 'text' || typeField == 'textarea') {
+				if (!vulpe.validate.checkEmail(config.field.val())) {
 					isValid = false;
-					vulpe.exception.showError(config);
+					vulpe.exception.setupError(idField, message);
 				}
 			}
 			return isValid;
 		},
 
-		validateRequiredAttributes: function(formName) {
+		validateAttributes: function(formName) {
 			var valid = true;
 			var parent = "";
 			if (vulpe.util.existsVulpePopups()) {
 				parent += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 			}
-			var fields = jQuery("input[type!=checkbox][class*='required']", parent);
+			var fields = jQuery("[class*='required']", parent);
 			if (fields && fields.length > 0) {
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
-					if (field) {
-						var type = field.attr("type");
-						if (type == "text" || type == "password" || type == "select-one") {
-							if (field.val() == "" || (field.attr("class").indexOf("hasDatepicker") != -1 && field.val() == "__/__/____")) {
-								var messageRequired = vulpe.config.messages.required;
-								var idField = field.attr("id");
-								vulpe.exception.setupError(idField, messageRequired);
-								valid = false;
+					var idField = field.attr("id");
+					valid = vulpe.validate.validateRequired({
+						field: field
+					});
+					if (valid) {
+						var config = vulpe.util.getElementConfig(idField);
+						if (config) {
+							if (config.type == "DATE") {
+								valid = vulpe.validate.validateDate({
+									field: field, 
+									datePatternStrict: config.datePattern
+								});
+							} else if (config.type == "INTEGER") {
+								valid = vulpe.validate.validateInteger({
+									field: field
+								});
+							} else if (config.type == "LONG") {
+								valid = vulpe.validate.validateLong({
+									field: field
+								});
+							} else if (config.type == "DOUBLE") {
+								valid = vulpe.validate.validateDouble({
+									field: field
+								});
+							} else if (config.type == "FLOAT") {
+								valid = vulpe.validate.validateFloat({
+									field: field
+								});
+							} else if (config.type == "EMAIL") {
+								valid = vulpe.validate.validateEmail({
+									field: field
+								});
+							} else if (config.type == "STRING") {
+								valid = vulpe.validate.validateMinLength({
+									field: field,
+									minLength: config.minLength
+								});
 							}
 						}
 					}
@@ -745,7 +809,11 @@ var vulpe = {
 					$(messageLayer).removeClass("error");
 					$(messageLayer).removeClass("success");
 					$(messageLayer).addClass("validation");
-					$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.validate + "</li></ul>");
+					if (fields.length > 1) {
+						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
+					} else {
+						$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
+					}
 					$(messageLayer).slideDown("slow");
 					setTimeout(function() {
 						$(messageLayer).slideUp("slow");
@@ -1239,7 +1307,7 @@ var vulpe = {
 
 			submitFormAction: function(actionURL, formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				if (actionURL.indexOf("Post") != -1 || actionURL.indexOf("read") != -1) {
-					if (!vulpe.validate.validateRequiredAttributes(formName)) {
+					if (!vulpe.validate.validateAttributes(formName)) {
 						return false;
 					}
 				}
@@ -1531,14 +1599,23 @@ var vulpe = {
 			vulpe.util.get(messageSuffix).attr("title", message);
 			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
 			vulpe.util.get(messageSuffix).tooltip({
-				opacity: 0.9
+				opacity: 0.9,
+				onShow: function() {
+					var title = vulpe.util.get(messageSuffix).attr("title");
+					if (title) {
+						this.getTip().html(vulpe.util.get(messageSuffix).attr("title"));
+						vulpe.util.get(messageSuffix).attr("title", "");
+					}
+				}
 			});
 			vulpe.util.get(messageSuffix).show();
 			var errorController = function () {
 				if (this.value.length == 0) {
 					vulpe.exception.showFieldError(this);
 				} else {
-					vulpe.exception.hideFieldError(this);
+					if (this.value != "__/__/_____") {
+						vulpe.exception.hideFieldError(this);
+					}
 				}
 			}
 			vulpe.util.get(fieldName).change(errorController);
