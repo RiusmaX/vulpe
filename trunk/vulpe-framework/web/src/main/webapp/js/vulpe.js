@@ -757,7 +757,7 @@ var vulpe = {
 			var valid = true;
 			var parent = "";
 			if (vulpe.util.existsVulpePopups()) {
-				parent += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
+				parent += "#" + vulpe.util.getLastVulpePopup();
 			}
 			var fields = jQuery("[class*='required']", parent);
 			if (fields && fields.length > 0) {
@@ -1635,6 +1635,7 @@ var vulpe = {
 			vulpe.util.get(messageSuffix).tooltip({
 				opacity: 0.9,
 				onShow: function() {
+					this.getTip().css("zIndex", "100000");
 					var title = vulpe.util.get(messageSuffix).attr("title");
 					if (title) {
 						this.getTip().html(vulpe.util.get(messageSuffix).attr("title"));
