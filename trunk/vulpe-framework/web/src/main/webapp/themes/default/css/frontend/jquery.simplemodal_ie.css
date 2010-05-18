@@ -22,6 +22,6 @@
 	background: none;
 	/*right:-14px;*/
 	filter: progid : DXImageTransform . Microsoft .
-		AlphaImageLoader(src = '../images/icons/button-popup-close-16x16.png', sizingMethod =
+		AlphaImageLoader(src = '../../images/icons/button-popup-close-16x16.png', sizingMethod =
 		'scale');
 }
