@@ -243,10 +243,11 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
-		showButtons(Action.UPDATE);
 		if (!validateDetails()) {
+			showButtons(Action.CREATE);
 			return Forward.SUCCESS;
 		}
+		showButtons(Action.UPDATE);
 		final ENTITY entity = onCreatePost();
 		addActionMessage(getText("vulpe.msg.create.post"));
 
