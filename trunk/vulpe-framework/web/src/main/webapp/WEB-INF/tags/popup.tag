@@ -229,7 +229,7 @@
 	</c:if>
 
 	<c:if test="${empty icon}">
-		<c:set var="icon" value="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/search.png"/>
+		<c:set var="icon" value="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-search-16x16.png"/>
 	</c:if>
 	<c:if test="${icon eq 'false'}">
 		<c:set var="icon" value=""/>

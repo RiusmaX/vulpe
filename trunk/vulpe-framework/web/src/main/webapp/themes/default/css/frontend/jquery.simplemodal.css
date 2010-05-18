@@ -35,7 +35,7 @@
 }
 
 .modalContainerHeader a.modalCloseImg {
-	background: url(../images/button-close.png) no-repeat;
+	background: url(../images/icons/button-popup-close-16x16.png) no-repeat;
 	width: 16px;
 	height: 16px;
 	display: inline;

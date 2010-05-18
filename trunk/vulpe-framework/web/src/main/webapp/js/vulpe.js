@@ -926,13 +926,13 @@ var vulpe = {
 			var i=0;
 			var value = '';
 			for(i=0; i<columns.length; i++) {
-				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' desc')) {
-					order = 'desc';
+				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' orderDesc')) {
+					order = 'orderDesc';
 					if (vulpe.util.trim(columns[i]) == property) {
 						if (value == '') {
-							value = vulpe.util.trim(columns[i]) + ' desc';
+							value = vulpe.util.trim(columns[i]) + ' orderDesc';
 						} else {
-							value = value + ',' + vulpe.util.trim(columns[i]) + ' desc';
+							value = value + ',' + vulpe.util.trim(columns[i]) + ' orderDesc';
 						}
 					} else {
 						oldDesc = true;
@@ -946,13 +946,13 @@ var vulpe = {
 				}
 			}
 			if (order == '') {
-				order = 'asc';
+				order = 'orderAsc';
 				if (value == '') {
 					value = property;
 				} else {
 					value = value + ', ' + property;
 				}
-			} else if (order == 'desc' && oldDesc) {
+			} else if (order == 'orderDesc' && oldDesc) {
 				order = '';
 			}
 			vulpe.util.getElement(sortPropertyInfo).value = value;
@@ -977,12 +977,12 @@ var vulpe = {
 				var i = 0;
 				for(i = 0; i < columns.length; i++) {
 					var order = '';
-					if (vulpe.util.trim(columns[i]).indexOf(' desc') >= 0) {
-						order = 'desc';
+					if (vulpe.util.trim(columns[i]).indexOf(' orderDesc') >= 0) {
+						order = 'orderDesc';
 					} else {
-						order = 'asc';
+						order = 'orderAsc';
 					}
-					var property = vulpe.util.trim(columns[i]).replace(' desc', '');
+					var property = vulpe.util.trim(columns[i]).replace(' orderDesc', '');
 					var propertyTh = vulpe.util.getElement(sortPropertyInfoName + '_' + property);
 					if (propertyTh) {
 						propertyTh.className = order;
@@ -1081,7 +1081,12 @@ var vulpe = {
 		},
 
 		showPopup: function(elementId, popupWidth) {
+			var ucTitle = jQuery("div[class*='ucTitle']", "#" + elementId);
+			if (ucTitle) {
+				ucTitle.hide();
+			}
 			var popup = vulpe.util.get(elementId).modal({
+				title: (ucTitle ? ucTitle.html() : ""),
 				closeTitle: vulpe.config.popup.closeTitle,
 				overlayId: 'overlay' + elementId,
 				containerId: 'container' + elementId,

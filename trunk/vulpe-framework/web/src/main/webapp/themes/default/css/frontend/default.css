@@ -17,12 +17,6 @@
 
 }
 
-.asc {
-	background: url(../../images/order-asc.gif) right;
-	background-color: #eee;
-	background-repeat: no-repeat;
-}
-
 .button {
 	background: url(../../images/background-button.png) repeat-x;
 	border: 1px #CCCCCC solid;
@@ -42,8 +36,14 @@
 	float: left;
 }
 
-.desc {
-	background: url(../../images/order-desc.gif) right;
+.orderAsc {
+	background: url(../../images/icons/order-asc.gif) right;
+	background-color: #eee;
+	background-repeat: no-repeat;
+}
+
+.orderDesc {
+	background: url(../../images/icons/order-desc.gif) right;
 	background-color: #eee;
 	background-repeat: no-repeat;
 }
@@ -117,13 +117,13 @@
 .error {
     color: #D8000C;
     background-color: #FFBABA;
-    background-image: url('../../images/message-error.png');
+    background-image: url('../../images/icons/message-error.png');
 }
 
 .info {
     color: #00529B;
     background-color: #BDE5F8;
-    background-image: url('../../images/message-info.png');
+    background-image: url('../../images/icons/message-info.png');
 }
 
 .simpleLabel {
@@ -133,19 +133,19 @@
 .success {
     color: #4F8A10;
     background-color: #DFF2BF;
-    background-image:url('../../images/message-success.png');
+    background-image:url('../../images/icons/message-success.png');
 }
 
 .validation {
     color: #D63301;
     background-color: #FFCCBA;
-    background-image: url('../../images/message-validation.png');
+    background-image: url('../../images/icons/message-validation.png');
 }
 
 .warning {
     color: #9F6000;
     background-color: #FEEFB3;
-    background-image: url('../../images/message-warning.png');
+    background-image: url('../../images/icons/message-warning.png');
 }
 
 .messages h1 {
@@ -162,7 +162,7 @@
 	font-weight: normal
 }
 
-.off {
+.iconOff {
 	filter: progid :         DXImageTransform .         Microsoft .
 		   Alpha(opacity =         40);
 	-moz-opacity: 0.4;

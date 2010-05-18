@@ -9,10 +9,10 @@
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}${vulpeTheme}.css";
 	</c:otherwise>
 	</c:choose>
-	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.accordion.css";
 	<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && vulpeFrontendMenuType == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && vulpeBackendMenuType == 'DROPPY')}">
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.droppy.css";
 	</c:if>
+	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.growl.css";
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.lightbox.css";
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.simplemodal.css";
 	@import "${pageContext.request.contextPath}/themes/${vulpeTheme}/css/${layout}jquery.rte.css";

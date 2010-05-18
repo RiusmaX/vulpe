@@ -273,7 +273,7 @@
 				<v:column role="${updateRole}" logged="${updateLogged}" labelKey="${updateLabelKey}" width="1%"/>
 			</c:if>
 			<c:if test="${!isHeader_table_tag}">
-				<v:columnAction role="${updateRole}" logged="${updateLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-edit.png" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${util:urlEncode(util:evalString(pageContext, updateValue))}', '${updateActionName}', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%"/>
+				<v:columnAction role="${updateRole}" logged="${updateLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-edit.png" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${util:urlEncode(util:evalString(pageContext, updateValue))}', '${updateActionName}', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%"/>
 			</c:if>
 		</c:if>
 		--%>
@@ -281,16 +281,16 @@
 			<c:if test="${empty isHeader_table_tag || isHeader_table_tag}">
 				<%--
 				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%" showBodyInHeader="true">
-					<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-delete-all.png"/>
+					<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
 				</v:column>
 				 --%>
 				<v:column role="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true">
 					<c:choose>
 						<c:when test="${deleteType eq 'detail'}">
-							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfig.baseName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-delete-all.png"/>
+							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfig.baseName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
 						</c:when>
 						<c:otherwise>
-							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-delete-all.png"/>
+							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
 						</c:otherwise>
 					</c:choose>
 				</v:column>
@@ -298,10 +298,10 @@
 			<c:if test="${!isHeader_table_tag}">
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
-						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${status_row_tag.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
+						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${status_row_tag.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
 					</c:when>
 					<c:otherwise>
-						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/button-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
+						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>

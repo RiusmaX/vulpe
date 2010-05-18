@@ -36,7 +36,11 @@
 			<textarea name="${name}" id="${elementId}" class="${styleClass}" style="${style}">${value}</textarea>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
-					vulpe.util.get('${elementId}').rte('${cssFrame}');
+					vulpe.util.get('${elementId}').rte({
+						//css: ['default.css'],
+						controls_rte: rte_toolbar,
+						controls_html: html_toolbar
+					});
 				});
 			</script>
 		</c:otherwise>

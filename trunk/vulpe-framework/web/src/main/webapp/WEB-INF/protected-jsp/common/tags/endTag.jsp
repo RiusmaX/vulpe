@@ -1,8 +1,8 @@
 <c:if test="${!showAsText || !onlyToSee}">
 	<img id="${elementId}_loading" class="imageFieldLoading"
-		src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/loader-field.gif" />
+		src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/ajax/field-loader.gif" />
 	<img id="${elementId}_ErrorMessage"
-		src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/stop.png"
+		src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/field-error-stop.png"
 		onclick="vulpe.util.get('${elementId}').focus();" class="imageErrorMessage" />
 </c:if>
 <c:if test="${paragraph}">
