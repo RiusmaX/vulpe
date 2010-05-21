@@ -20,6 +20,8 @@
 		<module>controller</module>
 		<module>controller-struts</module>
 		<module>audit</module>
+		<module>audit-dao-db4o</module>
+		<module>audit-dao-jpa</module>
 		<module>audit-struts</module>
 		<module>security</module>
 		<module>security-dao-db4o</module>

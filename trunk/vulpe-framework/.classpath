@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="annotations/src/main/java"/>
+	<classpathentry kind="src" path="audit-dao-db4o/src/main/java"/>
+	<classpathentry kind="src" path="audit-dao-jpa/src/main/java"/>
 	<classpathentry kind="src" path="security-dao-db4o/src/main/java"/>
 	<classpathentry kind="src" path="security-dao-jpa/src/main/java"/>
 	<classpathentry kind="src" path="audit-struts/src/main/resources"/>

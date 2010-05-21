@@ -35,6 +35,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-audit-dao-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
 			<version>1.0</version>
 		</dependency>
