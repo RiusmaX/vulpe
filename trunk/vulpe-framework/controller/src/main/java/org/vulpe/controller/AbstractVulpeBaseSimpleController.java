@@ -1,5 +1,5 @@
 /**
- * Vulpe Framework - Copyright 2010 Active Thread
+ * Vulpe Framework - Copyright (c) Active Thread
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import org.vulpe.model.services.Services;
 
 /**
  * Base Simple Controller
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -54,7 +54,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method returns current date time of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return VulpeDate.
 	 */
@@ -64,7 +64,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method returns current year from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Year.
 	 */
@@ -74,7 +74,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method returns current month from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Month.
 	 */
@@ -84,7 +84,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method returns current day from date of system.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Day.
 	 */
@@ -94,7 +94,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Return current action configuration.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -106,7 +106,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method to invoke services.
-	 *
+	 * 
 	 * @param eventName
 	 *            Name of event
 	 * @param serviceName
@@ -115,17 +115,15 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 *            Types of arguments
 	 * @param argsValues
 	 *            Arguments values
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Object
 	 */
-	protected Object invokeServices(final String eventName,
-			final String serviceName, final Class<?>[] argsType,
-			final Object[] argsValues) {
+	protected Object invokeServices(final String eventName, final String serviceName,
+			final Class<?>[] argsType, final Object[] argsValues) {
 		final Services service = getService();
 		try {
-			final Method method = service.getClass().getMethod(serviceName,
-					argsType);
+			final Method method = service.getClass().getMethod(serviceName, argsType);
 			return method.invoke(service, argsValues);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -134,7 +132,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Returns current action service configured.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Service Implementation.
 	 * @see Services
@@ -145,7 +143,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 *
+	 * 
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -166,7 +164,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Method to retrieve download info.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return DownlodInfo object.
 	 */
@@ -176,10 +174,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Set download info.
-	 *
+	 * 
 	 * @param downloadInfo
 	 *            Download Info.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	public void setDownloadInfo(final DownloadInfo downloadInfo) {
@@ -287,13 +285,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		return downloadContentDisposition;
 	}
 
-	public void setDownloadContentDisposition(
-			final String downloadContentDisposition) {
+	public void setDownloadContentDisposition(final String downloadContentDisposition) {
 		this.downloadContentDisposition = downloadContentDisposition;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getPopupKey() {
@@ -301,7 +298,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	}
 
 	/**
-	 *
+	 * 
 	 * @param popupKey
 	 */
 	public void setPopupKey(final String popupKey) {
@@ -309,7 +306,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public boolean isPopup() {
@@ -318,61 +315,59 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 
 	/**
 	 * Returns map of cached class
-	 *
+	 * 
 	 * @return Map with cached classes
 	 */
 	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_CLASS);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_CLASS);
 	}
 
 	/**
 	 * Returns map of cached enumeration
-	 *
+	 * 
 	 * @return Map with cached enumerations
 	 */
 	public Map<String, Object> getCachedEnum() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_ENUM);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_ENUM);
 	}
 
 	/**
 	 * Returns map of cached enumeration in array to checkbox list
-	 *
+	 * 
 	 * @return Map with cached enumerations array
 	 */
 	public Map<String, String> getCachedEnumArray() {
-		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_ENUM_ARRAY);
+		return (Map<String, String>) VulpeCacheHelper.getInstance()
+				.get(Constants.CACHED_ENUM_ARRAY);
 	}
 
 	/**
 	 * Verified if user is authenticated.
-	 *
+	 * 
 	 * @return true if authenticated
 	 */
 	public boolean isAuthenticated() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
+		final Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
 		return authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken);
 	}
 
 	/**
 	 * Returns user name.
-	 *
+	 * 
 	 * @return User Name
 	 */
 	public String getUserName() {
-		final Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		return principal instanceof UserDetails ? ((UserDetails) principal)
-				.getUsername() : principal.toString();
+		final Object principal = SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		return principal instanceof UserDetails ? ((UserDetails) principal).getUsername()
+				: principal.toString();
 	}
 
 	/**
 	 * Returns controller type
-	 *
+	 * 
 	 * @return Controller Type
 	 */
 	protected ControllerType getControllerType() {

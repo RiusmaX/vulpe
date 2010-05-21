@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.common;
 
 import java.util.List;
@@ -22,8 +37,7 @@ import org.vulpe.exception.VulpeSystemException;
  */
 public final class EmailUtil {
 
-	private static final Logger LOG = Logger.getLogger(EmailUtil.class
-			.getName());
+	private static final Logger LOG = Logger.getLogger(EmailUtil.class.getName());
 
 	private static boolean isDebugEnabled = LOG.isDebugEnabled();
 
@@ -36,8 +50,7 @@ public final class EmailUtil {
 	private EmailUtil() {
 	}
 
-	private EmailUtil(final String mailServer, final String mailFrom,
-			final String env) {
+	private EmailUtil(final String mailServer, final String mailFrom, final String env) {
 		super();
 		this.mailServer = mailServer;
 		this.mailFrom = mailFrom;
@@ -46,18 +59,18 @@ public final class EmailUtil {
 
 	/**
 	 * Returns EmailUtil instance.
-	 *
+	 * 
 	 * @param mailServer
 	 *            Mail Server
 	 * @param mailFrom
 	 *            From
 	 * @param env
 	 *            "prod" or "test"
-	 *
+	 * 
 	 * @return EmailUtil instance
 	 */
-	public static EmailUtil getInstance(final String mailServer,
-			final String mailFrom, final String env) {
+	public static EmailUtil getInstance(final String mailServer, final String mailFrom,
+			final String env) {
 		if (instance == null) {
 			instance = new EmailUtil(mailServer, mailFrom, env);
 		}
@@ -66,7 +79,7 @@ public final class EmailUtil {
 
 	/**
 	 * Send Mail to many recipients.
-	 *
+	 * 
 	 * @param recipients
 	 *            Recipients
 	 * @param subject
@@ -76,8 +89,8 @@ public final class EmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMail(final String[] recipients, final String subject,
-			final String body) throws VulpeSystemException {
+	public void sendMail(final String[] recipients, final String subject, final String body)
+			throws VulpeSystemException {
 
 		if (!checkValidEmail(recipients)) {
 			throw new VulpeSystemException("Invalid mails: " + recipients);
@@ -96,20 +109,16 @@ public final class EmailUtil {
 			if ("prod".equals(getEnv())) {
 				final Properties properties = new Properties();
 				properties.put("mail.smtp.host", mailServer);
-				final Session session = Session.getDefaultInstance(properties,
-						null);
+				final Session session = Session.getDefaultInstance(properties, null);
 				final MimeMessage mimemessage = new MimeMessage(session);
-				final InternetAddress internetaddress = new InternetAddress(
-						mailFrom);
+				final InternetAddress internetaddress = new InternetAddress(mailFrom);
 				mimemessage.setFrom(internetaddress);
 				final InternetAddress ainternetaddress[] = getAddress(recipients);
-				mimemessage.setRecipients(javax.mail.Message.RecipientType.TO,
-						ainternetaddress);
+				mimemessage.setRecipients(javax.mail.Message.RecipientType.TO, ainternetaddress);
 				// mimemessage.setRecipients(javax.mail.Message.RecipientType.CC,
 				// ainternetaddress);
 
-				final String assunto = MimeUtility.encodeText(subject, "UTF-8",
-						null);
+				final String assunto = MimeUtility.encodeText(subject, "UTF-8", null);
 				mimemessage.setSubject(assunto);
 				mimemessage.setText(body);
 				mimemessage.addHeader("Content-type", "text/html");
@@ -130,16 +139,15 @@ public final class EmailUtil {
 
 	/**
 	 * Print email
-	 *
+	 * 
 	 * @param recipients
-	 *
+	 * 
 	 * @param subject
-	 *
+	 * 
 	 * @param body
-	 *
+	 * 
 	 */
-	public void printMail(final String[] recipients, final String subject,
-			final String body) {
+	public void printMail(final String[] recipients, final String subject, final String body) {
 		LOG.info("Email enviado para: ");
 		for (int i = 0; i < recipients.length; i++) {
 			LOG.info(recipients[i].trim() + " - ");
@@ -153,11 +161,11 @@ public final class EmailUtil {
 
 	/**
 	 * Returns String Array of recipients.
-	 *
+	 * 
 	 * @param recipients
-	 *
+	 * 
 	 * @param property
-	 *
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -167,8 +175,7 @@ public final class EmailUtil {
 			final Object recipient = (Object) recipients.get(i);
 			try {
 				if (recipient != null) {
-					address[i] = BeanUtils.getProperty(recipient, property)
-							.trim();
+					address[i] = BeanUtils.getProperty(recipient, property).trim();
 				}
 			} catch (Exception e) {
 				LOG.error("Error on get email of " + recipient, e);
@@ -180,18 +187,17 @@ public final class EmailUtil {
 
 	/**
 	 * Send Mail to recipient.
-	 *
+	 * 
 	 * @param recipient
-	 *
+	 * 
 	 * @param subject
-	 *
+	 * 
 	 * @param body
-	 *
+	 * 
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMail(final String recipient, final String subject,
-			final String body) {
+	public void sendMail(final String recipient, final String subject, final String body) {
 		LOG.debug("Entering in sendMail...");
 		LOG.debug("recipient: " + recipient);
 		LOG.debug("subject: " + subject);
@@ -202,32 +208,29 @@ public final class EmailUtil {
 
 	/**
 	 * Send mail to recipients by Web Service.
-	 *
+	 * 
 	 * @param recipients
-	 *
+	 * 
 	 * @param subject
-	 *
+	 * 
 	 * @param body
-	 *
+	 * 
 	 * @param mailerService
-	 *
+	 * 
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMailByService(final String[] recipients,
-			final String subject, final String body, final String mailerService)
-			throws VulpeSystemException {
+	public void sendMailByService(final String[] recipients, final String subject,
+			final String body, final String mailerService) throws VulpeSystemException {
 		try {
 			final InitialContext initialContext = new InitialContext();
-			final Session session = (Session) initialContext
-					.lookup(mailerService);
+			final Session session = (Session) initialContext.lookup(mailerService);
 
 			final Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(mailFrom));
 
 			for (String recipient : recipients) {
-				message.addRecipient(Message.RecipientType.TO,
-						new InternetAddress(recipient));
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 			}
 
 			// msg.setRecipient(Message.RecipientType.TO, new
@@ -245,15 +248,14 @@ public final class EmailUtil {
 	/**
 	 * Converte um array de String de endereços de e-mail em array de
 	 * InternetAddress.
-	 *
+	 * 
 	 * @param address
 	 *            array de endereços (do tipo String)
 	 * @return array de InternetAddress
 	 * @throws AddressException
 	 *             Erro ao converter uma String de endereço para InternetAddress
 	 */
-	private InternetAddress[] getAddress(final String[] address)
-			throws AddressException {
+	private InternetAddress[] getAddress(final String[] address) throws AddressException {
 
 		InternetAddress[] iAddresses = new InternetAddress[address.length];
 
@@ -296,14 +298,13 @@ public final class EmailUtil {
 
 	/**
 	 * Checks if the email format is valid
-	 *
+	 * 
 	 * @return true if valid
 	 */
 	private boolean checkEmailFormat(final String email) {
 		final char arroba = "@".charAt(0); // NOPMD by felipe on 16/03/10 16:51
 		final char dot = ".".charAt(0); // NOPMD by felipe on 16/03/10 16:52
-		return email == null
-				|| (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false
+		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false
 				: true;
 	}
 

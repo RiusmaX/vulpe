@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.common;
 
 import java.text.DateFormat;
@@ -12,7 +27,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Utility class to date format.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 public final class DateUtil {
@@ -46,7 +61,7 @@ public final class DateUtil {
 
 	/**
 	 * Obter a data corrente.
-	 *
+	 * 
 	 * @author <a href="mailto:smendes@cit.com.br">Silvio Mendes</a>
 	 * @since 12/04/2006
 	 * @return VulpeDate Data corrente
@@ -143,8 +158,8 @@ public final class DateUtil {
 	 */
 	public static String getDateTimeFormatted(final Date data) {
 		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(
-				DateUtil.DDMMYYYYHHMMSS, Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat sdf = new SimpleDateFormat(DateUtil.DDMMYYYYHHMMSS,
+				Constants.PORTUGUESE_LOCALE);
 		return sdf.format(data);
 	}
 
@@ -155,8 +170,7 @@ public final class DateUtil {
 		Date returnDate = null;
 
 		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(pattern,
-				Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat sdf = new SimpleDateFormat(pattern, Constants.PORTUGUESE_LOCALE);
 		try {
 			returnDate = sdf.parse(date);
 		} catch (Exception e) {
@@ -173,8 +187,7 @@ public final class DateUtil {
 		String returnDate = null;
 
 		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(pattern,
-				Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat sdf = new SimpleDateFormat(pattern, Constants.PORTUGUESE_LOCALE);
 		try {
 			returnDate = sdf.format(date);
 		} catch (Exception e) {
@@ -188,8 +201,8 @@ public final class DateUtil {
 	 * Verifica se é uma data valida.
 	 */
 	public static boolean isValidDate(final String date) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat(
-				DateUtil.DDMMYYYY, Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat dateFormat = new SimpleDateFormat(DateUtil.DDMMYYYY,
+				Constants.PORTUGUESE_LOCALE);
 		if (date != null) {
 			try {
 				return date.equals(dateFormat.format(dateFormat.parse(date)));
@@ -207,8 +220,7 @@ public final class DateUtil {
 				|| calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
 	}
 
-	public static Date overrideField(final Date date, final int field,
-			final int value) {
+	public static Date overrideField(final Date date, final int field, final int value) {
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
 		calendar.set(field, value);
@@ -253,11 +265,9 @@ public final class DateUtil {
 			final int index = duration.indexOf(':');
 
 			final Integer hours = Integer.valueOf(duration.substring(0, index));
-			final Integer minutes = Integer.valueOf(duration
-					.substring(index + 1));
+			final Integer minutes = Integer.valueOf(duration.substring(index + 1));
 
-			totalMinutes = Integer.valueOf((hours.intValue() * 60)
-					+ minutes.intValue());
+			totalMinutes = Integer.valueOf((hours.intValue() * 60) + minutes.intValue());
 
 		}
 		return totalMinutes;
@@ -289,8 +299,7 @@ public final class DateUtil {
 			try {
 				final int index = time.indexOf(':');
 				// Integer hours = Integer.valueOf(time.substring(0, index));
-				final Integer minutes = Integer.valueOf(time
-						.substring(index + 1));
+				final Integer minutes = Integer.valueOf(time.substring(index + 1));
 				if ((minutes != null) && (minutes.intValue() < 60)) {
 					valid = true;
 				}
@@ -329,16 +338,13 @@ public final class DateUtil {
 
 			// se nao for do tamanho correto, lanca uma ParseException
 			if (newDate.length() != DDMMYYYY.length()) {
-				throw new ParseException(
-						"Tamanho inválido para um campo data.", newDate
-								.length());
+				throw new ParseException("Tamanho inválido para um campo data.", newDate.length());
 			}
 
 			// percorre o dia / mes / ano para verificar se os campos sao
 			// numericos
 			try {
-				final StringTokenizer stringTokenizer = new StringTokenizer(
-						newDate, "/");
+				final StringTokenizer stringTokenizer = new StringTokenizer(newDate, "/");
 
 				if (stringTokenizer.countTokens() != 3) {
 					return false;
@@ -367,13 +373,12 @@ public final class DateUtil {
 	 * Retorna a data atual por extenso: 99 de xxxxx de 9999
 	 */
 	public String getExtensiveDate() {
-		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat
-				.getDateInstance(DateFormat.MEDIUM, Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(
+				DateFormat.MEDIUM, Constants.PORTUGUESE_LOCALE);
 		format.applyPattern("MMMM");
 		final Calendar calendar = Calendar.getInstance();
 		final String month = format.format(calendar.getTime());
-		final String day = Integer
-				.toString(calendar.get(Calendar.DAY_OF_MONTH));
+		final String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 		final String year = Integer.toString(calendar.get(Calendar.YEAR));
 		return day + " de " + month + " de " + year;
 	}
@@ -403,8 +408,7 @@ public final class DateUtil {
 		calendarEnd.set(Calendar.SECOND, 0);
 		calendarEnd.set(Calendar.MILLISECOND, 0);
 
-		milliseconds = calendarEnd.getTime().getTime()
-				- calendarBegin.getTime().getTime();
+		milliseconds = calendarEnd.getTime().getTime() - calendarBegin.getTime().getTime();
 
 		days = milliseconds / 86400000;
 
@@ -414,23 +418,19 @@ public final class DateUtil {
 	/**
 	 * Converte uma string para data
 	 */
-	public static Date convertStringToDate(final String date)
-			throws ParseException {
+	public static Date convertStringToDate(final String date) throws ParseException {
 
 		if (LOG.isDebugEnabled()) {
-			LOG
-					.debug("Entering in DateUtil.convertStringToDate(String date) - Start");
+			LOG.debug("Entering in DateUtil.convertStringToDate(String date) - Start");
 			LOG.debug("date: " + date);
 		}
 
-		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY,
-				Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY, Constants.PORTUGUESE_LOCALE);
 		format.setLenient(false);
 		final Date formatedDate = format.parse(date);
 
 		if (LOG.isDebugEnabled()) {
-			LOG
-					.debug("Leaving of DateUtil.convertStringToDate(String date) - End");
+			LOG.debug("Leaving of DateUtil.convertStringToDate(String date) - End");
 		}
 
 		return formatedDate;
@@ -440,10 +440,8 @@ public final class DateUtil {
 	/**
 	 * Converte uma string representando uma hora para um objeto data
 	 */
-	public static Date convertStringToTime(final String time)
-			throws ParseException {
-		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM,
-				Constants.PORTUGUESE_LOCALE);
+	public static Date convertStringToTime(final String time) throws ParseException {
+		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM, Constants.PORTUGUESE_LOCALE);
 		timeFormat.setLenient(false);
 		return timeFormat.parse(time);
 	}
@@ -451,10 +449,9 @@ public final class DateUtil {
 	/**
 	 * Converte uma string com data e hora para um objeto data
 	 */
-	public static Date convertStringToDateTime(final String dateTime)
-			throws ParseException {
-		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY
-				+ " " + HHMM, Constants.PORTUGUESE_LOCALE);
+	public static Date convertStringToDateTime(final String dateTime) throws ParseException {
+		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
+				Constants.PORTUGUESE_LOCALE);
 		dateTimeFormat.setLenient(false);
 		return dateTimeFormat.parse(dateTime);
 	}
@@ -462,8 +459,8 @@ public final class DateUtil {
 	public static String convertDateTimeToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!ValidationUtil.getInstance().isEmpty(formatedDateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(
-					DDMMYYYY + " " + HHMM, Constants.PORTUGUESE_LOCALE);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
+					Constants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(formatedDateTime);
 		}
 		return formatedDateTime;
@@ -472,8 +469,8 @@ public final class DateUtil {
 	public static String convertDateToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!ValidationUtil.getInstance().isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(
-					DDMMYYYY, Constants.PORTUGUESE_LOCALE);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY,
+					Constants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
@@ -482,8 +479,8 @@ public final class DateUtil {
 	public static String convertDateTimeSecondToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!ValidationUtil.getInstance().isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(
-					DDMMYYYY + " " + HHMMSS, Constants.PORTUGUESE_LOCALE);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS,
+					Constants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
@@ -505,12 +502,12 @@ public final class DateUtil {
 	/**
 	 * Converte um objeto date em uma String com o dia da semana que ele
 	 * representa abreviado (Seg/Ter/Qua/Qui/Sex).
-	 *
+	 * 
 	 * Ex: Data: 04/10/2005 Valor retornado: Ter
 	 */
 	public static String getDataExtensoAbreviada(final Date date) {
-		final SimpleDateFormat formatDate = new SimpleDateFormat(
-				Constants.SIMPLE_DATE_FORMAT, Constants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat formatDate = new SimpleDateFormat(Constants.SIMPLE_DATE_FORMAT,
+				Constants.PORTUGUESE_LOCALE);
 		return formatDate.format(date);
 	}
 
@@ -543,8 +540,7 @@ public final class DateUtil {
 	/**
 	 * Retorna a diferença em milisegundos entre as duas datas
 	 */
-	public static long getDiferencaEmMilisegundos(final Date begin,
-			final Date end) {
+	public static long getDiferencaEmMilisegundos(final Date begin, final Date end) {
 		long milliseconds;
 
 		final Calendar dtBegin = new GregorianCalendar();
@@ -581,10 +577,8 @@ public final class DateUtil {
 	 * minuto dos parâmetros "inicio" e "fim" - os campos de ano, mês e dia
 	 * destes dois parâmetros não são levados em consideração.
 	 */
-	private static int calculateTruncatedTime(
-			final java.util.Date dateTimeBegin,
-			final java.util.Date dateTimeEnd, final java.util.Date begin,
-			final java.util.Date end) {
+	private static int calculateTruncatedTime(final java.util.Date dateTimeBegin,
+			final java.util.Date dateTimeEnd, final java.util.Date begin, final java.util.Date end) {
 
 		// se o período muda de dia, dividir em duas porções de tempo procuradas
 		if (begin.compareTo(end) > 0) {
@@ -598,10 +592,9 @@ public final class DateUtil {
 			calendarEnd2.setTime(calendarBegin1.getTime());
 			calendarEnd2.add(Calendar.DAY_OF_YEAR, 1);
 
-			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd,
-					calendarBegin1.getTime(), end)
-					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin,
-							calendarEnd2.getTime());
+			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd, calendarBegin1.getTime(), end)
+					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2
+							.getTime());
 		}
 
 		int returnedTime = 0;
@@ -616,10 +609,10 @@ public final class DateUtil {
 		 * Nos parâmetros "inicio" e "fim", o dia deve ser atualizado para ser o
 		 * mesmo dia do inicio da atividade, para se calcular as diferenças
 		 */
-		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity
-				.get(Calendar.MONTH), startActivity.get(Calendar.DATE));
-		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity
-				.get(Calendar.MONTH), startActivity.get(Calendar.DATE));
+		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
+				startActivity.get(Calendar.DATE));
+		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
+				startActivity.get(Calendar.DATE));
 
 		/** aplicando uma correção para periodo noturno */
 		if (periodBegin.getTime().compareTo(periodEnd.getTime()) > 0) {
@@ -629,16 +622,16 @@ public final class DateUtil {
 		final java.util.Date finish = periodEnd.getTime();
 
 		final int period = getMinutesDifference(start, finish);
-		final int activityTime = getMinutesDifference(dateTimeBegin,
-				dateTimeEnd);
+		final int activityTime = getMinutesDifference(dateTimeBegin, dateTimeEnd);
 
 		if (dateTimeBegin.compareTo(start) < 0) {
-			returnedTime = Math.max(Math.min(getMinutesDifference(start,
-					dateTimeEnd), period), 0); // a, b, c
+			returnedTime = Math.max(Math.min(getMinutesDifference(start, dateTimeEnd), period), 0); // a,
+																									// b,
+																									// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
-			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin
-					.getTime(), dateTimeEnd), period), 0); // d, e
+			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
+					dateTimeEnd), period), 0); // d, e
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
 			returnedTime = activityTime; // f
 		} else {
@@ -654,7 +647,7 @@ public final class DateUtil {
 
 	/**
 	 * Verifica um periodo de horas.
-	 *
+	 * 
 	 * Verifica se a hora informada está dentro do periodo inicial e final
 	 * informado ( desconsiderando o dia ).
 	 */
@@ -683,14 +676,12 @@ public final class DateUtil {
 		calendarTime.set(Calendar.YEAR, 1970);
 
 		// Verifica se esta dentro do periodo (no dia 1)
-		if (calendarTime.after(calendarBegin)
-				&& calendarTime.before(calendarEnd)) {
+		if (calendarTime.after(calendarBegin) && calendarTime.before(calendarEnd)) {
 			betweenPeriod = true;
 		} else {
 			// Se nao estiver, verifica se esta dentro do periodo no dia 2.
 			calendarTime.set(Calendar.DAY_OF_MONTH, 2);
-			if (calendarTime.after(calendarBegin)
-					&& calendarTime.before(calendarEnd)) {
+			if (calendarTime.after(calendarBegin) && calendarTime.before(calendarEnd)) {
 				betweenPeriod = true;
 			}
 		}
@@ -725,8 +716,7 @@ public final class DateUtil {
 
 			final Calendar calendarEnd = new GregorianCalendar();
 			calendarEnd.setTime(periodEnd);
-			calendarEnd.set(Calendar.DAY_OF_MONTH, calendarBegin
-					.get(Calendar.DAY_OF_MONTH));
+			calendarEnd.set(Calendar.DAY_OF_MONTH, calendarBegin.get(Calendar.DAY_OF_MONTH));
 			calendarEnd.set(Calendar.MONTH, calendarBegin.get(Calendar.MONTH));
 			calendarEnd.set(Calendar.YEAR, calendarBegin.get(Calendar.YEAR));
 			final Date datePeriodEnd = calendarEnd.getTime();
@@ -751,9 +741,8 @@ public final class DateUtil {
 				} else {
 					dtEndActivity = endActivity;
 				}
-				final int parcialMinutes = calculateTruncatedTime(
-						dtBeginActivity, dtEndActivity, datePeriodStart,
-						datePeriodEnd);
+				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity,
+						datePeriodStart, datePeriodEnd);
 				minutes += parcialMinutes;
 				// atualiza o próximo início
 				beginNextDay.setTime(dtEndActivity);
@@ -793,8 +782,7 @@ public final class DateUtil {
 	 * Calcula a diferença entre os índices dos dias ao longo de um ano entre
 	 * duas datas (dataMenor deve ser menor do que dataMaior)
 	 */
-	public static int getDifferencesBetweenIndicateDays(final Date minorDate,
-			final Date majorDate) {
+	public static int getDifferencesBetweenIndicateDays(final Date minorDate, final Date majorDate) {
 
 		int numDiff = 0;
 
@@ -819,8 +807,7 @@ public final class DateUtil {
 				while (auxYear < yearMaior) {
 					// soma quantidade de dias do ano da data atual no índice da
 					// nova atividade
-					dayYearMaior += calendarAux
-							.getActualMaximum(Calendar.DAY_OF_YEAR);
+					dayYearMaior += calendarAux.getActualMaximum(Calendar.DAY_OF_YEAR);
 					auxYear++;
 					calendarAux.set(Calendar.YEAR, auxYear);
 				}
@@ -846,9 +833,8 @@ public final class DateUtil {
 	/**
 	 * Verifica se uma data está entre um período
 	 */
-	public static boolean validatePeriodBetweenDate(final Date date,
-			final Date periodStart, final Date periodEnd) {
-		return (date.after(periodStart) && (periodEnd == null || date
-				.before(periodEnd)));
+	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart,
+			final Date periodEnd) {
+		return (date.after(periodStart) && (periodEnd == null || date.before(periodEnd)));
 	}
 }

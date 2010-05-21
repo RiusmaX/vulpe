@@ -1,12 +1,27 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.security.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
 public final class VulpeCriptoUtils {
 
@@ -17,7 +32,7 @@ public final class VulpeCriptoUtils {
 
 	/**
 	 * Realiza um digest em um array de bytes através do algoritmo especificado
-	 *
+	 * 
 	 * @param input
 	 *            - O array de bytes a ser criptografado
 	 * @param algorithm
@@ -35,7 +50,7 @@ public final class VulpeCriptoUtils {
 
 	/**
 	 * Converte o array de bytes em uma representação hexadecimal.
-	 *
+	 * 
 	 * @param input
 	 *            - O array de bytes a ser convertido.
 	 * @return Uma String com a representação hexa do array
@@ -54,15 +69,14 @@ public final class VulpeCriptoUtils {
 
 	/**
 	 * Converte uma String hexa no array de bytes correspondente.
-	 *
+	 * 
 	 * @param hexa
 	 *            - A String hexa
 	 * @return O vetor de bytes
 	 * @throws IllegalArgumentException
 	 *             - Caso a String não seja uma representação hexadecimal válida
 	 */
-	public static byte[] hexStringToByteArray(final String hexa)
-			throws IllegalArgumentException {
+	public static byte[] hexStringToByteArray(final String hexa) throws IllegalArgumentException {
 
 		// verifica se a String possui uma quantidade par de elementos
 		if (hexa.length() % 2 != 0) {

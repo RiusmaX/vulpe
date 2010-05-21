@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.view.tags;
 
 import java.awt.Graphics2D;
@@ -35,8 +50,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 @SuppressWarnings("unchecked")
 public class Functions {
 
-	private static final Logger LOG = Logger.getLogger(Functions.class
-			.getName());
+	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
 
 	public Functions() {
 		// default constructor
@@ -48,8 +62,7 @@ public class Functions {
 	 * @param field
 	 * @return
 	 */
-	public static boolean isFieldInValidator(final Object bean,
-			final String field) {
+	public static boolean isFieldInValidator(final Object bean, final String field) {
 		return false;
 	}
 
@@ -60,17 +73,15 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static Object eval(final PageContext pageContext,
-			final String expression) throws JspException {
+	public static Object eval(final PageContext pageContext, final String expression)
+			throws JspException {
 		try {
-			return ExpressionEvaluatorManager.evaluate(null, expression,
-					Object.class, pageContext);
+			return ExpressionEvaluatorManager.evaluate(null, expression, Object.class, pageContext);
 		} catch (Exception e) {
 			LOG.error("Erro na expressão: " + expression);
 			throw new JspException(e);
 		}
 	}
-
 
 	/**
 	 * 
@@ -79,8 +90,7 @@ public class Functions {
 	 */
 
 	public static List fieldsInBean(final Object bean) {
-		final PropertyDescriptor pDescriptor[] = PropertyUtils
-				.getPropertyDescriptors(bean);
+		final PropertyDescriptor pDescriptor[] = PropertyUtils.getPropertyDescriptors(bean);
 		final List list = new ArrayList();
 		for (PropertyDescriptor propertyDescriptor : pDescriptor) {
 			if (propertyDescriptor.getReadMethod() == null
@@ -120,8 +130,7 @@ public class Functions {
 	public static String clearChars(final String string, final String chars) {
 		String newString = string;
 		for (int i = 0; i < chars.length(); i++) {
-			newString = StringUtils.replace(newString, String.valueOf(chars
-					.charAt(i)), "");
+			newString = StringUtils.replace(newString, String.valueOf(chars.charAt(i)), "");
 		}
 		return newString;
 	}
@@ -134,8 +143,8 @@ public class Functions {
 	 * @param scope
 	 * @return
 	 */
-	public static Object put(final PageContext pageContext, final String key,
-			final Object value, final Integer scope) {
+	public static Object put(final PageContext pageContext, final String key, final Object value,
+			final Integer scope) {
 		pageContext.setAttribute(key, value, scope);
 		return value;
 	}
@@ -148,8 +157,8 @@ public class Functions {
 	 * @param replace
 	 * @return
 	 */
-	public static String replaceSequence(final String string,
-			final String begin, final String end, final String replace) {
+	public static String replaceSequence(final String string, final String begin, final String end,
+			final String replace) {
 		String aux = "";
 		String name = string;
 		while (name.indexOf(begin) >= 0 && name.indexOf(end) >= 0) {
@@ -167,19 +176,18 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static Object getProperty(final PageContext pageContext,
-			final String property) throws JspException {
+	public static Object getProperty(final PageContext pageContext, final String property)
+			throws JspException {
 		String baseName = "entity.";
-		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(
-				pageContext, "${targetConfig}");
+		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext,
+				"${targetConfig}");
 		if (detailConfig != null) {
-			baseName = eval(pageContext, "${targetConfigPropertyName}")
-					.toString().concat("_item");
+			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("_item");
 		}
 		return eval(pageContext, "${".concat(
 				(property.contains("entity.") || property.contains("entities")
-						|| property.contains("].") ? property : baseName
-						.concat(property))).concat("}"));
+						|| property.contains("].") ? property : baseName.concat(property))).concat(
+				"}"));
 	}
 
 	/**
@@ -196,8 +204,8 @@ public class Functions {
 	 * @throws IOException
 	 *             if the image could not be manipulated correctly.
 	 */
-	public static byte[] resizeImageAsJPG(final byte[] imageData,
-			final int maxWidth) throws IOException {
+	public static byte[] resizeImageAsJPG(final byte[] imageData, final int maxWidth)
+			throws IOException {
 		// Create an ImageIcon from the image data
 		final ImageIcon imageIcon = new ImageIcon(imageData);
 		int width = imageIcon.getIconWidth();
@@ -213,8 +221,7 @@ public class Functions {
 			LOG.debug("resize ratio: " + ratio);
 			height = (int) (imageIcon.getIconHeight() * ratio);
 			width = maxWidth;
-			LOG.debug("imageIcon post scale width: " + width + "  height: "
-					+ height);
+			LOG.debug("imageIcon post scale width: " + width + "  height: " + height);
 		}
 		// Create a new empty image buffer to "draw" the resized image into
 		final BufferedImage bufferedImage = new BufferedImage(width, height,
@@ -223,10 +230,8 @@ public class Functions {
 		final Graphics2D g2d = bufferedImage.createGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-				RenderingHints.VALUE_RENDER_SPEED);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 		// Draw the resized image
 		g2d.drawImage(imageIcon.getImage(), 0, 0, width, height, null);
 		g2d.dispose();
@@ -243,10 +248,8 @@ public class Functions {
 	 * @param role
 	 * @return
 	 */
-	public static Boolean isRole(final PageContext pageContext,
-			final String role) {
-		return ((HttpServletRequest) pageContext.getRequest())
-				.isUserInRole(role);
+	public static Boolean isRole(final PageContext pageContext, final String role) {
+		return ((HttpServletRequest) pageContext.getRequest()).isUserInRole(role);
 	}
 
 	/**
@@ -254,8 +257,7 @@ public class Functions {
 	 * @return
 	 */
 	public static Boolean isLogged(final PageContext pageContext) {
-		return ((HttpServletRequest) pageContext.getRequest())
-				.getUserPrincipal() != null;
+		return ((HttpServletRequest) pageContext.getRequest()).getUserPrincipal() != null;
 	}
 
 	protected static String findText(final String key) {
@@ -269,8 +271,7 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String booleanTo(final Boolean value, final String toValue)
-			throws JspException {
+	public static String booleanTo(final Boolean value, final String toValue) throws JspException {
 		final StringTokenizer values = new StringTokenizer(toValue, "|");
 		String valueTrue = values.nextToken();
 		String valueFalse = values.nextToken();
@@ -282,8 +283,7 @@ public class Functions {
 		}
 		if (valueFalse.charAt(0) == openBrace
 				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
-			valueFalse = findText(valueFalse.substring(1,
-					valueFalse.length() - 1));
+			valueFalse = findText(valueFalse.substring(1, valueFalse.length() - 1));
 		}
 		if (value) {
 			return valueTrue;

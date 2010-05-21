@@ -1,5 +1,5 @@
 /**
- * Vulpe Framework - Copyright 2010 Active Thread 
+ * Vulpe Framework - Copyright (c) Active Thread 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

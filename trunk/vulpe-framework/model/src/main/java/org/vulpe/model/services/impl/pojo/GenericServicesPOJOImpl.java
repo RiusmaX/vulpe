@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.model.services.impl.pojo;
 
 import java.io.Serializable;
@@ -15,9 +30,8 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 import org.vulpe.model.services.GenericServices;
 
-
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @SuppressWarnings("unchecked")
@@ -27,11 +41,11 @@ public class GenericServicesPOJOImpl<ENTITY extends AbstractVulpeBaseEntityImpl<
 		implements GenericServices {
 
 	private static final Logger LOG = Logger.getLogger(GenericServicesPOJOImpl.class);
+
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.vulpe.model.services.GenericServices#getList(
+	 * 
+	 * @see org.vulpe.model.services.GenericServices#getList(
 	 * org.vulpe.model.entity.VulpeBaseEntity)
 	 */
 	public <T extends VulpeBaseEntity<?>> List<T> getList(final T entity) {

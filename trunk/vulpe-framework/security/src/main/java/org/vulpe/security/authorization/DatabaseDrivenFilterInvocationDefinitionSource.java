@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.security.authorization;
 
 import java.util.ArrayList;
@@ -35,8 +50,7 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		if (firstQuestionMarkIndex != -1) {
 			newUrl = newUrl.substring(0, firstQuestionMarkIndex);
 		}
-		final SecureResource secureObject = authorizationService
-				.getSecureObject(newUrl);
+		final SecureResource secureObject = authorizationService.getSecureObject(newUrl);
 		if (secureObject == null) {// if secure object not exist in database
 			return null;
 		}
@@ -50,8 +64,8 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 				roles.append(sor.getName()).append(",");
 			}
 			Collection<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
-			ConfigAttribute config = new SecurityConfig(roles.toString()
-					.substring(0, roles.length() - 1));
+			ConfigAttribute config = new SecurityConfig(roles.toString().substring(0,
+					roles.length() - 1));
 			list.add(config);
 			return list;
 		}
@@ -74,8 +88,7 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		return authorizationService;
 	}
 
-	public void setAuthorizationService(
-			final AuthorizationService authorizationService) {
+	public void setAuthorizationService(final AuthorizationService authorizationService) {
 		this.authorizationService = authorizationService;
 	}
 
@@ -97,15 +110,12 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 	}
 
 	@Override
-	public Collection<ConfigAttribute> getAttributes(Object object)
-			throws IllegalArgumentException {
+	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 		if ((object == null) || !this.supports(object.getClass())) {
-			throw new IllegalArgumentException(
-					"Object must be a FilterInvocation");
+			throw new IllegalArgumentException("Object must be a FilterInvocation");
 		}
 
-		return this.lookupAttributes(((FilterInvocation) object)
-				.getRequestUrl());
+		return this.lookupAttributes(((FilterInvocation) object).getRequestUrl());
 	}
 
 }

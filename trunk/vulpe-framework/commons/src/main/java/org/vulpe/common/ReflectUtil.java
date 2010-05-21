@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.common;
 
 import java.lang.annotation.Annotation;
@@ -27,7 +42,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns instance of ReflectUtil.
-	 *
+	 * 
 	 * @return
 	 */
 	public static ReflectUtil getInstance() {
@@ -44,22 +59,19 @@ public class ReflectUtil {
 
 	/**
 	 * Returns list of fields in class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @return
 	 */
 	public List<Field> getFields(final Class<?> clazz) {
-		if (VulpeCacheHelper.getInstance().contains(
-				clazz.getName().concat(".fields"))) {
-			return VulpeCacheHelper.getInstance().get(
-					clazz.getName().concat(".fields"));
+		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".fields"))) {
+			return VulpeCacheHelper.getInstance().get(clazz.getName().concat(".fields"));
 		}
 		Class<?> baseClass = clazz;
 		final List<Field> list = new ArrayList<Field>();
 		while (!baseClass.equals(Object.class)) {
 			for (Field field : baseClass.getDeclaredFields()) {
-				if (!Modifier.isStatic(field.getModifiers())
-						&& !field.isSynthetic()) {
+				if (!Modifier.isStatic(field.getModifiers()) && !field.isSynthetic()) {
 					list.add(field);
 				}
 			}
@@ -71,7 +83,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns list of fields noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param clazz
 	 * @param annotationClass
 	 * @return
@@ -90,37 +102,33 @@ public class ReflectUtil {
 
 	/**
 	 * Returns field of class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @param fieldName
 	 * @return
 	 */
 	public Field getField(final Class<?> clazz, final String fieldName) {
 		Map<String, Field> fieldMap = new HashMap<String, Field>();
-		if (VulpeCacheHelper.getInstance().contains(
-				clazz.getName().concat(".fieldMap"))) {
-			fieldMap = VulpeCacheHelper.getInstance().get(
-					clazz.getName().concat(".fieldMap"));
+		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".fieldMap"))) {
+			fieldMap = VulpeCacheHelper.getInstance().get(clazz.getName().concat(".fieldMap"));
 		} else {
 			final List<Field> fields = getFields(clazz);
 			for (Field field : fields) {
 				fieldMap.put(field.getName(), field);
 			}
-			VulpeCacheHelper.getInstance().put(clazz.getName().concat(".fieldMap"),
-					fieldMap);
+			VulpeCacheHelper.getInstance().put(clazz.getName().concat(".fieldMap"), fieldMap);
 		}
 		return fieldMap.get(fieldName);
 	}
 
 	public Class<?> getFieldClass(final Class<?> clazz, final String fieldName) {
 		final Field field = getField(clazz, fieldName);
-		return field == null ? null : getDeclaredType(clazz,
-				field.getGenericType()).getType();
+		return field == null ? null : getDeclaredType(clazz, field.getGenericType()).getType();
 	}
 
 	/**
 	 * Copy attributes from <code>origin</code> to <code>destination</code>.
-	 *
+	 * 
 	 * @param destination
 	 * @param origin
 	 */
@@ -128,27 +136,24 @@ public class ReflectUtil {
 		final List<Field> fields = getFields(origin.getClass());
 		for (Field field : fields) {
 			try {
-				final Object value = PropertyUtils.getProperty(origin, field
-						.getName());
+				final Object value = PropertyUtils.getProperty(origin, field.getName());
 				if (Collection.class.isAssignableFrom(field.getType())) {
-					final Collection valueDes = (Collection) PropertyUtils
-							.getProperty(destination, field.getName());
+					final Collection valueDes = (Collection) PropertyUtils.getProperty(destination,
+							field.getName());
 					if (value == null) {
 						if (valueDes != null) {
 							valueDes.clear();
 						}
 					} else {
 						if (valueDes == null) {
-							PropertyUtils.setProperty(destination, field
-									.getName(), value);
+							PropertyUtils.setProperty(destination, field.getName(), value);
 						} else {
 							valueDes.clear();
 							valueDes.addAll((Collection) value);
 						}
 					}
 				} else {
-					PropertyUtils.setProperty(destination, field.getName(),
-							value);
+					PropertyUtils.setProperty(destination, field.getName(), value);
 				}
 			} catch (NoSuchMethodException e) {
 				LOG.debug("Method not found.", e);
@@ -160,15 +165,13 @@ public class ReflectUtil {
 
 	/**
 	 * Returns list of methods in class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @return
 	 */
 	public List<Method> getMethods(final Class<?> clazz) {
-		if (VulpeCacheHelper.getInstance().contains(
-				clazz.getName().concat(".methods"))) {
-			return VulpeCacheHelper.getInstance().get(
-					clazz.getName().concat(".methods"));
+		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".methods"))) {
+			return VulpeCacheHelper.getInstance().get(clazz.getName().concat(".methods"));
 		}
 		Class<?> baseClass = clazz;
 		final List<Method> list = new ArrayList<Method>();
@@ -187,7 +190,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns method of class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @param methodName
 	 * @param typeParams
@@ -200,8 +203,7 @@ public class ReflectUtil {
 		for (Method method : methods) {
 			if (method.getName().equals(methodName)) {
 				if ((typeParams == null && method.getParameterTypes() == null)
-						|| (typeParams != null
-								&& method.getParameterTypes() != null && Arrays
+						|| (typeParams != null && method.getParameterTypes() != null && Arrays
 								.equals(typeParams, method.getParameterTypes()))) {
 					return method;
 				}
@@ -215,7 +217,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns class of Type.
-	 *
+	 * 
 	 * @param clazz
 	 * @param type
 	 * @return
@@ -232,13 +234,11 @@ public class ReflectUtil {
 		} else if (type instanceof ParameterizedType) {
 			declaredType = new DeclaredType();
 			final ParameterizedType parameterizedType = (ParameterizedType) type;
-			final DeclaredType rawType = getDeclaredType(clazz,
-					parameterizedType.getRawType());
+			final DeclaredType rawType = getDeclaredType(clazz, parameterizedType.getRawType());
 			declaredType.setType(rawType.getType());
 			for (int i = 0; i < parameterizedType.getActualTypeArguments().length; i++) {
 				declaredType.getItems().add(
-						getDeclaredType(clazz, parameterizedType
-								.getActualTypeArguments()[i]));
+						getDeclaredType(clazz, parameterizedType.getActualTypeArguments()[i]));
 			}
 		} else if (type instanceof TypeVariable) {
 			return getDeclaredTypeVariable(clazz, (TypeVariable<?>) type);
@@ -246,17 +246,15 @@ public class ReflectUtil {
 			declaredType = new DeclaredType();
 			final WildcardType wildcardType = (WildcardType) type;
 			if (wildcardType.getLowerBounds().length > 0) {
-				declaredType.setType(getDeclaredType(clazz,
-						wildcardType.getLowerBounds()[0]).getType());
+				declaredType.setType(getDeclaredType(clazz, wildcardType.getLowerBounds()[0])
+						.getType());
 			} else {
 				declaredType.setType(null);
 			}
 
 			for (int i = 0; i < wildcardType.getUpperBounds().length; i++) {
-				declaredType.getTypeItems()
-						.add(
-								getDeclaredType(clazz, wildcardType
-										.getUpperBounds()[i]));
+				declaredType.getTypeItems().add(
+						getDeclaredType(clazz, wildcardType.getUpperBounds()[i]));
 			}
 
 			return declaredType;
@@ -266,7 +264,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 *
+	 * 
 	 * @param clazz
 	 * @param typeVariable
 	 * @return
@@ -275,23 +273,21 @@ public class ReflectUtil {
 			final TypeVariable<?> typeVariable) {
 		final int index = getIndexTypeVariable(typeVariable);
 		final VariableInfo info = new VariableInfo(index);
-		DeclaredType declaredType = getDeclaredTypeVariableDeclared(clazz,
-				clazz.getSuperclass(), typeVariable, info);
+		DeclaredType declaredType = getDeclaredTypeVariableDeclared(clazz, clazz.getSuperclass(),
+				typeVariable, info);
 		if (declaredType == null) {
 			if (info.isInSuperclass()) {
-				final ParameterizedType pType = (ParameterizedType) info
-						.getFirstClass().getGenericSuperclass();
-				final Type type = pType.getActualTypeArguments()[info
-						.getIndex()];
+				final ParameterizedType pType = (ParameterizedType) info.getFirstClass()
+						.getGenericSuperclass();
+				final Type type = pType.getActualTypeArguments()[info.getIndex()];
 				if (type instanceof TypeVariable) {
-					declaredType = getDeclaredType(clazz,
-							((TypeVariable<?>) type).getBounds()[0]);
+					declaredType = getDeclaredType(clazz, ((TypeVariable<?>) type).getBounds()[0]);
 				} else {
 					declaredType = getDeclaredType(clazz, type);
 				}
 			} else {
-				declaredType = getDeclaredType(clazz, info.getFirstClass()
-						.getTypeParameters()[info.getIndex()].getBounds()[0]);
+				declaredType = getDeclaredType(clazz, info.getFirstClass().getTypeParameters()[info
+						.getIndex()].getBounds()[0]);
 			}
 			return declaredType;
 		}
@@ -300,7 +296,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 *
+	 * 
 	 * @param clazz
 	 * @param superClass
 	 * @param typeVariable
@@ -308,8 +304,7 @@ public class ReflectUtil {
 	 * @return
 	 */
 	private DeclaredType getDeclaredTypeVariableDeclared(final Class<?> clazz,
-			final Class<?> superClass, final TypeVariable<?> typeVariable,
-			final VariableInfo info) {
+			final Class<?> superClass, final TypeVariable<?> typeVariable, final VariableInfo info) {
 		if (clazz.equals(Object.class)) {
 			return null;
 		}
@@ -319,13 +314,11 @@ public class ReflectUtil {
 			final int index = getIndexTypeVariable(typeVariable);
 			if (typeVariable.getGenericDeclaration().equals(clazz)) {
 				info.setIndex(index);
-				info.setFirstClass((Class<?>) typeVariable
-						.getGenericDeclaration());
+				info.setFirstClass((Class<?>) typeVariable.getGenericDeclaration());
 				info.setInSuperclass(false);
 				return null;
 			} else {
-				final ParameterizedType pType = (ParameterizedType) clazz
-						.getGenericSuperclass();
+				final ParameterizedType pType = (ParameterizedType) clazz.getGenericSuperclass();
 				final Type type = pType.getActualTypeArguments()[index];
 				if (type instanceof TypeVariable) {
 					info.setIndex(getIndexTypeVariable((TypeVariable<?>) type));
@@ -337,23 +330,19 @@ public class ReflectUtil {
 			}
 		} else {
 			final DeclaredType declaredType = getDeclaredTypeVariableDeclared(
-					clazz.getSuperclass(), superClass.getSuperclass(),
-					typeVariable, info);
+					clazz.getSuperclass(), superClass.getSuperclass(), typeVariable, info);
 			if (declaredType == null) {
 				ParameterizedType parameterizedType = null;
 				if (clazz.getGenericSuperclass() instanceof ParameterizedType) {
-					parameterizedType = (ParameterizedType) clazz
-							.getGenericSuperclass();
+					parameterizedType = (ParameterizedType) clazz.getGenericSuperclass();
 					info.setInSuperclass(true);
 					info.setFirstClass(clazz);
 				} else {
-					parameterizedType = (ParameterizedType) superClass
-							.getGenericSuperclass();
+					parameterizedType = (ParameterizedType) superClass.getGenericSuperclass();
 					info.setInSuperclass(false);
 					info.setFirstClass(superClass);
 				}
-				final Type type = parameterizedType.getActualTypeArguments()[info
-						.getIndex()];
+				final Type type = parameterizedType.getActualTypeArguments()[info.getIndex()];
 				if (type instanceof TypeVariable) {
 					info.setIndex(getIndexTypeVariable((TypeVariable<?>) type));
 					return null;
@@ -367,14 +356,14 @@ public class ReflectUtil {
 
 	/**
 	 * Returns position of TypeVariable in list of getTypeParameters on class.
-	 *
+	 * 
 	 * @param typeVariable
 	 * @return
 	 */
 	private int getIndexTypeVariable(final TypeVariable<?> typeVariable) {
 		int index = -1;
-		for (TypeVariable<?> typeVariable2 : typeVariable
-				.getGenericDeclaration().getTypeParameters()) {
+		for (TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration()
+				.getTypeParameters()) {
 			index++;
 			if (typeVariable.getName().equals(typeVariable2.getName())) {
 				break;
@@ -510,23 +499,20 @@ public class ReflectUtil {
 	/**
 	 * Returns class on index in the parameterized type on <code>clazz</code> or
 	 * <code>super</code>.
-	 *
+	 * 
 	 * @param clazz
 	 * @param index
 	 * @return
 	 */
 	public Class<?> getIndexClass(final Class<?> clazz, final int index) {
 		if (clazz.getGenericSuperclass() instanceof ParameterizedType) {
-			final ParameterizedType type = (ParameterizedType) clazz
-					.getGenericSuperclass();
+			final ParameterizedType type = (ParameterizedType) clazz.getGenericSuperclass();
 			DeclaredType declaredType = null;
 			if (type.getActualTypeArguments().length > index + 1) {
-				declaredType = getDeclaredType(clazz, type
-						.getActualTypeArguments()[index]);
+				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[index]);
 			} else {
-				declaredType = getDeclaredType(clazz,
-						type.getActualTypeArguments()[type
-								.getActualTypeArguments().length - 1]);
+				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[type
+						.getActualTypeArguments().length - 1]);
 			}
 			return (Class<?>) declaredType.getType();
 		} else if (clazz.getGenericSuperclass() instanceof Class) {
@@ -538,14 +524,14 @@ public class ReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInClass(
-			final Class<T> annotationClass, final Class<?> clazz) {
+	public <T extends Annotation> T getAnnotationInClass(final Class<T> annotationClass,
+			final Class<?> clazz) {
 		Class<?> baseClass = clazz;
 		while (baseClass != null && !baseClass.equals(Object.class)) {
 			if (baseClass.isAnnotationPresent(annotationClass)) {
@@ -553,8 +539,7 @@ public class ReflectUtil {
 			}
 
 			for (Class<?> iClass : baseClass.getInterfaces()) {
-				final T tAnnotation = getAnnotationInClass(annotationClass,
-						iClass);
+				final T tAnnotation = getAnnotationInClass(annotationClass, iClass);
 				if (tAnnotation != null) {
 					return tAnnotation;
 				}
@@ -568,36 +553,34 @@ public class ReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInClass(
-			final Class<T> annotationClass, final Class<?> clazz) {
+	public <T extends Annotation> boolean isAnnotationInClass(final Class<T> annotationClass,
+			final Class<?> clazz) {
 		return getAnnotationInClass(annotationClass, clazz) != null;
 	}
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param fieldName
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInField(
-			final Class<T> annotationClass, final Class<?> clazz,
-			final String fieldName) {
+	public <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
+			final Class<?> clazz, final String fieldName) {
 		final Field field = getField(clazz, fieldName);
 		if (field != null && field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
 		}
 
-		final String name = fieldName.substring(0, 1).toUpperCase().concat(
-				fieldName.substring(1));
+		final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
 
 		Method method = getMethod(clazz, "get".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
@@ -614,22 +597,21 @@ public class ReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param field
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInField(
-			final Class<T> annotationClass, final Class<?> clazz,
-			final Field field) {
+	public <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
+			final Class<?> clazz, final Field field) {
 		if (field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
 		}
 
-		final String name = field.getName().substring(0, 1).toUpperCase()
-				.concat(field.getName().substring(1));
+		final String name = field.getName().substring(0, 1).toUpperCase().concat(
+				field.getName().substring(1));
 
 		Method method = getMethod(clazz, "get".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
@@ -646,53 +628,49 @@ public class ReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param fieldName
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInField(
-			final Class<T> annotationClass, final Class<?> clazz,
-			final String fieldName) {
+	public <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
+			final Class<?> clazz, final String fieldName) {
 		return getAnnotationInField(annotationClass, clazz, fieldName) != null;
 	}
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param field
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInField(
-			final Class<T> annotationClass, final Class<?> clazz,
-			final Field field) {
+	public <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
+			final Class<?> clazz, final Field field) {
 		return getAnnotationInField(annotationClass, clazz, field) != null;
 	}
 
 	/**
 	 * Sets field value in object.
-	 *
+	 * 
 	 * @param object
 	 * @param fieldName
 	 * @param value
 	 */
-	public void setFieldValue(final Object object, final String fieldName,
-			final Object value) {
+	public void setFieldValue(final Object object, final String fieldName, final Object value) {
 		try {
 			final String name = fieldName.substring(0, 1).toUpperCase().concat(
 					fieldName.substring(1));
 
 			Method method = null;
-			Class<?> classField = (value == null ? getFieldClass(object
-					.getClass(), fieldName) : value.getClass());
+			Class<?> classField = (value == null ? getFieldClass(object.getClass(), fieldName)
+					: value.getClass());
 			while (classField != null && !classField.equals(Object.class)) {
-				method = getMethod(object.getClass(), "set".concat(name),
-						classField);
+				method = getMethod(object.getClass(), "set".concat(name), classField);
 				if (method != null) {
 					break;
 				}
@@ -740,7 +718,7 @@ public class ReflectUtil {
 
 	/**
 	 * Returns field value from object.
-	 *
+	 * 
 	 * @param <T>
 	 * @param object
 	 * @param fieldName
@@ -751,8 +729,7 @@ public class ReflectUtil {
 			final String name = fieldName.substring(0, 1).toUpperCase().concat(
 					fieldName.substring(1));
 
-			final Method method = getMethod(object.getClass(), "get"
-					.concat(name));
+			final Method method = getMethod(object.getClass(), "get".concat(name));
 			if (method != null) {
 				synchronized (method) {
 					boolean seted = false;

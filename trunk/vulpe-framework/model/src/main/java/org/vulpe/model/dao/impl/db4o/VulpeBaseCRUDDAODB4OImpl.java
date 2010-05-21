@@ -1,5 +1,5 @@
 /**
- * Vulpe Framework - Copyright 2010 Active Thread
+ * Vulpe Framework - Copyright (c) Active Thread
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,19 +47,18 @@ import com.db4o.query.Query;
 
 /**
  * Default implementation of DAO for CRUD's with DB4O.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @SuppressWarnings("unchecked")
 public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAODB4OImpl<ENTITY, ID> {
 
-	private static final Logger LOG = Logger
-			.getLogger(VulpeBaseCRUDDAODB4OImpl.class.getName());
+	private static final Logger LOG = Logger.getLogger(VulpeBaseCRUDDAODB4OImpl.class.getName());
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#create(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -78,7 +77,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#delete(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -106,7 +105,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeBaseCRUDDAO#delete(java.util. List)
 	 */
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {
@@ -117,7 +116,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -135,8 +134,9 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java .io.Serializable)
+	 * 
+	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
+	 * .io.Serializable)
 	 */
 	public ENTITY find(final ID identifier) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -164,7 +164,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeBaseCRUDDAO#read(br.com.activethread
 	 * .framework.model.entity.BaseEntity)
 	 */
@@ -174,8 +174,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 		}
 		try {
 			final ObjectSet<ENTITY> objectSet = getQuery(entity).execute();
-			final List<ENTITY> list = objectSet.hasNext() ? new ArrayList<ENTITY>()
-					: null;
+			final List<ENTITY> list = objectSet.hasNext() ? new ArrayList<ENTITY>() : null;
 			while (objectSet.hasNext()) {
 				list.add(objectSet.next());
 			}
@@ -187,13 +186,13 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#paging(br.com.
 	 * activethread.framework.model.entity.BaseEntity, java.lang.Integer,
 	 * java.lang.Integer)
 	 */
-	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize,
-			final Integer page) throws VulpeApplicationException {
+	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize, final Integer page)
+			throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Paging object: ".concat(entity.toString()));
 		}
@@ -235,14 +234,12 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = ReflectUtil.getInstance()
-					.getDeclaredType(getClass(),
-							getClass().getGenericSuperclass());
+			final DeclaredType declaredType = ReflectUtil.getInstance().getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
-			entityClass = (Class<ENTITY>) declaredType.getItems().get(0)
-					.getType();
+			entityClass = (Class<ENTITY>) declaredType.getItems().get(0).getType();
 		}
 		return entityClass;
 	}
@@ -252,15 +249,14 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
 	public boolean isNotEmpty(final Object value) {
 		if (ValidationUtil.getInstance().isNotEmpty(value)) {
 			if (value instanceof VulpeBaseEntity) {
-				return ValidationUtil.getInstance().isNotEmpty(
-						((VulpeBaseEntity) value).getId());
+				return ValidationUtil.getInstance().isNotEmpty(((VulpeBaseEntity) value).getId());
 			} else {
 				return true;
 			}
@@ -270,7 +266,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	}
 
 	/**
-	 *
+	 * 
 	 * @param entity
 	 * @return
 	 */
@@ -291,29 +287,25 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 				final String[] orderParts = order.split("\\.");
 				if (orderParts.length == 4) {
 					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.descend(orderParts[2]).descend(orderParts[3])
-								.orderDescending();
+						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
+								.descend(orderParts[3]).orderDescending();
 					} else {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.descend(orderParts[2]).descend(orderParts[3])
-								.orderAscending();
+						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
+								.descend(orderParts[3]).orderAscending();
 					}
 				} else if (orderParts.length == 3) {
 					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.descend(orderParts[2]).orderDescending();
+						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
+								.orderDescending();
 					} else {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.descend(orderParts[2]).orderAscending();
+						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
+								.orderAscending();
 					}
 				} else if (orderParts.length == 2) {
 					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.orderDescending();
+						query.descend(orderParts[0]).descend(orderParts[1]).orderDescending();
 					} else {
-						query.descend(orderParts[0]).descend(orderParts[1])
-								.orderAscending();
+						query.descend(orderParts[0]).descend(orderParts[1]).orderAscending();
 					}
 				} else {
 					if (descending) {
@@ -326,10 +318,8 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 		}
 		emptyToNull(entity);
-		for (Field field : ReflectUtil.getInstance()
-				.getFields(getEntityClass())) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(
-					entity, field.getName());
+		for (Field field : ReflectUtil.getInstance().getFields(getEntityClass())) {
+			final Object value = ReflectUtil.getInstance().getFieldValue(entity, field.getName());
 			if (LogicEntity.class.isAssignableFrom(entity.getClass())
 					&& field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
@@ -353,17 +343,12 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 						query.descend(paramName).constrain(value).equal();
 					} else if (OperatorType.SMALLER.equals(param.operator())) {
 						query.descend(paramName).constrain(value).smaller();
-					} else if (OperatorType.GREATER.equals(param.operator()
-							.getValue())) {
+					} else if (OperatorType.GREATER.equals(param.operator().getValue())) {
 						query.descend(paramName).constrain(value).greater();
-					} else if (OperatorType.SMALLER_OR_EQUAL.equals(param
-							.operator())) {
-						query.descend(paramName).constrain(value).smaller()
-								.equal();
-					} else if (OperatorType.GREATER_OR_EQUAL.equals(param
-							.operator())) {
-						query.descend(paramName).constrain(value).greater()
-								.equal();
+					} else if (OperatorType.SMALLER_OR_EQUAL.equals(param.operator())) {
+						query.descend(paramName).constrain(value).smaller().equal();
+					} else if (OperatorType.GREATER_OR_EQUAL.equals(param.operator())) {
+						query.descend(paramName).constrain(value).greater().equal();
 					}
 				}
 				if (String.class.isAssignableFrom(field.getType())) {
@@ -384,8 +369,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 						if (values.size() > 1) {
 							for (Object object : values) {
 								if (object instanceof Enum) {
-									subqy.descend(field.getName()).constrain(
-											object.toString());
+									subqy.descend(field.getName()).constrain(object.toString());
 								} else {
 									subqy.constrain(object);
 								}

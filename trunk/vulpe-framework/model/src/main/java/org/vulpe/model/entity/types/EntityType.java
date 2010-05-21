@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.model.entity.types;
 
 import java.io.Serializable;
@@ -22,7 +37,7 @@ import org.vulpe.model.services.Services;
 
 public class EntityType implements UserType, ParameterizedType {
 	/**
-	 * Classe de retorno
+	 * Returned Class
 	 */
 	private transient Class<? extends VulpeBaseEntity<?>> returnedClass = null;
 	/**
@@ -45,19 +60,12 @@ public class EntityType implements UserType, ParameterizedType {
 		return new int[] { type };
 	}
 
-	/**
-	 * Tipo que o UserType retorna
-	 */
 	@SuppressWarnings("unchecked")
 	public Class returnedClass() {
 		return returnedClass;
 	}
 
-	/**
-	 * Compara dois valores formatados
-	 */
-	public boolean equals(final Object obj0, final Object obj1)
-			throws HibernateException {
+	public boolean equals(final Object obj0, final Object obj1) throws HibernateException {
 		final VulpeBaseEntity<?> entity1 = (VulpeBaseEntity<?>) obj0;
 		final VulpeBaseEntity<?> entity2 = (VulpeBaseEntity<?>) obj1;
 		if (entity1 == null) {
@@ -69,11 +77,8 @@ public class EntityType implements UserType, ParameterizedType {
 		return entity1.equals(entity2);
 	}
 
-	/**
-	 * Obtem o valor do banco, adiciona a máscara e retorna o valor formatado
-	 */
-	public Object nullSafeGet(final ResultSet resultSet, final String[] names,
-			final Object owner) throws HibernateException, SQLException {
+	public Object nullSafeGet(final ResultSet resultSet, final String[] names, final Object owner)
+			throws HibernateException, SQLException {
 		try {
 			final String value = resultSet.getString(names[0]);
 			if (value == null) {
@@ -87,11 +92,8 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	/**
-	 * Pega o valor com a máscara, remove a máscara e seta no banco
-	 */
-	public void nullSafeSet(final PreparedStatement pstm, final Object value,
-			final int index) throws HibernateException, SQLException {
+	public void nullSafeSet(final PreparedStatement pstm, final Object value, final int index)
+			throws HibernateException, SQLException {
 		final VulpeBaseEntity<?> entity = (VulpeBaseEntity<?>) value;
 		if (entity == null || entity.getId() == null) {
 			pstm.setNull(index, type);
@@ -100,17 +102,13 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	/**
-	 * Copia uma nova instancia do valor
-	 */
 	public Object deepCopy(final Object value) throws HibernateException {
 		if (value == null) {
 			return null;
 		} else {
 			try {
 				final VulpeBaseEntity<?> origin = (VulpeBaseEntity<?>) value;
-				final VulpeBaseEntity<?> destination = this.returnedClass
-						.newInstance();
+				final VulpeBaseEntity<?> destination = this.returnedClass.newInstance();
 				ReflectUtil.getInstance().copy(destination, origin);
 				return destination;
 			} catch (Exception e) {
@@ -119,52 +117,32 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	/**
-	 * Indica que o valor é mutável
-	 */
 	public boolean isMutable() {
 		return true;
 	}
 
-	/**
-	 * Serializa o valor original
-	 */
-	public Serializable disassemble(final Object value)
-			throws HibernateException {
+	public Serializable disassemble(final Object value) throws HibernateException {
 		return (VulpeBaseEntity<?>) value;
 	}
 
-	/**
-	 * Deserializa o valor em cache
-	 */
-	public Object assemble(final Serializable cached, final Object owner)
-			throws HibernateException {
+	public Object assemble(final Serializable cached, final Object owner) throws HibernateException {
 		return cached;
 	}
 
-	/**
-	 * Retorna um possível subistituto
-	 */
-	public Object replace(final Object original, final Object target,
-			final Object owner) throws HibernateException {
+	public Object replace(final Object original, final Object target, final Object owner)
+			throws HibernateException {
 		return original;
 	}
 
-	/**
-	 * Retorna o hashCode do valor formatado
-	 */
 	public int hashCode(final Object obj) throws HibernateException {
 		return obj.hashCode();
 	}
 
-	/**
-	 * Seta os parametros de configuração da máscara
-	 */
 	@SuppressWarnings("unchecked")
 	public void setParameterValues(final Properties props) {
 		try {
-			this.returnedClass = (Class<? extends VulpeBaseEntity<?>>) Class
-					.forName(props.getProperty("returnedClass"));
+			this.returnedClass = (Class<? extends VulpeBaseEntity<?>>) Class.forName(props
+					.getProperty("returnedClass"));
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
@@ -174,8 +152,8 @@ public class EntityType implements UserType, ParameterizedType {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		this.idClass = (Class<? extends Serializable>) ReflectUtil
-				.getInstance().getFieldClass(this.returnedClass, "id");
+		this.idClass = (Class<? extends Serializable>) ReflectUtil.getInstance().getFieldClass(
+				this.returnedClass, "id");
 
 		final String type = (String) props.get("type");
 		if (StringUtils.isNotEmpty(type)) {
@@ -189,11 +167,9 @@ public class EntityType implements UserType, ParameterizedType {
 
 	protected VulpeBaseEntity<?> invokeFind(final Object identifier) {
 		try {
-			final Services services = VulpeServiceLocator.getInstance().lookup(
-					this.serviceClass);
+			final Services services = VulpeServiceLocator.getInstance().lookup(this.serviceClass);
 			final Method method = services.getClass().getMethod(
-					Constants.Action.FIND.concat(this.returnedClass
-							.getSimpleName()), this.idClass);
+					Constants.Action.FIND.concat(this.returnedClass.getSimpleName()), this.idClass);
 			return (VulpeBaseEntity<?>) method.invoke(services, identifier);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);

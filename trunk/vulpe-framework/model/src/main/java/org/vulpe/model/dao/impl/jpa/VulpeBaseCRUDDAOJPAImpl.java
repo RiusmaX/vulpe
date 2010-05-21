@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
@@ -30,7 +45,7 @@ import org.vulpe.model.entity.LogicEntity.Status;
 
 /**
  * Default implementation of DAO for CRUD's with JPA.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
@@ -38,12 +53,11 @@ import org.vulpe.model.entity.LogicEntity.Status;
 public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPAImpl<ENTITY, ID> {
 
-	private static final Logger LOG = Logger.getLogger(VulpeBaseCRUDDAOJPAImpl.class
-			.getName());
+	private static final Logger LOG = Logger.getLogger(VulpeBaseCRUDDAOJPAImpl.class.getName());
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#create(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -62,7 +76,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#delete(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -71,8 +85,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 			LOG.debug("Deleting object: ".concat(entity.toString()));
 		}
 		// persistent entity
-		final ENTITY entityDeleted = (ENTITY) getJpaTemplate().getReference(
-				entity.getClass(), entity.getId());
+		final ENTITY entityDeleted = (ENTITY) getJpaTemplate().getReference(entity.getClass(),
+				entity.getId());
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		if (entity instanceof LogicEntity) {
 			final LogicEntity logicEntity = (LogicEntity) entityDeleted;
@@ -90,8 +104,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 				LOG.debug("Deleting object: ".concat(entity.toString()));
 			}
 			// persistent entity
-			final ENTITY entityDeleted = (ENTITY) getJpaTemplate()
-					.getReference(entity.getClass(), entity.getId());
+			final ENTITY entityDeleted = (ENTITY) getJpaTemplate().getReference(entity.getClass(),
+					entity.getId());
 			if (entity instanceof LogicEntity) {
 				final LogicEntity logicEntity = (LogicEntity) entityDeleted;
 				logicEntity.setStatus(Status.D);
@@ -105,7 +119,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -123,8 +137,9 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java .io.Serializable)
+	 * 
+	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
+	 * .io.Serializable)
 	 */
 	public ENTITY find(final ID identifier) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -143,7 +158,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeBaseCRUDDAO#read(br.com.activethread
 	 * .framework.model.entity.BaseEntity)
 	 */
@@ -159,13 +174,13 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#paging(br.com.
 	 * activethread.framework.model.entity.BaseEntity, java.lang.Integer,
 	 * java.lang.Integer)
 	 */
-	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize,
-			final Integer page) throws VulpeApplicationException {
+	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize, final Integer page)
+			throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Paging object: ".concat(entity.toString()));
 		}
@@ -174,53 +189,46 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 
 		// getting total records
 		final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
-			public Object doInJpa(final EntityManager entityManager)
-					throws PersistenceException {
-				final Query query = entityManager
-						.createQuery("select count(*) ".concat(hql
-								.substring(hql.toLowerCase().indexOf("from"))));
+			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
+				final Query query = entityManager.createQuery("select count(*) ".concat(hql
+						.substring(hql.toLowerCase().indexOf("from"))));
 				setParams(query, params);
 				return query.getSingleResult();
 			}
 		});
 
-		final Paging paging = new Paging<ENTITY>(size.intValue(), pageSize,
-				page);
+		final Paging paging = new Paging<ENTITY>(size.intValue(), pageSize, page);
 		if (size.longValue() > 0) {
 			// getting list by size of page
-			paging.setList((List<ENTITY>) getJpaTemplate().execute(
-					new JpaCallback() {
-						public Object doInJpa(final EntityManager entityManager)
-								throws PersistenceException {
-							final Query query = entityManager.createQuery(hql);
-							setParams(query, params);
-							query.setFirstResult(paging.getFromIndex());
-							query.setMaxResults(pageSize);
-							return query.getResultList();
-						}
-					}));
+			paging.setList((List<ENTITY>) getJpaTemplate().execute(new JpaCallback() {
+				public Object doInJpa(final EntityManager entityManager)
+						throws PersistenceException {
+					final Query query = entityManager.createQuery(hql);
+					setParams(query, params);
+					query.setFirstResult(paging.getFromIndex());
+					query.setMaxResults(pageSize);
+					return query.getResultList();
+				}
+			}));
 		}
 
 		return paging;
 	}
 
 	/**
-	 *
+	 * 
 	 * @param entity
 	 * @param params
 	 * @return
 	 */
-	protected String getHQL(final ENTITY entity,
-			final Map<String, Object> params) {
-		final List<Field> fields = ReflectUtil.getInstance().getFields(
-				entity.getClass());
+	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
+		final List<Field> fields = ReflectUtil.getInstance().getFields(entity.getClass());
 		int countParam = 0;
 		for (Field field : fields) {
-			if ((ReflectUtil.getInstance().isAnnotationInField(Transient.class,
-					entity.getClass(), field.getName()) || Modifier
-					.isTransient(field.getModifiers()))
-					&& !ReflectUtil.getInstance().isAnnotationInField(
-							Param.class, entity.getClass(), field.getName())) {
+			if ((ReflectUtil.getInstance().isAnnotationInField(Transient.class, entity.getClass(),
+					field.getName()) || Modifier.isTransient(field.getModifiers()))
+					&& !ReflectUtil.getInstance().isAnnotationInField(Param.class,
+							entity.getClass(), field.getName())) {
 				continue;
 			}
 			field.setAccessible(true);
@@ -237,8 +245,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		}
 
 		final StringBuilder hql = new StringBuilder();
-		final NamedQuery namedQuery = getNamedQuery(getEntityClass(),
-				getEntityClass().getSimpleName().concat(".read"));
+		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
+				.getSimpleName().concat(".read"));
 		if (namedQuery == null) {
 			hql.append("select obj from ");
 			hql.append(entity.getClass().getSimpleName());
@@ -256,9 +264,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 			for (String name : params.keySet()) {
 				final Object value = params.get(name);
 				count++;
-				final Param param = ReflectUtil.getInstance()
-						.getAnnotationInField(Param.class, entity.getClass(),
-								name);
+				final Param param = ReflectUtil.getInstance().getAnnotationInField(Param.class,
+						entity.getClass(), name);
 				if (param == null) {
 					hql.append("obj.");
 					hql.append(name);
@@ -321,14 +328,12 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = ReflectUtil.getInstance()
-					.getDeclaredType(getClass(),
-							getClass().getGenericSuperclass());
+			final DeclaredType declaredType = ReflectUtil.getInstance().getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
-			entityClass = (Class<ENTITY>) declaredType.getItems().get(0)
-					.getType();
+			entityClass = (Class<ENTITY>) declaredType.getItems().get(0).getType();
 		}
 		return entityClass;
 	}
@@ -338,7 +343,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */

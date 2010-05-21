@@ -1,5 +1,5 @@
 /**
- * Vulpe Framework - Copyright 2010 Active Thread
+ * Vulpe Framework - Copyright (c) Active Thread
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
  * Utility class to validation.
- *
+ * 
  */
 public class ValidationUtil {
 
@@ -44,7 +44,7 @@ public class ValidationUtil {
 
 	/**
 	 * Validate if value is not empty
-	 *
+	 * 
 	 * @param value
 	 * @return returns true if is not empty
 	 */
@@ -75,7 +75,7 @@ public class ValidationUtil {
 
 	/**
 	 * Validate if value is empty.
-	 *
+	 * 
 	 * @param value
 	 * @return returns true if is empty
 	 */

@@ -1,3 +1,18 @@
+/**
+ * Vulpe Framework - Copyright (c) Active Thread
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
@@ -24,15 +39,14 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
  * Default implementation of DAO for CRUD's with JPA
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
-	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAOJPAImpl.class
-			.getName());
+	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAOJPAImpl.class.getName());
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -41,8 +55,7 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 	@Autowired
 	private TransactionTemplate transactionTemplate;
 
-	public final void setEntityManagerFactory(
-			final EntityManagerFactory entityManagerFactory) {
+	public final void setEntityManagerFactory(final EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
 		this.jpaTemplate = new JpaTemplate(this.entityManagerFactory);
 	}
@@ -51,8 +64,7 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 		return transactionTemplate;
 	}
 
-	public void setTransactionTemplate(
-			final TransactionTemplate transactionTemplate) {
+	public void setTransactionTemplate(final TransactionTemplate transactionTemplate) {
 		this.transactionTemplate = transactionTemplate;
 	}
 
@@ -74,14 +86,13 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 		});
 	}
 
-	protected <T> List<T> execute(final String hql,
-			final Map<String, Object> params) throws VulpeApplicationException {
+	protected <T> List<T> execute(final String hql, final Map<String, Object> params)
+			throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Reading object: ".concat(hql));
 		}
 		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
-			public Object doInJpa(final EntityManager entityManager)
-					throws PersistenceException {
+			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
 				final Query query = entityManager.createQuery(hql);
 				setParams(query, params);
 				return query.getResultList();
@@ -109,8 +120,7 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 	 */
 	protected NamedQuery getNamedQuery(final Class<?> entityClass, final String nameQuery) {
 		if (entityClass.isAnnotationPresent(NamedQueries.class)) {
-			final NamedQueries namedQueries = entityClass
-					.getAnnotation(NamedQueries.class);
+			final NamedQueries namedQueries = entityClass.getAnnotation(NamedQueries.class);
 			for (NamedQuery namedQuery : namedQueries.value()) {
 				if (namedQuery.name().equals(nameQuery)) {
 					return namedQuery;
