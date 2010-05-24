@@ -48,7 +48,7 @@ public interface Constants {
 	interface Expression {
 		String PROJECT_PACKAGE = "{project.package}";
 	}
-	
+
 	interface Context {
 		String APPLICATION_SCOPE = "APPLICATION_SCOPE";
 		String PAGE_SCOPE = "PAGE_SCOPE";
@@ -126,7 +126,7 @@ public interface Constants {
 				String ONE_OR_MORE = "1..*";
 			}
 		}
-		
+
 		interface URI {
 			String AUTHENTICATOR = "/authenticator";
 			String AJAX = "/ajax";
@@ -170,7 +170,7 @@ public interface Constants {
 			String ERRORS = "errors";
 			String MESSAGES = "messages";
 		}
-		
+
 		interface Shortcut {
 			String CLEAN = "vulpeShortcutActionClean";
 			String CREATE = "vulpeShortcutActionCreate";
@@ -253,6 +253,7 @@ public interface Constants {
 
 	interface Security {
 		String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
+		String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
 	}
 
 	interface Model {

@@ -33,12 +33,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.vulpe.common.Constants;
+import org.vulpe.common.Constants.Security;
 import org.vulpe.common.Constants.Action.Forward;
 import org.vulpe.common.Constants.Action.URI;
 import org.vulpe.common.Constants.View.Layout;
@@ -57,6 +53,8 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.Services;
+import org.vulpe.security.UserAuthenticated;
+import org.vulpe.security.UserAuthentication;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -70,8 +68,8 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
-		implements VulpeBaseSimpleController {
+public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implements
+		VulpeBaseSimpleController {
 
 	/**
 	 *
@@ -145,18 +143,15 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 */
 	protected DownloadInfo doReadReportLoad() {
 		try {
-			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils
-					.getProperty(this, getActionConfig().getReportDataSource());
+			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils.getProperty(
+					this, getActionConfig().getReportDataSource());
 			return StringUtils.isNotBlank(getActionConfig().getReportName()) ? StrutsReportUtil
-					.getInstance().getDownloadInfo(list,
-							getActionConfig().getReportFile(),
-							getActionConfig().getSubReports(),
-							getActionConfig().getReportFormat(),
-							getActionConfig().getReportName(),
-							getActionConfig().isReportDownload())
+					.getInstance()
+					.getDownloadInfo(list, getActionConfig().getReportFile(),
+							getActionConfig().getSubReports(), getActionConfig().getReportFormat(),
+							getActionConfig().getReportName(), getActionConfig().isReportDownload())
 					: StrutsReportUtil.getInstance().getDownloadInfo(list,
-							getActionConfig().getReportFile(),
-							getActionConfig().getSubReports(),
+							getActionConfig().getReportFile(), getActionConfig().getSubReports(),
 							getActionConfig().getReportFormat());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -178,8 +173,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 		String forward = Forward.SUCCESS;
 		if (getActionConfig().getType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getActionConfig().getPrimitiveActionName()
-						.concat(URI.AJAX));
+				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();
@@ -314,19 +308,16 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	protected DownloadInfo prepareDownloadInfo() {
 		try {
 			Object value = null;
-			if (getFormParams() != null
-					&& getFormParams().containsKey(getDownloadKey())) {
-				final Object[] array = (Object[]) getFormParams().get(
-						getDownloadKey());
+			if (getFormParams() != null && getFormParams().containsKey(getDownloadKey())) {
+				final Object[] array = (Object[]) getFormParams().get(getDownloadKey());
 				value = array[1];
 			}
 			if (value == null) {
-				value = ognlUtil.getValue(getDownloadKey(), ActionContext
-						.getContext().getContextMap(), this);
+				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
+						.getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = FileUtil.getInstance()
-					.getDownloadInfo(value, getDownloadContentType(),
-							getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = FileUtil.getInstance().getDownloadInfo(value,
+					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());
 			}
@@ -370,13 +361,11 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @since 1.0
 	 * @return Object
 	 */
-	protected Object invokeServices(final String eventName,
-			final String serviceName, final Class<?>[] argsType,
-			final Object[] argsValues) {
+	public Object invokeServices(final String eventName, final String serviceName,
+			final Class<?>[] argsType, final Object[] argsValues) {
 		final Services service = getService();
 		try {
-			final Method method = service.getClass().getMethod(serviceName,
-					argsType);
+			final Method method = service.getClass().getMethod(serviceName, argsType);
 			return method.invoke(service, argsValues);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -390,7 +379,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Service Implementation.
 	 * @see Services
 	 */
-	protected Services getService() {
+	public Services getService() {
 		return getService(getActionConfig().getServiceClass());
 	}
 
@@ -402,18 +391,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @since 1.0
 	 * @see Services
 	 */
-	protected <T extends Services> T getService(final Class<T> serviceClass) {
-		T service = null;
-		try {
-			service = (T) AbstractVulpeBeanFactory.getInstance().getBean(
-					serviceClass.getSimpleName());
-		} catch (NoSuchBeanDefinitionException e) {
-			if (service == null) {
-				service = VulpeServiceLocator.getInstance()
-						.getEJB(serviceClass);
-			}
-		}
-		return service;
+	public <T extends Services> T getService(final Class<T> serviceClass) {
+		return VulpeServiceLocator.getInstance().getService(serviceClass);
 	}
 
 	/**
@@ -494,21 +473,19 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 		return getText(key, new String[] { getText(arg) });
 	}
 
-	public String getTextArg(final String key, final String arg1,
-			final String arg2) {
+	public String getTextArg(final String key, final String arg1, final String arg2) {
 		return getText(key, new String[] { getText(arg1), getText(arg2) });
 	}
 
-	public String getTextArg(final String key, final String arg1,
-			final String arg2, final String arg3) {
-		return getText(key, new String[] { getText(arg1), getText(arg2),
-				getText(arg3) });
+	public String getTextArg(final String key, final String arg1, final String arg2,
+			final String arg3) {
+		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3) });
 	}
 
-	public String getTextArg(final String key, final String arg1,
-			final String arg2, final String arg3, final String arg4) {
-		return getText(key, new String[] { getText(arg1), getText(arg2),
-				getText(arg3), getText(arg4) });
+	public String getTextArg(final String key, final String arg1, final String arg2,
+			final String arg3, final String arg4) {
+		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3),
+				getText(arg4) });
 	}
 
 	private boolean uploaded;
@@ -642,8 +619,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 		return downloadContentDisposition;
 	}
 
-	public void setDownloadContentDisposition(
-			final String downloadContentDisposition) {
+	public void setDownloadContentDisposition(final String downloadContentDisposition) {
 		this.downloadContentDisposition = downloadContentDisposition;
 	}
 
@@ -677,8 +653,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Map with cached classes
 	 */
 	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_CLASS);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_CLASS);
 	}
 
 	/**
@@ -687,8 +662,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Map with cached enumerations
 	 */
 	public Map<String, Object> getCachedEnum() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_ENUM);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_ENUM);
 	}
 
 	/**
@@ -697,8 +671,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Map with cached enumerations array
 	 */
 	public Map<String, String> getCachedEnumArray() {
-		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_ENUM_ARRAY);
+		return (Map<String, String>) VulpeCacheHelper.getInstance()
+				.get(Constants.CACHED_ENUM_ARRAY);
 	}
 
 	/**
@@ -707,14 +681,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = StrutsControllerUtil.getInstance()
-				.getCurrentActionName().concat(Constants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession()
-				.getAttribute(keyForm);
+		final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName().concat(
+				Constants.PARAMS_SESSION_KEY);
+		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(
-					keyForm, formParams);
+			ServletActionContext.getRequest().getSession().setAttribute(keyForm, formParams);
 		}
 		return formParams;
 	}
@@ -755,30 +727,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 	}
 
 	/**
-	 * Verified if user is authenticated.
-	 * 
-	 * @return true if authenticated
-	 */
-	public boolean isAuthenticated() {
-		final Authentication authentication = SecurityContextHolder
-				.getContext().getAuthentication();
-		return authentication.isAuthenticated()
-				&& !(authentication instanceof AnonymousAuthenticationToken);
-	}
-
-	/**
-	 * Returns user name.
-	 * 
-	 * @return User Name
-	 */
-	public String getUserName() {
-		final Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-		return principal instanceof UserDetails ? ((UserDetails) principal)
-				.getUsername() : principal.toString();
-	}
-
-	/**
 	 * Returns controller type
 	 * 
 	 * @return Controller Type
@@ -800,6 +748,49 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport
 
 	public void setShowTitle(boolean showTitle) {
 		this.showTitle = showTitle;
+	}
+
+	/**
+	 * Verified if user is authenticated.
+	 * 
+	 * @return true if authenticated
+	 */
+	public boolean isAuthenticated() {
+		final UserAuthentication userAuthentication = AbstractVulpeBeanFactory.getInstance()
+				.getBean(UserAuthentication.class.getSimpleName());
+		if (userAuthentication != null) {
+			return userAuthentication.isAuthenticated();
+		}
+		return false;
+	}
+
+	/**
+	 * Returns current authenticated user.
+	 * 
+	 * @return
+	 */
+	public UserAuthenticated getUserAuthenticated() {
+		UserAuthenticated userAuthenticated = (UserAuthenticated) getSession().getAttribute(
+				Security.VULPE_USER_AUTHENTICATED);
+		if (userAuthenticated == null) {
+			userAuthenticated = AbstractVulpeBeanFactory.getInstance().getBean(
+					UserAuthenticated.class.getSimpleName());
+			userAuthenticated.getUsername();
+			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticated);
+		}
+		return userAuthenticated;
+	}
+
+	/**
+	 * Returns user name.
+	 * 
+	 * @return User Name
+	 */
+	public String getUserName() {
+		if (getUserAuthenticated() != null) {
+			return getUserAuthenticated().getUserName();
+		}
+		return "";
 	}
 
 }

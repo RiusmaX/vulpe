@@ -15,19 +15,6 @@
 		<version>1.0</version>
 	</parent>
 
-	<properties>
-		<spring.version>3.0.2.RELEASE</spring.version>
-	</properties>
-	
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${spring.version}</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-
 	<description>Vulpe Framework ;) Quick and Smart - Controller Struts 2</description>
 	<url>http://vulpe.org</url>
 	<inceptionYear>2010</inceptionYear>
@@ -60,18 +47,15 @@
 								<property name="maven.repo" value="${env.M2_REPO}" />
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
-										<pathelement
-											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+										<pathelement location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<if>
 									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
 										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
-										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/"
-											overwrite="true">
-											<fileset
-												file="${project.build.directory}/${artifactId}-${version}.jar" />
+										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/" overwrite="true">
+											<fileset file="${project.build.directory}/${artifactId}-${version}.jar" />
 										</copy>
 									</then>
 								</if>
