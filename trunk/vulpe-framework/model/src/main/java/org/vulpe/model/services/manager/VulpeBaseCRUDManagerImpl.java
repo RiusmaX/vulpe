@@ -22,9 +22,9 @@ import java.util.List;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Transient;
 
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.beans.AbstractVulpeBeanFactory;
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.Sufix;
 import org.vulpe.model.annotations.TransactionType;
@@ -52,7 +52,7 @@ public class VulpeBaseCRUDManagerImpl<ENTITY_CLASS extends VulpeBaseEntity<ENTIT
 	 */
 	protected Class<ENTITY_DAO> getDaoClass() {
 		if (daoClass == null) {
-			daoClass = (Class<ENTITY_DAO>) ReflectUtil.getInstance().getIndexClass(getClass(), 2);
+			daoClass = (Class<ENTITY_DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(), 2);
 		}
 		return daoClass;
 	}

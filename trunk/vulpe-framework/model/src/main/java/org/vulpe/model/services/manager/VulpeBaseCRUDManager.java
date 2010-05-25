@@ -18,7 +18,7 @@ package org.vulpe.model.services.manager;
 import java.io.Serializable;
 import java.util.List;
 
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeBaseCRUDDAO;
 import org.vulpe.model.entity.VulpeBaseEntity;

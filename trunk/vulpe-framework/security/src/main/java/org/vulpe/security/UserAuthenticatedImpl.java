@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.vulpe.common.model.services.VulpeServiceLocator;
+import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
@@ -35,10 +35,8 @@ public class UserAuthenticatedImpl implements UserAuthenticated {
 
 	@Override
 	public String getUsername() {
-		final String username = principal instanceof UserDetails ? ((UserDetails) principal)
-				.getUsername() : principal.toString();
-		setUser(username);
-		return username;
+		return principal instanceof UserDetails ? ((UserDetails) principal).getUsername()
+				: principal.toString();
 	}
 
 	protected User getUser() {
@@ -59,8 +57,18 @@ public class UserAuthenticatedImpl implements UserAuthenticated {
 	}
 
 	@Override
-	public String getUserName() {
+	public String getName() {
 		return user.getName();
+	}
+
+	@Override
+	public void load() {
+		setUser(getUsername());
+	}
+
+	@Override
+	public Long getId() {
+		return user.getId();
 	}
 
 }

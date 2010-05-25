@@ -15,7 +15,7 @@
  */
 package org.vulpe.security.controller.action;
 
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
@@ -34,12 +34,12 @@ public class VulpeLoginAction extends AbstractVulpeBaseSimpleAction {
 	 */
 	public String define() {
 		if (accessDenied) {
-			return Constants.Action.Forward.ACCESS_DENIED;
+			return VulpeConstants.Action.Forward.ACCESS_DENIED;
 		}
 		if (loginError != null && loginError == 1) {
-			return Constants.Action.Forward.ERRORS;
+			return VulpeConstants.Action.Forward.ERRORS;
 		}
-		return Constants.Action.Forward.SUCCESS;
+		return VulpeConstants.Action.Forward.SUCCESS;
 	}
 
 	public Integer getLoginError() {

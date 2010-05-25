@@ -16,8 +16,8 @@
 package org.vulpe.controller.struts.common;
 
 import org.apache.struts2.impl.StrutsObjectFactory;
-import org.vulpe.common.Constants.Expression;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.VulpeConstants.Expression;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 
 /**

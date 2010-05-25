@@ -21,12 +21,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.annotations.DetailConfig;
-import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.common.DuplicatedBean;
@@ -57,8 +57,8 @@ public abstract class ControllerUtil {
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(bean, fieldName);
-			if (ValidationUtil.getInstance().isEmpty(value)) {
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			if (VulpeValidationUtil.getInstance().isEmpty(value)) {
 				return true;
 			}
 		}
@@ -79,10 +79,10 @@ public abstract class ControllerUtil {
 			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
-					final Object valueRealBean = ReflectUtil.getInstance().getFieldValue(realBean,
+					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(realBean,
 							fieldName);
 					if (StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
@@ -169,7 +169,7 @@ public abstract class ControllerUtil {
 	 */
 	public String getCurrentActionKey() {
 		final String base = getCurrentActionName();
-		final String projectName = base.contains(Constants.AUDIT) ? Constants.ACTIVE
+		final String projectName = base.contains(VulpeConstants.AUDIT) ? VulpeConstants.ACTIVE
 				: VulpeConfigHelper.getProjectName();
 		return projectName.concat("/").concat(base);
 	}

@@ -18,7 +18,7 @@ package org.vulpe.view.struts.form.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 
 
 @SuppressWarnings( { "unchecked", "serial" })

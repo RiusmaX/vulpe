@@ -22,7 +22,7 @@ import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperPrint;
 
-import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.commons.cache.VulpeCacheHelper;
 
 public class ReportUtil {
 	/**

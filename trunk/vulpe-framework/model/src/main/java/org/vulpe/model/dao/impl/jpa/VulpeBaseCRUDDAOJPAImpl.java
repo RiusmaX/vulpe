@@ -31,11 +31,11 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.orm.jpa.JpaCallback;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.ReflectUtil.DeclaredType;
-import org.vulpe.common.audit.AuditOccurrenceType;
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
+import org.vulpe.commons.audit.AuditOccurrenceType;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Param;
@@ -222,12 +222,12 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	 * @return
 	 */
 	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
-		final List<Field> fields = ReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		int countParam = 0;
 		for (Field field : fields) {
-			if ((ReflectUtil.getInstance().isAnnotationInField(Transient.class, entity.getClass(),
+			if ((VulpeReflectUtil.getInstance().isAnnotationInField(Transient.class, entity.getClass(),
 					field.getName()) || Modifier.isTransient(field.getModifiers()))
-					&& !ReflectUtil.getInstance().isAnnotationInField(Param.class,
+					&& !VulpeReflectUtil.getInstance().isAnnotationInField(Param.class,
 							entity.getClass(), field.getName())) {
 				continue;
 			}
@@ -264,7 +264,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 			for (String name : params.keySet()) {
 				final Object value = params.get(name);
 				count++;
-				final Param param = ReflectUtil.getInstance().getAnnotationInField(Param.class,
+				final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(Param.class,
 						entity.getClass(), name);
 				if (param == null) {
 					hql.append("obj.");
@@ -328,7 +328,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = ReflectUtil.getInstance().getDeclaredType(getClass(),
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
 					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
@@ -348,10 +348,10 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	 * @return
 	 */
 	public boolean isNotEmpty(final Object value) {
-		if (ValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			if (value instanceof VulpeBaseEntity) {
 				final VulpeBaseEntity entity = (VulpeBaseEntity) value;
-				return ValidationUtil.getInstance().isNotEmpty(entity.getId());
+				return VulpeValidationUtil.getInstance().isNotEmpty(entity.getId());
 			} else {
 				return true;
 			}

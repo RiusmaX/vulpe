@@ -24,9 +24,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.FilterChainProxy;
-import org.vulpe.common.Constants.Action;
-import org.vulpe.common.Constants.Security;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.VulpeConstants.Action;
+import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
  * 

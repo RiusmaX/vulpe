@@ -8,9 +8,9 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import org.vulpe.common.factory.Factory;
-import org.vulpe.common.factory.VulpeFactoryLocator;
-import org.vulpe.common.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.factory.Factory;
+import org.vulpe.commons.factory.VulpeFactoryLocator;
+import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.LookupType;
 
@@ -29,7 +29,7 @@ public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}
 
 	public ${baseClassName}ServicesFactory() {
 		try {
-			props = org.vulpe.common.file.FileUtil.getInstance().getResourceProperties("${baseClassName?uncap_first}.properties");
+			props = org.vulpe.commons.file.FileUtil.getInstance().getResourceProperties("${baseClassName?uncap_first}.properties");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

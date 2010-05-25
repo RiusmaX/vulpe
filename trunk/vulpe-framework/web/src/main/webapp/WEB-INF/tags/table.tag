@@ -4,7 +4,7 @@
 <%@ attribute name="elementId" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="items" required="false" rtexprvalue="true" type="java.util.Collection" %>
 <%@ attribute name="detailConfig" required="false" rtexprvalue="true" type="org.vulpe.controller.common.VulpeBaseDetailConfig" %>
-<%@ attribute name="pagingList" required="false" rtexprvalue="true" type="org.vulpe.common.beans.Paging" %>
+<%@ attribute name="pagingList" required="false" rtexprvalue="true" type="org.vulpe.commons.beans.Paging" %>
 <%@ attribute name="pagingActionName" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="pagingFormName" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="pagingLayerFields" required="false" rtexprvalue="true" type="java.lang.String" %>

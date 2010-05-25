@@ -20,7 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.vulpe.common.annotations.DetailConfig;
+import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.model.services.Services;
 
 /**

@@ -35,8 +35,8 @@ import net.sf.jasperreports.engine.util.JRLoader;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.views.jasperreports.JasperReportConstants;
-import org.vulpe.common.beans.DownloadInfo;
-import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.commons.beans.DownloadInfo;
+import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;

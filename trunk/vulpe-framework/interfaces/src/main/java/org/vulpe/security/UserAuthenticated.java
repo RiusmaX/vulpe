@@ -17,7 +17,11 @@ package org.vulpe.security;
 
 public interface UserAuthenticated {
 
+	void load();
+
+	Long getId();
+
 	String getUsername();
 
-	String getUserName();
+	String getName();
 }

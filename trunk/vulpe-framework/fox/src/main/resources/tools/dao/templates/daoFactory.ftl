@@ -5,9 +5,9 @@ Generating DAOFactory: ${dao.daoPackageName}.${dao.daoName}Factory
 package ${dao.daoPackageName};
 
 import org.apache.log4j.Logger;
-import org.vulpe.common.factory.Factory;
-import org.vulpe.common.factory.VulpeFactoryLocator;
-import org.vulpe.common.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.factory.Factory;
+import org.vulpe.commons.factory.VulpeFactoryLocator;
+import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 
 <#if dao.inheritance>
 public class ${dao.daoName}Factory implements Factory<${dao.daoName}<${dao.packageName}.${dao.name}>>{

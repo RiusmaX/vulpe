@@ -18,8 +18,8 @@ package org.vulpe.controller.struts.interceptor;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.vulpe.common.Constants;
-import org.vulpe.common.ValidationUtil;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -38,7 +38,7 @@ public class SessionParametersInterceptor extends
 		super.setParameters(action, stack, parameters);
 
 		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
-				.concat(Constants.PARAMS_SESSION_KEY);
+				.concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
@@ -53,7 +53,7 @@ public class SessionParametersInterceptor extends
 						final Object[] value = (Object[]) params.get(name);
 						OgnlContextState.setCreatingNullObjects(stack
 								.getContext(), false);
-						if (ValidationUtil.getInstance().isEmpty(
+						if (VulpeValidationUtil.getInstance().isEmpty(
 								stack.findValue(name))) {
 							OgnlContextState.setCreatingNullObjects(stack
 									.getContext(), true);

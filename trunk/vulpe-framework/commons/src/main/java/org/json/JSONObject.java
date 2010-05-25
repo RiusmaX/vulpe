@@ -35,7 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.vulpe.common.ReflectUtil;
+import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.model.annotations.AutoComplete;
 
 /**
@@ -950,7 +950,7 @@ public class JSONObject {
 						}
 
 						Object result = method.invoke(bean, (Object[]) null);
-						Field field = ReflectUtil.getInstance().getField(klass, key);
+						Field field = VulpeReflectUtil.getInstance().getField(klass, key);
 						Object wrap = wrap(result);
 						if (field != null) {
 							AutoComplete autoCompleteValue = field

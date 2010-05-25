@@ -26,7 +26,7 @@ import net.sf.jelly.apt.TemplateOutput;
 import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.annotations.DetailConfig;
+import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;

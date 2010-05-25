@@ -25,8 +25,8 @@ import ognl.NullHandler;
 import ognl.Ognl;
 
 import org.apache.log4j.Logger;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ReflectUtil.DeclaredType;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 import com.opensymphony.xwork2.ObjectFactory;
@@ -64,11 +64,11 @@ public class GenericsNullHandler<ENTITY extends VulpeBaseEntity<ID>, ID extends 
 						.toString(), context, target);
 				if (realTarget != null) {
 					Class clazz = null;
-					final Field field = ReflectUtil.getInstance().getField(
+					final Field field = VulpeReflectUtil.getInstance().getField(
 							realTarget.getClass(), property.toString());
 					if (field != null) {
 						if (!field.getType().equals(field.getGenericType())) {
-							final DeclaredType declaredType = ReflectUtil
+							final DeclaredType declaredType = VulpeReflectUtil
 									.getInstance().getDeclaredType(
 											realTarget.getClass(),
 											field.getGenericType());

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeAuthenticationException;
@@ -78,13 +78,13 @@ public class VulpeExceptionMappingInterceptor extends
 		final VulpeBaseAction<?, ?> action = (VulpeBaseAction<?, ?>) invocation
 				.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
-		request.setAttribute(Constants.IS_EXCEPTION, Boolean.TRUE);
+		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
 		// gets real exception
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {
 			action.addActionMessageKey(newException.getMessage());
-			request.setAttribute(Constants.ON_HIDE_MESSAGES,
-					Constants.JS_REDIRECT_LOGIN);
+			request.setAttribute(VulpeConstants.ON_HIDE_MESSAGES,
+					VulpeConstants.JS_REDIRECT_LOGIN);
 		} else if (newException instanceof VulpeAuthorizationException) {
 			action.addActionMessageKey(newException.getMessage());
 		} else if (newException instanceof VulpeSystemException) {
@@ -115,7 +115,7 @@ public class VulpeExceptionMappingInterceptor extends
 				msg = msgFormat.format(null);
 				value = action.getText(msg);
 				if (StringUtils.isBlank(value) || value.equals(msg)) {
-					action.addActionMessage(Constants.ERROR_GERAL, msg);
+					action.addActionMessage(VulpeConstants.ERROR_GERAL, msg);
 				} else {
 					action.addActionMessage(value);
 				}
@@ -124,10 +124,10 @@ public class VulpeExceptionMappingInterceptor extends
 			}
 		}
 		if (action.isAjax()) {
-			return Constants.Action.Forward.MESSAGES;
+			return VulpeConstants.Action.Forward.MESSAGES;
 		} else {
-			request.setAttribute(Constants.VULPE_SHOW_MESSAGES, true);
-			return Constants.Action.Forward.ERRORS;
+			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
+			return VulpeConstants.Action.Forward.ERRORS;
 		}
 	}
 

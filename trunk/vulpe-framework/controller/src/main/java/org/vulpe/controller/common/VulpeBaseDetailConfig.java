@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.Constants.View.Layout;
-import org.vulpe.common.annotations.DetailConfig;
-import org.vulpe.common.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.view.tags.Functions;
 
 @SuppressWarnings("serial")

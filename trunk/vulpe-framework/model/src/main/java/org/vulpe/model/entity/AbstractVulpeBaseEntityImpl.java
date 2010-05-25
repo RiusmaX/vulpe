@@ -24,9 +24,9 @@ import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.helper.VulpeConfigHelper;
-import org.vulpe.common.xml.XMLDateConversor;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.config.annotations.VulpeDomains;
 
 import com.thoughtworks.xstream.XStream;
@@ -123,7 +123,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 		String strXml = "";
 		final XStream xstream = new XStream();
 		try {
-			for (Field attribute : ReflectUtil.getInstance().getFields(this.getClass())) {
+			for (Field attribute : VulpeReflectUtil.getInstance().getFields(this.getClass())) {
 				if (!isConvertible(attribute)) {
 					xstream.omitField(this.getClass(), attribute.getName());
 				}

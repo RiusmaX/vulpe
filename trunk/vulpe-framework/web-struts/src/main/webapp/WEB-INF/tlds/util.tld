@@ -62,7 +62,7 @@
 	<function>
 		<name>findPaging</name>
 		<function-class>org.vulpe.view.struts.tags.StrutsFunctions</function-class>
-		<function-signature>org.vulpe.common.beans.Paging findPaging(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Long,java.util.List)</function-signature>
+		<function-signature>org.vulpe.commons.beans.Paging findPaging(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Long,java.util.List)</function-signature>
 	</function>
 
 	<function>

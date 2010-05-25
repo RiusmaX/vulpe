@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.apache.struts2.interceptor.FileUploadInterceptor;
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -63,7 +63,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 		// sets the files in the session to parameters.
 		List<Object[]> fileList = (List<Object[]>) actionContext.getSession()
-				.get(Constants.Upload.FILES);
+				.get(VulpeConstants.Upload.FILES);
 		if (fileList != null) {
 			for (Object[] object : fileList) {
 				final String inputName = (String) object[0];
@@ -160,7 +160,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		}
 
 		if (fileList != null && !fileList.isEmpty()) {
-			actionContext.getSession().put(Constants.Upload.FILES, fileList);
+			actionContext.getSession().put(VulpeConstants.Upload.FILES, fileList);
 		}
 
 		// invoke action

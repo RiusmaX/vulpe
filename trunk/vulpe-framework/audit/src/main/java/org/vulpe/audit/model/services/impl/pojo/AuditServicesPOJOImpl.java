@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
 import org.vulpe.audit.model.services.manager.AuditOccurrenceManager;
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 
 @Service("AuditServices")

@@ -17,7 +17,7 @@ package org.vulpe.model.services.impl.ws.convert;
 
 import java.util.ArrayList;
 
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;

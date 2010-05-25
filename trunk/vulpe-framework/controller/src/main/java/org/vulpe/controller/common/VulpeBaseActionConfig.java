@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.Constants.View;
-import org.vulpe.common.Constants.View.Layout;
-import org.vulpe.common.Constants.View.Logic;
-import org.vulpe.common.Constants.View.Report;
-import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.VulpeConstants.View.Layout;
+import org.vulpe.commons.VulpeConstants.View.Logic;
+import org.vulpe.commons.VulpeConstants.View.Report;
+import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -43,9 +43,9 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public VulpeBaseActionConfig(final Class<?> classAction,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(ReflectUtil.getInstance().getAnnotationInClass(Controller.class, classAction));
-		this.entityClass = (Class<ENTITY>) ReflectUtil.getInstance().getIndexClass(classAction, 0);
-		this.idClass = (Class<ID>) ReflectUtil.getInstance().getIndexClass(classAction, 1);
+		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class, classAction));
+		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(classAction, 0);
+		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(classAction, 1);
 		this.details = details;
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);

@@ -19,14 +19,14 @@ import java.io.Serializable;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.Constants.View;
-import org.vulpe.common.Constants.View.Layout;
-import org.vulpe.common.Constants.View.Logic;
-import org.vulpe.common.Constants.View.Report;
-import org.vulpe.common.annotations.DetailConfig;
-import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.VulpeConstants.View.Layout;
+import org.vulpe.commons.VulpeConstants.View.Logic;
+import org.vulpe.commons.VulpeConstants.View.Report;
+import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -52,7 +52,7 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 	}
 
 	public VulpeBaseSimpleActionConfig(final Class<?> classAction) {
-		this.controller = ReflectUtil.getInstance().getAnnotationInClass(Controller.class,
+		this.controller = VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
 				classAction);
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);

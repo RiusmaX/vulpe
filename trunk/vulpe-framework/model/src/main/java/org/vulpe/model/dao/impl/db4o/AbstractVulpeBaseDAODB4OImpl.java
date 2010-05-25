@@ -26,9 +26,9 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.db4o.DB4OUtil;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.db4o.DB4OUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
@@ -137,10 +137,10 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 	 * @param object
 	 */
 	public void emptyToNull(final Object object) {
-		final List<Field> fields = ReflectUtil.getInstance().getFields(object.getClass());
+		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(object.getClass());
 		for (Field field : fields) {
 			try {
-				if ((field.getModifiers() == Constants.Modifiers.TRANSIENT || field
+				if ((field.getModifiers() == VulpeConstants.Modifiers.TRANSIENT || field
 						.isAnnotationPresent(Transient.class))
 						&& !field.isAnnotationPresent(Param.class)) {
 					if (!field.getType().isPrimitive()) {
@@ -175,8 +175,8 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 	 */
 	protected <T> void repairRelationship(final T entity, final ObjectContainer container) {
 		emptyToNull(entity);
-		for (Field field : ReflectUtil.getInstance().getFields(entity.getClass())) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(entity, field.getName());
+		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
 			if (value != null) {
 				if (VulpeBaseEntity.class.isAssignableFrom(field.getType())
 						&& ((VulpeBaseEntity) value).getId() != null) {
@@ -244,9 +244,9 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 	 */
 	public <T> void repair(final T detail, final ObjectContainer container)
 			throws VulpeSystemException {
-		for (Field field : ReflectUtil.getInstance().getFields(detail.getClass())) {
+		for (Field field : VulpeReflectUtil.getInstance().getFields(detail.getClass())) {
 			if (VulpeBaseEntity.class.isAssignableFrom(field.getType())) {
-				final Object value = ReflectUtil.getInstance().getFieldValue(detail,
+				final Object value = VulpeReflectUtil.getInstance().getFieldValue(detail,
 						field.getName());
 				if (value != null) {
 					try {

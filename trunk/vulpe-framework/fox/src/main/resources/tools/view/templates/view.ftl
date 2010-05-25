@@ -355,7 +355,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 
 <v:table>
 	<jsp:attribute name="tableHeader">
-		<th colspan="4"><fmt:message key="label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header"/></th>
+		<th colspan="${view.columnSpan}"><fmt:message key="label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row>
@@ -450,7 +450,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="4"><fmt:message key="vulpe.total.records"/>&nbsp;<v:tabular showSize="true"/></th>
+		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:tabular showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
 </@file>

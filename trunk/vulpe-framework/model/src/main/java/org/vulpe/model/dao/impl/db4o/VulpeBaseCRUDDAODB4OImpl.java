@@ -24,13 +24,13 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.Constants.Model.DAO.DB4O;
-import org.vulpe.common.ReflectUtil.DeclaredType;
-import org.vulpe.common.audit.AuditOccurrenceType;
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.VulpeConstants.Model.DAO.DB4O;
+import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
+import org.vulpe.commons.audit.AuditOccurrenceType;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.Param.OperatorType;
@@ -234,7 +234,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = ReflectUtil.getInstance().getDeclaredType(getClass(),
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
 					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
@@ -254,9 +254,9 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	 * @return
 	 */
 	public boolean isNotEmpty(final Object value) {
-		if (ValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			if (value instanceof VulpeBaseEntity) {
-				return ValidationUtil.getInstance().isNotEmpty(((VulpeBaseEntity) value).getId());
+				return VulpeValidationUtil.getInstance().isNotEmpty(((VulpeBaseEntity) value).getId());
 			} else {
 				return true;
 			}
@@ -318,8 +318,8 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 		}
 		emptyToNull(entity);
-		for (Field field : ReflectUtil.getInstance().getFields(getEntityClass())) {
-			final Object value = ReflectUtil.getInstance().getFieldValue(entity, field.getName());
+		for (Field field : VulpeReflectUtil.getInstance().getFields(getEntityClass())) {
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
 			if (LogicEntity.class.isAssignableFrom(entity.getClass())
 					&& field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
@@ -397,7 +397,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 					} else {
 						subqy.constrain(values[0].toString());
 					}
-				} else if (field.getModifiers() != Constants.Modifiers.TRANSIENT
+				} else if (field.getModifiers() != VulpeConstants.Modifiers.TRANSIENT
 						&& !field.isAnnotationPresent(Transient.class)
 						&& !field.getName().equals(DB4O.SELECTED)) {
 					query.descend(field.getName()).constrain(value);

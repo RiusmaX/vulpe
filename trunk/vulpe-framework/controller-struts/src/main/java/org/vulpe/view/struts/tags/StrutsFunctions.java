@@ -26,10 +26,10 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.beans.ValueBean;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.common.VulpeBaseDetailConfig;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.view.struts.form.beans.SessionPaging;
@@ -61,7 +61,7 @@ public final class StrutsFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = ReflectUtil.getInstance().getFieldClass(bean.getClass(),
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
 					field.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
@@ -92,7 +92,7 @@ public final class StrutsFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = ReflectUtil.getInstance().getFieldClass(bean.getClass(),
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
 					field.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;
@@ -157,9 +157,9 @@ public final class StrutsFunctions extends Functions {
 		final String key = (property.contains(baseName)) ? property : baseName.concat(property);
 
 		final Object value = getProperty(pageContext, property);
-		if (ValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName()
-					.concat(Constants.PARAMS_SESSION_KEY);
+					.concat(VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
 					.getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -176,7 +176,7 @@ public final class StrutsFunctions extends Functions {
 	 */
 	private static Map getFormParams() {
 		final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName().concat(
-				Constants.PARAMS_SESSION_KEY);
+				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -204,7 +204,7 @@ public final class StrutsFunctions extends Functions {
 			value = saveImageInSession(key, value, false, thumbWidth);
 			saveInSession(key, value, false);
 			if (thumbWidth != null && thumbWidth > 0) {
-				saveImageInSession(key.concat(Constants.Upload.Image.THUMB), value, false,
+				saveImageInSession(key.concat(VulpeConstants.Upload.Image.THUMB), value, false,
 						thumbWidth);
 			}
 		}
@@ -220,7 +220,7 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static Object saveInSession(final String key, final Object value, final Boolean expire) {
 		final Object newValue = value;
-		if (ValidationUtil.getInstance().isNotEmpty(newValue)) {
+		if (VulpeValidationUtil.getInstance().isNotEmpty(newValue)) {
 			getFormParams().put(key, new Object[] { expire, newValue });
 		} else {
 			getFormParams().remove(key);
@@ -239,7 +239,7 @@ public final class StrutsFunctions extends Functions {
 	public static Object saveImageInSession(final String key, final Object value,
 			final Boolean expire, final Integer width) {
 		final Object newValue = value;
-		if (ValidationUtil.getInstance().isNotEmpty(newValue)) {
+		if (VulpeValidationUtil.getInstance().isNotEmpty(newValue)) {
 			final Byte[] bytes = (Byte[]) newValue;
 			byte[] imageData = new byte[bytes.length];
 			for (int i = 0; i < bytes.length; i++) {

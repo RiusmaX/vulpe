@@ -16,8 +16,8 @@
 package org.vulpe.security.controller.action;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.annotations.DetailConfig;
-import org.vulpe.common.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.VulpeBaseAction;

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 
 import com.opensymphony.xwork2.ActionChainResult;
@@ -96,7 +96,7 @@ public class SessionActionChainResult extends ActionChainResult {
 		String name;
 		if (isClearParams()) {
 			ActionContext.getContext()
-					.put(Constants.CLEAR_PARAMS, Boolean.TRUE);
+					.put(VulpeConstants.CLEAR_PARAMS, Boolean.TRUE);
 		}
 
 		Map params = null;

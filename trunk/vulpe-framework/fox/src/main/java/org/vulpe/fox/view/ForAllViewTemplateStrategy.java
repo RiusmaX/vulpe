@@ -27,8 +27,8 @@ import net.sf.jelly.apt.TemplateOutput;
 import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
@@ -121,7 +121,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					detailFields.add(decoratedViewFieldDetail);
 					decoratedViewDetail.setFields(detailFields);
 				} else {
-					final List<Field> listDetailField = ReflectUtil.getInstance().getFields(
+					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(
 							detail.clazz());
 					for (Field detailField : listDetailField) {
 						final VulpeColumn column = detailField.getAnnotation(VulpeColumn.class);
@@ -267,6 +267,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setAction(selectPopup.action());
 			decoratedViewField.setSize(selectPopup.size());
 			decoratedViewField.setPopupWidth(selectPopup.popupWidth());
+			decoratedViewField.setAutoComplete(selectPopup.autoComplete());
 			decoratedViewField.setType("selectPopup");
 		}
 		if (autoComplete != null) {

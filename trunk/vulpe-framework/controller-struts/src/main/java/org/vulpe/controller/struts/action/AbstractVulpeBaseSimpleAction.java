@@ -33,16 +33,16 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.vulpe.common.Constants;
-import org.vulpe.common.Constants.Security;
-import org.vulpe.common.Constants.Action.Forward;
-import org.vulpe.common.Constants.Action.URI;
-import org.vulpe.common.Constants.View.Layout;
-import org.vulpe.common.beans.AbstractVulpeBeanFactory;
-import org.vulpe.common.beans.DownloadInfo;
-import org.vulpe.common.cache.VulpeCacheHelper;
-import org.vulpe.common.file.FileUtil;
-import org.vulpe.common.model.services.VulpeServiceLocator;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.VulpeConstants.View.Layout;
+import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.beans.DownloadInfo;
+import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.file.FileUtil;
+import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
@@ -653,7 +653,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return Map with cached classes
 	 */
 	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_CLASS);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASS);
 	}
 
 	/**
@@ -662,7 +662,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return Map with cached enumerations
 	 */
 	public Map<String, Object> getCachedEnum() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(Constants.CACHED_ENUM);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
 	}
 
 	/**
@@ -672,7 +672,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 */
 	public Map<String, String> getCachedEnumArray() {
 		return (Map<String, String>) VulpeCacheHelper.getInstance()
-				.get(Constants.CACHED_ENUM_ARRAY);
+				.get(VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 
 	/**
@@ -682,7 +682,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 */
 	public Map getFormParams() {
 		final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName().concat(
-				Constants.PARAMS_SESSION_KEY);
+				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -719,11 +719,11 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	public void setUrlBack(final String urlBack) {
-		getSession().setAttribute(Constants.View.URL_BACK, urlBack);
+		getSession().setAttribute(VulpeConstants.View.URL_BACK, urlBack);
 	}
 
 	public void setLayerUrlBack(final String layerUrlBack) {
-		getSession().setAttribute(Constants.View.LAYER_URL_BACK, layerUrlBack);
+		getSession().setAttribute(VulpeConstants.View.LAYER_URL_BACK, layerUrlBack);
 	}
 
 	/**
@@ -775,7 +775,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		if (userAuthenticated == null) {
 			userAuthenticated = AbstractVulpeBeanFactory.getInstance().getBean(
 					UserAuthenticated.class.getSimpleName());
-			userAuthenticated.getUsername();
+			userAuthenticated.load();
 			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticated);
 		}
 		return userAuthenticated;
@@ -788,7 +788,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 */
 	public String getUserName() {
 		if (getUserAuthenticated() != null) {
-			return getUserAuthenticated().getUserName();
+			return getUserAuthenticated().getName();
 		}
 		return "";
 	}

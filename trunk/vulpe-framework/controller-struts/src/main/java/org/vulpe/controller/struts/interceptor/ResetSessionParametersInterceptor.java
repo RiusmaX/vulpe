@@ -15,7 +15,7 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -40,7 +40,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 			throws Exception {
 		final Object action = invocation.getAction();
 		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
-				.concat(Constants.PARAMS_SESSION_KEY);
+				.concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (ActionContext.getContext().getSession().containsKey(key)
 				&& isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);

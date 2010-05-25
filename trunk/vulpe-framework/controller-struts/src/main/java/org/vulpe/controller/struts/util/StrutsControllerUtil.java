@@ -22,9 +22,9 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.vulpe.common.Constants.View;
-import org.vulpe.common.Constants.View.Logic;
-import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.VulpeConstants.View.Logic;
+import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ControllerUtil;
 
 import com.opensymphony.xwork2.ActionContext;

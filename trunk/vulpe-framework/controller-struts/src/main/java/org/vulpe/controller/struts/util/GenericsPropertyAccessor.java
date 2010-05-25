@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 
-import org.vulpe.common.ReflectUtil;
-import org.vulpe.common.ReflectUtil.DeclaredType;
+import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
 
 import ognl.NoSuchPropertyException;
 import ognl.OgnlContext;
@@ -107,7 +107,7 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 	protected Object getValue(final OgnlContext ognlContext,
 			final Object target, final String name, final Member member,
 			final Type type, final Object value) {
-		final DeclaredType declaredType = ReflectUtil.getInstance()
+		final DeclaredType declaredType = VulpeReflectUtil.getInstance()
 				.getDeclaredType(target.getClass(), type);
 		return OgnlRuntime.getConvertedType(ognlContext, target, member, name,
 				value, declaredType.getType());

@@ -22,7 +22,7 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.listeners.VulpeStartupListener;
 import org.vulpe.controller.struts.common.beans.converter.BigDecimalConverter;
 import org.vulpe.controller.struts.common.beans.converter.DateConverter;

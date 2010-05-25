@@ -18,7 +18,7 @@ package org.vulpe.audit.model.services;
 import java.util.List;
 
 import org.vulpe.audit.model.entity.AuditOccurrence;
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.services.Services;
 

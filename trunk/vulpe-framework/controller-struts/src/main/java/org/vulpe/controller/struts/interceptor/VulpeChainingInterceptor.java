@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.vulpe.common.Constants;
+import org.vulpe.commons.VulpeConstants;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -46,7 +46,7 @@ public class VulpeChainingInterceptor extends
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
 		if (Boolean.TRUE.equals(ActionContext.getContext().get(
-				Constants.CLEAR_PARAMS))) {
+				VulpeConstants.CLEAR_PARAMS))) {
 			if (invocation.getAction() instanceof ValidationAware) {
 				final ValueStack stack = invocation.getStack();
 				final CompoundRoot root = stack.getRoot();

@@ -17,7 +17,7 @@ package org.vulpe.security.model.services;
 
 import java.util.List;
 
-import org.vulpe.common.beans.Paging;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.services.Services;
 import org.vulpe.security.model.entity.Role;

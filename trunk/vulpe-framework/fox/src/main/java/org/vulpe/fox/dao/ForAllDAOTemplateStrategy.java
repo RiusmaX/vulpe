@@ -32,7 +32,7 @@ import net.sf.jelly.apt.TemplateOutput;
 import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.common.helper.VulpeConfigHelper;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;

@@ -19,7 +19,7 @@ import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButto
 
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
-import org.vulpe.common.audit.AuditOccurrenceType;
+import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.VulpeBaseAction;

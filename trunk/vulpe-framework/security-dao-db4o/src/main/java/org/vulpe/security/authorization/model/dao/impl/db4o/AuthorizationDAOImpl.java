@@ -22,9 +22,9 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.common.Constants;
-import org.vulpe.common.ValidationUtil;
-import org.vulpe.common.cache.VulpeCacheHelper;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseCRUDDAODB4OImpl;
 import org.vulpe.security.authorization.model.dao.AuthorizationDAO;
 import org.vulpe.security.model.entity.Role;
@@ -74,13 +74,13 @@ public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResourc
 	private void reloadAuthorizationInfo() {
 		// List<SecureResource> secureResources = getList(new SecureResource());
 		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
-				Constants.CACHED_CLASS);
+				VulpeConstants.CACHED_CLASS);
 		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
 				.get(SecureResource.class.getSimpleName());
 		if (secureResources != null) {
 			for (SecureResource secureResource : secureResources) {
 				secureObjects.put(secureResource.getResourceName(), secureResource);
-				if (ValidationUtil.getInstance()
+				if (VulpeValidationUtil.getInstance()
 						.isNotEmpty(secureResource.getSecureResourceRoles())) {
 					final List<Role> roles = new ArrayList<Role>();
 					for (SecureResourceRole secureResourceRole : secureResource

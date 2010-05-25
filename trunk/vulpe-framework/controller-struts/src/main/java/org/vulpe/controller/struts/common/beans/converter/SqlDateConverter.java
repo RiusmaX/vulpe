@@ -20,7 +20,7 @@ import java.sql.Date;
 import ognl.TypeConverter;
 
 import org.apache.log4j.Logger;
-import org.vulpe.common.DateUtil;
+import org.vulpe.commons.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
@@ -34,12 +34,12 @@ public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements
 		try {
 			if (value instanceof String) {
 				if (!value.toString().equals("")) {
-					final java.util.Date date = DateUtil.convertStringToDate(value
+					final java.util.Date date = VulpeDateUtil.convertStringToDate(value
 							.toString());
 					return new Date(date.getTime());
 				}
 			} else if (value instanceof Date && String.class.equals(type)) {
-				return DateUtil.convertDateTimeToString((Date) value);
+				return VulpeDateUtil.convertDateTimeToString((Date) value);
 			} else if (value instanceof Date) {
 				return (Date) value;
 			}

@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.vulpe.common.ReflectUtil;
+import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -79,7 +79,7 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 				if (parameters.containsKey(name)) {
 					final Object[] values = (Object[]) parameters.get(name);
 					if (values != null) {
-						final VulpeBaseAction baseAction = ReflectUtil.getInstance()
+						final VulpeBaseAction baseAction = VulpeReflectUtil.getInstance()
 								.getFieldValue(actionInvocation, "action");
 						final Object entity = baseAction.getActionConfig()
 								.getEntityClass().newInstance();
@@ -87,14 +87,14 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 								.substring(name.indexOf("].") + 2)
 								: name.substring("entity.".length());
 						if (String[].class.isAssignableFrom(values.getClass())) {
-							final Field field = ReflectUtil.getInstance()
+							final Field field = VulpeReflectUtil.getInstance()
 									.getField(entity.getClass(), attributeName);
 							if (List.class.isAssignableFrom(field.getType())) {
-								final Type[] fieldListType = ReflectUtil
+								final Type[] fieldListType = VulpeReflectUtil
 										.getInstance().getFieldValue(
 												field.getGenericType(),
 												"actualTypeArguments");
-								final Object[] enumConstants = ReflectUtil
+								final Object[] enumConstants = VulpeReflectUtil
 										.getInstance().getFieldValue(
 												fieldListType[0],
 												"enumConstants");
