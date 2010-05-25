@@ -22,7 +22,7 @@ import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.model.services.Services;
 
 @SuppressWarnings("unchecked")
-public class VulpeSecurityServiceUtil {
+public class VulpeSecurityCallbackUtil {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
