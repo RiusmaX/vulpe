@@ -31,7 +31,7 @@
 	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
 
 	<bean id="filterChainProxy"
-		class="org.vulpe.security.authentication.controller.filter.VulpeFilterChainProxy">
+		class="org.vulpe.security.controller.filter.VulpeFilterChainProxy">
 		<security:filter-chain-map path-type="ant">
 			<security:filter-chain pattern="/images/*"
 				filters="none" />
@@ -73,7 +73,7 @@
 		location="classpath:anonymousConfig.properties" />
 
 	<bean id="anonymousProcessingFilter"
-		class="org.vulpe.security.authentication.providers.anonymous.VulpeAnonymousProcessingFilter">
+		class="org.vulpe.security.providers.anonymous.VulpeAnonymousProcessingFilter">
 		<property name="anonymousConfig">
 			<ref local="anonymousConfig" />
 		</property>
@@ -156,7 +156,7 @@
 	</bean>
 
 	<bean id="anonymousAuthenticationProvider"
-		class="org.vulpe.security.authentication.providers.anonymous.VulpeAnonymousAuthenticationProvider">
+		class="org.vulpe.security.providers.anonymous.VulpeAnonymousAuthenticationProvider">
 		<property name="anonymousConfig">
 			<ref local="anonymousConfig" />
 		</property>
