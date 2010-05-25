@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authentication;
+package org.vulpe.security.authentication.callback.impl.pojo;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
 import org.vulpe.security.commons.VulpeSecurityServiceUtil;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Service("UserAuthenticatedService")
-public class UserAuthenticatedServicePOJOImpl extends VulpeSecurityServiceUtil implements UserAuthenticatedService {
+@Service("UserAuthenticatedCallback")
+public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityServiceUtil implements UserAuthenticatedCallback {
 
-	static final Logger LOG = Logger.getLogger(UserAuthenticatedServicePOJOImpl.class);
+	static final Logger LOG = Logger.getLogger(UserAuthenticatedCallbackPOJOImpl.class);
 
 	private User user;
 

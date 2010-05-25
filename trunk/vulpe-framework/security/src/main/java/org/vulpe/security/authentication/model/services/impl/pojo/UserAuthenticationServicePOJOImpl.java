@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authentication.model.services.impl;
+package org.vulpe.security.authentication.model.services.impl.pojo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +30,7 @@ import org.vulpe.security.exception.VulpeSecurityException;
  * @since 1.0
  * 
  */
-public class UserAuthenticationServiceImpl implements UserAuthenticationService {
+public class UserAuthenticationServicePOJOImpl implements UserAuthenticationService {
 
 	@Qualifier("UserAuthenticationDAO")
 	@Autowired
@@ -39,8 +39,8 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.security.authentication.authentication.model.services.
-	 * UserAuthenticationService#authenticateUser(java.lang.String,
+	 * @see org.vulpe.security.authentication.model.services.
+	 * UserAuthenticationCallback#authenticateUser(java.lang.String,
 	 * java.lang.String)
 	 */
 	public AuthenticationResponse authenticateUser(final String userId, final String password)

@@ -120,13 +120,13 @@
 		</property>
 		<property name="securityMetadataSource">
 			<bean id="dbdrivenFilterInvocationDefinitionSource"
-				class="org.vulpe.security.authentication.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
+				class="org.vulpe.security.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
 				<property name="authorizationService">
 					<bean id="authorizationService"
-						class="org.vulpe.security.authentication.authorization.model.services.impl.AuthorizationServiceImpl">
+						class="org.vulpe.security.authorization.model.services.impl.AuthorizationServiceImpl">
 						<property name="authorizationDAO">
 							<bean id="authorizationDAO"
-								class="org.vulpe.security.authentication.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
+								class="org.vulpe.security.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
 						</property>
 					</bean>
 				</property>
@@ -143,13 +143,13 @@
 	</security:authentication-manager>
 
 	<bean id="daoAuthenticationProvider"
-		class="org.vulpe.security.authentication.authentication.VulpeSecurityAuthenticationProvider">
+		class="org.vulpe.security.authentication.VulpeSecurityAuthenticationProvider">
 		<property name="authenticationService">
 			<bean id="userAuthenticationService"
-				class="org.vulpe.security.authentication.authentication.model.services.impl.UserAuthenticationServiceImpl">
+				class="org.vulpe.security.authentication.model.services.impl.pojo.UserAuthenticationServicePOJOImpl">
 				<property name="authenticationDAO">
 					<bean id="userAuthenticationDAO"
-						class="org.vulpe.security.authentication.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
+						class="org.vulpe.security.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
 				</property>
 			</bean>
 		</property>

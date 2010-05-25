@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.vulpe.model.services.Services;
-import org.vulpe.security.authentication.UserAuthenticatedService;
+import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
 
 public interface VulpeBaseSimpleController {
 
@@ -46,7 +46,7 @@ public interface VulpeBaseSimpleController {
 
 	boolean isAuthenticated();
 
-	UserAuthenticatedService getUserAuthenticated();
+	UserAuthenticatedCallback getUserAuthenticated();
 
 	String getUserName();
 

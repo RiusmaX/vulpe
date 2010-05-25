@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authentication;
+package org.vulpe.security.authentication.callback;
 
-public interface AfterUserAuthenticationService {
+public interface UserAuthenticatedCallback {
 
 	void load();
 
+	Long getId();
+
+	String getUsername();
+
+	String getName();
 }

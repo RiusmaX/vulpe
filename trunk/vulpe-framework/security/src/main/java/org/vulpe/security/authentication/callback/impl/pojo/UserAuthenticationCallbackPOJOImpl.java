@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authentication;
+package org.vulpe.security.authentication.callback.impl.pojo;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
+import org.vulpe.security.authentication.callback.UserAuthenticationCallback;
 import org.vulpe.security.commons.VulpeSecurityServiceUtil;
 
-@Service("UserAuthenticationService")
-public class UserAuthenticationServicePOJOImpl extends VulpeSecurityServiceUtil implements UserAuthenticationService {
+@Service("UserAuthenticationCallback")
+public class UserAuthenticationCallbackPOJOImpl extends VulpeSecurityServiceUtil implements UserAuthenticationCallback {
 
 	@Override
 	public boolean isAuthenticated() {
@@ -29,7 +31,7 @@ public class UserAuthenticationServicePOJOImpl extends VulpeSecurityServiceUtil 
 		final boolean autenticated = authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken);
 		if (autenticated) {
-			AfterUserAuthenticationService afterUserAuthentication = getBean(AfterUserAuthenticationService.class);
+			AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
 			if (afterUserAuthentication != null) {
 				afterUserAuthentication.load();
 			}

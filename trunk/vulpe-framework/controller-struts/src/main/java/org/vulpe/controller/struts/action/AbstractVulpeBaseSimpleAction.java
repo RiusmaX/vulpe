@@ -53,8 +53,8 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.Services;
-import org.vulpe.security.authentication.UserAuthenticatedService;
-import org.vulpe.security.authentication.UserAuthenticationService;
+import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
+import org.vulpe.security.authentication.callback.UserAuthenticationCallback;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -757,11 +757,11 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return true if authenticated
 	 */
 	public boolean isAuthenticated() {
-		UserAuthenticationService userAuthentication = (UserAuthenticationService) getSession().getAttribute(
+		UserAuthenticationCallback userAuthentication = (UserAuthenticationCallback) getSession().getAttribute(
 				Security.VULPE_USER_AUTHENTICATION);
 		if (userAuthentication == null) {
 			userAuthentication = AbstractVulpeBeanFactory.getInstance().getBean(
-					UserAuthenticationService.class.getSimpleName());
+					UserAuthenticationCallback.class.getSimpleName());
 			if (userAuthentication != null) {
 				final boolean authenticated = userAuthentication.isAuthenticated();
 				if (authenticated) {
@@ -782,12 +782,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * 
 	 * @return
 	 */
-	public UserAuthenticatedService getUserAuthenticated() {
-		UserAuthenticatedService userAuthenticated = (UserAuthenticatedService) getSession().getAttribute(
+	public UserAuthenticatedCallback getUserAuthenticated() {
+		UserAuthenticatedCallback userAuthenticated = (UserAuthenticatedCallback) getSession().getAttribute(
 				Security.VULPE_USER_AUTHENTICATED);
 		if (userAuthenticated == null) {
 			userAuthenticated = AbstractVulpeBeanFactory.getInstance().getBean(
-					UserAuthenticatedService.class.getSimpleName());
+					UserAuthenticatedCallback.class.getSimpleName());
 			userAuthenticated.load();
 			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticated);
 		}
