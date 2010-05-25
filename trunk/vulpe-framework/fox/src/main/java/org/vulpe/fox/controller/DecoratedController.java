@@ -29,6 +29,7 @@ public class DecoratedController implements Serializable {
 	private String moduleName;
 	private String superclassName;
 	private String controllerSuperclassName;
+	private String projectPackageName;
 	private String packageName;
 	private String servicePackageName;
 	private String controllerPackageName;
@@ -191,5 +192,13 @@ public class DecoratedController implements Serializable {
 
 	public List<DecoratedControllerDetail> getDetails() {
 		return details;
+	}
+
+	public void setProjectPackageName(String projectPackageName) {
+		this.projectPackageName = projectPackageName;
+	}
+
+	public String getProjectPackageName() {
+		return projectPackageName;
 	}
 }

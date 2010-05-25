@@ -253,6 +253,7 @@ public interface VulpeConstants {
 
 	interface Security {
 		String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
+		String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
 		String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
 	}
 

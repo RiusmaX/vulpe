@@ -44,7 +44,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	 * (non-Javadoc)
 	 * 
 	 * @seeorg.vulpe.security.authorization.model.services. AuthorizationService
-	 * #getSecureObjectRoles(org.vulpe.security .model.entity.SecureResource)
+	 * #getSecureObjectRoles(org.vulpe.security.authentication .model.entity.SecureResource)
 	 */
 	public List<Role> getSecureObjectRoles(final SecureResource secureObject) {
 		return authorizationDAO.getSecureObjectRoles(secureObject);

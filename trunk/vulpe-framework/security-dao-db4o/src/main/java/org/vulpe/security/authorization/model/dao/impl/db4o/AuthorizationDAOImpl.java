@@ -64,7 +64,7 @@ public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResourc
 	 * (non-Javadoc)
 	 * 
 	 * @seeorg.vulpe.security.authorization.model.dao. AuthorizationDAO
-	 * #getSecureObjectRoles(org.vulpe.security .model.entity.SecureResource)
+	 * #getSecureObjectRoles(org.vulpe.security.authentication .model.entity.SecureResource)
 	 */
 	public List<Role> getSecureObjectRoles(final SecureResource secureObject) {
 		return secureObjectToRoles.get(secureObject);

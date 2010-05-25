@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security;
+package org.vulpe.security.authentication;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.vulpe.commons.model.services.VulpeServiceLocator;
+import org.springframework.stereotype.Service;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.security.commons.VulpeSecurityServiceUtil;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Component("UserAuthenticated")
-public class UserAuthenticatedImpl implements UserAuthenticated {
+@Service("UserAuthenticatedService")
+public class UserAuthenticatedServicePOJOImpl extends VulpeSecurityServiceUtil implements UserAuthenticatedService {
 
-	static final Logger LOG = Logger.getLogger(UserAuthenticatedImpl.class);
-
-	final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	static final Logger LOG = Logger.getLogger(UserAuthenticatedServicePOJOImpl.class);
 
 	private User user;
 
 	@Override
 	public String getUsername() {
+		final Object principal = SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
 		return principal instanceof UserDetails ? ((UserDetails) principal).getUsername()
 				: principal.toString();
 	}
@@ -44,8 +44,7 @@ public class UserAuthenticatedImpl implements UserAuthenticated {
 	}
 
 	protected void setUser(String username) {
-		final SecurityServices securityServices = VulpeServiceLocator.getInstance().getService(
-				SecurityServices.class);
+		final SecurityServices securityServices = getService(SecurityServices.class);
 		User user = new User();
 		user.setUsername(username);
 		try {

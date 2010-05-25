@@ -12,7 +12,7 @@
 	default-lazy-init="true" default-autowire="byName">
 
 	<context:annotation-config />
-	<context:component-scan base-package="org.vulpe.security" />
+	<context:component-scan base-package="org.vulpe.security.authentication" />
 
 	<security:http>
 		<security:form-login authentication-failure-url="/authenticator.action?loginError=1"
@@ -31,7 +31,7 @@
 	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
 
 	<bean id="filterChainProxy"
-		class="org.vulpe.security.controller.filter.VulpeFilterChainProxy">
+		class="org.vulpe.security.authentication.controller.filter.VulpeFilterChainProxy">
 		<security:filter-chain-map path-type="ant">
 			<security:filter-chain pattern="/images/*"
 				filters="none" />
@@ -73,7 +73,7 @@
 		location="classpath:anonymousConfig.properties" />
 
 	<bean id="anonymousProcessingFilter"
-		class="org.vulpe.security.providers.anonymous.VulpeAnonymousProcessingFilter">
+		class="org.vulpe.security.authentication.providers.anonymous.VulpeAnonymousProcessingFilter">
 		<property name="anonymousConfig">
 			<ref local="anonymousConfig" />
 		</property>
@@ -120,13 +120,13 @@
 		</property>
 		<property name="securityMetadataSource">
 			<bean id="dbdrivenFilterInvocationDefinitionSource"
-				class="org.vulpe.security.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
+				class="org.vulpe.security.authentication.authorization.DatabaseDrivenFilterInvocationDefinitionSource">
 				<property name="authorizationService">
 					<bean id="authorizationService"
-						class="org.vulpe.security.authorization.model.services.impl.AuthorizationServiceImpl">
+						class="org.vulpe.security.authentication.authorization.model.services.impl.AuthorizationServiceImpl">
 						<property name="authorizationDAO">
 							<bean id="authorizationDAO"
-								class="org.vulpe.security.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
+								class="org.vulpe.security.authentication.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
 						</property>
 					</bean>
 				</property>
@@ -143,20 +143,20 @@
 	</security:authentication-manager>
 
 	<bean id="daoAuthenticationProvider"
-		class="org.vulpe.security.authentication.VulpeSecurityAuthenticationProvider">
+		class="org.vulpe.security.authentication.authentication.VulpeSecurityAuthenticationProvider">
 		<property name="authenticationService">
 			<bean id="userAuthenticationService"
-				class="org.vulpe.security.authentication.model.services.impl.UserAuthenticationServiceImpl">
+				class="org.vulpe.security.authentication.authentication.model.services.impl.UserAuthenticationServiceImpl">
 				<property name="authenticationDAO">
 					<bean id="userAuthenticationDAO"
-						class="org.vulpe.security.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
+						class="org.vulpe.security.authentication.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
 				</property>
 			</bean>
 		</property>
 	</bean>
 
 	<bean id="anonymousAuthenticationProvider"
-		class="org.vulpe.security.providers.anonymous.VulpeAnonymousAuthenticationProvider">
+		class="org.vulpe.security.authentication.providers.anonymous.VulpeAnonymousAuthenticationProvider">
 		<property name="anonymousConfig">
 			<ref local="anonymousConfig" />
 		</property>

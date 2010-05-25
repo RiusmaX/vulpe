@@ -39,7 +39,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.security.authentication.model.services.
+	 * @see org.vulpe.security.authentication.authentication.model.services.
 	 * UserAuthenticationService#authenticateUser(java.lang.String,
 	 * java.lang.String)
 	 */

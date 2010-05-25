@@ -53,8 +53,8 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.Services;
-import org.vulpe.security.UserAuthenticated;
-import org.vulpe.security.UserAuthentication;
+import org.vulpe.security.authentication.UserAuthenticatedService;
+import org.vulpe.security.authentication.UserAuthenticationService;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -653,7 +653,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return Map with cached classes
 	 */
 	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASS);
+		return (Map<String, Object>) VulpeCacheHelper.getInstance()
+				.get(VulpeConstants.CACHED_CLASS);
 	}
 
 	/**
@@ -671,8 +672,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return Map with cached enumerations array
 	 */
 	public Map<String, String> getCachedEnumArray() {
-		return (Map<String, String>) VulpeCacheHelper.getInstance()
-				.get(VulpeConstants.CACHED_ENUM_ARRAY);
+		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
+				VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 
 	/**
@@ -756,12 +757,24 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * @return true if authenticated
 	 */
 	public boolean isAuthenticated() {
-		final UserAuthentication userAuthentication = AbstractVulpeBeanFactory.getInstance()
-				.getBean(UserAuthentication.class.getSimpleName());
-		if (userAuthentication != null) {
-			return userAuthentication.isAuthenticated();
+		UserAuthenticationService userAuthentication = (UserAuthenticationService) getSession().getAttribute(
+				Security.VULPE_USER_AUTHENTICATION);
+		if (userAuthentication == null) {
+			userAuthentication = AbstractVulpeBeanFactory.getInstance().getBean(
+					UserAuthenticationService.class.getSimpleName());
+			if (userAuthentication != null) {
+				final boolean authenticated = userAuthentication.isAuthenticated();
+				if (authenticated) {
+					getSession().setAttribute(Security.VULPE_USER_AUTHENTICATION,
+							userAuthentication);
+				} else {
+					getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATION);
+				}
+				return authenticated;
+			}
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -769,12 +782,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * 
 	 * @return
 	 */
-	public UserAuthenticated getUserAuthenticated() {
-		UserAuthenticated userAuthenticated = (UserAuthenticated) getSession().getAttribute(
+	public UserAuthenticatedService getUserAuthenticated() {
+		UserAuthenticatedService userAuthenticated = (UserAuthenticatedService) getSession().getAttribute(
 				Security.VULPE_USER_AUTHENTICATED);
 		if (userAuthenticated == null) {
 			userAuthenticated = AbstractVulpeBeanFactory.getInstance().getBean(
-					UserAuthenticated.class.getSimpleName());
+					UserAuthenticatedService.class.getSimpleName());
 			userAuthenticated.load();
 			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticated);
 		}

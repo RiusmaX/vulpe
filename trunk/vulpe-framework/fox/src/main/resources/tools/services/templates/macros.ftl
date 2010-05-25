@@ -237,10 +237,12 @@ ${ident} *${line}
  -->
 <#macro forAllValidClasses>
 	<@forAllTypes var="type">
-		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.VulpeBaseManager")>
-			<#assign typeVariables = findTypeVariables(type, type.superclass)>
-			<#local signatureClass = getSignatureClass(type)>
-			<#nested type signatureClass>
+		<#if type?last_index_of("Manager") != -1>
+			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.VulpeBaseManager")>
+				<#assign typeVariables = findTypeVariables(type, type.superclass)>
+				<#local signatureClass = getSignatureClass(type)>
+				<#nested type signatureClass>
+			</#if>
 		</#if>
 	</@forAllTypes>
 </#macro>

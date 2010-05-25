@@ -27,6 +27,7 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
@@ -57,6 +58,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			final DecoratedController controller = new DecoratedController();
 			controller.setName(clazz.getSimpleName());
 			controller.setPackageName(clazz.getPackage().toString());
+			controller.setProjectPackageName(VulpeConfigHelper.getProjectPackage());
 			controller.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(),
 					".entity", ".services"));
 			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),

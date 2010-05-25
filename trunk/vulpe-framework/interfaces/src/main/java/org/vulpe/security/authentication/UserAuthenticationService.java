@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security;
+package org.vulpe.security.authentication;
 
-public interface AfterUserAuthentication {
+public interface UserAuthenticationService {
 
-	void load();
+	boolean isAuthenticated();
 
 }
