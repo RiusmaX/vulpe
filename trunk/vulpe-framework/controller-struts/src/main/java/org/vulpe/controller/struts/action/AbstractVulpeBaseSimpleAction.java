@@ -165,7 +165,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		onFrontend();
 
 		String forward = Forward.SUCCESS;
-		if (getActionConfig().getType().equals(ControllerType.FRONTEND)) {
+		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
 				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
@@ -835,7 +835,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * 
 	 * @return Controller Type
 	 */
-	protected ControllerType getControllerType() {
+	public ControllerType getControllerType() {
 		return ControllerType.valueOf(getActionConfig().getType());
 	}
 

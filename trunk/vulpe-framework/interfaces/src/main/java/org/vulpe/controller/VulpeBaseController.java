@@ -27,8 +27,6 @@ public interface VulpeBaseController extends VulpeBaseSimpleController {
 
 	String deleteDetail();
 
-	String frontend();
-
 	String prepare();
 
 	String tabularPost();

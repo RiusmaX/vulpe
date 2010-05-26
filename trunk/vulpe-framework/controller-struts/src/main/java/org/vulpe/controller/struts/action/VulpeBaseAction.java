@@ -1045,7 +1045,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 			if (Action.READ.equals(method) && getEntity() == null) {
 				setEntity(getActionConfig().getEntityClass().newInstance());
 			} else if (Action.UPDATE.equals(method)
-					|| (Action.DELETE.equals(method) && getActionConfig().getType().equals(
+					|| (Action.DELETE.equals(method) && getControllerType().equals(
 							ControllerType.SELECT))) {
 				final ENTITY entity = getActionConfig().getEntityClass().newInstance();
 				entity.setId(getId());

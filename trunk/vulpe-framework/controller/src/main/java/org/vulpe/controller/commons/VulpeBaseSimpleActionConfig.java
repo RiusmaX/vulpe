@@ -84,12 +84,12 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		this.viewItemsPath = Layout.PROTECTED_JSP;
 		final String simple = actionName.replace(Layout.MAIN, "");
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
-		if (getType().equals(ControllerType.FRONTEND)) {
+		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name).concat(
 					Layout.JSP);
-			if (getType().equals(ControllerType.SELECT)) {
+			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS);
@@ -99,19 +99,19 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 			final String name = parts.nextToken();
 			// final String type = parts.nextToken();
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
-			if (getType().equals(ControllerType.CRUD)) {
+			if (getControllerType().equals(ControllerType.CRUD)) {
 				this.viewPath += Layout.SUFFIX_JSP_CRUD;
 			}
-			if (getType().equals(ControllerType.TABULAR)) {
+			if (getControllerType().equals(ControllerType.TABULAR)) {
 				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
 			}
-			if (getType().equals(ControllerType.SELECT)) {
+			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewPath += Layout.SUFFIX_JSP_SELECT;
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
-			if (getType().equals(ControllerType.REPORT)) {
+			if (getControllerType().equals(ControllerType.REPORT)) {
 				this.viewPath += Layout.SUFFIX_JSP_REPORT;
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(name).concat(
@@ -147,6 +147,14 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		return this.controller.controllerType().name();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public ControllerType getControllerType() {
+		return this.controller.controllerType();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -174,9 +182,9 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		if (StringUtils.isNotEmpty(this.controller.ownerAction())) {
 			return this.controller.ownerAction();
 		} else {
-			if (getType().equals(ControllerType.CRUD)) {
+			if (getControllerType().equals(ControllerType.CRUD)) {
 				return getActionBaseName().concat(Logic.SELECTION);
-			} else if (getType().equals(ControllerType.SELECT)) {
+			} else if (getControllerType().equals(ControllerType.SELECT)) {
 				return getActionBaseName().concat(Logic.CRUD);
 			} else {
 				return null;
@@ -356,7 +364,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * 
 	 * @return Name of Project
 	 */
-	private String getProjectName() {
+	protected String getProjectName() {
 		return VulpeConfigHelper.getProjectName();
 	}
 

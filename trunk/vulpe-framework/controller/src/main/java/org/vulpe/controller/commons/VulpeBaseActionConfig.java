@@ -26,7 +26,6 @@ import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.VulpeConstants.View.Report;
 import org.vulpe.commons.cache.VulpeCacheHelper;
-import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
@@ -43,8 +42,10 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public VulpeBaseActionConfig(final Class<?> classAction,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class, classAction));
-		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(classAction, 0);
+		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
+				classAction));
+		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(
+				classAction, 0);
 		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(classAction, 1);
 		this.details = details;
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
@@ -66,12 +67,12 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		setViewItemsPath(Layout.PROTECTED_JSP);
 		final String simple = getActionName().replace(".main", "");
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
-		if (getType().equals(ControllerType.FRONTEND)) {
+		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name).concat(Layout.JSP)));
-			if (getType().equals(ControllerType.SELECT)) {
+			if (getControllerType().equals(ControllerType.SELECT)) {
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS)));
@@ -82,19 +83,19 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			// final String type = parts.nextToken();
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name)));
-			if (getType().equals(ControllerType.CRUD)) {
+			if (getControllerType().equals(ControllerType.CRUD)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_CRUD));
 			}
-			if (getType().equals(ControllerType.TABULAR)) {
+			if (getControllerType().equals(ControllerType.TABULAR)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_TABULAR));
 			}
-			if (getType().equals(ControllerType.SELECT)) {
+			if (getControllerType().equals(ControllerType.SELECT)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_SELECT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
-			if (getType().equals(ControllerType.REPORT)) {
+			if (getControllerType().equals(ControllerType.REPORT)) {
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_REPORT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
@@ -180,10 +181,6 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			propertyName = detail.substring(StringUtils.lastIndexOf(detail, '.') + 1);
 		}
 		return getDetail(propertyName);
-	}
-
-	private String getProjectName() {
-		return VulpeConfigHelper.getProjectName();
 	}
 
 }
