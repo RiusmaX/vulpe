@@ -49,6 +49,7 @@ public class DecoratedViewField implements Serializable {
 	private boolean autoComplete = false;
 	private boolean required = false;
 	private String validateType;
+	private String validateScope;
 	private String validateMask;
 	private String validateDatePattern;
 	private int validateMin;
@@ -343,6 +344,14 @@ public class DecoratedViewField implements Serializable {
 
 	public String getValidateDatePattern() {
 		return validateDatePattern;
+	}
+
+	public void setValidateScope(String validateScope) {
+		this.validateScope = validateScope;
+	}
+
+	public String getValidateScope() {
+		return validateScope;
 	}
 
 }

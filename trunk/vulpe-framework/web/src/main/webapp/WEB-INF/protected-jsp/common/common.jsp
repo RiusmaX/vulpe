@@ -134,6 +134,39 @@ $(document).ready(function() {
 			$(this).attr('defaultValue', $(this).val());
 		});
 	}
+	$("#alertDialog").dialog({
+		autoOpen: false,
+		bgiframe: true,
+		modal: true,
+		buttons: {
+			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
+
+	$("#confirmationDialog").dialog({
+		autoOpen: false,
+		bgiframe: true,
+		resizable: false,
+		height:140,
+		modal: true,
+		overlay: {
+			backgroundColor: '#000',
+			opacity: 0.5
+		},
+		buttons: {
+			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+				$(this).dialog('close');
+				if (vulpe.command) {
+					vulpe.command();
+				}
+			},
+			'<fmt:message key="vulpe.label.button.cancel"/>': function() {
+				$(this).dialog('close');
+			}
+		}
+	});
 });
 </script>
 </c:if>

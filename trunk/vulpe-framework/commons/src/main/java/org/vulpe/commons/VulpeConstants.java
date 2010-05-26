@@ -259,6 +259,10 @@ public interface VulpeConstants {
 
 	interface Model {
 
+		interface Entity {
+			String SECURITY_ROLE_PREFIX = "ROLE_";
+		}
+
 		interface DAO {
 
 			interface DB4O {

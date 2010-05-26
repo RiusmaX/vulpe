@@ -15,6 +15,8 @@
  */
 package org.vulpe.security.model.entity;
 
+import org.apache.commons.lang.StringUtils;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.db4o.Like;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
@@ -26,6 +28,8 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 
 	@Like
 	private String name;
+
+	private transient String simpleName;
 
 	@Like
 	@AutoComplete
@@ -68,4 +72,18 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 		this.description = description;
 	}
 
+	public void setSimpleName(String simpleName) {
+		if (StringUtils.isNotBlank(simpleName)
+				&& !simpleName.startsWith(Entity.SECURITY_ROLE_PREFIX)) {
+			setName(Entity.SECURITY_ROLE_PREFIX + simpleName);
+		}
+		this.simpleName = simpleName;
+	}
+
+	public String getSimpleName() {
+		if (StringUtils.isNotBlank(getName())) {
+			simpleName = getName().replace(Entity.SECURITY_ROLE_PREFIX, "");
+		}
+		return simpleName;
+	}
 }

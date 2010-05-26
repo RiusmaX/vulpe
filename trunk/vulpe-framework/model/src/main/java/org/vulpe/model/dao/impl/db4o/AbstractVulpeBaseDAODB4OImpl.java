@@ -176,23 +176,29 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 	protected <T> void repairRelationship(final T entity, final ObjectContainer container) {
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
+					field.getName());
 			if (value != null) {
-				if (VulpeBaseEntity.class.isAssignableFrom(field.getType())
-						&& ((VulpeBaseEntity) value).getId() != null) {
+				if (VulpeBaseEntity.class.isAssignableFrom(field.getType())) {
 					try {
-						final VulpeBaseEntity<Long> newEntity = (VulpeBaseEntity<Long>) field
-								.getType().newInstance();
-						newEntity.setId(((VulpeBaseEntity<Long>) value).getId());
-						final ObjectSet objectSet = getObjectContainer().queryByExample(newEntity);
-						if (objectSet.hasNext()) {
-							PropertyUtils.setProperty(entity, field.getName(), objectSet.next());
+						final VulpeBaseEntity<Long> valueEntity = (VulpeBaseEntity) value;
+						if (valueEntity.getId() != null) {
+							final VulpeBaseEntity<Long> newEntity = (VulpeBaseEntity<Long>) field
+									.getType().newInstance();
+							newEntity.setId(valueEntity.getId());
+							final ObjectSet objectSet = getObjectContainer().queryByExample(
+									newEntity);
+							if (objectSet.hasNext()) {
+								PropertyUtils
+										.setProperty(entity, field.getName(), objectSet.next());
+							}
+						} else {
+							PropertyUtils.setProperty(entity, field.getName(), null);
 						}
 					} catch (Exception e) {
 						LOG.error(e);
 					}
-				}
-				if (Collection.class.isAssignableFrom(field.getType())) {
+				} else if (Collection.class.isAssignableFrom(field.getType())) {
 					final Collection details = (Collection) value;
 					for (Object object : details) {
 						if (VulpeBaseEntity.class.isAssignableFrom(object.getClass())) {
@@ -206,9 +212,10 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 									detail.setId(getId(detail));
 									PropertyUtils.setProperty(detail, attributeName, entity);
 								} else {
+									final VulpeBaseEntity<Long> valueEntity = (VulpeBaseEntity) entity;
 									final VulpeBaseEntity<Long> newEntity = (VulpeBaseEntity<Long>) entity
 											.getClass().newInstance();
-									newEntity.setId(((VulpeBaseEntity<Long>) entity).getId());
+									newEntity.setId(valueEntity.getId());
 									final VulpeBaseEntity<Long> newDetailEntity = (VulpeBaseEntity<Long>) object
 											.getClass().newInstance();
 									newDetailEntity.setId(detail.getId());

@@ -71,7 +71,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 <#if field.required>
 	required="${field.required}"
 </#if>
-<#if field.validateType?has_content>
+<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("SELECT"))>
 	validateType="${field.validateType}"
 	<#if field.validateMas?has_content>
 	validateMask="${field.validateMask}"
@@ -207,7 +207,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 <#if field.required>
 	required="${field.required}"
 </#if>
-<#if field.validateType?has_content>
+<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("CRUD"))>
 	validateType="${field.validateType}"
 	<#if field.validateMas?has_content>
 	validateMask="${field.validateMask}"
@@ -305,7 +305,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 				<#if field.required>
 					required="${field.required}"
 				</#if>
-				<#if field.validateType?has_content>
+				<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("DETAIL"))>
 					validateType="${field.validateType}"
 					<#if field.validateMas?has_content>
 					validateMask="${field.validateMask}"
@@ -416,7 +416,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 				<#if field.required>
 					required="${field.required}"
 				</#if>
-				<#if field.validateType?has_content>
+				<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("TABULAR"))>
 					validateType="${field.validateType}"
 					<#if field.validateMas?has_content>
 					validateMask="${field.validateMask}"

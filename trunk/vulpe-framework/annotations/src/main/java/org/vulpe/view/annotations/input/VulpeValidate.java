@@ -35,6 +35,11 @@ public @interface VulpeValidate {
 	ValidateType type();
 
 	/**
+	 * Scope of validation on input
+	 */
+	ValidateScope[] scope() default { ValidateScope.ALL };
+
+	/**
 	 * Minimum value to input
 	 */
 	int min() default 0;
@@ -64,7 +69,7 @@ public @interface VulpeValidate {
 	 * Example: 99/99/9999
 	 */
 	String mask() default "";
-	
+
 	/**
 	 * Date pattern to input.<br>
 	 * Example: dd/MM/yyyy
@@ -76,6 +81,13 @@ public @interface VulpeValidate {
 	 */
 	enum ValidateType {
 		ARRAY, DATE, DOUBLE, EMAIL, FLOAT, INTEGER, LONG, NONE, STRING
+	}
+
+	/**
+	 * Scope for input validation
+	 */
+	enum ValidateScope {
+		ALL, CRUD, DETAIL, SELECT, TABULAR
 	}
 
 }

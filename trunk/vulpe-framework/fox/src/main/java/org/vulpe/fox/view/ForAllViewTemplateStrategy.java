@@ -42,6 +42,7 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeValidate;
+import org.vulpe.view.annotations.input.VulpeValidate.ValidateScope;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
@@ -278,6 +279,15 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeValidate.class);
 		if (validate != null) {
 			decoratedViewField.setValidateType(validate.type().name());
+			StringBuilder scope = new StringBuilder();
+			for (ValidateScope validadeScope : validate.scope()) {
+				if ("".equals(scope.toString())) {
+					scope.append(validadeScope.name());
+				} else {
+					scope.append(",").append(validadeScope.name());
+				}
+			}
+			decoratedViewField.setValidateScope(scope.toString());
 			switch (validate.type()) {
 			case STRING:
 				if (validate.minlength() > 0) {

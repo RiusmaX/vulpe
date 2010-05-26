@@ -59,38 +59,4 @@ vulpe.config.messageSlideUpTime = '${vulpeMessageSlideUpTime}';
 vulpe.config.popup.mobile = true;
 </c:if>
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
-
-$("#alertDialog").dialog({
-	autoOpen: false,
-	bgiframe: true,
-	modal: true,
-	buttons: {
-		Ok: function() {
-			$(this).dialog('close');
-		}
-	}
-});
-
-$("#confirmationDialog").dialog({
-	autoOpen: false,
-	bgiframe: true,
-	resizable: false,
-	height:140,
-	modal: true,
-	overlay: {
-		backgroundColor: '#000',
-		opacity: 0.5
-	},
-	buttons: {
-		Ok: function() {
-			$(this).dialog('close');
-			if (vulpe.command) {
-				vulpe.command();
-			}
-		},
-		Cancel: function() {
-			$(this).dialog('close');
-		}
-	}
-});
 </script>
