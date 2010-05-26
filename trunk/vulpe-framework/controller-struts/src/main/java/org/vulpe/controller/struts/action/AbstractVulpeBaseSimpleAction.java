@@ -934,7 +934,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.Class)
 	 */
 	public <T> T getBean(final Class<T> clazz) {
-		return getBean(clazz.getSimpleName());
+		return (T) getBean(clazz.getSimpleName());
 	}
 
 	/*

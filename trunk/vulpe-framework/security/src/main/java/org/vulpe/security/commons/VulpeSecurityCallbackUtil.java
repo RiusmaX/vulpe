@@ -68,7 +68,7 @@ public class VulpeSecurityCallbackUtil {
 	 * @since 1.0
 	 */
 	public <T> T getBean(final Class<T> clazz) {
-		return getBean(clazz.getSimpleName());
+		return (T) getBean(clazz.getSimpleName());
 	}
 
 	/**
