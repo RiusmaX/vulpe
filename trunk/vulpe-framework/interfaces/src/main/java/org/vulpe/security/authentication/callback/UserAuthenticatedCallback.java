@@ -17,7 +17,7 @@ package org.vulpe.security.authentication.callback;
 
 public interface UserAuthenticatedCallback {
 
-	void load();
+	void execute();
 
 	Long getId();
 

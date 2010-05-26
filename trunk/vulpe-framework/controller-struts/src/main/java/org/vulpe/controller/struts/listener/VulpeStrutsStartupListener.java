@@ -24,11 +24,11 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.listeners.VulpeStartupListener;
-import org.vulpe.controller.struts.common.beans.converter.BigDecimalConverter;
-import org.vulpe.controller.struts.common.beans.converter.DateConverter;
-import org.vulpe.controller.struts.common.beans.converter.DecimalConverter;
-import org.vulpe.controller.struts.common.beans.converter.EnumConverter;
-import org.vulpe.controller.struts.common.beans.converter.SqlDateConverter;
+import org.vulpe.controller.struts.commons.beans.converter.BigDecimalConverter;
+import org.vulpe.controller.struts.commons.beans.converter.DateConverter;
+import org.vulpe.controller.struts.commons.beans.converter.DecimalConverter;
+import org.vulpe.controller.struts.commons.beans.converter.EnumConverter;
+import org.vulpe.controller.struts.commons.beans.converter.SqlDateConverter;
 
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 

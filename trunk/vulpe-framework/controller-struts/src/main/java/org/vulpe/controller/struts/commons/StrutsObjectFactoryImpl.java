@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.struts.common;
+package org.vulpe.controller.struts.commons;
 
 import org.apache.struts2.impl.StrutsObjectFactory;
 import org.vulpe.commons.VulpeConstants.Expression;

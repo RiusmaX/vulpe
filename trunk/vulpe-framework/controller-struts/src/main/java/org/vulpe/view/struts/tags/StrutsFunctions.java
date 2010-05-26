@@ -30,7 +30,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.beans.ValueBean;
-import org.vulpe.controller.common.VulpeBaseDetailConfig;
+import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.view.struts.form.beans.SessionPaging;
 import org.vulpe.view.tags.Functions;

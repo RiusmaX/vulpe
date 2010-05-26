@@ -46,7 +46,7 @@ import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.common.VulpeBaseSimpleActionConfig;
+import org.vulpe.controller.commons.VulpeActionConfig;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -86,53 +86,48 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 */
 	private boolean showTitle = true;
 
-	/**
-	 * Method returns current date time of system.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return VulpeDate.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getSystemDate()
 	 */
 	public Date getSystemDate() {
 		return calendar.getTime();
 	}
 
-	/**
-	 * Method returns current year from date of system.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Year.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentYear()
 	 */
 	public int getCurrentYear() {
 		return calendar.get(Calendar.YEAR);
 	}
 
-	/**
-	 * Method returns current month from date of system.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Month.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentMonth()
 	 */
 	public int getCurrentMonth() {
 		return calendar.get(Calendar.MONTH);
 	}
 
-	/**
-	 * Method returns current day from date of system.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Day.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentDay()
 	 */
 	public int getCurrentDay() {
 		return calendar.get(Calendar.DAY_OF_MONTH);
 	}
 
-	/**
-	 * Return current action configuration.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return ActionConfig object for current action.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
 	 */
-	public VulpeBaseSimpleActionConfig getActionConfig() {
+	public VulpeActionConfig getActionConfig() {
 		return StrutsControllerUtil.getInstance().getActionConfig(this);
 	}
 
@@ -158,11 +153,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		}
 	}
 
-	/**
-	 * Method to prepare show.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#frontend()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -210,11 +204,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		LOG.debug("frontendAfter");
 	}
 
-	/**
-	 * Method to upload file.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#upload()
 	 */
 	@SkipValidation
 	public String upload() {
@@ -254,11 +247,10 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		LOG.debug("uploadBefore");
 	}
 
-	/**
-	 * Method to download file.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#download()
 	 */
 	@SkipValidation
 	public String download() {
@@ -346,20 +338,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		}
 	}
 
-	/**
-	 * Method to invoke services.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param eventName
-	 *            Name of event
-	 * @param serviceName
-	 *            Name of service
-	 * @param argsType
-	 *            Types of arguments
-	 * @param argsValues
-	 *            Arguments values
-	 * 
-	 * @since 1.0
-	 * @return Object
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#invokeServices(java.lang
+	 * .String, java.lang.String, java.lang.Class<?>[], java.lang.Object[])
 	 */
 	public Object invokeServices(final String eventName, final String serviceName,
 			final Class<?>[] argsType, final Object[] argsValues) {
@@ -372,24 +356,21 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		}
 	}
 
-	/**
-	 * Returns current action service configured.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Service Implementation.
-	 * @see Services
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getService()
 	 */
 	public Services getService() {
 		return getService(getActionConfig().getServiceClass());
 	}
 
-	/**
-	 * Method find specific service returns POJO or EJB implementation.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param serviceClass
-	 * @return Service Implementation.
-	 * @since 1.0
-	 * @see Services
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getService(java.lang.Class
+	 * )
 	 */
 	public <T extends Services> T getService(final Class<T> serviceClass) {
 		return VulpeServiceLocator.getInstance().getService(serviceClass);
@@ -543,10 +524,20 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		this.resultForward = resultForward;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAjax()
+	 */
 	public boolean isAjax() {
 		return ajax;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#setAjax(boolean)
+	 */
 	public void setAjax(final boolean ajax) {
 		this.ajax = ajax;
 	}
@@ -559,117 +550,215 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		this.resultName = resultName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOperation()
+	 */
 	public String getOperation() {
 		return operation;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setOperation(java.lang
+	 * .String)
+	 */
 	public void setOperation(final String operation) {
 		this.operation = operation;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isUploaded()
+	 */
 	public boolean isUploaded() {
 		return uploaded;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#setUploaded(boolean)
+	 */
 	public void setUploaded(final boolean uploaded) {
 		this.uploaded = uploaded;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOnHideMessages()
+	 */
 	public String getOnHideMessages() {
 		return onHideMessages;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setOnHideMessages(java
+	 * .lang.String)
+	 */
 	public void setOnHideMessages(final String onHideMessages) {
 		this.onHideMessages = onHideMessages;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isBack()
+	 */
 	public boolean isBack() {
 		return back;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#setBack(boolean)
+	 */
 	public void setBack(final boolean back) {
 		this.back = back;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isExecuted()
+	 */
 	public boolean isExecuted() {
 		return executed;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#setExecuted(boolean)
+	 */
 	public void setExecuted(final boolean executed) {
 		this.executed = executed;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getDownloadKey()
+	 */
 	public String getDownloadKey() {
 		return downloadKey;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadKey(java.lang
+	 * .String)
+	 */
 	public void setDownloadKey(final String downloadKey) {
 		this.downloadKey = downloadKey;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentType()
+	 */
 	public String getDownloadContentType() {
 		return downloadContentType;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentType
+	 * (java.lang.String)
+	 */
 	public void setDownloadContentType(final String downloadContentType) {
 		this.downloadContentType = downloadContentType;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentDisposition
+	 * ()
+	 */
 	public String getDownloadContentDisposition() {
 		return downloadContentDisposition;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentDisposition
+	 * (java.lang.String)
+	 */
 	public void setDownloadContentDisposition(final String downloadContentDisposition) {
 		this.downloadContentDisposition = downloadContentDisposition;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getPopupKey()
 	 */
 	public String getPopupKey() {
 		return popupKey;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param popupKey
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setPopupKey(java.lang.
+	 * String)
 	 */
 	public void setPopupKey(final String popupKey) {
 		this.popupKey = popupKey;
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isPopup()
 	 */
 	public boolean isPopup() {
 		return StringUtils.isNotEmpty(getPopupKey());
 	}
 
-	/**
-	 * Returns map of cached class
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return Map with cached classes
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedClass()
 	 */
 	public Map<String, Object> getCachedClass() {
 		return (Map<String, Object>) VulpeCacheHelper.getInstance()
 				.get(VulpeConstants.CACHED_CLASS);
 	}
 
-	/**
-	 * Returns map of cached enumeration
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return Map with cached enumerations
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnum()
 	 */
 	public Map<String, Object> getCachedEnum() {
 		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
 	}
 
-	/**
-	 * Returns map of cached enumeration in array to checkbox list
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return Map with cached enumerations array
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnumArray()
 	 */
 	public Map<String, String> getCachedEnumArray() {
 		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
@@ -677,7 +766,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 * Returns form parameters
+	 * Retrieves form parameters
 	 * 
 	 * @return Map with form parameters
 	 */
@@ -693,7 +782,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 * Returns current HTTP Session.
+	 * Retrieves current HTTP Session.
 	 * 
 	 * @return Http Session
 	 */
@@ -702,7 +791,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 * Returns current HTTP Request.
+	 * Retrieves current HTTP Request.
 	 * 
 	 * @return Http Servlet Request
 	 */
@@ -711,7 +800,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	}
 
 	/**
-	 * Returns current HTTP Response.
+	 * Retrieves current HTTP Response.
 	 * 
 	 * @return Http Servlet Reponse
 	 */
@@ -719,21 +808,35 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return ServletActionContext.getResponse();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setUrlBack(java.lang.String
+	 * )
+	 */
 	public void setUrlBack(final String urlBack) {
 		getSession().setAttribute(VulpeConstants.View.URL_BACK, urlBack);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#setLayerUrlBack(java.lang
+	 * .String)
+	 */
 	public void setLayerUrlBack(final String layerUrlBack) {
 		getSession().setAttribute(VulpeConstants.View.LAYER_URL_BACK, layerUrlBack);
 	}
 
 	/**
-	 * Returns controller type
+	 * Retrieves controller type
 	 * 
 	 * @return Controller Type
 	 */
 	protected ControllerType getControllerType() {
-		return getActionConfig().getType();
+		return ControllerType.valueOf(getActionConfig().getType());
 	}
 
 	/**
@@ -743,30 +846,38 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		setResultForward(Layout.PROTECTED_JSP_COMMON.concat(Layout.UC_JSP));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isShowTitle()
+	 */
 	public boolean isShowTitle() {
 		return showTitle;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#setShowTitle(boolean)
+	 */
 	public void setShowTitle(boolean showTitle) {
 		this.showTitle = showTitle;
 	}
 
-	/**
-	 * Verified if user is authenticated.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return true if authenticated
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAuthenticated()
 	 */
 	public boolean isAuthenticated() {
-		UserAuthenticationCallback userAuthentication = (UserAuthenticationCallback) getSession().getAttribute(
-				Security.VULPE_USER_AUTHENTICATION);
-		if (userAuthentication == null) {
-			userAuthentication = AbstractVulpeBeanFactory.getInstance().getBean(
-					UserAuthenticationCallback.class.getSimpleName());
-			if (userAuthentication != null) {
-				final boolean authenticated = userAuthentication.isAuthenticated();
+		UserAuthenticationCallback userAuthenticationCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATION);
+		if (userAuthenticationCallback == null) {
+			userAuthenticationCallback = getBean(UserAuthenticationCallback.class);
+			if (userAuthenticationCallback != null) {
+				final boolean authenticated = userAuthenticationCallback.isAuthenticated();
 				if (authenticated) {
 					getSession().setAttribute(Security.VULPE_USER_AUTHENTICATION,
-							userAuthentication);
+							userAuthenticationCallback);
 				} else {
 					getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATION);
 				}
@@ -777,33 +888,75 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return true;
 	}
 
-	/**
-	 * Returns current authenticated user.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getUserAuthenticatedCallback
+	 * ()
 	 */
-	public UserAuthenticatedCallback getUserAuthenticated() {
-		UserAuthenticatedCallback userAuthenticated = (UserAuthenticatedCallback) getSession().getAttribute(
-				Security.VULPE_USER_AUTHENTICATED);
-		if (userAuthenticated == null) {
-			userAuthenticated = AbstractVulpeBeanFactory.getInstance().getBean(
-					UserAuthenticatedCallback.class.getSimpleName());
-			userAuthenticated.load();
-			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticated);
+	public UserAuthenticatedCallback getUserAuthenticatedCallback() {
+		UserAuthenticatedCallback userAuthenticatedCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATED);
+		if (userAuthenticatedCallback == null) {
+			userAuthenticatedCallback = getBean(UserAuthenticatedCallback.class);
+			userAuthenticatedCallback.execute();
+			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticatedCallback);
 		}
-		return userAuthenticated;
+		return userAuthenticatedCallback;
 	}
 
-	/**
-	 * Returns user name.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return User Name
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#getUserName()
 	 */
 	public String getUserName() {
-		if (getUserAuthenticated() != null) {
-			return getUserAuthenticated().getName();
+		if (getUserAuthenticatedCallback() != null) {
+			return getUserAuthenticatedCallback().getName();
 		}
 		return "";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.String)
+	 */
+	public <T> T getBean(final String beanName) {
+		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.Class)
+	 */
+	public <T> T getBean(final Class<T> clazz) {
+		return getBean(clazz.getSimpleName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getSessionAttribute(java
+	 * .lang.String)
+	 */
+	public <T> T getSessionAttribute(final String attributeName) {
+		return (T) getSession().getAttribute(attributeName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getRequestAttribute(java
+	 * .lang.String)
+	 */
+	public <T> T getRequestAttribute(final String attributeName) {
+		return (T) getRequest().getAttribute(attributeName);
 	}
 
 }

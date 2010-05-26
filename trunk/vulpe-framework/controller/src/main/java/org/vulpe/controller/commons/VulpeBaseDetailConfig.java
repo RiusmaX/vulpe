@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.common;
+package org.vulpe.controller.commons;
 
 import java.io.Serializable;
 import java.util.ArrayList;

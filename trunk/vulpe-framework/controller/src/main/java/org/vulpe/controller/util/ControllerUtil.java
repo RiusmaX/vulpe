@@ -29,10 +29,10 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.VulpeBaseSimpleController;
-import org.vulpe.controller.common.DuplicatedBean;
-import org.vulpe.controller.common.VulpeBaseActionConfig;
-import org.vulpe.controller.common.VulpeBaseDetailConfig;
-import org.vulpe.controller.common.VulpeBaseSimpleActionConfig;
+import org.vulpe.controller.commons.DuplicatedBean;
+import org.vulpe.controller.commons.VulpeBaseActionConfig;
+import org.vulpe.controller.commons.VulpeBaseDetailConfig;
+import org.vulpe.controller.commons.VulpeBaseSimpleActionConfig;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**

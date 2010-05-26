@@ -11,7 +11,7 @@
 	<include file="struts-application.xml" />
 
 	<bean type="com.opensymphony.xwork2.ObjectFactory"
-		class="org.vulpe.controller.struts.common.StrutsObjectFactoryImpl" />
+		class="org.vulpe.controller.struts.commons.StrutsObjectFactoryImpl" />
 
 	<package name="default" extends="struts-default">
 		<result-types>

@@ -17,6 +17,6 @@ package org.vulpe.security.authentication.callback;
 
 public interface AfterUserAuthenticationCallback {
 
-	void load();
+	void execute();
 
 }

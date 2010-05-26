@@ -33,7 +33,7 @@ public class UserAuthenticationCallbackPOJOImpl extends VulpeSecurityCallbackUti
 		if (autenticated) {
 			AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
 			if (afterUserAuthentication != null) {
-				afterUserAuthentication.load();
+				afterUserAuthentication.execute();
 			}
 		}
 		return autenticated;

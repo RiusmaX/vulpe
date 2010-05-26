@@ -36,8 +36,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
-import org.vulpe.controller.common.MultipleResourceBundle;
-import org.vulpe.controller.common.VulpeBaseDetailConfig;
+import org.vulpe.controller.commons.MultipleResourceBundle;
+import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.common;
+package org.vulpe.controller.commons;
 
 import java.io.Serializable;
 import java.util.StringTokenizer;
@@ -29,11 +29,20 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeActionConfig;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.services.Services;
 
+/**
+ * Simple Vulpe Action Config implementation.
+ * 
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @version 1.0
+ * @since 1.0
+ */
 @SuppressWarnings("serial")
-public class VulpeBaseSimpleActionConfig implements Serializable {
+public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializable {
+
 	private boolean simple = true;
 	private Controller controller;
 	private String actionBaseName;
@@ -129,18 +138,38 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 		}
 	}
 
-	public ControllerType getType() {
-		return this.controller.controllerType();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getType()
+	 */
+	public String getType() {
+		return this.controller.controllerType().name();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getServiceClass()
+	 */
 	public Class<? extends Services> getServiceClass() {
 		return this.controller.serviceClass();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getPageSize()
+	 */
 	public int getPageSize() {
 		return this.controller.pageSize();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getOwnerAction()
+	 */
 	public String getOwnerAction() {
 		if (StringUtils.isNotEmpty(this.controller.ownerAction())) {
 			return this.controller.ownerAction();
@@ -155,29 +184,63 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveOwnerAction()
+	 */
 	public String getPrimitiveOwnerAction() {
 		return StringUtils.replace(getOwnerAction(), ".", "/");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getMethod()
+	 */
 	public String getMethod() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		return controllerUtil.getCurrentMethod();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionBaseName()
+	 */
 	public String getActionBaseName() {
 		return this.actionBaseName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionName()
+	 */
 	public String getActionName() {
 		return this.actionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveActionName()
+	 */
 	public String getPrimitiveActionName() {
 		this.primitiveActionName = StringUtils.replace(getActionName(), ".", "/");
 		return this.primitiveActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveReportActionName
+	 * ()
+	 */
 	public String getPrimitiveReportActionName() {
 		this.primitiveReportActionName = StringUtils.replace(getActionName(), ".", "/");
 		this.primitiveReportActionName = StringUtils.replace(this.primitiveReportActionName,
@@ -185,124 +248,296 @@ public class VulpeBaseSimpleActionConfig implements Serializable {
 		return this.primitiveReportActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionKey()
+	 */
 	public String getActionKey() {
 		return getProjectName().concat("/").concat(getActionName());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getSimpleActionName()
+	 */
 	public String getSimpleActionName() {
 		return this.simpleActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getFormName()
+	 */
 	public String getFormName() {
 		final String formName = StringUtils.replace(getActionName(), Logic.FRONTEND, "");
 		return StringUtils.replace(formName, ".", "");
 	}
 
+	/**
+	 * Retrieves Configuration of Details.
+	 * 
+	 * @return Array of DetailConfig
+	 */
 	public DetailConfig[] getDetailsConfig() {
 		return this.controller.detailsConfig();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#isDetailsInTabs()
+	 */
 	public boolean isDetailsInTabs() {
 		return this.controller.detailsInTabs();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportFormat()
+	 */
 	public String getReportFormat() {
 		return this.controller.report().reportFormat();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportDataSource()
+	 */
 	public String getReportDataSource() {
 		return this.controller.report().reportDataSource();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportName()
+	 */
 	public String getReportName() {
 		return this.controller.report().reportName();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#isReportDownload()
+	 */
 	public boolean isReportDownload() {
 		return this.controller.report().reportDownload();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportFile()
+	 */
 	public String getReportFile() {
 		return this.reportFile;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#getParentName(java.lang
+	 * .String)
+	 */
 	public String getParentName(final String detail) {
 		final int pos = StringUtils.lastIndexOf(detail, ".");
 		return pos == -1 ? detail : StringUtils.substring(detail, 0, pos);
 	}
 
+	/**
+	 * Retrieves Name of Project
+	 * 
+	 * @return Name of Project
+	 */
 	private String getProjectName() {
 		return VulpeConfigHelper.getProjectName();
 	}
 
+	/**
+	 * Retrieves Controller Annotation.
+	 * 
+	 * @return Controller Annotation
+	 */
 	public Controller getController() {
 		return controller;
 	}
 
+	/**
+	 * Puts Controller Annotation.
+	 * 
+	 * @param controller
+	 */
 	public void setController(final Controller controller) {
 		this.controller = controller;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setActionBaseName(java
+	 * .lang.String)
+	 */
 	public void setActionBaseName(final String actionBaseName) {
 		this.actionBaseName = actionBaseName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setActionName(java.lang
+	 * .String)
+	 */
 	public void setActionName(final String actionName) {
 		this.actionName = actionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setPrimitiveActionName
+	 * (java.lang.String)
+	 */
 	public void setPrimitiveActionName(final String primitiveActionName) {
 		this.primitiveActionName = primitiveActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setSimpleActionName(java
+	 * .lang.String)
+	 */
 	public void setSimpleActionName(final String simpleActionName) {
 		this.simpleActionName = simpleActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setReportFile(java.lang
+	 * .String)
+	 */
 	public void setReportFile(final String reportFile) {
 		this.reportFile = reportFile;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getTitleKey()
+	 */
 	public String getTitleKey() {
 		return titleKey;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setTitleKey(java.lang.
+	 * String)
+	 */
 	public void setTitleKey(final String titleKey) {
 		this.titleKey = titleKey;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#isSimple()
+	 */
 	public boolean isSimple() {
 		return simple;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#setSimple(boolean)
+	 */
 	public void setSimple(final boolean simple) {
 		this.simple = simple;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setViewItemsPath(java.
+	 * lang.String)
+	 */
 	public void setViewItemsPath(final String viewItemsPath) {
 		this.viewItemsPath = viewItemsPath;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getViewItemsPath()
+	 */
 	public String getViewItemsPath() {
 		return viewItemsPath;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setViewPath(java.lang.
+	 * String)
+	 */
 	public void setViewPath(final String viewPath) {
 		this.viewPath = viewPath;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getViewPath()
+	 */
 	public String getViewPath() {
 		return viewPath;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setPrimitiveReportActionName
+	 * (java.lang.String)
+	 */
 	public void setPrimitiveReportActionName(String primitiveReportActionName) {
 		this.primitiveReportActionName = primitiveReportActionName;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeActionConfig#setSubReports(java.lang
+	 * .String[])
+	 */
 	public void setSubReports(String[] subReports) {
 		this.subReports = subReports;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.commons.VulpeActionConfig#getSubReports()
+	 */
 	public String[] getSubReports() {
 		return subReports;
 	}

@@ -21,6 +21,13 @@ import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.model.services.Services;
 
+/**
+ * Vulpe Security Callback utility class.
+ * 
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @version 1.0
+ * @since 1.0
+ */
 @SuppressWarnings("unchecked")
 public class VulpeSecurityCallbackUtil {
 
@@ -37,28 +44,38 @@ public class VulpeSecurityCallbackUtil {
 	}
 
 	/**
+	 * Retrieves a Spring Bean by name.
 	 * 
 	 * @param <T>
+	 *            Class type to return
 	 * @param beanName
-	 * @return
+	 *            Name of Component/Service/Repository
+	 * @return Bean converted to Class type
+	 * @since 1.0
 	 */
-	public <T> T getBean(String beanName) {
+	public <T> T getBean(final String beanName) {
 		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
 	}
 
 	/**
+	 * Retrieves a Spring Bean by class.
 	 * 
 	 * @param <T>
+	 *            Class type to return
 	 * @param clazz
-	 * @return
+	 *            Component/Service/Repository class
+	 * @return Bean converted to Class type
+	 * @since 1.0
 	 */
-	public <T> T getBean(Class<T> clazz) {
-		return (T) AbstractVulpeBeanFactory.getInstance().getBean(clazz.getSimpleName());
+	public <T> T getBean(final Class<T> clazz) {
+		return getBean(clazz.getSimpleName());
 	}
 
 	/**
+	 * Retrieves Spring Security Authentication.
 	 * 
-	 * @return
+	 * @return Authentication Interface
+	 * @since 1.0
 	 */
 	public Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();

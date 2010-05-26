@@ -13,7 +13,7 @@
 	</context-param>
 	<context-param>
 		<param-name>project.bundle</param-name>
-		<param-value>org.vulpe.controller.common.MultipleResourceBundle</param-value>
+		<param-value>org.vulpe.controller.commons.MultipleResourceBundle</param-value>
 	</context-param>
 	<context-param>
 		<param-name>project.bundle.modules</param-name>

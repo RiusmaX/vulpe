@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.struts.common.beans.converter;
+package org.vulpe.controller.struts.commons.beans.converter;
 
-import java.util.Date;
+import java.sql.Date;
 
 import ognl.TypeConverter;
 
@@ -24,19 +24,22 @@ import org.vulpe.commons.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
+public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements
+		TypeConverter {
 
-	private static final Logger LOG = Logger.getLogger(DateConverter.class);
+	private static final Logger LOG = Logger.getLogger(SqlDateConverter.class);
 
 	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
 				if (!value.toString().equals("")) {
-					return VulpeDateUtil.convertStringToDate(value.toString());
+					final java.util.Date date = VulpeDateUtil.convertStringToDate(value
+							.toString());
+					return new Date(date.getTime());
 				}
 			} else if (value instanceof Date && String.class.equals(type)) {
-				return VulpeDateUtil.convertDateToString((Date) value);
+				return VulpeDateUtil.convertDateTimeToString((Date) value);
 			} else if (value instanceof Date) {
 				return (Date) value;
 			}

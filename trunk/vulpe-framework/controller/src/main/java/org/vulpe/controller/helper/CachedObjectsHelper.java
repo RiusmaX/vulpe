@@ -34,7 +34,7 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
-import org.vulpe.controller.common.MultipleResourceBundle;
+import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**

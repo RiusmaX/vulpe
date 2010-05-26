@@ -62,7 +62,7 @@ public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityCallbackUtil
 	}
 
 	@Override
-	public void load() {
+	public void execute() {
 		setUser(getUsername());
 	}
 
