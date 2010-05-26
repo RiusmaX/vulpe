@@ -18,14 +18,6 @@
 		<security:form-login authentication-failure-url="/authenticator.action?loginError=1"
 			default-target-url="/" login-processing-url="/j_spring_security_check"
 			login-page="/authenticator.action" />
-		<!--
-			<security:custom-filter ref="exceptionTranslationFilter"
-			before="EXCEPTION_TRANSLATION_FILTER" /> <security:custom-filter
-			ref="anonymousProcessingFilter" before="ANONYMOUS_FILTER" />
-			<security:custom-filter ref="logoutFilter" before="LOGOUT_FILTER" />
-			<security:custom-filter ref="filterInvocationInterceptor"
-			before="FILTER_SECURITY_INTERCEPTOR" />
-		-->
 	</security:http>
 
 	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
