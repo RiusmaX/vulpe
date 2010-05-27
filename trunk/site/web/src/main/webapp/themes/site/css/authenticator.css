@@ -1,6 +1,8 @@
 /************************************************************************
 * CSS - Vulpe Framework											*
-************************************************************************/ /* Classes */
+************************************************************************/
+	/* Classes */
+
 .actions {
 	width: 100%;
 	text-align: right;
@@ -19,16 +21,17 @@
 	width: auto;
 }
 */
+
 .alertError {
 	color: red;
 }
 
 .alertMessage {
-	
+
 }
 
-.orderAsc {
-	background: #eee url(../images/icons/order-asc.gif) right no-repeat;
+.asc {
+	background: #eee url(../images/order-asc.gif) right no-repeat;
 }
 
 .button {
@@ -50,8 +53,8 @@
 	float: left;
 }
 
-.orderDesc {
-	background: #eee url(../images/icons/order-desc.gif) right no-repeat;
+.desc {
+	background: #eee url(../images/order-desc.gif) right no-repeat;
 }
 
 .fieldError {
@@ -89,30 +92,6 @@
 	padding: 1px;
 }
 
-.imageErrorMessage {
-	border: 0;
-	cursor: pointer;
-	display: none;
-	left: -2px;
-	position: relative;
-	top: 3px;
-}
-
-.imageFieldLoading {
-	border: 0;
-	cursor: pointer;
-	display: none;
-	left: -2px;
-	position: relative;
-	top: 3px;
-}
-
-.imagePopupButton {
-	cursor: pointer;
-	position: relative;
-	top: 3px;
-}
-
 .info,.success,.warning,.error,.validation {
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
@@ -124,13 +103,13 @@
 .error {
 	color: #D8000C;
 	background-color: #FFBABA;
-	background-image: url('../images/icons/message-error.png');
+	background-image: url('../images/message-error.png');
 }
 
 .info {
 	color: #00529B;
 	background-color: #BDE5F8;
-	background-image: url('../images/icons/message-info.png');
+	background-image: url('../images/message-info.png');
 }
 
 .messages h1 {
@@ -149,7 +128,7 @@
 }
 
 .off {
-	filter: progid : DXImageTransform.Microsoft.Alpha ( opacity =   40 );
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity = 40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
@@ -205,7 +184,7 @@
 .success {
 	color: #4F8A10;
 	background-color: #DFF2BF;
-	background-image: url('../images/icons/message-success.png');
+	background-image: url('../images/message-success.png');
 }
 
 .submit {
@@ -220,23 +199,25 @@
 
 .tooltip {
 	display: none;
-	background: url(../images/tooltip/black-arrow.png);
-	font-size: 12px;
-	height: 70px;
-	width: 160px;
-	padding: 25px;
-	color: #fff;
-	border: 0px;
+	position: absolute;
+	padding: 5px;
+	font-weight: normal;
+	color: #000;
+	border: 1px solid #888;
+	background: #ffc;
+	width: 150px;
+	z-index: 10;
+	margin-left: -22px;
+	margin-top: 25px;
 }
 
-.tooltip.bottom {
-	background: url(../images/tooltip/black-arrow-bottom.png);
-	padding-top: 40px;
-	height: 55px;
-}
-
-.tooltip.bottom {
-	background: url(../images/tooltip/black-arrow-bottom.png);
+.tooltip em {
+	position: relative;
+	display: block;
+	background: url(../images/tooltip.gif) no-repeat;
+	width: 11px;
+	height: 11px;
+	margin-top: -11px
 }
 
 /*
@@ -245,6 +226,7 @@
 	position: fixed;
 }
 */
+
 .ucTitle {
 	background-color: #eee;
 	border-top: 1px #ddd solid;
@@ -261,45 +243,45 @@
 }
 
 .userAuthenticated {
-	background-color: #000;
-	display: block;
-	height: 19px;
-	letter-spacing: 1px;
-	margin: 0;
-	padding-left: 20px;
-	padding-top: 3px;
-	text-align: right;
-	width: auto;
-	font-size: 11px;
-	color: #fff;
+	background-color:#000;
+	display:block;
+	height:19px;
+	letter-spacing:1px;
+	margin:0;
+	padding-left:20px;
+	padding-top:3px;
+	text-align:right;
+	width:auto;
+	font-size:11px;
+	color:#fff;
 }
 
-.userAuthenticated  a {
+.userAuthenticated  a{
 	border-left: 1px solid #fff;
 	color: #fff;
 	padding: 2px;
 	text-decoration: none;
 }
 
-.userAuthenticated  a:hover {
+.userAuthenticated  a:hover{
 	text-decoration: underline;
 	background-color: #999;
 }
 
-.userAuthenticated  a:visited {
+.userAuthenticated  a:visited{
 	color: #fff;
 }
 
 .validation {
 	color: #D63301;
 	background-color: #FFCCBA;
-	background-image: url('../images/icons/message-validation.png');
+	background-image: url('../images/message-validation.png');
 }
 
 .warning {
 	color: #9F6000;
 	background-color: #FEEFB3;
-	background-image: url('../images/icons/message-warning.png');
+	background-image: url('../images/message-warning.png');
 }
 
 /* DOM Objects */
@@ -318,7 +300,7 @@ a:hover {
 
 body {
 	color: #333;
-	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
 	font-size: 62.5%;
 }
 
@@ -426,7 +408,7 @@ thead th,.header {
 }
 
 #copyright {
-	
+
 }
 
 #copyright a {
@@ -447,7 +429,7 @@ thead th,.header {
 	background: url(../images/background-all.png) repeat-x;
 	font-size: 10px;
 	height: 30px;
-	width: 100%;
+	width: 98.4%;
 	max-width: 100%;
 	position: absolute;
 	bottom: 0;
@@ -474,7 +456,7 @@ thead th,.header {
 	color: #fff;
 	font-size: 18px;
 	height: 36px;
-	padding: 3px;
+    padding: 3px;
 	vertical-align: top;
 	width: auto;
 }
@@ -490,7 +472,7 @@ thead th,.header {
 }
 
 #loading {
-	background: url(../images/icons/loader.gif) center no-repeat;
+	background: url(../images/loader.gif) center no-repeat;
 	cursor: wait;
 }
 
@@ -560,6 +542,10 @@ thead th,.header {
 	margin: 0px;
 	padding-left: 20px;
 	padding-top: 3px;
+}
+
+#error #message {
+	padding: 10px;
 }
 
 #error h1 {

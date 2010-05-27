@@ -12,7 +12,7 @@
  *
  */ /* Overlay */
 .modalOverlay {
-	background-color: #fff!important;
+	background-color: #ddd!important;
 	cursor: wait;
 }
 
@@ -27,19 +27,20 @@
 /* Container Header */
 .modalContainerHeader {
 	width: auto;
-	height: 28px;
-	background-color: #999;
-	border: 1px solid #333;
+	height: 23px;
+	background-color: #DDD;
+	border: 1px solid #999;
+  	border-bottom: 1px solid #CCC;
   	cursor: move;
 }
 
 .modalContainerHeader a.modalCloseImg {
-	background: url(../../images/frontend/button-close-24x24.png) no-repeat;
+	background: url(../../images/frontend/icons/button-popup-close-24x24.png) no-repeat;
 	width: 24px;
-	height: 24px;
+	height: 20px;
 	display: inline;
 	position: absolute;
-	right: 3px;
+	right: 0px;
 	top: 3px;
 	cursor: pointer;
 }

@@ -1,5 +1,5 @@
 /************************************************************************
-* CSS - Active Thread Framework											*
+* CSS - Vulpe Framework											*
 ************************************************************************/
 	/* Classes */
 
@@ -17,11 +17,6 @@ td .titulo{
 
 .alertMessage {
 
-}
-
-.asc {
-	background: #eee url(../../images/frontend/order-asc.gif) right
-		no-repeat;
 }
 
 .button {
@@ -43,9 +38,12 @@ td .titulo{
 	float: left;
 }
 
-.desc {
-	background: #eee url(../../images/frontend/order-desc.gif) right
-		no-repeat;
+.orderAsc {
+	background: #eee url(../../images/frontend/icons/order-asc.gif) right no-repeat;
+}
+
+.orderDesc {
+	background: #eee url(../../images/frontend/icons/order-desc.gif) right no-repeat;
 }
 
 .fieldError {
@@ -108,13 +106,13 @@ td .titulo{
 .error {
 	color: #D8000C;
 	background-color: #FFBABA;
-	background-image: url('../../images/frontend/message-error.png');
+	background-image: url('../../images/frontend/icons/message-error.png');
 }
 
 .info {
 	color: #00529B;
 	background-color: #BDE5F8;
-	background-image: url('../../images/frontend/message-info.png');
+	background-image: url('../../images/frontend/icons/message-info.png');
 }
 
 .messages h1 {
@@ -195,7 +193,7 @@ td .titulo{
 .success {
 	color: #4F8A10;
 	background-color: #DFF2BF;
-	background-image: url('../../images/frontend/message-success.png');
+	background-image: url('../../images/frontend/icons/message-success.png');
 }
 
 .submit {
@@ -225,16 +223,26 @@ td .titulo{
 	margin-left: -22px;
 	margin-top: 25px;
 }
-
-.tooltip em {
-	position: relative;
-	display: block;
-	background: url(../../images/frontend/tooltip.gif) no-repeat;
-	width: 11px;
-	height: 11px;
-	margin-top: -11px
+.tooltip {
+	display: none;
+	background: url(../../images/tooltip/black-arrow.png);
+	font-size: 12px;
+	height: 70px;
+	width: 160px;
+	padding: 25px;
+	color: #fff;
+	border: 0px;
 }
 
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+	padding-top: 40px;
+	height: 55px;
+}
+
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+}
 /*
 .uc {
 	width: auto;
@@ -285,13 +293,13 @@ td .titulo{
 .validation {
 	color: #D63301;
 	background-color: #FFCCBA;
-	background-image: url('../../images/frontend/message-validation.png');
+	background-image: url('../../images/frontend/icons/message-validation.png');
 }
 
 .warning {
 	color: #9F6000;
 	background-color: #FEEFB3;
-	background-image: url('../../images/frontend/message-warning.png');
+	background-image: url('../../images/frontend/icons/message-warning.png');
 }
 
 /* DOM Objects */
@@ -427,7 +435,7 @@ html,body {
 }
 
 #loading {
-	background: url(../../images/frontend/loader.gif) center no-repeat;
+	background: url(../../images/frontend/ajax/loader.gif) center no-repeat;
 	cursor: wait;
 }
 
