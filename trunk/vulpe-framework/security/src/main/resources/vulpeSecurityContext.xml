@@ -21,9 +21,15 @@
 			<security:filter-chain pattern="/j_spring_security_check*"
 				filters="securityContextPersistenceFilter,usernamePasswordAuthenticationFilter" />
 			<security:filter-chain pattern="/**"
-				filters="securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+				filters="concurrentSessionFilter,securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
 		</security:filter-chain-map>
 	</bean>
+
+	<bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<property name="sessionRegistry" ref="sessionRegistry" />
+		<property name="expiredUrl" value="/authenticator.action" />
+	</bean>
+	<bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
 
 	<bean id="usernamePasswordAuthenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
@@ -65,11 +71,11 @@
 				</property>
 			</bean>
 		</property>
-		<property name="accessDeniedHandler">
-			<bean class="org.vulpe.security.web.access.VulpeAccessDeniedHandlerImpl">
-				<property name="errorPage" value="/authenticator.action?accessDenied=true" />
-			</bean>
-		</property>
+		<!--
+			<property name="accessDeniedHandler"> <bean
+			class="org.vulpe.security.web.access.VulpeAccessDeniedHandlerImpl"> <property name="errorPage"
+			value="/authenticator.action?accessDenied=true" /> </bean> </property>
+		-->
 	</bean>
 
 	<bean id="filterInvocationInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
@@ -89,7 +95,8 @@
 			</bean>
 		</property>
 		<property name="securityMetadataSource">
-			<bean id="dbdrivenFilterInvocationDefinitionSource" class="org.vulpe.security.web.access.intercept.DatabaseDrivenFilterInvocationDefinitionSource">
+			<bean id="dbdrivenFilterInvocationDefinitionSource"
+				class="org.vulpe.security.web.access.intercept.DatabaseDrivenFilterInvocationDefinitionSource">
 				<property name="authorizationService">
 					<bean id="authorizationService" class="org.vulpe.security.authorization.model.services.impl.AuthorizationServiceImpl">
 						<property name="authorizationDAO">
