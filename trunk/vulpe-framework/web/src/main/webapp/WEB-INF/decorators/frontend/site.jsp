@@ -1,6 +1,6 @@
 <%@taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@taglib prefix="page" uri="http://www.opensymphony.com/sitemesh/page" %>
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <fmt:setBundle basename="${vulpeI18nManager}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,8 +14,8 @@
 		<title><fmt:message key="vulpe.frontend.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icon.png" rel="shortcut icon"/>
 		<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>
-		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
-		<%@include file="/WEB-INF/protected-jsp/common/css.jsp" %>
+		<%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>
+		<%@include file="/WEB-INF/protected-jsp/commons/css.jsp" %>
 		<decorator:head/>
 	</head>
 	<body>
@@ -42,12 +42,12 @@
 			</div>
 			<div id="frontend">
 				<div id="header">
-					<%@include file="/WEB-INF/protected-jsp/common/frontend/header.jsp" %>
+					<%@include file="/WEB-INF/protected-jsp/commons/frontend/header.jsp" %>
 				</div>
 				<div id="messages" style="display: none;" class="messages"></div>
 				<div id="menu">
 					<ul id="nav">
-						<%@include file="/WEB-INF/protected-jsp/common/frontend/menu.jsp" %>
+						<%@include file="/WEB-INF/protected-jsp/commons/frontend/menu.jsp" %>
 					</ul>
 				</div>
 				<div id="body">
@@ -55,7 +55,7 @@
 				</div>
 			</div>
 			<div id="footer">
-				<%@include file="/WEB-INF/protected-jsp/common/frontend/footer.jsp" %>
+				<%@include file="/WEB-INF/protected-jsp/commons/frontend/footer.jsp" %>
 			</div>
 		</div>
 	</body>

@@ -128,42 +128,42 @@
 	<error-page>
 		<!-- Bad Request -->
 		<error-code>400</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/400.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/400.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Unauthorized -->
 		<error-code>401</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/401.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/401.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Forbidden -->
 		<error-code>403</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/403.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/403.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Not Found -->
 		<error-code>404</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/404.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/404.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Request Timeout -->
 		<error-code>408</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/408.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/408.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Internal Server Error -->
 		<error-code>500</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/500.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/500.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Service Unavailable -->
 		<error-code>503</error-code>
-		<location>/WEB-INF/protected-jsp/common/errors/503.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/errors/503.jsp</location>
 	</error-page>
 	<error-page>
 		<!-- Generic Error -->
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/WEB-INF/protected-jsp/common/error.jsp</location>
+		<location>/WEB-INF/protected-jsp/commons/error.jsp</location>
 	</error-page>
 
 	<resource-ref>

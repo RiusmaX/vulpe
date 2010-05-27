@@ -1,13 +1,13 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="cols" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
 <%@ attribute name="readonly" required="false" rtexprvalue="true" %>
 <%@ attribute name="rows" required="false" rtexprvalue="true" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 	
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
 		<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
@@ -22,5 +22,5 @@
 		</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

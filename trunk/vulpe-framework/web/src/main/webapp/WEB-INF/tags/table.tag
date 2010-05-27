@@ -19,7 +19,7 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sortPropertyInfo" required="false" rtexprvalue="true" %>
 <%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:set var="scope" scope="request" value="${scope}"/>
 
@@ -170,7 +170,7 @@
 					<!-- sub-detalhe: ${targetConfigPropertyName} - ${targetConfig} -->
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${i.index}].${subDetail.propertyName}" scope="request"/>
-					<jsp:include page="/WEB-INF/protected-jsp/common/detail.jsp">
+					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 						<jsp:param name="detail_viewPath" value="${subDetail.viewPath}"/>
 					</jsp:include>
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>

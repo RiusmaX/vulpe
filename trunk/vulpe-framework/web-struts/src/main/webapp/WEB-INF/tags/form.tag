@@ -5,7 +5,7 @@
 <%@ attribute name="enctype" required="false" rtexprvalue="true" %>
 <%@ attribute name="validate" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:if test="${empty theme}">
 	<c:set var="theme" value="simple"/>

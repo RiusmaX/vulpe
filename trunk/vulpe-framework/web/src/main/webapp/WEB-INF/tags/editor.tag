@@ -18,11 +18,11 @@
 <%@ attribute name="cssFrame" required="false" rtexprvalue="true" %>
 <%@ attribute name="showAsText" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 
 <c:if test="${show eq true}">
 
-	<%@include file="/WEB-INF/protected-jsp/common/tags/configAttributesTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/configAttributesTag.jsp" %>
 
 	<c:if test="${empty styleClass}">
 		<c:set var="styleClass" value="rte-zone"/>
@@ -46,5 +46,5 @@
 		</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

@@ -25,7 +25,7 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true"%>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 
 <c:set var="exibe" value="${true}" />
 <c:if test="${empty showButtonAsImage}">

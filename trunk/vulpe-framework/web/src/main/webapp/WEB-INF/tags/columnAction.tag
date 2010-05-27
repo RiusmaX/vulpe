@@ -20,7 +20,7 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:set var="exibe" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">

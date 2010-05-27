@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
 <%@ attribute name="enumeration" required="false" rtexprvalue="true" type="java.lang.Object" %>
@@ -6,10 +6,10 @@
 <%@ attribute name="listValue" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@ attribute name="listKey" required="false" rtexprvalue="true" type="java.lang.Object" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 
 	<c:if test="${not empty enumeration}">
 		<c:set var="enumerationEL" value="${'${'}cachedEnumArray['${enumeration}']${'}'}"/>
@@ -65,5 +65,5 @@
 		</c:otherwise>
 	</c:choose>
 	</span>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

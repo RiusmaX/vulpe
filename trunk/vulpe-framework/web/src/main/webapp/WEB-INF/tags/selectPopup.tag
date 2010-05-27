@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
@@ -30,7 +30,7 @@
 <%@ attribute name="autoComplete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="autoCompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 <c:if test="${empty readonly}">
 	<c:set var="readonly" value="${true}"/>
 </c:if>

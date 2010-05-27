@@ -1,14 +1,14 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="indexed" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
 <%@ attribute name="items" required="false" rtexprvalue="true" %>
 <%@ attribute name="itemLabel" required="false" rtexprvalue="true" %>
 <%@ attribute name="itemKey" required="false" rtexprvalue="true" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 	
 	<c:if test="${empty itemLabel}">
 		<c:set var="itemLabel" value="value"/>
@@ -52,5 +52,5 @@
 		</c:choose>
 	</c:forEach>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

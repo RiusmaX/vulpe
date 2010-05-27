@@ -8,7 +8,7 @@
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:if test="${empty saveInSession}">
 	<c:set var="saveInSession" value="${false}"/>

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
 <%@ attribute name="mask" required="false" rtexprvalue="true" %>
 <%@ attribute name="upperCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
@@ -7,7 +7,7 @@
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:set var="show" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
@@ -18,7 +18,7 @@
 </c:if>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 	
 	<c:if test="${not empty property && empty name}">
 		<c:set var="name" value="${targetName}.${property}"/>
@@ -83,7 +83,7 @@
 		</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 	<script type="text/javascript">
 		jQuery(function($){
 			<c:if test="${upperCase && empty mask}">

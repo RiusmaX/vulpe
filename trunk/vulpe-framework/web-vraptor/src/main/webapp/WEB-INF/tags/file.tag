@@ -1,10 +1,10 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="accept" required="false" rtexprvalue="true" %>
 <%@ attribute name="indexed" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <c:set var="show" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
@@ -15,7 +15,7 @@
 </c:if>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 	
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
 		<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
@@ -30,5 +30,5 @@
 	<c:if test="${not empty util:getProperty(pageContext, name)}">
 		<img border="0" src="${util:linkProperty(pageContext, name, 'image/jpeg', '')}"/>
 	</c:if>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

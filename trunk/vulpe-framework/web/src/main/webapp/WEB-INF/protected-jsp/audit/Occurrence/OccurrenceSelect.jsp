@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:text labelKey="label.vulpe.audit.Occurrence.select.id" property="id" mask="I"/>
 <v:select labelKey="label.vulpe.audit.Occurrence.select.occurrenceType" property="occurrenceType" />

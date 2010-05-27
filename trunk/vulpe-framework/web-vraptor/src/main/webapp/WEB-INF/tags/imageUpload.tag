@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/tags/tagAttributes.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="accept" required="false" rtexprvalue="true" %>
 <%@ attribute name="indexed" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
@@ -9,10 +9,10 @@
 <%@ attribute name="imageThumbHeight" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="showGallery" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 
-<%@include file="/WEB-INF/protected-jsp/common/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/common/tags/beginTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 
 	<c:if test="${empty accept}">
 		<c:set var="accept" value="*.jpg;*.gif;*.png"/>
@@ -57,5 +57,5 @@
 	    });
 	    </script>
 	</c:if>
-	<%@include file="/WEB-INF/protected-jsp/common/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 </c:if>

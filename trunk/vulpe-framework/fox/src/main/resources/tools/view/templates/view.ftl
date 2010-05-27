@@ -11,7 +11,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.header=List of 
 label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=${field.name?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <#list view.arguments as field>
 <v:${field.type}
@@ -103,7 +103,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 </#list>
 </@file>
 <@file name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
@@ -146,7 +146,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud=CRUD of ${view.na
 label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${field.name?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}CRUD.jsp">
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:hidden property="id"/>
 <#list view.fields as field>
@@ -247,7 +247,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}=${
 label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${detailField.name}=${detailField.name?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:table>
 	<jsp:attribute name="tableBody">
@@ -351,7 +351,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header=${view.
 label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=${field.name?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
-<%@include file="/WEB-INF/protected-jsp/common/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:table>
 	<jsp:attribute name="tableHeader">

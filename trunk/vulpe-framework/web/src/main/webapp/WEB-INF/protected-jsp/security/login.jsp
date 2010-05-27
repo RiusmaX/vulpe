@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <form
 	action="${pageContext.request.contextPath}/j_spring_security_check"
 	method="POST" id="loginForm">
