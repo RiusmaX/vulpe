@@ -1061,6 +1061,14 @@ var vulpe = {
 
 		showMessages: function() {
 			jQuery(vulpe.config.layers.modalMessages).modal({
+				title: function() { 
+					var popupTitle = jQuery("div[class*='title']", "#modalMessages");
+					if (popupTitle) {
+						popupTitle.hide();
+						return popupTitle.html();
+					}
+					return "";
+				},
 				closeTitle: vulpe.config.popup.closeTitle,
 				overlayId: 'overlayMessages',
 				containerId: 'containerMessages',
@@ -1081,12 +1089,15 @@ var vulpe = {
 		},
 
 		showPopup: function(elementId, popupWidth) {
-			var ucTitle = jQuery("div[class*='ucTitle']", "#" + elementId);
-			if (ucTitle) {
-				ucTitle.hide();
-			}
 			var popup = vulpe.util.get(elementId).modal({
-				title: (ucTitle ? ucTitle.html() : ""),
+				title: function() {
+					var popupTitle = jQuery("div[class*='ucTitle']", "#" + elementId);
+					if (popupTitle) {
+						popupTitle.hide();
+						return popupTitle.html();
+					}
+					return "";
+				},
 				closeTitle: vulpe.config.popup.closeTitle,
 				overlayId: 'overlay' + elementId,
 				containerId: 'container' + elementId,

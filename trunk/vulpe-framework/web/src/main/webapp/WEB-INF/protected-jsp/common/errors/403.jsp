@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><fmt:message key="vulpe.error.401.title" /></title>
+<title><fmt:message key="vulpe.error.403.title" /></title>
 <style media="all" type="text/css">
 @import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
 @import	"${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/${vulpeTheme}.css";
@@ -16,9 +16,10 @@
 </head>
 <body>
 <!--IS_EXCEPTION-->
+<div class="title" style="display: none"><fmt:message key="vulpe.error.403.title" /></div>
 <div id="error">
-<h1><fmt:message key="vulpe.error.401.subtitle" /></h1>
-<h2><fmt:message key="vulpe.error.401" /></h2>
+<h1><fmt:message key="vulpe.error.403.subtitle" /></h1>
+<h2><fmt:message key="vulpe.error.403" /></h2>
 <div id="home"><a href="${pageContext.request.contextPath}"><fmt:message
 	key="vulpe.label.home" /></a></div>
 </div>

@@ -3,7 +3,7 @@
 		<pattern>*/ajax*</pattern>
 		<pattern>/login.jsp*</pattern>
 		<pattern>/accessDenied.jsp*</pattern>
-		<pattern>/exclude/*</pattern>
+		<pattern>*/errors/*</pattern>
 	</excludes>
 	<decorator name="default" page="site.jsp">
 		<pattern>/*</pattern>
