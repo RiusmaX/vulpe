@@ -1,6 +1,5 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-anonymousUser=anonymous
-anonymousRole=ROLE_ANONYMOUS
-key=${rootArtifactId}
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<h2>Template</h2>
