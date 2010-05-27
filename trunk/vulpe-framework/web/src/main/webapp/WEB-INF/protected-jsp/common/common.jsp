@@ -4,7 +4,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.util.focusFirst();
-<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && actionConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && actionConfig.type != 'FRONTEND')}">
+<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && actionConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && actionConfig.type == 'BACKEND')}">
 	$("#nav").droppy();
 </c:if>
 <c:if test="${pageContext.request.locale ne 'en_US'}">

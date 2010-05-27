@@ -33,6 +33,9 @@
 			<c:when test="${actionConfig.type == 'FRONTEND'}">
 				<%@include file="/WEB-INF/protected-jsp/common/frontend.jsp" %>
 			</c:when>
+			<c:when test="${actionConfig.type == 'FRONTEND'}">
+				<%@include file="/WEB-INF/protected-jsp/common/backend.jsp" %>
+			</c:when>
 		</c:choose>
 	</div>
 </v:form>

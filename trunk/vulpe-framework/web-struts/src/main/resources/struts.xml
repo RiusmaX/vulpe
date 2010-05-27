@@ -201,7 +201,7 @@
 		</global-results>
 
 		<!-- Back-End -->
-		<action name="*/backend"
+		<action name="backend/*"
 			class="{project.package}.backend.controller.action.{1}Action"
 			method="backend">
 			<result name="success">${resultForward}</result>
@@ -213,7 +213,7 @@
 			</result>
 		</action>
 
-		<action name="*/backend/ajax"
+		<action name="backend/*/ajax"
 			class="{project.package}.backend.controller.action.{1}Action"
 			method="backend">
 			<result name="success">${resultForward}</result>
@@ -226,7 +226,7 @@
 		</action>
 		
 		<!-- Front-End -->
-		<action name="*/frontend"
+		<action name="frontend/*"
 			class="{project.package}.frontend.controller.action.{1}Action"
 			method="frontend">
 			<result name="success">${resultForward}</result>
@@ -238,7 +238,7 @@
 			</result>
 		</action>
 
-		<action name="*/frontend/ajax"
+		<action name="frontend/*/ajax"
 			class="{project.package}.frontend.controller.action.{1}Action"
 			method="frontend">
 			<result name="success">${resultForward}</result>

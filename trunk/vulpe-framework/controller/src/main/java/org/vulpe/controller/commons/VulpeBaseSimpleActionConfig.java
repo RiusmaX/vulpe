@@ -19,17 +19,16 @@ import java.io.Serializable;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.VulpeConstants.View.Report;
+import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.commons.VulpeActionConfig;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.services.Services;
 
@@ -67,9 +66,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		this.actionName = controllerUtil.getCurrentActionName();
 
-		this.actionBaseName = StringUtils.replace(this.actionName, Logic.BACKEND, "");
-		this.actionBaseName = StringUtils.replace(this.actionName, Logic.FRONTEND, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.CRUD, "");
+		this.actionBaseName = StringUtils.replace(this.actionName, Logic.CRUD, "");
 		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.SELECTION, "");
 		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.TABULAR, "");
 		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.REPORT, "");
@@ -87,8 +84,8 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
-			final String name = parts.nextToken();
 			final String module = parts.nextToken();
+			final String name = parts.nextToken();
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name).concat(
 					Layout.JSP);
 			if (getControllerType().equals(ControllerType.SELECT)) {
@@ -99,7 +96,6 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		} else {
 			final String module = parts.nextToken();
 			final String name = parts.nextToken();
-			// final String type = parts.nextToken();
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
 			if (getControllerType().equals(ControllerType.CRUD)) {
 				this.viewPath += Layout.SUFFIX_JSP_CRUD;

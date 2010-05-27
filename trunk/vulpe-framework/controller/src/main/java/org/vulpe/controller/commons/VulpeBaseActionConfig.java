@@ -69,8 +69,8 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
-			final String name = parts.nextToken();
 			final String module = parts.nextToken();
+			final String name = parts.nextToken();
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name).concat(Layout.JSP)));
 			if (getControllerType().equals(ControllerType.SELECT)) {

@@ -239,8 +239,8 @@ public interface VulpeConstants {
 		}
 
 		interface Logic {
-			String BACKEND = ".backend";
-			String FRONTEND = ".frontend";
+			String BACKEND = "backend.";
+			String FRONTEND = "frontend.";
 			String REPORT = ".report";
 			String CRUD = ".crud";
 			String SELECTION = ".select";
