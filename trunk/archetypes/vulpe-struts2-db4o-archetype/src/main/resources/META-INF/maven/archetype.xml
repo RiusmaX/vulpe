@@ -8,14 +8,14 @@
     <resource>config\src\main\java\org\vulpe\config\package-info.java</resource>
     <resource>config\src\main\resources\.deleteme</resource>
     <resource>core\pom.xml</resource>
+    <resource>core\src\main\java\frontend\controller\action\IndexAction.java</resource>
     <resource>domains\pom-controller.xml</resource>
     <resource>domains\pom-manager.xml</resource>
     <resource>domains\pom-view.xml</resource>
     <resource>domains\pom.xml</resource>
     <resource>domains\src\main\java\org\vulpe\config\domains\package-info.java</resource>
-    <resource>domains\src\main\java\template\vulpe_struts2_db4o\core\model\entity\.deleteme</resource>
+    <resource>domains\src\main\java\core\model\entity\.deleteme</resource>
     <resource>web\pom.xml</resource>
-    <resource>web\src\main\java\template\vulpe_struts2_db4o\frontend\controller\action\IndexAction.java</resource>
     <resource>web\src\main\resources\applicationContext.xml</resource>
     <resource>web\src\main\resources\ApplicationResources.properties</resource>
     <resource>web\src\main\resources\ApplicationResources_en_US.properties</resource>
@@ -25,135 +25,6 @@
     <resource>web\src\main\resources\struts-application.xml</resource>
     <resource>web\src\main\webapp\index.jsp</resource>
     <resource>web\src\main\webapp\js\application.js</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.accordion.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.droppy.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.lightbox.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.rte.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.simplemodal.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.simplemodal_ie.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\jquery.ui.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\frontend\template.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.accordion.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.droppy.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.lightbox.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.rte.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.simplemodal.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.simplemodal_ie.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\jquery.ui.css</resource>
-    <resource>web\src\main\webapp\themes\template\css\template.css</resource>
-    <resource>web\src\main\webapp\themes\template\images\accordion-collapsed.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\accordion-expanded.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\background-all.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\background-button.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-close.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-delete-all.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-delete.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-edit.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-go-first.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-go-last.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-go-next.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\button-go-previous.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\accordion-collapsed.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\accordion-expanded.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\back.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\background-all.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\background-button.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\br.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-close-24x24.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-close.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-delete-all.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-delete.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-edit.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-go-first.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-go-last.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-go-next.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\button-go-previous.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\icon.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\loader.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-bg-ON.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-bg-OVER.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-bg.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-left-ON.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-left.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-right-ON.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu-right.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\menu.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\message-error.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\message-info.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\message-success.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\message-validation.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\message-warning.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\order-asc.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\order-desc.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\quick-smart.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-bold.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-change-view.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-image.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-insert-ordered-list.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-insert-unordered-list.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-italic.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-justify-center.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-justify-left.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-justify-right.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-link.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-switch.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\rte-underline.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\search.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\stop.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\tooltip.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\us.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\vulpe-bg.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\frontend\vulpe.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icon.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-add-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-add-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-back-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-back-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-clear-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-clear-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-delete-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-delete-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-refresh-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-refresh-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-report-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-report-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-save-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-save-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-search-16x16.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\icons\button-search-32x32.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\lightbox-blank.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\lightbox-btn-close.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\lightbox-btn-next.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\lightbox-btn-prev.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\lightbox-ico-loading.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\loader-field.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\loader.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\message-error.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\message-info.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\message-success.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\message-validation.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\message-warning.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\order-asc.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\order-desc.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-bold.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-change-view.gif</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-image.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-insert-ordered-list.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-insert-unordered-list.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-italic.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-justify-center.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-justify-left.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-justify-right.jpg</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-link.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-switch.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\rte-underline.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\search.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\shadow-bottom.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\shadow-top.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\stop.png</resource>
-    <resource>web\src\main\webapp\themes\template\images\tooltip.gif</resource>
-    <resource>web\src\main\webapp\themes\template\js\frontend\template.js</resource>
-    <resource>web\src\main\webapp\themes\template\js\template.js</resource>
     <resource>web\src\main\webapp\WEB-INF\protected-jsp\common\frontend\header.jsp</resource>
     <resource>web\src\main\webapp\WEB-INF\protected-jsp\common\frontend\menu.jsp</resource>
     <resource>web\src\main\webapp\WEB-INF\protected-jsp\common\menu.jsp</resource>
