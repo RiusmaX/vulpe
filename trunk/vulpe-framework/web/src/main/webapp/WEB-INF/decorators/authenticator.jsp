@@ -13,7 +13,7 @@
 		</c:if>
 		<title><fmt:message key="vulpe.security.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icon.png" rel="shortcut icon"/>
-		<c:set var="vulpeCurrentLayout" value="AUTHENTICATOR" scope="request"/>
+		<c:set var="vulpeCurrentLayout" value="AUTHENTICATOR" scope="session"/>
 		<%@include file="/WEB-INF/protected-jsp/common/javascript.jsp" %>
 		<%@include file="/WEB-INF/protected-jsp/common/css.jsp" %>
 		<decorator:head/>

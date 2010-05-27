@@ -97,6 +97,6 @@ public @interface Controller {
 	 * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
 	 */
 	public enum ControllerType {
-		CRUD, TABULAR, SELECT, REPORT, FRONTEND, OTHER, NONE
+		CRUD, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, NONE
 	}
 }

@@ -146,7 +146,15 @@ public interface VulpeBaseSimpleController {
 	String getUserName();
 
 	/**
-	 * Method to prepare show.
+	 * Method to prepare back-end show.
+	 * 
+	 * @since 1.0
+	 * @return Navigation
+	 */
+	String backend();
+
+	/**
+	 * Method to prepare front-end show.
 	 * 
 	 * @since 1.0
 	 * @return Navigation

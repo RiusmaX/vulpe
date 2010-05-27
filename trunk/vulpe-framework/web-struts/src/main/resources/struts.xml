@@ -200,6 +200,31 @@
 			<result name="errors">layout.vulpe.errors</result>
 		</global-results>
 
+		<!-- Back-End -->
+		<action name="*/backend"
+			class="{project.package}.backend.controller.action.{1}Action"
+			method="backend">
+			<result name="success">${resultForward}</result>
+			<result name="backend" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="*/backend/ajax"
+			class="{project.package}.backend.controller.action.{1}Action"
+			method="backend">
+			<result name="success">${resultForward}</result>
+			<result name="backend" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+		
 		<!-- Front-End -->
 		<action name="*/frontend"
 			class="{project.package}.frontend.controller.action.{1}Action"

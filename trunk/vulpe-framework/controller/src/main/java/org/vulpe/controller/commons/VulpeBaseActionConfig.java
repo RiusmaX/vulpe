@@ -67,7 +67,8 @@ public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		setViewItemsPath(Layout.PROTECTED_JSP);
 		final String simple = getActionName().replace(".main", "");
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
-		if (getControllerType().equals(ControllerType.FRONTEND)) {
+		if (getControllerType().equals(ControllerType.BACKEND)
+				|| getControllerType().equals(ControllerType.FRONTEND)) {
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
 			setViewPath(getViewPath().concat(

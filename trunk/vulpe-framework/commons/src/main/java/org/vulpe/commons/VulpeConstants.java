@@ -163,6 +163,7 @@ public interface VulpeConstants {
 			String CREATE = "create";
 			String UPDATE = "update";
 			String READ = "read";
+			String BACKEND = "backend";
 			String FRONTEND = "frontend";
 			String UPLOAD = "upload";
 			String DOWNLOAD = "download";
@@ -191,6 +192,7 @@ public interface VulpeConstants {
 		String ENUM = ".enum.";
 		String LAYOUT = "layout.";
 		String AUTHENTICATOR = "authenticator";
+		String CURRENT_LAYOUT = "vulpeCurrentLayout";
 
 		interface Layout {
 			String UC = ".uc";
@@ -237,6 +239,7 @@ public interface VulpeConstants {
 		}
 
 		interface Logic {
+			String BACKEND = ".backend";
 			String FRONTEND = ".frontend";
 			String REPORT = ".report";
 			String CRUD = ".crud";

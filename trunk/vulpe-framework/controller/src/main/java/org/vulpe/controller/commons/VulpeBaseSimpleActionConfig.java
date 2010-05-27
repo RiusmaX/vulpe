@@ -67,6 +67,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		this.actionName = controllerUtil.getCurrentActionName();
 
+		this.actionBaseName = StringUtils.replace(this.actionName, Logic.BACKEND, "");
 		this.actionBaseName = StringUtils.replace(this.actionName, Logic.FRONTEND, "");
 		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.CRUD, "");
 		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.SELECTION, "");
@@ -84,7 +85,8 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 		this.viewItemsPath = Layout.PROTECTED_JSP;
 		final String simple = actionName.replace(Layout.MAIN, "");
 		final StringTokenizer parts = new StringTokenizer(simple, ".");
-		if (getControllerType().equals(ControllerType.FRONTEND)) {
+		if (getControllerType().equals(ControllerType.BACKEND)
+				|| getControllerType().equals(ControllerType.FRONTEND)) {
 			final String name = parts.nextToken();
 			final String module = parts.nextToken();
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name).concat(
@@ -280,7 +282,8 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * @see org.vulpe.controller.commons.VulpeActionConfig#getFormName()
 	 */
 	public String getFormName() {
-		final String formName = StringUtils.replace(getActionName(), Logic.FRONTEND, "");
+		String formName = StringUtils.replace(getActionName(), Logic.BACKEND, "");
+		formName = StringUtils.replace(getActionName(), Logic.FRONTEND, "");
 		return StringUtils.replace(formName, ".", "");
 	}
 
@@ -355,8 +358,8 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * .String)
 	 */
 	public String getParentName(final String detail) {
-		final int pos = StringUtils.lastIndexOf(detail, ".");
-		return pos == -1 ? detail : StringUtils.substring(detail, 0, pos);
+		final int position = StringUtils.lastIndexOf(detail, ".");
+		return position == -1 ? detail : StringUtils.substring(detail, 0, position);
 	}
 
 	/**

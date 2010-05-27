@@ -156,6 +156,57 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#backend()
+	 */
+	@SkipValidation
+	@ResetSession(before = true)
+	public String backend() {
+		backendBefore();
+		onBackend();
+
+		String forward = Forward.SUCCESS;
+		if (getControllerType().equals(ControllerType.BACKEND)) {
+			if (isAjax()) {
+				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
+				forward = Forward.BACKEND;
+			} else {
+				controlResultForward();
+			}
+		} else {
+			controlResultForward();
+		}
+		setResultName(forward);
+
+		backendAfter();
+		return getResultName();
+	}
+
+	/**
+	 * Extension point to prepare show.
+	 * 
+	 * @since 1.0
+	 */
+	protected void onBackend() {
+		setExecuted(false);
+	}
+
+	/**
+	 * Extension point to code before prepare.
+	 */
+	protected void backendBefore() {
+		LOG.debug("backendBefore");
+	}
+
+	/**
+	 * Extension point to code after prepare.
+	 */
+	protected void backendAfter() {
+		LOG.debug("backendAfter");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#frontend()
 	 */
 	@SkipValidation

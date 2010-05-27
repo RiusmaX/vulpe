@@ -69,8 +69,9 @@ public class StrutsControllerUtil extends ControllerUtil {
 		if (base.contains(Logic.AJAX)) {
 			base = base.replace(Logic.AJAX, "");
 		}
-		return (base.contains(Logic.FRONTEND) || base.contains(View.AUTHENTICATOR)) ? base : base
-				.substring(0, StringUtils.lastIndexOf(base, '.'));
+		return (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
+				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
+				base, '.'));
 	}
 
 	/**

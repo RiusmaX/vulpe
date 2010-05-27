@@ -46,7 +46,7 @@
 
 	<bean id="securityContextHolderAwareRequestFilter" class="org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter" />
 
-	<bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+	<bean id="logoutFilter" class="org.vulpe.security.web.authentication.logout.VulpeLogoutFilter">
 		<constructor-arg value="/index.jsp" />
 		<constructor-arg>
 			<list>
