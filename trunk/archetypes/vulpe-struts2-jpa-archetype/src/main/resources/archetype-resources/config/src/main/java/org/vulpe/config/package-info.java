@@ -9,9 +9,7 @@
 				showButtonIcon = false,
 				showButtonText = false,
 				frontendCenteredLayout = true
-		),
-		theme = "template",
-		frontendMenuType = MenuType.NONE
+		)
 )
 package org.vulpe.config;
 
