@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/common/taglibs.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <div id="content">
 <h2><fmt:message key="label.site.Index.frontend.h2"/></h2>
 <p><fmt:message key="label.site.Index.frontend.pStart"/></p> 
