@@ -1,49 +1,49 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <div id="content">
-<h2><fmt:message key="label.site.Index.frontend.h2"/></h2>
-<p><fmt:message key="label.site.Index.frontend.pStart"/></p> 
+<h2><fmt:message key="label.site.frontend.Index.h2"/></h2>
+<p><fmt:message key="label.site.frontend.Index.pStart"/></p> 
 <ul>
-	<li><fmt:message key="label.site.Index.frontend.ul.li1"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li2"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li3"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li4"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li5"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li6"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li7"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li8"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li9"/></li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li10"/>
+	<li><fmt:message key="label.site.frontend.Index.ul.li1"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li2"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li3"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li4"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li5"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li6"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li7"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li8"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li9"/></li>
+	<li><fmt:message key="label.site.frontend.Index.ul.li10"/>
 	<ul>
-		<li><fmt:message key="label.site.Index.frontend.ul.li10.ul.li1"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li10.ul.li2"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li10.ul.li3"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li10.ul.li1"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li10.ul.li2"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li10.ul.li3"/></li>
 	</ul>
 	</li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li11"/>
+	<li><fmt:message key="label.site.frontend.Index.ul.li11"/>
 	<ul>
-		<li><fmt:message key="label.site.Index.frontend.ul.li11.ul.li1"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li11.ul.li2"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li11.ul.li3"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li11.ul.li4"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li11.ul.li1"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li11.ul.li2"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li11.ul.li3"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li11.ul.li4"/></li>
 	</ul>
 	</li>
-	<li><fmt:message key="label.site.Index.frontend.ul.li12"/>
+	<li><fmt:message key="label.site.frontend.Index.ul.li12"/>
 	<ul>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li1"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li2"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li3"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li4"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li5"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li6"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li7"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li8"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li9"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li10"/></li>
-		<li><fmt:message key="label.site.Index.frontend.ul.li12.ul.li11"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li1"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li2"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li3"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li4"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li5"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li6"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li7"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li8"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li9"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li10"/></li>
+		<li><fmt:message key="label.site.frontend.Index.ul.li12.ul.li11"/></li>
 	</ul>
 	</li>
 </ul>
-<p><fmt:message key="label.site.Index.frontend.pEnd"/></p>
+<p><fmt:message key="label.site.frontend.Index.pEnd"/></p>
 </div>
 <jsp:include page="../bottom.jsp"/>
 <script type="text/javascript">
