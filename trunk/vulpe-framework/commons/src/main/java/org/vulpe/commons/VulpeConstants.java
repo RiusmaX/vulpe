@@ -209,7 +209,7 @@ public interface VulpeConstants {
 			String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
 			String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
 			String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
-			String PROTECTED_JSP_COMMON = PROTECTED_JSP + "common/";
+			String PROTECTED_JSP_COMMON = PROTECTED_JSP + "commons/";
 			String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
 			String JSP = ".jsp";
 			String SUFFIX_JSP_TABULAR = "Tabular.jsp";
