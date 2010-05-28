@@ -112,7 +112,7 @@
 					<c:choose>
 					<c:when test="${fn:contains(javascript, 'Popup')}">
 					<c:if test="${empty iconClass}">
-						<c:set var="iconClass" value="imagePopupButton"/>
+						<c:set var="iconClass" value="vulpeImagePopupButton"/>
 					</c:if>
 					<img class="${iconClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
 						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"

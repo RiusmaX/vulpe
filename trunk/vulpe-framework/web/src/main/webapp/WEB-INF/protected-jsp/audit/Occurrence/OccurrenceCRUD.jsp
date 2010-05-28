@@ -18,7 +18,7 @@
 		<td class="texto"><strong><fmt:message key="label.vulpe.audit.value"/></strong></td>
 	</tr>
 	<c:forEach var="attribute" items="${entity.dataHistoryAttributes}" varStatus="status">
-	<tr class="${status.count % 2 == 0 ? 'lineOn' : 'lineOff'}">
+	<tr class="${status.count % 2 == 0 ? 'vulpeLineOn' : 'vulpeLineOff'}">
 		<td>${attribute.name}</td>
 		<td>${attribute.value}</td>
 	</tr>
@@ -36,7 +36,7 @@
 					<td class="texto"><strong><fmt:message key="label.vulpe.audit.value"/></strong></td>
 				</tr>
 				<c:forEach var="attribute" items="${child.dataHistoryAttributes}" varStatus="status">
-				<tr class="${status.count % 2 == 0 ? 'lineOn' : 'lineOff'}">
+				<tr class="${status.count % 2 == 0 ? 'vulpeLineOn' : 'vulpeLineOff'}">
 					<td>${attribute.name}</td>
 					<td>${attribute.value}</td>
 				</tr>

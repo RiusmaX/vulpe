@@ -64,7 +64,7 @@
 		<c:set var="title" value="${label}"/>
 	</c:if>
 	<c:if test="${empty labelClass}">
-		<c:set var="labelClass" value="blocklabel"/>
+		<c:set var="labelClass" value="vulpeBlockLabel"/>
 	</c:if>
 	<label for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}:</label>
 	<c:if test="${breakLabel}">

@@ -24,7 +24,7 @@ var vulpe = {
 		},
 		contextPath: '',
 		css: {
-			fieldError: 'fieldError'
+			fieldError: 'vulpeFieldError'
 		},
 		elements: new Array(),
 		entity: '_entity.',
@@ -34,7 +34,7 @@ var vulpe = {
 		},
 		layers: {
 			alertDialog: "#alertDialog",
-			alertMessage: "#alertMessage",
+			vulpeAlertMessage: "#vulpeAlertMessage",
 			confirmationDialog: "#confirmationDialog",
 			confirmationMessage: "#confirmationMessage",
 			messages: "#messages",
@@ -788,13 +788,13 @@ var vulpe = {
 				if (vulpe.util.existsVulpePopups()) {
 					messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 				}
-				$(messageLayer).removeClass("error");
-				$(messageLayer).removeClass("success");
-				$(messageLayer).addClass("validation");
+				$(messageLayer).removeClass("vulpeError");
+				$(messageLayer).removeClass("vulpeSuccess");
+				$(messageLayer).addClass("vulpeValidation");
 				if (fields.length > 1) {
-					$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
+					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
 				} else {
-					$(messageLayer).html("<ul><li class='alertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
+					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
 				}
 				$(messageLayer).slideDown("slow");
 				setTimeout(function() {
@@ -926,13 +926,13 @@ var vulpe = {
 			var i=0;
 			var value = '';
 			for(i=0; i<columns.length; i++) {
-				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' orderDesc')) {
-					order = 'orderDesc';
+				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' vulpeOrderDesc')) {
+					order = 'vulpeOrderDesc';
 					if (vulpe.util.trim(columns[i]) == property) {
 						if (value == '') {
-							value = vulpe.util.trim(columns[i]) + ' orderDesc';
+							value = vulpe.util.trim(columns[i]) + ' vulpeOrderDesc';
 						} else {
-							value = value + ',' + vulpe.util.trim(columns[i]) + ' orderDesc';
+							value = value + ',' + vulpe.util.trim(columns[i]) + ' vulpeOrderDesc';
 						}
 					} else {
 						oldDesc = true;
@@ -946,13 +946,13 @@ var vulpe = {
 				}
 			}
 			if (order == '') {
-				order = 'orderAsc';
+				order = 'vulpeOrderAsc';
 				if (value == '') {
 					value = property;
 				} else {
 					value = value + ', ' + property;
 				}
-			} else if (order == 'orderDesc' && oldDesc) {
+			} else if (order == 'vulpeOrderDesc' && oldDesc) {
 				order = '';
 			}
 			vulpe.util.getElement(sortPropertyInfo).value = value;
@@ -977,12 +977,12 @@ var vulpe = {
 				var i = 0;
 				for(i = 0; i < columns.length; i++) {
 					var order = '';
-					if (vulpe.util.trim(columns[i]).indexOf(' orderDesc') >= 0) {
-						order = 'orderDesc';
+					if (vulpe.util.trim(columns[i]).indexOf(' vulpeOrderDesc') >= 0) {
+						order = 'vulpeOrderDesc';
 					} else {
-						order = 'orderAsc';
+						order = 'vulpeOrderAsc';
 					}
-					var property = vulpe.util.trim(columns[i]).replace(' orderDesc', '');
+					var property = vulpe.util.trim(columns[i]).replace(' vulpeOrderDesc', '');
 					var propertyTh = vulpe.util.getElement(sortPropertyInfoName + '_' + property);
 					if (propertyTh) {
 						propertyTh.className = order;
@@ -992,11 +992,11 @@ var vulpe = {
 		},
 
 		onmouseoverRow: function(row) {
-			jQuery(row).addClass('selectedRow');
+			jQuery(row).addClass('vulpeSelectedRow');
 		},
 
 		onmouseoutRow: function(row) {
-			jQuery(row).removeClass('selectedRow');
+			jQuery(row).removeClass('vulpeSelectedRow');
 		},
 
 		/**
@@ -1062,7 +1062,7 @@ var vulpe = {
 		showMessages: function() {
 			jQuery(vulpe.config.layers.modalMessages).modal({
 				title: function() { 
-					var popupTitle = jQuery("div[class*='title']", "#modalMessages");
+					var popupTitle = jQuery("#messageTitle", "#modalMessages");
 					if (popupTitle) {
 						popupTitle.hide();
 						return popupTitle.html();
@@ -1091,7 +1091,7 @@ var vulpe = {
 		showPopup: function(elementId, popupWidth) {
 			var popup = vulpe.util.get(elementId).modal({
 				title: function() {
-					var popupTitle = jQuery("div[class*='ucTitle']", "#" + elementId);
+					var popupTitle = jQuery("#contentTitle", "#" + elementId);
 					if (popupTitle) {
 						popupTitle.hide();
 						return popupTitle.html();
@@ -1306,7 +1306,7 @@ var vulpe = {
 					});
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsExclusion);
 					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},
@@ -1350,7 +1350,7 @@ var vulpe = {
 					});
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsExclusion);
 					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},
@@ -1461,7 +1461,7 @@ var vulpe = {
 				var popup = jQuery('<div>').attr('id', popupName).attr('layerParent', popupLayerParent).attr('popupProperties', popupProperties).attr('popupExpressions', popupExpressions);
 				popup.hide();
 				popup.css("height", "100%");
-				popup.addClass('popup');
+				popup.addClass('vulpePopup');
 				if (vulpe.util.isNotEmpty(styleClass)) {
 					popup.addClass(styleClass);
 				}
@@ -1738,7 +1738,7 @@ var vulpe = {
 				if (typeof data != "string" && data.responseText) {
 					data = data.responseText;
 				}
-				if (data.indexOf("\"alertError\"") != -1) {
+				if (data.indexOf("\"vulpeAlertError\"") != -1) {
 					jQuery(vulpe.config.layers.messages).html(data);
 				} else {
 					jQuery(vulpe.config.layers.modalMessages).html(data);
@@ -1746,10 +1746,10 @@ var vulpe = {
 			} else {
 				jQuery(vulpe.config.layers.messages).html("Erro fatal: " + e);
 			}
-			if (data.indexOf("\"alertError\"") == -1) {
-				jQuery(vulpe.config.layers.modalMessages).removeClass("success");
-				jQuery(vulpe.config.layers.modalMessages).removeClass("validation");
-				jQuery(vulpe.config.layers.modalMessages).addClass("error");
+			if (data.indexOf("\"vulpeAlertError\"") == -1) {
+				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeSuccess");
+				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeValidation");
+				jQuery(vulpe.config.layers.modalMessages).addClass("vulpeError");
 				vulpe.view.showMessages();
 			}
 		}

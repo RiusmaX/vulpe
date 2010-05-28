@@ -61,10 +61,10 @@
 	<c:if test="${empty styleClass && not empty status_row_tag}">
 		<c:choose>
 			<c:when test="${(status_row_tag.index % 2) == 0}">
-				<c:set var="styleClass" value="lineOn"/>
+				<c:set var="styleClass" value="vulpeLineOn"/>
 			</c:when>
 			<c:otherwise>
-				<c:set var="styleClass" value="lineOff"/>
+				<c:set var="styleClass" value="vulpeLineOff"/>
 			</c:otherwise>
 		</c:choose>
 	</c:if>

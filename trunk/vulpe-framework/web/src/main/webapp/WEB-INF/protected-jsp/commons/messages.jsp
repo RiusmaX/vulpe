@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <c:if test="${not empty actionErrors || not empty actionMessages || not empty fieldErrors}">
 	<c:if test="${not empty fieldErrors}">
 		<script charset="utf-8">
@@ -15,9 +15,9 @@
 					vulpe.exception.setupError('${fieldName}', '${msgs}');
 				</c:forEach>
 				vulpe.exception.focusFirstError('${actionConfig.formName}');
-				$("#messages").removeClass("error");
-				$("#messages").removeClass("success");
-				$("#messages").addClass("validation");
+				$("#messages").removeClass("vulpeError");
+				$("#messages").removeClass("vulpeSuccess");
+				$("#messages").addClass("vulpeValidation");
 				$("#messages").slideDown("slow");
 				setTimeout(function() {
 				  $("#messages").slideUp("slow");
@@ -28,7 +28,7 @@
 	<c:choose>
 		<c:when test="${IS_EXCEPTION}">
 			<c:if test="${empty fieldErrors}">
-				<h1><fmt:message key="vulpe.error.alert"/></h1>
+				<h1><fmt:message key="vulpe.error.alert" /></h1>
 			</c:if>
 			<!--IS_EXCEPTION-->
 			<c:choose>
@@ -36,16 +36,16 @@
 					<!--SUBMIT_AJAX-->
 					<ul>
 						<c:if test="${not empty fieldErrors}">
-							<li class="alertError"><fmt:message key="vulpe.error.validate"/></li>
+							<li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li>
 						</c:if>
 						<c:if test="${not empty actionErrors}">
 							<c:forEach items="${actionErrors}" var="msg">
-								<li class="alertError"><c:out value="${msg}"/></li>
+								<li class="vulpeAlertError">${msg}</li>
 							</c:forEach>
 						</c:if>
 						<c:if test="${not empty actionMessages}">
 							<c:forEach items="${actionMessages}" var="msg">
-								<li class="alertMessage"><c:out value="${msg}"/></li>
+								<li class="vulpeAlertMessage">${msg}</li>
 							</c:forEach>
 						</c:if>
 					</ul>
@@ -54,22 +54,22 @@
 					</script>
 				</c:when>
 				<c:otherwise>
-					<div id="errors" class="messages">
-						<ul>
-							<c:if test="${not empty fieldErrors}">
-								<li class="alertError"><fmt:message key="vulpe.error.validate"/></li>
-							</c:if>
-							<c:if test="${not empty actionErrors}">
-								<c:forEach items="${actionErrors}" var="msg">
-									<li class="alertError"><c:out value="${msg}"/></li>
-								</c:forEach>
-							</c:if>
-							<c:if test="${not empty actionMessages}">
-								<c:forEach items="${actionMessages}" var="msg">
-									<li class="alertMessage"><c:out value="${msg}"/></li>
-								</c:forEach>
-							</c:if>
-						</ul>
+					<div id="errors" class="vulpeMessages">
+					<ul>
+						<c:if test="${not empty fieldErrors}">
+							<li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li>
+						</c:if>
+						<c:if test="${not empty actionErrors}">
+							<c:forEach items="${actionErrors}" var="msg">
+								<li class="vulpeAlertError">${msg}</li>
+							</c:forEach>
+						</c:if>
+						<c:if test="${not empty actionMessages}">
+							<c:forEach items="${actionMessages}" var="msg">
+								<li class="vulpeAlertMessage">${msg}</li>
+							</c:forEach>
+						</c:if>
+					</ul>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -79,20 +79,20 @@
 				$(document).ready(function() {
 					var msg = '<ul>';
 
-					$("#messages").removeClass("error");
-					$("#messages").removeClass("success");
-					$("#messages").removeClass("validation");
+					$("#messages").removeClass("vulpeError");
+					$("#messages").removeClass("vulpeSuccess");
+					$("#messages").removeClass("vulpeValidation");
 
 					<c:if test="${not empty actionErrors}">
-					$("#messages").addClass("error");
+					$("#messages").addClass("vulpeError");
 						<c:forEach items="${actionErrors}" var="msg">
-					msg += '<li class="alertError"><c:out value="${msg}"/></li>';
+					msg += '<li class="vulpeAlertError">${msg}</li>';
 						</c:forEach>
 					</c:if>
 					<c:if test="${not empty actionMessages}">
-					$("#messages").addClass("success");
+					$("#messages").addClass("vulpeSuccess");
 						<c:forEach items="${actionMessages}" var="msg">
-					msg += '<li class="alertMessage"><c:out value="${msg}"/></li>';
+					msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
 					</c:if>
 

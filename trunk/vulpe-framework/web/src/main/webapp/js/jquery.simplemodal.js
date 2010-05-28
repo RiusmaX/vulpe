@@ -133,7 +133,7 @@
 					.addClass('modalContainer')
 					.css(this.opts.containerCss)
 					.append(
-							this.opts.close ? '<div class=\"modalContainerHeader drag\"><h1 class=\"popupCaption drag\">' + this.opts.title() + '<a class="modalCloseImg '
+							this.opts.close ? '<div class=\"modalContainerHeader vulpeDrag\"><h1 class=\"vulpePopupCaption drag\">' + this.opts.title() + '<a class="modalCloseImg '
 									+ this.opts.closeClass
 									+ '" title="'
 									+ this.opts.closeTitle
@@ -215,7 +215,7 @@
 					transparent : true
 				});
 				this.dialog.container.draggable( {
-					handle : ".drag"
+					handle : ".vulpeDrag"
 				});
 			}
 		},

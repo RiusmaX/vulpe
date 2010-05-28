@@ -10,7 +10,7 @@
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 
 	<c:if test="${empty styleClass}">
-		<c:set var="styleClass" value="noBorder"/>
+		<c:set var="styleClass" value=".vulpeNoBoarder"/>
 	</c:if>
 	
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">

@@ -1,17 +1,17 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
-<div id="${actionConfig.formName}_select">
-	<div id="${actionConfig.formName}_select_actions" class="actions">
+<div id="vulpeSelect">
+	<div id="vulpeSelectActions" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/selectActions.jsp" %>
 	</div>
-	<div id="${actionConfig.formName}_select_form">
+	<div id="vulpeSelectForm">
 		<p class="selectForm">
 			<jsp:include page="${actionConfig.viewPath}" />
 		</p>
 	</div>
 
-	<div id="${actionConfig.formName}_select_table">
-		<p class="selectTable">
+	<div id="vulpeSelectTable">
+		<p class="vulpeSelectTable">
 			<jsp:include page="${actionConfig.viewItemsPath}" />
 			<c:if test="${actionConfig.type == 'REPORT' && not empty downloadInfo}">
 				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
@@ -25,7 +25,7 @@
 	</div>
 
 	<p class="selectFooter">
-		<div id="${actionConfig.formName}_select_footer">
+		<div id="vulpeSelectFooter">
 		</div>
 	</p>
 </div>

@@ -9,7 +9,7 @@
 	<c:set var="style" value="display: none;" />
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.clear"
-	elementId="button_clear_${actionConfig.formName}"
+	elementId="vulpeButtonClear"
 	javascript="document.forms['${actionConfig.formName}'].reset();"
 	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}" showButtonIcon="${vulpeShowButtonIcon}"
@@ -19,7 +19,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action validate="false" layer="${popup ? popupKey : ''}" style="${style}"
-	labelKey="vulpe.label.clear" elementId="button_prepare_${actionConfig.formName}"
+	labelKey="vulpe.label.clear" elementId="vulpeButtonPrepare"
 	action="${actionConfig.primitiveActionName}/prepare/ajax" helpKey="vulpe.help.clear"
 	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}" showButtonIcon="${vulpeShowButtonIcon}"
@@ -29,7 +29,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if> 
 <v:action validate="false" layer="${popup ? popupKey : ''}" style="${style}"
-	labelKey="vulpe.label.create" elementId="button_create_${actionConfig.formName}"
+	labelKey="vulpe.label.create" elementId="vulpeButtonCreate"
 	action="${actionConfig.primitiveActionName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${actionConfig.formName}%27)" helpKey="vulpe.help.create"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
@@ -40,7 +40,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action style="${style}" labelKey="vulpe.label.read"
-	elementId="button_read_${actionConfig.formName}" layer="${actionConfig.formName}_select_table"
+	elementId="vulpeButtonRead" layer="vulpeSelectTable"
 	action="${actionConfig.primitiveActionName}/read/ajax"
 	beforeJs="vulpe.view.prepareRead(%27${actionConfig.formName}%27)" helpKey="vulpe.help.read"
 	icon="themes/${vulpeTheme}/images/icons/button-search-${widthIcon}x${heightIcon}.png"
@@ -51,7 +51,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action style="${style}" labelKey="vulpe.label.report"
-	elementId="button_read_${actionConfig.formName}" layer="${actionConfig.formName}_select_table"
+	elementId="vulpeButtonRead" layer="vulpeSelectTable"
 	action="${actionConfig.primitiveReportActionName}/read/ajax" helpKey="vulpe.help.report"
 	icon="themes/${vulpeTheme}/images/icons/button-report-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}" showButtonIcon="${vulpeShowButtonIcon}"

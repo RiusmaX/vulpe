@@ -13,49 +13,49 @@ $(document).ready(function() {
 
 	if (document.forms['${actionConfig.formName}']) {
 	<c:if test="${createShow}">
-		var button_create = $("#button_create_${actionConfig.formName}");
-		if (button_create) {
-			button_create.${createShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){button_create.click(); return false;});
+		var buttonCreate = $("#vulpeButtonCreate");
+		if (buttonCreate) {
+			buttonCreate.${createShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){buttonCreate.click(); return false;});
 		}
 	</c:if>
 
 	<c:if test="${createPostShow}">
-		var button_create_post = $("#button_create_post_${actionConfig.formName}");
-		if (button_create_post) {
-			button_create_post.${createPostShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){button_create_post.click();});
+		var buttonCreatePost = $("#vulpeButtonCreatePost");
+		if (buttonCreatePost) {
+			buttonCreatePost.${createPostShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
 		}
 	</c:if>
 
 	<c:if test="${updatePostShow}">
-		var button_update_post = $("#button_update_post_${actionConfig.formName}");
-		if (button_update_post) {
-			button_update_post.${updatePostShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){button_update_post.click();});
+		var buttonUpdatePost = $("#vulpeButtonUpdatePost");
+		if (buttonUpdatePost) {
+			buttonUpdatePost.${updatePostShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
 		}
 	</c:if>
 
 	<c:if test="${tabularPostShow}">
-		var button_tabularPost = $("#button_tabularPost_${actionConfig.formName}");
-		if (button_tabularPost) {
-			button_tabularPost.${tabularPostShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){button_tabularPost.click();});
+		var buttonTabularPost = $("#vulpeButtonTabularPost");
+		if (buttonTabularPost) {
+			buttonTabularPost.${tabularPostShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
 		}
 	</c:if>
 
 	<c:if test="${deleteShow}">
-		var button_delete = $("#button_delete_${actionConfig.formName}");
-		if (button_delete) {
-			button_delete.${deleteShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+del', function (){button_delete.click();});
+		var buttonDelete = $("#vulpeButtonDelete");
+		if (buttonDelete) {
+			buttonDelete.${deleteShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
 		}
 	</c:if>
 
 	<c:if test="${prepareShow}">
-		var button_prepare = $("#button_prepare_${actionConfig.formName}");
-		if (button_prepare) {
-			button_prepare.${prepareShow ? 'show' : 'hide'}();
+		var buttonPrepare = $("#vulpeButtonPrepare");
+		if (buttonPrepare) {
+			buttonPrepare.${prepareShow ? 'show' : 'hide'}();
 			<c:if test="${actionConfig.type == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
@@ -65,33 +65,33 @@ $(document).ready(function() {
 			<c:if test="${actionConfig.type == 'TABULAR'}">
 			<c:set var="prepare" value="Ctrl+f9"/>
 			</c:if>
-			jQuery(document).bind('keydown', '${prepare}', function (){button_prepare.click();});
+			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
 		}
 	</c:if>
 
 	<c:if test="${readShow}">
-		var button_read = $("#button_read_${actionConfig.formName}");
-		if (button_read) {
-			button_read.${readShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f9', function (){button_read.click();});
+		var buttonRead = $("#vulpeButtonRead");
+		if (buttonRead) {
+			buttonRead.${readShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
 		}
 	</c:if>
 
 	<c:if test="${clearShow}">
-		var button_clear = $("#button_clear_${actionConfig.formName}");
-		if (button_clear) {
-			button_clear.${clearShow ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Shift+del', function (){button_clear.click();});
+		var buttonClear = $("#vulpeButtonClear");
+		if (buttonClear) {
+			buttonClear.${clearShow ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
 		}
 	</c:if>
 
-	<c:set var="button_create_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
-	<c:set var="button_create_tabular" value="${util:eval(pageContext, button_create_tabular_EL)}"/>
-	<c:if test="${button_create_tabular}">
-		var button_addDetail_entities = $("#button_addDetail_${actionConfig.formName}_entities");
-		if (button_addDetail_entities) {
-			button_addDetail_entities.${button_create_tabular ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Ctrl+f8', function (){button_addDetail_entities.click();});
+	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
+	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
+	<c:if test="${buttonCreate_tabular}">
+		var buttonAddDetail_entities = $("#vulpeButtonAddDetail_${actionConfig.formName}_entities");
+		if (buttonAddDetail_entities) {
+			buttonAddDetail_entities.${buttonCreate_tabular ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
 		}
 	</c:if>
 
@@ -100,10 +100,10 @@ $(document).ready(function() {
 		<c:set var="btEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
 		<c:set var="bt" value="${util:eval(pageContext, btEL)}"/>
 		<c:if test="${bt}">
-		var button_addDetail_${detail.baseName} = $("#button_addDetail_${actionConfig.formName}_${detail.baseName}");
-		if (button_addDetail_${detail.baseName}) {
-			button_addDetail_${detail.baseName}.${bt ? 'show' : 'hide'}();
-			jQuery(document).bind('keydown', 'Alt+f8', function (){button_addDetail_${detail.baseName}.click();});
+		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${actionConfig.formName}_${detail.baseName}");
+		if (buttonAddDetail_${detail.baseName}) {
+			buttonAddDetail_${detail.baseName}.${bt ? 'show' : 'hide'}();
+			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
 		}
 		</c:if>
 	</c:forEach>
@@ -139,7 +139,7 @@ $(document).ready(function() {
 		bgiframe: true,
 		modal: true,
 		buttons: {
-			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+			'<fmt:message key="vulpe.label.vulpeButton.ok"/>': function() {
 				$(this).dialog('close');
 			}
 		}
@@ -156,13 +156,13 @@ $(document).ready(function() {
 			opacity: 0.5
 		},
 		buttons: {
-			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+			'<fmt:message key="vulpe.label.vulpeButton.ok"/>': function() {
 				$(this).dialog('close');
 				if (vulpe.command) {
 					vulpe.command();
 				}
 			},
-			'<fmt:message key="vulpe.label.button.cancel"/>': function() {
+			'<fmt:message key="vulpe.label.vulpeButton.cancel"/>': function() {
 				$(this).dialog('close');
 			}
 		}

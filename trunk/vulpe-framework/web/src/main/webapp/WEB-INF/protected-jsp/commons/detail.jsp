@@ -8,33 +8,32 @@
 	<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
 	<c:set var="index" value="_${util:eval(pageContext, indexEL)}_"/>
 	
-	<%-- if had parent, then add line for subDetail --%>
 	<c:choose>
 		<c:when test="${(util:eval(pageContext, indexEL) % 2) == 0}">
-			<tr class="lineOn">
+<tr class="vulpeLineOn">
 		</c:when>
 		<c:otherwise>
-			<tr class="lineOff">
+<tr class="vulpeLineOff">
 		</c:otherwise>
 	</c:choose>
 	<td colspan="100">
 </c:if>
 
-<div id="${actionConfig.formName}_${targetConfigLocal.baseName}${index}_detail" class="detailBody">
+<div id="vulpeDetail_${targetConfigLocal.baseName}${index}" class="detailBody">
 <%-- if subDetail or don't use tabs, then add accordion --%>
 <c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
-	<dl id="${actionConfig.formName}_${targetConfigLocal.baseName}${index}">
+	<dl id="vulpeSubDetail_${targetConfigLocal.baseName}${index}">
 		<dt><fmt:message key="${actionConfig.titleKey}"/></dt>
 		<dd>
 </c:if>
-			<div id="${actionConfig.formName}_${targetConfigLocal.baseName}${index}_detail_actions" class="actions">
-				<%@include file="/WEB-INF/protected-jsp/commons/detailActions.jsp" %>
-			</div>
-			<div id="${actionConfig.formName}_${targetConfigLocal.baseName}${index}_detail_body">
-				<jsp:include page="${param.detail_viewPath}" />
-				<c:set var="targetConfig" value="${targetConfigLocal}" scope="request"/>
-				<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
-			</div>
+		<div id="vulpeDetailActions_${targetConfigLocal.baseName}${index}" class="vulpeActions">
+			<%@include file="/WEB-INF/protected-jsp/commons/detailActions.jsp" %>
+		</div>
+		<div id="vulpeDetailBody_${targetConfigLocal.baseName}${index}">
+			<jsp:include page="${param.detailViewPath}" />
+			<c:set var="targetConfig" value="${targetConfigLocal}" scope="request"/>
+			<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
+		</div>
 <%-- if subDetail or don't use tabs, then add accordion --%>
 <c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
 		</dd>
@@ -44,14 +43,14 @@
 
 <c:if test="${not empty targetConfig.parentDetailConfig}">
 	</td>
-	</tr>
+</tr>
 </c:if>
 
 <%-- if subDetail or don't use tabs, then add accordion --%>
 <c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
 	<script type="text/javascript">
 		$(document).ready(function() {
-			vulpe.util.get('${actionConfig.formName}_${targetConfigLocal.baseName}${index}').accordion({start: 'closed'});
+			vulpe.util.get('vulpeSubDetail_${targetConfigLocal.baseName}${index}').accordion({start: 'closed'});
 		});
 	</script>
 </c:if>

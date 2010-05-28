@@ -148,7 +148,7 @@
 			<c:set var="cellspacing" value="1"/>
 		</c:if>
 
-		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="entities">
+		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="i">
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
@@ -202,12 +202,12 @@
 		</c:if>
 		</table>
 		<c:if test="${not empty pagingList}">
-			<div class="paging">
-				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.firstPage ? 'iconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-first.png" labelKey="vulpe.label.first" javascript="vulpe.view.request.submitPaging(${empty pagingList.firstPage ? 0 : pagingList.firstPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.firstPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
-				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.previousPage ? 'iconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-previous.png" labelKey="vulpe.label.previous" javascript="vulpe.view.request.submitPaging(${empty pagingList.previousPage ? 0 : pagingList.previousPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.previousPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
+			<div id="paging" class="vulpePaging">
+				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.firstPage ? 'vulpeIconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-first.png" labelKey="vulpe.label.first" javascript="vulpe.view.request.submitPaging(${empty pagingList.firstPage ? 0 : pagingList.firstPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.firstPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
+				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.previousPage ? 'vulpeIconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-previous.png" labelKey="vulpe.label.previous" javascript="vulpe.view.request.submitPaging(${empty pagingList.previousPage ? 0 : pagingList.previousPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.previousPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
 				<fmt:message key="vulpe.label.page"/>&nbsp;${pagingList.page}&nbsp;<fmt:message key="vulpe.label.of"/>&nbsp;${pagingList.pages}
-				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.nextPage ? 'iconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-next.png" labelKey="vulpe.label.next" javascript="vulpe.view.request.submitPaging(${empty pagingList.nextPage ? 0 : pagingList.nextPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.nextPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
-				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.lastPage ? 'iconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-last.png" labelKey="vulpe.label.last" javascript="vulpe.view.request.submitPaging(${empty pagingList.lastPage ? 0 : pagingList.lastPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.lastPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
+				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.nextPage ? 'vulpeIconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-next.png" labelKey="vulpe.label.next" javascript="vulpe.view.request.submitPaging(${empty pagingList.nextPage ? 0 : pagingList.nextPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.nextPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
+				<v:action widthIcon="16" heightIcon="16" iconClass="${(empty pagingList.lastPage ? 'vulpeIconOff' : '')}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-go-last.png" labelKey="vulpe.label.last" javascript="vulpe.view.request.submitPaging(${empty pagingList.lastPage ? 0 : pagingList.lastPage}, '${pagingActionName}/ajax', '${pagingFormName}', '${pagingLayerFields}', '${pagingLayer}', '${not empty pagingList.lastPage ? pagingBeforeJs : 'false'}', '${pagingAfterJs}');"/>
 			</div>
 		</c:if>
 	</c:if>

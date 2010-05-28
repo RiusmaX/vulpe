@@ -11,12 +11,12 @@
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${actionConfig.formName}_popupKey"/>
 	</c:if>
 	<c:if test="${authenticated && empty popupKey}">
-	<div id="${actionConfig.formName}_user_authenticated" class="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${userName}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
+	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${userName}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
 	</c:if>
 	<c:if test="${showTitle}">
-		<div id="${actionConfig.formName}_uc_title" class="ucTitle ${uc_title_class}"><fmt:message>${actionConfig.titleKey}${onlyToSee ? '.view' : ''}</fmt:message></div>
+		<div id="contentTitle"><fmt:message>${actionConfig.titleKey}${onlyToSee ? '.view' : ''}</fmt:message></div>
 	</c:if>
-	<div id="${actionConfig.formName}_uc" class="uc">
+	<div id="content">
 		<c:choose>
 			<c:when test="${actionConfig.type == 'CRUD'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %>

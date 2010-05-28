@@ -10,7 +10,7 @@
 	<c:set var="style" value="display: none;" />
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.clear"
-	elementId="button_clear_${actionConfig.formName}"
+	elementId="vulpeButtonClear"
 	javascript="document.forms['${actionConfig.formName}'].reset();"
 	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
@@ -24,7 +24,7 @@
 </c:if> 
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.create"
-	elementId="button_create_${actionConfig.formName}"
+	elementId="vulpeButtonCreate"
 	action="${actionConfig.primitiveActionName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${actionConfig.formName}%27)"
 	helpKey="vulpe.help.create"
@@ -39,7 +39,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.createPost"
-	elementId="button_create_post_${actionConfig.formName}"
+	elementId="vulpeButtonCreatePost"
 	action="${actionConfig.primitiveActionName}/createPost/ajax"
 	helpKey="vulpe.help.createPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
@@ -54,7 +54,7 @@
 </c:if>
 <v:action beforeJs="vulpe.view.confirmExclusion()" validate="false"
 	style="${style}" labelKey="vulpe.label.delete"
-	elementId="button_delete_${actionConfig.formName}"
+	elementId="vulpeButtonDelete"
 	action="${actionConfig.primitiveActionName}/delete/ajax"
 	helpKey="vulpe.help.delete"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
@@ -68,7 +68,7 @@
 	<c:set var="style" value="display: inline;" />
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.updatePost"
-	elementId="button_update_post_${actionConfig.formName}"
+	elementId="vulpeButtonUpdatePost"
 	action="${actionConfig.primitiveActionName}/updatePost/ajax"
 	helpKey="vulpe.help.updatePost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
@@ -85,7 +85,7 @@
 	value="${actionConfig.primitiveActionName}/prepare/ajax" /> 
 <v:action
 	validate="false" style="${style}" labelKey="vulpe.label.prepare"
-	elementId="button_prepare_${actionConfig.formName}"
+	elementId="vulpeButtonPrepare"
 	action="${not empty urlBack ? urlBack : action}"
 	layer="${not empty layerUrlBack ? layerUrlBack : ''}"
 	helpKey="vulpe.help.prepare"

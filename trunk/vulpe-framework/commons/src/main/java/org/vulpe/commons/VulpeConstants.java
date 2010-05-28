@@ -222,13 +222,13 @@ public interface VulpeConstants {
 			String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
 			String SUFFIX_JSP_CRUD = "CRUD.jsp";
 
-			String UC_JSP = "uc.jsp";
-			String UC_CRUD_JSP = "crud.jsp";
-			String UC_CRUD_ACTIONS_JSP = "crudActions.jsp";
-			String UC_SELECT_JSP = "select.jsp";
-			String UC_SELECT_ACTIONS_JSP = "selectActions.jsp";
-			String UC_TABULAR_JSP = "tabular.jsp";
-			String UC_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
+			String BODY_JSP = "body.jsp";
+			String BODY_CRUD_JSP = "crud.jsp";
+			String BODY_CRUD_ACTIONS_JSP = "crudActions.jsp";
+			String BODY_SELECT_JSP = "select.jsp";
+			String BODY_SELECT_ACTIONS_JSP = "selectActions.jsp";
+			String BODY_TABULAR_JSP = "tabular.jsp";
+			String BODY_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
 
 			String TARGET_CONFIG = "targetConfig";
 			String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";

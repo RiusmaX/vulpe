@@ -1,58 +1,58 @@
 /************************************************************************
 * CSS - Vulpe Framework											*
 ************************************************************************/ /* Classes */
-.actions {
+.vulpeActions {
 	width: 100%;
 	text-align: right;
 }
 
-.alertError {
+.vulpeAlertError {
 	color: red;
 }
 
-.alertMessage {
+.vulpeAlertMessage {
 	
 }
 
-.button {
+.vulpeButton {
 	background: url(../images/background-button.png) repeat-x;
 	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
 }
 
-.blocklabel {
+.vulpeBlockLabel {
 	display: block;
 	width: 135px;
 	float: left;
 }
 
-.blockshort {
+.vulpeBlockshort {
 	display: block;
 	width: 90px;
 	float: left;
 }
 
-.drag {
+.vulpeDrag {
 	cursor: move;
 }
 
-.entities {
+.vulpeEntities {
 	border: 1px solid #eee;
 	margin-bottom: 15px;
 }
 
-.error {
+.vulpeError {
 	color: #D8000C;
 	background-color: #FFBABA;
 	background-image: url('../images/icons/message-error.png');
 }
 
-.fieldError {
+.vulpeFieldError {
 	background-color: #ffccbc;
 }
 
-.imageErrorMessage {
+.vulpeImageErrorMessage {
 	border: 0;
 	cursor: pointer;
 	display: none;
@@ -60,7 +60,7 @@
 	top: 3px;
 }
 
-.imageFieldLoading {
+.vulpeImageFieldLoading {
 	border: 0;
 	cursor: pointer;
 	display: none;
@@ -68,22 +68,21 @@
 	top: 3px;
 }
 
-.imagePopupButton {
+.vulpeImagePopupButton {
 	cursor: pointer;
 	left: -2px;
 	position: relative;
 	top: 3px;
 }
 
-.info,.success,.warning,.error,.validation {
+.vulpeInfo,.vulpeSuccess,.vulpeWarning,.vulpeError,.vulpeValidation {
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
-	/*padding: 15px 10px 15px 50px;*/
 	background-repeat: no-repeat;
 	background-position: 10px center;
 }
 
-.iconOff {
+.vulpeIconOff {
 	filter: progid :                               DXImageTransform .                             
 		 Microsoft .   
 		       
@@ -92,21 +91,21 @@
 	opacity: 0.4;
 }
 
-.info {
+.vulpeInfo {
 	color: #00529B;
 	background-color: #BDE5F8;
 	background-image: url('../images/icons/message-info.png');
 }
 
-.lineOff {
+.vulpeLineOff {
 	background: #fff;
 }
 
-.lineOn {
+.vulpeLineOn {
 	background: #eee;
 }
 
-.messages {
+.vulpeMessages {
 	-moz-border-radius-bottomleft: 7px;
 	-moz-border-radius-bottomright: 7px;
 	-moz-border-radius-topleft: 0px;
@@ -122,43 +121,43 @@
 	padding: 1px;
 }
 
-.messages h1 {
+.vulpeMessages h1 {
 	width: auto;
 	margin-top: 0px;
 	cursor: move;
 }
 
-.noBorder {
+.vulpeNoBoarder {
 	border: none;
 }
 
-.nob {
+.vulpeNob {
 	font-weight: normal
 }
 
-.orderAsc {
+.vulpeOrderAsc {
 	background: url(../images/icons/order-asc.gif) right;
 	background-color: #eee;
 	background-repeat: no-repeat;
 }
 
-.orderDesc {
+.vulpeOrderDesc {
 	background: url(../images/icons/order-desc.gif) right;
 	background-color: #eee;
 	background-repeat: no-repeat;
 }
 
-.paging {
+.vulpePaging {
 	width: 150px;
 	margin: 5px auto;
 	text-align: center;
 }
 
-.paging a {
+.vulpePaging a {
 	text-decoration: none;
 }
 
-.popup {
+.vulpePopup {
 	background-color: #fff;
 	border: 1px solid #333;
 	border-top: 1px solid #F9F9F9;
@@ -174,13 +173,13 @@
 	-webkit-border-bottom-left-radius: 7px;
 }
 
-.popup h1 {
+.vulpePopup h1 {
 	width: auto;
 	margin-top: 0px;
 	cursor: default;
 }
 
-.popupCaption {
+.vulpePopupCaption {
 	background: none;
 	display: block;
 	font-size: 12px;
@@ -192,12 +191,12 @@
 	width: auto;
 }
 
-.selectedRow {
+.vulpeSelectedRow {
 	background-color: #ffccbc; /*E8EBE2*/
 	cursor: pointer;
 }
 
-.simpleLabel {
+.vulpeSimpleLabel {
 	font-weight: normal;
 }
 
@@ -211,7 +210,7 @@
 	cursor: pointer;
 }
 
-.success {
+.vulpeSuccess {
 	color: #4F8A10;
 	background-color: #DFF2BF;
 	background-image: url('../images/icons/message-success.png');
@@ -228,11 +227,11 @@
 	border: 0px;
 }
 
-.uc {
+#content {
 	width: auto;
 }
 
-.ucTitle {
+#contentTitle {
 	background: #F5F3F1;
 	font-family: tahoma, arial, hevetica, sans-serif;
 	font-size: 12px;
@@ -241,17 +240,17 @@
 	padding: 10px 15px 10px 15px;
 }
 
-.userAuthenticated {
+#userAuthenticated {
 	text-align: right;
 }
 
-.validation {
+.vulpeValidation {
 	color: #D63301;
 	background-color: #FFCCBA;
 	background-image: url('../images/icons/message-validation.png');
 }
 
-.warning {
+.vulpeWarning {
 	color: #9F6000;
 	background-color: #FEEFB3;
 	background-image: url('../images/icons/message-warning.png');
@@ -356,39 +355,6 @@
 	background: url(../images/ajax/loader.gif) center no-repeat;
 	height: 32px;
 	cursor: wait
-}
-
-#loginBox {
-	display: block;
-	background: #e1e4d7;
-	padding: 5px;
-}
-
-#loginBox label {
-	width: 60px;
-	font-weight: bold;
-	text-align: right;
-}
-
-#loginHolder {
-	width: 300px;
-	margin: 0 auto;
-	margin-top: 100px;
-	padding: 5px;
-	background: #fff;
-	border: 1px solid #030;
-}
-
-#logo {
-	background: url(../images/background-all.png) repeat-x;
-	width: 100%;
-	height: 90px;
-}
-
-#okHolder {
-	width: 310px;
-	margin: 0 auto;
-	margin-top: 20px;
 }
 
 #poweredby {
