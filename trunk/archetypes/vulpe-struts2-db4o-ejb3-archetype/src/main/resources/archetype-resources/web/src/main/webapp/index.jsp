@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:choose>
-	<c:when test="${not empty vulpeCurrentLayout && vulpeCurrentLayout == 'BACKEND'}">
+	<c:when test="${symbol_dollar}{not empty vulpeCurrentLayout && vulpeCurrentLayout == 'BACKEND'}">
 		<c:redirect url="/backend/Index.action" />
 	</c:when>
 	<c:otherwise>

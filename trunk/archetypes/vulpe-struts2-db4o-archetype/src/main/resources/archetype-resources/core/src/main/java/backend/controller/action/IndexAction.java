@@ -13,6 +13,6 @@ import org.vulpe.controller.annotations.Controller.ControllerType;
 @Controller(controllerType = ControllerType.BACKEND)
 public class IndexAction extends ApplicationBaseSimpleAction {
 
-	Logger log = Logger.getLogger(IndexAction.class);
+	protected static final Logger LOG = Logger.getLogger(IndexAction.class);
 
 }

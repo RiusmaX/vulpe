@@ -3,12 +3,11 @@
 #set( $symbol_escape = '\' )
 package ${package}.controller.action;
 
-import java.io.Serializable;
-
 import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
 
-import ${package}.commons.ApplicationConstants.Core;
-
+@SuppressWarnings("serial")
 public class ApplicationBaseSimpleAction extends AbstractVulpeBaseSimpleAction {
+
+	protected static final Logger LOG = Logger.getLogger(ApplicationBaseSimpleAction.class);
 	
 }
