@@ -18,6 +18,6 @@
 	elementId="vulpeButtonAddDetail_${actionConfig.formName}_${targetConfig.baseName}"
 	action="${actionConfig.primitiveActionName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}"
-	layer="vulpe${targetConfig.baseName}${index}DetailBody" />
+	layer="vulpeDetailBody_${targetConfig.baseName}${index}" />
 
 </p>

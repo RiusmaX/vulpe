@@ -32,7 +32,7 @@
 </c:if> 
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.refresh"
-	elementId="vulpeButtonPrepare"
+	elementId="vulpeButtonPrepare_${actionConfig.formName}"
 	action="${actionConfig.primitiveActionName}/prepare/ajax"
 	helpKey="vulpe.help.refresh"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
@@ -47,7 +47,7 @@
 </c:if> 
 <v:action validate="true" style="${style}"
 	labelKey="vulpe.label.tabularPost"
-	elementId="vulpeButtonTabularPost"
+	elementId="vulpeButtonTabularPost_${actionConfig.formName}"
 	action="${actionConfig.primitiveActionName}/tabularPost/ajax"
 	helpKey="vulpe.help.tabularPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"

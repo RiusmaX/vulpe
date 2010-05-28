@@ -5,12 +5,12 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/selectActions.jsp" %>
 	</div>
 	<div id="vulpeSelectForm">
-		<p class="selectForm">
+		<p class="vulpeSelectForm">
 			<jsp:include page="${actionConfig.viewPath}" />
 		</p>
 	</div>
 
-	<div id="vulpeSelectTable">
+	<div id="vulpeSelectTable_${actionConfig.formName}">
 		<p class="vulpeSelectTable">
 			<jsp:include page="${actionConfig.viewItemsPath}" />
 			<c:if test="${actionConfig.type == 'REPORT' && not empty downloadInfo}">
@@ -24,8 +24,8 @@
 		</p>
 	</div>
 
-	<p class="selectFooter">
-		<div id="vulpeSelectFooter">
-		</div>
-	</p>
+	<div id="vulpeSelectFooter">
+		<p class="vulpeSelectFooter">
+		</p>
+	</div>
 </div>

@@ -65,7 +65,7 @@
 
 	<bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
 		<property name="authenticationEntryPoint">
-			<bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+			<bean id="loginUrlAuthenticationEntryPoint" class="org.vulpe.security.web.authentication.VulpeLoginUrlAuthenticationEntryPoint">
 				<property name="loginFormUrl">
 					<value>/authenticator.action</value>
 				</property>

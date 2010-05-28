@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 	if (document.forms['${actionConfig.formName}']) {
 	<c:if test="${createShow}">
-		var buttonCreate = $("#vulpeButtonCreate");
+		var buttonCreate = $("#vulpeButtonCreate_${actionConfig.formName}");
 		if (buttonCreate) {
 			buttonCreate.${createShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){buttonCreate.click(); return false;});
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${createPostShow}">
-		var buttonCreatePost = $("#vulpeButtonCreatePost");
+		var buttonCreatePost = $("#vulpeButtonCreatePost_${actionConfig.formName}");
 		if (buttonCreatePost) {
 			buttonCreatePost.${createPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${updatePostShow}">
-		var buttonUpdatePost = $("#vulpeButtonUpdatePost");
+		var buttonUpdatePost = $("#vulpeButtonUpdatePost_${actionConfig.formName}");
 		if (buttonUpdatePost) {
 			buttonUpdatePost.${updatePostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
@@ -37,7 +37,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${tabularPostShow}">
-		var buttonTabularPost = $("#vulpeButtonTabularPost");
+		var buttonTabularPost = $("#vulpeButtonTabularPost_${actionConfig.formName}");
 		if (buttonTabularPost) {
 			buttonTabularPost.${tabularPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
@@ -45,7 +45,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${deleteShow}">
-		var buttonDelete = $("#vulpeButtonDelete");
+		var buttonDelete = $("#vulpeButtonDelete_${actionConfig.formName}");
 		if (buttonDelete) {
 			buttonDelete.${deleteShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
@@ -53,7 +53,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${prepareShow}">
-		var buttonPrepare = $("#vulpeButtonPrepare");
+		var buttonPrepare = $("#vulpeButtonPrepare_${actionConfig.formName}");
 		if (buttonPrepare) {
 			buttonPrepare.${prepareShow ? 'show' : 'hide'}();
 			<c:if test="${actionConfig.type == 'CRUD'}">
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${readShow}">
-		var buttonRead = $("#vulpeButtonRead");
+		var buttonRead = $("#vulpeButtonRead_${actionConfig.formName}");
 		if (buttonRead) {
 			buttonRead.${readShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
@@ -78,7 +78,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${clearShow}">
-		var buttonClear = $("#vulpeButtonClear");
+		var buttonClear = $("#vulpeButtonClear_${actionConfig.formName}");
 		if (buttonClear) {
 			buttonClear.${clearShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});

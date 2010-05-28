@@ -5,11 +5,11 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/reportActions.jsp" %>
 	</div>
 	<div id="vulpeReportBody">
-		<p class="selectForm">
+		<p class="vulpeReportForm">
 			<jsp:include page="${actionConfig.viewPath}" />
 		</p>
 	</div>
-	<div id="vulpeReportTable">
+	<div id="vulpeReportTable_${actionConfig.formName}">
 		<p class="vulpeReportTable">
 			<jsp:include page="${actionConfig.viewItemsPath}" />
 			<c:if test="${not empty downloadInfo}">

@@ -1372,6 +1372,9 @@ var vulpe = {
 			submitLoginForm: function(formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				var form = vulpe.util.getElement(formName);
 				if (vulpe.validate.validateLoginForm(formName)) {
+					if (vulpe.util.existsVulpePopups()) {
+						layer = vulpe.util.getLastVulpePopup();
+					}
 					form.action = vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck;
 					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);
 				}
