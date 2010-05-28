@@ -3,6 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.controller.action;
 
+import org.apache.log4j.Logger;
 import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
 
 @SuppressWarnings("serial")

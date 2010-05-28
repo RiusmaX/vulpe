@@ -4,6 +4,7 @@
 package ${package}.controller.action;
 
 import java.io.Serializable;
+import org.apache.log4j.Logger;
 
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 import org.vulpe.model.entity.VulpeBaseEntity;
