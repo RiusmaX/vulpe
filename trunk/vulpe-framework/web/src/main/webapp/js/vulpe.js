@@ -759,7 +759,7 @@ var vulpe = {
 			if (vulpe.util.existsVulpePopups()) {
 				parent += "#" + vulpe.util.getLastVulpePopup();
 			}
-			var fields = jQuery("[class*='required']", parent);
+			var fields = jQuery("[class*='vulpeRequired']", parent);
 			if (fields && fields.length > 0) {
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
@@ -1007,7 +1007,7 @@ var vulpe = {
 		 * returnFieldNameA=fieldNameA,returnFieldNameB=fieldNameB,returnFieldNameC=fieldNameC
 		 */
 		selectRow: function(row, values) {
-			var popupName = jQuery(row).parents('div.popup').attr('id');
+			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
 			var popup = vulpe.util.get(popupName);
 			var popupProperties = popup.attr('popupProperties');
 
@@ -1115,6 +1115,7 @@ var vulpe = {
 				vulpe.view.hidePopup(elementId); 
 				return false; 
 			});
+			vulpe.util.focusFirst("#" + elementId);
 			return popup;
 		},
 

@@ -17,7 +17,7 @@
 <c:set var="styleClass" value="${styleClass} focused"/>
 
 <c:if test="${required}">
-	<c:set var="styleClass" value="${styleClass} required"/>
+	<c:set var="styleClass" value="${styleClass} vulpeRequired"/>
 </c:if>
 
 <c:if test="${not empty vulpeShowAsMobile}">

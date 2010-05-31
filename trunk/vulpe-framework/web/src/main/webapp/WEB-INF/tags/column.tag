@@ -123,7 +123,7 @@
 					<c:set var="statusEL" value="${'${'}${status_table_tag}${'.count}'}"/>
 					<c:set var="key" value="${listName}[${util:eval(pageContext, statusEL) -1}].${property}"/>
 					<center>
-						<img border="0" src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="thumb"/>
+						<img border="0" src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="vulpeThumb"/>
 					</center>
 				</c:otherwise>
 				</c:choose>

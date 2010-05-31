@@ -86,50 +86,53 @@
 	</c:if>
 
 	<c:choose>
-		<c:when test="${empty icon}">
+		<c:when test="${!showButtonAsImage}">
 			<c:if test="${empty styleClass}">
-				<c:set var="styleClass" value="submit" />
+				<c:set var="styleClass" value="vulpeSubmit" />
 			</c:if>
 			<input style="${style}" id="${elementId}" type="button" value="<fmt:message key="${labelKey}"/>"
 				class="${styleClass}" onclick="${javascript}"
 				title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 		</c:when>
 		<c:otherwise>
-			<c:if test="${empty widthIcon}">
-				<c:set var="widthIcon" value="16" />
-			</c:if>
-			<c:if test="${empty heightIcon}">
-				<c:set var="heightIcon" value="16" />
-			</c:if>
-			<c:if test="${empty borderIcon}">
-				<c:set var="borderIcon" value="0" />
-			</c:if>
-			<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}">
-				<c:set var="icon" value="${pageContext.request.contextPath}/${icon}" />
+			<c:if test="${not empty icon}">
+				<c:if test="${empty widthIcon}">
+					<c:set var="widthIcon" value="16" />
+				</c:if>
+				<c:if test="${empty heightIcon}">
+					<c:set var="heightIcon" value="16" />
+				</c:if>
+				<c:if test="${empty borderIcon}">
+					<c:set var="borderIcon" value="0" />
+				</c:if>
+				<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}">
+					<c:set var="icon" value="${pageContext.request.contextPath}/${icon}" />
+				</c:if>
 			</c:if>
 			<c:choose>
 				<c:when test="${showButtonAsImage}">
 					<c:choose>
-					<c:when test="${fn:contains(javascript, 'Popup')}">
-					<c:if test="${empty iconClass}">
-						<c:set var="iconClass" value="vulpeImagePopupButton"/>
-					</c:if>
-					<img class="${iconClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
-						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
-						width="${widthIcon}" height="${heightIcon}" border="${borderIcon}" onclick="${javascript}"/><c:if
-						test="${showButtonText}">&nbsp;
+						<c:when test="${fn:contains(javascript, 'Popup')}">
+							<c:if test="${empty iconClass}">
+								<c:set var="iconClass" value="vulpeImagePopupButton" />
+							</c:if>
+							<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}"
+								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${widthIcon}"
+								height="${heightIcon}" border="${borderIcon}" onclick="${javascript}" />
+							<c:if test="${showButtonText}">&nbsp;
 						<fmt:message key="${labelKey}" />
-					</c:if>
-					</c:when>
-					<c:otherwise>
-					<a class="${styleClass}" style="${style}" id="${elementId}" accesskey="${accesskey}"
-						href="javascript:void(0);" onclick="${javascript}"> <img class="${iconClass}"
-						src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"
-						width="${widthIcon}" height="${heightIcon}" border="${borderIcon}" /><c:if
-						test="${showButtonText}">&nbsp;
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}"
+								href="javascript:void(0);" onclick="${javascript}"> <c:if test="${not empty icon}">
+								<img class="${iconClass}" src="${icon}"
+									title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${widthIcon}"
+									height="${heightIcon}" border="${borderIcon}" />
+							</c:if><c:if test="${showButtonText}">&nbsp;
 						<fmt:message key="${labelKey}" />
-					</c:if></a>
-					</c:otherwise>
+							</c:if></a>
+						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
@@ -145,7 +148,7 @@
 							</c:if></button>
 						</c:when>
 						<c:otherwise>
-							<c:set var="styleClass" value="submit" />
+							<c:set var="styleClass" value="vulpeSubmit" />
 							<input style="${style}" id="${elementId}" type="button" accesskey="${accesskey}"
 								value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}"
 								title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
@@ -156,7 +159,7 @@
 		</c:otherwise>
 	</c:choose>
 	<c:if test="${not empty hotKey}">
-	<script type="text/javascript">
+		<script type="text/javascript">
 	jQuery(document).bind('keydown', '${hotKey}', function (evt){
 		if (vulpe.util.get("${elementId}").css("style") !== "none") {
 			vulpe.util.get("${elementId}").click(); return false;
