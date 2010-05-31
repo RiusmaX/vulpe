@@ -15,7 +15,7 @@
 					vulpe.exception.setupError('${fieldName}', '${msgs}');
 				</c:forEach>
 				vulpe.exception.focusFirstError('${actionConfig.formName}');
-				$("#messages").removeClass("vulpeError");
+				$("#messages").removeClass("vulpeMessageError");
 				$("#messages").removeClass("vulpeMessageSuccess");
 				$("#messages").addClass("vulpeMessageValidation");
 				$("#messages").slideDown("slow");
@@ -79,12 +79,12 @@
 				$(document).ready(function() {
 					var msg = '<ul>';
 
-					$("#messages").removeClass("vulpeError");
+					$("#messages").removeClass("vulpeMessageError");
 					$("#messages").removeClass("vulpeMessageSuccess");
 					$("#messages").removeClass("vulpeMessageValidation");
 
 					<c:if test="${not empty actionErrors}">
-					$("#messages").addClass("vulpeError");
+					$("#messages").addClass("vulpeMessageError");
 						<c:forEach items="${actionErrors}" var="msg">
 					msg += '<li class="vulpeAlertError">${msg}</li>';
 						</c:forEach>

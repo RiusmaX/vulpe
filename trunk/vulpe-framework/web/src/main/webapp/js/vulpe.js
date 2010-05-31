@@ -788,9 +788,9 @@ var vulpe = {
 				if (vulpe.util.existsVulpePopups()) {
 					messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
 				}
-				$(messageLayer).removeClass("vulpeError");
-				$(messageLayer).removeClass("vulpeSuccess");
-				$(messageLayer).addClass("vulpeValidation");
+				$(messageLayer).removeClass("vulpeMessageError");
+				$(messageLayer).removeClass("vulpeMessageSuccess");
+				$(messageLayer).addClass("vulpeMessageValidation");
 				if (fields.length > 1) {
 					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
 				} else {
@@ -1751,9 +1751,9 @@ var vulpe = {
 				jQuery(vulpe.config.layers.messages).html("Erro fatal: " + e);
 			}
 			if (data.indexOf("\"vulpeAlertError\"") == -1) {
-				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeSuccess");
-				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeValidation");
-				jQuery(vulpe.config.layers.modalMessages).addClass("vulpeError");
+				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageSuccess");
+				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageValidation");
+				jQuery(vulpe.config.layers.modalMessages).addClass("vulpeMessageError");
 				vulpe.view.showMessages();
 			}
 		}

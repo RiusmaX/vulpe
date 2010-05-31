@@ -15,6 +15,7 @@
 }
 
 .vulpeButton {
+	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
 }
@@ -40,7 +41,7 @@
 	margin-bottom: 15px;
 }
 
-.vulpeError {
+.vulpeMessageError {
 	color: #D8000C;
 	background-color: #FFBABA;
 	background-image: url('../images/icons/message-error.png');
@@ -90,7 +91,7 @@
 	background: #eee;
 }
 
-.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeError,.vulpeMessageValidation {
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
 	background-repeat: no-repeat;
