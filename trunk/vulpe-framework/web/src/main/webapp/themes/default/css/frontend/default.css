@@ -42,7 +42,7 @@
 	margin-bottom: 15px;
 }
 
-.vulpeError {
+.vulpeMessageError {
 	color: #D8000C;
 	background-color: #FFBABA;
 	background-image: url('../../images/icons/message-error.png');
@@ -74,14 +74,14 @@
 	top: 3px;
 }
 
-.vulpeInfo,.vulpeSuccess,.vulpeWarning,.vulpeError,.vulpeValidation {
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
 	background-repeat: no-repeat;
 	background-position: 10px center;
 }
 
-.vulpeInfo {
+.vulpeMessageInfo {
 	color: #00529B;
 	background-color: #BDE5F8;
 	background-image: url('../../images/icons/message-info.png');
@@ -147,7 +147,7 @@
 	font-weight: normal;
 }
 
-.vulpeSuccess {
+.vulpeMessageSuccess {
 	color: #4F8A10;
 	background-color: #DFF2BF;
 	background-image: url('../../images/icons/message-success.png');
@@ -240,13 +240,13 @@
 	text-align: right;
 }
 
-.vulpeValidation {
+.vulpeMessageValidation {
 	color: #D63301;
 	background-color: #FFCCBA;
 	background-image: url('../../images/icons/message-validation.png');
 }
 
-.vulpeWarning {
+.vulpeMessageWarning {
 	color: #9F6000;
 	background-color: #FEEFB3;
 	background-image: url('../../images/icons/message-warning.png');
