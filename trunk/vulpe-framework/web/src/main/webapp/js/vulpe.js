@@ -76,6 +76,7 @@ var vulpe = {
 		os: {
 			iPhone: (BrowserDetect.OS == "iPhone/iPod")
 		},
+		order: new Array(),
 		pagingPage: '_paging.page',
 		prefix: {
 			popup: "Popup_"
@@ -919,20 +920,19 @@ var vulpe = {
 			}
 		},
 
-		sortTable: function(sortPropertyInfo, property) {
+		sortTable: function(formName, sortPropertyInfo, property) {
 			var columns = vulpe.util.getElement(sortPropertyInfo).value.split(',');
 			var oldDesc = false;
 			var order = '';
-			var i=0;
 			var value = '';
-			for(i=0; i<columns.length; i++) {
+			for (var i = 0; i < columns.length; i++) {
 				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' vulpeOrderDesc')) {
 					order = 'vulpeOrderDesc';
 					if (vulpe.util.trim(columns[i]) == property) {
 						if (value == '') {
-							value = vulpe.util.trim(columns[i]) + ' vulpeOrderDesc';
+							value = vulpe.util.trim(columns[i]) + ' desc';
 						} else {
-							value = value + ',' + vulpe.util.trim(columns[i]) + ' vulpeOrderDesc';
+							value = value + ',' + vulpe.util.trim(columns[i]) + ' desc';
 						}
 					} else {
 						oldDesc = true;
@@ -957,6 +957,11 @@ var vulpe = {
 			}
 			vulpe.util.getElement(sortPropertyInfo).value = value;
 			vulpe.util.getElement(sortPropertyInfo + '_' + property).className = order;
+			vulpe.config.order[sortPropertyInfo + '_' + property] = {property: sortPropertyInfo, value: value, css: order};
+			var buttonRead = $("#vulpeButtonRead_" + formName);
+			if (buttonRead) {
+				buttonRead.click();
+			}
 		},
 
 		setSelectCheckbox: function(select) {
@@ -1138,50 +1143,50 @@ var vulpe = {
 			globalsBeforeJs: new Array(),
 			globalsAfterJs: new Array(),
 
-			registerFunctions: function(v_array, v_callback, v_key, v_layerFields) {
-				if (typeof v_key == "undefined") {
+			registerFunctions: function(array, callback, key, layerFields) {
+				if (typeof key == "undefined") {
 					throw vulpe.config.messages.keyRequired;
 				}
-				if (typeof v_layerFields == "undefined") {
-					v_layerFields = '';
+				if (typeof layerFields == "undefined") {
+					layerFields = '';
 				}
 
-				var newFunction = {key: v_key, callback: v_callback, layerFields: v_layerFields, getKey: function() {return this.key + this.layerFields;}};
+				var newFunction = {key: key, callback: callback, layerFields: layerFields, getKey: function() {return this.key + this.layerFields;}};
 
 				var exists = false;
-				jQuery(v_array).each(function(i) {
+				jQuery(array).each(function(i) {
 					exists = this.getKey() == newFunction.getKey();
 					if (exists) {
-						v_array[i] = newFunction;
+						array[i] = newFunction;
 						return false;
 					}
 				});
 
 				if (!exists) {
-					v_array[v_array.length] = newFunction;
+					array[array.length] = newFunction;
 				}
 			},
 
-			registerGlobalsBeforeJs: function(v_callback, v_key, v_layerFields) {
-				vulpe.view.request.registerFunctions(vulpe.view.request.globalsBeforeJs, v_callback, v_key, v_layerFields);
+			registerGlobalsBeforeJs: function(callback, key, layerFields) {
+				vulpe.view.request.registerFunctions(vulpe.view.request.globalsBeforeJs, callback, key, layerFields);
 			},
 
-			registerGlobalsAfterJs: function(v_callback, v_key, v_layerFields) {
-				vulpe.view.request.registerFunctions(vulpe.view.request.globalsAfterJs, v_callback, v_key, v_layerFields);
+			registerGlobalsAfterJs: function(callback, key, layerFields) {
+				vulpe.view.request.registerFunctions(vulpe.view.request.globalsAfterJs, callback, key, layerFields);
 			},
 
-			removeFunctions: function(v_array, v_key, v_layerFields) {
-				if (typeof v_key == "undefined") {
+			removeFunctions: function(array, key, layerFields) {
+				if (typeof key == "undefined") {
 					throw vulpe.config.messages.keyRequired;
 				}
-				if (typeof v_layerFields == "undefined") {
-					v_layerFields = '';
+				if (typeof layerFields == "undefined") {
+					layerFields = '';
 				}
 
-				var key = v_key + v_layerFields;
+				var key = key + layerFields;
 
 				var indexs = new Array();
-				jQuery(v_array).each(function(i) {
+				jQuery(array).each(function(i) {
 					if (this.getKey() == key) {
 						indexs[indexs.length] = i;
 						return false;
@@ -1189,46 +1194,46 @@ var vulpe = {
 				});
 
 				jQuery(indexs).each(function(i) {
-					vulpe.util.removeArray(v_array, this);
+					vulpe.util.removeArray(array, this);
 				});
 			},
 
-			removeGlobalsBeforeJs: function(v_key, v_layerFields) {
-				vulpe.view.request.removeFunctions(vulpe.view.request.globalsBeforeJs, v_key, v_layerFields);
+			removeGlobalsBeforeJs: function(key, layerFields) {
+				vulpe.view.request.removeFunctions(vulpe.view.request.globalsBeforeJs, key, layerFields);
 			},
 
-			removeGlobalsAfterJs: function(v_key, v_layerFields) {
-				vulpe.view.request.removeFunctions(vulpe.view.request.globalsAfterJs, v_key, v_layerFields);
+			removeGlobalsAfterJs: function(key, layerFields) {
+				vulpe.view.request.removeFunctions(vulpe.view.request.globalsAfterJs, key, layerFields);
 			},
 
-			invokeFunctions: function(v_array, v_layerFields) {
-				if (typeof v_layerFields == "undefined")
-					v_layerFields = '';
+			invokeFunctions: function(array, layerFields) {
+				if (typeof layerFields == "undefined")
+					layerFields = '';
 
-				jQuery(v_array).each(function(i) {
-					if (this.layerFields == v_layerFields)
+				jQuery(array).each(function(i) {
+					if (this.layerFields == layerFields)
 						this.callback();
 				});
 			},
 
-			invokeGlobalsBeforeJs: function(v_layerFields) {
-				vulpe.view.request.invokeFunctions(vulpe.view.request.globalsBeforeJs, v_layerFields);
+			invokeGlobalsBeforeJs: function(layerFields) {
+				vulpe.view.request.invokeFunctions(vulpe.view.request.globalsBeforeJs, layerFields);
 			},
 
-			invokeGlobalsAfterJs: function(v_layerFields) {
-				vulpe.view.request.invokeFunctions(vulpe.view.request.globalsAfterJs, v_layerFields);
+			invokeGlobalsAfterJs: function(layerFields) {
+				vulpe.view.request.invokeFunctions(vulpe.view.request.globalsAfterJs, layerFields);
 			},
 
-			uploadAll: function(v_files, v_formName, v_layerFields, v_queryString, v_layer, v_validate, v_beforeJs, v_afterJs) {
+			uploadAll: function(files, formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
 				jQuery.uploadFiles({
-					files: v_files,
-					formName: v_formName,
-					layerFields: v_layerFields,
-					queryString: v_queryString,
-					layer: v_layer,
-					validate: v_validate,
-					beforeJs: v_beforeJs,
-					afterJs: v_afterJs
+					files: files,
+					formName: formName,
+					layerFields: layerFields,
+					queryString: queryString,
+					layer: layer,
+					validate: validate,
+					beforeJs: beforeJs,
+					afterJs: afterJs
 				});
 			},
 
@@ -1457,6 +1462,7 @@ var vulpe = {
 
 			submitMenu: function(url, beforeJs, afterJs) {
 				jQuery(vulpe.config.layers.messages).hide();
+				vulpe.config.order = new Array();
 				return vulpe.view.request.submitPage(vulpe.config.contextPath + url, '', 'body', beforeJs, afterJs);
 			},
 

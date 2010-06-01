@@ -357,6 +357,38 @@
 	cursor: wait
 }
 
+#paging {
+	
+}
+
+#pagingFirstPage {
+	background: url(../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingPreviousPage {
+	background: url(../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingNextPage {
+	background: url(../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingLastPage {
+	background: url(../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
 #poweredby {
 	font-size: 9px;
 }

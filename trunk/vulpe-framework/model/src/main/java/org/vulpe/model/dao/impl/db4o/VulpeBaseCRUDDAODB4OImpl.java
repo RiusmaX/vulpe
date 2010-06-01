@@ -19,9 +19,11 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Transient;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
@@ -234,8 +236,8 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
-					getClass().getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
+					getClass(), getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
@@ -256,7 +258,8 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	public boolean isNotEmpty(final Object value) {
 		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			if (value instanceof VulpeBaseEntity) {
-				return VulpeValidationUtil.getInstance().isNotEmpty(((VulpeBaseEntity) value).getId());
+				return VulpeValidationUtil.getInstance().isNotEmpty(
+						((VulpeBaseEntity) value).getId());
 			} else {
 				return true;
 			}
@@ -273,6 +276,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	public Query getQuery(final ENTITY entity) {
 		final Query query = getObjectContainer().query();
 		query.constrain(entity.getClass());
+		final Map<String, String> orderMap = new HashedMap();
 		if (StringUtils.isNotBlank(entity.getOrderBy())) {
 			final String[] orderArray = entity.getOrderBy().split(",");
 			for (int i = 0; i < orderArray.length; i++) {
@@ -285,6 +289,9 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 					order = order.replaceAll(" asc", "");
 				}
 				final String[] orderParts = order.split("\\.");
+				for (String string : orderParts) {
+					orderMap.put(string, string);
+				}
 				if (orderParts.length == 4) {
 					if (descending) {
 						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
@@ -319,13 +326,14 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 		}
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getInstance().getFields(getEntityClass())) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
+					field.getName());
 			if (LogicEntity.class.isAssignableFrom(entity.getClass())
 					&& field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
 			}
 			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
-			if (orderBy != null) {
+			if (orderBy != null && !orderMap.containsKey(field.getName())) {
 				if (orderBy.type().equals(OrderType.DESC)) {
 					query.descend(field.getName()).orderDescending();
 				} else {

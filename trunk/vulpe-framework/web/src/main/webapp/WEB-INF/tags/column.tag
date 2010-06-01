@@ -70,11 +70,11 @@
 			<c:choose>
 			<c:when test="${vulpeUseDB4O}">
 				<c:set var="idTh">id="${sortPropertyInfo_table_tag}_${property}" </c:set>
-				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${sortPropertyInfo_table_tag}', '${property}');">${label}</a></c:set>
+				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${actionConfig.formName}', '${sortPropertyInfo_table_tag}', '${property}');">${label}</a></c:set>
 			</c:when>
 			<c:otherwise>
 				<c:set var="idTh">id="${sortPropertyInfo_table_tag}_${alias}.${property}" </c:set>
-				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${sortPropertyInfo_table_tag}', '${alias}.${property}');">${label}</a></c:set>
+				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${actionConfig.formName}', '${sortPropertyInfo_table_tag}', '${alias}.${property}');">${label}</a></c:set>
 			</c:otherwise>
 			</c:choose>
 		</c:if>

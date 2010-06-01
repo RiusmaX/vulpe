@@ -139,7 +139,7 @@ $(document).ready(function() {
 		bgiframe: true,
 		modal: true,
 		buttons: {
-			'<fmt:message key="vulpe.label.vulpeButton.ok"/>': function() {
+			'<fmt:message key="vulpe.label.button.ok"/>': function() {
 				$(this).dialog('close');
 			}
 		}
@@ -156,17 +156,26 @@ $(document).ready(function() {
 			opacity: 0.5
 		},
 		buttons: {
-			'<fmt:message key="vulpe.label.vulpeButton.ok"/>': function() {
+			'<fmt:message key="vulpe.label.button.ok"/>': function() {
 				$(this).dialog('close');
 				if (vulpe.command) {
 					vulpe.command();
 				}
 			},
-			'<fmt:message key="vulpe.label.vulpeButton.cancel"/>': function() {
+			'<fmt:message key="vulpe.label.button.cancel"/>': function() {
 				$(this).dialog('close');
 			}
 		}
 	});
+	var columns = jQuery("th[id!='']", "#entities");
+	for (var i = 0; i < columns.length; i++) {
+		var column = columns[i];
+		var order = vulpe.config.order[column.id];
+		if (order) {
+			vulpe.util.get(order.property).val(order.value);
+			column.className = order.css;
+		}
+	}
 });
 </script>
 </c:if>

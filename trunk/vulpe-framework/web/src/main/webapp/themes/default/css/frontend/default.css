@@ -353,41 +353,40 @@
 	cursor: wait
 }
 
-#loginBox {
-	display: block;
-	background: #e1e4d7;
-	padding: 5px;
-}
-
-#loginBox label {
-	width: 60px;
-	font-weight: bold;
-	text-align: right;
-}
-
-#loginHolder {
-	width: 300px;
-	margin: 0 auto;
-	margin-top: 100px;
-	padding: 5px;
-	background: #fff;
-	border: 1px solid #030;
-}
-
-#logo {
-	background: url(../../images/background-all.png) repeat-x;
-	width: 100%;
-	height: 90px;
-}
-
 #menu {
 	width: auto;
 }
 
-#okHolder {
-	width: 310px;
-	margin: 0 auto;
-	margin-top: 20px;
+#paging {
+	
+}
+
+#pagingFirstPage {
+	background: url(../../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingPreviousPage {
+	background: url(../../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingNextPage {
+	background: url(../../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingLastPage {
+	background: url(../../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
 }
 
 #poweredby {

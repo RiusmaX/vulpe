@@ -330,7 +330,7 @@
 
 #pagingFirstPage {
 	background: url(../../images/icons/button-go-first.png) no-repeat;
-	display: block;
+	display: inline-table;
 	height: 16px;
 	width: 16px
 }
