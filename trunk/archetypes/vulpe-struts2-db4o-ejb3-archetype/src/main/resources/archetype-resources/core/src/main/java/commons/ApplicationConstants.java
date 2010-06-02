@@ -3,6 +3,6 @@
 #set( $symbol_escape = '\' )
 package ${package}.commons;
 
-public interface ApplicationConstants {
+public class ApplicationConstants {
 
 }
