@@ -86,15 +86,20 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						if (count > 1) {
 							detail.setNext(",");
 						}
-						final StringBuilder despiseFields = new StringBuilder();
-						for (String despise : detailConfig.despiseFields()) {
-							if (StringUtils.isBlank(despiseFields.toString())) {
-								despiseFields.append("\"" + despise + "\"");
-							} else {
-								despiseFields.append(", \"" + despise + "\"");
+						if (detailConfig.despiseFields().length > 1) {
+							final StringBuilder despiseFields = new StringBuilder();
+							for (String despise : detailConfig.despiseFields()) {
+								if (StringUtils.isBlank(despiseFields.toString())) {
+									despiseFields.append("\"" + despise + "\"");
+								} else {
+									despiseFields.append(", \"" + despise + "\"");
+								}
 							}
+							detail.setDespiseFields(despiseFields.toString());
+						} else {
+							detail.setDespiseFields(detailConfig.despiseFields()[0]);
 						}
-						detail.setDespiseFields(despiseFields.toString());
+
 						detail.setDetailNews(detailConfig.detailNews());
 						detail.setName(detailConfig.name());
 						detail.setParentDetailName(detailConfig.parentDetailName());
@@ -102,6 +107,9 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						detail.setView(detailConfig.view());
 						details.add(detail);
 						count--;
+					}
+					if (!details.isEmpty()) {
+						controller.setDetails(details);
 					}
 				}
 				if (control.controllerType().equals(ControllerType.SELECT)) {

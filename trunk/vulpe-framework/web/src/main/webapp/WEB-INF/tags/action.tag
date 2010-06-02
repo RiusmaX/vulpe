@@ -125,13 +125,7 @@
 						</c:when>
 						<c:otherwise>
 							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}"
-								href="javascript:void(0);" onclick="${javascript}"> <c:if test="${not empty icon}">
-								<img class="${iconClass}" src="${icon}"
-									title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${widthIcon}"
-									height="${heightIcon}" border="${borderIcon}" />
-							</c:if><c:if test="${showButtonText}">&nbsp;
-						<fmt:message key="${labelKey}" />
-							</c:if></a>
+								href="javascript:void(0);" onclick="${javascript}"> <c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${widthIcon}" height="${heightIcon}" border="${borderIcon}" /></c:if><c:if test="${showButtonText || empty icon}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>

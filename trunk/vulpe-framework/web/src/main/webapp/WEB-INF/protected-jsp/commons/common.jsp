@@ -97,12 +97,12 @@ $(document).ready(function() {
 
 	<c:if test="${!actionConfig.simple}">
 	<c:forEach items="${actionConfig.details}" var="detail">
-		<c:set var="btEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
-		<c:set var="bt" value="${util:eval(pageContext, btEL)}"/>
-		<c:if test="${bt}">
+		<c:set var="buttonDetailEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
+		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
+		<c:if test="${buttonDetail}">
 		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${actionConfig.formName}_${detail.baseName}");
 		if (buttonAddDetail_${detail.baseName}) {
-			buttonAddDetail_${detail.baseName}.${bt ? 'show' : 'hide'}();
+			buttonAddDetail_${detail.baseName}.${buttonDetail ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
 		}
 		</c:if>

@@ -32,12 +32,17 @@ public @interface VulpeValidate {
 	/**
 	 * Type of validation on input
 	 */
-	ValidateType type();
+	VulpeValidateType type();
 
 	/**
 	 * Scope of validation on input
 	 */
-	ValidateScope[] scope() default { ValidateScope.ALL };
+	VulpeValidateScope[] scope() default { VulpeValidateScope.ALL };
+
+	/**
+	 * Scope of required validation on input
+	 */
+	VulpeValidateScope[] requiredScope() default { VulpeValidateScope.ALL };
 
 	/**
 	 * Minimum value to input
@@ -79,15 +84,14 @@ public @interface VulpeValidate {
 	/**
 	 * Types for input validation
 	 */
-	enum ValidateType {
+	enum VulpeValidateType {
 		ARRAY, DATE, DOUBLE, EMAIL, FLOAT, INTEGER, LONG, NONE, STRING
 	}
 
 	/**
 	 * Scope for input validation
 	 */
-	enum ValidateScope {
+	enum VulpeValidateScope {
 		ALL, CRUD, DETAIL, SELECT, TABULAR
 	}
-
 }

@@ -26,7 +26,7 @@ public class DecoratedControllerDetail implements Serializable {
 	private String view;
 	private String propertyName;
 	private String parentDetailName;
-	private String next;
+	private String next = "";
 
 	public String getName() {
 		return name;

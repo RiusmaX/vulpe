@@ -6,11 +6,12 @@ Generating Controller: ${controller.controllerPackageName}.${controller.name}Sel
 <@javaSource name="${controller.moduleName}.src.main.java.${controller.controllerPackageName}.${controller.name}SelectAction">
 package ${controller.controllerPackageName};
 
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
+
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import ${controller.projectPackageName}.controller.action.ApplicationBaseAction;
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**
@@ -27,11 +28,15 @@ Generating Controller: ${controller.controllerPackageName}.${controller.name}CRU
 <@javaSource name="${controller.moduleName}.src.main.java.${controller.controllerPackageName}.${controller.name}CRUDAction">
 package ${controller.controllerPackageName};
 
+<#if controller.details?has_content>
+import org.vulpe.commons.annotations.DetailConfig;
+</#if>
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
+
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import ${controller.projectPackageName}.controller.action.ApplicationBaseAction;
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**
@@ -48,11 +53,12 @@ Generating Controller: ${controller.controllerPackageName}.${controller.name}Tab
 <@javaSource name="${controller.moduleName}.src.main.java.${controller.controllerPackageName}.${controller.name}TabularAction">
 package ${controller.controllerPackageName};
 
+import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Controller.ControllerType;
+
 import ${controller.packageName}.${controller.name};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Services;
 import ${controller.projectPackageName}.controller.action.ApplicationBaseAction;
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 
 
 /**

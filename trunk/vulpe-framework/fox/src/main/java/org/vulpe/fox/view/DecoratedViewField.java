@@ -50,6 +50,7 @@ public class DecoratedViewField implements Serializable {
 	private boolean required = false;
 	private String validateType;
 	private String validateScope;
+	private String validateRequiredScope = "ALL";
 	private String validateMask;
 	private String validateDatePattern;
 	private int validateMin;
@@ -352,6 +353,14 @@ public class DecoratedViewField implements Serializable {
 
 	public String getValidateScope() {
 		return validateScope;
+	}
+
+	public void setValidateRequiredScope(String validateRequiredScope) {
+		this.validateRequiredScope = validateRequiredScope;
+	}
+
+	public String getValidateRequiredScope() {
+		return validateRequiredScope;
 	}
 
 }

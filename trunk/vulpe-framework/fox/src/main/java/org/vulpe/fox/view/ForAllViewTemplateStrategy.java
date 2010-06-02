@@ -42,7 +42,7 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeValidate;
-import org.vulpe.view.annotations.input.VulpeValidate.ValidateScope;
+import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateScope;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
@@ -280,7 +280,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		if (validate != null) {
 			decoratedViewField.setValidateType(validate.type().name());
 			StringBuilder scope = new StringBuilder();
-			for (ValidateScope validadeScope : validate.scope()) {
+			for (VulpeValidateScope validadeScope : validate.scope()) {
 				if ("".equals(scope.toString())) {
 					scope.append(validadeScope.name());
 				} else {
@@ -288,6 +288,15 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				}
 			}
 			decoratedViewField.setValidateScope(scope.toString());
+			StringBuilder requiredScope = new StringBuilder();
+			for (VulpeValidateScope validadeRequiredScope : validate.requiredScope()) {
+				if ("".equals(scope.toString())) {
+					requiredScope.append(validadeRequiredScope.name());
+				} else {
+					requiredScope.append(",").append(validadeRequiredScope.name());
+				}
+			}
+			decoratedViewField.setValidateRequiredScope(requiredScope.toString());
 			switch (validate.type()) {
 			case STRING:
 				if (validate.minlength() > 0) {

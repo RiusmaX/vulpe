@@ -21,7 +21,7 @@ import java.util.List;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.view.annotations.input.VulpeValidate;
-import org.vulpe.view.annotations.input.VulpeValidate.ValidateType;
+import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
 
 /**
  * 
@@ -41,7 +41,7 @@ public class EntityValidator {
 		for (Field field : fields) {
 			final VulpeValidate validate = field.getAnnotation(VulpeValidate.class);
 			if (validate != null) {
-				if (validate.type().equals(ValidateType.STRING)) {
+				if (validate.type().equals(VulpeValidateType.STRING)) {
 					
 				}
 			}

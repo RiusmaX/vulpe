@@ -68,7 +68,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	enumeration="${field.enumeration}"
 	</#if>
 </#if>
-<#if field.required>
+<#if field.required && (field.validateRequiredScope == "ALL" || field.validateRequiredScope?contains("SELECT"))>
 	required="${field.required}"
 </#if>
 <#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("SELECT"))>
@@ -204,7 +204,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	enumeration="${field.enumeration}"
 	</#if>
 </#if>
-<#if field.required>
+<#if field.required && (field.validateRequiredScope == "ALL" || field.validateRequiredScope?contains("CRUD"))>
 	required="${field.required}"
 </#if>
 <#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("CRUD"))>
@@ -302,34 +302,34 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					enumeration="${detailField.enumeration}"
 					</#if>
 				</#if>
-				<#if field.required>
-					required="${field.required}"
+				<#if detailField.required && (detailField.validateRequiredScope == "ALL" || detailField.validateRequiredScope?contains("DETAIL"))>
+					required="${detailField.required}"
 				</#if>
-				<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("DETAIL"))>
-					validateType="${field.validateType}"
-					<#if field.validateMas?has_content>
-					validateMask="${field.validateMask}"
+				<#if detailField.validateType?has_content && detailField.validateScope?has_content && (detailField.validateScope == "ALL" || detailField.validateScope?contains("DETAIL"))>
+					validateType="${detailField.validateType}"
+					<#if detailField.validateMas?has_content>
+					validateMask="${detailField.validateMask}"
 					</#if>
-					<#if field.validateType == 'DATE'>
-					validateDatePattern="${field.validateDatePattern}"
+					<#if detailField.validateType == 'DATE'>
+					validateDatePattern="${detailField.validateDatePattern}"
 					</#if>
-					<#if field.validateType == 'STRING'>
-					<#if field.validateMinLength?has_content>
-					validateMinLength="${field.validateMinLength}"
+					<#if detailField.validateType == 'STRING'>
+					<#if detailField.validateMinLength?has_content>
+					validateMinLength="${detailField.validateMinLength}"
 					</#if>
-					<#if field.validateMaxLength?has_content>
-					validateMaxLength="${field.validateMaxLength}"
+					<#if detailField.validateMaxLength?has_content>
+					validateMaxLength="${detailField.validateMaxLength}"
 					</#if>
 					</#if>
-					<#if field.validateType == 'INTEGER' || field.validateType == 'LONG' || field.validateType == 'DOUBLE' || field.validateType == 'FLOAT'>
-					<#if field.validateRange?has_content>
-					validateRange="${field.validateRange}"
+					<#if detailField.validateType == 'INTEGER' || detailField.validateType == 'LONG' || detailField.validateType == 'DOUBLE' || detailField.validateType == 'FLOAT'>
+					<#if detailField.validateRange?has_content>
+					validateRange="${detailField.validateRange}"
 					</#if>
-					<#if field.validateMin?has_content>
-					validateMin="${field.validateMin}"
+					<#if detailField.validateMin?has_content>
+					validateMin="${detailField.validateMin}"
 					</#if>
-					<#if field.validateMax?has_content>
-					validateMax="${field.validateMax}"
+					<#if detailField.validateMax?has_content>
+					validateMax="${detailField.validateMax}"
 					</#if>
 					</#if>
 				</#if>
@@ -413,7 +413,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					enumeration="${field.enumeration}"
 					</#if>
 				</#if>
-				<#if field.required>
+				<#if field.required && (field.validateRequiredScope == "ALL" || field.validateRequiredScope?contains("TABULAR"))>
 					required="${field.required}"
 				</#if>
 				<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("TABULAR"))>

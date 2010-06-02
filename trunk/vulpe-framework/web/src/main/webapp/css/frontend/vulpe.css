@@ -456,10 +456,8 @@ td p {
 
 thead th,th,.vulpeTableHeader {
 	color: #333;
-	font-size: 12px;
 	font-weight: bold;
 }
 
 tfoot th,.vulpeTableFooter {
-	font-size: 12px;
 }

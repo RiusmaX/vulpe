@@ -7,17 +7,17 @@
 	<c:set var="index" value="_${util:eval(pageContext, indexEL)}_" />
 </c:if>
 
-<p><c:set var="btEL"
+<p><c:set var="buttonDetailEL"
 	value="${'${'}addDetailShow${targetConfig.baseName}${'}'}" /> <c:set
-	var="bt" value="${util:eval(pageContext, btEL)}" /> <c:set var="style"
-	value="display: none;" /> <c:if test="${bt}">
+	var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" /> <c:set var="style"
+	value="display: none;" /> <c:if test="${buttonDetail}">
 	<c:set var="style" value="display: inline;" />
 </c:if> <v:action
 	layerFields="${actionConfig.formName}_${targetConfig.baseName}${index}"
 	validate="false" style="${style}" labelKey="vulpe.label.addDetail"
 	elementId="vulpeButtonAddDetail_${actionConfig.formName}_${targetConfig.baseName}"
 	action="${actionConfig.primitiveActionName}/addDetail/ajax"
-	queryString="detail=${targetConfigPropertyName}"
+	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
 	layer="vulpeDetailBody_${targetConfig.baseName}${index}" />
 
 </p>
