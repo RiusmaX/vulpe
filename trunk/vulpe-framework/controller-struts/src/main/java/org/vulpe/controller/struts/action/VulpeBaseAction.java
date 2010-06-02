@@ -204,6 +204,13 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			try {
 				setEntity(getActionConfig().getEntityClass().newInstance());
+				if (getActionConfig().getDetails() != null
+						&& !getActionConfig().getDetails().isEmpty()) {
+					for (VulpeBaseDetailConfig detail : getActionConfig().getDetails()) {
+						setDetail(detail.getPropertyName());
+						onAddDetail();
+					}
+				}
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}

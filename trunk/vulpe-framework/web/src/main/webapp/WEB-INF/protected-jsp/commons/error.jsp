@@ -17,6 +17,7 @@
 </head>
 <body>
 <!--IS_EXCEPTION-->
+<div id="messageTitle" style="display: none"><fmt:message key="vulpe.error.internal.title" /></div>
 <div id="error">
 	<h1><fmt:message key="vulpe.error.internal" /></h1>
 	<div id="message">
