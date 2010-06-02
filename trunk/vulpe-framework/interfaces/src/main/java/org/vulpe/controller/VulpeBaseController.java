@@ -17,22 +17,82 @@ package org.vulpe.controller;
 
 public interface VulpeBaseController extends VulpeBaseSimpleController {
 
+	/**
+	 * Method to control add detail.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String addDetail();
 
+	/**
+	 * Method to create new record.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String create();
 
+	/**
+	 * Method to confirm create.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String createPost();
 
+	/**
+	 * Method to delete record.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String delete();
 
+	/**
+	 * Method to delete detail items.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String deleteDetail();
 
+	/**
+	 * Method to prepare show.
+	 * 
+	 * @since 1.0
+	 * @return Navigation
+	 */
 	String prepare();
 
+	/**
+	 * Method to confirm logic tabulate.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String tabularPost();
 
+	/**
+	 * Method to update.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String update();
 
+	/**
+	 * Method to confirm update.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
 	String updatePost();
 
+	/**
+	 * Checks if entity is valid.
+	 * 
+	 * @return
+	 */
+	boolean validateEntity();
 }

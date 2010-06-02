@@ -20,10 +20,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
 import org.vulpe.security.authentication.callback.UserAuthenticationCallback;
-import org.vulpe.security.commons.VulpeSecurityCallbackUtil;
+import org.vulpe.security.commons.VulpeSecurityUtil;
 
 @Service("UserAuthenticationCallback")
-public class UserAuthenticationCallbackPOJOImpl extends VulpeSecurityCallbackUtil implements UserAuthenticationCallback {
+public class UserAuthenticationCallbackPOJOImpl extends VulpeSecurityUtil implements UserAuthenticationCallback {
 
 	@Override
 	public boolean isAuthenticated() {

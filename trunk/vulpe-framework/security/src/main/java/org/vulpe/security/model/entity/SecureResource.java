@@ -20,7 +20,7 @@ import java.util.List;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
-import org.vulpe.security.authentication.SecurityConstants;
+import org.vulpe.security.commons.VulpeSecurityConstants;
 
 /**
  * Contains the information of a secured resource. They can be of two types. One
@@ -46,7 +46,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 	 * type of secured resource. One for function invocation and another for
 	 * method invocation.
 	 */
-	private String type = SecurityConstants.RESOURCE_TYPE_FI;
+	private String type = VulpeSecurityConstants.RESOURCE_TYPE_FI;
 
 	private List<SecureResourceRole> secureResourceRoles;
 
@@ -101,6 +101,21 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 	public SecureResource(final String resourceName, final String type) {
 		this.resourceName = resourceName;
 		this.type = type;
+	}
+
+	/**
+	 * Creates a SecureResource with <code>resourceName</code> and
+	 * <code>secureResourceRoles</code> params.
+	 * 
+	 * @param resourceName
+	 *            secured resource. It can be URL or method name.
+	 * @param secureResourceRoles
+	 *            roles to grant access
+	 */
+	public SecureResource(final String resourceName,
+			final List<SecureResourceRole> secureResourceRoles) {
+		this.resourceName = resourceName;
+		this.secureResourceRoles = secureResourceRoles;
 	}
 
 	public SecureResource() {

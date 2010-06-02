@@ -274,4 +274,5 @@ public interface VulpeBaseSimpleController {
 	 * @since 1.0
 	 */
 	<T> T getRequestAttribute(final String attributeName);
+
 }

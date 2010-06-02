@@ -21,12 +21,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
-import org.vulpe.security.commons.VulpeSecurityCallbackUtil;
+import org.vulpe.security.commons.VulpeSecurityUtil;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
 @Service("UserAuthenticatedCallback")
-public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityCallbackUtil implements UserAuthenticatedCallback {
+public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityUtil implements UserAuthenticatedCallback {
 
 	static final Logger LOG = Logger.getLogger(UserAuthenticatedCallbackPOJOImpl.class);
 

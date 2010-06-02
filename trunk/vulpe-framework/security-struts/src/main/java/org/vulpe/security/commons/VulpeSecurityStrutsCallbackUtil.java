@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
-public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityCallbackUtil {
+public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 
 	/**
 	 * Returns current HTTP Session.

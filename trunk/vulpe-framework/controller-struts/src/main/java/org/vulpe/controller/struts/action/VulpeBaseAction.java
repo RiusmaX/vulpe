@@ -44,6 +44,7 @@ import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseActionConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -167,11 +168,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		return getActionConfig().getDetailConfig(getDetail());
 	}
 
-	/**
-	 * Method to create new record.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#create()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -232,18 +232,20 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to confirm create.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#createPost()
 	 */
 	@ResetSession
 	public String createPost() {
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
-		if (!validateDetails()) {
+		if (!validateEntity()) {
+			showButtons(Action.CREATE);
+			return Forward.SUCCESS;
+		} else if (!validateDetails()) {
 			showButtons(Action.CREATE);
 			return Forward.SUCCESS;
 		}
@@ -307,11 +309,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to update.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#update()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -386,11 +387,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to confirm update.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#updatePost()
 	 */
 	@ResetSession
 	public String updatePost() {
@@ -464,11 +464,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to delete record.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#delete()
 	 */
 	@SkipValidation
 	public String delete() {
@@ -538,11 +537,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to delete detail items.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#deleteDetail()
 	 */
 	@SkipValidation
 	public String deleteDetail() {
@@ -787,11 +785,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to confirm logic tabulate.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#tabularPost()
 	 */
 	@ResetSession
 	public String tabularPost() {
@@ -854,11 +851,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to control add detail.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation.
+	 * @see org.vulpe.controller.VulpeBaseController#addDetail()
 	 */
 	@SkipValidation
 	public String addDetail() {
@@ -977,11 +973,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		// extension point
 	}
 
-	/**
-	 * Method to prepare show.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @since 1.0
-	 * @return Navigation
+	 * @see org.vulpe.controller.VulpeBaseController#prepare()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -1536,6 +1531,15 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 
 	public boolean isReportShow() {
 		return reportShow;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeBaseSimpleController#validateEntity()
+	 */
+	public boolean validateEntity() {
+		return EntityValidator.validate(getEntity());
 	}
 
 }

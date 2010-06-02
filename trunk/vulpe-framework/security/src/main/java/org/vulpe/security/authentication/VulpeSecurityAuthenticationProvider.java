@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
 import org.vulpe.security.authentication.model.services.UserAuthenticationService;
+import org.vulpe.security.commons.VulpeSecurityConstants;
 import org.vulpe.security.exception.VulpeSecurityException;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.entity.UserRole;
@@ -51,7 +52,7 @@ public class VulpeSecurityAuthenticationProvider implements
 					"Exception occurred while executing service", e);
 		}
 		UserDetails user = null;
-		if (authResponse.getAuthStatus() == SecurityConstants.AUTHENTICATION_SUCCESS) {
+		if (authResponse.getAuthStatus() == VulpeSecurityConstants.AUTHENTICATION_SUCCESS) {
 			final User userObj = authResponse.getUserDetails();
 			final List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 

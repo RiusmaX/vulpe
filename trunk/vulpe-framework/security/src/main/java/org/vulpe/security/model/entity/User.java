@@ -51,4 +51,25 @@ public class User extends BasicUser {
 		this.setActive(active);
 		this.setUserRoles(userRoles);
 	}
+
+	public User(final String username, final String password, final String name,
+			final String email, final List<UserRole> userRoles) {
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setName(name);
+		this.setEmail(email);
+		this.setActive(true);
+		this.setUserRoles(userRoles);
+	}
+
+	public User(final String username, final String password, final String name,
+			final List<UserRole> userRoles) {
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setName(name);
+		this.setEmail(username + "@localhost");
+		this.setActive(true);
+		this.setUserRoles(userRoles);
+	}
+
 }

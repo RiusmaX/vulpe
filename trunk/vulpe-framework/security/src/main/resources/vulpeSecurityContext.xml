@@ -55,11 +55,11 @@
 		</constructor-arg>
 	</bean>
 
-	<util:properties id="anonymousConfig" location="classpath:anonymousConfig.properties" />
+	<util:properties id="security" location="classpath:security.properties" />
 
 	<bean id="anonymousProcessingFilter" class="org.vulpe.security.web.authentication.VulpeAnonymousProcessingFilter">
 		<property name="anonymousConfig">
-			<ref local="anonymousConfig" />
+			<ref local="security" />
 		</property>
 	</bean>
 
@@ -127,7 +127,7 @@
 
 	<bean id="anonymousAuthenticationProvider" class="org.vulpe.security.authentication.VulpeAnonymousAuthenticationProvider">
 		<property name="anonymousConfig">
-			<ref local="anonymousConfig" />
+			<ref local="security" />
 		</property>
 	</bean>
 	<!-- END - AUTHENTICATION MANAGER -->

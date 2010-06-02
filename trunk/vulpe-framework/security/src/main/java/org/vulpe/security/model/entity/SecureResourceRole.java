@@ -26,6 +26,18 @@ public class SecureResourceRole extends AbstractVulpeBaseEntityImpl<Long> {
 
 	private Role role;
 
+	public SecureResourceRole() {
+		// default constructor
+	}
+
+	/**
+	 * 
+	 * @param role
+	 */
+	public SecureResourceRole(final Role role) {
+		this.role = role;
+	}
+
 	public Long getId() {
 		return this.id;
 	}

@@ -18,9 +18,9 @@ package org.vulpe.security.authentication.model.dao.impl.db4o;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseCRUDDAODB4OImpl;
-import org.vulpe.security.authentication.SecurityConstants;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
 import org.vulpe.security.authentication.model.dao.UserAuthenticationDAO;
+import org.vulpe.security.commons.VulpeSecurityConstants;
 import org.vulpe.security.exception.VulpeSecurityException;
 import org.vulpe.security.exception.VulpeSecurityInactiveUserException;
 import org.vulpe.security.exception.VulpeSecurityInvalidPasswordException;
@@ -62,7 +62,7 @@ public class UserAuthenticationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<User, Lo
 		if (!user.isActive()) {
 			throw new VulpeSecurityInactiveUserException(username);
 		}
-		return new AuthenticationResponse(SecurityConstants.AUTHENTICATION_SUCCESS, user);
+		return new AuthenticationResponse(VulpeSecurityConstants.AUTHENTICATION_SUCCESS, user);
 	}
 
 }

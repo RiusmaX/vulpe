@@ -359,56 +359,57 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 						query.descend(paramName).constrain(value).greater().equal();
 					}
 				}
-				if (String.class.isAssignableFrom(field.getType())) {
-					final Like like = field.getAnnotation(Like.class);
-					if (like == null) {
-						query.descend(field.getName()).constrain(value);
-					} else {
-						query.descend(field.getName()).constrain(value).like();
-					}
-				} else if (VulpeBaseEntity.class.isAssignableFrom(field.getType())) {
-					if (isNotEmpty(value)) {
-						query.descend(field.getName()).constrain(value);
-					}
-				} else if (List.class.isAssignableFrom(field.getType())) {
-					final List values = (List) value;
-					if (!values.isEmpty()) {
+				if (field.getModifiers() != VulpeConstants.Modifiers.TRANSIENT) {
+					if (String.class.isAssignableFrom(field.getType())) {
+						final Like like = field.getAnnotation(Like.class);
+						if (like == null) {
+							query.descend(field.getName()).constrain(value);
+						} else {
+							query.descend(field.getName()).constrain(value).like();
+						}
+					} else if (VulpeBaseEntity.class.isAssignableFrom(field.getType())) {
+						if (isNotEmpty(value)) {
+							query.descend(field.getName()).constrain(value);
+						}
+					} else if (List.class.isAssignableFrom(field.getType())) {
+						final List values = (List) value;
+						if (!values.isEmpty()) {
+							final Query subqy = query.descend(field.getName());
+							if (values.size() > 1) {
+								for (Object object : values) {
+									if (object instanceof Enum) {
+										subqy.descend(field.getName()).constrain(object.toString());
+									} else {
+										subqy.constrain(object);
+									}
+								}
+							} else {
+								final Object object = values.get(0);
+								if (object instanceof Enum) {
+									subqy.constrain(object.toString());
+								} else {
+									subqy.constrain(object);
+								}
+							}
+						}
+					} else if (Object[].class.isAssignableFrom(field.getType())) {
 						final Query subqy = query.descend(field.getName());
-						if (values.size() > 1) {
+						final Object[] values = (Object[]) value;
+						if (values.length > 1) {
 							for (Object object : values) {
 								if (object instanceof Enum) {
-									subqy.descend(field.getName()).constrain(object.toString());
+									subqy.constrain(object.toString());
 								} else {
 									subqy.constrain(object);
 								}
 							}
 						} else {
-							final Object object = values.get(0);
-							if (object instanceof Enum) {
-								subqy.constrain(object.toString());
-							} else {
-								subqy.constrain(object);
-							}
+							subqy.constrain(values[0].toString());
 						}
+					} else if (!field.isAnnotationPresent(Transient.class)
+							&& !field.getName().equals(DB4O.SELECTED)) {
+						query.descend(field.getName()).constrain(value);
 					}
-				} else if (Object[].class.isAssignableFrom(field.getType())) {
-					final Query subqy = query.descend(field.getName());
-					final Object[] values = (Object[]) value;
-					if (values.length > 1) {
-						for (Object object : values) {
-							if (object instanceof Enum) {
-								subqy.constrain(object.toString());
-							} else {
-								subqy.constrain(object);
-							}
-						}
-					} else {
-						subqy.constrain(values[0].toString());
-					}
-				} else if (field.getModifiers() != VulpeConstants.Modifiers.TRANSIENT
-						&& !field.isAnnotationPresent(Transient.class)
-						&& !field.getName().equals(DB4O.SELECTED)) {
-					query.descend(field.getName()).constrain(value);
 				}
 			}
 		}

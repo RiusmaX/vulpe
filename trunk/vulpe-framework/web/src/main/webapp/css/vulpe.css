@@ -52,10 +52,10 @@
 }
 
 .vulpeIconOff {
-	filter: progid :                                 DXImageTransform .                              
-		  Microsoft .    
+	filter: progid :                                   DXImageTransform .                               
+		   Microsoft .     
 		       
-		               Alpha(opacity =                                 40);
+		                Alpha(opacity =                                   40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
@@ -91,7 +91,8 @@
 	background: #eee;
 }
 
-.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation
+	{
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
 	background-repeat: no-repeat;
@@ -230,12 +231,11 @@
 	background: url(../images/tooltip/black-arrow-bottom.png);
 }
 
-
 /************************************************************************
 * CSS - Vulpe Framework	- ID Elements									*
 ************************************************************************/
 #body {
-
+	
 }
 
 #container {
@@ -457,12 +457,12 @@ td p {
 	margin-bottom: 5px;
 }
 
-th,.vulpeTableHeader {
+thead th,th,.vulpeTableHeader {
 	color: #333;
+	font-size: 12px;
 	font-weight: bold;
 }
 
-thead th,.vulpeTableHeader {
-	color: #333;
-	font-weight: bold;
+tfoot th,.vulpeTableFooter {
+	font-size: 12px;
 }

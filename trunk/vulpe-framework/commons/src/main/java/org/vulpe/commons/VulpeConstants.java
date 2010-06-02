@@ -24,276 +24,276 @@ import java.util.Locale;
  * @version 1.0
  * @since 1.0
  */
-public interface VulpeConstants {
+public class VulpeConstants {
 
-	String ACTIVE = "active";
-	String AUDIT = "audit";
-	String MAPPING_REQUEST = "MAPPING_REQUEST";
-	String FORM_REQUEST = "FORM_REQUEST";
-	Locale PORTUGUESE_LOCALE = new Locale("pt", "BR");
-	String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
-	String STRING_NULL = "";
-	String LITERAL_EMPTY_STRING = "0";
-	String LITERAL_POINT = ".";
-	String LITERAL_SIMPLE_SPACE = " ";
-	String SELECT_OPTION_BLANK = "";
-	String IS_EXCEPTION = "IS_EXCEPTION";
-	String JS_REDIRECT_LOGIN = "vulpe.view.redirectLogin()";
-	String AJAX = "ajax";
-	String ON_HIDE_MESSAGES = "onHideMessages";
-	String VULPE_SHOW_ACTIONS = "vulpeShowActions";
-	String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
-	String ERROR_GERAL = "vulpe.error.general";
-	String CLEAR_PARAMS = "vulpe.clearParams";
-	String PARAMS_SESSION_KEY = "_params";
-	String CACHED_CLASS = "vulpeCachedClass";
-	String CACHED_ENUM = "vulpeCachedEnum";
-	String CACHED_ENUM_ARRAY = "vulpeCachedEnumArray";
-	String FRAMEWORK = "vulpe";
-	String DOMAINS = "domains";
+	public static final String ACTIVE = "active";
+	public static final String AUDIT = "audit";
+	public static final String MAPPING_REQUEST = "MAPPING_REQUEST";
+	public static final String FORM_REQUEST = "FORM_REQUEST";
+	public static final Locale PORTUGUESE_LOCALE = new Locale("pt", "BR");
+	public static final String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
+	public static final String STRING_NULL = "";
+	public static final String LITERAL_EMPTY_STRING = "0";
+	public static final String LITERAL_POINT = ".";
+	public static final String LITERAL_SIMPLE_SPACE = " ";
+	public static final String SELECT_OPTION_BLANK = "";
+	public static final String IS_EXCEPTION = "IS_EXCEPTION";
+	public static final String JS_REDIRECT_LOGIN = "vulpe.view.redirectLogin()";
+	public static final String AJAX = "ajax";
+	public static final String ON_HIDE_MESSAGES = "onHideMessages";
+	public static final String VULPE_SHOW_ACTIONS = "vulpeShowActions";
+	public static final String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
+	public static final String ERROR_GERAL = "vulpe.error.general";
+	public static final String CLEAR_PARAMS = "vulpe.clearParams";
+	public static final String PARAMS_SESSION_KEY = "_params";
+	public static final String CACHED_CLASS = "vulpeCachedClass";
+	public static final String CACHED_ENUM = "vulpeCachedEnum";
+	public static final String CACHED_ENUM_ARRAY = "vulpeCachedEnumArray";
+	public static final String FRAMEWORK = "vulpe";
+	public static final String DOMAINS = "domains";
 
-	interface Expression {
-		String PROJECT_PACKAGE = "{project.package}";
+	public class Expression {
+		public static final String PROJECT_PACKAGE = "{project.package}";
 	}
 
-	interface Context {
-		String APPLICATION_SCOPE = "APPLICATION_SCOPE";
-		String PAGE_SCOPE = "PAGE_SCOPE";
-		String REQUEST_SCOPE = "REQUEST_SCOPE";
-		String SESSION_SCOPE = "SESSION_SCOPE";
-		String THEME = "vulpeTheme";
-		String I18N_MANAGER = "vulpeI18nManager";
-		String AUDIT_ENABLED = "vulpeAuditEnabled";
-		String SECURITY_ENABLED = "vulpeSecurityEnabled";
-		String FRONTEND_MENU_TYPE = "vulpeFrontendMenuType";
-		String BACKEND_MENU_TYPE = "vulpeBackendMenuType";
+	public class Context {
+		public static final String APPLICATION_SCOPE = "APPLICATION_SCOPE";
+		public static final String PAGE_SCOPE = "PAGE_SCOPE";
+		public static final String REQUEST_SCOPE = "REQUEST_SCOPE";
+		public static final String SESSION_SCOPE = "SESSION_SCOPE";
+		public static final String THEME = "vulpeTheme";
+		public static final String I18N_MANAGER = "vulpeI18nManager";
+		public static final String AUDIT_ENABLED = "vulpeAuditEnabled";
+		public static final String SECURITY_ENABLED = "vulpeSecurityEnabled";
+		public static final String FRONTEND_MENU_TYPE = "vulpeFrontendMenuType";
+		public static final String BACKEND_MENU_TYPE = "vulpeBackendMenuType";
 
-		interface View {
-			String BACKEND_CENTERED_LAYOUT = "vulpeBackendCenteredLayout";
-			String FRONTEND_CENTERED_LAYOUT = "vulpeFrontendCenteredLayout";
-			String SHOW_BUTTON_AS_IMAGE = "vulpeShowButtonAsImage";
-			String SHOW_BUTTON_ICON = "vulpeShowButtonIcon";
-			String SHOW_BUTTON_TEXT = "vulpeShowButtonText";
-			String WIDTH_BUTTON_ICON = "vulpeWidthButtonIcon";
-			String WIDTH_MOBILE_BUTTON_ICON = "vulpeWidthMobileButtonIcon";
-			String HEIGHT_BUTTON_ICON = "vulpeHeightButtonIcon";
-			String HEIGHT_MOBILE_BUTTON_ICON = "vulpeHeightMobileButtonIcon";
-			String MESSAGE_SLIDE_UP_TIME = "vulpeMessageSlideUpTime";
+		public class View {
+			public static final String BACKEND_CENTERED_LAYOUT = "vulpeBackendCenteredLayout";
+			public static final String FRONTEND_CENTERED_LAYOUT = "vulpeFrontendCenteredLayout";
+			public static final String SHOW_BUTTON_AS_IMAGE = "vulpeShowButtonAsImage";
+			public static final String SHOW_BUTTON_ICON = "vulpeShowButtonIcon";
+			public static final String SHOW_BUTTON_TEXT = "vulpeShowButtonText";
+			public static final String WIDTH_BUTTON_ICON = "vulpeWidthButtonIcon";
+			public static final String WIDTH_MOBILE_BUTTON_ICON = "vulpeWidthMobileButtonIcon";
+			public static final String HEIGHT_BUTTON_ICON = "vulpeHeightButtonIcon";
+			public static final String HEIGHT_MOBILE_BUTTON_ICON = "vulpeHeightMobileButtonIcon";
+			public static final String MESSAGE_SLIDE_UP_TIME = "vulpeMessageSlideUpTime";
 		}
 
-		String SHOW_AS_MOBILE = "vulpeShowAsMobile";
+		public static final String SHOW_AS_MOBILE = "vulpeShowAsMobile";
 
-		interface Mobile {
-			String VIEWPORT_WIDHT = "viewportWidth";
-			String VIEWPORT_HEIGHT = "viewportHeight";
-			String VIEWPORT_USER_SCALABLE = "viewportUserScalable";
-			String VIEWPORT_INITIAL_SCALE = "viewportInitialScale";
-			String VIEWPORT_MAXIMUM_SCALE = "viewportMaximumScale";
-			String VIEWPORT_MINIMUM_SCALE = "viewportMinimumScale";
+		public class Mobile {
+			public static final String VIEWPORT_WIDHT = "viewportWidth";
+			public static final String VIEWPORT_HEIGHT = "viewportHeight";
+			public static final String VIEWPORT_USER_SCALABLE = "viewportUserScalable";
+			public static final String VIEWPORT_INITIAL_SCALE = "viewportInitialScale";
+			public static final String VIEWPORT_MAXIMUM_SCALE = "viewportMaximumScale";
+			public static final String VIEWPORT_MINIMUM_SCALE = "viewportMinimumScale";
 		}
 
-		String VULPE_USE_DB4O = "vulpeUseDB4O";
+		public static final String VULPE_USE_DB4O = "vulpeUseDB4O";
 	}
 
-	interface Error {
-		String CONTROLLER = "vulpe.error.controller";
+	public class Error {
+		public static final String CONTROLLER = "vulpe.error.controller";
 	}
 
-	interface Upload {
-		String FILES = "org.vulpe.controller.struts.interceptor.UploadInterceptor.files";
+	public class Upload {
+		public static final String FILES = "org.vulpe.controller.struts.interceptor.UploadInterceptor.files";
 
-		interface Image {
-			String THUMB = "_thumb";
+		public class Image {
+			public static final String THUMB = "_thumb";
 		}
 	}
 
-	interface Action {
-		String CREATE = "create";
-		String CREATE_POST = "createPost";
-		String UPDATE = "update";
-		String VIEW = "view";
-		String UPDATE_POST = "updatePost";
-		String DELETE = "delete";
-		String READ = "read";
-		String PAGING = "paging";
-		String PREPARE = "prepare";
-		String ADD_DETAIL = "addDetail";
-		String TABULAR_POST = "tabularPost";
-		String FIND = "find";
-		String PERSIST = "persist";
-		String UPLOAD = "upload";
-		String DOWNLOAD = "download";
-		String ACTION_SUFFIX = ".action";
+	public class Action {
+		public static final String CREATE = "create";
+		public static final String CREATE_POST = "createPost";
+		public static final String UPDATE = "update";
+		public static final String VIEW = "view";
+		public static final String UPDATE_POST = "updatePost";
+		public static final String DELETE = "delete";
+		public static final String READ = "read";
+		public static final String PAGING = "paging";
+		public static final String PREPARE = "prepare";
+		public static final String ADD_DETAIL = "addDetail";
+		public static final String TABULAR_POST = "tabularPost";
+		public static final String FIND = "find";
+		public static final String PERSIST = "persist";
+		public static final String UPLOAD = "upload";
+		public static final String DOWNLOAD = "download";
+		public static final String ACTION_SUFFIX = ".action";
 
-		interface Validate {
-			interface Cardinality {
-				String ZERO = "0";
-				String ZERO_OR_MORE = "0..*";
-				String ONE = "1";
-				String ONE_OR_MORE = "1..*";
+		public class Validate {
+			public class Cardinality {
+				public static final String ZERO = "0";
+				public static final String ZERO_OR_MORE = "0..*";
+				public static final String ONE = "1";
+				public static final String ONE_OR_MORE = "1..*";
 			}
 		}
 
-		interface URI {
-			String AUTHENTICATOR = "/authenticator";
-			String AJAX = "/ajax";
-			String CREATE = "/create";
-			String CREATE_AJAX = "/create/ajax";
-			String CREATE_POST = "/createPost";
-			String UPDATE = "/update";
-			String UPDATE_AJAX = "/update/ajax";
-			String VIEW = "/view";
-			String VIEW_AJAX = "/view/ajax";
-			String UPDATE_POST = "/updatePost";
-			String UPDATE_POST_AJAX = "/updatePost/ajax";
-			String DELETE = "/delete";
-			String DELETE_AJAX = "/delete/ajax";
-			String READ = "/read";
-			String READ_AJAX = "/read/ajax";
-			String PAGING = "/paging";
-			String PAGING_AJAX = "/paging/ajax";
-			String PREPARE = "/prepare";
-			String PREPARE_AJAX = "/prepare/ajax";
-			String ADD_DETAIL = "/addDetail";
-			String TABULAR_POST = "/tabularPost";
-			String FIND = "/find";
-			String PERSIST = "/persist";
-			String UPLOAD = "/upload";
-			String DOWNLOAD = "/download";
+		public class URI {
+			public static final String AUTHENTICATOR = "/authenticator";
+			public static final String AJAX = "/ajax";
+			public static final String CREATE = "/create";
+			public static final String CREATE_AJAX = "/create/ajax";
+			public static final String CREATE_POST = "/createPost";
+			public static final String UPDATE = "/update";
+			public static final String UPDATE_AJAX = "/update/ajax";
+			public static final String VIEW = "/view";
+			public static final String VIEW_AJAX = "/view/ajax";
+			public static final String UPDATE_POST = "/updatePost";
+			public static final String UPDATE_POST_AJAX = "/updatePost/ajax";
+			public static final String DELETE = "/delete";
+			public static final String DELETE_AJAX = "/delete/ajax";
+			public static final String READ = "/read";
+			public static final String READ_AJAX = "/read/ajax";
+			public static final String PAGING = "/paging";
+			public static final String PAGING_AJAX = "/paging/ajax";
+			public static final String PREPARE = "/prepare";
+			public static final String PREPARE_AJAX = "/prepare/ajax";
+			public static final String ADD_DETAIL = "/addDetail";
+			public static final String TABULAR_POST = "/tabularPost";
+			public static final String FIND = "/find";
+			public static final String PERSIST = "/persist";
+			public static final String UPLOAD = "/upload";
+			public static final String DOWNLOAD = "/download";
 		}
 
-		interface Forward {
-			String SUCCESS = "success";
-			String JSON = "json";
-			String ACCESS_DENIED = "accessDenied";
-			String REPORT = "report";
-			String CREATE = "create";
-			String UPDATE = "update";
-			String READ = "read";
-			String BACKEND = "backend";
-			String FRONTEND = "frontend";
-			String UPLOAD = "upload";
-			String DOWNLOAD = "download";
+		public class Forward {
+			public static final String SUCCESS = "success";
+			public static final String JSON = "json";
+			public static final String ACCESS_DENIED = "accessDenied";
+			public static final String REPORT = "report";
+			public static final String CREATE = "create";
+			public static final String UPDATE = "update";
+			public static final String READ = "read";
+			public static final String BACKEND = "backend";
+			public static final String FRONTEND = "frontend";
+			public static final String UPLOAD = "upload";
+			public static final String DOWNLOAD = "download";
 
-			String ERRORS = "errors";
-			String MESSAGES = "messages";
+			public static final String ERRORS = "errors";
+			public static final String MESSAGES = "messages";
 		}
 
-		interface Shortcut {
-			String CLEAN = "vulpeShortcutActionClean";
-			String CREATE = "vulpeShortcutActionCreate";
-			String CREATE_POST = "vulpeShortcutActionCreatePost";
-			String PREPARE = "vulpeShortcutActionPrepare";
-			String READ = "vulpeShortcutActionRead";
-			String REPORT = "vulpeShortcutActionReport";
-			String UPDATE = "vulpeShortcutActionUpdate";
-			String UPDATE_POST = "vulpeShortcutActionUpdatePost";
-		}
-	}
-
-	interface View {
-		String APPLICATION_LOCALE = "vulpeApplicationLocale";
-		String LAYER_URL_BACK = "layerUrlBack";
-		String URL_BACK = "urlBack";
-		String LABEL = "label.";
-		String ENUM = ".enum.";
-		String LAYOUT = "layout.";
-		String AUTHENTICATOR = "authenticator";
-		String CURRENT_LAYOUT = "vulpeCurrentLayout";
-
-		interface Layout {
-			String UC = ".uc";
-			String MAIN = ".main";
-			String DETAIL = ".detail";
-			String TABULAR = ".tabular";
-			String CRUD = ".crud";
-			String REPORT = ".report";
-			String OTHER = ".other";
-			String SELECT = ".select";
-			String TABLE = ".table";
-			String FORM = ".form";
-			String FRONTEND = "frontend";
-			String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
-			String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
-			String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
-			String PROTECTED_JSP_COMMON = PROTECTED_JSP + "commons/";
-			String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
-			String JSP = ".jsp";
-			String SUFFIX_JSP_TABULAR = "Tabular.jsp";
-			String SUFFIX_JSP_OTHER = ".jsp";
-			String SUFFIX_JSP_FRONTEND = ".jsp";
-			String SUFFIX_JSP_DETAIL = "Detail.jsp";
-			String SUFFIX_JSP_SELECT = "Select.jsp";
-			String SUFFIX_JSP_SELECT_ITEMS = "SelectItems.jsp";
-			String SUFFIX_JSP_REPORT = "Report.jsp";
-			String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
-			String SUFFIX_JSP_CRUD = "CRUD.jsp";
-
-			String BODY_JSP = "body.jsp";
-			String BODY_CRUD_JSP = "crud.jsp";
-			String BODY_CRUD_ACTIONS_JSP = "crudActions.jsp";
-			String BODY_SELECT_JSP = "select.jsp";
-			String BODY_SELECT_ACTIONS_JSP = "selectActions.jsp";
-			String BODY_TABULAR_JSP = "tabular.jsp";
-			String BODY_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
-
-			String TARGET_CONFIG = "targetConfig";
-			String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
-			String DETAIL_ITEM = "_item";
-
-			String ADD_DETAIL_SHOW = "addDetailShow";
-			String DELETE_SHOW = "deleteShow";
-		}
-
-		interface Logic {
-			String BACKEND = "backend.";
-			String FRONTEND = "frontend.";
-			String REPORT = ".report";
-			String CRUD = ".crud";
-			String SELECTION = ".select";
-			String TABULAR = ".tabular";
-			String AJAX = ".ajax";
-		}
-
-		interface Report {
-			String PATH = "/WEB-INF/reports/";
-			String JASPER = ".jasper";
+		public class Shortcut {
+			public static final String CLEAN = "vulpeShortcutActionClean";
+			public static final String CREATE = "vulpeShortcutActionCreate";
+			public static final String CREATE_POST = "vulpeShortcutActionCreatePost";
+			public static final String PREPARE = "vulpeShortcutActionPrepare";
+			public static final String READ = "vulpeShortcutActionRead";
+			public static final String REPORT = "vulpeShortcutActionReport";
+			public static final String UPDATE = "vulpeShortcutActionUpdate";
+			public static final String UPDATE_POST = "vulpeShortcutActionUpdatePost";
 		}
 	}
 
-	interface Security {
-		String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
-		String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
-		String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
-	}
+	public class View {
+		public static final String APPLICATION_LOCALE = "vulpeApplicationLocale";
+		public static final String LAYER_URL_BACK = "layerUrlBack";
+		public static final String URL_BACK = "urlBack";
+		public static final String LABEL = "label.";
+		public static final String ENUM = ".enum.";
+		public static final String LAYOUT = "layout.";
+		public static final String AUTHENTICATOR = "authenticator";
+		public static final String CURRENT_LAYOUT = "vulpeCurrentLayout";
 
-	interface Model {
+		public class Layout {
+			public static final String UC = ".uc";
+			public static final String MAIN = ".main";
+			public static final String DETAIL = ".detail";
+			public static final String TABULAR = ".tabular";
+			public static final String CRUD = ".crud";
+			public static final String REPORT = ".report";
+			public static final String OTHER = ".other";
+			public static final String SELECT = ".select";
+			public static final String TABLE = ".table";
+			public static final String FORM = ".form";
+			public static final String FRONTEND = "frontend";
+			public static final String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
+			public static final String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
+			public static final String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
+			public static final String PROTECTED_JSP_COMMON = PROTECTED_JSP + "commons/";
+			public static final String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
+			public static final String JSP = ".jsp";
+			public static final String SUFFIX_JSP_TABULAR = "Tabular.jsp";
+			public static final String SUFFIX_JSP_OTHER = ".jsp";
+			public static final String SUFFIX_JSP_FRONTEND = ".jsp";
+			public static final String SUFFIX_JSP_DETAIL = "Detail.jsp";
+			public static final String SUFFIX_JSP_SELECT = "Select.jsp";
+			public static final String SUFFIX_JSP_SELECT_ITEMS = "SelectItems.jsp";
+			public static final String SUFFIX_JSP_REPORT = "Report.jsp";
+			public static final String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
+			public static final String SUFFIX_JSP_CRUD = "CRUD.jsp";
 
-		interface Entity {
-			String SECURITY_ROLE_PREFIX = "ROLE_";
+			public static final String BODY_JSP = "body.jsp";
+			public static final String BODY_CRUD_JSP = "crud.jsp";
+			public static final String BODY_CRUD_ACTIONS_JSP = "crudActions.jsp";
+			public static final String BODY_SELECT_JSP = "select.jsp";
+			public static final String BODY_SELECT_ACTIONS_JSP = "selectActions.jsp";
+			public static final String BODY_TABULAR_JSP = "tabular.jsp";
+			public static final String BODY_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
+
+			public static final String TARGET_CONFIG = "targetConfig";
+			public static final String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
+			public static final String DETAIL_ITEM = "_item";
+
+			public static final String ADD_DETAIL_SHOW = "addDetailShow";
+			public static final String DELETE_SHOW = "deleteShow";
 		}
 
-		interface DAO {
+		public class Logic {
+			public static final String BACKEND = "backend.";
+			public static final String FRONTEND = "frontend.";
+			public static final String REPORT = ".report";
+			public static final String CRUD = ".crud";
+			public static final String SELECTION = ".select";
+			public static final String TABULAR = ".tabular";
+			public static final String AJAX = ".ajax";
+		}
 
-			interface DB4O {
-				String DATABASE_NAME = "vulpe.fox";
-				String DATABASE_DIRECTORY = "/db4o/data";
-				int DATABASE_PORT = 7777;
-				String STATUS = "status";
-				String SELECTED = "selected";
+		public class Report {
+			public static final String PATH = "/WEB-INF/reports/";
+			public static final String JASPER = ".jasper";
+		}
+	}
+
+	public class Security {
+		public static final String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
+		public static final String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
+		public static final String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
+	}
+
+	public class Model {
+
+		public class Entity {
+			public static final String SECURITY_ROLE_PREFIX = "ROLE_";
+		}
+
+		public class DAO {
+
+			public class DB4O {
+				public static final String DATABASE_NAME = "vulpe.fox";
+				public static final String DATABASE_DIRECTORY = "/db4o/data";
+				public static final int DATABASE_PORT = 7777;
+				public static final String STATUS = "status";
+				public static final String SELECTED = "selected";
 			}
 
-			interface JPA {
+			public class JPA {
 
 			}
 		}
 
-		interface Services {
+		public class Services {
 
 		}
 	}
 
-	interface Modifiers {
-		int TRANSIENT = 130;
+	public class Modifiers {
+		public static final int TRANSIENT = 130;
 	}
 }
