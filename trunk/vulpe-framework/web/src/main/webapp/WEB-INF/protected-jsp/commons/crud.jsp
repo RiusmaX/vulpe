@@ -21,6 +21,8 @@
 	</c:if>
 
 	<div id="vulpeCRUDBody">
+		<c:remove var="targetConfig" scope="request"/>
+		<c:remove var="targetConfigPropertyName" scope="request"/>
 		<jsp:include page="${actionConfig.viewPath}" />
 	</div>
 
@@ -34,8 +36,8 @@
 					<jsp:param name="detailViewPath" value="${detail.viewPath}"/>
 				</jsp:include>
 
-				<c:set var="targetConfig" value="${null}" scope="request"/>
-				<c:set var="targetConfigPropertyName" value="${null}" scope="request"/>
+				<c:remove var="targetConfig" scope="request"/>
+				<c:remove var="targetConfigPropertyName" scope="request"/>
 			</c:if>
 		</c:forEach>
 	</c:if>

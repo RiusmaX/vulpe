@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants;
@@ -51,9 +52,24 @@ public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResourc
 		final SecureResource secureResource = secureObjects.get(securityObjectName);
 		if (secureResource == null) {
 			for (SecureResource secureResource2 : secureObjects.values()) {
-				if (securityObjectName.contains(secureResource2.getResourceName().replaceAll("\\*",
-						""))) {
-					return secureResource2;
+				if (StringUtils.isNotBlank(secureResource2.getResourceName())) {
+					if (secureResource2.getResourceName().startsWith("*")
+							&& secureResource2.getResourceName().endsWith("*")) {
+						if (securityObjectName.contains(secureResource2.getResourceName()
+								.replaceAll("\\*", ""))) {
+							return secureResource2;
+						}
+					} else if (secureResource2.getResourceName().startsWith("*")) {
+						if (securityObjectName.endsWith(secureResource2.getResourceName()
+								.replaceAll("\\*", ""))) {
+							return secureResource2;
+						}
+					} else {
+						if (securityObjectName.startsWith(secureResource2.getResourceName()
+								.replaceAll("\\*", ""))) {
+							return secureResource2;
+						}
+					}
 				}
 			}
 		}
@@ -64,7 +80,8 @@ public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResourc
 	 * (non-Javadoc)
 	 * 
 	 * @seeorg.vulpe.security.authorization.model.dao. AuthorizationDAO
-	 * #getSecureObjectRoles(org.vulpe.security.authentication .model.entity.SecureResource)
+	 * #getSecureObjectRoles(org.vulpe.security.authentication
+	 * .model.entity.SecureResource)
 	 */
 	public List<Role> getSecureObjectRoles(final SecureResource secureObject) {
 		return secureObjectToRoles.get(secureObject);
@@ -80,8 +97,8 @@ public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResourc
 		if (secureResources != null) {
 			for (SecureResource secureResource : secureResources) {
 				secureObjects.put(secureResource.getResourceName(), secureResource);
-				if (VulpeValidationUtil.getInstance()
-						.isNotEmpty(secureResource.getSecureResourceRoles())) {
+				if (VulpeValidationUtil.getInstance().isNotEmpty(
+						secureResource.getSecureResourceRoles())) {
 					final List<Role> roles = new ArrayList<Role>();
 					for (SecureResourceRole secureResourceRole : secureResource
 							.getSecureResourceRoles()) {
