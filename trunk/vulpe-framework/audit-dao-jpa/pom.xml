@@ -33,6 +33,11 @@
 			<artifactId>vulpe-model</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-model-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 </project>

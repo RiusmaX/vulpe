@@ -17,6 +17,8 @@
 		<module>annotations</module>
 		<module>commons</module>
 		<module>model</module>
+		<module>model-db4o</module>
+		<module>model-jpa</module>
 		<module>controller</module>
 		<module>controller-struts</module>
 		<module>audit</module>

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -39,6 +41,8 @@ import org.vulpe.security.model.entity.SecureResource;
 public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		FilterInvocationSecurityMetadataSource {
 
+	@Qualifier("AuthorizationService")
+	@Autowired
 	private AuthorizationService authorizationService;
 
 	public Collection<ConfigAttribute> lookupAttributes(final String url) {

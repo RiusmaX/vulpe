@@ -35,6 +35,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-model-db4o</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-dao-db4o</artifactId>
 			<version>1.0</version>
 		</dependency>

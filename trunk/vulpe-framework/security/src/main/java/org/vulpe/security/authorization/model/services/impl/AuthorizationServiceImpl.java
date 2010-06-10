@@ -19,11 +19,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.vulpe.security.authorization.model.dao.AuthorizationDAO;
 import org.vulpe.security.authorization.model.services.AuthorizationService;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
 
+@Service("AuthorizationService")
 public class AuthorizationServiceImpl implements AuthorizationService {
 
 	@Qualifier("AuthorizationDAO")

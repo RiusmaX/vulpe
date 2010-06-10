@@ -3,6 +3,8 @@ package org.vulpe.security.authentication;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +34,8 @@ import org.vulpe.security.model.entity.UserRole;
 public class VulpeSecurityAuthenticationProvider implements
 		AuthenticationProvider {
 
+	@Qualifier("UserAuthenticationService")
+	@Autowired
 	private UserAuthenticationService authenticationService;
 
 	/*

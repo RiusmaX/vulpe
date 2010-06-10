@@ -17,6 +17,7 @@ package org.vulpe.security.authentication.model.services.impl.pojo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.vulpe.security.authentication.data.AuthenticationResponse;
 import org.vulpe.security.authentication.model.dao.UserAuthenticationDAO;
 import org.vulpe.security.authentication.model.services.UserAuthenticationService;
@@ -30,6 +31,7 @@ import org.vulpe.security.exception.VulpeSecurityException;
  * @since 1.0
  * 
  */
+@Service("UserAuthenticationService")
 public class UserAuthenticationServicePOJOImpl implements UserAuthenticationService {
 
 	@Qualifier("UserAuthenticationDAO")

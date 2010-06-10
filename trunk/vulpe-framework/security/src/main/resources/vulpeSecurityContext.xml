@@ -23,7 +23,8 @@
 			<security:filter-chain pattern="/themes/**" filters="none" />
 			<security:filter-chain pattern="/authenticator.action" filters="none" />
 			<security:filter-chain pattern="/authenticator/ajax.action" filters="none" />
-			<security:filter-chain pattern="/WEB-INF/protected-jsp/security/login.jsp" filters="none" />
+			<security:filter-chain pattern="/WEB-INF/protected-jsp/security/login.jsp"
+				filters="none" />
 			<security:filter-chain pattern="/j_spring_security_check*"
 				filters="securityContextPersistenceFilter,usernamePasswordAuthenticationFilter" />
 			<security:filter-chain pattern="/**"
@@ -102,15 +103,7 @@
 		</property>
 		<property name="securityMetadataSource">
 			<bean id="dbdrivenFilterInvocationDefinitionSource"
-				class="org.vulpe.security.web.access.intercept.DatabaseDrivenFilterInvocationDefinitionSource">
-				<property name="authorizationService">
-					<bean id="authorizationService" class="org.vulpe.security.authorization.model.services.impl.AuthorizationServiceImpl">
-						<property name="authorizationDAO">
-							<bean id="authorizationDAO" class="org.vulpe.security.authorization.model.dao.impl.db4o.AuthorizationDAOImpl" />
-						</property>
-					</bean>
-				</property>
-			</bean>
+				class="org.vulpe.security.web.access.intercept.DatabaseDrivenFilterInvocationDefinitionSource" />
 		</property>
 	</bean>
 
@@ -120,16 +113,7 @@
 		<security:authentication-provider ref="anonymousAuthenticationProvider" />
 	</security:authentication-manager>
 
-	<bean id="daoAuthenticationProvider" class="org.vulpe.security.authentication.VulpeSecurityAuthenticationProvider">
-		<property name="authenticationService">
-			<bean id="userAuthenticationService"
-				class="org.vulpe.security.authentication.model.services.impl.pojo.UserAuthenticationServicePOJOImpl">
-				<property name="authenticationDAO">
-					<bean id="userAuthenticationDAO" class="org.vulpe.security.authentication.model.dao.impl.db4o.UserAuthenticationDAOImpl" />
-				</property>
-			</bean>
-		</property>
-	</bean>
+	<bean id="daoAuthenticationProvider" class="org.vulpe.security.authentication.VulpeSecurityAuthenticationProvider" />
 
 	<bean id="anonymousAuthenticationProvider" class="org.vulpe.security.authentication.VulpeAnonymousAuthenticationProvider">
 		<property name="anonymousConfig">
