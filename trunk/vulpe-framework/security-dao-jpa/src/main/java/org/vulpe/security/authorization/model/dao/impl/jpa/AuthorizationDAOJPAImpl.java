@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authorization.model.dao.impl.db4o;
+package org.vulpe.security.authorization.model.dao.impl.jpa;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.cache.VulpeCacheHelper;
-import org.vulpe.model.dao.impl.db4o.VulpeBaseCRUDDAODB4OImpl;
+import org.vulpe.model.dao.impl.jpa.VulpeBaseCRUDDAOJPAImpl;
 import org.vulpe.security.authorization.model.dao.AuthorizationDAO;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
@@ -34,7 +34,7 @@ import org.vulpe.security.model.entity.SecureResourceRole;
 
 @Repository("AuthorizationDAO")
 @Transactional
-public class AuthorizationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<SecureResource, Long> implements
+public class AuthorizationDAOJPAImpl extends VulpeBaseCRUDDAOJPAImpl<SecureResource, Long> implements
 		AuthorizationDAO {
 
 	private transient final Map<String, SecureResource> secureObjects = new HashMap<String, SecureResource>();

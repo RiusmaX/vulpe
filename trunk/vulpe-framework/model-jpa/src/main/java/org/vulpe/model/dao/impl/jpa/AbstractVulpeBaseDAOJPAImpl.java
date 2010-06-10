@@ -134,4 +134,5 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 		}
 		return null;
 	}
+
 }

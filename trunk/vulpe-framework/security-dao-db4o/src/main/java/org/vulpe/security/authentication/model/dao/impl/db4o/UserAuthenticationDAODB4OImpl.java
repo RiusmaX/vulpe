@@ -39,7 +39,7 @@ import org.vulpe.security.model.entity.User;
  */
 @Repository("UserAuthenticationDAO")
 @Transactional
-public class UserAuthenticationDAOImpl extends VulpeBaseCRUDDAODB4OImpl<User, Long> implements
+public class UserAuthenticationDAODB4OImpl extends VulpeBaseCRUDDAODB4OImpl<User, Long> implements
 		UserAuthenticationDAO {
 
 	/*
