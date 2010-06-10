@@ -27,6 +27,8 @@ import javax.servlet.ServletResponse;
 import ognl.OgnlRuntime;
 
 import org.apache.struts2.dispatcher.FilterDispatcher;
+import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.struts.util.GenericsNullHandler;
 import org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer;
 import org.vulpe.controller.struts.util.GenericsPropertyAccessor;
@@ -82,7 +84,8 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 			final FilterChain chain) throws IOException, ServletException {
 		try {
 			StrutsControllerUtil.setServletContext(this.filterConfig.getServletContext());
-
+			final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+			cache.put(View.APPLICATION_LOCALE, request.getLocale());
 			request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 		} finally {

@@ -73,8 +73,6 @@ public class MultipleResourceBundle extends ResourceBundle {
 		List<ResourceBundle> list = cache.get(BUNDLES_KEY);
 		if (list == null || checkLocale) {
 			VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
-			// final String modules[] = servletContext.getInitParameter(
-			// "project.bundle.modules").split(",");
 			final String modules[] = project.i18n();
 			list = new ArrayList<ResourceBundle>(modules.length);
 			for (String module : modules) {

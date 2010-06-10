@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.struts.util;
+package org.vulpe.controller.vraptor.util;
 
 import javax.servlet.ServletContext;
 
@@ -24,25 +24,23 @@ import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ControllerUtil;
 
-import com.opensymphony.xwork2.ActionContext;
-
 /**
  * Utility class to controller
  * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * 
  */
-public class StrutsControllerUtil extends ControllerUtil {
+public class VRaptorControllerUtil extends ControllerUtil {
 
-	private static final Logger LOG = Logger.getLogger(StrutsControllerUtil.class);
-
+	private static final Logger LOG = Logger.getLogger(VRaptorControllerUtil.class);
+	
 	/**
-	 * Returns instance of StrutsControllerUtil
+	 * Returns instance of VRaptorControllerUtil
 	 */
-	public static StrutsControllerUtil getInstance() {
+	public static VRaptorControllerUtil getInstance() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(StrutsControllerUtil.class)) {
-			cache.put(ControllerUtil.class, new StrutsControllerUtil());
+		if (!cache.contains(VRaptorControllerUtil.class)) {
+			cache.put(ControllerUtil.class, new VRaptorControllerUtil());
 		}
 		return cache.get(ControllerUtil.class);
 	}
@@ -50,7 +48,7 @@ public class StrutsControllerUtil extends ControllerUtil {
 	/**
 	 *
 	 */
-	protected StrutsControllerUtil() {
+	protected VRaptorControllerUtil() {
 		// default constructor
 	}
 
@@ -59,7 +57,8 @@ public class StrutsControllerUtil extends ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentActionName() {
-		String base = StringUtils.replace(ActionContext.getContext().getName(), "/", ".");
+		//String base = StringUtils.replace(ActionContext.getContext().getName(), "/", ".");
+		String base = "";
 		if (base.contains(Logic.AJAX)) {
 			base = base.replace(Logic.AJAX, "");
 		}
@@ -75,12 +74,12 @@ public class StrutsControllerUtil extends ControllerUtil {
 	public String getCurrentMethod() {
 		String method = null;
 		try {
-			method = ActionContext.getContext().getActionInvocation().getProxy().getMethod();
+			method = "";//ActionContext.getContext().getActionInvocation().getProxy().getMethod();
 		} catch (Exception e) {
 			LOG.error(e);
 		}
 		if (StringUtils.isEmpty(method)) {
-			method = ActionContext.getContext().getName();
+			//method = ActionContext.getContext().getName();
 			method = method.substring(StringUtils.lastIndexOf(method, '.') + 1);
 		}
 		return method;
