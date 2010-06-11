@@ -43,19 +43,17 @@ import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseActionConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.validator.EntityValidator;
-import org.vulpe.controller.vraptor.util.VRaptorControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
- * Vulpe Base Action to Struts2
+ * Vulpe Base Action to VRaptor
  * 
  * @param <ENTITY>
  *            Entity
  * @param <ID>
  *            Identifier
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -151,7 +149,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseActionConfig<ENTITY, ID> getActionConfig() {
-		return VRaptorControllerUtil.getInstance().getActionConfig(this);
+		return getControllerUtil().getActionConfig(this);
 	}
 
 	/**
@@ -253,7 +251,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		}
 		showButtons(Action.UPDATE);
 		final ENTITY entity = onCreatePost();
-		// addActionMessage(getText("vulpe.msg.create.post"));
+		addActionMessage(getText("vulpe.msg.create.post"));
 
 		setResultName(Forward.SUCCESS);
 
@@ -402,7 +400,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 			return Forward.SUCCESS;
 		}
 		onUpdatePost();
-		// addActionMessage(getText("vulpe.msg.update.post"));
+		addActionMessage(getText("vulpe.msg.update.post"));
 
 		setResultName(Forward.SUCCESS);
 		if (entity.getClass().isAnnotationPresent(CachedClass.class)) {
@@ -474,7 +472,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		deleteBefore();
 		onDelete();
 		showButtons(Action.DELETE);
-		// addActionMessage(getText("vulpe.msg.delete"));
+		addActionMessage(getText("vulpe.msg.delete"));
 
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			setResultForward(getActionConfig().getPrimitiveActionName().concat(Action.URI.READ));
@@ -544,10 +542,9 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	public String deleteDetail() {
 		setOperation(Action.UPDATE_POST);
 		deleteDetailBefore();
-		// final int size = onDeleteDetail();
+		final int size = onDeleteDetail();
 		showButtons(Action.UPDATE);
-		// addActionMessage(getText(size > 1 ? "vulpe.msg.delete.details" :
-		// "vulpe.msg.delete.detail"));
+		addActionMessage(getText(size > 1 ? "vulpe.msg.delete.details" : "vulpe.msg.delete.detail"));
 		setResultName(Forward.SUCCESS);
 		if (isAjax()) {
 			final VulpeBaseDetailConfig detailConfig = getActionConfig().getDetailConfig(
@@ -801,7 +798,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 				return Forward.SUCCESS;
 			}
 			onTabularPost();
-			// addActionMessage(getText("vulpe.msg.tabular.post"));
+			addActionMessage(getText("vulpe.msg.tabular.post"));
 			if (!getEntities().isEmpty()) {
 				final ENTITY entityTabular = getEntities().get(0);
 				if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
@@ -1148,7 +1145,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 */
 	protected void despiseDetailItens(final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
-		VRaptorControllerUtil.getInstance().despiseItens(beans, detailConfig.getDespiseFields(),
+		getControllerUtil().despiseItens(beans, detailConfig.getDespiseFields(),
 				getControllerType().equals(ControllerType.TABULAR));
 	}
 
@@ -1162,8 +1159,8 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	protected boolean validateDuplicatedDetailItens(final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
-		final Collection<DuplicatedBean> duplicatedBeans = VRaptorControllerUtil.getInstance()
-				.duplicatedItens(beans, despiseFields);
+		final Collection<DuplicatedBean> duplicatedBeans = getControllerUtil().duplicatedItens(
+				beans, despiseFields);
 		if (duplicatedBeans != null && !duplicatedBeans.isEmpty()) {
 			if (getControllerType().equals(ControllerType.TABULAR) && duplicatedBeans.size() == 1) {
 				return true;
@@ -1172,8 +1169,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 			int count = 1;
 			for (DuplicatedBean duplicatedBean : duplicatedBeans) {
 				if (duplicatedBeans.size() > 1 && duplicatedBeans.size() == count) {
-					// lines.append(" " + getText("vulpe.label.and") + " " +
-					// duplicatedBean.getLine());
+					lines.append(" " + getText("vulpe.label.and") + " " + duplicatedBean.getLine());
 				} else {
 					lines.append(StringUtils.isBlank(lines.toString()) ? String
 							.valueOf(duplicatedBean.getLine()) : ", " + duplicatedBean.getLine());
@@ -1181,11 +1177,10 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 				count++;
 			}
 			if (getControllerType().equals(ControllerType.TABULAR)) {
-				// addActionError("vulpe.error.tabular.duplicated",
-				// lines.toString());
+				addActionError("vulpe.error.tabular.duplicated", lines.toString());
 			} else {
-				// addActionError("vulpe.error.details.duplicated",
-				// getText(detailConfig.getTitleKey()), lines.toString());
+				addActionError("vulpe.error.details.duplicated",
+						getText(detailConfig.getTitleKey()), lines.toString());
 			}
 			return false;
 		}
@@ -1204,20 +1199,17 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 		if (!Cardinality.ZERO.equals(detailConfig.getCardinalityType().getValue())) {
 			if (Cardinality.ONE.equals(detailConfig.getCardinalityType().getValue())) {
 				if (beans == null || beans.size() == 0) {
-					// addActionError("vulpe.error.details.cardinality.one.less",
-					// getText(detailConfig
-					// .getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.less", getText(detailConfig
+							.getTitleKey()));
 					return false;
 				} else if (beans.size() > 1) {
-					// addActionError("vulpe.error.details.cardinality.one.only",
-					// getText(detailConfig
-					// .getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.only", getText(detailConfig
+							.getTitleKey()));
 				}
 			} else if (Cardinality.ONE_OR_MORE.equals(detailConfig.getCardinalityType().getValue())) {
 				if (beans == null || beans.size() == 0) {
-					// addActionError("vulpe.error.details.cardinality.one.more",
-					// getText(detailConfig
-					// .getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.more", getText(detailConfig
+							.getTitleKey()));
 					return false;
 				}
 			}
@@ -1511,7 +1503,7 @@ public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Seri
 	 */
 	protected String showError(final String message) {
 		showButtons(getOperation());
-		// addActionError(getText(message));
+		addActionError(getText(message));
 		controlResultForward();
 		return Forward.SUCCESS;
 	}

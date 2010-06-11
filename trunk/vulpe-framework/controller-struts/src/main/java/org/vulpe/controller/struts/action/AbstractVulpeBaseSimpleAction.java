@@ -894,7 +894,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * Define Result Forward to render normal or AJAX request
 	 */
 	protected void controlResultForward() {
-		setResultForward(Layout.PROTECTED_JSP_COMMON.concat(Layout.BODY_JSP));
+		setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}
 
 	/*

@@ -19,13 +19,25 @@ import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.vulpe.controller.vraptor.http.route.VulpePathAnnotationRoutesParser;
+import org.vulpe.controller.vraptor.view.VulpePathResolver;
 
+import br.com.caelum.vraptor.ComponentRegistry;
+import br.com.caelum.vraptor.http.route.RoutesParser;
 import br.com.caelum.vraptor.ioc.spring.SpringProvider;
+import br.com.caelum.vraptor.view.PathResolver;
 
 public class VulpeSpringProvider extends SpringProvider {
 
 	@Override
 	protected ApplicationContext getParentApplicationContext(ServletContext context) {
 		return new ClassPathXmlApplicationContext("classpath*:beanRefContext.xml");
+	}
+
+	@Override
+	protected void registerCustomComponents(ComponentRegistry registry) {
+		super.registerCustomComponents(registry);
+		registry.register(PathResolver.class, VulpePathResolver.class);
+		registry.register(RoutesParser.class, VulpePathAnnotationRoutesParser.class);
 	}
 }

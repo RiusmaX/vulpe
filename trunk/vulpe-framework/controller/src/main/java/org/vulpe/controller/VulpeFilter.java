@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -33,11 +34,12 @@ public class VulpeFilter implements Filter {
 
 	private static final Logger LOG = Logger.getLogger(VulpeFilter.class);
 
-	private FilterConfig filterConfig;
+	private ServletContext servletContext;
 
 	@Override
 	public void destroy() {
 		LOG.debug("destroy filter");
+		servletContext = null;
 	}
 
 	@Override
@@ -45,14 +47,15 @@ public class VulpeFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		cache.put(View.APPLICATION_LOCALE, request.getLocale());
-		ControllerUtil.setServletContext(filterConfig.getServletContext());
+		ControllerUtil.setServletContext(servletContext);
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		chain.doFilter(request, response);
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterConfig = filterConfig;
+		this.servletContext = filterConfig.getServletContext();
 	}
 
 }

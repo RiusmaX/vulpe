@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.commons.VulpeSecurityUtil;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context;
@@ -36,7 +36,7 @@ import org.vulpe.security.model.services.SecurityServices;
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@Service("VulpeSecurityContext")
+@Component("VulpeSecurityContext")
 public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements VulpeSecurityContext {
 
 	private static final Logger LOG = Logger.getLogger(VulpeSecurityContextImpl.class);

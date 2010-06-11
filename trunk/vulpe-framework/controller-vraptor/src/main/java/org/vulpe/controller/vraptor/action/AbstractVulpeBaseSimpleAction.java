@@ -39,7 +39,9 @@ import org.vulpe.commons.file.FileUtil;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.I18NService;
 import org.vulpe.controller.commons.VulpeActionConfig;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.vraptor.util.VRaptorControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.Services;
@@ -51,7 +53,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.core.RequestInfo;
 
 /**
- * Action base for Struts2
+ * Action base for VRaptor
  * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
@@ -68,7 +70,8 @@ public abstract class AbstractVulpeBaseSimpleAction implements VulpeBaseSimpleCo
 	protected Result result;
 	@Autowired
 	protected Validator validator;
-
+	protected I18NService i18nService = new I18NService();
+	
 	/**
 	 * Calendar
 	 */
@@ -121,7 +124,11 @@ public abstract class AbstractVulpeBaseSimpleAction implements VulpeBaseSimpleCo
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
 	 */
 	public VulpeActionConfig getActionConfig() {
-		return VRaptorControllerUtil.getInstance().getActionConfig(this);
+		return getControllerUtil().getActionConfig(this);
+	}
+
+	public ControllerUtil getControllerUtil() {
+		return VRaptorControllerUtil.getInstance(requestInfo);
 	}
 
 	/**
@@ -224,6 +231,7 @@ public abstract class AbstractVulpeBaseSimpleAction implements VulpeBaseSimpleCo
 		setResultName(forward);
 
 		frontendAfter();
+		result.include("actionConfig", getActionConfig());
 		return getResultName();
 	}
 
@@ -756,7 +764,7 @@ public abstract class AbstractVulpeBaseSimpleAction implements VulpeBaseSimpleCo
 	 * Define Result Forward to render normal or AJAX request
 	 */
 	protected void controlResultForward() {
-		setResultForward(Layout.PROTECTED_JSP_COMMON.concat(Layout.BODY_JSP));
+		setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}
 
 	/*
@@ -897,6 +905,22 @@ public abstract class AbstractVulpeBaseSimpleAction implements VulpeBaseSimpleCo
 	 */
 	public HttpServletResponse getResponse() {
 		return requestInfo.getResponse();
+	}
+	
+	public String getText(final String key) {
+		return i18nService.getText(key);
+	}
+
+	public void addActionMessage(final String message) {
+		result.include("notice", message);
+	}
+
+	public void addActionError(final String message) {
+		result.include("notice", message);
+	}
+	
+	public void addActionError(final String key, final Object...args) {
+		result.include("notice", getText(key));
 	}
 
 }

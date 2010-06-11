@@ -64,5 +64,5 @@
 </c:if>
 
 <c:if test="${render}">
-	<s:hidden theme="simple" name="${name}" id="${elementId}" value="${value}"/>
+	<input type="hidden" name="${name}" id="${elementId}" value="${value}"/>
 </c:if>

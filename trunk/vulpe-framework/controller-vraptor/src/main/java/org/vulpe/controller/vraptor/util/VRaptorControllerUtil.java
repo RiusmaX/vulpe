@@ -22,6 +22,8 @@ import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ControllerUtil;
 
+import br.com.caelum.vraptor.core.RequestInfo;
+
 /**
  * Utility class to controller
  * 
@@ -31,16 +33,21 @@ import org.vulpe.controller.util.ControllerUtil;
 public class VRaptorControllerUtil extends ControllerUtil {
 
 	private static final Logger LOG = Logger.getLogger(VRaptorControllerUtil.class);
-	
+
+	private RequestInfo requestInfo;
+
 	/**
 	 * Returns instance of VRaptorControllerUtil
 	 */
-	public static VRaptorControllerUtil getInstance() {
+	public static VRaptorControllerUtil getInstance(RequestInfo requestInfo) {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(VRaptorControllerUtil.class)) {
-			cache.put(ControllerUtil.class, new VRaptorControllerUtil());
+		VRaptorControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		if (controllerUtil == null) {
+			controllerUtil = new VRaptorControllerUtil();
+			cache.put(ControllerUtil.class, controllerUtil);
 		}
-		return cache.get(ControllerUtil.class);
+		controllerUtil.setRequestInfo(requestInfo);
+		return controllerUtil;
 	}
 
 	/**
@@ -55,11 +62,14 @@ public class VRaptorControllerUtil extends ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentActionName() {
-		//String base = StringUtils.replace(ActionContext.getContext().getName(), "/", ".");
-		String base = "";
+		final String uri = requestInfo.getRequestedUri().startsWith("/") ? requestInfo
+				.getRequestedUri().substring(1) : requestInfo.getRequestedUri();
+		String base = StringUtils.replace(uri, "/", ".");
 		if (base.contains(Logic.AJAX)) {
 			base = base.replace(Logic.AJAX, "");
 		}
+		final String[] parts = uri.split("/");
+		requestInfo.getRequest().setAttribute("vulpeModuleURI", parts[0] + "/");
 		return (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
 				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
 				base, '.'));
@@ -72,14 +82,22 @@ public class VRaptorControllerUtil extends ControllerUtil {
 	public String getCurrentMethod() {
 		String method = null;
 		try {
-			method = "";//ActionContext.getContext().getActionInvocation().getProxy().getMethod();
+			method = "";// ActionContext.getContext().getActionInvocation().getProxy().getMethod();
 		} catch (Exception e) {
 			LOG.error(e);
 		}
 		if (StringUtils.isEmpty(method)) {
-			//method = ActionContext.getContext().getName();
+			// method = ActionContext.getContext().getName();
 			method = method.substring(StringUtils.lastIndexOf(method, '.') + 1);
 		}
 		return method;
+	}
+
+	public void setRequestInfo(RequestInfo requestInfo) {
+		this.requestInfo = requestInfo;
+	}
+
+	public RequestInfo getRequestInfo() {
+		return requestInfo;
 	}
 }

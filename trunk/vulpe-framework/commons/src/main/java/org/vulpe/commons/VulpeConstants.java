@@ -216,7 +216,7 @@ public class VulpeConstants {
 			public static final String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
 			public static final String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
 			public static final String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
-			public static final String PROTECTED_JSP_COMMON = PROTECTED_JSP + "commons/";
+			public static final String PROTECTED_JSP_COMMONS = PROTECTED_JSP + "commons/";
 			public static final String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
 			public static final String JSP = ".jsp";
 			public static final String SUFFIX_JSP_TABULAR = "Tabular.jsp";
