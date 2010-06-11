@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.struts.listener;
+package org.vulpe.controller.struts;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,7 +23,7 @@ import javax.servlet.ServletContextEvent;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.controller.listeners.VulpeStartupListener;
+import org.vulpe.controller.VulpeStartupListener;
 import org.vulpe.controller.struts.commons.beans.converter.BigDecimalConverter;
 import org.vulpe.controller.struts.commons.beans.converter.DateConverter;
 import org.vulpe.controller.struts.commons.beans.converter.DecimalConverter;
