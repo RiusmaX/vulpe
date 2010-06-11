@@ -15,8 +15,6 @@
  */
 package org.vulpe.controller.struts.util;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants.View;
@@ -86,24 +84,4 @@ public class StrutsControllerUtil extends ControllerUtil {
 		return method;
 	}
 
-	/**
-	 *
-	 */
-	private transient static final ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
-
-	/**
-	 * 
-	 * @return
-	 */
-	public static ServletContext getServletContext() {
-		return servletCurrent.get();
-	}
-
-	/**
-	 * 
-	 * @param servletContext
-	 */
-	public static void setServletContext(final ServletContext servletContext) {
-		servletCurrent.set(servletContext);
-	}
 }
