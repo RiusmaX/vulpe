@@ -68,7 +68,7 @@
 	</filter-mapping>
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.struts.listener.VulpeStrutsStartupListener</listener-class>
+		<listener-class>org.vulpe.controller.struts.VulpeStrutsStartupListener</listener-class>
 	</listener>
 	<!-- Spring Initialization Listener -->
 	<listener>
