@@ -28,7 +28,7 @@
 
 	<!-- APP Initialization Listener -->
 	<listener>
-		<listener-class>org.vulpe.controller.listeners.VulpeStartupListener</listener-class>
+		<listener-class>org.vulpe.controller.VulpeStartupListener</listener-class>
 	</listener>
 
 	<!-- Spring Initialization Listener -->
