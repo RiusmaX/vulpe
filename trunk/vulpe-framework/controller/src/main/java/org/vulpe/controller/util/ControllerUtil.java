@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.VulpeConstants;
@@ -82,8 +84,8 @@ public abstract class ControllerUtil {
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
-					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(realBean,
-							fieldName);
+					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(
+							realBean, fieldName);
 					if (StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
@@ -222,4 +224,26 @@ public abstract class ControllerUtil {
 
 		return config;
 	}
+
+	/**
+	 *
+	 */
+	private transient static final ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static ServletContext getServletContext() {
+		return servletCurrent.get();
+	}
+
+	/**
+	 * 
+	 * @param servletContext
+	 */
+	public static void setServletContext(final ServletContext servletContext) {
+		servletCurrent.set(servletContext);
+	}
+
 }

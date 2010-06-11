@@ -24,7 +24,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import org.apache.commons.beanutils.locale.LocaleBeanUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.cache.VulpeCacheHelper;
@@ -143,16 +142,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 * @return
 	 */
 	public Object getKeyDescription(final String key) {
-		setLocale(LocaleBeanUtils.getDefaultLocale());
 		return getObject(key);
-	}
-
-	/**
-	 * 
-	 * @param locale
-	 */
-	public void setLocale(final Locale locale) {
-		this.locale = locale;
 	}
 
 }
