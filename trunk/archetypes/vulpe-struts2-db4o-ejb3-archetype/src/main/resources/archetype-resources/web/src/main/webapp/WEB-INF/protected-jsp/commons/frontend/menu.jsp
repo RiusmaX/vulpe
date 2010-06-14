@@ -7,7 +7,7 @@
 	key='label.${rootArtifactId}.menu.Index' /></span></a>
 <ul>
 	<li><a href="javascript:void(0);" class="current"
-		onclick="vulpe.view.request.submitMenu('/frontend/Index/ajax.action');"
+		onclick="vulpe.view.request.submitMenu('/frontend/Index/ajax');"
 		title="<fmt:message key='label.${rootArtifactId}.menu.Index.start'/>"><span><fmt:message
 		key='label.${rootArtifactId}.menu.Index.start' /></span></a></li>
 </ul>

@@ -4,7 +4,7 @@
 package ${package}.controller.action;
 
 import org.apache.log4j.Logger;
-import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
+import org.vulpe.controller.struts.AbstractVulpeBaseSimpleAction;
 
 @SuppressWarnings("serial")
 public class ApplicationBaseSimpleAction extends AbstractVulpeBaseSimpleAction {
