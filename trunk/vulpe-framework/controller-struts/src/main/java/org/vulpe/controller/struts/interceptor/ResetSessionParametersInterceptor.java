@@ -15,9 +15,10 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
+import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -39,7 +40,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(final ActionInvocation invocation)
 			throws Exception {
 		final Object action = invocation.getAction();
-		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerName()
 				.concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (ActionContext.getContext().getSession().containsKey(key)
 				&& isMethodReset(action)) {
@@ -58,7 +59,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 			return action instanceof ValidationAware
 					&& (((ValidationAware) action).hasActionErrors() || ((ValidationAware) action)
 							.hasFieldErrors()) ? false : action.getClass()
-					.getMethod(StrutsControllerUtil.getInstance().getCurrentMethod())
+					.getMethod(ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentMethod())
 					.isAnnotationPresent(ResetSession.class);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);

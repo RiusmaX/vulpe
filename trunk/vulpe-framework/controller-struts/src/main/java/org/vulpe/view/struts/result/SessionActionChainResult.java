@@ -80,8 +80,8 @@ public class SessionActionChainResult extends ActionChainResult {
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 						.getAction();
-				name = owner ? action.getControllerConfig().getOwnerAction()
-						: action.getControllerConfig().getActionName();
+				name = owner ? action.getControllerConfig().getOwnerController()
+						: action.getControllerConfig().getControllerName();
 			}
 		}
 		return name;

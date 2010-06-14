@@ -125,7 +125,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.BACKEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveControllerName().concat(URI.AJAX));
 				forward = Forward.BACKEND;
 			} else {
 				controlResultForward();
@@ -174,7 +174,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveControllerName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();

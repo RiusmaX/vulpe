@@ -18,10 +18,11 @@ package org.vulpe.controller.struts.interceptor;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -37,7 +38,7 @@ public class SessionParametersInterceptor extends
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
 
-		final String key = StrutsControllerUtil.getInstance().getCurrentActionName()
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerName()
 				.concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
@@ -74,7 +75,7 @@ public class SessionParametersInterceptor extends
 	protected boolean isMethodReset(final Object action) {
 		try {
 			final ResetSession resetSession = action.getClass().getMethod(
-					StrutsControllerUtil.getInstance().getCurrentMethod())
+					ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentMethod())
 					.getAnnotation(ResetSession.class);
 			return resetSession != null && resetSession.before();
 		} catch (Exception e) {

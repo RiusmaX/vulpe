@@ -37,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.views.jasperreports.JasperReportConstants;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -62,8 +63,8 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 			final Collection<VulpeBaseEntity<?>> collection, final String format) {
 		try {
 			String fullFileName = fileName;
-			if (StrutsControllerUtil.getServletContext() != null) {
-				fullFileName = StrutsControllerUtil.getServletContext().getRealPath(fileName);
+			if (ControllerUtil.getServletContext() != null) {
+				fullFileName = ControllerUtil.getServletContext().getRealPath(fileName);
 			}
 			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
 			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
@@ -74,7 +75,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 			if (subReports != null && subReports.length > 0) {
 				int count = 0;
 				for (String subReport : subReports) {
-					parameters.put("SUBREPORT_".concat(String.valueOf(count)), StrutsControllerUtil
+					parameters.put("SUBREPORT_".concat(String.valueOf(count)), ControllerUtil
 							.getServletContext().getRealPath(subReport));
 					count++;
 				}

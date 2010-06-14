@@ -17,7 +17,6 @@ package org.vulpe.controller.commons;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeReflectUtil;
@@ -39,48 +38,49 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 	private final Class<ID> idClass;
 	private final Class<ENTITY> entityClass;
 
-	public VulpeBaseControllerConfig(final Class<?> classAction,
+	public VulpeBaseControllerConfig(final Class<?> controllerClass,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
 		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
-				classAction));
+				controllerClass));
 		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(
-				classAction, 0);
-		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(classAction, 1);
+				controllerClass, 0);
+		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 1);
 		this.details = details;
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
-		setActionName(controllerUtil.getCurrentActionName());
+		setControllerName(controllerUtil.getCurrentControllerName());
 
-		setActionBaseName(StringUtils.replace(getActionName(), Logic.CRUD, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.SELECTION, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.TABULAR, ""));
-		setActionBaseName(StringUtils.replace(getActionBaseName(), Logic.REPORT, ""));
+		setControllerBaseName(StringUtils.replace(getControllerName(), Logic.CRUD, ""));
+		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.SELECTION, ""));
+		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.TABULAR, ""));
+		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.REPORT, ""));
 
-		if (StringUtils.lastIndexOf(getActionBaseName(), '.') >= 0) {
-			setSimpleActionName(getActionBaseName().substring(
-					StringUtils.lastIndexOf(getActionBaseName(), '.') + 1));
+		if (StringUtils.lastIndexOf(getControllerBaseName(), '/') != -1) {
+			setSimpleControllerName(getControllerBaseName().substring(
+					StringUtils.lastIndexOf(getControllerBaseName(), '/') + 1));
 		} else {
-			setSimpleActionName(getActionBaseName());
+			setSimpleControllerName(getControllerBaseName());
 		}
 		setViewPath(Layout.PROTECTED_JSP);
 		setViewItemsPath(Layout.PROTECTED_JSP);
-		final String simple = getActionName().replace(".main", "");
-		final StringTokenizer parts = new StringTokenizer(simple, ".");
+		final String simple = getControllerName().replace(Layout.MAIN, "");
+		final String[] parts = simple.split("/");
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
-			final String module = parts.nextToken();
-			final String name = parts.nextToken();
+			final String module = parts[0];
+			final String name = parts[1];
 			setViewPath(getViewPath().concat(
-					module.concat("/").concat(name).concat("/").concat(name).concat(Layout.JSP)));
+					module.concat("/").concat(name).concat("/").concat(name).concat(
+							Layout.SUFFIX_JSP)));
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 		} else {
-			final String module = parts.nextToken();
-			final String name = parts.nextToken();
+			final String module = parts[0];
+			final String name = parts[1];
 			// final String type = parts.nextToken();
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name)));
@@ -104,20 +104,20 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 			}
 		}
 
-		setTitleKey(View.LABEL.concat(getProjectName()).concat(".").concat(getActionName()));
+		setTitleKey(View.LABEL.concat(getProjectName()).concat(".").concat(
+				getControllerName().replace("/", ".")));
 
 		setReportFile(getController().report().reportFile());
 		if (getReportFile().equals("")) {
-			setReportFile(Report.PATH.concat(StringUtils.replace(getActionBaseName(), ".", "/"))
-					.concat("/").concat(getSimpleActionName()).concat(Report.JASPER));
+			setReportFile(Report.PATH.concat(getControllerBaseName()).concat("/").concat(
+					getSimpleControllerName()).concat(Report.JASPER));
 		}
 		setSubReports(getController().report().subReports());
 		if (getSubReports() != null && getSubReports().length > 0) {
 			int count = 0;
 			for (String subReport : getSubReports()) {
-				getSubReports()[count] = Report.PATH.concat(
-						StringUtils.replace(getActionBaseName(), ".", "/")).concat("/").concat(
-						subReport).concat(Report.JASPER);
+				getSubReports()[count] = Report.PATH.concat(getControllerBaseName()).concat("/")
+						.concat(subReport).concat(Report.JASPER);
 				count++;
 			}
 		}

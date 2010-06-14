@@ -16,7 +16,6 @@
 package org.vulpe.controller.commons;
 
 import java.io.Serializable;
-import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeReflectUtil;
@@ -33,7 +32,7 @@ import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.services.Services;
 
 /**
- * Simple Vulpe Action Config implementation.
+ * Simple Vulpe Controller Config implementation.
  * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
@@ -44,11 +43,11 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	private boolean simple = true;
 	private Controller controller;
-	private String actionBaseName;
-	private String actionName;
-	private String primitiveActionName;
-	private String primitiveReportActionName;
-	private String simpleActionName;
+	private String controllerBaseName;
+	private String controllerName;
+	private String primitiveControllerName;
+	private String primitiveReportControllerName;
+	private String simpleControllerName;
 	private String viewPath;
 	private String viewItemsPath;
 	private String titleKey;
@@ -59,43 +58,43 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		// default constructor
 	}
 
-	public VulpeBaseSimpleControllerConfig(final Class<?> classAction) {
+	public VulpeBaseSimpleControllerConfig(final Class<?> controllerClass) {
 		this.controller = VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
-				classAction);
+				controllerClass);
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
-		this.actionName = controllerUtil.getCurrentActionName();
+		this.controllerName = controllerUtil.getCurrentControllerName();
 
-		this.actionBaseName = StringUtils.replace(this.actionName, Logic.CRUD, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.SELECTION, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.TABULAR, "");
-		this.actionBaseName = StringUtils.replace(this.actionBaseName, Logic.REPORT, "");
+		this.controllerBaseName = StringUtils.replace(this.controllerName, Logic.CRUD, "");
+		this.controllerBaseName = StringUtils.replace(this.controllerBaseName, Logic.SELECTION, "");
+		this.controllerBaseName = StringUtils.replace(this.controllerBaseName, Logic.TABULAR, "");
+		this.controllerBaseName = StringUtils.replace(this.controllerBaseName, Logic.REPORT, "");
 
-		if (StringUtils.lastIndexOf(actionBaseName, '.') >= 0) {
-			this.simpleActionName = actionBaseName.substring(StringUtils.lastIndexOf(
-					actionBaseName, '.') + 1);
+		if (StringUtils.lastIndexOf(controllerBaseName, '/') != -1) {
+			this.simpleControllerName = controllerBaseName.substring(StringUtils.lastIndexOf(
+					controllerBaseName, '/') + 1);
 		} else {
-			this.simpleActionName = actionBaseName;
+			this.simpleControllerName = controllerBaseName;
 		}
 
 		this.viewPath = Layout.PROTECTED_JSP;
 		this.viewItemsPath = Layout.PROTECTED_JSP;
-		final String simple = actionName.replace(Layout.MAIN, "");
-		final StringTokenizer parts = new StringTokenizer(simple, ".");
+		final String simple = controllerName.replace(Layout.MAIN, "");
+		final String[] parts = simple.split("/");
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
-			final String module = parts.nextToken();
-			final String name = parts.nextToken();
+			final String module = parts[0];
+			final String name = parts[1];
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name).concat(
-					Layout.JSP);
+					Layout.SUFFIX_JSP);
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
 						+ module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 		} else {
-			final String module = parts.nextToken();
-			final String name = parts.nextToken();
+			final String module = parts[0];
+			final String name = parts[1];
 			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
 			if (getControllerType().equals(ControllerType.CRUD)) {
 				this.viewPath += Layout.SUFFIX_JSP_CRUD;
@@ -116,20 +115,20 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 								Layout.SUFFIX_JSP_REPORT_ITEMS);
 			}
 		}
-		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(actionName);
+		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(
+				controllerName.replace("/", "."));
 
 		this.reportFile = this.controller.report().reportFile();
 		if (this.reportFile.equals("")) {
-			this.reportFile = Report.PATH
-					.concat(StringUtils.replace(this.actionBaseName, ".", "/")).concat("/").concat(
-							this.simpleActionName).concat(Report.JASPER);
+			this.reportFile = Report.PATH.concat(this.controllerBaseName).concat("/").concat(
+					this.simpleControllerName).concat(Report.JASPER);
 		}
 		this.subReports = this.controller.report().subReports();
 		if (this.subReports != null && this.subReports.length > 0) {
 			int count = 0;
 			for (String subReport : this.subReports) {
 				this.subReports[count] = Report.PATH.concat(
-						StringUtils.replace(this.actionBaseName, ".", "/")).concat("/").concat(
+						this.controllerBaseName).concat("/").concat(
 						subReport).concat(Report.JASPER);
 				count++;
 			}
@@ -174,16 +173,17 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getOwnerAction()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getOwnerController()
 	 */
-	public String getOwnerAction() {
-		if (StringUtils.isNotEmpty(this.controller.ownerAction())) {
-			return this.controller.ownerAction();
+	public String getOwnerController() {
+		if (StringUtils.isNotEmpty(this.controller.ownerController())) {
+			return this.controller.ownerController();
 		} else {
 			if (getControllerType().equals(ControllerType.CRUD)) {
-				return getActionBaseName().concat(Logic.SELECTION);
+				return getControllerBaseName().concat(Logic.SELECTION);
 			} else if (getControllerType().equals(ControllerType.SELECT)) {
-				return getActionBaseName().concat(Logic.CRUD);
+				return getControllerBaseName().concat(Logic.CRUD);
 			} else {
 				return null;
 			}
@@ -193,11 +193,11 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveOwnerAction()
+	 * @seeorg.vulpe.controller.commons.VulpeControllerConfig#
+	 * getPrimitiveOwnerController()
 	 */
-	public String getPrimitiveOwnerAction() {
-		return StringUtils.replace(getOwnerAction(), ".", "/");
+	public String getPrimitiveOwnerController() {
+		return StringUtils.replace(getOwnerController(), ".", "/");
 	}
 
 	/*
@@ -214,62 +214,68 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionBaseName()
-	 */
-	public String getActionBaseName() {
-		return this.actionBaseName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionName()
-	 */
-	public String getActionName() {
-		return this.actionName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveActionName()
-	 */
-	public String getPrimitiveActionName() {
-		this.primitiveActionName = StringUtils.replace(getActionName(), ".", "/");
-		return this.primitiveActionName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveReportActionName
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerBaseName
 	 * ()
 	 */
-	public String getPrimitiveReportActionName() {
-		this.primitiveReportActionName = StringUtils.replace(getActionName(), ".", "/");
-		this.primitiveReportActionName = StringUtils.replace(this.primitiveReportActionName,
-				"/select", "/report");
-		return this.primitiveReportActionName;
+	public String getControllerBaseName() {
+		return this.controllerBaseName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionKey()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerName()
 	 */
-	public String getActionKey() {
-		return getProjectName().concat("/").concat(getActionName());
+	public String getControllerName() {
+		return this.controllerName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSimpleActionName()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveControllerName
+	 * ()
 	 */
-	public String getSimpleActionName() {
-		return this.simpleActionName;
+	public String getPrimitiveControllerName() {
+		this.primitiveControllerName = StringUtils.replace(getControllerName(), ".", "/");
+		return this.primitiveControllerName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.vulpe.controller.commons.VulpeControllerConfig#
+	 * getPrimitiveReportControllerName ()
+	 */
+	public String getPrimitiveReportControllerName() {
+		this.primitiveReportControllerName = StringUtils.replace(getControllerName(), ".", "/");
+		this.primitiveReportControllerName = StringUtils.replace(
+				this.primitiveReportControllerName, "/select", "/report");
+		return this.primitiveReportControllerName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerKey()
+	 */
+	public String getControllerKey() {
+		return getProjectName().concat("/").concat(getControllerName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getSimpleControllerName
+	 * ()
+	 */
+	public String getSimpleControllerName() {
+		return this.simpleControllerName;
 	}
 
 	/*
@@ -278,8 +284,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getFormName()
 	 */
 	public String getFormName() {
-		String formName = StringUtils.replace(getActionName(), Logic.BACKEND, "");
-		formName = StringUtils.replace(getActionName(), Logic.FRONTEND, "");
+		String formName = StringUtils.replace(getControllerName(), Logic.BACKEND, "");
+		formName = StringUtils.replace(getControllerName(), Logic.FRONTEND, "");
 		return StringUtils.replace(formName, ".", "");
 	}
 
@@ -313,7 +319,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSource()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSource()
 	 */
 	public String getReportDataSource() {
 		return this.controller.report().reportDataSource();
@@ -331,7 +338,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
 	 */
 	public boolean isReportDownload() {
 		return this.controller.report().reportDownload();
@@ -350,8 +358,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getParentName(java.lang
-	 * .String)
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getParentName(java
+	 * .lang .String)
 	 */
 	public String getParentName(final String detail) {
 		final int position = StringUtils.lastIndexOf(detail, ".");
@@ -389,52 +397,52 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setActionBaseName(java
-	 * .lang.String)
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerBaseName
+	 * (java .lang.String)
 	 */
-	public void setActionBaseName(final String actionBaseName) {
-		this.actionBaseName = actionBaseName;
+	public void setControllerBaseName(final String actionBaseName) {
+		this.controllerBaseName = actionBaseName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setActionName(java.lang
-	 * .String)
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerName(
+	 * java.lang .String)
 	 */
-	public void setActionName(final String actionName) {
-		this.actionName = actionName;
+	public void setControllerName(final String actionName) {
+		this.controllerName = actionName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setPrimitiveActionName
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setPrimitiveControllerName
 	 * (java.lang.String)
 	 */
-	public void setPrimitiveActionName(final String primitiveActionName) {
-		this.primitiveActionName = primitiveActionName;
+	public void setPrimitiveControllerName(final String primitiveControllerName) {
+		this.primitiveControllerName = primitiveControllerName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimpleActionName(java
-	 * .lang.String)
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimpleControllerName
+	 * (java .lang.String)
 	 */
-	public void setSimpleActionName(final String simpleActionName) {
-		this.simpleActionName = simpleActionName;
+	public void setSimpleControllerName(final String simpleControllerName) {
+		this.simpleControllerName = simpleControllerName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setReportFile(java.lang
-	 * .String)
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setReportFile(java
+	 * .lang .String)
 	 */
 	public void setReportFile(final String reportFile) {
 		this.reportFile = reportFile;
@@ -472,7 +480,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#setSimple(boolean)
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimple(boolean)
 	 */
 	public void setSimple(final boolean simple) {
 		this.simple = simple;
@@ -492,7 +501,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
 	 */
 	public String getViewItemsPath() {
 		return viewItemsPath;
@@ -521,20 +531,19 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setPrimitiveReportActionName
-	 * (java.lang.String)
+	 * @seeorg.vulpe.controller.commons.VulpeControllerConfig#
+	 * setPrimitiveReportControllerName (java.lang.String)
 	 */
-	public void setPrimitiveReportActionName(String primitiveReportActionName) {
-		this.primitiveReportActionName = primitiveReportActionName;
+	public void setPrimitiveReportControllerName(String primitiveReportControllerName) {
+		this.primitiveReportControllerName = primitiveReportControllerName;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setSubReports(java.lang
-	 * .String[])
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setSubReports(java
+	 * .lang .String[])
 	 */
 	public void setSubReports(String[] subReports) {
 		this.subReports = subReports;

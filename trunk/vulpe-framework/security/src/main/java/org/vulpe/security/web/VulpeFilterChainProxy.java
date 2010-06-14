@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.web.FilterChainProxy;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
@@ -52,7 +53,8 @@ public class VulpeFilterChainProxy extends FilterChainProxy {
 			return;
 		}
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if (httpRequest != null && !httpRequest.getRequestURI().contains(Action.URI.AUTHENTICATOR)) {
+		if (httpRequest != null && !httpRequest.getRequestURI().contains(Action.URI.AUTHENTICATOR)
+				&& !httpRequest.getRequestURI().endsWith(Layout.SUFFIX_JSP)) {
 			httpRequest.getSession().setAttribute(Security.VULPE_SECURITY_URL_REQUESTED,
 					httpRequest.getRequestURI());
 		}

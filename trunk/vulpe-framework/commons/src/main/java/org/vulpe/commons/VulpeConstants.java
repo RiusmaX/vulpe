@@ -202,23 +202,18 @@ public class VulpeConstants {
 		public static final String CURRENT_LAYOUT = "vulpeCurrentLayout";
 
 		public class Layout {
-			public static final String UC = ".uc";
 			public static final String MAIN = ".main";
-			public static final String DETAIL = ".detail";
-			public static final String TABULAR = ".tabular";
-			public static final String CRUD = ".crud";
-			public static final String REPORT = ".report";
-			public static final String OTHER = ".other";
-			public static final String SELECT = ".select";
-			public static final String TABLE = ".table";
-			public static final String FORM = ".form";
 			public static final String FRONTEND = "frontend";
 			public static final String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
 			public static final String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
 			public static final String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
 			public static final String PROTECTED_JSP_COMMONS = PROTECTED_JSP + "commons/";
 			public static final String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
-			public static final String JSP = ".jsp";
+			public static final String IMAGES_CONTEXT = "/images/";
+			public static final String JS_CONTEXT = "/js/";
+			public static final String CSS_CONTEXT = "/css/";
+			public static final String THEMES_CONTEXT = "/themes/";
+			public static final String SUFFIX_JSP = ".jsp";
 			public static final String SUFFIX_JSP_TABULAR = "Tabular.jsp";
 			public static final String SUFFIX_JSP_OTHER = ".jsp";
 			public static final String SUFFIX_JSP_FRONTEND = ".jsp";
@@ -246,13 +241,13 @@ public class VulpeConstants {
 		}
 
 		public class Logic {
-			public static final String BACKEND = "backend.";
-			public static final String FRONTEND = "frontend.";
-			public static final String REPORT = ".report";
-			public static final String CRUD = ".crud";
-			public static final String SELECTION = ".select";
-			public static final String TABULAR = ".tabular";
-			public static final String AJAX = ".ajax";
+			public static final String BACKEND = "backend/";
+			public static final String FRONTEND = "frontend/";
+			public static final String REPORT = "/report";
+			public static final String CRUD = "/crud";
+			public static final String SELECTION = "/select";
+			public static final String TABULAR = "/tabular";
+			public static final String AJAX = "/ajax";
 		}
 
 		public class Report {

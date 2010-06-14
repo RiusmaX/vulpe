@@ -21,12 +21,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.annotations.DetailConfig;
+import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.VulpeConstants.View.Logic;
+import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.VulpeBaseController;
@@ -43,13 +48,24 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * 
  */
-public abstract class ControllerUtil {
+public class ControllerUtil {
+
+	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
+
+	private HttpServletRequest request;
 
 	/**
-	 *
+	 * Returns instance of VRaptorControllerUtil
 	 */
-	protected ControllerUtil() {
-		// default constructor
+	public static ControllerUtil getInstance(HttpServletRequest request) {
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
+		if (controllerUtil == null) {
+			controllerUtil = new ControllerUtil();
+			cache.put(ControllerUtil.class, controllerUtil);
+		}
+		controllerUtil.setRequest(request);
+		return controllerUtil;
 	}
 
 	/**
@@ -169,16 +185,49 @@ public abstract class ControllerUtil {
 	 * 
 	 * @return
 	 */
-	public String getCurrentActionKey() {
-		final String base = getCurrentActionName();
+	public String getCurrentControllerKey() {
+		final String base = getCurrentController().get();
 		final String projectName = base.contains(VulpeConstants.AUDIT) ? VulpeConstants.ACTIVE
 				: VulpeConfigHelper.getProjectName();
 		return projectName.concat("/").concat(base);
 	}
 
-	public abstract String getCurrentActionName();
+	/**
+	 * 
+	 * @return
+	 */
+	public String getCurrentControllerName() {
+		String base = getRequest().getRequestURI();
+		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");
+		base = base.replace(Logic.AJAX, "");
+		base = (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
+				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
+				base, '/'));
+		getCurrentController().set(base);
+		return base;
+	}
 
-	public abstract String getCurrentMethod();
+	public String getCurrentMethod() {
+		String method = null;
+		try {
+			String base = getRequest().getRequestURI().replace(URI.AJAX, "");
+			final String[] parts = base.substring(1).split("/");
+			if (parts.length == 3) {
+				if (base.contains(Logic.BACKEND)) {
+					method = "backend";
+				} else if (base.contains(Logic.FRONTEND)) {
+					method = "frontend";
+				}
+			} else if (base.endsWith(URI.AUTHENTICATOR)) {
+				method = "define";
+			}else {
+				method = parts[parts.length - 1];
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return method;
+	}
 
 	/**
 	 * 
@@ -187,14 +236,14 @@ public abstract class ControllerUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
-		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
+		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
+			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller.getClass(),
-				details);
-		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
+		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller
+				.getClass(), details);
+		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
 
 		int count = 0;
 		for (DetailConfig detail : config.getDetailsConfig()) {
@@ -213,29 +262,32 @@ public abstract class ControllerUtil {
 	 * @param controller
 	 * @return
 	 */
-	public VulpeBaseSimpleControllerConfig getControllerConfig(final VulpeBaseSimpleController controller) {
-		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
+	public VulpeBaseSimpleControllerConfig getControllerConfig(
+			final VulpeBaseSimpleController controller) {
+		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
+			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
 		}
 
-		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(controller
-				.getClass());
-		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
+		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(
+				controller.getClass());
+		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
 
 		return config;
 	}
 
+	private transient final ThreadLocal<String> currentController = new ThreadLocal<String>();
+
 	/**
 	 *
 	 */
-	private transient static final ThreadLocal<ServletContext> servletCurrent = new ThreadLocal<ServletContext>();
+	private transient static final ThreadLocal<ServletContext> CURRENT_SERVLET_CONTEXT = new ThreadLocal<ServletContext>();
 
 	/**
 	 * 
 	 * @return
 	 */
 	public static ServletContext getServletContext() {
-		return servletCurrent.get();
+		return CURRENT_SERVLET_CONTEXT.get();
 	}
 
 	/**
@@ -243,7 +295,19 @@ public abstract class ControllerUtil {
 	 * @param servletContext
 	 */
 	public static void setServletContext(final ServletContext servletContext) {
-		servletCurrent.set(servletContext);
+		CURRENT_SERVLET_CONTEXT.set(servletContext);
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public ThreadLocal<String> getCurrentController() {
+		return currentController;
 	}
 
 }

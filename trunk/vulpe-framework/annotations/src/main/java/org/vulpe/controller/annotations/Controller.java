@@ -65,7 +65,7 @@ public @interface Controller {
 	/**
 	 * Action to redirect after selection
 	 */
-	String ownerAction() default "";
+	String ownerController() default "";
 
 	// TABULAR - configurations
 	/**

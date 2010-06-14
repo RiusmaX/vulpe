@@ -26,7 +26,6 @@ import org.vulpe.commons.file.FileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.util.ControllerUtil;
-import org.vulpe.controller.vraptor.util.VRaptorControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import br.com.caelum.vraptor.Result;
@@ -62,7 +61,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 	}
 
 	public ControllerUtil getControllerUtil() {
-		return VRaptorControllerUtil.getInstance(requestInfo);
+		return ControllerUtil.getInstance(getRequest());
 	}
 
 	/**

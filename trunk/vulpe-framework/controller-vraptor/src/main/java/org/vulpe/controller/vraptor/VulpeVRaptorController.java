@@ -178,7 +178,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			setResultName(Forward.CREATE);
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 					Action.URI.CREATE_AJAX));
 		} else {
 			controlResultForward();
@@ -323,7 +323,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 					Action.URI.UPDATE_AJAX));
 			setResultName(Forward.UPDATE);
 		} else {
@@ -475,10 +475,10 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 		addActionMessage(getText("vulpe.msg.delete"));
 
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveActionName().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getPrimitiveControllerName().concat(Action.URI.READ));
 			setResultName(Forward.READ);
 		} else {
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(Action.URI.READ));
 			setResultName(Forward.READ);
 		}
 
@@ -988,7 +988,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.CRUD)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+				setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 						Action.URI.READ_AJAX));
 				setBack(true);
 				setResultName(Forward.READ);
@@ -997,7 +997,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(
+				setResultForward(getControllerConfig().getPrimitiveControllerName().concat(
 						Action.URI.READ_AJAX));
 				setResultName(Forward.READ);
 			} else {

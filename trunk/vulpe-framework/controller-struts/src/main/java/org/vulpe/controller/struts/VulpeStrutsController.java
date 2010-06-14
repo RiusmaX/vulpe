@@ -43,7 +43,6 @@ import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
@@ -155,7 +154,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseControllerConfig<ENTITY, ID> getControllerConfig() {
-		return StrutsControllerUtil.getInstance().getControllerConfig(this);
+		return getControllerUtil().getControllerConfig(this);
 	}
 
 	/**
@@ -185,7 +184,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			setResultName(Forward.CREATE);
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 					Action.URI.CREATE_AJAX));
 		} else {
 			controlResultForward();
@@ -331,7 +330,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 					Action.URI.UPDATE_AJAX));
 			setResultName(Forward.UPDATE);
 		} else {
@@ -367,7 +366,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			final ENTITY entity = prepareEntity(Action.UPDATE);
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Action.UPDATE, Action.FIND
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity.getId() });
+					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity
+							.getId() });
 			setEntity(persistentEntity);
 			setExecuted(false);
 		}
@@ -444,9 +444,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
 
-		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig().getEntityClass()
-				.getSimpleName()), new Class[] { getControllerConfig().getEntityClass() },
-				new Object[] { entity });
+		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
+				.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
+				.getEntityClass() }, new Object[] { entity });
 
 		setExecuted(true);
 	}
@@ -485,10 +485,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		addActionMessage(getText("vulpe.msg.delete"));
 
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveActionName().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getPrimitiveControllerName().concat(
+					Action.URI.READ));
 			setResultName(Forward.READ);
 		} else {
-			setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
+					Action.URI.READ));
 			setResultName(Forward.READ);
 		}
 
@@ -620,9 +622,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 							new Object[] { removedDetails });
 				} else {
 					if (entity.getId() != null && size > details.size()) {
-						invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
-								.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
-								.getEntityClass() }, new Object[] { entity });
+						invokeServices(Action.UPDATE_POST, Action.UPDATE
+								.concat(getControllerConfig().getEntityClass().getSimpleName()),
+								new Class[] { getControllerConfig().getEntityClass() },
+								new Object[] { entity });
 						invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
 								.getEntityClass().getSimpleName()), new Class[] { List.class },
 								new Object[] { removedDetails });
@@ -749,11 +752,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				&& getControllerConfig().getPageSize() > 0) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
 					: getPaging().getPage();
-			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(
-					Action.READ,
+			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(Action.READ,
 					Action.PAGING.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass(), Integer.class, Integer.class },
-					new Object[] { entity, getControllerConfig().getPageSize(), page });
+					new Class[] { getControllerConfig().getEntityClass(), Integer.class,
+							Integer.class }, new Object[] { entity,
+							getControllerConfig().getPageSize(), page });
 			setPaging(paging);
 			setEntities(paging.getList());
 		} else {
@@ -998,7 +1001,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.CRUD)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveOwnerAction().concat(
+				setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
 						Action.URI.READ_AJAX));
 				setBack(true);
 				setResultName(Forward.READ);
@@ -1007,11 +1010,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(
+				setResultForward(getControllerConfig().getPrimitiveControllerName().concat(
 						Action.URI.READ_AJAX));
 				setResultName(Forward.READ);
 			} else {
-				controlResultForward();
+				return read();
 			}
 		} else {
 			controlResultForward();
@@ -1153,7 +1156,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	protected void despiseDetailItens(final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
-		StrutsControllerUtil.getInstance().despiseItens(beans, detailConfig.getDespiseFields(),
+		getControllerUtil().despiseItens(beans, detailConfig.getDespiseFields(),
 				getControllerType().equals(ControllerType.TABULAR));
 	}
 
@@ -1167,8 +1170,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	protected boolean validateDuplicatedDetailItens(final Collection<VulpeBaseEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
-		final Collection<DuplicatedBean> duplicatedBeans = StrutsControllerUtil.getInstance()
-				.duplicatedItens(beans, despiseFields);
+		final Collection<DuplicatedBean> duplicatedBeans = getControllerUtil().duplicatedItens(
+				beans, despiseFields);
 		if (duplicatedBeans != null && !duplicatedBeans.isEmpty()) {
 			if (getControllerType().equals(ControllerType.TABULAR) && duplicatedBeans.size() == 1) {
 				return true;
@@ -1336,7 +1339,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	public boolean isAddDetailShow() {
 		return (Boolean) getRequest().getAttribute(
-				Layout.ADD_DETAIL_SHOW.concat(getControllerConfig().getTabularConfig().getBaseName()));
+				Layout.ADD_DETAIL_SHOW.concat(getControllerConfig().getTabularConfig()
+						.getBaseName()));
 	}
 
 	public boolean isAddDetailShow(final String detail) {

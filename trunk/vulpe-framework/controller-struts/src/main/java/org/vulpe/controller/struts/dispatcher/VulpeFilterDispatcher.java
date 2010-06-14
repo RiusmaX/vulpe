@@ -28,6 +28,7 @@ import ognl.OgnlRuntime;
 
 import org.apache.struts2.dispatcher.FilterDispatcher;
 import org.springframework.security.web.FilterInvocation;
+import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.controller.struts.util.GenericsNullHandler;
 import org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer;
 import org.vulpe.controller.struts.util.GenericsPropertyAccessor;
@@ -71,8 +72,9 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 			throws IOException, ServletException {
 		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
 		final String url = filterInvocation.getRequestUrl();
-		if (url.contains("/js/") || url.contains("/themes/") || url.contains("/css/")
-				|| url.contains("/images/")) {
+		if (url.contains(Layout.JS_CONTEXT) || url.contains(Layout.THEMES_CONTEXT)
+				|| url.contains(Layout.CSS_CONTEXT) || url.contains(Layout.IMAGES_CONTEXT)
+				|| url.endsWith(Layout.SUFFIX_JSP)) {
 			chain.doFilter(request, response);
 			return;
 		}

@@ -44,7 +44,7 @@ public class ParametersServletActionRedirectResult extends ServletActionRedirect
 		} else if (sendParamsInSession) {
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				final VulpeStrutsController action = (VulpeStrutsController) invocation.getAction();
-				name = action.getControllerConfig().getOwnerAction();
+				name = action.getControllerConfig().getOwnerController();
 			}
 			final Map params = (Map) invocation.getInvocationContext().getSession().get(name);
 			if (params != null) {

@@ -22,23 +22,23 @@ public interface VulpeControllerConfig {
 
 	int getPageSize();
 
-	String getOwnerAction();
+	String getOwnerController();
 
-	String getPrimitiveOwnerAction();
+	String getPrimitiveOwnerController();
 
 	String getMethod();
 
-	String getActionBaseName();
+	String getControllerBaseName();
 
-	String getActionName();
+	String getControllerName();
 
-	String getPrimitiveActionName();
+	String getPrimitiveControllerName();
 
-	String getPrimitiveReportActionName();
+	String getPrimitiveReportControllerName();
 
-	String getActionKey();
+	String getControllerKey();
 
-	String getSimpleActionName();
+	String getSimpleControllerName();
 
 	String getFormName();
 
@@ -56,13 +56,13 @@ public interface VulpeControllerConfig {
 
 	String getParentName(final String detail);
 
-	void setActionBaseName(final String actionBaseName);
+	void setControllerBaseName(final String controllerBaseName);
 
-	void setActionName(final String actionName);
+	void setControllerName(final String actionName);
 
-	void setPrimitiveActionName(final String primitiveActionName);
+	void setPrimitiveControllerName(final String primitiveControllerName);
 
-	void setSimpleActionName(final String simpleActionName);
+	void setSimpleControllerName(final String simpleControllerName);
 
 	void setReportFile(final String reportFile);
 
@@ -82,7 +82,7 @@ public interface VulpeControllerConfig {
 
 	String getViewPath();
 
-	void setPrimitiveReportActionName(String primitiveReportActionName);
+	void setPrimitiveReportControllerName(String primitiveReportControllerName);
 
 	void setSubReports(String[] subReports);
 

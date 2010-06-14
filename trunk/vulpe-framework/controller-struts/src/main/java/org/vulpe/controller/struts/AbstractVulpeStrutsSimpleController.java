@@ -42,8 +42,8 @@ import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.commons.VulpeControllerConfig;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -65,8 +65,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  */
 @SuppressWarnings( { "unchecked", "serial" })
 public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
-		implements Action, Validateable, ValidationAware, LocaleProvider,
-		Serializable {
+		implements Action, Validateable, ValidationAware, LocaleProvider, Serializable {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeStrutsSimpleController.class);
 	/**
@@ -80,7 +79,11 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
-		return StrutsControllerUtil.getInstance().getControllerConfig(this);
+		return getControllerUtil().getControllerConfig(this);
+	}
+
+	public ControllerUtil getControllerUtil() {
+		return ControllerUtil.getInstance(getRequest());
 	}
 
 	/**
@@ -93,12 +96,13 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils.getProperty(
 					this, getControllerConfig().getReportDataSource());
 			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
-					.getInstance()
-					.getDownloadInfo(list, getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(), getControllerConfig().getReportFormat(),
-							getControllerConfig().getReportName(), getControllerConfig().isReportDownload())
-					: StrutsReportUtil.getInstance().getDownloadInfo(list,
-							getControllerConfig().getReportFile(), getControllerConfig().getSubReports(),
+					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+							getControllerConfig().getSubReports(),
+							getControllerConfig().getReportFormat(),
+							getControllerConfig().getReportName(),
+							getControllerConfig().isReportDownload()) : StrutsReportUtil
+					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+							getControllerConfig().getSubReports(),
 							getControllerConfig().getReportFormat());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -119,7 +123,8 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.BACKEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveControllerName()
+						.concat(URI.AJAX));
 				forward = Forward.BACKEND;
 			} else {
 				controlResultForward();
@@ -147,7 +152,8 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveControllerName()
+						.concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();
@@ -271,7 +277,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName().concat(
+		final String keyForm = getControllerUtil().getCurrentControllerName().concat(
 				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
@@ -437,8 +443,8 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 */
 	public void pause(String result) {
 	}
-	
+
 	public void addActionError(final String key, final Object... args) {
-		
+
 	}
 }

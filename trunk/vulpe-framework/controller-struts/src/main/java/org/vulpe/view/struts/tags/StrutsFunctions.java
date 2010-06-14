@@ -31,7 +31,7 @@ import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.view.struts.form.beans.SessionPaging;
 import org.vulpe.view.tags.Functions;
 
@@ -61,8 +61,8 @@ public final class StrutsFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
-					field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
+					bean.getClass(), field.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
 				String value = null;
@@ -92,8 +92,8 @@ public final class StrutsFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
-					field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
+					bean.getClass(), field.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;
 			}
@@ -125,11 +125,12 @@ public final class StrutsFunctions extends Functions {
 	public static String linkKey(final String key, final String contentType,
 			final String contentDisposition) throws JspException {
 		final String link = ServletActionContext.getRequest().getContextPath().concat("/").concat(
-				StrutsControllerUtil.getInstance().getCurrentActionName().replace(".", "/"))
-				.concat("/download.action?downloadKey=").concat(urlEncode(key)).concat(
-						"&downloadContentType=").concat(contentType).concat(
-						"&downloadContentDisposition=").concat(contentDisposition).concat(
-						"&access=").concat(String.valueOf(System.currentTimeMillis()));
+				ControllerUtil.getInstance(ServletActionContext.getRequest())
+						.getCurrentControllerName().replace(".", "/")).concat(
+				"/download.action?downloadKey=").concat(urlEncode(key)).concat(
+				"&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=")
+				.concat(contentDisposition).concat("&access=").concat(
+						String.valueOf(System.currentTimeMillis()));
 		return link;
 	}
 
@@ -158,8 +159,8 @@ public final class StrutsFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
-			final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName()
-					.concat(VulpeConstants.PARAMS_SESSION_KEY);
+			final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
+					.getCurrentControllerName().concat(VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
 					.getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -175,8 +176,8 @@ public final class StrutsFunctions extends Functions {
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = StrutsControllerUtil.getInstance().getCurrentActionName().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
+				.getCurrentControllerName().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();

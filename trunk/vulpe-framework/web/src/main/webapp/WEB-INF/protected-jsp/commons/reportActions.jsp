@@ -5,7 +5,7 @@
 	<c:if test="${prepareShow}">
 		<c:set var="style" value="display: inline;"/>
 	</c:if>
-	<v:action validate="false" style="${style}" labelKey="vulpe.label.clear" elementId="vulpeButtonPrepare_${controllerConfig.formName}" action="${controllerConfig.primitiveActionName}/prepare"/>
+	<v:action validate="false" style="${style}" labelKey="vulpe.label.clear" elementId="vulpeButtonPrepare_${controllerConfig.formName}" action="${controllerConfig.primitiveControllerName}/prepare"/>
 
 	<c:set var="style" value="display: inline;"/>
 	<c:if test="${clearShow == false}">
@@ -17,6 +17,6 @@
 	<c:if test="${readShow}">
 		<c:set var="style" value="display: inline;"/>
 	</c:if>
-	<v:action style="${style}" labelKey="vulpe.label.view" elementId="vulpeButtonRead_${controllerConfig.formName}" action="${controllerConfig.primitiveActionName}/read" layer="vulpeReportTable_${controllerConfig.formName}" />
+	<v:action style="${style}" labelKey="vulpe.label.view" elementId="vulpeButtonRead_${controllerConfig.formName}" action="${controllerConfig.primitiveControllerName}/read" layer="vulpeReportTable_${controllerConfig.formName}" />
 
 </p>

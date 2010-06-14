@@ -18,7 +18,7 @@ package org.vulpe.controller.struts.commons;
 import org.apache.struts2.impl.StrutsObjectFactory;
 import org.vulpe.commons.VulpeConstants.Expression;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.controller.struts.util.StrutsControllerUtil;
+import org.vulpe.controller.util.ControllerUtil;
 
 /**
  * Created to fix name of class with wildcards
@@ -31,7 +31,7 @@ public class VulpeStrutsObjectFactory extends StrutsObjectFactory {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Class getClassInstance(final String className) throws ClassNotFoundException {
-		if (StrutsControllerUtil.getServletContext() == null) {
+		if (ControllerUtil.getServletContext() == null) {
 			return super.getClassInstance(className);
 		}
 
@@ -44,7 +44,7 @@ public class VulpeStrutsObjectFactory extends StrutsObjectFactory {
 			if (Expression.PROJECT_PACKAGE.equals(expression)) {
 				value = VulpeConfigHelper.getProjectPackage();
 			} else {
-				value = StrutsControllerUtil.getServletContext().getInitParameter(
+				value = ControllerUtil.getServletContext().getInitParameter(
 						expression);
 			}
 			newClassName = className.replace("{".concat(expression).concat("}"), value == null ? ""

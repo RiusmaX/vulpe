@@ -17,16 +17,16 @@ public class VulpePathAnnotationRoutesParser extends PathAnnotationRoutesParser 
 		String prefix = extractPrefix(type);
 		if ("".equals(prefix)) {
 			String baseName = type.getSimpleName();
-			if (baseName.endsWith("")) {
-				return "/" + baseName.substring(0, baseName.lastIndexOf(""));
-			} else if (baseName.endsWith("CRUD")) {
-				return "/" + baseName.substring(0, baseName.lastIndexOf("CRUD"));
-			} else if (baseName.endsWith("Select")) {
-				return "/" + baseName.substring(0, baseName.lastIndexOf("Select"));
-			} else if (baseName.endsWith("Tabular")) {
-				return "/" + baseName.substring(0, baseName.lastIndexOf("Tabular"));
-			} else if (baseName.endsWith("Report")) {
-				return "/" + baseName.substring(0, baseName.lastIndexOf("Report"));
+			if (baseName.endsWith("Controller")) {
+				return "/" + baseName.substring(0, baseName.lastIndexOf("Controller"));
+			} else if (baseName.endsWith("CRUDController")) {
+				return "/" + baseName.substring(0, baseName.lastIndexOf("CRUDController"));
+			} else if (baseName.endsWith("SelectController")) {
+				return "/" + baseName.substring(0, baseName.lastIndexOf("SelectController"));
+			} else if (baseName.endsWith("TabularController")) {
+				return "/" + baseName.substring(0, baseName.lastIndexOf("TabularController"));
+			} else if (baseName.endsWith("ReportController")) {
+				return "/" + baseName.substring(0, baseName.lastIndexOf("ReportController"));
 			}
 			return "/" + baseName;
 		} else {
