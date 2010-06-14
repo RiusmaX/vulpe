@@ -54,16 +54,16 @@ public class VulpePathResolver extends DefaultPathResolver {
 
 	@Override
 	protected String extractControllerFromName(String baseName) {
-		if (baseName.endsWith("Action")) {
-			return baseName.substring(0, baseName.lastIndexOf("Action"));
-		} else if (baseName.endsWith("CRUDAction")) {
-			return baseName.substring(0, baseName.lastIndexOf("CRUDAction"));
-		} else if (baseName.endsWith("SelectAction")) {
-			return baseName.substring(0, baseName.lastIndexOf("SelectAction"));
-		} else if (baseName.endsWith("TabularAction")) {
-			return baseName.substring(0, baseName.lastIndexOf("TabularAction"));
-		} else if (baseName.endsWith("ReportAction")) {
-			return baseName.substring(0, baseName.lastIndexOf("ReportAction"));
+		if (baseName.endsWith("")) {
+			return baseName.substring(0, baseName.lastIndexOf(""));
+		} else if (baseName.endsWith("CRUD")) {
+			return baseName.substring(0, baseName.lastIndexOf("CRUD"));
+		} else if (baseName.endsWith("Select")) {
+			return baseName.substring(0, baseName.lastIndexOf("Select"));
+		} else if (baseName.endsWith("Tabular")) {
+			return baseName.substring(0, baseName.lastIndexOf("Tabular"));
+		} else if (baseName.endsWith("Report")) {
+			return baseName.substring(0, baseName.lastIndexOf("Report"));
 		}
 		return baseName;
 	}

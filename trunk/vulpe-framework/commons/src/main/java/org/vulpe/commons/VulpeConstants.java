@@ -192,7 +192,8 @@ public class VulpeConstants {
 	}
 
 	public class View {
-		public static final String APPLICATION_LOCALE = "vulpeApplicationLocale";
+		public static final String VULPE_LOCALE = "vulpeLocale";
+		public static final String VULPE_I18N_SERVICE = "vulpeI8NService";
 		public static final String LAYER_URL_BACK = "layerUrlBack";
 		public static final String URL_BACK = "urlBack";
 		public static final String LABEL = "label.";

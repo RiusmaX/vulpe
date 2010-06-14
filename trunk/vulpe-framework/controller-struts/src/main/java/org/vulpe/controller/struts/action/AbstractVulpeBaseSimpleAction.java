@@ -15,13 +15,13 @@
  */
 package org.vulpe.controller.struts.action;
 
-import java.lang.reflect.Method;
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,19 +31,15 @@ import ognl.OgnlException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.VulpeConstants.Action.URI;
-import org.vulpe.commons.VulpeConstants.View.Layout;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.file.FileUtil;
-import org.vulpe.commons.model.services.VulpeServiceLocator;
-import org.vulpe.controller.VulpeBaseSimpleController;
+import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.commons.VulpeActionConfig;
@@ -52,13 +48,17 @@ import org.vulpe.controller.struts.util.StrutsReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
-import org.vulpe.model.services.Services;
-import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
-import org.vulpe.security.authentication.callback.UserAuthenticationCallback;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.LocaleProvider;
+import com.opensymphony.xwork2.TextProvider;
+import com.opensymphony.xwork2.TextProviderFactory;
+import com.opensymphony.xwork2.Validateable;
+import com.opensymphony.xwork2.ValidationAware;
+import com.opensymphony.xwork2.ValidationAwareSupport;
 import com.opensymphony.xwork2.util.OgnlUtil;
+import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * Action base for Struts2
@@ -68,59 +68,15 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implements
-		VulpeBaseSimpleController {
+public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSimpleController
+		implements Action, Validateable, ValidationAware, TextProvider, LocaleProvider,
+		Serializable {
 
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseSimpleAction.class);
 	/**
 	 *
 	 */
 	private final OgnlUtil ognlUtil = new OgnlUtil();
-
-	/**
-	 * Calendar
-	 */
-	private final Calendar calendar = Calendar.getInstance();
-
-	/**
-	 * Show Title
-	 */
-	private boolean showTitle = true;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getSystemDate()
-	 */
-	public Date getSystemDate() {
-		return calendar.getTime();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentYear()
-	 */
-	public int getCurrentYear() {
-		return calendar.get(Calendar.YEAR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentMonth()
-	 */
-	public int getCurrentMonth() {
-		return calendar.get(Calendar.MONTH);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentDay()
-	 */
-	public int getCurrentDay() {
-		return calendar.get(Calendar.DAY_OF_MONTH);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -181,29 +137,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return getResultName();
 	}
 
-	/**
-	 * Extension point to prepare show.
-	 * 
-	 * @since 1.0
-	 */
-	protected void onBackend() {
-		setExecuted(false);
-	}
-
-	/**
-	 * Extension point to code before prepare.
-	 */
-	protected void backendBefore() {
-		LOG.debug("backendBefore");
-	}
-
-	/**
-	 * Extension point to code after prepare.
-	 */
-	protected void backendAfter() {
-		LOG.debug("backendAfter");
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -232,29 +165,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return getResultName();
 	}
 
-	/**
-	 * Extension point to prepare show.
-	 * 
-	 * @since 1.0
-	 */
-	protected void onFrontend() {
-		setExecuted(false);
-	}
-
-	/**
-	 * Extension point to code before prepare.
-	 */
-	protected void frontendBefore() {
-		LOG.debug("frontendBefore");
-	}
-
-	/**
-	 * Extension point to code after prepare.
-	 */
-	protected void frontendAfter() {
-		LOG.debug("frontendAfter");
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -271,33 +181,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return getResultName();
 	}
 
-	/**
-	 * Extension point to upload.
-	 * 
-	 * @since 1.0
-	 */
-	protected void onUpload() {
-		setUploaded(true);
-	}
-
-	/**
-	 * Extension point to code before upload.
-	 * 
-	 * @since 1.0
-	 */
-	protected void uploadAfter() {
-		LOG.debug("uploadAfter");
-	}
-
-	/**
-	 * Extension point to code after upload.
-	 * 
-	 * @since 1.0
-	 */
-	protected void uploadBefore() {
-		LOG.debug("uploadBefore");
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -312,34 +195,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 
 		downloadAfter();
 		return getResultName();
-	}
-
-	/**
-	 * Extension point to download.
-	 * 
-	 * @since 1.0
-	 */
-	protected void onDownload() {
-		final DownloadInfo downloadInfo = prepareDownloadInfo();
-		setDownloadInfo(downloadInfo);
-	}
-
-	/**
-	 * Extension point to code before download.
-	 * 
-	 * @since 1.0
-	 */
-	protected void downloadAfter() {
-		LOG.debug("downloadAfter");
-	}
-
-	/**
-	 * Extension point to code after download.
-	 * 
-	 * @since 1.0
-	 */
-	protected void downloadBefore() {
-		LOG.debug("downloadBefore");
 	}
 
 	/**
@@ -370,12 +225,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.opensymphony.xwork2.ActionSupport#validate()
-	 */
-	@Override
 	public void validate() {
 		if (isBack() && !isExecuted()) {
 			final Collection messages = getActionMessages();
@@ -389,138 +238,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#invokeServices(java.lang
-	 * .String, java.lang.String, java.lang.Class<?>[], java.lang.Object[])
-	 */
-	public Object invokeServices(final String eventName, final String serviceName,
-			final Class<?>[] argsType, final Object[] argsValues) {
-		final Services service = getService();
-		try {
-			final Method method = service.getClass().getMethod(serviceName, argsType);
-			return method.invoke(service, argsValues);
-		} catch (Exception e) {
-			throw new VulpeSystemException(e);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getService()
-	 */
-	public Services getService() {
-		return getService(getActionConfig().getServiceClass());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getService(java.lang.Class
-	 * )
-	 */
-	public <T extends Services> T getService(final Class<T> serviceClass) {
-		return VulpeServiceLocator.getInstance().getService(serviceClass);
-	}
-
-	/**
-	 * Method to add error message.
-	 * 
-	 * @param key
-	 *            Key in resource bundle
-	 * @param args
-	 *            arguments
-	 * 
-	 * @since 1.0
-	 */
-	public void addActionError(final String key, final String... args) {
-		addActionError(getText(key, args));
-	}
-
-	/**
-	 * Method to add error message.
-	 * 
-	 * @param key
-	 *            Key in resource bundle
-	 * 
-	 * @since 1.0
-	 */
-	public void addActionErrorKey(final String key) {
-		addActionError(getText(key));
-	}
-
-	/**
-	 * Method to add warning message.
-	 * 
-	 * @param key
-	 *            Key in resource bundle
-	 * @param args
-	 *            arguments
-	 * 
-	 * @since 1.0
-	 */
-	public void addActionMessage(final String key, final String... args) {
-		addActionMessage(getText(key, args));
-	}
-
-	/**
-	 * Method to add warning message.
-	 * 
-	 * @param key
-	 *            Key in resource bundle
-	 * 
-	 * @since 1.0
-	 */
-	public void addActionMessageKey(final String key) {
-		addActionMessage(getText(key));
-	}
-
-	/**
-	 * Method to retrieve download info.
-	 * 
-	 * @since 1.0
-	 * @return DownlodInfo object.
-	 */
-	public DownloadInfo getDownloadInfo() {
-		return downloadInfo;
-	}
-
-	/**
-	 * Set download info.
-	 * 
-	 * @param downloadInfo
-	 *            Download Info.
-	 * 
-	 * @since 1.0
-	 */
-	public void setDownloadInfo(final DownloadInfo downloadInfo) {
-		this.downloadInfo = downloadInfo;
-	}
-
-	public String getTextArg(final String key, final String arg) {
-		return getText(key, new String[] { getText(arg) });
-	}
-
-	public String getTextArg(final String key, final String arg1, final String arg2) {
-		return getText(key, new String[] { getText(arg1), getText(arg2) });
-	}
-
-	public String getTextArg(final String key, final String arg1, final String arg2,
-			final String arg3) {
-		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3) });
-	}
-
-	public String getTextArg(final String key, final String arg1, final String arg2,
-			final String arg3, final String arg4) {
-		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3),
-				getText(arg4) });
-	}
-
-	private boolean uploaded;
 	/**
 	 * Result Forward.
 	 */
@@ -529,37 +246,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 	 * Result Name.
 	 */
 	private String resultName;
-	/**
-	 * Operation
-	 */
-	private String operation;
-	private boolean ajax = false;
-	private boolean back = false;
-	private boolean executed = false;
-	/**
-	 * Popup Key
-	 */
-	private String popupKey;
-	/**
-	 *
-	 */
-	private String onHideMessages;
-	/**
-	 *
-	 */
-	private String downloadKey;
-	/**
-	 * Download content type.
-	 */
-	private String downloadContentType;
-	/**
-	 *
-	 */
-	private String downloadContentDisposition;
-	/**
-	 * Download information.
-	 */
-	private DownloadInfo downloadInfo;
 
 	/**
 	 * Method retrieve forward.
@@ -575,245 +261,12 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		this.resultForward = resultForward;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAjax()
-	 */
-	public boolean isAjax() {
-		return ajax;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setAjax(boolean)
-	 */
-	public void setAjax(final boolean ajax) {
-		this.ajax = ajax;
-	}
-
 	public String getResultName() {
 		return resultName;
 	}
 
 	public void setResultName(final String resultName) {
 		this.resultName = resultName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOperation()
-	 */
-	public String getOperation() {
-		return operation;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setOperation(java.lang
-	 * .String)
-	 */
-	public void setOperation(final String operation) {
-		this.operation = operation;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isUploaded()
-	 */
-	public boolean isUploaded() {
-		return uploaded;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setUploaded(boolean)
-	 */
-	public void setUploaded(final boolean uploaded) {
-		this.uploaded = uploaded;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOnHideMessages()
-	 */
-	public String getOnHideMessages() {
-		return onHideMessages;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setOnHideMessages(java
-	 * .lang.String)
-	 */
-	public void setOnHideMessages(final String onHideMessages) {
-		this.onHideMessages = onHideMessages;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isBack()
-	 */
-	public boolean isBack() {
-		return back;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setBack(boolean)
-	 */
-	public void setBack(final boolean back) {
-		this.back = back;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isExecuted()
-	 */
-	public boolean isExecuted() {
-		return executed;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setExecuted(boolean)
-	 */
-	public void setExecuted(final boolean executed) {
-		this.executed = executed;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getDownloadKey()
-	 */
-	public String getDownloadKey() {
-		return downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadKey(java.lang
-	 * .String)
-	 */
-	public void setDownloadKey(final String downloadKey) {
-		this.downloadKey = downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentType()
-	 */
-	public String getDownloadContentType() {
-		return downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentType
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentType(final String downloadContentType) {
-		this.downloadContentType = downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentDisposition
-	 * ()
-	 */
-	public String getDownloadContentDisposition() {
-		return downloadContentDisposition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentDisposition
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentDisposition(final String downloadContentDisposition) {
-		this.downloadContentDisposition = downloadContentDisposition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getPopupKey()
-	 */
-	public String getPopupKey() {
-		return popupKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setPopupKey(java.lang.
-	 * String)
-	 */
-	public void setPopupKey(final String popupKey) {
-		this.popupKey = popupKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isPopup()
-	 */
-	public boolean isPopup() {
-		return StringUtils.isNotEmpty(getPopupKey());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedClass()
-	 */
-	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance()
-				.get(VulpeConstants.CACHED_CLASS);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnum()
-	 */
-	public Map<String, Object> getCachedEnum() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnumArray()
-	 */
-	public Map<String, String> getCachedEnumArray() {
-		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
-				VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 
 	/**
@@ -859,155 +312,184 @@ public abstract class AbstractVulpeBaseSimpleAction extends ActionSupport implem
 		return ServletActionContext.getResponse();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setUrlBack(java.lang.String
-	 * )
-	 */
-	public void setUrlBack(final String urlBack) {
-		getSession().setAttribute(VulpeConstants.View.URL_BACK, urlBack);
+	private final transient TextProvider textProvider = new TextProviderFactory().createInstance(
+			getClass(), this);
+
+	private final ValidationAwareSupport validationAware = new ValidationAwareSupport();
+
+	public void setActionErrors(Collection errorMessages) {
+		validationAware.setActionErrors(errorMessages);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setLayerUrlBack(java.lang
-	 * .String)
-	 */
-	public void setLayerUrlBack(final String layerUrlBack) {
-		getSession().setAttribute(VulpeConstants.View.LAYER_URL_BACK, layerUrlBack);
+	public Collection getActionErrors() {
+		return validationAware.getActionErrors();
 	}
 
-	/**
-	 * Retrieves controller type
-	 * 
-	 * @return Controller Type
-	 */
-	public ControllerType getControllerType() {
-		return ControllerType.valueOf(getActionConfig().getType());
+	public void setActionMessages(Collection messages) {
+		validationAware.setActionMessages(messages);
+	}
+
+	public Collection getActionMessages() {
+		return validationAware.getActionMessages();
 	}
 
 	/**
-	 * Define Result Forward to render normal or AJAX request
+	 * @deprecated Use {@link #getActionErrors()}.
 	 */
-	protected void controlResultForward() {
-		setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+	public Collection getErrorMessages() {
+		return getActionErrors();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * @deprecated Use {@link #getFieldErrors()}.
+	 */
+	public Map getErrors() {
+		return getFieldErrors();
+	}
+
+	public void setFieldErrors(Map errorMap) {
+		validationAware.setFieldErrors(errorMap);
+	}
+
+	public Map getFieldErrors() {
+		return validationAware.getFieldErrors();
+	}
+
+	public Locale getLocale() {
+		return ActionContext.getContext().getLocale();
+	}
+
+	public String getText(String aTextName) {
+		return textProvider.getText(aTextName);
+	}
+
+	public String getText(String aTextName, String defaultValue) {
+		return textProvider.getText(aTextName, defaultValue);
+	}
+
+	public String getText(String aTextName, String defaultValue, String obj) {
+		return textProvider.getText(aTextName, defaultValue, obj);
+	}
+
+	public String getText(String aTextName, List args) {
+		return textProvider.getText(aTextName, args);
+	}
+
+	public String getText(String key, String[] args) {
+		return textProvider.getText(key, args);
+	}
+
+	public String getText(String aTextName, String defaultValue, List args) {
+		return textProvider.getText(aTextName, defaultValue, args);
+	}
+
+	public String getText(String key, String defaultValue, String[] args) {
+		return textProvider.getText(key, defaultValue, args);
+	}
+
+	public String getText(String key, String defaultValue, List args, ValueStack stack) {
+		return textProvider.getText(key, defaultValue, args, stack);
+	}
+
+	public String getText(String key, String defaultValue, String[] args, ValueStack stack) {
+		return textProvider.getText(key, defaultValue, args, stack);
+	}
+
+	public ResourceBundle getTexts() {
+		return textProvider.getTexts();
+	}
+
+	public ResourceBundle getTexts(String aBundleName) {
+		return textProvider.getTexts(aBundleName);
+	}
+
+	public void addActionError(String anErrorMessage) {
+		validationAware.addActionError(anErrorMessage);
+	}
+
+	public void addActionMessage(String aMessage) {
+		validationAware.addActionMessage(aMessage);
+	}
+
+	public void addFieldError(String fieldName, String errorMessage) {
+		validationAware.addFieldError(fieldName, errorMessage);
+	}
+
+	public String input() throws Exception {
+		return INPUT;
+	}
+
+	public String doDefault() throws Exception {
+		return SUCCESS;
+	}
+
+	/**
+	 * A default implementation that does nothing an returns "success".
+	 * <p/>
+	 * Subclasses should override this method to provide their business logic.
+	 * <p/>
+	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
 	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isShowTitle()
+	 * @return returns {@link #SUCCESS}
+	 * @throws Exception
+	 *             can be thrown by subclasses.
 	 */
-	public boolean isShowTitle() {
-		return showTitle;
+	public String execute() throws Exception {
+		return SUCCESS;
 	}
 
-	/*
-	 * (non-Javadoc)
+	public boolean hasActionErrors() {
+		return validationAware.hasActionErrors();
+	}
+
+	public boolean hasActionMessages() {
+		return validationAware.hasActionMessages();
+	}
+
+	public boolean hasErrors() {
+		return validationAware.hasErrors();
+	}
+
+	public boolean hasFieldErrors() {
+		return validationAware.hasFieldErrors();
+	}
+
+	/**
+	 * Clears all errors and messages. Useful for Continuations and other
+	 * situations where you might want to clear parts of the state on the same
+	 * action.
+	 */
+	public void clearErrorsAndMessages() {
+		validationAware.clearErrorsAndMessages();
+	}
+
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
+	/**
+	 * <!-- START SNIPPET: pause-method --> Stops the action invocation
+	 * immediately (by throwing a PauseException) and causes the action
+	 * invocation to return the specified result, such as {@link #SUCCESS},
+	 * {@link #INPUT}, etc.
+	 * <p/>
 	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setShowTitle(boolean)
-	 */
-	public void setShowTitle(boolean showTitle) {
-		this.showTitle = showTitle;
-	}
-
-	/*
-	 * (non-Javadoc)
+	 * The next time this action is invoked (and using the same continuation
+	 * ID), the method will resume immediately after where this method was
+	 * called, with the entire call stack in the execute method restored.
+	 * <p/>
 	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAuthenticated()
-	 */
-	public boolean isAuthenticated() {
-		UserAuthenticationCallback userAuthenticationCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATION);
-		if (userAuthenticationCallback == null) {
-			userAuthenticationCallback = getBean(UserAuthenticationCallback.class);
-			if (userAuthenticationCallback != null) {
-				final boolean authenticated = userAuthenticationCallback.isAuthenticated();
-				if (authenticated) {
-					getSession().setAttribute(Security.VULPE_USER_AUTHENTICATION,
-							userAuthenticationCallback);
-				} else {
-					getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATION);
-				}
-				return authenticated;
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
+	 * Note: this method can <b>only</b> be called within the {@link #execute()}
+	 * method. <!-- END SNIPPET: pause-method -->
 	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getUserAuthenticatedCallback
-	 * ()
+	 * @param result
+	 *            the result to return - the same type of return value in the
+	 *            {@link #execute()} method.
 	 */
-	public UserAuthenticatedCallback getUserAuthenticatedCallback() {
-		UserAuthenticatedCallback userAuthenticatedCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATED);
-		if (userAuthenticatedCallback == null) {
-			userAuthenticatedCallback = getBean(UserAuthenticatedCallback.class);
-			userAuthenticatedCallback.execute();
-			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticatedCallback);
-		}
-		return userAuthenticatedCallback;
+	public void pause(String result) {
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getUserName()
-	 */
-	public String getUserName() {
-		if (getUserAuthenticatedCallback() != null) {
-			return getUserAuthenticatedCallback().getName();
-		}
-		return "";
+	
+	public void addActionError(final String key, final Object... args) {
+		
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.String)
-	 */
-	public <T> T getBean(final String beanName) {
-		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.Class)
-	 */
-	public <T> T getBean(final Class<T> clazz) {
-		return (T) getBean(clazz.getSimpleName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getSessionAttribute(java
-	 * .lang.String)
-	 */
-	public <T> T getSessionAttribute(final String attributeName) {
-		return (T) getSession().getAttribute(attributeName);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getRequestAttribute(java
-	 * .lang.String)
-	 */
-	public <T> T getRequestAttribute(final String attributeName) {
-		return (T) getRequest().getAttribute(attributeName);
-	}
-
 }

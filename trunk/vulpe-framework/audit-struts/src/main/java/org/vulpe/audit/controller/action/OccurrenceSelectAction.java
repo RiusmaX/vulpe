@@ -17,6 +17,7 @@ package org.vulpe.audit.controller.action;
 
 import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.CREATE;
 
+import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
 import org.vulpe.commons.audit.AuditOccurrenceType;
@@ -24,6 +25,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 
+@Component("audit.OccurrenceSelect")
 @Controller(controllerType = ControllerType.SELECT, serviceClass = AuditServices.class, pageSize = 5)
 @SuppressWarnings("serial")
 public class OccurrenceSelectAction extends VulpeBaseAction<AuditOccurrence, Long> {

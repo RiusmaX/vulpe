@@ -19,12 +19,14 @@ import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButto
 import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.DELETE;
 import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.UPDATE;
 
+import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.VulpeBaseAction;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
+@Component("security.RoleSelect")
 @Controller(controllerType = ControllerType.SELECT, serviceClass = SecurityServices.class, pageSize = 5)
 @SuppressWarnings("serial")
 public class RoleSelectAction extends VulpeBaseAction<Role, Long> {

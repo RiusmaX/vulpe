@@ -10,9 +10,6 @@
 	<include file="struts-security.xml" />
 	<include file="struts-application.xml" />
 
-	<bean type="com.opensymphony.xwork2.ObjectFactory"
-		class="org.vulpe.controller.struts.commons.StrutsObjectFactoryImpl" />
-
 	<package name="default" extends="struts-default">
 		<result-types>
 			<result-type name="chain"
@@ -202,7 +199,7 @@
 
 		<!-- Back-End -->
 		<action name="backend/*"
-			class="{project.package}.backend.controller.action.{1}Action"
+			class="backend.{1}"
 			method="backend">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
@@ -214,7 +211,7 @@
 		</action>
 
 		<action name="backend/*/ajax"
-			class="{project.package}.backend.controller.action.{1}Action"
+			class="backend.{1}"
 			method="backend">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
@@ -227,7 +224,7 @@
 		
 		<!-- Front-End -->
 		<action name="frontend/*"
-			class="{project.package}.frontend.controller.action.{1}Action"
+			class="frontend.{1}"
 			method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
@@ -239,7 +236,7 @@
 		</action>
 
 		<action name="frontend/*/ajax"
-			class="{project.package}.frontend.controller.action.{1}Action"
+			class="frontend.{1}"
 			method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
@@ -250,8 +247,8 @@
 			</result>
 		</action>
 
-		<action name="*/*"
-			class="{project.package}.frontend.controller.action.{1}Action"
+		<action name="frontend/*/*"
+			class="frontend.{1}"
 			method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -261,8 +258,8 @@
 			</result>
 		</action>
 
-		<action name="*/*/ajax"
-			class="{project.package}.frontend.controller.action.{1}Action"
+		<action name="frontend/*/*/ajax"
+			class="frontend.{1}."
 			method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -274,7 +271,7 @@
 
 		<!-- Selection -->
 		<action name="*/*/select/*"
-			class="{project.package}.{1}.controller.action.{2}SelectAction"
+			class="{1}.{2}Select"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
@@ -291,7 +288,7 @@
 		</action>
 
 		<action name="*/*/select/*/ajax"
-			class="{project.package}.{1}.controller.action.{2}SelectAction"
+			class="{1}.{2}Select"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
@@ -309,7 +306,7 @@
 
 		<!-- Report -->
 		<action name="*/*/report/*"
-			class="{project.package}.{1}.controller.action.{2}ReportAction"
+			class="{1}.{2}Report"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
@@ -326,7 +323,7 @@
 		</action>
 
 		<action name="*/*/report/*/ajax"
-			class="{project.package}.{1}.controller.action.{2}ReportAction"
+			class="{1}.{2}Report"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
@@ -344,7 +341,7 @@
 
 		<!-- CRUD -->
 		<action name="*/*/crud/*"
-			class="{project.package}.{1}.controller.action.{2}CRUDAction" method="{3}">
+			class="{1}.{2}CRUD" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -358,7 +355,7 @@
 		</action>
 
 		<action name="*/*/crud/*/ajax"
-			class="{project.package}.{1}.controller.action.{2}CRUDAction" method="{3}">
+			class="{1}.{2}CRUD" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -373,7 +370,7 @@
 
 		<!-- Tabular -->
 		<action name="*/*/tabular/*"
-			class="{project.package}.{1}.controller.action.{2}TabularAction"
+			class="{1}.{2}Tabular"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -384,7 +381,7 @@
 		</action>
 
 		<action name="*/*/tabular/*/ajax"
-			class="{project.package}.{1}.controller.action.{2}TabularAction"
+			class="{1}.{2}Tabular"
 			method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">

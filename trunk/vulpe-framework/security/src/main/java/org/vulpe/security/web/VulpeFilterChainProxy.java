@@ -52,10 +52,7 @@ public class VulpeFilterChainProxy extends FilterChainProxy {
 			return;
 		}
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if (httpRequest != null
-				&& httpRequest.getRequestURI().contains(Action.ACTION_SUFFIX)
-				&& !httpRequest.getRequestURI().contains(
-						Action.URI.AUTHENTICATOR + Action.ACTION_SUFFIX)) {
+		if (httpRequest != null && !httpRequest.getRequestURI().contains(Action.URI.AUTHENTICATOR)) {
 			httpRequest.getSession().setAttribute(Security.VULPE_SECURITY_URL_REQUESTED,
 					httpRequest.getRequestURI());
 		}

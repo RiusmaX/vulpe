@@ -58,7 +58,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "serial" })
 public class VulpeBaseAction<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseSimpleAction implements VulpeBaseController {
 

@@ -17,8 +17,7 @@ package org.vulpe.commons.helper;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.vulpe.commons.helper.GenericServicesHelper;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.beans.SpringBeanFactory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.model.services.GenericServices;
 import org.vulpe.model.services.Services;
@@ -41,7 +40,7 @@ public final class GenericServicesHelper {
 	public static GenericServices getService() {
 		GenericServices service = null;
 		try {
-			service = (GenericServices) AbstractVulpeBeanFactory.getInstance().getBean(
+			service = (GenericServices) SpringBeanFactory.getInstance().getBean(
 					GenericServices.class.getSimpleName());
 		} catch (NoSuchBeanDefinitionException e) {
 			if (service == null) {
@@ -65,7 +64,7 @@ public final class GenericServicesHelper {
 	public static <T extends Services> T getService(final Class<T> serviceClass) {
 		T service = null;
 		try {
-			service = (T) AbstractVulpeBeanFactory.getInstance().getBean(
+			service = (T) SpringBeanFactory.getInstance().getBean(
 					serviceClass.getSimpleName());
 		} catch (NoSuchBeanDefinitionException e) {
 			if (service == null) {

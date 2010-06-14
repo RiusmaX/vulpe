@@ -141,9 +141,6 @@ var vulpe = {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
 				url = vulpe.config.contextPath + '/' + url;
 			}
-			if (url.indexOf(vulpe.config.springSecurityCheck) == -1 && url.indexOf(vulpe.config.suffix.action) == -1) {
-				url = url + vulpe.config.suffix.action;
-			}
 			return url;
 		},
 
@@ -1368,8 +1365,8 @@ var vulpe = {
 					}
 				}
 				var form = vulpe.util.getElement(formName);
-				if (actionURL.indexOf(vulpe.config.contextPath) == -1 && actionURL.indexOf(vulpe.config.suffix.action) == -1) {
-					actionURL = vulpe.config.contextPath + '/' + actionURL + vulpe.config.suffix.action;
+				if (actionURL.indexOf(vulpe.config.contextPath) == -1) {
+					actionURL = vulpe.config.contextPath + '/' + actionURL;
 				}
 				form.action = actionURL;
 				vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, false);

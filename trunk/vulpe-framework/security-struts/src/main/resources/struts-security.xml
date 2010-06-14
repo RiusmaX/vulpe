@@ -194,20 +194,15 @@
 			<result name="errors">layout.vulpe.errors</result>
 		</global-results>
 
-		<!--
-			<action name="login"
-			class="org.vulpe.security.controller.action.VulpeLoginAction"
-			method="define"> <result>${resultForward}</result> </action>
-		-->
 		<action name="authenticator"
-			class="org.vulpe.security.controller.action.VulpeLoginAction" method="define">
+			class="security.authenticator" method="define">
 			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
 		</action>
 		
 		<action name="authenticator/ajax"
-			class="org.vulpe.security.controller.action.VulpeLoginAction" method="define">
+			class="security.authenticator" method="define">
 			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
@@ -215,7 +210,7 @@
 		
 		<!-- Selection -->
 		<action name="security/User/select/*"
-			class="org.vulpe.security.controller.action.UserSelectAction" method="{1}">
+			class="security.UserSelect" method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
 			<!-- usado para redirecionar para a tela de inclusão -->
@@ -235,7 +230,7 @@
 		</action>
 
 		<action name="security/User/select/*/ajax"
-			class="org.vulpe.security.controller.action.UserSelectAction" method="{1}">
+			class="security.UserSelect" method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
 			<!-- usado para redirecionar para a tela de inclusão -->
@@ -255,7 +250,7 @@
 		</action>
 
 		<action name="security/Role/select/*"
-			class="org.vulpe.security.controller.action.RoleSelectAction" method="{1}">
+			class="security.RoleSelect" method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
 			<!-- usado para redirecionar para a tela de inclusão -->
@@ -275,7 +270,7 @@
 		</action>
 
 		<action name="security/Role/select/*/ajax"
-			class="org.vulpe.security.controller.action.RoleSelectAction" method="{1}">
+			class="security.RoleSelect" method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
 			<!-- usado para redirecionar para a tela de inclusão -->
@@ -295,7 +290,7 @@
 		</action>
 
 		<action name="security/SecureResource/select/*"
-			class="org.vulpe.security.controller.action.SecureResourceSelectAction"
+			class="security.SecureResourceSelect"
 			method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
@@ -316,7 +311,7 @@
 		</action>
 
 		<action name="security/SecureResource/select/*/ajax"
-			class="org.vulpe.security.controller.action.SecureResourceSelectAction"
+			class="security.SecureResourceSelect"
 			method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
@@ -338,7 +333,7 @@
 
 		<!-- CRUD -->
 		<action name="security/User/crud/*"
-			class="org.vulpe.security.controller.action.UserCRUDAction" method="{1}">
+			class="security.UserCRUD" method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -352,7 +347,7 @@
 		</action>
 
 		<action name="security/User/crud/*/ajax"
-			class="org.vulpe.security.controller.action.UserCRUDAction" method="{1}">
+			class="security.UserCRUD" method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -366,7 +361,7 @@
 		</action>
 
 		<action name="security/SecureResource/crud/*"
-			class="org.vulpe.security.controller.action.SecureResourceCRUDAction"
+			class="security.SecureResourceCRUD"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -381,7 +376,7 @@
 		</action>
 
 		<action name="security/SecureResource/crud/*/ajax"
-			class="org.vulpe.security.controller.action.SecureResourceCRUDAction"
+			class="security.SecureResourceCRUD"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -397,7 +392,7 @@
 
 		<!-- Tabular -->
 		<action name="security/Role/tabular/*"
-			class="org.vulpe.security.controller.action.RoleTabularAction"
+			class="security.RoleTabular"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -408,7 +403,7 @@
 		</action>
 
 		<action name="security/Role/tabular/*/ajax"
-			class="org.vulpe.security.controller.action.RoleTabularAction"
+			class="security.RoleTabular"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">

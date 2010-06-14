@@ -26,7 +26,7 @@ import org.vulpe.controller.struts.util.StrutsControllerUtil;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings("serial")
-public class StrutsObjectFactoryImpl extends StrutsObjectFactory {
+public class VulpeStrutsObjectFactory extends StrutsObjectFactory {
 
 	@Override
 	@SuppressWarnings("unchecked")

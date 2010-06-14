@@ -16,6 +16,7 @@
 package org.vulpe.security.controller.action;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Component;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
@@ -24,6 +25,7 @@ import org.vulpe.controller.struts.action.VulpeBaseAction;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
+@Component("security.UserCRUD")
 @Controller(controllerType = ControllerType.CRUD, serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", detailNews = 1, cardinalityType = CardinalityType.ONE_OR_MORE) })
 @SuppressWarnings("serial")
 public class UserCRUDAction extends VulpeBaseAction<User, Long> {

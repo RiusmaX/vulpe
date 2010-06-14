@@ -45,7 +45,7 @@
 			j_password.focus();
 		}
 		
-		if (URLRequested && URLRequested.indexOf('/ajax.action') != -1) {
+		if (URLRequested && URLRequested.indexOf('/ajax') != -1) {
 			vulpe.util.get('buttonSubmitLoginForm').click(function() {
 				vulpe.view.request.submitLoginForm('vulpeLoginForm', 'vulpeLoginForm', '', 'body', false, '', ''); 
 				return false;

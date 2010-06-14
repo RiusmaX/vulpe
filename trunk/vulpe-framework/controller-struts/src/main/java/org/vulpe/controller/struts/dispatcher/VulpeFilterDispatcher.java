@@ -15,14 +15,19 @@
  */
 package org.vulpe.controller.struts.dispatcher;
 
+import java.io.IOException;
 import java.util.Set;
 
+import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import ognl.OgnlRuntime;
 
 import org.apache.struts2.dispatcher.FilterDispatcher;
+import org.springframework.security.web.FilterInvocation;
 import org.vulpe.controller.struts.util.GenericsNullHandler;
 import org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer;
 import org.vulpe.controller.struts.util.GenericsPropertyAccessor;
@@ -61,4 +66,16 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 		OgnlRuntime.setPropertyAccessor(Set.class, new XWorkSetPropertyAccessor());
 	}
 
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
+		final String url = filterInvocation.getRequestUrl();
+		if (url.contains("/js/") || url.contains("/themes/") || url.contains("/css/")
+				|| url.contains("/images/")) {
+			chain.doFilter(request, response);
+			return;
+		}
+		super.doFilter(request, response, chain);
+	}
 }

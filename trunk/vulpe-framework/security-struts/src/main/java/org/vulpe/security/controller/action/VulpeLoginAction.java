@@ -15,11 +15,13 @@
  */
 package org.vulpe.security.controller.action;
 
+import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
 
+@Component("security.authenticator")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.OTHER)
 public class VulpeLoginAction extends AbstractVulpeBaseSimpleAction {

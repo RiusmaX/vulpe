@@ -180,7 +180,7 @@
 
 		<!-- Selection -->
 		<action name="audit/Occurrence/select/*"
-			class="org.vulpe.audit.controller.action.OccurrenceSelectAction"
+			class="audit.OccurrenceSelect"
 			method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
@@ -201,7 +201,7 @@
 		</action>
 
 		<action name="audit/Occurrence/select/*/ajax"
-			class="org.vulpe.audit.controller.action.OccurrenceSelectAction"
+			class="audit.OccurrenceSelect"
 			method="{1}">
 			<!-- usado para apresentar a tela inicial -->
 			<result name="success">${resultForward}</result>
@@ -223,7 +223,7 @@
 
 		<!-- CRUD -->
 		<action name="audit/Occurrence/crud/*"
-			class="org.vulpe.audit.controller.action.OccurrenceCRUDAction"
+			class="audit.OccurrenceCRUD"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
@@ -238,7 +238,7 @@
 		</action>
 
 		<action name="audit/Occurrence/crud/*/ajax"
-			class="org.vulpe.audit.controller.action.OccurrenceCRUDAction"
+			class="audit.OccurrenceCRUD"
 			method="{1}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
