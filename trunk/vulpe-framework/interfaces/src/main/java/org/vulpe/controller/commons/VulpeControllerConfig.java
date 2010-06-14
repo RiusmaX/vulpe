@@ -9,7 +9,7 @@ import org.vulpe.model.services.Services;
  * @version 1.0
  * @since 1.0
  */
-public interface VulpeActionConfig {
+public interface VulpeControllerConfig {
 
 	/**
 	 * Retrieves type of controller.

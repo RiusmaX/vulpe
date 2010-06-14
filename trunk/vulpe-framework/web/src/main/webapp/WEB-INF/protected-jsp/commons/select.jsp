@@ -6,14 +6,14 @@
 	</div>
 	<div id="vulpeSelectForm">
 		<p class="vulpeSelectForm">
-			<jsp:include page="${actionConfig.viewPath}" />
+			<jsp:include page="${controllerConfig.viewPath}" />
 		</p>
 	</div>
 
-	<div id="vulpeSelectTable_${actionConfig.formName}">
+	<div id="vulpeSelectTable_${controllerConfig.formName}">
 		<p class="vulpeSelectTable">
-			<jsp:include page="${actionConfig.viewItemsPath}" />
-			<c:if test="${actionConfig.type == 'REPORT' && not empty downloadInfo}">
+			<jsp:include page="${controllerConfig.viewItemsPath}" />
+			<c:if test="${controllerConfig.type == 'REPORT' && not empty downloadInfo}">
 				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
 				<script type="text/javascript">
 					$(document).ready(function() {

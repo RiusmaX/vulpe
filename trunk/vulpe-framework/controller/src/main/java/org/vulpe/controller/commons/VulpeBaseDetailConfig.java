@@ -111,7 +111,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setupDetail(final VulpeBaseActionConfig config, final DetailConfig detail) {
+	public void setupDetail(final VulpeBaseControllerConfig config, final DetailConfig detail) {
 		if (detail == null) {
 			return;
 		}

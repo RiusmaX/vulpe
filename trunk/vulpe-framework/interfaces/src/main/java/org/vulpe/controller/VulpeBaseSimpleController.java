@@ -18,7 +18,7 @@ package org.vulpe.controller;
 import java.util.Date;
 import java.util.Map;
 
-import org.vulpe.controller.commons.VulpeActionConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.model.services.Services;
 import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
 
@@ -80,7 +80,7 @@ public interface VulpeBaseSimpleController {
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
-	VulpeActionConfig getActionConfig();
+	VulpeControllerConfig getControllerConfig();
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.

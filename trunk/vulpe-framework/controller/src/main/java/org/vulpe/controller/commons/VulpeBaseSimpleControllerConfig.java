@@ -40,7 +40,7 @@ import org.vulpe.model.services.Services;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializable {
+public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, Serializable {
 
 	private boolean simple = true;
 	private Controller controller;
@@ -55,11 +55,11 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	private String reportFile;
 	private String[] subReports;
 
-	public VulpeBaseSimpleActionConfig() {
+	public VulpeBaseSimpleControllerConfig() {
 		// default constructor
 	}
 
-	public VulpeBaseSimpleActionConfig(final Class<?> classAction) {
+	public VulpeBaseSimpleControllerConfig(final Class<?> classAction) {
 		this.controller = VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
 				classAction);
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
@@ -139,7 +139,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getType()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getType()
 	 */
 	public String getType() {
 		return this.controller.controllerType().name();
@@ -156,7 +156,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getServiceClass()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getServiceClass()
 	 */
 	public Class<? extends Services> getServiceClass() {
 		return this.controller.serviceClass();
@@ -165,7 +165,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getPageSize()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getPageSize()
 	 */
 	public int getPageSize() {
 		return this.controller.pageSize();
@@ -174,7 +174,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getOwnerAction()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getOwnerAction()
 	 */
 	public String getOwnerAction() {
 		if (StringUtils.isNotEmpty(this.controller.ownerAction())) {
@@ -194,7 +194,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveOwnerAction()
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveOwnerAction()
 	 */
 	public String getPrimitiveOwnerAction() {
 		return StringUtils.replace(getOwnerAction(), ".", "/");
@@ -203,7 +203,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getMethod()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMethod()
 	 */
 	public String getMethod() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
@@ -214,7 +214,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionBaseName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionBaseName()
 	 */
 	public String getActionBaseName() {
 		return this.actionBaseName;
@@ -223,7 +223,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionName()
 	 */
 	public String getActionName() {
 		return this.actionName;
@@ -233,7 +233,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveActionName()
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveActionName()
 	 */
 	public String getPrimitiveActionName() {
 		this.primitiveActionName = StringUtils.replace(getActionName(), ".", "/");
@@ -244,7 +244,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#getPrimitiveReportActionName
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getPrimitiveReportActionName
 	 * ()
 	 */
 	public String getPrimitiveReportActionName() {
@@ -257,7 +257,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getActionKey()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getActionKey()
 	 */
 	public String getActionKey() {
 		return getProjectName().concat("/").concat(getActionName());
@@ -266,7 +266,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getSimpleActionName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSimpleActionName()
 	 */
 	public String getSimpleActionName() {
 		return this.simpleActionName;
@@ -275,7 +275,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getFormName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getFormName()
 	 */
 	public String getFormName() {
 		String formName = StringUtils.replace(getActionName(), Logic.BACKEND, "");
@@ -295,7 +295,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#isDetailsInTabs()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isDetailsInTabs()
 	 */
 	public boolean isDetailsInTabs() {
 		return this.controller.detailsInTabs();
@@ -304,7 +304,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportFormat()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFormat()
 	 */
 	public String getReportFormat() {
 		return this.controller.report().reportFormat();
@@ -313,7 +313,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportDataSource()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSource()
 	 */
 	public String getReportDataSource() {
 		return this.controller.report().reportDataSource();
@@ -322,7 +322,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportName()
 	 */
 	public String getReportName() {
 		return this.controller.report().reportName();
@@ -331,7 +331,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#isReportDownload()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
 	 */
 	public boolean isReportDownload() {
 		return this.controller.report().reportDownload();
@@ -340,7 +340,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getReportFile()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFile()
 	 */
 	public String getReportFile() {
 		return this.reportFile;
@@ -350,7 +350,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#getParentName(java.lang
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getParentName(java.lang
 	 * .String)
 	 */
 	public String getParentName(final String detail) {
@@ -389,7 +389,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setActionBaseName(java
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setActionBaseName(java
 	 * .lang.String)
 	 */
 	public void setActionBaseName(final String actionBaseName) {
@@ -400,7 +400,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setActionName(java.lang
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setActionName(java.lang
 	 * .String)
 	 */
 	public void setActionName(final String actionName) {
@@ -411,7 +411,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setPrimitiveActionName
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setPrimitiveActionName
 	 * (java.lang.String)
 	 */
 	public void setPrimitiveActionName(final String primitiveActionName) {
@@ -422,7 +422,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setSimpleActionName(java
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimpleActionName(java
 	 * .lang.String)
 	 */
 	public void setSimpleActionName(final String simpleActionName) {
@@ -433,7 +433,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setReportFile(java.lang
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setReportFile(java.lang
 	 * .String)
 	 */
 	public void setReportFile(final String reportFile) {
@@ -443,7 +443,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getTitleKey()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getTitleKey()
 	 */
 	public String getTitleKey() {
 		return titleKey;
@@ -453,7 +453,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setTitleKey(java.lang.
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setTitleKey(java.lang.
 	 * String)
 	 */
 	public void setTitleKey(final String titleKey) {
@@ -463,7 +463,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#isSimple()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isSimple()
 	 */
 	public boolean isSimple() {
 		return simple;
@@ -472,7 +472,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#setSimple(boolean)
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#setSimple(boolean)
 	 */
 	public void setSimple(final boolean simple) {
 		this.simple = simple;
@@ -482,7 +482,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setViewItemsPath(java.
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setViewItemsPath(java.
 	 * lang.String)
 	 */
 	public void setViewItemsPath(final String viewItemsPath) {
@@ -492,7 +492,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getViewItemsPath()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
 	 */
 	public String getViewItemsPath() {
 		return viewItemsPath;
@@ -502,7 +502,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setViewPath(java.lang.
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setViewPath(java.lang.
 	 * String)
 	 */
 	public void setViewPath(final String viewPath) {
@@ -512,7 +512,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getViewPath()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewPath()
 	 */
 	public String getViewPath() {
 		return viewPath;
@@ -522,7 +522,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setPrimitiveReportActionName
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setPrimitiveReportActionName
 	 * (java.lang.String)
 	 */
 	public void setPrimitiveReportActionName(String primitiveReportActionName) {
@@ -533,7 +533,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeActionConfig#setSubReports(java.lang
+	 * org.vulpe.controller.commons.VulpeControllerConfig#setSubReports(java.lang
 	 * .String[])
 	 */
 	public void setSubReports(String[] subReports) {
@@ -543,7 +543,7 @@ public class VulpeBaseSimpleActionConfig implements VulpeActionConfig, Serializa
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeActionConfig#getSubReports()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSubReports()
 	 */
 	public String[] getSubReports() {
 		return subReports;

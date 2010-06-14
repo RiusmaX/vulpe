@@ -51,7 +51,7 @@
 </c:if>
 <c:if test="${exibe eq true}">
 	<c:if test="${empty layerFields}">
-		<c:set var="layerFields" value="${actionConfig.formName}" />
+		<c:set var="layerFields" value="${controllerConfig.formName}" />
 	</c:if>
 	<c:if test="${layerFields eq 'false'}">
 		<c:set var="layerFields" value="" />
@@ -72,11 +72,11 @@
 		<c:choose>
 			<c:when test="${empty action}">
 				<c:set var="javascript"
-					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitForm('${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}', false);${showDeleteConfirmation ? '})': ''}" />
+					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitForm('${controllerConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}', false);${showDeleteConfirmation ? '})': ''}" />
 			</c:when>
 			<c:when test="${!noSubmitForm}">
 				<c:set var="javascript"
-					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitFormAction('${action}', '${actionConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');${showDeleteConfirmation ? '})': ''}" />
+					value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitFormAction('${action}', '${controllerConfig.formName}', '${layerFields}', '${queryString}', '${layer}', ${validate}, '${fn:escapeXml(beforeJs)}', '${fn:escapeXml(afterJs)}');${showDeleteConfirmation ? '})': ''}" />
 			</c:when>
 			<c:otherwise>
 				<c:set var="javascript"

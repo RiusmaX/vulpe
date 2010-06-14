@@ -6,7 +6,7 @@
 	</div>
 
 	<div id="vulpeFrontendBody">
-		<jsp:include page="${actionConfig.viewPath}" />
+		<jsp:include page="${controllerConfig.viewPath}" />
 	</div>
 
 	<c:if test="${not empty frontendFooter}">

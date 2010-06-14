@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.struts.action;
+package org.vulpe.controller.struts;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ import org.vulpe.commons.file.FileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.commons.VulpeActionConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.struts.util.StrutsControllerUtil;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -52,13 +51,10 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.LocaleProvider;
-import com.opensymphony.xwork2.TextProvider;
-import com.opensymphony.xwork2.TextProviderFactory;
 import com.opensymphony.xwork2.Validateable;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.ValidationAwareSupport;
 import com.opensymphony.xwork2.util.OgnlUtil;
-import com.opensymphony.xwork2.util.ValueStack;
 
 /**
  * Action base for Struts2
@@ -68,11 +64,11 @@ import com.opensymphony.xwork2.util.ValueStack;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSimpleController
-		implements Action, Validateable, ValidationAware, TextProvider, LocaleProvider,
+public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
+		implements Action, Validateable, ValidationAware, LocaleProvider,
 		Serializable {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseSimpleAction.class);
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeStrutsSimpleController.class);
 	/**
 	 *
 	 */
@@ -83,8 +79,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 	 * 
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
 	 */
-	public VulpeActionConfig getActionConfig() {
-		return StrutsControllerUtil.getInstance().getActionConfig(this);
+	public VulpeControllerConfig getControllerConfig() {
+		return StrutsControllerUtil.getInstance().getControllerConfig(this);
 	}
 
 	/**
@@ -95,15 +91,15 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 	protected DownloadInfo doReadReportLoad() {
 		try {
 			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils.getProperty(
-					this, getActionConfig().getReportDataSource());
-			return StringUtils.isNotBlank(getActionConfig().getReportName()) ? StrutsReportUtil
+					this, getControllerConfig().getReportDataSource());
+			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
 					.getInstance()
-					.getDownloadInfo(list, getActionConfig().getReportFile(),
-							getActionConfig().getSubReports(), getActionConfig().getReportFormat(),
-							getActionConfig().getReportName(), getActionConfig().isReportDownload())
+					.getDownloadInfo(list, getControllerConfig().getReportFile(),
+							getControllerConfig().getSubReports(), getControllerConfig().getReportFormat(),
+							getControllerConfig().getReportName(), getControllerConfig().isReportDownload())
 					: StrutsReportUtil.getInstance().getDownloadInfo(list,
-							getActionConfig().getReportFile(), getActionConfig().getSubReports(),
-							getActionConfig().getReportFormat());
+							getControllerConfig().getReportFile(), getControllerConfig().getSubReports(),
+							getControllerConfig().getReportFormat());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
@@ -123,7 +119,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.BACKEND)) {
 			if (isAjax()) {
-				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.BACKEND;
 			} else {
 				controlResultForward();
@@ -151,7 +147,7 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();
@@ -312,9 +308,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 		return ServletActionContext.getResponse();
 	}
 
-	private final transient TextProvider textProvider = new TextProviderFactory().createInstance(
-			getClass(), this);
-
 	private final ValidationAwareSupport validationAware = new ValidationAwareSupport();
 
 	public void setActionErrors(Collection errorMessages) {
@@ -357,50 +350,6 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 
 	public Locale getLocale() {
 		return ActionContext.getContext().getLocale();
-	}
-
-	public String getText(String aTextName) {
-		return textProvider.getText(aTextName);
-	}
-
-	public String getText(String aTextName, String defaultValue) {
-		return textProvider.getText(aTextName, defaultValue);
-	}
-
-	public String getText(String aTextName, String defaultValue, String obj) {
-		return textProvider.getText(aTextName, defaultValue, obj);
-	}
-
-	public String getText(String aTextName, List args) {
-		return textProvider.getText(aTextName, args);
-	}
-
-	public String getText(String key, String[] args) {
-		return textProvider.getText(key, args);
-	}
-
-	public String getText(String aTextName, String defaultValue, List args) {
-		return textProvider.getText(aTextName, defaultValue, args);
-	}
-
-	public String getText(String key, String defaultValue, String[] args) {
-		return textProvider.getText(key, defaultValue, args);
-	}
-
-	public String getText(String key, String defaultValue, List args, ValueStack stack) {
-		return textProvider.getText(key, defaultValue, args, stack);
-	}
-
-	public String getText(String key, String defaultValue, String[] args, ValueStack stack) {
-		return textProvider.getText(key, defaultValue, args, stack);
-	}
-
-	public ResourceBundle getTexts() {
-		return textProvider.getTexts();
-	}
-
-	public ResourceBundle getTexts(String aBundleName) {
-		return textProvider.getTexts(aBundleName);
 	}
 
 	public void addActionError(String anErrorMessage) {

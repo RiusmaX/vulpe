@@ -5,11 +5,11 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/crudActions.jsp" %>
 	</div>
 
-	<c:if test="${actionConfig.detailsInTabs eq true && not empty actionConfig.details && fn:length(actionConfig.details) > 0}">
+	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeCRUDBodyTabs">
 		<ul>
 			<li><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody"><fmt:message key="vulpe.label.main"/></a></li>
-			<c:forEach items="${actionConfig.details}" var="detail" varStatus="status">
+			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
 					<li><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail_${detail.baseName}"><fmt:message key="${detail.titleKey}"/></a></li>
 				</c:if>
@@ -23,11 +23,11 @@
 	<div id="vulpeCRUDBody">
 		<c:remove var="targetConfig" scope="request"/>
 		<c:remove var="targetConfigPropertyName" scope="request"/>
-		<jsp:include page="${actionConfig.viewPath}" />
+		<jsp:include page="${controllerConfig.viewPath}" />
 	</div>
 
-	<c:if test="${not empty actionConfig.details && fn:length(actionConfig.details) > 0}">
-		<c:forEach items="${actionConfig.details}" var="detail">
+	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
+		<c:forEach items="${controllerConfig.details}" var="detail">
 			<c:if test="${empty detail.parentDetailConfig}">
 				<c:set var="targetConfig" value="${detail}" scope="request"/>
 				<c:set var="targetConfigPropertyName" value="${detail.propertyName}" scope="request"/>
@@ -45,7 +45,7 @@
 	<div id="vulpeCRUDFooter">
 	</div>
 
-	<c:if test="${actionConfig.detailsInTabs eq true && not empty actionConfig.details && fn:length(actionConfig.details) > 0}">
+	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -53,7 +53,7 @@
 				$(tabsName).tabs({
 				    show: function(event, ui) {
 				    	var selected = $(tabsName).tabs('option', 'selected');
-				        vulpe.util.selectTab("${actionConfig.formName}", selected);
+				        vulpe.util.selectTab("${controllerConfig.formName}", selected);
 				        return true;
 			    	}
 				});
@@ -61,7 +61,7 @@
 				if (selectedTab && selectedTab > 0) {
 					$(tabsName).tabs('option', 'selected', selectedTab);
 				}
-				var tabs = "${fn:length(actionConfig.details)}";
+				var tabs = "${fn:length(controllerConfig.details)}";
 				var tabIndex = 0;
 				var tabControl = function(index) {
 					if (index == -1) {

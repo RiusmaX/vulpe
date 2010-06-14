@@ -114,10 +114,10 @@
 
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
 		<c:if test="${empty updateActionName}">
-			<c:set var="updateActionName" value="${actionConfig.primitiveActionName}/update"/>
+			<c:set var="updateActionName" value="${controllerConfig.primitiveActionName}/update"/>
 		</c:if>
 		<c:if test="${empty updateFormName}">
-			<c:set var="updateFormName" value="${actionConfig.formName}"/>
+			<c:set var="updateFormName" value="${controllerConfig.formName}"/>
 		</c:if>
 		<c:if test="${empty updateLayerFields}">
 			<c:set var="updateLayerFields" value="${updateFormName}"/>
@@ -154,10 +154,10 @@
 
 	<c:if test="${not empty deleteValue && deleteValue ne 'false'}">
 		<c:if test="${empty deleteActionName}">
-			<c:set var="deleteActionName" value="${actionConfig.primitiveActionName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
+			<c:set var="deleteActionName" value="${controllerConfig.primitiveActionName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
 		</c:if>
 		<c:if test="${empty deleteFormName}">
-			<c:set var="deleteFormName" value="${actionConfig.formName}"/>
+			<c:set var="deleteFormName" value="${controllerConfig.formName}"/>
 		</c:if>
 		<c:if test="${empty deleteLayerFields}">
 			<c:set var="deleteLayerFields" value="${deleteFormName}"/>

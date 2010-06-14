@@ -4,16 +4,16 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.util.focusFirst();
-<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && actionConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && actionConfig.type == 'BACKEND')}">
+<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && controllerConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && controllerConfig.type == 'BACKEND')}">
 	$("#nav").droppy();
 </c:if>
 <c:if test="${pageContext.request.locale ne 'en_US'}">
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 
-	if (document.forms['${actionConfig.formName}']) {
+	if (document.forms['${controllerConfig.formName}']) {
 	<c:if test="${createShow}">
-		var buttonCreate = $("#vulpeButtonCreate_${actionConfig.formName}");
+		var buttonCreate = $("#vulpeButtonCreate_${controllerConfig.formName}");
 		if (buttonCreate) {
 			buttonCreate.${createShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){buttonCreate.click(); return false;});
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${createPostShow}">
-		var buttonCreatePost = $("#vulpeButtonCreatePost_${actionConfig.formName}");
+		var buttonCreatePost = $("#vulpeButtonCreatePost_${controllerConfig.formName}");
 		if (buttonCreatePost) {
 			buttonCreatePost.${createPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${updatePostShow}">
-		var buttonUpdatePost = $("#vulpeButtonUpdatePost_${actionConfig.formName}");
+		var buttonUpdatePost = $("#vulpeButtonUpdatePost_${controllerConfig.formName}");
 		if (buttonUpdatePost) {
 			buttonUpdatePost.${updatePostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
@@ -37,7 +37,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${tabularPostShow}">
-		var buttonTabularPost = $("#vulpeButtonTabularPost_${actionConfig.formName}");
+		var buttonTabularPost = $("#vulpeButtonTabularPost_${controllerConfig.formName}");
 		if (buttonTabularPost) {
 			buttonTabularPost.${tabularPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
@@ -45,7 +45,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${deleteShow}">
-		var buttonDelete = $("#vulpeButtonDelete_${actionConfig.formName}");
+		var buttonDelete = $("#vulpeButtonDelete_${controllerConfig.formName}");
 		if (buttonDelete) {
 			buttonDelete.${deleteShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
@@ -53,16 +53,16 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${prepareShow}">
-		var buttonPrepare = $("#vulpeButtonPrepare_${actionConfig.formName}");
+		var buttonPrepare = $("#vulpeButtonPrepare_${controllerConfig.formName}");
 		if (buttonPrepare) {
 			buttonPrepare.${prepareShow ? 'show' : 'hide'}();
-			<c:if test="${actionConfig.type == 'CRUD'}">
+			<c:if test="${controllerConfig.type == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
-			<c:if test="${actionConfig.type == 'SELECT'}">
+			<c:if test="${controllerConfig.type == 'SELECT'}">
 			<c:set var="prepare" value="Shift+del"/>
 			</c:if>
-			<c:if test="${actionConfig.type == 'TABULAR'}">
+			<c:if test="${controllerConfig.type == 'TABULAR'}">
 			<c:set var="prepare" value="Ctrl+f9"/>
 			</c:if>
 			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${readShow}">
-		var buttonRead = $("#vulpeButtonRead_${actionConfig.formName}");
+		var buttonRead = $("#vulpeButtonRead_${controllerConfig.formName}");
 		if (buttonRead) {
 			buttonRead.${readShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
@@ -78,7 +78,7 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${clearShow}">
-		var buttonClear = $("#vulpeButtonClear_${actionConfig.formName}");
+		var buttonClear = $("#vulpeButtonClear_${controllerConfig.formName}");
 		if (buttonClear) {
 			buttonClear.${clearShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
@@ -88,19 +88,19 @@ $(document).ready(function() {
 	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
 	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
 	<c:if test="${buttonCreate_tabular}">
-		var buttonAddDetail_entities = $("#vulpeButtonAddDetail_${actionConfig.formName}_entities");
+		var buttonAddDetail_entities = $("#vulpeButtonAddDetail_${controllerConfig.formName}_entities");
 		if (buttonAddDetail_entities) {
 			buttonAddDetail_entities.${buttonCreate_tabular ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
 		}
 	</c:if>
 
-	<c:if test="${!actionConfig.simple}">
-	<c:forEach items="${actionConfig.details}" var="detail">
+	<c:if test="${!controllerConfig.simple}">
+	<c:forEach items="${controllerConfig.details}" var="detail">
 		<c:set var="buttonDetailEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
-		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${actionConfig.formName}_${detail.baseName}");
+		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${controllerConfig.formName}_${detail.baseName}");
 		if (buttonAddDetail_${detail.baseName}) {
 			buttonAddDetail_${detail.baseName}.${buttonDetail ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
@@ -109,27 +109,27 @@ $(document).ready(function() {
 	</c:forEach>
 	</c:if>
 
-		vulpe.util.get('${actionConfig.formName}_operation').each(function(){
+		vulpe.util.get('${controllerConfig.formName}_operation').each(function(){
 			$(this).val('${operation}');
 			$(this).attr('defaultValue', $(this).val());
 		});
 
-		vulpe.util.get('${actionConfig.formName}_paging.page').each(function(){
+		vulpe.util.get('${controllerConfig.formName}_paging.page').each(function(){
 			$(this).val('${paging.page}');
 			$(this).attr('defaultValue', $(this).val());
 		});
 
-		vulpe.util.get('${actionConfig.formName}_id').each(function(){
+		vulpe.util.get('${controllerConfig.formName}_id').each(function(){
 			$(this).val('${id}');
 			$(this).attr('defaultValue', $(this).val());
 		});
 
-		vulpe.util.get('${actionConfig.formName}_executed').each(function(){
+		vulpe.util.get('${controllerConfig.formName}_executed').each(function(){
 			$(this).val('${executed}');
 			$(this).attr('defaultValue', $(this).val());
 		});
 
-		vulpe.util.get('${actionConfig.formName}_entity.orderBy').each(function(){
+		vulpe.util.get('${controllerConfig.formName}_entity.orderBy').each(function(){
 			$(this).val('${entity.orderBy}');
 			$(this).attr('defaultValue', $(this).val());
 		});

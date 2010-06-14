@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.controller.action;
+package org.vulpe.security.controller;
+
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE;
 
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.security.model.entity.User;
+import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Component("security.UserSelect")
+@Component("security.RoleSelect")
 @Controller(controllerType = ControllerType.SELECT, serviceClass = SecurityServices.class, pageSize = 5)
 @SuppressWarnings("serial")
-public class UserSelectAction extends VulpeBaseAction<User, Long> {
+public class RoleSelectController extends VulpeStrutsController<Role, Long> {
+
+	@Override
+	protected void showButtons(final String method) {
+		super.showButtons(method);
+		hideButton(new BaseActionButtons[] { CREATE, UPDATE, DELETE });
+	}
 
 }

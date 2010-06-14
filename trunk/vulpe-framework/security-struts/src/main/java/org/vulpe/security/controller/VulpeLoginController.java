@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.controller.action;
+package org.vulpe.security.controller;
 
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.AbstractVulpeBaseSimpleAction;
+import org.vulpe.controller.struts.AbstractVulpeStrutsSimpleController;
 
 @Component("security.authenticator")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.OTHER)
-public class VulpeLoginAction extends AbstractVulpeBaseSimpleAction {
+public class VulpeLoginController extends AbstractVulpeStrutsSimpleController {
 
 	private Integer loginError;
 

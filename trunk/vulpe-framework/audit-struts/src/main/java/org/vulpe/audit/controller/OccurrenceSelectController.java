@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.audit.controller.action;
+package org.vulpe.audit.controller;
 
-import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.CREATE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
 
 import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
@@ -23,12 +23,12 @@ import org.vulpe.audit.model.services.AuditServices;
 import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 
 @Component("audit.OccurrenceSelect")
 @Controller(controllerType = ControllerType.SELECT, serviceClass = AuditServices.class, pageSize = 5)
 @SuppressWarnings("serial")
-public class OccurrenceSelectAction extends VulpeBaseAction<AuditOccurrence, Long> {
+public class OccurrenceSelectController extends VulpeStrutsController<AuditOccurrence, Long> {
 
 	@Override
 	public String prepare() {

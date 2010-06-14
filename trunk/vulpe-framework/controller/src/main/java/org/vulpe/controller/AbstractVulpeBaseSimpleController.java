@@ -125,7 +125,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.BACKEND)) {
 			if (isAjax()) {
-				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.BACKEND;
 			} else {
 				controlResultForward();
@@ -174,7 +174,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getActionConfig().getPrimitiveActionName().concat(URI.AJAX));
+				setResultForward(getControllerConfig().getPrimitiveActionName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();
@@ -323,7 +323,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#getService()
 	 */
 	public Services getService() {
-		return getService(getActionConfig().getServiceClass());
+		return getService(getControllerConfig().getServiceClass());
 	}
 
 	/*
@@ -775,7 +775,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * @return Controller Type
 	 */
 	public ControllerType getControllerType() {
-		return ControllerType.valueOf(getActionConfig().getType());
+		return ControllerType.valueOf(getControllerConfig().getType());
 	}
 
 	/**

@@ -58,11 +58,11 @@
 
 	<c:if test="${empty popupTargetName}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="popupTargetName" value="${actionConfig.formName}_entity."/>
+			<c:set var="popupTargetName" value="${controllerConfig.formName}_entity."/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="popupTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="popupTargetName" value="${actionConfig.formName}_${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
+			<c:set var="popupTargetName" value="${controllerConfig.formName}_${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
 		</c:if>
 	</c:if>
 	<c:choose>
@@ -76,11 +76,11 @@
 
 	<c:if test="${empty paramTargetName}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="paramTargetName" value="${actionConfig.formName}_entity"/>
+			<c:set var="paramTargetName" value="${controllerConfig.formName}_entity"/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="paramTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="paramTargetName" value="${actionConfig.formName}_${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
+			<c:set var="paramTargetName" value="${controllerConfig.formName}_${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
 		</c:if>
 	</c:if>
 	<c:choose>
@@ -94,7 +94,7 @@
 
 	<c:if test="${empty popupLayerParent}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="popupLayerParent" value="${actionConfig.formName}"/>
+			<c:set var="popupLayerParent" value="${controllerConfig.formName}"/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="index" value=""/>
@@ -102,7 +102,7 @@
 				<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
 				<c:set var="index" value="_${util:eval(pageContext, indexEL)}_"/>
 			</c:if>
-			<c:set var="popupLayerParent" value="${actionConfig.formName}_${targetConfig.baseName}${index}"/>
+			<c:set var="popupLayerParent" value="${controllerConfig.formName}_${targetConfig.baseName}${index}"/>
 		</c:if>
 	</c:if>
 	<c:if test="${popupLayerParent eq 'false'}">
@@ -111,7 +111,7 @@
 
 	<c:if test="${empty paramLayerParent}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="paramLayerParent" value="${actionConfig.formName}"/>
+			<c:set var="paramLayerParent" value="${controllerConfig.formName}"/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="index" value=""/>
@@ -119,7 +119,7 @@
 				<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
 				<c:set var="index" value="_${util:eval(pageContext, indexEL)}_"/>
 			</c:if>
-			<c:set var="paramLayerParent" value="${actionConfig.formName}_${targetConfig.baseName}${index}"/>
+			<c:set var="paramLayerParent" value="${controllerConfig.formName}_${targetConfig.baseName}${index}"/>
 		</c:if>
 	</c:if>
 	<c:if test="${paramLayerParent eq 'false'}">

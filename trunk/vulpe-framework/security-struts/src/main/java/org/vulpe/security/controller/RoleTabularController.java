@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.controller.action;
+package org.vulpe.security.controller;
 
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.security.model.entity.SecureResource;
+import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Component("security.SecureResourceSelect")
-@Controller(controllerType = ControllerType.SELECT, serviceClass = SecurityServices.class, pageSize = 5)
+@Component("security.RoleTabular")
+@Controller(controllerType = ControllerType.TABULAR, serviceClass = SecurityServices.class, tabularDetailNews = 4, tabularDespiseFields = { "name" })
 @SuppressWarnings("serial")
-public class SecureResourceSelectAction extends VulpeBaseAction<SecureResource, Long> {
+public class RoleTabularController extends VulpeStrutsController<Role, Long> {
 
 }

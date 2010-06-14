@@ -16,8 +16,8 @@
 </c:if> 
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.addDetail"
-	elementId="vulpeButtonAddDetail_${actionConfig.formName}_${targetConfig.name}"
-	action="${actionConfig.primitiveActionName}/addDetail/ajax"
+	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.name}"
+	action="${controllerConfig.primitiveActionName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}"
 	helpKey="vulpe.help.tabularNew"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
@@ -32,8 +32,8 @@
 </c:if> 
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.refresh"
-	elementId="vulpeButtonPrepare_${actionConfig.formName}"
-	action="${actionConfig.primitiveActionName}/prepare/ajax"
+	elementId="vulpeButtonPrepare_${controllerConfig.formName}"
+	action="${controllerConfig.primitiveActionName}/prepare/ajax"
 	helpKey="vulpe.help.refresh"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
@@ -47,8 +47,8 @@
 </c:if> 
 <v:action validate="true" style="${style}"
 	labelKey="vulpe.label.tabularPost"
-	elementId="vulpeButtonTabularPost_${actionConfig.formName}"
-	action="${actionConfig.primitiveActionName}/tabularPost/ajax"
+	elementId="vulpeButtonTabularPost_${controllerConfig.formName}"
+	action="${controllerConfig.primitiveActionName}/tabularPost/ajax"
 	helpKey="vulpe.help.tabularPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"

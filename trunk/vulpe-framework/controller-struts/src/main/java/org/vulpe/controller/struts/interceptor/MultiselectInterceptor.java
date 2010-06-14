@@ -31,7 +31,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -79,9 +79,9 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 				if (parameters.containsKey(name)) {
 					final Object[] values = (Object[]) parameters.get(name);
 					if (values != null) {
-						final VulpeBaseAction baseAction = VulpeReflectUtil.getInstance()
+						final VulpeStrutsController baseAction = VulpeReflectUtil.getInstance()
 								.getFieldValue(actionInvocation, "action");
-						final Object entity = baseAction.getActionConfig()
+						final Object entity = baseAction.getControllerConfig()
 								.getEntityClass().newInstance();
 						final String attributeName = name.contains("entities") ? name
 								.substring(name.indexOf("].") + 2)

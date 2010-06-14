@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeAuthenticationException;
 import org.vulpe.exception.VulpeAuthorizationException;
@@ -57,7 +57,7 @@ public class VulpeExceptionMappingInterceptor extends
 			result = super.intercept(invocation);
 		} catch (Exception e) {
 			// if exception no mapped in struts, then do general handling
-			if (invocation.getAction() instanceof VulpeBaseAction) {
+			if (invocation.getAction() instanceof VulpeStrutsController) {
 				result = findResultFromException(invocation, e);
 			} else {
 				throw e;
@@ -75,7 +75,7 @@ public class VulpeExceptionMappingInterceptor extends
 	 */
 	protected String findResultFromException(final ActionInvocation invocation,
 			final Throwable exception) {
-		final VulpeBaseAction<?, ?> action = (VulpeBaseAction<?, ?>) invocation
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 				.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);

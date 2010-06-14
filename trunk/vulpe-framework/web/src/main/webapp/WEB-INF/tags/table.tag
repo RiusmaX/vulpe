@@ -33,7 +33,7 @@
 
 <c:if test="${exibe eq true}">
 	<c:if test="${empty sortPropertyInfo}">
-		<c:set var="sortPropertyInfo" value="${actionConfig.formName}_entity.orderBy"/>
+		<c:set var="sortPropertyInfo" value="${controllerConfig.formName}_entity.orderBy"/>
 	</c:if>
 
 	<c:if test="${empty renderId}">
@@ -120,10 +120,10 @@
 	<c:if test="${not empty pagingList}">
 		<c:set var="items" value="${pagingList.list}"/>
 		<c:if test="${empty pagingActionName}">
-			<c:set var="pagingActionName" value="${actionConfig.primitiveActionName}/read"/>
+			<c:set var="pagingActionName" value="${controllerConfig.primitiveActionName}/read"/>
 		</c:if>
 		<c:if test="${empty pagingFormName}">
-			<c:set var="pagingFormName" value="${actionConfig.formName}"/>
+			<c:set var="pagingFormName" value="${controllerConfig.formName}"/>
 		</c:if>
 		<c:if test="${empty pagingLayerFields}">
 			<c:set var="pagingLayerFields" value="${pagingFormName}"/>

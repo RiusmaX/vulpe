@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.audit.controller.action;
+package org.vulpe.audit.controller;
 
-import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.DELETE;
-import static org.vulpe.controller.struts.action.VulpeBaseAction.BaseActionButtons.UPDATE_POST;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE_POST;
 
 import java.util.List;
 
@@ -26,13 +26,13 @@ import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
 
 @Component("audit.OccurrenceCRUD")
 @Controller(controllerType = ControllerType.CRUD, serviceClass = AuditServices.class)
 @SuppressWarnings("serial")
-public class OccurrenceCRUDAction extends VulpeBaseAction<AuditOccurrence, Long> {
+public class OccurrenceCRUDController extends VulpeStrutsController<AuditOccurrence, Long> {
 
 	private List<AuditOccurrence> childOccurrences = null;
 

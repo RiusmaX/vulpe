@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.vraptor.action;
+package org.vulpe.controller.vraptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.file.FileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
-import org.vulpe.controller.commons.VulpeActionConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.vraptor.util.VRaptorControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -41,9 +41,9 @@ import br.com.caelum.vraptor.core.RequestInfo;
  * @since 1.0
  */
 @SuppressWarnings( { "serial" })
-public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSimpleController {
+public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpeBaseSimpleController {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseSimpleAction.class);
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeVRaptorSimpleController.class);
 
 	@Autowired
 	protected RequestInfo requestInfo;
@@ -57,8 +57,8 @@ public abstract class AbstractVulpeBaseSimpleAction extends AbstractVulpeBaseSim
 	 * 
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
 	 */
-	public VulpeActionConfig getActionConfig() {
-		return getControllerUtil().getActionConfig(this);
+	public VulpeControllerConfig getControllerConfig() {
+		return getControllerUtil().getControllerConfig(this);
 	}
 
 	public ControllerUtil getControllerUtil() {

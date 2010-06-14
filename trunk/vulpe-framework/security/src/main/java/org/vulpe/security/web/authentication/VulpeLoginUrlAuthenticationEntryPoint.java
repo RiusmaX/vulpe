@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Action.URI;
 
 /**
@@ -37,8 +36,8 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		if (request.getRequestURI().endsWith(URI.AJAX + Action.ACTION_SUFFIX)) {
-			setLoginFormUrl(URI.AUTHENTICATOR + URI.AJAX + Action.ACTION_SUFFIX);
+		if (request.getRequestURI().endsWith(URI.AJAX)) {
+			setLoginFormUrl(URI.AUTHENTICATOR + URI.AJAX);
 		}
 		super.commence(request, response, authException);
 	}

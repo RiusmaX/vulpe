@@ -33,13 +33,13 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.view.tags.Functions;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class VulpeBaseActionConfig<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
-		extends VulpeBaseSimpleActionConfig implements Serializable {
+public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
+		extends VulpeBaseSimpleControllerConfig implements Serializable {
 	private final List<VulpeBaseDetailConfig> details;
 	private final Class<ID> idClass;
 	private final Class<ENTITY> entityClass;
 
-	public VulpeBaseActionConfig(final Class<?> classAction,
+	public VulpeBaseControllerConfig(final Class<?> classAction,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
 		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,

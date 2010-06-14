@@ -6,12 +6,12 @@
 	</div>
 	<div id="vulpeReportBody">
 		<p class="vulpeReportForm">
-			<jsp:include page="${actionConfig.viewPath}" />
+			<jsp:include page="${controllerConfig.viewPath}" />
 		</p>
 	</div>
-	<div id="vulpeReportTable_${actionConfig.formName}">
+	<div id="vulpeReportTable_${controllerConfig.formName}">
 		<p class="vulpeReportTable">
-			<jsp:include page="${actionConfig.viewItemsPath}" />
+			<jsp:include page="${controllerConfig.viewItemsPath}" />
 			<c:if test="${not empty downloadInfo}">
 				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
 				<script type="text/javascript">

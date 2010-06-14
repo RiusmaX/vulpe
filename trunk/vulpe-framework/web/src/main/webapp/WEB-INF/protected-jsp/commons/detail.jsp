@@ -21,9 +21,9 @@
 
 <div id="vulpeDetail_${targetConfigLocal.baseName}${index}" class="detailBody">
 <%-- if subDetail or don't use tabs, then add accordion --%>
-<c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
+<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
 	<dl id="vulpeSubDetail_${targetConfigLocal.baseName}${index}">
-		<dt><fmt:message key="${actionConfig.titleKey}"/></dt>
+		<dt><fmt:message key="${controllerConfig.titleKey}"/></dt>
 		<dd>
 </c:if>
 		<div id="vulpeDetailActions_${targetConfigLocal.baseName}${index}" class="vulpeActions">
@@ -35,7 +35,7 @@
 			<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 		</div>
 <%-- if subDetail or don't use tabs, then add accordion --%>
-<c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
+<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
 		</dd>
 	</dl>
 </c:if>
@@ -47,7 +47,7 @@
 </c:if>
 
 <%-- if subDetail or don't use tabs, then add accordion --%>
-<c:if test="${not empty targetConfig.parentDetailConfig || actionConfig.detailsInTabs eq false}">
+<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
 	<script type="text/javascript">
 		$(document).ready(function() {
 			vulpe.util.get('vulpeSubDetail_${targetConfigLocal.baseName}${index}').accordion({start: 'closed'});

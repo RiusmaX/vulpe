@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.controller.action;
+package org.vulpe.security.controller;
 
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
-import org.vulpe.security.model.entity.Role;
+import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.security.model.entity.SecureResource;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Component("security.RoleTabular")
-@Controller(controllerType = ControllerType.TABULAR, serviceClass = SecurityServices.class, tabularDetailNews = 4, tabularDespiseFields = { "name" })
+@Component("security.SecureResourceCRUD")
+@Controller(controllerType = ControllerType.CRUD, serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "secureResourceRoles", propertyName = "entity.secureResourceRoles", despiseFields = "role", detailNews = 1, cardinalityType = CardinalityType.ONE_OR_MORE) })
 @SuppressWarnings("serial")
-public class RoleTabularAction extends VulpeBaseAction<Role, Long> {
+public class SecureResourceCRUDController extends VulpeStrutsController<SecureResource, Long> {
 
 }

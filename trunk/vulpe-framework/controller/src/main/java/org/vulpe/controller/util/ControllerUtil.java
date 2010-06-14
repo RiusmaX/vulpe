@@ -32,9 +32,9 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.VulpeBaseController;
 import org.vulpe.controller.VulpeBaseSimpleController;
 import org.vulpe.controller.commons.DuplicatedBean;
-import org.vulpe.controller.commons.VulpeBaseActionConfig;
+import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
-import org.vulpe.controller.commons.VulpeBaseSimpleActionConfig;
+import org.vulpe.controller.commons.VulpeBaseSimpleControllerConfig;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
@@ -186,13 +186,13 @@ public abstract class ControllerUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseActionConfig getActionConfig(final VulpeBaseController controller) {
+	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
 			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseActionConfig config = new VulpeBaseActionConfig(controller.getClass(),
+		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller.getClass(),
 				details);
 		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
 
@@ -213,12 +213,12 @@ public abstract class ControllerUtil {
 	 * @param controller
 	 * @return
 	 */
-	public VulpeBaseSimpleActionConfig getActionConfig(final VulpeBaseSimpleController controller) {
+	public VulpeBaseSimpleControllerConfig getControllerConfig(final VulpeBaseSimpleController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentActionKey())) {
 			return VulpeCacheHelper.getInstance().get(getCurrentActionKey());
 		}
 
-		final VulpeBaseSimpleActionConfig config = new VulpeBaseSimpleActionConfig(controller
+		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(controller
 				.getClass());
 		VulpeCacheHelper.getInstance().put(getCurrentActionKey(), config);
 

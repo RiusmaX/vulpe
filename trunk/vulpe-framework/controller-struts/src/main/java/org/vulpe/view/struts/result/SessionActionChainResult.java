@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 
 import com.opensymphony.xwork2.ActionChainResult;
 import com.opensymphony.xwork2.ActionContext;
@@ -77,11 +77,11 @@ public class SessionActionChainResult extends ActionChainResult {
 	public String getName(final ActionInvocation invocation, final boolean owner) {
 		if (StringUtils.isEmpty(name)) {
 			name = ActionContext.getContext().getName();
-			if (invocation.getAction() instanceof VulpeBaseAction) {
-				final VulpeBaseAction<?, ?> action = (VulpeBaseAction<?, ?>) invocation
+			if (invocation.getAction() instanceof VulpeStrutsController) {
+				final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 						.getAction();
-				name = owner ? action.getActionConfig().getOwnerAction()
-						: action.getActionConfig().getActionName();
+				name = owner ? action.getControllerConfig().getOwnerAction()
+						: action.getControllerConfig().getActionName();
 			}
 		}
 		return name;

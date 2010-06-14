@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.dispatcher.ServletActionRedirectResult;
-import org.vulpe.controller.struts.action.VulpeBaseAction;
+import org.vulpe.controller.struts.VulpeStrutsController;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -42,9 +42,9 @@ public class ParametersServletActionRedirectResult extends ServletActionRedirect
 			invocation.getInvocationContext().getSession().put(name,
 					invocation.getInvocationContext().getParameters());
 		} else if (sendParamsInSession) {
-			if (invocation.getAction() instanceof VulpeBaseAction) {
-				final VulpeBaseAction action = (VulpeBaseAction) invocation.getAction();
-				name = action.getActionConfig().getOwnerAction();
+			if (invocation.getAction() instanceof VulpeStrutsController) {
+				final VulpeStrutsController action = (VulpeStrutsController) invocation.getAction();
+				name = action.getControllerConfig().getOwnerAction();
 			}
 			final Map params = (Map) invocation.getInvocationContext().getSession().get(name);
 			if (params != null) {

@@ -13,10 +13,10 @@
 	value="display: none;" /> <c:if test="${buttonDetail}">
 	<c:set var="style" value="display: inline;" />
 </c:if> <v:action
-	layerFields="${actionConfig.formName}_${targetConfig.baseName}${index}"
+	layerFields="${controllerConfig.formName}_${targetConfig.baseName}${index}"
 	validate="false" style="${style}" labelKey="vulpe.label.addDetail"
-	elementId="vulpeButtonAddDetail_${actionConfig.formName}_${targetConfig.baseName}"
-	action="${actionConfig.primitiveActionName}/addDetail/ajax"
+	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.baseName}"
+	action="${controllerConfig.primitiveActionName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
 	layer="vulpeDetailBody_${targetConfig.baseName}${index}" />
 
