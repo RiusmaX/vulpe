@@ -5,9 +5,9 @@
 
 <c:choose>
 	<c:when test="${symbol_dollar}{not empty vulpeCurrentLayout && vulpeCurrentLayout == 'BACKEND'}">
-		<c:redirect url="/backend/Index.action" />
+		<c:redirect url="/backend/Index" />
 	</c:when>
 	<c:otherwise>
-		<c:redirect url="/frontend/Index.action" />
+		<c:redirect url="/frontend/Index" />
 	</c:otherwise>
 </c:choose>
