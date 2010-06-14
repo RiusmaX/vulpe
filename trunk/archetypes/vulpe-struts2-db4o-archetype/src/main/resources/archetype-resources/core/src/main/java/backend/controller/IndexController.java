@@ -5,13 +5,13 @@ package ${package}.backend.controller.action;
 
 import org.apache.log4j.Logger;
 
-import ${package}.controller.action.ApplicationBaseSimpleAction;
+import ${package}.controller.action.ApplicationBaseSimpleController;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Controller.ControllerType;
 
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.BACKEND)
-public class IndexAction extends ApplicationBaseSimpleAction {
+public class IndexController extends ApplicationBaseSimpleController {
 
 	protected static final Logger LOG = Logger.getLogger(IndexAction.class);
 
