@@ -24,17 +24,11 @@ public interface VulpeControllerConfig {
 
 	String getOwnerController();
 
-	String getPrimitiveOwnerController();
-
 	String getMethod();
 
 	String getControllerBaseName();
 
 	String getControllerName();
-
-	String getPrimitiveControllerName();
-
-	String getPrimitiveReportControllerName();
 
 	String getControllerKey();
 
@@ -60,8 +54,6 @@ public interface VulpeControllerConfig {
 
 	void setControllerName(final String actionName);
 
-	void setPrimitiveControllerName(final String primitiveControllerName);
-
 	void setSimpleControllerName(final String simpleControllerName);
 
 	void setReportFile(final String reportFile);
@@ -82,9 +74,9 @@ public interface VulpeControllerConfig {
 
 	String getViewPath();
 
-	void setPrimitiveReportControllerName(String primitiveReportControllerName);
-
 	void setSubReports(String[] subReports);
 
 	String[] getSubReports();
+	
+	String getReportControllerName();
 }

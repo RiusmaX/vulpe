@@ -123,6 +123,10 @@ public class VulpeConstants {
 		public static final String PERSIST = "persist";
 		public static final String UPLOAD = "upload";
 		public static final String DOWNLOAD = "download";
+		public static final String FRONTEND = "frontend";
+		public static final String BACKEND = "backend";
+		public static final String DEFINE = "define";
+		public static final String ENTITIES = "entities";
 
 		public class Validate {
 			public class Cardinality {
@@ -203,12 +207,12 @@ public class VulpeConstants {
 
 		public class Layout {
 			public static final String MAIN = ".main";
+			public static final String BACKEND = "backend";
 			public static final String FRONTEND = "frontend";
-			public static final String PUBLIC_JSP = "/WEB-INF/protected-jsp/";
-			public static final String PUBLIC_JSP_FRONTEND = PUBLIC_JSP + "frontend/";
 			public static final String PROTECTED_JSP = "/WEB-INF/protected-jsp/";
 			public static final String PROTECTED_JSP_COMMONS = PROTECTED_JSP + "commons/";
 			public static final String PROTECTED_JSP_FRONTEND = PROTECTED_JSP + "frontend/";
+			public static final String PROTECTED_JSP_BACKEND = PROTECTED_JSP + "backend/";
 			public static final String IMAGES_CONTEXT = "/images/";
 			public static final String JS_CONTEXT = "/js/";
 			public static final String CSS_CONTEXT = "/css/";
@@ -245,7 +249,7 @@ public class VulpeConstants {
 			public static final String FRONTEND = "frontend/";
 			public static final String REPORT = "/report";
 			public static final String CRUD = "/crud";
-			public static final String SELECTION = "/select";
+			public static final String SELECT = "/select";
 			public static final String TABULAR = "/tabular";
 			public static final String AJAX = "/ajax";
 		}

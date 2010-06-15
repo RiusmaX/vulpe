@@ -25,7 +25,7 @@
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.create"
 	elementId="vulpeButtonCreate_${controllerConfig.formName}"
-	action="${controllerConfig.primitiveControllerName}/create/ajax"
+	action="${controllerConfig.controllerName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${controllerConfig.formName}%27)"
 	helpKey="vulpe.help.create"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
@@ -40,7 +40,7 @@
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.createPost"
 	elementId="vulpeButtonCreatePost_${controllerConfig.formName}"
-	action="${controllerConfig.primitiveControllerName}/createPost/ajax"
+	action="${controllerConfig.controllerName}/createPost/ajax"
 	helpKey="vulpe.help.createPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
@@ -55,7 +55,7 @@
 <v:action beforeJs="vulpe.view.confirmExclusion()" validate="false"
 	style="${style}" labelKey="vulpe.label.delete"
 	elementId="vulpeButtonDelete_${controllerConfig.formName}"
-	action="${controllerConfig.primitiveControllerName}/delete/ajax"
+	action="${controllerConfig.controllerName}/delete/ajax"
 	helpKey="vulpe.help.delete"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
@@ -69,7 +69,7 @@
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.updatePost"
 	elementId="vulpeButtonUpdatePost_${controllerConfig.formName}"
-	action="${controllerConfig.primitiveControllerName}/updatePost/ajax"
+	action="${controllerConfig.controllerName}/updatePost/ajax"
 	helpKey="vulpe.help.updatePost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
@@ -82,7 +82,7 @@
 	<c:set var="style" value="display: none;" />
 </c:if> 
 <c:set var="action"
-	value="${controllerConfig.primitiveControllerName}/prepare/ajax" /> 
+	value="${controllerConfig.controllerName}/prepare/ajax" /> 
 <v:action
 	validate="false" style="${style}" labelKey="vulpe.label.prepare"
 	elementId="vulpeButtonPrepare_${controllerConfig.formName}"

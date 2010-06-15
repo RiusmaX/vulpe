@@ -123,8 +123,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.BACKEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveControllerName()
-						.concat(URI.AJAX));
+				setResultForward(getControllerConfig().getControllerName().concat(URI.AJAX));
 				forward = Forward.BACKEND;
 			} else {
 				controlResultForward();
@@ -152,8 +151,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		String forward = Forward.SUCCESS;
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveControllerName()
-						.concat(URI.AJAX));
+				setResultForward(getControllerConfig().getControllerName().concat(URI.AJAX));
 				forward = Forward.FRONTEND;
 			} else {
 				controlResultForward();

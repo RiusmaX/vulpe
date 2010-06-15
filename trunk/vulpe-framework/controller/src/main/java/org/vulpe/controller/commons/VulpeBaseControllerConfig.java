@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
@@ -31,6 +32,13 @@ import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.view.tags.Functions;
 
+/**
+ * Vulpe Controller Config implementation.
+ * 
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @version 1.0
+ * @since 1.0
+ */
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeBaseSimpleControllerConfig implements Serializable {
@@ -51,28 +59,25 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		setControllerName(controllerUtil.getCurrentControllerName());
 
-		setControllerBaseName(StringUtils.replace(getControllerName(), Logic.CRUD, ""));
-		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.SELECTION, ""));
-		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.TABULAR, ""));
-		setControllerBaseName(StringUtils.replace(getControllerBaseName(), Logic.REPORT, ""));
-
-		if (StringUtils.lastIndexOf(getControllerBaseName(), '/') != -1) {
-			setSimpleControllerName(getControllerBaseName().substring(
-					StringUtils.lastIndexOf(getControllerBaseName(), '/') + 1));
-		} else {
-			setSimpleControllerName(getControllerBaseName());
-		}
 		setViewPath(Layout.PROTECTED_JSP);
 		setViewItemsPath(Layout.PROTECTED_JSP);
 		final String simple = getControllerName().replace(Layout.MAIN, "");
 		final String[] parts = simple.split("/");
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
+			setControllerBaseName(getControllerName());
 			final String module = parts[0];
 			final String name = parts[1];
-			setViewPath(getViewPath().concat(
-					module.concat("/").concat(name).concat("/").concat(name).concat(
-							Layout.SUFFIX_JSP)));
+			setModuleName(module);
+			setSimpleControllerName(name);
+			setViewPath(getViewPath().concat(module.concat("/").concat(name).concat("/")));
+			final String method = controllerUtil.getCurrentMethod();
+			if (!Action.FRONTEND.equals(method) && !Action.BACKEND.equals(method)) {
+				setViewPath(getViewPath().concat(method));
+			} else {
+				setViewPath(getViewPath().concat(name));
+			}
+			setViewPath(getViewPath().concat(Layout.SUFFIX_JSP));
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
@@ -81,22 +86,27 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 		} else {
 			final String module = parts[0];
 			final String name = parts[1];
-			// final String type = parts.nextToken();
+			setModuleName(module);
+			setSimpleControllerName(name);
 			setViewPath(getViewPath().concat(
 					module.concat("/").concat(name).concat("/").concat(name)));
 			if (getControllerType().equals(ControllerType.CRUD)) {
+				setControllerBaseName(getControllerName().replace(Logic.CRUD, ""));
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_CRUD));
 			}
 			if (getControllerType().equals(ControllerType.TABULAR)) {
+				setControllerBaseName(getControllerName().replace(Logic.TABULAR, ""));
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_TABULAR));
 			}
 			if (getControllerType().equals(ControllerType.SELECT)) {
+				setControllerBaseName(getControllerName().replace(Logic.SELECT, ""));
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_SELECT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS)));
 			}
 			if (getControllerType().equals(ControllerType.REPORT)) {
+				setControllerBaseName(getControllerName().replace(Logic.REPORT, ""));
 				setViewPath(getViewPath().concat(Layout.SUFFIX_JSP_REPORT));
 				setViewItemsPath(getViewItemsPath().concat(
 						module.concat("/").concat(name).concat("/").concat(name).concat(
@@ -108,7 +118,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 				getControllerName().replace("/", ".")));
 
 		setReportFile(getController().report().reportFile());
-		if (getReportFile().equals("")) {
+		if ("".equals(getReportFile())) {
 			setReportFile(Report.PATH.concat(getControllerBaseName()).concat("/").concat(
 					getSimpleControllerName()).concat(Report.JASPER));
 		}
@@ -125,7 +135,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 		if (getController().controllerType().equals(ControllerType.TABULAR)) {
 			final int detailNews = getController().tabularDetailNews();
 			final String[] despiseFields = getController().tabularDespiseFields();
-			String name = "entities";
+			String name = Action.ENTITIES;
 			String propertyName = name;
 			if (!getController().tabularName().equals("")) {
 				name = getController().tabularName();
@@ -144,7 +154,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 	}
 
 	public VulpeBaseDetailConfig getTabularConfig() {
-		return getDetail("entities");
+		return getDetail(Action.ENTITIES);
 	}
 
 	public Class<ENTITY> getEntityClass() {

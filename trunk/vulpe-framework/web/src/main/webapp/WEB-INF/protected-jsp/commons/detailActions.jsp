@@ -16,7 +16,7 @@
 	layerFields="${controllerConfig.formName}_${targetConfig.baseName}${index}"
 	validate="false" style="${style}" labelKey="vulpe.label.addDetail"
 	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.baseName}"
-	action="${controllerConfig.primitiveControllerName}/addDetail/ajax"
+	action="${controllerConfig.controllerName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
 	layer="vulpeDetailBody_${targetConfig.baseName}${index}" />
 

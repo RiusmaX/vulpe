@@ -114,7 +114,7 @@
 
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
 		<c:if test="${empty updateActionName}">
-			<c:set var="updateActionName" value="${controllerConfig.primitiveControllerName}/update"/>
+			<c:set var="updateActionName" value="${controllerConfig.controllerName}/update"/>
 		</c:if>
 		<c:if test="${empty updateFormName}">
 			<c:set var="updateFormName" value="${controllerConfig.formName}"/>
@@ -154,7 +154,7 @@
 
 	<c:if test="${not empty deleteValue && deleteValue ne 'false'}">
 		<c:if test="${empty deleteActionName}">
-			<c:set var="deleteActionName" value="${controllerConfig.primitiveControllerName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
+			<c:set var="deleteActionName" value="${controllerConfig.controllerName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
 		</c:if>
 		<c:if test="${empty deleteFormName}">
 			<c:set var="deleteFormName" value="${controllerConfig.formName}"/>

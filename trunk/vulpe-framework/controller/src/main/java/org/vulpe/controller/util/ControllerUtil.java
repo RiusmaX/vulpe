@@ -28,8 +28,10 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.cache.VulpeCacheHelper;
@@ -198,8 +200,12 @@ public class ControllerUtil {
 	 */
 	public String getCurrentControllerName() {
 		String base = getRequest().getRequestURI();
+		if (base.endsWith(Layout.SUFFIX_JSP)) {
+			return getCurrentController().get();
+		}
 		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");
 		base = base.replace(Logic.AJAX, "");
+		getCurrentControllerURI().set(base);
 		base = (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
 				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
 				base, '/'));
@@ -210,16 +216,16 @@ public class ControllerUtil {
 	public String getCurrentMethod() {
 		String method = null;
 		try {
-			String base = getRequest().getRequestURI().replace(URI.AJAX, "");
+			String base = getCurrentControllerURI().get();
 			final String[] parts = base.substring(1).split("/");
-			if (parts.length == 3) {
+			if (parts.length == 2) {
 				if (base.contains(Logic.BACKEND)) {
-					method = "backend";
+					method = Action.BACKEND;
 				} else if (base.contains(Logic.FRONTEND)) {
-					method = "frontend";
+					method = Action.FRONTEND;
 				}
 			} else if (base.endsWith(URI.AUTHENTICATOR)) {
-				method = "define";
+				method = Action.DEFINE;
 			}else {
 				method = parts[parts.length - 1];
 			}
@@ -276,6 +282,8 @@ public class ControllerUtil {
 	}
 
 	private transient final ThreadLocal<String> currentController = new ThreadLocal<String>();
+	
+	private transient final ThreadLocal<String> currentControllerURI = new ThreadLocal<String>();
 
 	/**
 	 *
@@ -308,6 +316,10 @@ public class ControllerUtil {
 
 	public ThreadLocal<String> getCurrentController() {
 		return currentController;
+	}
+
+	public ThreadLocal<String> getCurrentControllerURI() {
+		return currentControllerURI;
 	}
 
 }

@@ -58,7 +58,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial" })
+@SuppressWarnings( { "unchecked", "serial" })
 public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeVRaptorSimpleController implements VulpeBaseController {
 
@@ -178,7 +178,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			setResultName(Forward.CREATE);
-			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
+			setResultForward(getControllerConfig().getOwnerController().concat(
 					Action.URI.CREATE_AJAX));
 		} else {
 			controlResultForward();
@@ -323,7 +323,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
+			setResultForward(getControllerConfig().getOwnerController().concat(
 					Action.URI.UPDATE_AJAX));
 			setResultName(Forward.UPDATE);
 		} else {
@@ -358,7 +358,8 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			final ENTITY entity = prepareEntity(Action.UPDATE);
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Action.UPDATE, Action.FIND
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity.getId() });
+					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity
+							.getId() });
 			setEntity(persistentEntity);
 			setExecuted(false);
 		}
@@ -435,9 +436,9 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
 
-		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig().getEntityClass()
-				.getSimpleName()), new Class[] { getControllerConfig().getEntityClass() },
-				new Object[] { entity });
+		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
+				.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
+				.getEntityClass() }, new Object[] { entity });
 
 		setExecuted(true);
 	}
@@ -475,10 +476,10 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 		addActionMessage(getText("vulpe.msg.delete"));
 
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getPrimitiveControllerName().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getControllerName().concat(Action.URI.READ));
 			setResultName(Forward.READ);
 		} else {
-			setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(Action.URI.READ));
+			setResultForward(getControllerConfig().getOwnerController().concat(Action.URI.READ));
 			setResultName(Forward.READ);
 		}
 
@@ -610,9 +611,10 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 							new Object[] { removedDetails });
 				} else {
 					if (entity.getId() != null && size > details.size()) {
-						invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
-								.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
-								.getEntityClass() }, new Object[] { entity });
+						invokeServices(Action.UPDATE_POST, Action.UPDATE
+								.concat(getControllerConfig().getEntityClass().getSimpleName()),
+								new Class[] { getControllerConfig().getEntityClass() },
+								new Object[] { entity });
 						invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
 								.getEntityClass().getSimpleName()), new Class[] { List.class },
 								new Object[] { removedDetails });
@@ -739,11 +741,11 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 				&& getControllerConfig().getPageSize() > 0) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
 					: getPaging().getPage();
-			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(
-					Action.READ,
+			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(Action.READ,
 					Action.PAGING.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass(), Integer.class, Integer.class },
-					new Object[] { entity, getControllerConfig().getPageSize(), page });
+					new Class[] { getControllerConfig().getEntityClass(), Integer.class,
+							Integer.class }, new Object[] { entity,
+							getControllerConfig().getPageSize(), page });
 			setPaging(paging);
 			setEntities(paging.getList());
 		} else {
@@ -988,7 +990,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.CRUD)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveOwnerController().concat(
+				setResultForward(getControllerConfig().getOwnerController().concat(
 						Action.URI.READ_AJAX));
 				setBack(true);
 				setResultName(Forward.READ);
@@ -997,7 +999,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			if (isAjax()) {
-				setResultForward(getControllerConfig().getPrimitiveControllerName().concat(
+				setResultForward(getControllerConfig().getControllerName().concat(
 						Action.URI.READ_AJAX));
 				setResultName(Forward.READ);
 			} else {
@@ -1328,7 +1330,8 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 
 	public boolean isAddDetailShow() {
 		return (Boolean) getRequest().getAttribute(
-				Layout.ADD_DETAIL_SHOW.concat(getControllerConfig().getTabularConfig().getBaseName()));
+				Layout.ADD_DETAIL_SHOW.concat(getControllerConfig().getTabularConfig()
+						.getBaseName()));
 	}
 
 	public boolean isAddDetailShow(final String detail) {

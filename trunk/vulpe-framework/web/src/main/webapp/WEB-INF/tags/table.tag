@@ -120,7 +120,7 @@
 	<c:if test="${not empty pagingList}">
 		<c:set var="items" value="${pagingList.list}"/>
 		<c:if test="${empty pagingActionName}">
-			<c:set var="pagingActionName" value="${controllerConfig.primitiveControllerName}/read"/>
+			<c:set var="pagingActionName" value="${controllerConfig.controllerName}/read"/>
 		</c:if>
 		<c:if test="${empty pagingFormName}">
 			<c:set var="pagingFormName" value="${controllerConfig.formName}"/>
