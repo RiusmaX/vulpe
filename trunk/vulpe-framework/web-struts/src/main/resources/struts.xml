@@ -12,24 +12,20 @@
 
 	<package name="default" extends="struts-default">
 		<result-types>
-			<result-type name="chain"
-				class="org.vulpe.view.struts.result.SessionActionChainResult" />
-			<result-type name="jasper"
-				class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
+			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />
+			<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
 		</result-types>
 
 		<interceptors>
 			<!-- file upload interceptor -->
-			<interceptor name="fileUpload"
-				class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
+			<interceptor name="fileUpload" class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
 
 			<!-- exception interceptor -->
 			<interceptor name="exception"
 				class="org.vulpe.controller.struts.interceptor.VulpeExceptionMappingInterceptor" />
 
 			<!-- chain interceptor -->
-			<interceptor name="chain"
-				class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
+			<interceptor name="chain" class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
 
 			<!-- params interceptor -->
 			<interceptor name="params"
@@ -46,9 +42,9 @@
 				<interceptor-ref name="prepare" />
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="params">
-                    <param name="excludeParams">dojo\..*,^struts\..*</param>
-                </interceptor-ref>
-				<interceptor-ref name="conversionError"/>
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="resetSessionParams" />
 			</interceptor-stack>
 
@@ -84,24 +80,21 @@
 			</interceptor-stack>
 
 			<!--
-				An example of the paramsPrepareParams trick. This stack is exactly
-				the same as the defaultStack, except that it includes one extra
-				interceptor before the prepare interceptor: the params interceptor.
-
-				This is useful for when you wish to apply parameters directly to an
-				object that you wish to load externally (such as a DAO or database
-				or service layer), but can't load that object until at least the ID
-				parameter has been loaded. By loading the parameters twice, you can
-				retrieve the object in the prepare() method, allowing the second
-				params interceptor to apply the values on the object.
+				An example of the paramsPrepareParams trick. This stack is exactly the same as the defaultStack,
+				except that it includes one extra interceptor before the prepare interceptor: the params
+				interceptor. This is useful for when you wish to apply parameters directly to an object that you
+				wish to load externally (such as a DAO or database or service layer), but can't load that object
+				until at least the ID parameter has been loaded. By loading the parameters twice, you can
+				retrieve the object in the prepare() method, allowing the second params interceptor to apply the
+				values on the object.
 			-->
 			<interceptor-stack name="paramsPrepareParamsStack">
 				<interceptor-ref name="exception" />
 				<interceptor-ref name="alias" />
 				<interceptor-ref name="i18n" />
 				<interceptor-ref name="params">
-                    <param name="excludeParams">dojo\..*,^struts\..*</param>
-                </interceptor-ref>
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="servletConfig" />
 				<interceptor-ref name="prepare" />
@@ -110,9 +103,9 @@
 				<interceptor-ref name="fileUpload" />
 				<interceptor-ref name="staticParams" />
 				<interceptor-ref name="params">
-                    <param name="excludeParams">dojo\..*,^struts\..*</param>
-                </interceptor-ref>
-				<interceptor-ref name="conversionError"/>
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
 					<param name="excludeMethods">input,back,cancel,browse</param>
 				</interceptor-ref>
@@ -122,14 +115,12 @@
 			</interceptor-stack>
 
 			<!--
-				A complete stack with all the common interceptors in place.
-				Generally, this stack should be the one you use, though it may do
-				more than you need. Also, the ordering can be switched around (ex:
-				if you wish to have your servlet-related objects applied before
-				prepare() is called, you'd need to move servletConfig interceptor
-				up. This stack also excludes from the normal validation and workflow
-				the method names input, back, and cancel. These typically are
-				associated with requests that should not be validated.
+				A complete stack with all the common interceptors in place. Generally, this stack should be the
+				one you use, though it may do more than you need. Also, the ordering can be switched around (ex:
+				if you wish to have your servlet-related objects applied before prepare() is called, you'd need
+				to move servletConfig interceptor up. This stack also excludes from the normal validation and
+				workflow the method names input, back, and cancel. These typically are associated with requests
+				that should not be validated.
 			-->
 			<interceptor-stack name="defaultStack">
 				<interceptor-ref name="exception" />
@@ -146,9 +137,9 @@
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="staticParams" />
 				<interceptor-ref name="params">
-                    <param name="excludeParams">dojo\..*,^struts\..*</param>
-                </interceptor-ref>
-				<interceptor-ref name="conversionError"/>
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
 					<param name="excludeMethods">input,back,cancel,browse</param>
 				</interceptor-ref>
@@ -159,16 +150,15 @@
 			</interceptor-stack>
 
 			<!--
-				The completeStack is here for backwards compatibility for
-				applications that still refer to the defaultStack by the old name
+				The completeStack is here for backwards compatibility for applications that still refer to the
+				defaultStack by the old name
 			-->
 			<interceptor-stack name="completeStack">
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 
 			<!--
-				Sample execute and wait stack. Note: execAndWait should always be
-				the *last* interceptor.
+				Sample execute and wait stack. Note: execAndWait should always be the *last* interceptor.
 			-->
 			<interceptor-stack name="executeAndWaitStack">
 				<interceptor-ref name="execAndWait">
@@ -198,9 +188,7 @@
 		</global-results>
 
 		<!-- Back-End -->
-		<action name="backend/*"
-			class="backend.{1}"
-			method="backend">
+		<action name="backend/*" class="backend.{1}" method="backend">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -210,9 +198,7 @@
 			</result>
 		</action>
 
-		<action name="backend/*/ajax"
-			class="backend.{1}"
-			method="backend">
+		<action name="backend/*/ajax" class="backend.{1}" method="backend">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -221,11 +207,9 @@
 				<param name="clearParams">true</param>
 			</result>
 		</action>
-		
+
 		<!-- Front-End -->
-		<action name="frontend/*"
-			class="frontend.{1}"
-			method="frontend">
+		<action name="frontend/*" class="frontend.{1}" method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -235,9 +219,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/ajax"
-			class="frontend.{1}"
-			method="frontend">
+		<action name="frontend/*/ajax" class="frontend.{1}" method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -247,9 +229,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/*"
-			class="frontend.{1}"
-			method="{2}">
+		<action name="frontend/*/*" class="frontend.{1}" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -258,9 +238,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/*/ajax"
-			class="frontend.{1}."
-			method="{2}">
+		<action name="frontend/*/*/ajax" class="frontend.{1}" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -270,9 +248,7 @@
 		</action>
 
 		<!-- Selection -->
-		<action name="*/*/select/*"
-			class="{1}.{2}Select"
-			method="{3}">
+		<action name="*/*/select/*" class="{1}.{2}Select" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -287,9 +263,7 @@
 			</result>
 		</action>
 
-		<action name="*/*/select/*/ajax"
-			class="{1}.{2}Select"
-			method="{3}">
+		<action name="*/*/select/*/ajax" class="{1}.{2}Select" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -305,9 +279,7 @@
 		</action>
 
 		<!-- Report -->
-		<action name="*/*/report/*"
-			class="{1}.{2}Report"
-			method="{3}">
+		<action name="*/*/report/*" class="{1}.{2}Report" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -322,9 +294,7 @@
 			</result>
 		</action>
 
-		<action name="*/*/report/*/ajax"
-			class="{1}.{2}Report"
-			method="{3}">
+		<action name="*/*/report/*/ajax" class="{1}.{2}Report" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -340,8 +310,7 @@
 		</action>
 
 		<!-- CRUD -->
-		<action name="*/*/crud/*"
-			class="{1}.{2}CRUD" method="{3}">
+		<action name="*/*/crud/*" class="{1}.{2}CRUD" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -354,8 +323,7 @@
 			</result>
 		</action>
 
-		<action name="*/*/crud/*/ajax"
-			class="{1}.{2}CRUD" method="{3}">
+		<action name="*/*/crud/*/ajax" class="{1}.{2}CRUD" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -369,9 +337,7 @@
 		</action>
 
 		<!-- Tabular -->
-		<action name="*/*/tabular/*"
-			class="{1}.{2}Tabular"
-			method="{3}">
+		<action name="*/*/tabular/*" class="{1}.{2}Tabular" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -380,9 +346,7 @@
 			</result>
 		</action>
 
-		<action name="*/*/tabular/*/ajax"
-			class="{1}.{2}Tabular"
-			method="{3}">
+		<action name="*/*/tabular/*/ajax" class="{1}.{2}Tabular" method="{3}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
