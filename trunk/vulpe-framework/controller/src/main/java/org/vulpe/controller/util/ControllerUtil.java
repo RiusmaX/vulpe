@@ -56,7 +56,7 @@ public class ControllerUtil {
 	private HttpServletRequest request;
 
 	/**
-	 * Returns instance of VRaptorControllerUtil
+	 * Returns instance of ControllerUtil
 	 */
 	public static ControllerUtil getInstance(HttpServletRequest request) {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
@@ -190,7 +190,7 @@ public class ControllerUtil {
 		final String base = getCurrentController().get();
 		final String projectName = base.contains(VulpeConstants.AUDIT) ? VulpeConstants.ACTIVE
 				: VulpeConfigHelper.getProjectName();
-		return projectName.concat("/").concat(base);
+		return projectName.concat(".").concat(base.replace("/", "."));
 	}
 
 	/**
@@ -228,7 +228,7 @@ public class ControllerUtil {
 				}
 			} else if (base.equals(View.AUTHENTICATOR)) {
 				method = Action.DEFINE;
-			}else {
+			} else {
 				method = parts[parts.length - 1];
 			}
 		} catch (Exception e) {
@@ -284,7 +284,7 @@ public class ControllerUtil {
 	}
 
 	private transient final ThreadLocal<String> currentController = new ThreadLocal<String>();
-	
+
 	private transient final ThreadLocal<String> currentControllerURI = new ThreadLocal<String>();
 
 	/**
