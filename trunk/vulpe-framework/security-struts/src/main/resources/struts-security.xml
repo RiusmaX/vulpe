@@ -10,24 +10,20 @@
 	<package name="security" extends="struts-default">
 
 		<result-types>
-			<result-type name="chain"
-				class="org.vulpe.view.struts.result.SessionActionChainResult" />
-			<result-type name="jasper"
-				class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
+			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />
+			<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
 		</result-types>
 
 		<interceptors>
 			<!-- file upload interceptor -->
-			<interceptor name="fileUpload"
-				class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
+			<interceptor name="fileUpload" class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
 
 			<!-- exception interceptor -->
 			<interceptor name="exception"
 				class="org.vulpe.controller.struts.interceptor.VulpeExceptionMappingInterceptor" />
 
 			<!-- chain interceptor -->
-			<interceptor name="chain"
-				class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
+			<interceptor name="chain" class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
 
 			<!-- params interceptor -->
 			<interceptor name="params"
@@ -82,16 +78,13 @@
 			</interceptor-stack>
 
 			<!--
-				An example of the paramsPrepareParams trick. This stack is exactly
-				the same as the defaultStack, except that it includes one extra
-				interceptor before the prepare interceptor: the params interceptor.
-
-				This is useful for when you wish to apply parameters directly to an
-				object that you wish to load externally (such as a DAO or database
-				or service layer), but can't load that object until at least the ID
-				parameter has been loaded. By loading the parameters twice, you can
-				retrieve the object in the prepare() method, allowing the second
-				params interceptor to apply the values on the object.
+				An example of the paramsPrepareParams trick. This stack is exactly the same as the defaultStack,
+				except that it includes one extra interceptor before the prepare interceptor: the params
+				interceptor. This is useful for when you wish to apply parameters directly to an object that you
+				wish to load externally (such as a DAO or database or service layer), but can't load that object
+				until at least the ID parameter has been loaded. By loading the parameters twice, you can
+				retrieve the object in the prepare() method, allowing the second params interceptor to apply the
+				values on the object.
 			-->
 			<interceptor-stack name="paramsPrepareParamsStack">
 				<interceptor-ref name="exception" />
@@ -120,14 +113,12 @@
 			</interceptor-stack>
 
 			<!--
-				A complete stack with all the common interceptors in place.
-				Generally, this stack should be the one you use, though it may do
-				more than you need. Also, the ordering can be switched around (ex:
-				if you wish to have your servlet-related objects applied before
-				prepare() is called, you'd need to move servletConfig interceptor
-				up. This stack also excludes from the normal validation and workflow
-				the method names input, back, and cancel. These typically are
-				associated with requests that should not be validated.
+				A complete stack with all the common interceptors in place. Generally, this stack should be the
+				one you use, though it may do more than you need. Also, the ordering can be switched around (ex:
+				if you wish to have your servlet-related objects applied before prepare() is called, you'd need
+				to move servletConfig interceptor up. This stack also excludes from the normal validation and
+				workflow the method names input, back, and cancel. These typically are associated with requests
+				that should not be validated.
 			-->
 			<interceptor-stack name="defaultStack">
 				<interceptor-ref name="exception" />
@@ -156,16 +147,15 @@
 			</interceptor-stack>
 
 			<!--
-				The completeStack is here for backwards compatibility for
-				applications that still refer to the defaultStack by the old name
+				The completeStack is here for backwards compatibility for applications that still refer to the
+				defaultStack by the old name
 			-->
 			<interceptor-stack name="completeStack">
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 
 			<!--
-				Sample execute and wait stack. Note: execAndWait should always be
-				the *last* interceptor.
+				Sample execute and wait stack. Note: execAndWait should always be the *last* interceptor.
 			-->
 			<interceptor-stack name="executeAndWaitStack">
 				<interceptor-ref name="execAndWait">
@@ -194,223 +184,16 @@
 			<result name="errors">layout.vulpe.errors</result>
 		</global-results>
 
-		<action name="authenticator"
-			class="security.authenticator" method="define">
+		<action name="authenticator" class="security.authenticator" method="define">
 			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
 		</action>
-		
-		<action name="authenticator/ajax"
-			class="security.authenticator" method="define">
+
+		<action name="authenticator/ajax" class="security.authenticator" method="define">
 			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
 			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
-		</action>
-		
-		<!-- Selection -->
-		<action name="security/User/select/*"
-			class="security.UserSelect" method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/User/select/*/ajax"
-			class="security.UserSelect" method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/Role/select/*"
-			class="security.RoleSelect" method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/Role/select/*/ajax"
-			class="security.RoleSelect" method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/SecureResource/select/*"
-			class="security.SecureResourceSelect"
-			method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/SecureResource/select/*/ajax"
-			class="security.SecureResourceSelect"
-			method="{1}">
-			<!-- usado para apresentar a tela inicial -->
-			<result name="success">${resultForward}</result>
-			<!-- usado para redirecionar para a tela de inclusão -->
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para redirecionar para a tela de alteração -->
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<!-- usado para realizar a pesquisa após a exclusão -->
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<!-- CRUD -->
-		<action name="security/User/crud/*"
-			class="security.UserCRUD" method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/User/crud/*/ajax"
-			class="security.UserCRUD" method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/SecureResource/crud/*"
-			class="security.SecureResourceCRUD"
-			method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="security/SecureResource/crud/*/ajax"
-			class="security.SecureResourceCRUD"
-			method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<!-- Tabular -->
-		<action name="security/Role/tabular/*"
-			class="security.RoleTabular"
-			method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax</param>
-			</result>
-		</action>
-
-		<action name="security/Role/tabular/*/ajax"
-			class="security.RoleTabular"
-			method="{1}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax</param>
-			</result>
 		</action>
 
 	</package>
