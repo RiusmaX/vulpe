@@ -127,6 +127,8 @@ public class VulpeConstants {
 		public static final String BACKEND = "backend";
 		public static final String DEFINE = "define";
 		public static final String ENTITIES = "entities";
+		public static final String SELECT_FORM = "_selectForm";
+		
 
 		public class Validate {
 			public class Cardinality {
