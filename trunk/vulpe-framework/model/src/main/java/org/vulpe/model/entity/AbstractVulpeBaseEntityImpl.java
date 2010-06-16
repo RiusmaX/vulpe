@@ -161,4 +161,15 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 		this.lastUserUpdated = lastUserUpdated;
 	}
 
+	@Override
+	public VulpeBaseEntity<ID> clone() {
+		VulpeBaseEntity<ID> entity = null;
+		try {
+			entity = (VulpeBaseEntity<ID>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			LOG.error(e);
+		}
+		return entity;
+	}
+
 }

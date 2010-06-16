@@ -27,7 +27,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("unchecked")
 public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends
-		Serializable, Comparable<VulpeBaseEntity<ID>> {
+		Serializable, Comparable<VulpeBaseEntity<ID>>, Cloneable {
 	ID getId();
 
 	void setId(final ID id);
@@ -49,4 +49,6 @@ public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends
 	String getLastUserUpdated();
 	
 	void setLastUserUpdated(final String username);
+	
+	VulpeBaseEntity<ID> clone();
 }
