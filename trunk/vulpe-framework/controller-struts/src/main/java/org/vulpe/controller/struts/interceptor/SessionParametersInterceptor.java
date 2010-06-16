@@ -38,26 +38,23 @@ public class SessionParametersInterceptor extends
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
 
-		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerName()
-				.concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
+				.getCurrentControllerName().replace("/", ".").concat(
+						VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
 			final Map params = (Map) ActionContext.getContext().getSession().get(key);
 			if (params != null) {
-				final boolean createNullObjects = OgnlContextState
-						.isCreatingNullObjects(stack.getContext());
+				final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(stack
+						.getContext());
 				try {
-					for (final Iterator iterator = params.keySet().iterator(); iterator
-							.hasNext();) {
+					for (final Iterator iterator = params.keySet().iterator(); iterator.hasNext();) {
 						final String name = (String) iterator.next();
 						final Object[] value = (Object[]) params.get(name);
-						OgnlContextState.setCreatingNullObjects(stack
-								.getContext(), false);
-						if (VulpeValidationUtil.getInstance().isEmpty(
-								stack.findValue(name))) {
-							OgnlContextState.setCreatingNullObjects(stack
-									.getContext(), true);
+						OgnlContextState.setCreatingNullObjects(stack.getContext(), false);
+						if (VulpeValidationUtil.getInstance().isEmpty(stack.findValue(name))) {
+							OgnlContextState.setCreatingNullObjects(stack.getContext(), true);
 							stack.setValue(name, value[1]);
 						}
 						if (Boolean.TRUE.equals(value[0])) {
@@ -65,8 +62,7 @@ public class SessionParametersInterceptor extends
 						}
 					}
 				} finally {
-					OgnlContextState.setCreatingNullObjects(stack
-							.getContext(), createNullObjects);
+					OgnlContextState.setCreatingNullObjects(stack.getContext(), createNullObjects);
 				}
 			}
 		}
@@ -75,8 +71,8 @@ public class SessionParametersInterceptor extends
 	protected boolean isMethodReset(final Object action) {
 		try {
 			final ResetSession resetSession = action.getClass().getMethod(
-					ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentMethod())
-					.getAnnotation(ResetSession.class);
+					ControllerUtil.getInstance(ServletActionContext.getRequest())
+							.getCurrentMethod()).getAnnotation(ResetSession.class);
 			return resetSession != null && resetSession.before();
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);

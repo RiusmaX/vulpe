@@ -31,26 +31,25 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.MethodFilterInterceptor#doIntercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
 	 */
 	@Override
-	protected String doIntercept(final ActionInvocation invocation)
-			throws Exception {
+	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		final Object action = invocation.getAction();
-		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerName()
-				.concat(VulpeConstants.PARAMS_SESSION_KEY);
-		if (ActionContext.getContext().getSession().containsKey(key)
-				&& isMethodReset(action)) {
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
+				.getCurrentControllerName().replace("/", ".").concat(
+						VulpeConstants.PARAMS_SESSION_KEY);
+		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
 		}
 		return invocation.invoke();
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -58,9 +57,9 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 		try {
 			return action instanceof ValidationAware
 					&& (((ValidationAware) action).hasActionErrors() || ((ValidationAware) action)
-							.hasFieldErrors()) ? false : action.getClass()
-					.getMethod(ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentMethod())
-					.isAnnotationPresent(ResetSession.class);
+							.hasFieldErrors()) ? false : action.getClass().getMethod(
+					ControllerUtil.getInstance(ServletActionContext.getRequest())
+							.getCurrentMethod()).isAnnotationPresent(ResetSession.class);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
