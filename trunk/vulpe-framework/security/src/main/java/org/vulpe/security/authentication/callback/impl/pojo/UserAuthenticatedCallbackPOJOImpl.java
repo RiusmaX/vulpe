@@ -15,6 +15,8 @@
  */
 package org.vulpe.security.authentication.callback.impl.pojo;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +28,8 @@ import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
 @Service("UserAuthenticatedCallback")
-public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityUtil implements UserAuthenticatedCallback {
+public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityUtil implements
+		UserAuthenticatedCallback {
 
 	static final Logger LOG = Logger.getLogger(UserAuthenticatedCallbackPOJOImpl.class);
 
@@ -46,10 +49,12 @@ public class UserAuthenticatedCallbackPOJOImpl extends VulpeSecurityUtil impleme
 
 	protected void setUser(String username) {
 		final SecurityServices securityServices = getService(SecurityServices.class);
-		User user = new User();
-		user.setUsername(username);
+		User user = new User(username);
 		try {
-			user = securityServices.readUser(user).get(0);
+			final List<User> users = securityServices.readUser(user);
+			if (users != null && !users.isEmpty()) {
+				user = users.get(0);
+			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}

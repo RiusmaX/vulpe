@@ -30,7 +30,6 @@ import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
-import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.annotations.DetailConfig;
@@ -217,14 +216,17 @@ public class ControllerUtil {
 		String method = null;
 		try {
 			String base = getCurrentControllerURI().get();
-			final String[] parts = base.substring(1).split("/");
+			if (base.startsWith("/")) {
+				base = base.substring(1);
+			}
+			final String[] parts = base.split("/");
 			if (parts.length == 2) {
 				if (base.contains(Logic.BACKEND)) {
 					method = Action.BACKEND;
 				} else if (base.contains(Logic.FRONTEND)) {
 					method = Action.FRONTEND;
 				}
-			} else if (base.endsWith(URI.AUTHENTICATOR)) {
+			} else if (base.equals(View.AUTHENTICATOR)) {
 				method = Action.DEFINE;
 			}else {
 				method = parts[parts.length - 1];

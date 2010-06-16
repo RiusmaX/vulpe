@@ -146,6 +146,13 @@ public interface VulpeBaseSimpleController {
 	String getUserName();
 
 	/**
+	 * Retrieves user authenticated.
+	 * 
+	 * @return
+	 */
+	String getUserAuthenticated();
+
+	/**
 	 * Method to prepare back-end show.
 	 * 
 	 * @since 1.0

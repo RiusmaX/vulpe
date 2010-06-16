@@ -44,6 +44,10 @@ public class User extends BasicUser {
 		// default constructor
 	}
 
+	public User(final String username) {
+		this.setUsername(username);
+	}
+
 	public User(final String username, final String password, final boolean active,
 			final List<UserRole> userRoles) {
 		this.setUsername(username);

@@ -45,4 +45,8 @@ public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends
 	boolean isHistoryAuditable();
 
 	String toXMLAudit();
+	
+	String getLastUserUpdated();
+	
+	void setLastUserUpdated(final String username);
 }

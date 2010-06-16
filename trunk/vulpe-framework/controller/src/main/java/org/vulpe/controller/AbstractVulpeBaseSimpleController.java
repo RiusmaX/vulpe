@@ -814,6 +814,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 			userAuthenticationCallback = getBean(UserAuthenticationCallback.class);
 			if (userAuthenticationCallback != null) {
 				final boolean authenticated = userAuthenticationCallback.isAuthenticated();
+				getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATED);
 				if (authenticated) {
 					getSession().setAttribute(Security.VULPE_USER_AUTHENTICATION,
 							userAuthenticationCallback);
@@ -852,6 +853,20 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	public String getUserName() {
 		if (getUserAuthenticatedCallback() != null) {
 			return getUserAuthenticatedCallback().getName();
+		}
+		return "";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeBaseSimpleController#getUserAuthenticated()
+	 */
+	@Override
+	public String getUserAuthenticated() {
+		if (getUserAuthenticatedCallback() != null) {
+			return getUserAuthenticatedCallback().getUsername();
 		}
 		return "";
 	}

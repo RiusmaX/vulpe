@@ -942,8 +942,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		final Map context = ActionContext.getContext().getContextMap();
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
-		final Object detail = accessor.getProperty(context, collection, index);
-		final Object preparedDetail = prepareDetail(detail);
+		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
+		detail.setLastUserUpdated(getUserAuthenticated());
+		final ENTITY preparedDetail = prepareDetail(detail);
 		if (!preparedDetail.equals(detail)) {
 			accessor.setProperty(context, collection, index, preparedDetail);
 		}
@@ -956,7 +957,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 *            Detail.
 	 * @since 1.0
 	 */
-	protected Object prepareDetail(final Object detail) {
+	protected ENTITY prepareDetail(final ENTITY detail) {
 		return detail;
 	}
 
@@ -1057,6 +1058,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
+		getEntity().setLastUserUpdated(getUserAuthenticated());
 		return getEntity();
 	}
 

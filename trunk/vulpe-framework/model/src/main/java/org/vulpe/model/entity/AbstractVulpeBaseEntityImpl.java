@@ -39,6 +39,8 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 
 	private ID id;
 
+	private String lastUserUpdated;
+
 	@IgnoreAudit
 	private transient boolean selected;
 
@@ -149,6 +151,14 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 			return true;
 		}
 		return false;
+	}
+
+	public String getLastUserUpdated() {
+		return lastUserUpdated;
+	}
+
+	public void setLastUserUpdated(String lastUserUpdated) {
+		this.lastUserUpdated = lastUserUpdated;
 	}
 
 }
