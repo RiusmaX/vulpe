@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("${dao.daoName}")
 @Transactional
-@SuppressWarnings("unchecked")
 <#if dao.daoSuperclassName??>
 <#if dao.inheritance>
 public class ${dao.daoName}DB4OImpl<ENTITY_CLASS extends ${dao.name}> extends ${dao.daoSuperclassPackageName}.impl.db4o.${dao.daoSuperclassSimpleName}DB4OImpl<ENTITY_CLASS> implements ${dao.daoName}<ENTITY_CLASS> {

@@ -62,7 +62,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			controller.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(),
 					".entity", ".services"));
 			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),
-					".model.entity", ".controller.action"));
+					".model.entity", ".controller"));
 			controller.setModuleName(getModuleName(clazz));
 
 			if (clazz.getSuperclass() != null
@@ -71,7 +71,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 							AbstractVulpeBaseEntityImpl.class.getName())) {
 				controller.setSuperclassName(getClassName(clazz.getSuperclass()));
 				controller.setControllerSuperclassName(StringUtils.replace(controller
-						.getSuperclassName(), ".model.entity", ".controller.action"));
+						.getSuperclassName(), ".model.entity", ".controller"));
 			}
 
 			final List<String> types = new ArrayList<String>();
