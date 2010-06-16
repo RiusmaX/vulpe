@@ -4,7 +4,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.util.focusFirst();
-<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && controllerConfig.type == 'FRONTEND') || (vulpeBackendMenuType == 'DROPPY' && controllerConfig.type == 'BACKEND')}">
+<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && (controllerConfig.type == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (vulpeBackendMenuType == 'DROPPY' && (controllerConfig.type == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">
 	$("#nav").droppy();
 </c:if>
 <c:if test="${pageContext.request.locale ne 'en_US'}">
@@ -180,7 +180,7 @@ $(document).ready(function() {
 </script>
 </c:if>
 
-<c:if test="${empty vulpeShowMessages || !vulpeShowMessages}">
+<c:if test="${not empty vulpeShowMessages || !vulpeShowMessages}">
 	<c:set var="vulpeShowMessages" value="true" scope="request"/>
 	<%@include file="/WEB-INF/protected-jsp/commons/messages.jsp" %>
 </c:if>

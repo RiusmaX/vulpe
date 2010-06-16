@@ -242,7 +242,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerKey()
 	 */
 	public String getControllerKey() {
-		return getProjectName().concat("/").concat(getControllerName());
+		return getProjectName().concat(".").concat(getControllerName().replace("/", "."));
 	}
 
 	/*

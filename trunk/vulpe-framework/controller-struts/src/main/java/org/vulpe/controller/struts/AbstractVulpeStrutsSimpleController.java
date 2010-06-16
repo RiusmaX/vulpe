@@ -275,7 +275,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = getControllerUtil().getCurrentControllerName().concat(
+		final String keyForm = getControllerUtil().getCurrentControllerName().replace("/", ".").concat(
 				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {

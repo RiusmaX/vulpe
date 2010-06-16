@@ -708,21 +708,16 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		readBefore();
 		onRead();
 		showButtons(Action.READ);
-
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			if (isBack()) {
-				controlResultForward();
-			} else if (isAjax()) {
+			if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
 				controlResultForward();
 			}
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
 			setResultName(Forward.REPORT);
-			if (isBack()) {
-				controlResultForward();
-			} else if (isAjax()) {
+			if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
 				controlResultForward();
@@ -746,6 +741,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		}
 
 		final ENTITY entity = prepareEntity(Action.READ);
+		final String key = getControllerConfig().getControllerKey() + Action.SELECT_FORM;
+		getSession().setAttribute(key, getEntity().clone());
 		if (getControllerType().equals(ControllerType.SELECT)
 				&& getControllerConfig().getPageSize() > 0) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
@@ -753,14 +750,15 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(Action.READ,
 					Action.PAGING.concat(getControllerConfig().getEntityClass().getSimpleName()),
 					new Class[] { getControllerConfig().getEntityClass(), Integer.class,
-							Integer.class }, new Object[] { entity,
+							Integer.class }, new Object[] { entity.clone(),
 							getControllerConfig().getPageSize(), page });
 			setPaging(paging);
 			setEntities(paging.getList());
 		} else {
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
+					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
+							.clone() });
 			setEntities(list);
 
 			if (getControllerType().equals(ControllerType.REPORT)) {
@@ -997,6 +995,15 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)
 				|| getControllerType().equals(ControllerType.REPORT)) {
+			final String key = getControllerConfig().getControllerKey() + Action.SELECT_FORM;
+			if (isBack()) {
+				setEntity((ENTITY) getSessionAttribute(key));
+				setBack(false);
+				setAjax(false);
+				return read();
+			} else {
+				getSession().removeAttribute(key);
+			}
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.CRUD)) {
 			if (isAjax()) {
@@ -1053,12 +1060,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 							ControllerType.SELECT))) {
 				final ENTITY entity = getControllerConfig().getEntityClass().newInstance();
 				entity.setId(getId());
+				entity.setLastUserUpdated(getUserAuthenticated());
 				return entity;
 			}
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		getEntity().setLastUserUpdated(getUserAuthenticated());
 		return getEntity();
 	}
 

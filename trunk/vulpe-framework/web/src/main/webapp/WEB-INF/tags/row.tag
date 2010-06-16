@@ -114,7 +114,7 @@
 
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
 		<c:if test="${empty updateActionName}">
-			<c:set var="updateActionName" value="${controllerConfig.controllerName}/update"/>
+			<c:set var="updateActionName" value="${controllerConfig.moduleName}/${controllerConfig.simpleControllerName}/crud/update"/>
 		</c:if>
 		<c:if test="${empty updateFormName}">
 			<c:set var="updateFormName" value="${controllerConfig.formName}"/>
