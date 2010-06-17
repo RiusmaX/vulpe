@@ -926,7 +926,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	}
 
 	public String getText(final String key, final String... args) {
-		return i18nService.getText(key);
+		return i18nService.getText(key, args);
 	}
 
 	public abstract void addActionMessage(final String message);
