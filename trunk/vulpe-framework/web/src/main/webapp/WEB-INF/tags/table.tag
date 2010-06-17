@@ -23,15 +23,15 @@
 
 <c:set var="scope" scope="request" value="${scope}"/>
 
-<c:set var="exibe" value="${true}"/>
+<c:set var="show" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 <c:if test="${not empty role && util:isRole(pageContext, role) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 
-<c:if test="${exibe eq true}">
+<c:if test="${show eq true}">
 	<c:if test="${empty sortPropertyInfo}">
 		<c:set var="sortPropertyInfo" value="${controllerConfig.formName}_entity.orderBy"/>
 	</c:if>
@@ -64,14 +64,14 @@
 		</c:if>
 	</c:if>
 
-	<c:set var="isSelect_table_tag" value="${false}" scope="request"/>
+	<c:set var="isSelectTableTag" value="${false}" scope="request"/>
 	<c:set var="selectCheckOn" scope="request" value=""/>
 	<c:set var="selectCheckOff" scope="request" value=""/>
 	<c:if test="${not empty pagingList || not empty items}">
-		<c:set var="isSelect_table_tag" value="${true}" scope="request"/>
+		<c:set var="isSelectTableTag" value="${true}" scope="request"/>
 		<c:set var="selectCheckOn" scope="request" value="vulpe.view.setSelectCheckbox(true);"/>
 		<c:set var="selectCheckOff" scope="request" value="vulpe.view.setSelectCheckbox(false);"/>
-		<c:set var="sortPropertyInfo_table_tag" value="${sortPropertyInfo}" scope="request"/>
+		<c:set var="sortPropertyInfoTableTag" value="${sortPropertyInfo}" scope="request"/>
 	</c:if>
 
 	<c:if test="${not empty detailConfig}">
@@ -150,13 +150,15 @@
 
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<tbody>
-		<c:forEach var="item" items="${items}" varStatus="i">
+		<c:forEach var="item" items="${items}" varStatus="status">
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
-			<c:set var="isHeader_table_tag" value="${false}" scope="request"/>
-			<c:set var="status_table_tag" value="${baseName}_status" scope="request"/>
-			<c:set var="v_status" value="${util:put(pageContext, status_table_tag, i, applicationScope['REQUEST_SCOPE'])}"/>
-			<c:set var="item_table_tag" value="${itemName}" scope="request"/>
-			<c:set var="v_item" value="${util:put(pageContext, item_table_tag, item, applicationScope['REQUEST_SCOPE'])}"/>
+			<c:set var="isHeaderTableTag" value="${false}" scope="request"/>
+			<c:set var="statusTableTag" value="${baseName}_status" scope="request"/>
+			<c:set var="currentStatus" value="${status}" scope="request"/>
+			<c:set var="v_status" value="${util:put(pageContext, statusTableTag, status, applicationScope['REQUEST_SCOPE'])}"/>
+			<c:set var="itemTableTag" value="${itemName}" scope="request"/>
+			<c:set var="currentItem" value="${item}" scope="request"/>
+			<c:set var="v_item" value="${util:put(pageContext, itemTableTag, item, applicationScope['REQUEST_SCOPE'])}"/>
 
 			<c:if test="${not empty detailConfig && renderId}">
 				<v:hidden property="id"/>
@@ -169,21 +171,23 @@
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
 					<!-- sub-detalhe: ${targetConfigPropertyName} - ${targetConfig} -->
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
-					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${i.index}].${subDetail.propertyName}" scope="request"/>
+					<c:if test="${!fn:contains(targetConfigPropertyName, subDetail.propertyName)}">
+					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>
+					</c:if>
 					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
-						<jsp:param name="detail_viewPath" value="${subDetail.viewPath}"/>
+						<jsp:param name="detailViewPath" value="${subDetail.viewPath}"/>
 					</jsp:include>
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 				</c:forEach>
 				<c:set var="targetConfig" value="${detailConfig}" scope="request"/>
 				<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 			</c:if>
-			<c:set var="status_table_tag" value="${null}" scope="request"/>
-			<c:set var="item_table_tag" value="${null}" scope="request"/>
+			<c:set var="statusTableTag" value="${null}" scope="request"/>
+			<c:set var="itemTableTag" value="${null}" scope="request"/>
 		</c:forEach>
 		</tbody>
 		<thead>
-			<c:set var="isHeader_table_tag" value="${true}" scope="request"/>
+			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
 			<c:if test="${not empty tableHeader}">
 				<tr>
 					${tableHeader}
@@ -203,16 +207,16 @@
 		</table>
 		<v:paging list="${pagingList}" actionName="${pagingActionName}" formName="${pagingFormName}" layer="${pagingLayer}" layerFields="${pagingLayerFields}" beforeJs="${pagingBeforeJs}" afterJs="${pagingAfterJs}"/>
 	</c:if>
-	<c:if test="${not empty sortPropertyInfo_table_tag}">
+	<c:if test="${not empty sortPropertyInfoTableTag}">
 		<script type="text/javascript">
 			$(document).ready(function() {
-				vulpe.view.setupSortTable('${sortPropertyInfo_table_tag}');
+				vulpe.view.setupSortTable('${sortPropertyInfoTableTag}');
 			});
 		</script>
 	</c:if>
 	<c:set var="targetConfig" value="${null}" scope="request"/>
 	<c:set var="targetConfigPropertyName" value="${null}" scope="request"/>
-	<c:set var="sortPropertyInfo_table_tag" value="${null}" scope="request"/>
-	<c:set var="isHeader_table_tag" value="${null}" scope="request"/>
+	<c:set var="sortPropertyInfoTableTag" value="${null}" scope="request"/>
+	<c:set var="isHeaderTableTag" value="${null}" scope="request"/>
 	<!-- tag end -->
 </c:if>

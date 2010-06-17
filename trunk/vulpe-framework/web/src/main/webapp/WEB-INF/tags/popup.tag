@@ -25,15 +25,15 @@
 
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
-<c:set var="exibe" value="${true}"/>
+<c:set var="show" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 <c:if test="${not empty role && util:isRole(pageContext, role) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 
-<c:if test="${exibe eq true}">
+<c:if test="${show eq true}">
 	<c:if test="${not empty popupExpressions}">
 		<c:set var="popupExpressions" value="${fn:trim(popupExpressions)}"/>
 	</c:if>

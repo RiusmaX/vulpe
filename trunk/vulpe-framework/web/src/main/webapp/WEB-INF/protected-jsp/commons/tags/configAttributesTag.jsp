@@ -29,8 +29,7 @@
 		<c:set var="targetName" value="entity"/>
 	</c:if>
 	<c:if test="${not empty targetConfig}">
-		<c:set var="targetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-		<c:set var="targetName" value="${targetConfigPropertyName}[${util:eval(pageContext, targetNameEL)}]"/>
+		<c:set var="targetName" value="${targetConfigPropertyName}[${currentStatus.index}]"/>
 	</c:if>
 </c:if>
 
@@ -40,8 +39,7 @@
 		<c:set var="targetValue" value="${util:eval(pageContext, targetValueEL)}"/>
 	</c:if>
 	<c:if test="${not empty targetConfig}">
-		<c:set var="targetValueEL" value="${'${'}${targetConfig.baseName}_item${'}'}"/>
-		<c:set var="targetValue" value="${util:eval(pageContext, targetValueEL)}"/>
+		<c:set var="targetValue" value="${currentItem}"/>
 	</c:if>
 </c:if>
 

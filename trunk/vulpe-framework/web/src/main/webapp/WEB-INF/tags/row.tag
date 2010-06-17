@@ -39,28 +39,22 @@
 
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
-<c:set var="exibe" value="${true}"/>
+<c:set var="show" value="${true}"/>
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 <c:if test="${not empty role && util:isRole(pageContext, role) eq false}">
-	<c:set var="exibe" value="${false}"/>
+	<c:set var="show" value="${false}"/>
 </c:if>
 
-<c:if test="${exibe eq true}">
+<c:if test="${show eq true}">
 	<c:if test="${empty showLine}">
 		<c:set var="showLine" value="${true}"/>
 	</c:if>
 
-	<c:set var="status_row_tag" value="${null}"/>
-	<c:if test="${not empty status_table_tag}">
-		<c:set var="status_row_tagEL" value="${'${'}${status_table_tag}${'}'}"/>
-		<c:set var="status_row_tag" value="${util:eval(pageContext, status_row_tagEL)}"/>
-	</c:if>
-
-	<c:if test="${empty styleClass && not empty status_row_tag}">
+	<c:if test="${empty styleClass && not empty currentStatus}">
 		<c:choose>
-			<c:when test="${(status_row_tag.index % 2) == 0}">
+			<c:when test="${(currentStatus.index % 2) == 0}">
 				<c:set var="styleClass" value="vulpeLineOn"/>
 			</c:when>
 			<c:otherwise>
@@ -69,7 +63,7 @@
 		</c:choose>
 	</c:if>
 
-	<c:if test="${empty updateValue && isSelect_table_tag && updateShow}">
+	<c:if test="${empty updateValue && isSelectTableTag && updateShow}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -77,8 +71,8 @@
 			<c:set var="updateLabelKey" value="vulpe.label.update"/>
 		</c:if>
 		<c:choose>
-			<c:when test="${not empty item_table_tag}">
-				<c:set var="updateValue" value="${'${'}${item_table_tag}.${updateValue}${'}'}"/>
+			<c:when test="${not empty currentItem}">
+				<c:set var="updateValue" value="${'${'}currentItem.${updateValue}${'}'}"/>
 			</c:when>
 			<c:otherwise>
 				<c:set var="updateValue" value=""/>
@@ -89,7 +83,7 @@
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<c:when test="${isSelect_table_tag && deleteShow}">
+			<c:when test="${isSelectTableTag && deleteShow}">
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="select"/>
 			</c:when>
@@ -109,7 +103,7 @@
 		<c:if test="${empty deleteLabelKey}">
 			<c:set var="deleteLabelKey" value="vulpe.label.delete"/>
 		</c:if>
-		<c:set var="deleteValue" value="${'${'}${item_table_tag}.${deleteValue}${'}'}"/>
+		<c:set var="deleteValue" value="${'${'}currentItem.${deleteValue}${'}'}"/>
 	</c:if>
 
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -170,7 +164,7 @@
 							<c:set var="deleteLayer" value="body"/>
 						</c:when>
 						<c:otherwise>
-							<c:set var="deleteLayer" value="${deleteFormName}_${targetConfig.baseName}_detail_body"/>
+							<c:set var="deleteLayer" value="vulpeDetailBody_${targetConfig.baseName}${currentDetailIndex}"/>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -193,7 +187,7 @@
 		</c:if>
 	</c:if>
 
-	<c:if test="${popup && !isHeader_table_tag && isSelect_table_tag && not empty popupProperties}">
+	<c:if test="${popup && !isHeaderTableTag && isSelectTableTag && not empty popupProperties}">
 		<c:set var="popupProperties" value="${fn:trim(popupProperties)}"/>
 		<c:set var="valueSelectRow" value=""/>
 		<c:forEach items="${fn:split(popupProperties, ',')}" var="prop" varStatus="sProp">
@@ -207,7 +201,7 @@
 					<c:set var="propField" value="${propCfg}"/>
 				</c:if>
 			</c:forEach>
-			<c:set var="valueRowEL" value="${'${'}${item_table_tag}.${propField}${'}'}"/>
+			<c:set var="valueRowEL" value="${'${'}currentItem.${propField}${'}'}"/>
 			<c:set var="valueRow" value="${util:urlEncode(util:evalString(pageContext, valueRowEL))}"/>
 			<c:choose>
 				<c:when test="${sProp.first}">
@@ -231,63 +225,47 @@
 	<tr id="${elementId}" onclick="${onclick}" onmouseover="${onmouseover}" onmouseout="${onmouseout}" class="${styleClass}" style="${style}" rowspan="${rowspan}">
 		<c:if test="${showLine}">
 			<v:column labelKey="vulpe.label.line" width="1%">
-				<c:if test="${!isHeader_table_tag}">
-					${status_row_tag.index + 1}.
+				<c:if test="${!isHeaderTableTag}">
+					${currentStatus.index + 1}.
 				</c:if>
 			</v:column>
 		</c:if>
 
 		<c:if test="${!onlyToSee && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
-			<c:when test="${!isHeader_table_tag}">
+			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" align="center">
 					<input type="checkbox" name="selected" value="${elementId}" tabindex="100000">
 				</td>
 			</c:when>
 			<c:otherwise>
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this);" tabindex="100000">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000">
 				</th>
 			</c:otherwise>
 		</c:choose>
 		</c:if>
 
 		<c:if test="${!onlyToSee && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
-			<c:if test="${empty isHeader_table_tag || isHeader_table_tag}">
-				<%--<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%"/>--%>
+			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this);" tabindex="100000">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000">
 				</th>
 			</c:if>
-			<c:if test="${!isHeader_table_tag}">
+			<c:if test="${!isHeaderTableTag}">
 				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%">
-					<v:checkbox name="${targetConfigPropertyName}[${status_row_tag.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000"/>
+					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000"/>
 				</v:column>
 			</c:if>
 		</c:if>
 
 		<jsp:doBody/>
-		<%--
-		<c:if test="${not empty updateValue && updateValue ne 'false'}">
-			<c:if test="${empty isHeader_table_tag || isHeader_table_tag}">
-				<v:column role="${updateRole}" logged="${updateLogged}" labelKey="${updateLabelKey}" width="1%"/>
-			</c:if>
-			<c:if test="${!isHeader_table_tag}">
-				<v:columnAction role="${updateRole}" logged="${updateLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-edit.png" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${util:urlEncode(util:evalString(pageContext, updateValue))}', '${updateActionName}', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%"/>
-			</c:if>
-		</c:if>
-		--%>
 		<c:if test="${not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
-			<c:if test="${empty isHeader_table_tag || isHeader_table_tag}">
-				<%--
-				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%" showBodyInHeader="true">
-					<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
-				</v:column>
-				 --%>
+			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<v:column role="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true">
 					<c:choose>
 						<c:when test="${deleteType eq 'detail'}">
-							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfig.baseName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
+							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
 						</c:when>
 						<c:otherwise>
 							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
@@ -295,10 +273,10 @@
 					</c:choose>
 				</v:column>
 			</c:if>
-			<c:if test="${!isHeader_table_tag}">
+			<c:if test="${!isHeaderTableTag}">
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
-						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${status_row_tag.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
+						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${currentStatus.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
 					</c:when>
 					<c:otherwise>
 						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
