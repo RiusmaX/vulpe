@@ -205,15 +205,38 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				setEntity(getControllerConfig().getEntityClass().newInstance());
 				if (getControllerConfig().getDetails() != null
 						&& !getControllerConfig().getDetails().isEmpty()) {
-					for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
-						setDetail(detail.getPropertyName());
-						onAddDetail();
-					}
+					createDetails(getControllerConfig().getDetails(), false);
+					setDetail("");
 				}
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
 			setExecuted(false);
+		}
+	}
+
+	private void createDetails(final List<VulpeBaseDetailConfig> details, final boolean subDetail) {
+		for (VulpeBaseDetailConfig detail : details) {
+			if (subDetail) {
+				final Map context = ActionContext.getContext().getContextMap();
+				try {
+					final Collection collection = (Collection) Ognl.getValue(getDetail(), context,
+							this);
+					for (int i = 0; i < collection.size(); i++) {
+						setDetail(detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."
+								+ detail.getPropertyName());
+						onAddDetail();
+					}
+				} catch (OgnlException e) {
+					LOG.error(e);
+				}
+			} else if (detail.getParentDetailConfig() == null) {
+				setDetail(detail.getPropertyName());
+				onAddDetail();
+			}
+			if (detail.getSubDetails() != null && !detail.getSubDetails().isEmpty()) {
+				createDetails(detail.getSubDetails(), true);
+			}
 		}
 	}
 
