@@ -902,6 +902,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		return (T) getSession().getAttribute(attributeName);
 	}
 
+	public void setSessionAttribute(final String attributeName, final Object attributeValue) {
+		getSession().setAttribute(attributeName, attributeValue);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -911,6 +915,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 */
 	public <T> T getRequestAttribute(final String attributeName) {
 		return (T) getRequest().getAttribute(attributeName);
+	}
+
+	public void setRequestAttribute(final String attributeName, final Object attributeValue) {
+		getRequest().setAttribute(attributeName, attributeValue);
 	}
 
 	public String getText(final String key) {

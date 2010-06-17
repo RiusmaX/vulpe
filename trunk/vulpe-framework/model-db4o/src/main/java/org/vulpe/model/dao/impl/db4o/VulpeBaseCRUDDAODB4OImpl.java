@@ -160,6 +160,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 			LOG.error(e.getMessage());
 		} finally {
 			rollback();
+			close();
 		}
 		return entity;
 	}
@@ -183,6 +184,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 			return list;
 		} finally {
 			rollback();
+			close();
 		}
 	}
 
@@ -222,6 +224,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 			return paging;
 		} finally {
 			rollback();
+			close();
 		}
 	}
 

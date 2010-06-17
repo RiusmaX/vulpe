@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.VulpeConstants.Action;
@@ -187,10 +186,8 @@ public class ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
-		final String base = getCurrentController().get();
-		final String projectName = base.contains(VulpeConstants.AUDIT) ? VulpeConstants.ACTIVE
-				: VulpeConfigHelper.getProjectName();
-		return projectName.concat(".").concat(base.replace("/", "."));
+		return VulpeConfigHelper.getProjectName().concat(".").concat(
+				getCurrentControllerName().replace("/", "."));
 	}
 
 	/**

@@ -30,8 +30,6 @@ public interface VulpeControllerConfig {
 
 	String getControllerName();
 
-	String getControllerKey();
-
 	String getSimpleControllerName();
 
 	String getFormName();
@@ -77,6 +75,10 @@ public interface VulpeControllerConfig {
 	void setSubReports(String[] subReports);
 
 	String[] getSubReports();
-	
+
 	String getReportControllerName();
+
+	String getModuleName();
+
+	void setModuleName(final String moduleName);
 }

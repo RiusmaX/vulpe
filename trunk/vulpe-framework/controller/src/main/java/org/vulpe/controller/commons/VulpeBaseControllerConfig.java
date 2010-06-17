@@ -114,8 +114,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 			}
 		}
 
-		setTitleKey(View.LABEL.concat(getProjectName()).concat(".").concat(
-				getControllerName().replace("/", ".")));
+		setTitleKey(View.LABEL.concat(controllerUtil.getCurrentControllerKey()));
 
 		setReportFile(getController().report().reportFile());
 		if ("".equals(getReportFile())) {

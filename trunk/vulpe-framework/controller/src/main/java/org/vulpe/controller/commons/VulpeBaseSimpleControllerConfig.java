@@ -118,8 +118,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 								Layout.SUFFIX_JSP_REPORT_ITEMS);
 			}
 		}
-		this.titleKey = View.LABEL.concat(getProjectName()).concat(".").concat(
-				controllerName.replace("/", "."));
+		this.titleKey = View.LABEL.concat(controllerUtil.getCurrentControllerKey());
 
 		this.reportFile = this.controller.report().reportFile();
 		if ("".equals(this.reportFile)) {
@@ -233,16 +232,6 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 */
 	public String getReportControllerName() {
 		return getControllerName().replace("/select", "/report");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerKey()
-	 */
-	public String getControllerKey() {
-		return getProjectName().concat(".").concat(getControllerName().replace("/", "."));
 	}
 
 	/*

@@ -39,8 +39,7 @@ public class SessionParametersInterceptor extends
 		super.setParameters(action, stack, parameters);
 
 		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerName().replace("/", ".").concat(
-						VulpeConstants.PARAMS_SESSION_KEY);
+				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {

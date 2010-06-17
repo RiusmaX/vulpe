@@ -159,8 +159,7 @@ public final class StrutsFunctions extends Functions {
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
-					.getCurrentControllerName().replace("/", ".").concat(
-							VulpeConstants.PARAMS_SESSION_KEY);
+					.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
 					.getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -177,8 +176,7 @@ public final class StrutsFunctions extends Functions {
 	 */
 	private static Map getFormParams() {
 		final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerName().replace("/", ".").concat(
-						VulpeConstants.PARAMS_SESSION_KEY);
+				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();

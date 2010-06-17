@@ -40,8 +40,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		final Object action = invocation.getAction();
 		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerName().replace("/", ".").concat(
-						VulpeConstants.PARAMS_SESSION_KEY);
+				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(action)) {
 			ActionContext.getContext().getSession().remove(key);
 		}
