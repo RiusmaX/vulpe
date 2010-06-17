@@ -965,8 +965,8 @@ var vulpe = {
 			vulpe.view.isSelection = select;
 		},
 
-		markUnmarkAll: function(controller) {
-			var selections = jQuery("*[name$='selected']");
+		markUnmarkAll: function(controller, parent) {
+			var selections = jQuery("*[name$='selected']", parent);
 			for (i = 0; i < selections.length; i++) {
 				selections[i].checked = controller.checked;
 			}
@@ -1300,7 +1300,7 @@ var vulpe = {
 										selections[i].value = selectedIds[i];
 									}
 								}
-								vulpe.view.request.submitFormAction(actionURL, formName, layerFields, 'detail=' + (detail == 'entities' ? detail : 'entity.' + detail), layer, false, beforeJs, afterJs);
+								vulpe.view.request.submitFormAction(actionURL, formName, layerFields, 'detail=' + (detail == 'entities' || detail.indexOf("entity.") != -1 ? detail : 'entity.' + detail), layer, false, beforeJs, afterJs);
 							},
 							Cancel: function() {
 								$(this).dialog('close');
