@@ -32,7 +32,7 @@ public @interface VulpeValidate {
 	/**
 	 * Type of validation on input
 	 */
-	VulpeValidateType type();
+	VulpeValidateType type() default VulpeValidateType.NONE;
 
 	/**
 	 * Scope of validation on input

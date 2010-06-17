@@ -38,6 +38,7 @@ import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeCheckboxlist;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpePassword;
+import org.vulpe.view.annotations.input.VulpeRadio;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -253,6 +254,26 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				}
 			}
 			decoratedViewField.setType("checkboxlist");
+		}
+		final VulpeRadio radio = fDeclaration == null ? field
+				.getAnnotation(VulpeRadio.class) : fDeclaration
+				.getAnnotation(VulpeRadio.class);
+		if (radio != null) {
+			name = radio.name();
+			decoratedViewField.setArgument(radio.argument());
+			decoratedViewField.setRequired(radio.required());
+			if (StringUtils.isNotBlank(radio.list())) {
+				if (StringUtils.isNotBlank(radio.list())) {
+					decoratedViewField.setList(radio.list());
+					if (StringUtils.isNotBlank(radio.listKey())) {
+						decoratedViewField.setListKey(radio.listKey());
+					}
+					if (StringUtils.isNotBlank(radio.listValue())) {
+						decoratedViewField.setListValue(radio.listValue());
+					}
+				}
+			}
+			decoratedViewField.setType("radio");
 		}
 		final VulpeSelectPopup selectPopup = fDeclaration == null ? field
 				.getAnnotation(VulpeSelectPopup.class) : fDeclaration

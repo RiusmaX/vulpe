@@ -34,4 +34,15 @@ public class I18NService {
 		}
 		return text;
 	}
+	
+	public String getText(final String key, final String... args) {
+		String text = getText(key);
+		int count = 0;
+		for (String string : args) {
+			final String token = "{" + count + "}";
+			text = text.replace(token, string);
+			++count;
+		}
+		return text;
+	}
 }

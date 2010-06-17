@@ -51,6 +51,17 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	size="${field.size}" popupWidth="${field.popupWidth}px"
 	autoComplete="${field.autoComplete}"
 </#if>
+<#if field.type == 'radio'>
+	<#if field.list?has_content>
+	items="${field.list}"
+	</#if>
+	<#if field.listKey?has_content>
+	itemKey="${field.listKey}"
+	</#if>
+	<#if field.listValue?has_content>
+	itemValue="${field.listValue}"
+	</#if>
+</#if>
 <#if field.type == 'checkbox'>
 	fieldValue="${field.fieldValue}"
 </#if>
@@ -187,6 +198,17 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	size="${field.size}" popupWidth="${field.popupWidth}px"
 	autoComplete="${field.autoComplete}"
 </#if>
+<#if field.type == 'radio'>
+	<#if field.list?has_content>
+	items="${field.list}"
+	</#if>
+	<#if field.listKey?has_content>
+	itemKey="${field.listKey}"
+	</#if>
+	<#if field.listValue?has_content>
+	itemValue="${field.listValue}"
+	</#if>
+</#if>
 <#if field.type == 'checkbox'>
 	fieldValue="${field.fieldValue}"
 </#if>
@@ -285,7 +307,18 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					</#if>
 					showBlank="${detailField.showBlank}" autoLoad="${detailField.autoLoad}"
 				</#if>
-					<#if detailField.type == 'checkbox'>
+				<#if detailField.type == 'radio'>
+					<#if detailField.list?has_content>
+					items="${detailField.list}"
+					</#if>
+					<#if detailField.listKey?has_content>
+					itemKey="${detailField.listKey}"
+					</#if>
+					<#if detailField.listValue?has_content>
+					itemValue="${detailField.listValue}"
+					</#if>
+				</#if>
+				<#if detailField.type == 'checkbox'>
 					fieldValue="${detailField.fieldValue}"
 				</#if>
 				<#if detailField.type == 'checkboxlist'>
@@ -395,6 +428,17 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					action="${field.action}" popupId="${field.name}SelectPopup"
 					popupProperties="${field.name}.${field.identifier}=${field.identifier},${field.name}.${field.description}=${field.description}"
 					size="${field.size}" popupWidth="${field.popupWidth}px"
+				</#if>
+				<#if field.type == 'radio'>
+					<#if field.list?has_content>
+					items="${field.list}"
+					</#if>
+					<#if field.listKey?has_content>
+					itemKey="${field.listKey}"
+					</#if>
+					<#if field.listValue?has_content>
+					itemValue="${field.listValue}"
+					</#if>
 				</#if>
 				<#if field.type == 'checkbox'>
 					fieldValue="${field.fieldValue}"
