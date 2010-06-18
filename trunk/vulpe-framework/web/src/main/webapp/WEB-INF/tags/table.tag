@@ -154,13 +154,11 @@
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
 			<c:set var="isHeaderTableTag" value="${false}" scope="request"/>
 			<c:set var="statusTableTag" value="${baseName}_status" scope="request"/>
-			<c:set var="currentStatus" value="${status}" scope="request"/>
 			<c:set var="v_status" value="${util:put(pageContext, statusTableTag, status, applicationScope['REQUEST_SCOPE'])}"/>
+			<c:set var="currentStatus" value="${status}" scope="request"/>
 			<c:set var="itemTableTag" value="${itemName}" scope="request"/>
-			<c:set var="currentItem" value="${item}" scope="request"/>
-			<c:set var="detailName" value="${baseName}_detail" scope="request"/>
 			<c:set var="v_item" value="${util:put(pageContext, itemTableTag, item, applicationScope['REQUEST_SCOPE'])}"/>
-			${util:put(pageContext, detailName, item, applicationScope['REQUEST_SCOPE'])}
+			<c:set var="currentItem" value="${item}" scope="request"/>
 			<c:if test="${not empty detailConfig && renderId}">
 				<v:hidden property="id"/>
 			</c:if>
