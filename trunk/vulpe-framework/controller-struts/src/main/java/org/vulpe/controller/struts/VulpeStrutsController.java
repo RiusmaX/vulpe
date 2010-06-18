@@ -1011,6 +1011,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String prepare() {
+		clearErrorsAndMessages();
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);

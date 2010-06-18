@@ -158,8 +158,9 @@
 			<c:set var="v_status" value="${util:put(pageContext, statusTableTag, status, applicationScope['REQUEST_SCOPE'])}"/>
 			<c:set var="itemTableTag" value="${itemName}" scope="request"/>
 			<c:set var="currentItem" value="${item}" scope="request"/>
+			<c:set var="detailName" value="${baseName}_detail" scope="request"/>
 			<c:set var="v_item" value="${util:put(pageContext, itemTableTag, item, applicationScope['REQUEST_SCOPE'])}"/>
-
+			${util:put(pageContext, detailName, item, applicationScope['REQUEST_SCOPE'])}
 			<c:if test="${not empty detailConfig && renderId}">
 				<v:hidden property="id"/>
 			</c:if>
@@ -171,9 +172,7 @@
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
 					<!-- sub-detalhe: ${targetConfigPropertyName} - ${targetConfig} -->
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
-					<c:if test="${!fn:contains(targetConfigPropertyName, subDetail.propertyName)}">
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>
-					</c:if>
 					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 						<jsp:param name="detailViewPath" value="${subDetail.viewPath}"/>
 					</jsp:include>

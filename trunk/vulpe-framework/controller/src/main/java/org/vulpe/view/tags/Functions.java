@@ -78,7 +78,7 @@ public class Functions {
 		try {
 			return ExpressionEvaluatorManager.evaluate(null, expression, Object.class, pageContext);
 		} catch (Exception e) {
-			LOG.error("Erro na expressão: " + expression);
+			LOG.error("Expression error: " + expression);
 			throw new JspException(e);
 		}
 	}
