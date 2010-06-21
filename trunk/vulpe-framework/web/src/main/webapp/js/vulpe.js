@@ -90,7 +90,7 @@ var vulpe = {
 		suffix: {
 			action: '.action',
 			errorMessage: '_ErrorMessage',
-			selectTab: '_selectedTab'
+			selectedTab: '_selectedTab'
 		},
 		theme: 'default'
 	},

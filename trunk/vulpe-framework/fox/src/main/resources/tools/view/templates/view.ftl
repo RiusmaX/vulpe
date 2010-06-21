@@ -261,6 +261,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 </#list>
 </@file>
 <#list view.details as detail>
+label.${view.projectName}.${view.moduleName}.${view.name}.crud.master=${view.name}
 ################################################################################
 # View CRUD Detail: ${detail.name}
 ################################################################################

@@ -225,14 +225,14 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					for (int i = 0; i < collection.size(); i++) {
 						setDetail(detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."
 								+ detail.getPropertyName());
-						onAddDetail();
+						onAddDetail(true);
 					}
 				} catch (OgnlException e) {
 					LOG.error(e);
 				}
 			} else if (detail.getParentDetailConfig() == null) {
 				setDetail(detail.getPropertyName());
-				onAddDetail();
+				onAddDetail(true);
 			}
 			if (detail.getSubDetails() != null && !detail.getSubDetails().isEmpty()) {
 				createDetails(detail.getSubDetails(), true);
@@ -733,7 +733,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		showButtons(Action.READ);
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
-			if (isAjax()) {
+			if (isBack()) {
+				controlResultForward();
+			} else if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
 				controlResultForward();
@@ -784,6 +786,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 							.clone() });
 			setEntities(list);
 
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				if (list == null || list.isEmpty()) {
+					setDetail("entities");
+					onAddDetail(true);
+				}
+			}
 			if (getControllerType().equals(ControllerType.REPORT)) {
 				final DownloadInfo downloadInfo = doReadReportLoad();
 				setDownloadInfo(downloadInfo);
@@ -888,7 +896,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	public String addDetail() {
 		addDetailBefore();
-		final VulpeBaseDetailConfig detailConfig = onAddDetail();
+		final VulpeBaseDetailConfig detailConfig = onAddDetail(false);
 		showButtons(Action.ADD_DETAIL);
 
 		setResultName(Forward.SUCCESS);
@@ -909,8 +917,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * Extension point to add detail.
 	 * 
 	 * @since 1.0
+	 * @param start
+	 *            indicates if use <code>startNewDetails</code> or
+	 *            <code>newDetails</code> parameter of Detail Config
+	 * @return
 	 */
-	protected VulpeBaseDetailConfig onAddDetail() {
+	protected VulpeBaseDetailConfig onAddDetail(final boolean start) {
 		boolean createNullObjects = false;
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
@@ -919,19 +931,20 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				createNullObjects = true;
 			}
 
-			int detailNews = 1;
+			int newDetails = 1;
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
 					getDetail());
 			if (detailConfig != null) {
-				detailNews = detailConfig.getDetailNews();
+				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig
+						.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
-			for (int i = 0; i < detailNews; i++) {
+			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
 
 			if (detailConfig != null) {
-				detailNews = detailConfig.getDetailNews();
+				newDetails = detailConfig.getNewDetails();
 				final String parentName = getControllerConfig().getParentName(getDetail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
@@ -1011,7 +1024,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String prepare() {
-		clearErrorsAndMessages();
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);

@@ -21,7 +21,8 @@ import java.io.Serializable;
 public class DecoratedControllerDetail implements Serializable {
 
 	private String name;
-	private int detailNews;
+	private int newDetails;
+	private int startNewDetails;
 	private String despiseFields;
 	private String view;
 	private String propertyName;
@@ -34,14 +35,6 @@ public class DecoratedControllerDetail implements Serializable {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public int getDetailNews() {
-		return detailNews;
-	}
-
-	public void setDetailNews(final int detailNews) {
-		this.detailNews = detailNews;
 	}
 
 	public String getDespiseFields() {
@@ -82,5 +75,21 @@ public class DecoratedControllerDetail implements Serializable {
 
 	public String getNext() {
 		return next;
+	}
+
+	public void setNewDetails(int newDetails) {
+		this.newDetails = newDetails;
+	}
+
+	public int getNewDetails() {
+		return newDetails;
+	}
+
+	public void setStartNewDetails(int startNewDetails) {
+		this.startNewDetails = startNewDetails;
+	}
+
+	public int getStartNewDetails() {
+		return startNewDetails;
 	}
 }

@@ -202,6 +202,7 @@ public class VulpeConstants {
 		public static final String LAYER_URL_BACK = "layerUrlBack";
 		public static final String URL_BACK = "urlBack";
 		public static final String LABEL = "label.";
+		public static final String MASTER = ".master";
 		public static final String ENUM = ".enum.";
 		public static final String LAYOUT = "layout.";
 		public static final String AUTHENTICATOR = "authenticator";

@@ -76,7 +76,12 @@ public @interface Controller {
 	/**
 	 * Quantity of new records in tabular
 	 */
-	int tabularDetailNews() default 1;
+	int tabularNewDetails() default 1;
+
+	/**
+	 * Quantity of new records in tabular on start
+	 */
+	int tabularStartNewDetails() default 1;
 
 	/**
 	 * Name of list

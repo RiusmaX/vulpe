@@ -8,7 +8,7 @@
 	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeCRUDBodyTabs">
 		<ul>
-			<li><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody"><fmt:message key="vulpe.label.main"/></a></li>
+			<li><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody"><fmt:message key="${controllerConfig.masterTitleKey}"/></a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
 					<li><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail_${detail.baseName}"><fmt:message key="${detail.titleKey}"/></a></li>

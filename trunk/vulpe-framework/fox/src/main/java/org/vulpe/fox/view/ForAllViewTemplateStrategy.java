@@ -126,6 +126,10 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(
 							detail.clazz());
 					for (Field detailField : listDetailField) {
+						if (detailField.getName().toString().equals(
+								clazz.getSimpleName().toLowerCase())) {
+							continue;
+						}
 						final VulpeColumn column = detailField.getAnnotation(VulpeColumn.class);
 						final DecoratedViewField decoratedViewFieldDetail = generateViewField(null,
 								detailField);
@@ -255,9 +259,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			decoratedViewField.setType("checkboxlist");
 		}
-		final VulpeRadio radio = fDeclaration == null ? field
-				.getAnnotation(VulpeRadio.class) : fDeclaration
-				.getAnnotation(VulpeRadio.class);
+		final VulpeRadio radio = fDeclaration == null ? field.getAnnotation(VulpeRadio.class)
+				: fDeclaration.getAnnotation(VulpeRadio.class);
 		if (radio != null) {
 			name = radio.name();
 			decoratedViewField.setArgument(radio.argument());

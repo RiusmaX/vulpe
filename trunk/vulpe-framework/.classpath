@@ -102,5 +102,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-commons/1.0/vulpe-commons-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/caelum/vraptor/3.1.2/vraptor-3.1.2.jar" sourcepath="/M2_REPO/br/com/caelum/vraptor/3.1.2/vraptor-3.1.2-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/collections/google-collections/1.0/google-collections-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/joda-time/joda-time/1.6/joda-time-1.6.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

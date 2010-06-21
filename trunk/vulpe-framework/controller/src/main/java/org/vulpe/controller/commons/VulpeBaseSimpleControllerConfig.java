@@ -52,6 +52,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	private String viewPath;
 	private String viewItemsPath;
 	private String titleKey;
+	private String masterTitleKey;
 	private String reportFile;
 	private String[] subReports;
 
@@ -119,6 +120,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 			}
 		}
 		this.titleKey = View.LABEL.concat(controllerUtil.getCurrentControllerKey());
+		this.masterTitleKey = View.LABEL.concat(controllerUtil.getCurrentControllerKey()).concat(
+				View.MASTER);
 
 		this.reportFile = this.controller.report().reportFile();
 		if ("".equals(this.reportFile)) {
@@ -516,6 +519,14 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	public String getModuleName() {
 		return moduleName;
+	}
+
+	public void setMasterTitleKey(String masterTitleKey) {
+		this.masterTitleKey = masterTitleKey;
+	}
+
+	public String getMasterTitleKey() {
+		return masterTitleKey;
 	}
 
 }

@@ -36,7 +36,8 @@ public class DecoratedController implements Serializable {
 	private String controllerSuperclassPackageName;
 	private int pageSize = 5;
 	private String tabularDespiseFields = "";
-	private int tabularDetailNews = 1;
+	private int tabularNewDetails = 1;
+	private int tabularStartNewDetails = 1;
 	private String tabularName = "";
 	private String tabularPropertyName = "";
 	private List<String> types;
@@ -72,8 +73,8 @@ public class DecoratedController implements Serializable {
 	}
 
 	public String getSuperclassSimpleName() {
-		return StringUtils.substring(superclassName, StringUtils.lastIndexOf(
-				superclassName, ".") + 1);
+		return StringUtils.substring(superclassName,
+				StringUtils.lastIndexOf(superclassName, ".") + 1);
 	}
 
 	public String getSuperclassName() {
@@ -101,8 +102,8 @@ public class DecoratedController implements Serializable {
 	}
 
 	public String getControllerSuperclassSimpleName() {
-		return StringUtils.substring(controllerSuperclassName, StringUtils
-				.lastIndexOf(controllerSuperclassName, ".") + 1);
+		return StringUtils.substring(controllerSuperclassName, StringUtils.lastIndexOf(
+				controllerSuperclassName, ".") + 1);
 	}
 
 	public String getControllerSuperclassName() {
@@ -117,8 +118,7 @@ public class DecoratedController implements Serializable {
 		return controllerSuperclassPackageName;
 	}
 
-	public void setControllerSuperclassPackageName(
-			final String daoSuperclassPackageName) {
+	public void setControllerSuperclassPackageName(final String daoSuperclassPackageName) {
 		this.controllerSuperclassPackageName = daoSuperclassPackageName;
 	}
 
@@ -144,14 +144,6 @@ public class DecoratedController implements Serializable {
 
 	public int getPageSize() {
 		return pageSize;
-	}
-
-	public void setTabularDetailNews(final int tabularDetailNews) {
-		this.tabularDetailNews = tabularDetailNews;
-	}
-
-	public int getTabularDetailNews() {
-		return tabularDetailNews;
 	}
 
 	public void setTabularName(final String tabularName) {
@@ -200,5 +192,21 @@ public class DecoratedController implements Serializable {
 
 	public String getProjectPackageName() {
 		return projectPackageName;
+	}
+
+	public void setTabularNewDetails(int tabularNewDetails) {
+		this.tabularNewDetails = tabularNewDetails;
+	}
+
+	public int getTabularNewDetails() {
+		return tabularNewDetails;
+	}
+
+	public void setTabularStartNewDetails(int tabularStartNewDetails) {
+		this.tabularStartNewDetails = tabularStartNewDetails;
+	}
+
+	public int getTabularStartNewDetails() {
+		return tabularStartNewDetails;
 	}
 }

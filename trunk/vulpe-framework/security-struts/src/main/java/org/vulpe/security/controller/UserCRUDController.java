@@ -26,7 +26,7 @@ import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityServices;
 
 @Component("security.UserCRUD")
-@Controller(controllerType = ControllerType.CRUD, serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", detailNews = 1, cardinalityType = CardinalityType.ONE_OR_MORE) })
+@Controller(controllerType = ControllerType.CRUD, serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) })
 @SuppressWarnings("serial")
 public class UserCRUDController extends VulpeStrutsController<User, Long> {
 

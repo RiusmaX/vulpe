@@ -32,7 +32,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private String propertyName;
 	private String simpleName;
 	private String titleKey;
-	private int detailNews;
+	private int newDetails;
+	private int startNewDetails;
 	private String[] despiseFields;
 	private String viewPath;
 	private CardinalityType cardinalityType = CardinalityType.ZERO;
@@ -40,7 +41,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
 
 	public VulpeBaseDetailConfig() {
-		this.detailNews = 1;
+		this.setNewDetails(1);
 	}
 
 	public VulpeBaseDetailConfig(final String name) {
@@ -51,10 +52,11 @@ public class VulpeBaseDetailConfig implements Serializable {
 	}
 
 	public VulpeBaseDetailConfig(final String name, final String propertyName,
-			final int detailNews, final String[] despiseFields) {
+			final int startNewDetails, final int newDetails, final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
-		this.detailNews = detailNews;
+		setStartNewDetails(startNewDetails);
+		setNewDetails(newDetails);
 		this.despiseFields = despiseFields.clone();
 		setSimpleName();
 	}
@@ -64,7 +66,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			final CardinalityType cardinalityType) {
 		this.name = name;
 		this.propertyName = propertyName;
-		this.detailNews = detailNews;
+		this.setNewDetails(detailNews);
 		this.despiseFields = despiseFields.clone();
 		this.cardinalityType = cardinalityType;
 		setSimpleName();
@@ -80,10 +82,6 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public VulpeBaseDetailConfig getParentDetailConfig() {
 		return parentDetailConfig;
-	}
-
-	public int getDetailNews() {
-		return detailNews;
 	}
 
 	public String[] getDespiseFields() {
@@ -139,8 +137,12 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.despiseFields = detail.despiseFields();
 		}
 
-		if (detail.detailNews() > 1) {
-			this.detailNews = detail.detailNews();
+		if (detail.startNewDetails() > 1) {
+			this.setStartNewDetails(detail.startNewDetails());
+		}
+
+		if (detail.newDetails() > 1) {
+			this.setNewDetails(detail.newDetails());
 		}
 
 		this.cardinalityType = detail.cardinalityType();
@@ -180,6 +182,22 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public CardinalityType getCardinalityType() {
 		return cardinalityType;
+	}
+
+	public void setStartNewDetails(int startNewDetails) {
+		this.startNewDetails = startNewDetails;
+	}
+
+	public int getStartNewDetails() {
+		return startNewDetails;
+	}
+
+	public void setNewDetails(int newDetails) {
+		this.newDetails = newDetails;
+	}
+
+	public int getNewDetails() {
+		return newDetails;
 	}
 
 }

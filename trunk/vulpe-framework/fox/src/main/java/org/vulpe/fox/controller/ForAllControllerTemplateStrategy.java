@@ -100,7 +100,8 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 							detail.setDespiseFields(detailConfig.despiseFields()[0]);
 						}
 
-						detail.setDetailNews(detailConfig.detailNews());
+						detail.setNewDetails(detailConfig.newDetails());
+						detail.setStartNewDetails(detailConfig.startNewDetails());
 						detail.setName(detailConfig.name());
 						detail.setParentDetailName(detailConfig.parentDetailName());
 						detail.setPropertyName(detailConfig.propertyName());
@@ -127,7 +128,8 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						}
 					}
 					controller.setTabularDespiseFields(tabularDespise.toString());
-					controller.setTabularDetailNews(control.tabularDetailNews());
+					controller.setTabularStartNewDetails(control.tabularStartNewDetails());
+					controller.setTabularNewDetails(control.tabularNewDetails());
 					controller.setTabularName(control.tabularName());
 					controller.setTabularPropertyName(control.tabularPropertyName());
 				}

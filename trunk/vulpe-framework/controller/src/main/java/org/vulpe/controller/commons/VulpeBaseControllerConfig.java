@@ -113,8 +113,9 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 								Layout.SUFFIX_JSP_REPORT_ITEMS)));
 			}
 		}
-
 		setTitleKey(View.LABEL.concat(controllerUtil.getCurrentControllerKey()));
+		setMasterTitleKey(View.LABEL.concat(controllerUtil.getCurrentControllerKey()).concat(
+				View.MASTER));
 
 		setReportFile(getController().report().reportFile());
 		if ("".equals(getReportFile())) {
@@ -132,7 +133,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 		}
 
 		if (getController().controllerType().equals(ControllerType.TABULAR)) {
-			final int detailNews = getController().tabularDetailNews();
+			final int newDetails = getController().tabularNewDetails();
+			final int startNewDetails = getController().tabularStartNewDetails();
 			final String[] despiseFields = getController().tabularDespiseFields();
 			String name = Action.ENTITIES;
 			String propertyName = name;
@@ -143,8 +145,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 			if (!getController().tabularPropertyName().equals("")) {
 				propertyName = getController().tabularPropertyName();
 			}
-			this.details.add(new VulpeBaseDetailConfig(name, propertyName, detailNews,
-					despiseFields));
+			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails,
+					newDetails, despiseFields));
 		}
 	}
 

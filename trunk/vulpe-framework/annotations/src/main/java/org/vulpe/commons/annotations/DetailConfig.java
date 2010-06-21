@@ -31,7 +31,12 @@ public @interface DetailConfig {
 	/**
 	 * Quantity of news details
 	 */
-	int detailNews() default 1;
+	int newDetails() default 1;
+
+	/**
+	 * Quantity of news details on start
+	 */
+	int startNewDetails() default 1;
 
 	/**
 	 * Attributes to despise details

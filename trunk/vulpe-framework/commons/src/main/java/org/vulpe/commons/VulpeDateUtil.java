@@ -18,9 +18,11 @@ package org.vulpe.commons;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
@@ -60,7 +62,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Obter a data corrente.
+	 * Retrieves current date.
 	 * 
 	 * @author <a href="mailto:smendes@cit.com.br">Silvio Mendes</a>
 	 * @since 12/04/2006
@@ -73,9 +75,9 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Obter a data corrente acrescido de 1 milisegundo. Utilizado para
-	 * contornar o problema do limite do campo timestamp do java, que possui
-	 * precisão de milisegundos
+	 * Retrieves current date plus one millisecond more.
+	 * 
+	 * @return
 	 */
 	public static Date getCurrentDatePlusOne() {
 		final Calendar calendar = new GregorianCalendar();
@@ -84,9 +86,9 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Obter a data corrente diminuido de 1 milisegundo. Utilizado para
-	 * contornar o problema do limite do campo timestamp do java, que possui
-	 * precisão de milisegundos
+	 * Retrieves current date decrease one millisecond.
+	 * 
+	 * @return
 	 */
 	public static Date getCurrentDateMinusOne() {
 		final Calendar calendar = new GregorianCalendar();
@@ -95,7 +97,9 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * obter a data de ontem.
+	 * Retrieves yesterday date.
+	 * 
+	 * @return
 	 */
 	public static Date getYesterdayDate() {
 		final Calendar calendar = new GregorianCalendar();
@@ -104,24 +108,23 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Obter a string da data corrente no formato ddmmaahhmmss.
+	 * Retrieves current date on TimeStamp format: ddmmaahhmmss.
 	 */
 	public static String getCurrentTimeStamp() {
 		return getTimeStamp(System.currentTimeMillis());
 	}
 
 	/**
-	 * Obter a string da data no formato ddmmaahhmmss.
+	 * Retrieves date on TimeStamp format: ddmmaahhmmss.
+	 * 
+	 * @param timestamp
+	 * @return
 	 */
 	public static String getTimeStamp(final long timestamp) {
 
 		final Calendar now = new GregorianCalendar();
 		now.setTimeInMillis(timestamp);
 
-		// variaveis para a formatacao da data...
-
-		// obter o data formatada...
-		// cria o formato ddmmaahhmmss
 		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss",
 				VulpeConstants.PORTUGUESE_LOCALE);
 		final String ddmmaahhmmss = sdf.format(now.getTime());
@@ -213,7 +216,7 @@ public final class VulpeDateUtil {
 		return false;
 	}
 
-	public static boolean isFimDeSemana(final Date date) {
+	public static boolean isWeekend(final Date date) {
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
 		return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
@@ -333,16 +336,12 @@ public final class VulpeDateUtil {
 		boolean valid = false;
 
 		try {
-			// remove os espacos
 			final String newDate = date.trim();
 
-			// se nao for do tamanho correto, lanca uma ParseException
 			if (newDate.length() != DDMMYYYY.length()) {
 				throw new ParseException("Tamanho inválido para um campo data.", newDate.length());
 			}
 
-			// percorre o dia / mes / ano para verificar se os campos sao
-			// numericos
 			try {
 				final StringTokenizer stringTokenizer = new StringTokenizer(newDate, "/");
 
@@ -370,7 +369,9 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a data atual por extenso: 99 de xxxxx de 9999
+	 * Retrieves date on extensive format. Example: 01 of Jully of 2010.
+	 * 
+	 * @return
 	 */
 	public String getExtensiveDate() {
 		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(
@@ -380,7 +381,8 @@ public final class VulpeDateUtil {
 		final String month = format.format(calendar.getTime());
 		final String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 		final String year = Integer.toString(calendar.get(Calendar.YEAR));
-		return day + " de " + month + " de " + year;
+		String ofSepareate = " of ";
+		return day + ofSepareate + month + ofSepareate + year;
 	}
 
 	/**
@@ -394,14 +396,12 @@ public final class VulpeDateUtil {
 		final Calendar calendarBegin = new GregorianCalendar();
 		final Calendar calendarEnd = new GregorianCalendar();
 
-		/* clear time */
 		calendarBegin.setTime(begin);
 		calendarBegin.set(Calendar.HOUR_OF_DAY, 0);
 		calendarBegin.set(Calendar.MINUTE, 0);
 		calendarBegin.set(Calendar.SECOND, 0);
 		calendarBegin.set(Calendar.MILLISECOND, 0);
 
-		/* clear time */
 		calendarEnd.setTime(end);
 		calendarEnd.set(Calendar.HOUR_OF_DAY, 0);
 		calendarEnd.set(Calendar.MINUTE, 0);
@@ -425,7 +425,8 @@ public final class VulpeDateUtil {
 			LOG.debug("date: " + date);
 		}
 
-		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY, VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY,
+				VulpeConstants.PORTUGUESE_LOCALE);
 		format.setLenient(false);
 		final Date formatedDate = format.parse(date);
 
@@ -441,7 +442,8 @@ public final class VulpeDateUtil {
 	 * Converte uma string representando uma hora para um objeto data
 	 */
 	public static Date convertStringToTime(final String time) throws ParseException {
-		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM, VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM,
+				VulpeConstants.PORTUGUESE_LOCALE);
 		timeFormat.setLenient(false);
 		return timeFormat.parse(time);
 	}
@@ -505,7 +507,7 @@ public final class VulpeDateUtil {
 	 * 
 	 * Ex: Data: 04/10/2005 Valor retornado: Ter
 	 */
-	public static String getDataExtensoAbreviada(final Date date) {
+	public static String getExtensiveAbbreviatedDate(final Date date) {
 		final SimpleDateFormat formatDate = new SimpleDateFormat(VulpeConstants.SIMPLE_DATE_FORMAT,
 				VulpeConstants.PORTUGUESE_LOCALE);
 		return formatDate.format(date);
@@ -521,6 +523,7 @@ public final class VulpeDateUtil {
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
 		calendar.set(Calendar.MINUTE, 59);
 		calendar.set(Calendar.SECOND, 59);
+		calendar.set(Calendar.MILLISECOND, 999);
 		return calendar.getTime();
 	}
 
@@ -534,26 +537,25 @@ public final class VulpeDateUtil {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
 	}
 
 	/**
 	 * Retorna a diferença em milisegundos entre as duas datas
 	 */
-	public static long getDiferencaEmMilisegundos(final Date begin, final Date end) {
+	public static long getMillisecondDifference(final Date begin, final Date end) {
 		long milliseconds;
 
 		final Calendar dtBegin = new GregorianCalendar();
 		final Calendar dtEnd = new GregorianCalendar();
 
-		/* limpa o horario */
 		dtBegin.setTime(begin);
 		dtBegin.set(Calendar.HOUR_OF_DAY, dtBegin.get(Calendar.HOUR_OF_DAY));
 		dtBegin.set(Calendar.MINUTE, dtBegin.get(Calendar.MINUTE));
 		dtBegin.set(Calendar.SECOND, dtBegin.get(Calendar.SECOND));
 		dtBegin.set(Calendar.MILLISECOND, dtBegin.get(Calendar.MILLISECOND));
 
-		/* limpa o horario */
 		dtEnd.setTime(end);
 		dtEnd.set(Calendar.HOUR_OF_DAY, dtEnd.get(Calendar.HOUR_OF_DAY));
 		dtEnd.set(Calendar.MINUTE, dtEnd.get(Calendar.MINUTE));
@@ -568,7 +570,7 @@ public final class VulpeDateUtil {
 	 * Retorna a diferenca, em minutos, entre as datas
 	 */
 	public static int getMinutesDifference(final Date begin, final Date end) {
-		return (int) getDiferencaEmMilisegundos(begin, end) / 60000;
+		return (int) getMillisecondDifference(begin, end) / 60000;
 	}
 
 	/**
@@ -577,10 +579,9 @@ public final class VulpeDateUtil {
 	 * minuto dos parâmetros "inicio" e "fim" - os campos de ano, mês e dia
 	 * destes dois parâmetros não são levados em consideração.
 	 */
-	private static int calculateTruncatedTime(final java.util.Date dateTimeBegin,
-			final java.util.Date dateTimeEnd, final java.util.Date begin, final java.util.Date end) {
+	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd,
+			final Date begin, final Date end) {
 
-		// se o período muda de dia, dividir em duas porções de tempo procuradas
 		if (begin.compareTo(end) > 0) {
 			final Calendar calendarBegin1 = new GregorianCalendar();
 			calendarBegin1.setTime(begin);
@@ -618,16 +619,16 @@ public final class VulpeDateUtil {
 		if (periodBegin.getTime().compareTo(periodEnd.getTime()) > 0) {
 			periodEnd.add(Calendar.DATE, 1);
 		}
-		final java.util.Date start = periodBegin.getTime();
-		final java.util.Date finish = periodEnd.getTime();
+		final Date start = periodBegin.getTime();
+		final Date finish = periodEnd.getTime();
 
 		final int period = getMinutesDifference(start, finish);
 		final int activityTime = getMinutesDifference(dateTimeBegin, dateTimeEnd);
 
 		if (dateTimeBegin.compareTo(start) < 0) {
 			returnedTime = Math.max(Math.min(getMinutesDifference(start, dateTimeEnd), period), 0); // a,
-																									// b,
-																									// c
+			// b,
+			// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
 			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
@@ -651,8 +652,7 @@ public final class VulpeDateUtil {
 	 * Verifica se a hora informada está dentro do periodo inicial e final
 	 * informado ( desconsiderando o dia ).
 	 */
-	public static boolean verificaPeriodoHoras(final java.util.Date beginHour,
-			final java.util.Date endHour, final java.util.Date hour) {
+	public static boolean checkTimePeriod(final Date beginHour, final Date endHour, final Date hour) {
 
 		final Calendar calendarBegin = Calendar.getInstance();
 		calendarBegin.setTime(beginHour);
@@ -689,11 +689,13 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Determina a quantidade de minutos de uma atividade que ocorreram dentro
-	 * do período especificado. O período é delimitado pelos campos de hora e
-	 * minuto dos parâmetros "inicio" e "fim" - os campos de ano, mês e dia
-	 * destes dois parâmetros não são levados em consideração. Divide em dias
-	 * para atividades com mais de um dia
+	 * Retrieves time of activity on period.
+	 * 
+	 * @param dateTimeStart
+	 * @param dateTimeEnd
+	 * @param start
+	 * @param end
+	 * @return
 	 */
 	public static int calculateTruncatedTimeByDays(final Date dateTimeStart,
 			final Date dateTimeEnd, final Date start, final Date end) {
@@ -752,6 +754,13 @@ public final class VulpeDateUtil {
 		return minutes;
 	}
 
+	/**
+	 * Adds days on Date.
+	 * 
+	 * @param date
+	 * @param numberOfDays
+	 * @return
+	 */
 	public static Date addDaysOnDate(final Date date, final int numberOfDays) {
 		Date addedDate = null;
 		if (date != null) {
@@ -764,7 +773,9 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Obtém o offset do GMT da aplicação
+	 * Retrieves Time Zone (GTM)
+	 * 
+	 * @return
 	 */
 	public static String getOffSetTimeZone() {
 		final int off = Calendar.getInstance().get(Calendar.ZONE_OFFSET);
@@ -783,37 +794,29 @@ public final class VulpeDateUtil {
 	 * duas datas (dataMenor deve ser menor do que dataMaior)
 	 */
 	public static int getDifferencesBetweenIndicateDays(final Date minorDate, final Date majorDate) {
-
 		int numDiff = 0;
 
 		if (majorDate.after(minorDate)) {
-			// dia do ano e ano da data menor
 			final Calendar calendarMinor = new GregorianCalendar();
 			calendarMinor.setTime(minorDate);
 			final int dayYearMinor = calendarMinor.get(Calendar.DAY_OF_YEAR);
 			final int yearMinor = calendarMinor.get(Calendar.YEAR);
 
-			// dia do ano e ano da data maior
 			final Calendar calendarMajor = new GregorianCalendar();
 			calendarMajor.setTime(majorDate);
 			int dayYearMaior = calendarMajor.get(Calendar.DAY_OF_YEAR);
 			final int yearMaior = calendarMajor.get(Calendar.YEAR);
 
-			// iterage para calcula os índices de dias no ano projetando mais de
-			// um ano
 			if (yearMinor < yearMaior) {
 				int auxYear = yearMinor;
 				final Calendar calendarAux = calendarMinor;
 				while (auxYear < yearMaior) {
-					// soma quantidade de dias do ano da data atual no índice da
-					// nova atividade
 					dayYearMaior += calendarAux.getActualMaximum(Calendar.DAY_OF_YEAR);
 					auxYear++;
 					calendarAux.set(Calendar.YEAR, auxYear);
 				}
 			}
 
-			// calcula a diferença entre os índices
 			numDiff = (dayYearMaior - dayYearMinor);
 		}
 
@@ -821,7 +824,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica se duas datas estão no mesmo dia
+	 * Checks whether the dates are on the same day.
+	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
 	 */
 	public static boolean isDatesInSameDay(final Date date1, final Date date2) {
 		if (truncateTime(date1).equals(truncateTime(date2))) {
@@ -831,10 +838,74 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica se uma data está entre um período
+	 * Checks if data is between period.
+	 * 
+	 * @param date
+	 * @param periodStart
+	 * @param periodEnd
+	 * @return
 	 */
 	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart,
 			final Date periodEnd) {
 		return (date.after(periodStart) && (periodEnd == null || date.before(periodEnd)));
+	}
+
+	/**
+	 * Retrieves dates by days of week on month
+	 * 
+	 * @param days
+	 * @return
+	 */
+	public static List<Date> getDatesOnMonth(final DaysOfWeek... daysOfWeek) {
+		final List<Date> dates = new ArrayList<Date>();
+		if (daysOfWeek != null) {
+			final Calendar calendar = Calendar.getInstance();
+			int firstDay = Calendar.getInstance().getActualMinimum(Calendar.DATE);
+			int lastDay = Calendar.getInstance().getActualMaximum(Calendar.DATE);
+			int period = lastDay - firstDay;
+			for (int i = 1; i <= period; i++) {
+				calendar.set(Calendar.DATE, i);
+				int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+				for (DaysOfWeek day : daysOfWeek) {
+					if (dayOfWeek == day.getValue()) {
+						dates.add(calendar.getTime());
+						continue;
+					}
+				}
+			}
+		}
+		return dates;
+	}
+
+	public enum DaysOfWeek {
+		SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
+
+		public int getValue() {
+			int dayOfWeek = 0;
+			switch (this) {
+			case SUNDAY:
+				dayOfWeek = 1;
+				break;
+			case MONDAY:
+				dayOfWeek = 2;
+				break;
+			case TUESDAY:
+				dayOfWeek = 3;
+				break;
+			case WEDNESDAY:
+				dayOfWeek = 4;
+				break;
+			case THURSDAY:
+				dayOfWeek = 5;
+				break;
+			case FRIDAY:
+				dayOfWeek = 6;
+				break;
+			case SATURDAY:
+				dayOfWeek = 7;
+				break;
+			}
+			return dayOfWeek;
+		}
 	}
 }

@@ -889,19 +889,19 @@ public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID exten
 			// createNullObjects = true;
 			// }
 
-			int detailNews = 1;
+			int newDetails = 1;
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
 					getDetail());
 			if (detailConfig != null) {
-				detailNews = detailConfig.getDetailNews();
+				newDetails = detailConfig.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
-			for (int i = 0; i < detailNews; i++) {
+			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
 
 			if (detailConfig != null) {
-				detailNews = detailConfig.getDetailNews();
+				newDetails = detailConfig.getNewDetails();
 				final String parentName = getControllerConfig().getParentName(getDetail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();

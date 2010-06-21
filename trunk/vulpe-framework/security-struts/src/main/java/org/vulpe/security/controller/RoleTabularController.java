@@ -23,7 +23,7 @@ import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
 @Component("security.RoleTabular")
-@Controller(controllerType = ControllerType.TABULAR, serviceClass = SecurityServices.class, tabularDetailNews = 4, tabularDespiseFields = { "name" })
+@Controller(controllerType = ControllerType.TABULAR, serviceClass = SecurityServices.class, tabularNewDetails = 4, tabularDespiseFields = { "name" })
 @SuppressWarnings("serial")
 public class RoleTabularController extends VulpeStrutsController<Role, Long> {
 

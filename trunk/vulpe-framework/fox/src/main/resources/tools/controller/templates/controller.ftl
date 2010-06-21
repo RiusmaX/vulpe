@@ -47,7 +47,7 @@ import ${controller.projectPackageName}.controller.ApplicationBaseController;
  */
 @SuppressWarnings("serial")
 @Component("${controller.moduleName}.${controller.name}CRUD")
-@Controller(controllerType = ControllerType.CRUD, serviceClass = ${controller.moduleName?capitalize}Services.class<#if controller.details?has_content>, detailsConfig = { <#list controller.details as detail>@DetailConfig(<#if detail.name?has_content>name = "${detail.name}"</#if><#if detail.propertyName?has_content>, propertyName = "${detail.propertyName}"</#if><#if detail.despiseFields?has_content>, despiseFields = "${detail.despiseFields}"</#if><#if (detail.detailNews > 0)>, detailNews = ${detail.detailNews}</#if><#if detail.parentDetailName?has_content>, parentDetailName = "${detail.parentDetailName}"</#if>)${detail.next}</#list> }</#if>)
+@Controller(controllerType = ControllerType.CRUD, serviceClass = ${controller.moduleName?capitalize}Services.class<#if controller.details?has_content>, detailsConfig = { <#list controller.details as detail>@DetailConfig(<#if detail.name?has_content>name = "${detail.name}"</#if><#if detail.propertyName?has_content>, propertyName = "${detail.propertyName}"</#if><#if detail.despiseFields?has_content>, despiseFields = "${detail.despiseFields}"</#if><#if (detail.startNewDetails > 0)>, startNewDetails = ${detail.startNewDetails}</#if><#if (detail.newDetails > 0)>, newDetails = ${detail.newDetails}</#if><#if detail.parentDetailName?has_content>, parentDetailName = "${detail.parentDetailName}"</#if>)${detail.next}</#list> }</#if>)
 public class ${controller.name}CRUDController extends ApplicationBaseController<${controller.name}, ${controller.idType}> {
 
 }
@@ -71,7 +71,7 @@ import ${controller.projectPackageName}.controller.ApplicationBaseController;
  */
 @SuppressWarnings("serial")
 @Component("${controller.moduleName}.${controller.name}Tabular")
-@Controller(controllerType = ControllerType.TABULAR, serviceClass = ${controller.moduleName?capitalize}Services.class<#if controller.tabularName?has_content>, tabularName = "${controller.tabularName}"</#if><#if controller.tabularPropertyName?has_content>, tabularPropertyName = "${controller.tabularPropertyName}"</#if><#if (controller.tabularDetailNews > 0)>, tabularDetailNews = ${controller.tabularDetailNews}</#if><#if controller.tabularDespiseFields?has_content>, tabularDespiseFields = { ${controller.tabularDespiseFields} }</#if>)
+@Controller(controllerType = ControllerType.TABULAR, serviceClass = ${controller.moduleName?capitalize}Services.class<#if controller.tabularName?has_content>, tabularName = "${controller.tabularName}"</#if><#if controller.tabularPropertyName?has_content>, tabularPropertyName = "${controller.tabularPropertyName}"</#if><#if (controller.tabularStartNewDetails > 0)>, tabularStartNewDetails = ${controller.tabularStartNewDetails}</#if><#if (controller.tabularNewDetails > 0)>, tabularNewDetails = ${controller.tabularNewDetails}</#if><#if controller.tabularDespiseFields?has_content>, tabularDespiseFields = { ${controller.tabularDespiseFields} }</#if>)
 public class ${controller.name}TabularController extends ApplicationBaseController<${controller.name}, ${controller.idType}> {
 
 }
