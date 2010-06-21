@@ -175,6 +175,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String create() {
+		clearErrorsAndMessages();
 		setOperation(Action.CREATE);
 		createBefore();
 		onCreate();
@@ -182,13 +183,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		showButtons(Action.CREATE);
 
 		setResultName(Forward.SUCCESS);
-		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultName(Forward.CREATE);
-			setResultForward(getControllerConfig().getOwnerController().concat(
-					Action.URI.CREATE_AJAX));
-		} else {
-			controlResultForward();
-		}
+		controlResultForward();
 
 		createAfter();
 		return getResultName();
@@ -268,6 +263,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String createPost() {
+		clearErrorsAndMessages();
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
@@ -346,19 +342,14 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String update() {
+		clearErrorsAndMessages();
 		setOperation(Action.UPDATE);
 		updateBefore();
 		onUpdate();
 		showButtons(Action.UPDATE);
 
 		setResultName(Forward.SUCCESS);
-		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getOwnerController().concat(
-					Action.URI.UPDATE_AJAX));
-			setResultName(Forward.UPDATE);
-		} else {
-			controlResultForward();
-		}
+		controlResultForward();
 
 		updateAfter();
 		return getResultName();
@@ -424,6 +415,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String updatePost() {
+		clearErrorsAndMessages();
 		setOperation(Action.UPDATE_POST);
 		updatePostBefore();
 		controlResultForward();
@@ -501,18 +493,18 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String delete() {
+		clearErrorsAndMessages();
 		setOperation(Action.DELETE);
 		deleteBefore();
 		onDelete();
 		showButtons(Action.DELETE);
 		addActionMessage(getText("vulpe.msg.delete"));
 
+		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			setResultForward(getControllerConfig().getControllerName().concat(Action.URI.READ));
-			setResultName(Forward.READ);
 		} else {
 			setResultForward(getControllerConfig().getOwnerController().concat(Action.URI.READ));
-			setResultName(Forward.READ);
 		}
 
 		deleteAfter();
@@ -574,6 +566,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String deleteDetail() {
+		clearErrorsAndMessages();
 		setOperation(Action.UPDATE_POST);
 		deleteDetailBefore();
 		final int size = onDeleteDetail();
@@ -727,6 +720,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String read() {
+		clearErrorsAndMessages();
 		setOperation(Action.READ);
 		readBefore();
 		onRead();
@@ -829,6 +823,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String tabularPost() {
+		clearErrorsAndMessages();
 		if (getEntities() != null) {
 			setOperation(Action.TABULAR_POST);
 			tabularPostBefore();
@@ -895,6 +890,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String addDetail() {
+		clearErrorsAndMessages();
 		addDetailBefore();
 		final VulpeBaseDetailConfig detailConfig = onAddDetail(false);
 		showButtons(Action.ADD_DETAIL);
@@ -1024,6 +1020,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String prepare() {
+		clearErrorsAndMessages();
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
@@ -1035,7 +1032,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			if (isBack()) {
 				setEntity((ENTITY) getSessionAttribute(key));
 				setBack(false);
-				setAjax(false);
 				return read();
 			} else {
 				getSession().removeAttribute(key);
