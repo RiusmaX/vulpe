@@ -175,7 +175,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String create() {
-		clearErrorsAndMessages();
 		setOperation(Action.CREATE);
 		createBefore();
 		onCreate();
@@ -263,7 +262,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String createPost() {
-		clearErrorsAndMessages();
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
@@ -342,10 +340,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String update() {
-		clearErrorsAndMessages();
 		setOperation(Action.UPDATE);
 		updateBefore();
 		onUpdate();
+		setSelectedTab(0);
 		showButtons(Action.UPDATE);
 
 		setResultName(Forward.SUCCESS);
@@ -415,7 +413,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String updatePost() {
-		clearErrorsAndMessages();
 		setOperation(Action.UPDATE_POST);
 		updatePostBefore();
 		controlResultForward();
@@ -493,7 +490,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String delete() {
-		clearErrorsAndMessages();
 		setOperation(Action.DELETE);
 		deleteBefore();
 		onDelete();
@@ -566,7 +562,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String deleteDetail() {
-		clearErrorsAndMessages();
 		setOperation(Action.UPDATE_POST);
 		deleteDetailBefore();
 		final int size = onDeleteDetail();
@@ -720,7 +715,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String read() {
-		clearErrorsAndMessages();
 		setOperation(Action.READ);
 		readBefore();
 		onRead();
@@ -729,6 +723,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			if (isBack()) {
 				controlResultForward();
+				setBack(false);
 			} else if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
@@ -760,8 +755,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		}
 
 		final ENTITY entity = prepareEntity(Action.READ);
-		final String key = getControllerUtil().getCurrentControllerKey() + Action.SELECT_FORM;
-		setSessionAttribute(key, getEntity().clone());
 		if (getControllerType().equals(ControllerType.SELECT)
 				&& getControllerConfig().getPageSize() > 0) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
@@ -790,6 +783,14 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				final DownloadInfo downloadInfo = doReadReportLoad();
 				setDownloadInfo(downloadInfo);
 			}
+		}
+		final String selectFormKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_FORM;
+		setSessionAttribute(selectFormKey, getEntity().clone());
+		if (getEntities() != null && !getEntities().isEmpty()) {
+			final String selectTableKey = getControllerUtil().getCurrentControllerKey()
+					+ Action.SELECT_TABLE;
+			setSessionAttribute(selectTableKey, getEntities());
 		}
 		setExecuted(true);
 	}
@@ -823,7 +824,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String tabularPost() {
-		clearErrorsAndMessages();
+
 		if (getEntities() != null) {
 			setOperation(Action.TABULAR_POST);
 			tabularPostBefore();
@@ -890,7 +891,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@SkipValidation
 	public String addDetail() {
-		clearErrorsAndMessages();
 		addDetailBefore();
 		final VulpeBaseDetailConfig detailConfig = onAddDetail(false);
 		showButtons(Action.ADD_DETAIL);
@@ -1020,7 +1020,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String prepare() {
-		clearErrorsAndMessages();
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
@@ -1028,13 +1027,17 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.SELECT)
 				|| getControllerType().equals(ControllerType.REPORT)) {
-			final String key = getControllerUtil().getCurrentControllerKey() + Action.SELECT_FORM;
+			final String selectFormKey = getControllerUtil().getCurrentControllerKey()
+					+ Action.SELECT_FORM;
+			final String selectTableKey = getControllerUtil().getCurrentControllerKey()
+					+ Action.SELECT_TABLE;
 			if (isBack()) {
-				setEntity((ENTITY) getSessionAttribute(key));
-				setBack(false);
+				setEntity((ENTITY) getSessionAttribute(selectFormKey));
+				setEntities((List<ENTITY>) getSessionAttribute(selectTableKey));
 				return read();
 			} else {
-				getSession().removeAttribute(key);
+				getSession().removeAttribute(selectFormKey);
+				getSession().removeAttribute(selectTableKey);
 			}
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {

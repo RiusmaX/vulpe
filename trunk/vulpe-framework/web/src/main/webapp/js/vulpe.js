@@ -145,7 +145,7 @@ var vulpe = {
 		},
 
 		focusFirst: function(layer) {
-			var token = "input[type!=checkbox][class*=focused]";
+			var token = "[class*=focused]";
 			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
 			if (fields && fields.length > 0) {
 				for (var i = 0; i < fields.length; i++) {

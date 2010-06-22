@@ -38,10 +38,9 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	 */
 	@Override
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
-		final Object action = invocation.getAction();
 		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
 				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
-		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(action)) {
+		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		}
 		return invocation.invoke();
@@ -52,13 +51,16 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	 * @param action
 	 * @return
 	 */
-	protected boolean isMethodReset(final Object action) {
+	protected boolean isMethodReset(final ActionInvocation invocation) {
 		try {
-			return action instanceof ValidationAware
-					&& (((ValidationAware) action).hasActionErrors() || ((ValidationAware) action)
-							.hasFieldErrors()) ? false : action.getClass().getMethod(
-					ControllerUtil.getInstance(ServletActionContext.getRequest())
-							.getCurrentMethod()).isAnnotationPresent(ResetSession.class);
+			boolean reset = false;
+			if (invocation.getAction() instanceof ValidationAware) {
+				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
+				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
+								.isAnnotationPresent(ResetSession.class));
+			}
+			return reset;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
