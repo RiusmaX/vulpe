@@ -26,8 +26,6 @@ public interface VulpeControllerConfig {
 
 	String getMethod();
 
-	String getControllerBaseName();
-
 	String getControllerName();
 
 	String getSimpleControllerName();
@@ -47,8 +45,6 @@ public interface VulpeControllerConfig {
 	String getReportFile();
 
 	String getParentName(final String detail);
-
-	void setControllerBaseName(final String controllerBaseName);
 
 	void setControllerName(final String actionName);
 

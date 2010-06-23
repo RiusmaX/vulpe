@@ -23,7 +23,6 @@ import org.vulpe.commons.VulpeStringUtil;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
-import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.VulpeConstants.View.Report;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.cache.VulpeCacheHelper;
@@ -45,7 +44,6 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	private boolean simple = true;
 	private Controller controller;
-	private String controllerBaseName;
 	private String controllerName;
 	private String moduleName;
 	private String simpleControllerName;
@@ -55,6 +53,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	private String masterTitleKey;
 	private String reportFile;
 	private String[] subReports;
+	private ControllerType controllerType;
 
 	public VulpeBaseSimpleControllerConfig() {
 		// default constructor
@@ -63,80 +62,12 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	public VulpeBaseSimpleControllerConfig(final Class<?> controllerClass) {
 		this.controller = VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
 				controllerClass);
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
-		this.controllerName = controllerUtil.getCurrentControllerName();
-		this.viewPath = Layout.PROTECTED_JSP;
-		this.viewItemsPath = Layout.PROTECTED_JSP;
-		final String simple = controllerName.replace(Layout.MAIN, "");
-		final String[] parts = simple.split("/");
-		if (getControllerType().equals(ControllerType.BACKEND)
-				|| getControllerType().equals(ControllerType.FRONTEND)) {
-			this.controllerBaseName = this.controllerName;
-			final String module = parts[0];
-			final String name = parts[1];
-			this.moduleName = module;
-			this.simpleControllerName = name;
-			this.viewPath += module.concat("/").concat(name).concat("/");
-			final String method = controllerUtil.getCurrentMethod();
-			if (!Action.FRONTEND.equals(method) && !Action.BACKEND.equals(method)) {
-				this.viewPath += method;
-			} else {
-				this.viewPath += name;
-			}
-			this.viewPath += Layout.SUFFIX_JSP;
-			if (getControllerType().equals(ControllerType.SELECT)) {
-				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(name).concat(
-								Layout.SUFFIX_JSP_SELECT_ITEMS);
-			}
-		} else {
-			final String module = parts[0];
-			final String name = parts[1];
-			this.moduleName = module;
-			this.simpleControllerName = name;
-			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
-			if (getControllerType().equals(ControllerType.CRUD)) {
-				this.controllerBaseName = this.controllerName.replace(Logic.CRUD, "");
-				this.viewPath += Layout.SUFFIX_JSP_CRUD;
-			}
-			if (getControllerType().equals(ControllerType.TABULAR)) {
-				this.controllerBaseName = this.controllerName.replace(Logic.TABULAR, "");
-				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
-			}
-			if (getControllerType().equals(ControllerType.SELECT)) {
-				this.controllerBaseName = this.controllerName.replace(Logic.SELECT, "");
-				this.viewPath += Layout.SUFFIX_JSP_SELECT;
-				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(name).concat(
-								Layout.SUFFIX_JSP_SELECT_ITEMS);
-			}
-			if (getControllerType().equals(ControllerType.REPORT)) {
-				this.controllerBaseName = this.controllerName.replace(Logic.REPORT, "");
-				this.viewPath += Layout.SUFFIX_JSP_REPORT;
-				this.viewItemsPath += this.viewItemsPath
-						+ module.concat("/").concat(name).concat("/").concat(name).concat(
-								Layout.SUFFIX_JSP_REPORT_ITEMS);
-			}
-		}
-		this.titleKey = View.LABEL.concat(controllerUtil.getCurrentControllerKey());
-		this.masterTitleKey = View.LABEL.concat(controllerUtil.getCurrentControllerKey()).concat(
-				View.MASTER);
+		this.controllerName = getControllerUtil().getCurrentControllerName();
+	}
 
-		this.reportFile = this.controller.report().reportFile();
-		if ("".equals(this.reportFile)) {
-			this.reportFile = Report.PATH.concat(this.controllerBaseName).concat("/").concat(
-					this.simpleControllerName).concat(Report.JASPER);
-		}
-		this.subReports = this.controller.report().subReports();
-		if (this.subReports != null && this.subReports.length > 0) {
-			int count = 0;
-			for (String subReport : this.subReports) {
-				this.subReports[count] = Report.PATH.concat(this.controllerBaseName).concat("/")
-						.concat(subReport).concat(Report.JASPER);
-				count++;
-			}
-		}
+	protected ControllerUtil getControllerUtil() {
+		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
+		return cache.<ControllerUtil> get(ControllerUtil.class);
 	}
 
 	/*
@@ -145,7 +76,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getType()
 	 */
 	public String getType() {
-		return this.controller.controllerType().name();
+		return this.controllerType.name();
 	}
 
 	/**
@@ -153,7 +84,10 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @return
 	 */
 	public ControllerType getControllerType() {
-		return this.controller.controllerType();
+		if (this.controllerType == null) {
+			this.controllerType = this.controller.controllerType();
+		}
+		return this.controllerType;
 	}
 
 	/*
@@ -183,15 +117,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	public String getOwnerController() {
 		if (StringUtils.isNotEmpty(this.controller.ownerController())) {
 			return this.controller.ownerController();
-		} else {
-			if (getControllerType().equals(ControllerType.CRUD)) {
-				return getControllerBaseName().concat(Logic.SELECT);
-			} else if (getControllerType().equals(ControllerType.SELECT)) {
-				return getControllerBaseName().concat(Logic.CRUD);
-			} else {
-				return null;
-			}
 		}
+		return this.controllerName;
 	}
 
 	/*
@@ -200,20 +127,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMethod()
 	 */
 	public String getMethod() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		final ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
-		return controllerUtil.getCurrentMethod();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerBaseName
-	 * ()
-	 */
-	public String getControllerBaseName() {
-		return this.controllerBaseName;
+		return getControllerUtil().getCurrentMethod();
 	}
 
 	/*
@@ -327,6 +241,13 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFile()
 	 */
 	public String getReportFile() {
+		if (StringUtils.isBlank(this.reportFile)) {
+			this.reportFile = this.controller.report().reportFile();
+			if ("".equals(this.reportFile)) {
+				this.reportFile = Report.PATH.concat(this.controllerName).concat("/").concat(
+						this.simpleControllerName).concat(Report.JASPER);
+			}
+		}
 		return this.reportFile;
 	}
 
@@ -373,17 +294,6 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerBaseName
-	 * (java .lang.String)
-	 */
-	public void setControllerBaseName(final String actionBaseName) {
-		this.controllerBaseName = actionBaseName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerName(
 	 * java.lang .String)
 	 */
@@ -419,6 +329,9 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getTitleKey()
 	 */
 	public String getTitleKey() {
+		if (StringUtils.isBlank(this.titleKey)) {
+			this.titleKey = View.LABEL.concat(getControllerUtil().getCurrentControllerKey());
+		}
 		return titleKey;
 	}
 
@@ -490,6 +403,52 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewPath()
 	 */
 	public String getViewPath() {
+		this.viewPath = Layout.PROTECTED_JSP;
+		this.viewItemsPath = Layout.PROTECTED_JSP;
+		final String simple = controllerName.replace(Layout.MAIN, "");
+		final String[] parts = simple.split("/");
+		if (getControllerType().equals(ControllerType.BACKEND)
+				|| getControllerType().equals(ControllerType.FRONTEND)) {
+			final String module = parts[0];
+			final String name = parts[1];
+			this.moduleName = module;
+			this.simpleControllerName = name;
+			this.viewPath += module.concat("/").concat(name).concat("/");
+			final String method = getControllerUtil().getCurrentMethod();
+			if (!Action.FRONTEND.equals(method) && !Action.BACKEND.equals(method)) {
+				this.viewPath += method;
+			} else {
+				this.viewPath += name;
+			}
+			this.viewPath += Layout.SUFFIX_JSP;
+			if (getControllerType().equals(ControllerType.SELECT)) {
+				this.viewItemsPath += this.viewItemsPath
+						+ module.concat("/").concat(name).concat("/").concat(name).concat(
+								Layout.SUFFIX_JSP_SELECT_ITEMS);
+			}
+		} else {
+			final String module = parts[0];
+			final String name = parts[1];
+			this.moduleName = module;
+			this.simpleControllerName = name;
+			this.viewPath += module.concat("/").concat(name).concat("/").concat(name);
+			if (getControllerType().equals(ControllerType.CRUD)) {
+				this.viewPath += Layout.SUFFIX_JSP_CRUD;
+			}
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
+			}
+			if (getControllerType().equals(ControllerType.SELECT)) {
+				this.viewPath += Layout.SUFFIX_JSP_SELECT;
+				this.viewItemsPath += module.concat("/").concat(name).concat("/").concat(name)
+						.concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
+			}
+			if (getControllerType().equals(ControllerType.REPORT)) {
+				this.viewPath += Layout.SUFFIX_JSP_REPORT;
+				this.viewItemsPath += module.concat("/").concat(name).concat("/").concat(name)
+						.concat(Layout.SUFFIX_JSP_REPORT_ITEMS);
+			}
+		}
 		return viewPath;
 	}
 
@@ -510,6 +469,17 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSubReports()
 	 */
 	public String[] getSubReports() {
+		if (this.subReports == null) {
+			this.subReports = this.controller.report().subReports();
+			if (this.subReports != null && this.subReports.length > 0) {
+				int count = 0;
+				for (String subReport : this.subReports) {
+					this.subReports[count] = Report.PATH.concat(this.controllerName).concat("/")
+							.concat(subReport).concat(Report.JASPER);
+					count++;
+				}
+			}
+		}
 		return subReports;
 	}
 
@@ -526,7 +496,15 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	}
 
 	public String getMasterTitleKey() {
+		if (StringUtils.isBlank(this.masterTitleKey)) {
+			this.masterTitleKey = View.LABEL.concat(getControllerUtil().getCurrentControllerKey())
+					.concat(View.MASTER);
+		}
 		return masterTitleKey;
+	}
+
+	public void setControllerType(ControllerType controllerType) {
+		this.controllerType = controllerType;
 	}
 
 }

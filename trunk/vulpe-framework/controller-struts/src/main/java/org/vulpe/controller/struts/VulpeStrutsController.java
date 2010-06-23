@@ -175,6 +175,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String create() {
+		getControllerConfig().setControllerType(ControllerType.CRUD);
 		setOperation(Action.CREATE);
 		createBefore();
 		onCreate();
@@ -262,6 +263,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String createPost() {
+		getControllerConfig().setControllerType(ControllerType.CRUD);
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
@@ -340,6 +342,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String update() {
+		getControllerConfig().setControllerType(ControllerType.CRUD);
 		setOperation(Action.UPDATE);
 		updateBefore();
 		onUpdate();
@@ -413,6 +416,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String updatePost() {
+		getControllerConfig().setControllerType(ControllerType.CRUD);
 		setOperation(Action.UPDATE_POST);
 		updatePostBefore();
 		controlResultForward();
@@ -1050,6 +1054,80 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			}
 		} else {
 			controlResultForward();
+		}
+
+		prepareAfter();
+		return getResultName();
+	}
+
+	@SkipValidation
+	@ResetSession(before = true)
+	public String select() {
+		getControllerConfig().setControllerType(ControllerType.SELECT);
+		prepareBefore();
+		onPrepare();
+		showButtons(Action.PREPARE);
+
+		setResultName(Forward.SUCCESS);
+		final String selectFormKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_FORM;
+		final String selectTableKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_TABLE;
+		if (isBack()) {
+			setEntity((ENTITY) getSessionAttribute(selectFormKey));
+			setEntities((List<ENTITY>) getSessionAttribute(selectTableKey));
+			return read();
+		} else {
+			getSession().removeAttribute(selectFormKey);
+			getSession().removeAttribute(selectTableKey);
+		}
+		controlResultForward();
+
+		prepareAfter();
+		return getResultName();
+	}
+
+	@SkipValidation
+	@ResetSession(before = true)
+	public String report() {
+		getControllerConfig().setControllerType(ControllerType.REPORT);
+		prepareBefore();
+		onPrepare();
+		showButtons(Action.PREPARE);
+
+		setResultName(Forward.SUCCESS);
+		final String selectFormKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_FORM;
+		final String selectTableKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_TABLE;
+		if (isBack()) {
+			setEntity((ENTITY) getSessionAttribute(selectFormKey));
+			setEntities((List<ENTITY>) getSessionAttribute(selectTableKey));
+			return read();
+		} else {
+			getSession().removeAttribute(selectFormKey);
+			getSession().removeAttribute(selectTableKey);
+		}
+		controlResultForward();
+
+		prepareAfter();
+		return getResultName();
+	}
+
+	@SkipValidation
+	@ResetSession(before = true)
+	public String tabular() {
+		getControllerConfig().setControllerType(ControllerType.TABULAR);
+		prepareBefore();
+		onPrepare();
+		showButtons(Action.PREPARE);
+
+		setResultName(Forward.SUCCESS);
+		if (isAjax()) {
+			setResultForward(getControllerConfig().getControllerName().concat(Action.URI.READ_AJAX));
+			setResultName(Forward.READ);
+		} else {
+			return read();
 		}
 
 		prepareAfter();

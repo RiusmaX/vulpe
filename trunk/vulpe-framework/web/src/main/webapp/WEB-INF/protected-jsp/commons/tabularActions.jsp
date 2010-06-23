@@ -33,7 +33,7 @@
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.refresh"
 	elementId="vulpeButtonPrepare_${controllerConfig.formName}"
-	action="${controllerConfig.controllerName}/prepare/ajax"
+	action="${controllerConfig.controllerName}/tabular/ajax"
 	helpKey="vulpe.help.refresh"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"

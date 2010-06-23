@@ -82,7 +82,7 @@
 	<c:set var="style" value="display: none;" />
 </c:if> 
 <c:set var="action"
-	value="${controllerConfig.ownerController}/prepare/ajax${operation == 'update' || operation == 'updatePost' ? '?back=true' : ''}" /> 
+	value="${controllerConfig.ownerController}/select/ajax${operation == 'update' || operation == 'updatePost' ? '?back=true' : ''}" /> 
 <v:action
 	validate="false" style="${style}" labelKey="vulpe.label.prepare"
 	elementId="vulpeButtonPrepare_${controllerConfig.formName}"

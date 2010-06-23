@@ -30,7 +30,7 @@
 </c:if> 
 <v:action validate="false" layer="${popup ? popupKey : ''}" style="${style}"
 	labelKey="vulpe.label.create" elementId="vulpeButtonCreate_${controllerConfig.formName}"
-	action="${controllerConfig.moduleName}/${controllerConfig.simpleControllerName}/crud/create/ajax"
+	action="${controllerConfig.controllerName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${controllerConfig.formName}%27)" helpKey="vulpe.help.create"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}" showButtonIcon="${vulpeShowButtonIcon}"

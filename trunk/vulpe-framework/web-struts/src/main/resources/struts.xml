@@ -247,112 +247,12 @@
 			</result>
 		</action>
 
-		<!-- Selection -->
-		<action name="*/*/select/*" class="{1}.{2}Select" method="{3}">
+		<action name="*/*/*" class="{1}.{2}Controller" method="{3}">
 			<result name="success">${resultForward}</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
 		</action>
 
-		<action name="*/*/select/*/ajax" class="{1}.{2}Select" method="{3}">
+		<action name="*/*/*/ajax" class="{1}.{2}Controller" method="{3}">
 			<result name="success">${resultForward}</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<!-- Report -->
-		<action name="*/*/report/*" class="{1}.{2}Report" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="*/*/report/*/ajax" class="{1}.{2}Report" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="saveParams">true</param>
-			</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<!-- CRUD -->
-		<action name="*/*/crud/*" class="{1}.{2}CRUD" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<action name="*/*/crud/*/ajax" class="{1}.{2}CRUD" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="sendParams">true</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax,back=true</param>
-			</result>
-			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
-			</result>
-		</action>
-
-		<!-- Tabular -->
-		<action name="*/*/tabular/*" class="{1}.{2}Tabular" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax</param>
-			</result>
-		</action>
-
-		<action name="*/*/tabular/*/ajax" class="{1}.{2}Tabular" method="{3}">
-			<result name="success">${resultForward}</result>
-			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
-				<param name="clearParams">true</param>
-				<param name="noClearParamNames">ajax</param>
-			</result>
 		</action>
 
 	</package>

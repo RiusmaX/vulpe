@@ -35,7 +35,7 @@ public @interface Controller {
 	/**
 	 * Type of logic
 	 */
-	ControllerType controllerType();
+	ControllerType controllerType() default ControllerType.NONE;
 
 	/**
 	 * Service interface
