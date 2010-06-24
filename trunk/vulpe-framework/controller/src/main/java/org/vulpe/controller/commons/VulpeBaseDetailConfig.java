@@ -25,7 +25,7 @@ import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.view.tags.Functions;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "rawtypes" })
 public class VulpeBaseDetailConfig implements Serializable {
 
 	private String name;
@@ -125,9 +125,9 @@ public class VulpeBaseDetailConfig implements Serializable {
 			setSimpleName();
 		}
 
-		this.viewPath = config.getViewPath().substring(0,
-				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/").concat(
-				getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
+		this.viewPath = config.getViewPath()
+				.substring(0, StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/")
+				.concat(getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
 
 		if (StringUtils.isEmpty(getTitleKey()) && StringUtils.isNotEmpty(getPropertyName())) {
 			setTitleKey(config.getTitleKey().concat(".").concat(getBaseName()));

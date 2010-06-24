@@ -27,12 +27,10 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-public class BigDecimalConverter extends AbstractVulpeBaseTypeConverter implements
-		TypeConverter {
-	private static final Logger LOG = Logger
-			.getLogger(BigDecimalConverter.class);
+@SuppressWarnings("rawtypes")
+public class BigDecimalConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
+	private static final Logger LOG = Logger.getLogger(BigDecimalConverter.class);
 
-	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			final DecimalFormat valueFormat = new DecimalFormat("#,##0.00",
@@ -50,9 +48,8 @@ public class BigDecimalConverter extends AbstractVulpeBaseTypeConverter implemen
 				return value;
 			}
 		} catch (Exception e) {
-			LOG.error("Erro ao converter valor decimal: " + value);
-			throw new TypeConversionException(
-					"Erro ao converter valor decimal: " + value, e);
+			LOG.error("Error on convert decimal value: " + value);
+			throw new TypeConversionException("Error on convert decimal value: " + value, e);
 		}
 		return null;
 	}

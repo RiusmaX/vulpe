@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings("serial")
@@ -44,12 +44,11 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
 		String result = null;
@@ -68,7 +67,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -83,35 +82,29 @@ public class VulpeExceptionMappingInterceptor extends
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {
 			action.addActionMessageKey(newException.getMessage());
-			request.setAttribute(VulpeConstants.ON_HIDE_MESSAGES,
-					VulpeConstants.JS_REDIRECT_LOGIN);
+			request.setAttribute(VulpeConstants.ON_HIDE_MESSAGES, VulpeConstants.JS_REDIRECT_LOGIN);
 		} else if (newException instanceof VulpeAuthorizationException) {
 			action.addActionMessageKey(newException.getMessage());
 		} else if (newException instanceof VulpeSystemException) {
 			final VulpeSystemException sException = (VulpeSystemException) newException;
 			if (sException.getArgs() != null && sException.getArgs().length > 0) {
-				action.addActionMessage(newException.getMessage(), sException
-						.getArgs());
+				action.addActionMessage(newException.getMessage(), sException.getArgs());
 			} else {
-				action.addActionMessage(newException.getMessage(), (sException
-						.getCause() == null
-						|| StringUtils.isEmpty(sException.getCause()
-								.getMessage()) ? "desconhecido" : sException
-						.getCause().getMessage()));
+				action.addActionMessage(newException.getMessage(), (sException.getCause() == null
+						|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "desconhecido"
+						: sException.getCause().getMessage()));
 			}
 		} else if (newException instanceof VulpeApplicationException) {
 			final VulpeApplicationException sException = (VulpeApplicationException) newException;
-			action.addActionMessage(newException.getMessage(), sException
-					.getArgs());
+			action.addActionMessage(newException.getMessage(), sException.getArgs());
 		} else {
 			final String key = newException.getClass().getName().toLowerCase();
 			String value = action.getText(key);
 			if (StringUtils.isBlank(value) || value.equals(key)) {
 				String msg = newException.getMessage();
 				final MessageFormat msgFormat = buildMessageFormat(
-						TextParseUtil.translateVariables(msg, invocation
-								.getStack()), invocation.getInvocationContext()
-								.getLocale());
+						TextParseUtil.translateVariables(msg, invocation.getStack()), invocation
+								.getInvocationContext().getLocale());
 				msg = msgFormat.format(null);
 				value = action.getText(msg);
 				if (StringUtils.isBlank(value) || value.equals(msg)) {
@@ -132,25 +125,23 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 *
+	 * 
 	 * @param exception
 	 * @return
 	 */
 	protected Throwable getException(final Throwable exception) {
 		final Throwable newException = exception;
 		return newException.getCause() instanceof InvocationTargetException ? getException(((InvocationTargetException) newException
-				.getCause()).getTargetException())
-				: newException;
+				.getCause()).getTargetException()) : newException;
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return
 	 */
-	protected MessageFormat buildMessageFormat(final String pattern,
-			final Locale locale) {
+	protected MessageFormat buildMessageFormat(final String pattern, final Locale locale) {
 		return new MessageFormat(pattern, locale);
 	}
 }

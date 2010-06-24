@@ -32,7 +32,7 @@ import com.opensymphony.xwork2.util.CompoundRoot;
 import com.opensymphony.xwork2.util.OgnlUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 public class VulpeChainingInterceptor extends ChainingInterceptor {
 
 	/*
@@ -59,7 +59,11 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 						while (iterator.hasNext()) {
 							final Object obj = iterator.next();
 							if (obj instanceof ValidationAware) {
-								new OgnlUtil().copy(obj, invocation.getAction(), ctxMap, null,
+								new OgnlUtil().copy(
+										obj,
+										invocation.getAction(),
+										ctxMap,
+										null,
 										Arrays.asList(new String[] { "actionErrors",
 												"actionMessages", "fieldErrors" }));
 							}

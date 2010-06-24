@@ -21,12 +21,11 @@ import ognl.DefaultTypeConverter;
 
 import org.apache.commons.beanutils.Converter;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public abstract class AbstractVulpeBaseTypeConverter extends DefaultTypeConverter implements
 		Converter {
 
-	public Object convertValue(final Map context, final Object value,
-			final Class toClass) {
+	public Object convertValue(final Map context, final Object value, final Class toClass) {
 		if (value != null && value.getClass().isArray()) {
 			final Object values[] = (Object[]) value;
 			if (values.length == 1) {

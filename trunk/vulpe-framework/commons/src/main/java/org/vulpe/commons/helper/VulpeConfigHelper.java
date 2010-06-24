@@ -26,7 +26,7 @@ import org.vulpe.config.annotations.VulpeProject;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @since 1.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VulpeConfigHelper {
 
 	private VulpeConfigHelper() {

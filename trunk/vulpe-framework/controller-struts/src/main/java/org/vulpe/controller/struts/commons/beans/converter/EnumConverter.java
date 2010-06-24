@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
+@SuppressWarnings("rawtypes")
 public class EnumConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
 	private static final Logger LOG = Logger.getLogger(EnumConverter.class);
@@ -72,9 +73,8 @@ public class EnumConverter extends AbstractVulpeBaseTypeConverter implements Typ
 				return values;
 			}
 		} catch (Exception e) {
-			LOG.error("Erro ao converter enumeração: " + value);
-			throw new TypeConversionException("Erro ao converter enumeração: "
-					+ value, e);
+			LOG.error("Error on convert enum: " + value);
+			throw new TypeConversionException("Error on convert enum: " + value, e);
 		}
 		return null;
 	}

@@ -42,6 +42,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
  * parameter is present and its visible counterpart is not, set a new request
  * parameter to an empty Sting.
  */
+@SuppressWarnings("rawtypes")
 public class MultiselectInterceptor extends AbstractInterceptor {
 	private static final long serialVersionUID = 1L;
 

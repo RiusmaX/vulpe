@@ -49,6 +49,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  *
  */
+@SuppressWarnings("rawtypes")
 public class ControllerUtil {
 
 	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
@@ -123,7 +124,6 @@ public class ControllerUtil {
 	 *            indicate if marked items must be removed or ignored on model
 	 *            layer.
 	 */
-	@SuppressWarnings("unchecked")
 	public void despiseItens(final Collection<VulpeBaseEntity<?>> beans,
 			final String despiseFields[], final boolean ignoreExclud) {
 		if (beans == null) {

@@ -38,6 +38,7 @@ import org.vulpe.security.model.entity.SecureResource;
  * @since 1.0
  * 
  */
+@SuppressWarnings("rawtypes")
 public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		FilterInvocationSecurityMetadataSource {
 
@@ -80,7 +81,6 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 	 * @seeorg.springframework.security.intercept.ObjectDefinitionSource#
 	 * getConfigAttributeDefinitions()
 	 */
-	@SuppressWarnings("unchecked")
 	public Collection getConfigAttributeDefinitions() {
 		return null;
 	}

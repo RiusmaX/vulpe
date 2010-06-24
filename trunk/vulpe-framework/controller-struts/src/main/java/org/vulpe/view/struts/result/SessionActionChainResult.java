@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ActionChainResult;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 public class SessionActionChainResult extends ActionChainResult {
 	private boolean saveParams;
 	private boolean sendParams;
@@ -80,8 +80,8 @@ public class SessionActionChainResult extends ActionChainResult {
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 						.getAction();
-				name = owner ? action.getControllerConfig().getOwnerController()
-						: action.getControllerConfig().getControllerName();
+				name = owner ? action.getControllerConfig().getOwnerController() : action
+						.getControllerConfig().getControllerName();
 			}
 		}
 		return name;
@@ -89,14 +89,11 @@ public class SessionActionChainResult extends ActionChainResult {
 
 	@Override
 	public void execute(final ActionInvocation invocation) throws Exception {
-		final Map requestParams = invocation.getInvocationContext()
-				.getParameters();
-		final Map sessionParams = invocation.getInvocationContext()
-				.getSession();
+		final Map requestParams = invocation.getInvocationContext().getParameters();
+		final Map sessionParams = invocation.getInvocationContext().getSession();
 		String name;
 		if (isClearParams()) {
-			ActionContext.getContext()
-					.put(VulpeConstants.CLEAR_PARAMS, Boolean.TRUE);
+			ActionContext.getContext().put(VulpeConstants.CLEAR_PARAMS, Boolean.TRUE);
 		}
 
 		Map params = null;
@@ -108,12 +105,10 @@ public class SessionActionChainResult extends ActionChainResult {
 					if (paramNames[i].contains("=")) {
 						final String paramName[] = paramNames[i].split("=");
 						final Object value = requestParams.get(paramName[0]);
-						params.put(paramName[0],
-								(value == null ? new String[] { paramName[1] }
-										: value));
+						params.put(paramName[0], (value == null ? new String[] { paramName[1] }
+								: value));
 					} else {
-						params.put(paramNames[i], requestParams
-								.get(paramNames[i]));
+						params.put(paramNames[i], requestParams.get(paramNames[i]));
 					}
 				}
 			}

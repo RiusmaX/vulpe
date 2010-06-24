@@ -22,13 +22,12 @@ import java.util.Map;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
-
 /**
  * Utility class to control objects in cache.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VulpeCacheHelper {
 	private static final VulpeCacheHelper INSTANCE = new VulpeCacheHelper();
 

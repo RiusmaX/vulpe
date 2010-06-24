@@ -46,8 +46,8 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 
 import com.thoughtworks.xstream.XStream;
 
-@NamedQueries( { @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
-@SuppressWarnings("serial")
+@NamedQueries({ @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
+@SuppressWarnings({ "serial", "rawtypes" })
 @Entity
 @MappedSuperclass
 @IgnoreAudit
@@ -138,7 +138,6 @@ public class AuditOccurrence extends AbstractVulpeBaseEntityImpl<Long> {
 		this.username = username;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Transient
 	public VulpeBaseEntity fromXMLHistory() {
 		final XStream xstream = new XStream();

@@ -28,6 +28,7 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+@SuppressWarnings("rawtypes")
 public class XMLDateConversor implements Converter {
 
 	private static final Logger LOG = Logger.getLogger(XMLDateConversor.class);
@@ -38,7 +39,6 @@ public class XMLDateConversor implements Converter {
 		super();
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean canConvert(final Class clazz) {
 		return (clazz == Date.class || clazz == java.sql.Date.class || clazz == java.sql.Timestamp.class);
 	}

@@ -37,7 +37,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @TransactionType
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeBaseCRUDManagerImpl<ENTITY_CLASS extends VulpeBaseEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeBaseCRUDDAO<ENTITY_CLASS, ENTITY_ID>>
 		implements VulpeBaseCRUDManager<ENTITY_CLASS, ENTITY_ID, ENTITY_DAO> {
 
@@ -52,7 +52,8 @@ public class VulpeBaseCRUDManagerImpl<ENTITY_CLASS extends VulpeBaseEntity<ENTIT
 	 */
 	protected Class<ENTITY_DAO> getDaoClass() {
 		if (daoClass == null) {
-			daoClass = (Class<ENTITY_DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(), 2);
+			daoClass = (Class<ENTITY_DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(),
+					2);
 		}
 		return daoClass;
 	}

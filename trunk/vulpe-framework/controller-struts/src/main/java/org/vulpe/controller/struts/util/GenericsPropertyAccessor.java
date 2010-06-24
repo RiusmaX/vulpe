@@ -34,14 +34,14 @@ import ognl.OgnlRuntime;
 import com.opensymphony.xwork2.util.OgnlValueStack.ObjectAccessor;
 
 /**
- * Classe utilizada para corrigir problemas ao setar valores em tipos genericos.
- *
+ * Utility class to solve problems on set generic types.
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
+@SuppressWarnings("rawtypes")
 public class GenericsPropertyAccessor extends ObjectAccessor {
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void setProperty(final Map context, final Object target, final Object oname,
 			final Object value) throws OgnlException {
 		Object newValue = value;
@@ -50,31 +50,27 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 
 			Method method = null;
 			try {
-				method = OgnlRuntime.getSetMethod(ognlContext, target
-						.getClass(), oname.toString());
+				method = OgnlRuntime.getSetMethod(ognlContext, target.getClass(), oname.toString());
 			} catch (IntrospectionException e) {
 				throw new OgnlException(oname.toString(), e);
 			}
-			// verifica se o parametro do metodo set é do tipo Generics
 			if (method != null
-					&& OgnlRuntime.isMethodAccessible(ognlContext, target,
-							method, oname.toString())
-					&& !method.getParameterTypes()[0].equals(method
-							.getGenericParameterTypes()[0])) {
-				newValue = getValue(ognlContext, target, oname.toString(),
-						method, method.getGenericParameterTypes()[0], newValue);
-				OgnlRuntime.callAppropriateMethod(ognlContext, target, target,
-						method.getName(), oname.toString(), Collections
-								.nCopies(1, method), new Object[] { newValue });
+					&& OgnlRuntime
+							.isMethodAccessible(ognlContext, target, method, oname.toString())
+					&& !method.getParameterTypes()[0].equals(method.getGenericParameterTypes()[0])) {
+				newValue = getValue(ognlContext, target, oname.toString(), method,
+						method.getGenericParameterTypes()[0], newValue);
+				OgnlRuntime
+						.callAppropriateMethod(ognlContext, target, target, method.getName(),
+								oname.toString(), Collections.nCopies(1, method),
+								new Object[] { newValue });
 				return;
 			}
 
-			final Field field = OgnlRuntime.getField(target.getClass(), oname
-					.toString());
+			final Field field = OgnlRuntime.getField(target.getClass(), oname.toString());
 			if (field != null
 					&& (!field.getType().equals(field.getGenericType()) || (method != null && !method
-							.getGenericParameterTypes()[0].equals(field
-							.getGenericType())))) {
+							.getGenericParameterTypes()[0].equals(field.getGenericType())))) {
 				boolean fieldAccess = true;
 				synchronized (field) {
 					if (!field.isAccessible()) {
@@ -82,15 +78,13 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 						fieldAccess = false;
 					}
 					try {
-						newValue = getValue(ognlContext, target, oname
-								.toString(), field, field.getGenericType(),
-								newValue);
+						newValue = getValue(ognlContext, target, oname.toString(), field,
+								field.getGenericType(), newValue);
 						try {
 							field.set(target, newValue);
 							return;
 						} catch (Exception e) {
-							throw new NoSuchPropertyException(target, oname
-									.toString(), e);
+							throw new NoSuchPropertyException(target, oname.toString(), e);
 						}
 					} finally {
 						if (!fieldAccess) {
@@ -104,12 +98,11 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 		super.setProperty(context, target, oname, newValue);
 	}
 
-	protected Object getValue(final OgnlContext ognlContext,
-			final Object target, final String name, final Member member,
-			final Type type, final Object value) {
-		final DeclaredType declaredType = VulpeReflectUtil.getInstance()
-				.getDeclaredType(target.getClass(), type);
-		return OgnlRuntime.getConvertedType(ognlContext, target, member, name,
-				value, declaredType.getType());
+	protected Object getValue(final OgnlContext ognlContext, final Object target,
+			final String name, final Member member, final Type type, final Object value) {
+		final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
+				target.getClass(), type);
+		return OgnlRuntime.getConvertedType(ognlContext, target, member, name, value,
+				declaredType.getType());
 	}
 }

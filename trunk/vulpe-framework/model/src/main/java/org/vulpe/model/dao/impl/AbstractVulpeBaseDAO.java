@@ -36,7 +36,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * 
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		implements VulpeBaseCRUDDAO<ENTITY, ID> {
 

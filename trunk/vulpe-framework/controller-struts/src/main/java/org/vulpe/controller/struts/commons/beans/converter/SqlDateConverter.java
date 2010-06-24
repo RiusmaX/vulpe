@@ -24,18 +24,16 @@ import org.vulpe.commons.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements
-		TypeConverter {
+@SuppressWarnings("rawtypes")
+public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
 	private static final Logger LOG = Logger.getLogger(SqlDateConverter.class);
 
-	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
 				if (!value.toString().equals("")) {
-					final java.util.Date date = VulpeDateUtil.convertStringToDate(value
-							.toString());
+					final java.util.Date date = VulpeDateUtil.convertStringToDate(value.toString());
 					return new Date(date.getTime());
 				}
 			} else if (value instanceof Date && String.class.equals(type)) {
@@ -44,9 +42,8 @@ public class SqlDateConverter extends AbstractVulpeBaseTypeConverter implements
 				return (Date) value;
 			}
 		} catch (Exception e) {
-			LOG.error("Erro ao converter data: " + value);
-			throw new TypeConversionException("Erro ao converter data: "
-					+ value, e);
+			LOG.error("Error on convert date: " + value);
+			throw new TypeConversionException("Error on convert date: " + value, e);
 		}
 		return null;
 	}

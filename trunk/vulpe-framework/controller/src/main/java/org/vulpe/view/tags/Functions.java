@@ -47,7 +47,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * 
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Functions {
 
 	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
@@ -184,10 +184,12 @@ public class Functions {
 		if (detailConfig != null) {
 			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("_item");
 		}
-		return eval(pageContext, "${".concat(
-				(property.contains("entity.") || property.contains("entities")
-						|| property.contains("].") ? property : baseName.concat(property))).concat(
-				"}"));
+		return eval(
+				pageContext,
+				"${".concat(
+						(property.contains("entity.") || property.contains("entities")
+								|| property.contains("].") ? property : baseName.concat(property)))
+						.concat("}"));
 	}
 
 	/**

@@ -32,7 +32,7 @@ import org.vulpe.view.tags.Functions;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked", "rawtypes" })
 public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeBaseSimpleControllerConfig implements Serializable {
 	private final List<VulpeBaseDetailConfig> details;

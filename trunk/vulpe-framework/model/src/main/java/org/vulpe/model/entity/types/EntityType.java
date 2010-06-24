@@ -35,6 +35,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.Services;
 
+@SuppressWarnings("rawtypes")
 public class EntityType implements UserType, ParameterizedType {
 	/**
 	 * Returned Class
@@ -60,7 +61,6 @@ public class EntityType implements UserType, ParameterizedType {
 		return new int[] { type };
 	}
 
-	@SuppressWarnings("unchecked")
 	public Class returnedClass() {
 		return returnedClass;
 	}

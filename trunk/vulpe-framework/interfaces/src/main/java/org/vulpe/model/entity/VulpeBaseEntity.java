@@ -19,15 +19,15 @@ import java.io.Serializable;
 
 /**
  * Default entity Interface
- *
+ * 
  * @param <ID>
  *            Type of entity identifier
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:geraldo.matos@activethread.com.br">Geraldo Matos</a>
  */
-@SuppressWarnings("unchecked")
-public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends
-		Serializable, Comparable<VulpeBaseEntity<ID>>, Cloneable {
+@SuppressWarnings("rawtypes")
+public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends Serializable,
+		Comparable<VulpeBaseEntity<ID>>, Cloneable {
 	ID getId();
 
 	void setId(final ID id);
@@ -45,10 +45,10 @@ public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends
 	boolean isHistoryAuditable();
 
 	String toXMLAudit();
-	
+
 	String getLastUserUpdated();
-	
+
 	void setLastUserUpdated(final String username);
-	
+
 	VulpeBaseEntity<ID> clone();
 }

@@ -22,6 +22,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
 
+@SuppressWarnings("rawtypes")
 public class PagingWSConvert<BEAN extends VulpeBaseEntity<?>, BEANDELEGATE extends AbstractVulpeBaseEntityDelegate<?, ?>>
 		implements WSConvert<Paging<BEAN>, Paging<BEANDELEGATE>> {
 

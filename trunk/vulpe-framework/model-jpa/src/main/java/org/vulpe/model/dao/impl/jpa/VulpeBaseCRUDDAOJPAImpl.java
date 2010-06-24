@@ -49,7 +49,7 @@ import org.vulpe.model.entity.LogicEntity.Status;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPAImpl<ENTITY, ID> {
 
@@ -225,8 +225,9 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		int countParam = 0;
 		for (Field field : fields) {
-			if ((VulpeReflectUtil.getInstance().isAnnotationInField(Transient.class, entity.getClass(),
-					field.getName()) || Modifier.isTransient(field.getModifiers()))
+			if ((VulpeReflectUtil.getInstance().isAnnotationInField(Transient.class,
+					entity.getClass(), field.getName()) || Modifier.isTransient(field
+					.getModifiers()))
 					&& !VulpeReflectUtil.getInstance().isAnnotationInField(Param.class,
 							entity.getClass(), field.getName())) {
 				continue;
@@ -264,8 +265,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 			for (String name : params.keySet()) {
 				final Object value = params.get(name);
 				count++;
-				final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(Param.class,
-						entity.getClass(), name);
+				final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(
+						Param.class, entity.getClass(), name);
 				if (param == null) {
 					hql.append("obj.");
 					hql.append(name);
@@ -328,8 +329,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
-					getClass().getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
+					getClass(), getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}

@@ -35,6 +35,7 @@ import org.vulpe.model.services.Services;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
+@SuppressWarnings("rawtypes")
 public class VulpeServiceLocator {
 	/**
 	 * Returns VulpeServiceLocator instance
@@ -98,7 +99,7 @@ public class VulpeServiceLocator {
 	 * @param classe
 	 * @return
 	 */
-	@SuppressWarnings( { "unchecked", "unused" })
+	@SuppressWarnings("unused")
 	private String getEJBName(final Class classe) {
 		return VulpeConfigHelper.getProjectName().concat("/").concat(classe.getSimpleName())
 				.concat("/remote");
@@ -115,8 +116,8 @@ public class VulpeServiceLocator {
 	protected <T extends Services> Factory<T> getFactory(final Class<T> clazz) {
 		try {
 			if (!VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".factory"))) {
-				final FactoryClass factoryClass = VulpeReflectUtil.getInstance().getAnnotationInClass(
-						FactoryClass.class, clazz);
+				final FactoryClass factoryClass = VulpeReflectUtil.getInstance()
+						.getAnnotationInClass(FactoryClass.class, clazz);
 				final Factory<?> factory = VulpeFactoryLocator.getInstance().getFactory(
 						factoryClass.value());
 				VulpeCacheHelper.getInstance().put(clazz.getName().concat(".factory"), factory);

@@ -31,8 +31,8 @@ import org.vulpe.security.model.entity.UserRole;
  * @see {@link org.springframework.security.providers.AuthenticationProvider}
  * 
  */
-public class VulpeSecurityAuthenticationProvider implements
-		AuthenticationProvider {
+@SuppressWarnings("rawtypes")
+public class VulpeSecurityAuthenticationProvider implements AuthenticationProvider {
 
 	@Qualifier("UserAuthenticationService")
 	@Autowired
@@ -48,12 +48,10 @@ public class VulpeSecurityAuthenticationProvider implements
 			throws AuthenticationException {
 		AuthenticationResponse authResponse = null;
 		try {
-			authResponse = authenticationService.authenticateUser(
-					authentication.getPrincipal().toString(), authentication
-							.getCredentials().toString());
+			authResponse = authenticationService.authenticateUser(authentication.getPrincipal()
+					.toString(), authentication.getCredentials().toString());
 		} catch (VulpeSecurityException e) {
-			throw new BadCredentialsException(
-					"Exception occurred while executing service", e);
+			throw new BadCredentialsException("Exception occurred while executing service", e);
 		}
 		UserDetails user = null;
 		if (authResponse.getAuthStatus() == VulpeSecurityConstants.AUTHENTICATION_SUCCESS) {
@@ -63,18 +61,15 @@ public class VulpeSecurityAuthenticationProvider implements
 			final List<UserRole> userRoles = userObj.getUserRoles();
 			if (userRoles != null) {
 				for (UserRole userRole : userRoles) {
-					list.add(new GrantedAuthorityImpl(userRole.getRole()
-							.getName()));
+					list.add(new GrantedAuthorityImpl(userRole.getRole().getName()));
 				}
 			}
 
-			user = new org.springframework.security.core.userdetails.User(
-					authentication.getPrincipal().toString(), authentication
-							.getCredentials().toString(), true, true, true,
-					true, list);
+			user = new org.springframework.security.core.userdetails.User(authentication
+					.getPrincipal().toString(), authentication.getCredentials().toString(), true,
+					true, true, true, list);
 		} else {
-			throw new BadCredentialsException("Bad Credentials",
-					((Object) (user)));
+			throw new BadCredentialsException("Bad Credentials", ((Object) (user)));
 		}
 
 		final UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
@@ -90,10 +85,8 @@ public class VulpeSecurityAuthenticationProvider implements
 	 * org.springframework.security.providers.AuthenticationProvider#supports
 	 * (java.lang .Class)
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean supports(final Class authentication) {
-		return UsernamePasswordAuthenticationToken.class
-				.isAssignableFrom(authentication);
+		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	/**
@@ -102,8 +95,7 @@ public class VulpeSecurityAuthenticationProvider implements
 	 * @param authService
 	 *            The authService to set.
 	 */
-	public void setAuthenticationService(
-			final UserAuthenticationService authService) {
+	public void setAuthenticationService(final UserAuthenticationService authService) {
 		this.authenticationService = authService;
 	}
 

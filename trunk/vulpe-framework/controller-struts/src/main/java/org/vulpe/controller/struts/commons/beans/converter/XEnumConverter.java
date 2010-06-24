@@ -16,12 +16,14 @@
 package org.vulpe.controller.struts.commons.beans.converter;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
+@SuppressWarnings("rawtypes")
 public class XEnumConverter extends StrutsTypeConverter {
 
 	@SuppressWarnings("unchecked")
@@ -37,7 +39,6 @@ public class XEnumConverter extends StrutsTypeConverter {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public String convertToString(final Map context, final Object obj) {
 		final List list = (List) obj;

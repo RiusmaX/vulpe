@@ -42,6 +42,7 @@ import com.opensymphony.xwork2.util.ObjectTypeDeterminerFactory;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
+@SuppressWarnings("rawtypes")
 public class VulpeFilterDispatcher extends FilterDispatcher {
 
 	/*
@@ -50,7 +51,6 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 	 * @seeorg.apache.struts2.dispatcher.FilterDispatcher#init(javax.servlet.
 	 * FilterConfig)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void init(final FilterConfig filterConfig) throws ServletException {
 		super.init(filterConfig);

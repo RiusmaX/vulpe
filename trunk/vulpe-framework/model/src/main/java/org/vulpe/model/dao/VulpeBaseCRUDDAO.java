@@ -27,7 +27,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public interface VulpeBaseCRUDDAO<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeBaseDAO {
 	/**

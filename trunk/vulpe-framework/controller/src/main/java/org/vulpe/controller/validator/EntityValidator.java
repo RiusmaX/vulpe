@@ -28,7 +28,7 @@ import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
  * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class EntityValidator {
 
 	/**

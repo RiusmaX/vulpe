@@ -42,6 +42,7 @@ import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
+@SuppressWarnings("rawtypes")
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
 	 * Returns StrutsReportUtil instance

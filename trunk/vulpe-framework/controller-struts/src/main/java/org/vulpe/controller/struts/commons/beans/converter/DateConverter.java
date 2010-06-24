@@ -24,11 +24,11 @@ import org.vulpe.commons.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
+@SuppressWarnings("rawtypes")
 public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
 	private static final Logger LOG = Logger.getLogger(DateConverter.class);
 
-	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
@@ -41,9 +41,8 @@ public class DateConverter extends AbstractVulpeBaseTypeConverter implements Typ
 				return (Date) value;
 			}
 		} catch (Exception e) {
-			LOG.error("Erro ao converter data: " + value);
-			throw new TypeConversionException("Erro ao converter data: "
-					+ value, e);
+			LOG.error("Error on convert date: " + value);
+			throw new TypeConversionException("Erroe on convert date: " + value, e);
 		}
 		return null;
 	}

@@ -35,6 +35,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * Utility class to send mail.
  */
+@SuppressWarnings("rawtypes")
 public final class VulpeEmailUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeEmailUtil.class.getName());
@@ -168,7 +169,6 @@ public final class VulpeEmailUtil {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public String[] getRecipients(final List recipients, final String property) {
 		String[] address = new String[recipients.size()];
 		for (int i = 0; i < recipients.size(); i++) {

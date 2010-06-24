@@ -31,7 +31,7 @@ import org.vulpe.config.annotations.VulpeDomains;
 
 import com.thoughtworks.xstream.XStream;
 
-@SuppressWarnings( { "unchecked", "serial" })
+@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comparable> implements
 		VulpeBaseEntity<ID> {
 

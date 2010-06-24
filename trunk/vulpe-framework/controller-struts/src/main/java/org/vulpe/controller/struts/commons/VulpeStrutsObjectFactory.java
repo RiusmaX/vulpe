@@ -28,8 +28,8 @@ import org.vulpe.controller.util.ControllerUtil;
 @SuppressWarnings("serial")
 public class VulpeStrutsObjectFactory extends StrutsObjectFactory {
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	@SuppressWarnings("unchecked")
 	public Class getClassInstance(final String className) throws ClassNotFoundException {
 		if (ControllerUtil.getServletContext() == null) {
 			return super.getClassInstance(className);

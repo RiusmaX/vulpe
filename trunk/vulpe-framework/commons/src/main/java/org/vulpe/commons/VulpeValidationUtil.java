@@ -25,6 +25,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * Utility class to validation.
  * 
  */
+@SuppressWarnings("rawtypes")
 public class VulpeValidationUtil {
 
 	/**
@@ -48,7 +49,6 @@ public class VulpeValidationUtil {
 	 * @param value
 	 * @return returns true if is not empty
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean isNotEmpty(final Object value) {
 		if (value == null) {
 			return false;

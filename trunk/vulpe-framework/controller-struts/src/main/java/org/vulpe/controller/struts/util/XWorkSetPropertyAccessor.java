@@ -33,9 +33,10 @@ import com.opensymphony.xwork2.util.XWorkConverter;
 
 /**
  * Classe utilizada para corrigir problemas ao realizar binding de Set's.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
+@SuppressWarnings("rawtypes")
 public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 
 	@Override
@@ -47,8 +48,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			final List list = getList(set);
 			final int index = ((Number) name).intValue();
 			OgnlContextState.updateCurrentPropertyPath(context, name);
-			final Class lastClass = (Class) context
-					.get(XWorkConverter.LAST_BEAN_CLASS_ACCESSED);
+			final Class lastClass = (Class) context.get(XWorkConverter.LAST_BEAN_CLASS_ACCESSED);
 			final String lastProperty = (String) context
 					.get(XWorkConverter.LAST_BEAN_PROPERTY_ACCESSED);
 
@@ -57,22 +57,19 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			}
 
 			Object result = null;
-			final Class beanClass = XWorkConverter.getInstance()
-					.getObjectTypeDeterminer().getElementClass(lastClass,
-							lastProperty, name);
+			final Class beanClass = XWorkConverter.getInstance().getObjectTypeDeterminer()
+					.getElementClass(lastClass, lastProperty, name);
 			if (OgnlContextState.isCreatingNullObjects(context)
 					&& XWorkConverter.getInstance().getObjectTypeDeterminer()
-							.shouldCreateIfNew(lastClass, lastProperty, target,
-									null, true)) {
+							.shouldCreateIfNew(lastClass, lastProperty, target, null, true)) {
 				boolean seted = false;
 				if (list.size() <= index) {
 					for (int i = list.size(); i < index; i++) {
 						list.add(null);
 					}
 					try {
-						final boolean added = set.add(result = ObjectFactory
-								.getObjectFactory().buildBean(beanClass,
-										context));
+						final boolean added = set.add(result = ObjectFactory.getObjectFactory()
+								.buildBean(beanClass, context));
 						if (added) {
 							list.add(index, result);
 							seted = true;
@@ -82,8 +79,9 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 					}
 				} else if (list.get(index) == null) {
 					try {
-						list.set(index, (result = ObjectFactory
-								.getObjectFactory().buildBean(beanClass,
+						list.set(
+								index,
+								(result = ObjectFactory.getObjectFactory().buildBean(beanClass,
 										context)));
 						seted = true;
 					} catch (Exception exc) {
@@ -133,8 +131,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			}
 			if (list == null) {
 				list = new ArrayList(set);
-				cache.add(new WeakReference<Object[]>(
-						new Object[] { set, list }));
+				cache.add(new WeakReference<Object[]>(new Object[] { set, list }));
 			}
 			return list;
 		} finally {
@@ -146,8 +143,8 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void setProperty(final Map context, final Object target,
-			final Object name, final Object value) throws OgnlException {
+	public void setProperty(final Map context, final Object target, final Object name,
+			final Object value) throws OgnlException {
 		if (target instanceof Set && name instanceof Number) {
 			final Set set = (Set) target;
 			final List list = getList(set);

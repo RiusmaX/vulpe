@@ -40,7 +40,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("rawtypes")
 public class GenericsNullHandler<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends InstantiatingNullHandler implements NullHandler {
 

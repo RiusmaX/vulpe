@@ -38,7 +38,7 @@ import org.vulpe.view.tags.Functions;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.XWorkConverter;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class StrutsFunctions extends Functions {
 
 	private static final Logger LOG = Logger.getLogger(StrutsFunctions.class.getName());
@@ -124,12 +124,15 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static String linkKey(final String key, final String contentType,
 			final String contentDisposition) throws JspException {
-		final String link = ServletActionContext.getRequest().getContextPath().concat("/").concat(
-				ControllerUtil.getInstance(ServletActionContext.getRequest())
+		final String link = ServletActionContext
+				.getRequest()
+				.getContextPath()
+				.concat("/")
+				.concat(ControllerUtil.getInstance(ServletActionContext.getRequest())
 						.getCurrentControllerName()).concat("/download.action?downloadKey=")
-				.concat(urlEncode(key)).concat("&downloadContentType=").concat(contentType).concat(
-						"&downloadContentDisposition=").concat(contentDisposition).concat(
-						"&access=").concat(String.valueOf(System.currentTimeMillis()));
+				.concat(urlEncode(key)).concat("&downloadContentType=").concat(contentType)
+				.concat("&downloadContentDisposition=").concat(contentDisposition)
+				.concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
 		return link;
 	}
 

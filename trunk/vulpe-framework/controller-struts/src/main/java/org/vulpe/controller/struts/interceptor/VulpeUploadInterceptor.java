@@ -39,19 +39,18 @@ import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
-@SuppressWarnings( { "unchecked", "serial" })
+@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
-	private static final Logger LOG = Logger
-			.getLogger(VulpeUploadInterceptor.class);
+	private static final Logger LOG = Logger.getLogger(VulpeUploadInterceptor.class);
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.apache.struts2.interceptor.FileUploadInterceptor#intercept(com.
 	 * opensymphony.xwork2.ActionInvocation)
 	 */
@@ -62,17 +61,15 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 				.get(ServletActionContext.HTTP_REQUEST);
 
 		// sets the files in the session to parameters.
-		List<Object[]> fileList = (List<Object[]>) actionContext.getSession()
-				.get(VulpeConstants.Upload.FILES);
+		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(
+				VulpeConstants.Upload.FILES);
 		if (fileList != null) {
 			for (Object[] object : fileList) {
 				final String inputName = (String) object[0];
 				if (!actionContext.getParameters().containsKey(inputName)) {
 					actionContext.getParameters().put(inputName, object[1]);
-					actionContext.getParameters().put(
-							inputName.concat("ContentType"), object[2]);
-					actionContext.getParameters().put(
-							inputName.concat("FileName"), object[3]);
+					actionContext.getParameters().put(inputName.concat("ContentType"), object[2]);
+					actionContext.getParameters().put(inputName.concat("FileName"), object[3]);
 				}
 			}
 			fileList.clear();
@@ -87,8 +84,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
 				LOG.debug(getTextMessage("struts.messages.bypass.request",
-						new Object[] { proxy.getNamespace(),
-								proxy.getActionName() }, ActionContext
+						new Object[] { proxy.getNamespace(), proxy.getActionName() }, ActionContext
 								.getContext().getLocale()));
 			}
 			return invocation.invoke();
@@ -103,8 +99,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 		final MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) request;
 		if (multiWrapper.hasErrors()) {
-			for (final Iterator errorIterator = multiWrapper.getErrors()
-					.iterator(); errorIterator.hasNext();) {
+			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator
+					.hasNext();) {
 				final String error = (String) errorIterator.next();
 				if (validation != null) {
 					validation.addActionError(error);
@@ -120,8 +116,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			final String inputName = (String) fpNames.nextElement();
 
 			// get the content type
-			final String[] contentType = multiWrapper
-					.getContentTypes(inputName);
+			final String[] contentType = multiWrapper.getContentTypes(inputName);
 
 			if (isNotEmpty(contentType)) {
 				// get the name of the file from the input tag
@@ -136,26 +131,20 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 						byte[][] bytes = new byte[files.length][];
 						for (int index = 0; index < files.length; index++) {
-							if (acceptFile(files[index], contentType[index],
-									inputName, validation, actionContext
-											.getLocale())) {
-								bytes[index] = FileUtils
-										.readFileToByteArray(files[index]);
+							if (acceptFile(files[index], contentType[index], inputName, validation,
+									actionContext.getLocale())) {
+								bytes[index] = FileUtils.readFileToByteArray(files[index]);
 							}
 						}
-						fileList.add(new Object[] { inputName, bytes,
-								contentType, fileName });
+						fileList.add(new Object[] { inputName, bytes, contentType, fileName });
 					}
 				} else {
 					LOG.error(getTextMessage("struts.messages.invalid.file",
-							new Object[] { inputName }, ActionContext
-									.getContext().getLocale()));
+							new Object[] { inputName }, ActionContext.getContext().getLocale()));
 				}
 			} else {
-				LOG.error(getTextMessage(
-						"struts.messages.invalid.content.type",
-						new Object[] { inputName }, ActionContext.getContext()
-								.getLocale()));
+				LOG.error(getTextMessage("struts.messages.invalid.content.type",
+						new Object[] { inputName }, ActionContext.getContext().getLocale()));
 			}
 		}
 
@@ -173,9 +162,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			final File[] file = multiWrapper.getFiles(inputValue);
 			for (int index = 0; index < file.length; index++) {
 				final File currentFile = file[index];
-				LOG.info(getTextMessage("struts.messages.removing.file",
-						new Object[] { inputValue, currentFile }, ActionContext
-								.getContext().getLocale()));
+				LOG.info(getTextMessage("struts.messages.removing.file", new Object[] { inputValue,
+						currentFile }, ActionContext.getContext().getLocale()));
 				if ((currentFile != null) && currentFile.isFile()) {
 					currentFile.delete();
 				}
@@ -186,7 +174,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param objArray
 	 * @return
 	 */
@@ -203,17 +191,16 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	protected static final String DEFAULT_MESSAGE = "no.message.found";
 
 	/**
-	 *
+	 * 
 	 * @param messageKey
 	 * @param args
 	 * @param locale
 	 * @return
 	 */
-	protected String getTextMessage(final String messageKey,
-			final Object[] args, final Locale locale) {
-		return args == null || args.length == 0 ? LocalizedTextUtil.findText(
-				this.getClass(), messageKey, locale) : LocalizedTextUtil
-				.findText(this.getClass(), messageKey, locale, DEFAULT_MESSAGE,
-						args);
+	protected String getTextMessage(final String messageKey, final Object[] args,
+			final Locale locale) {
+		return args == null || args.length == 0 ? LocalizedTextUtil.findText(this.getClass(),
+				messageKey, locale) : LocalizedTextUtil.findText(this.getClass(), messageKey,
+				locale, DEFAULT_MESSAGE, args);
 	}
 }

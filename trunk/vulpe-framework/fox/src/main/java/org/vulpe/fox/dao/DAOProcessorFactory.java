@@ -28,13 +28,12 @@ public class DAOProcessorFactory extends FreemarkerProcessorFactory {
 
 	protected AnnotationProcessor newProcessor(final URL url) {
 		return new FreemarkerProcessor(url) {
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings("rawtypes")
 			@Override
 			protected Collection<FreemarkerTransform> getTransforms() {
 				final Collection<FreemarkerTransform> list = super.getTransforms();
 				if (list != null && !list.isEmpty()) {
-					final FreemarkerTransform transform = (FreemarkerTransform) list
-							.toArray()[0];
+					final FreemarkerTransform transform = (FreemarkerTransform) list.toArray()[0];
 					final String namespace = transform.getTransformNamespace();
 					list.add(new ForAllDAOTransform(namespace));
 				}
