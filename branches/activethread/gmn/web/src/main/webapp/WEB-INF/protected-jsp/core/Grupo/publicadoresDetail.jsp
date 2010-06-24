@@ -16,14 +16,6 @@
 					required="true"
 				/>
 			</v:column>
-			<v:column labelKey="label.gmn.core.Grupo.crud.publicadores.congregacao" align="left">
-				<v:select property="congregacao"
-					items="Congregacao"
-					itemKey="id"
-					itemLabel="nome"
-					showBlank="true" autoLoad="true"
-				/>
-			</v:column>
 			<v:column labelKey="label.gmn.core.Grupo.crud.publicadores.usuario" align="left">
 				<v:selectPopup property="usuario"
 					identifier="id" description="name"
