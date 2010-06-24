@@ -2,7 +2,7 @@
 
 <div id="vulpeFrontend">
 	<div id="vulpeFrontendActions" class="vulpeActions">
-		<%--@include file="/WEB-INF/protected-jsp/commons/frontendActions.jsp" --%>
+		<%@include file="/WEB-INF/protected-jsp/commons/frontendActions.jsp"%>
 	</div>
 
 	<div id="vulpeFrontendBody">

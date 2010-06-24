@@ -15,13 +15,10 @@
  */
 package org.vulpe.security.controller;
 
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.Role;
@@ -36,7 +33,7 @@ public class RoleController extends VulpeStrutsController<Role, Long> {
 	@Override
 	protected void showButtons(final String method) {
 		super.showButtons(method);
-		hideButton(new BaseActionButtons[] { CREATE, UPDATE, DELETE });
+		hideButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
 	}
 
 }

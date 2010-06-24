@@ -15,10 +15,6 @@
  */
 package org.vulpe.audit.controller;
 
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
-import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE_POST;
-
 import java.util.List;
 
 import org.jfree.util.Log;
@@ -27,6 +23,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
+import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
@@ -36,15 +33,14 @@ import org.vulpe.exception.VulpeApplicationException;
 @Component("audit.OccurrenceController")
 @Controller(serviceClass = AuditServices.class, pageSize = 5)
 @SuppressWarnings("serial")
-public class OccurrenceController extends
-		VulpeStrutsController<AuditOccurrence, Long> {
+public class OccurrenceController extends VulpeStrutsController<AuditOccurrence, Long> {
 
 	private List<AuditOccurrence> childOccurrences = null;
 
 	@Override
 	public String update() {
 		final String update = super.update();
-		hideButton(new BaseActionButtons[] { UPDATE_POST, DELETE });
+		hideButtons(Button.UPDATE_POST, Button.DELETE);
 		return update;
 	}
 
@@ -52,9 +48,8 @@ public class OccurrenceController extends
 	protected void onUpdate() {
 		super.onUpdate();
 		try {
-			childOccurrences = getService(AuditServices.class)
-					.findByParentAuditOccurrence(
-							new AuditOccurrence(getEntity().getId()));
+			childOccurrences = getService(AuditServices.class).findByParentAuditOccurrence(
+					new AuditOccurrence(getEntity().getId()));
 		} catch (VulpeApplicationException e) {
 			Log.error(e);
 		}
@@ -71,14 +66,14 @@ public class OccurrenceController extends
 	@Override
 	public String prepare() {
 		final String prepare = super.prepare();
-		hideButton(CREATE);
+		hideButton(Button.CREATE);
 		return prepare;
 	}
 
 	@Override
 	public String read() {
 		final String read = super.read();
-		hideButton(CREATE);
+		hideButton(Button.CREATE);
 		return read;
 	}
 

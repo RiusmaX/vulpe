@@ -1,13 +1,11 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:set var="widthIcon"
-	value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
-<c:set var="heightIcon"
-	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
+<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
+<c:set var="heightIcon"	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 	
 <p>
-<c:set var="style" value="display: inline;" /> <c:if
-	test="${clearShow == false}">
-	<c:set var="style" value="display: none;" />
+<c:set var="style" value="display: none;" /> 
+<c:if test="${clearShow}">
+	<c:set var="style" value="display: inline;" />
 </c:if> 
 <v:action style="${style}" labelKey="vulpe.label.clear"
 	elementId="vulpeButtonClear_${controllerConfig.formName}"
@@ -17,8 +15,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" /> 
+<c:set var="style" value="display: none;" /> 
 <c:if test="${createShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 
@@ -33,8 +30,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" /> 
+<c:set var="style" value="display: none;" /> 
 <c:if test="${createPostShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 
@@ -47,8 +43,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" /> 
+<c:set var="style" value="display: none;" /> 
 <c:if test="${deleteShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if>
@@ -62,8 +57,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" /> 
+<c:set var="style" value="display: none;" /> 
 <c:if test="${updatePostShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 
@@ -76,13 +70,11 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: inline;" /> 
-<c:if test="${prepareShow == false}">
-	<c:set var="style" value="display: none;" />
+<c:set var="style" value="display: none;" /> 
+<c:if test="${prepareShow}">
+	<c:set var="style" value="display: inline;" />
 </c:if> 
-<c:set var="action"
-	value="${controllerConfig.ownerController}/select/ajax${operation == 'update' || operation == 'updatePost' ? '?back=true' : ''}" /> 
+<c:set var="action"	value="${controllerConfig.ownerController}/select/ajax${operation == 'update' || operation == 'updatePost' ? '?back=true' : ''}" /> 
 <v:action
 	validate="false" style="${style}" labelKey="vulpe.label.prepare"
 	elementId="vulpeButtonPrepare_${controllerConfig.formName}"
@@ -95,4 +87,5 @@
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
 <c:remove var="urlBack" scope="session" />
-<c:remove var="layerUrlBack" scope="session" /></p>
+<c:remove var="layerUrlBack" scope="session" />
+</p>

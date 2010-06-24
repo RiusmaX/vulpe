@@ -129,7 +129,20 @@ public class VulpeConstants {
 		public static final String ENTITIES = "entities";
 		public static final String SELECT_FORM = "_selectForm";
 		public static final String SELECT_TABLE = "_selectTable";
-		
+
+		public class Button {
+			public static final String CREATE = "createShow";
+			public static final String CREATE_POST = "createPostShow";
+			public static final String DELETE = "deleteShow";
+			public static final String UPDATE = "updateShow";
+			public static final String UPDATE_POST = "updatePostShow";
+			public static final String PREPARE = "prepareShow";
+			public static final String READ = "readShow";
+			public static final String REPORT = "reportShow";
+			public static final String CLEAR = "clearShow";
+			public static final String TABULAR_POST = "tabularPostShow";
+			public static final String ADD_DETAIL = "addDetailShow";
+		}
 
 		public class Validate {
 			public class Cardinality {
@@ -243,9 +256,6 @@ public class VulpeConstants {
 			public static final String TARGET_CONFIG = "targetConfig";
 			public static final String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
 			public static final String DETAIL_ITEM = "_item";
-
-			public static final String ADD_DETAIL_SHOW = "addDetailShow";
-			public static final String DELETE_SHOW = "deleteShow";
 		}
 
 		public class Logic {

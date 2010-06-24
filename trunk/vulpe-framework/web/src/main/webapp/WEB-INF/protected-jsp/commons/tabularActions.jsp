@@ -1,17 +1,12 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:set var="widthIcon"
-	value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
-<c:set var="heightIcon"
-	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
+<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
+<c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 
 <p>
-<c:set var="buttonEL"
-	value="${'${'}addDetailShow${targetConfig.name}${'}'}" /> 
-<c:set
-	var="button" value="${util:eval(pageContext, btEL)}" /> 
-<c:set
-	var="style" value="display: none;" /> 
-<c:if test="${bt}">
+<c:set var="buttonEL" value="${'${'}addDetailShow${targetConfig.name}${'}'}" /> 
+<c:set var="button" value="${util:eval(pageContext, btEL)}" /> 
+<c:set var="style" value="display: none;" /> 
+<c:if test="${button}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 
 <v:action validate="false" style="${style}"
@@ -25,8 +20,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" /> 
+<c:set var="style" value="display: none;" /> 
 <c:if test="${prepareShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 
@@ -40,8 +34,7 @@
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" /> 
-<c:set var="style"
-	value="display: none;" />
+<c:set var="style" value="display: none;" />
 <c:if test="${tabularPostShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if> 

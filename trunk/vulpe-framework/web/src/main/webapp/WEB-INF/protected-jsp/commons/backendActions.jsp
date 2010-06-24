@@ -1,9 +1,9 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 
 <p>
-	<c:set var="style" value="display: inline;"/>
-	<c:if test="${clearShow == false}">
-		<c:set var="style" value="display: none;"/>
+	<c:set var="style" value="display: none;"/>
+	<c:if test="${clearShow}">
+		<c:set var="style" value="display: inline;"/>
 	</c:if>
 	<v:action style="${style}" labelKey="vulpe.label.clear" elementId="vulpeButtonClear_${controllerConfig.formName}" javascript="document.forms['${controllerConfig.formName}'].reset();"/>
 
@@ -31,9 +31,9 @@
 	</c:if>
 	<v:action style="${style}" labelKey="vulpe.label.updatePost" elementId="vulpeButtonUpdatePost_${controllerConfig.formName}" action="${controllerConfig.controllerName}/updatePost" helpKey="vulpe.help.updatePost"/>
 
-	<c:set var="style" value="display: inline;"/>
-	<c:if test="${prepareShow == false}">
-		<c:set var="style" value="display: none;"/>
+	<c:set var="style" value="display: none;"/>
+	<c:if test="${prepareShow}">
+		<c:set var="style" value="display: inline;"/>
 	</c:if>
 	<v:action validate="false" style="${style}" labelKey="vulpe.label.prepare" elementId="vulpeButtonPrepare_${controllerConfig.formName}" action="${controllerConfig.controllerName}/prepare" helpKey="vulpe.help.prepare"/>
 

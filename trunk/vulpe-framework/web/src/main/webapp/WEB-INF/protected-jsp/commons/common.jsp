@@ -15,7 +15,6 @@ $(document).ready(function() {
 	<c:if test="${createShow}">
 		var buttonCreate = $("#vulpeButtonCreate_${controllerConfig.formName}");
 		if (buttonCreate) {
-			buttonCreate.${createShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){buttonCreate.click(); return false;});
 		}
 	</c:if>
@@ -23,7 +22,6 @@ $(document).ready(function() {
 	<c:if test="${createPostShow}">
 		var buttonCreatePost = $("#vulpeButtonCreatePost_${controllerConfig.formName}");
 		if (buttonCreatePost) {
-			buttonCreatePost.${createPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
 		}
 	</c:if>
@@ -31,7 +29,6 @@ $(document).ready(function() {
 	<c:if test="${updatePostShow}">
 		var buttonUpdatePost = $("#vulpeButtonUpdatePost_${controllerConfig.formName}");
 		if (buttonUpdatePost) {
-			buttonUpdatePost.${updatePostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
 		}
 	</c:if>
@@ -39,7 +36,6 @@ $(document).ready(function() {
 	<c:if test="${tabularPostShow}">
 		var buttonTabularPost = $("#vulpeButtonTabularPost_${controllerConfig.formName}");
 		if (buttonTabularPost) {
-			buttonTabularPost.${tabularPostShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
 		}
 	</c:if>
@@ -47,7 +43,6 @@ $(document).ready(function() {
 	<c:if test="${deleteShow}">
 		var buttonDelete = $("#vulpeButtonDelete_${controllerConfig.formName}");
 		if (buttonDelete) {
-			buttonDelete.${deleteShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
 		}
 	</c:if>
@@ -55,7 +50,6 @@ $(document).ready(function() {
 	<c:if test="${prepareShow}">
 		var buttonPrepare = $("#vulpeButtonPrepare_${controllerConfig.formName}");
 		if (buttonPrepare) {
-			buttonPrepare.${prepareShow ? 'show' : 'hide'}();
 			<c:if test="${controllerConfig.controllerType == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
@@ -72,7 +66,6 @@ $(document).ready(function() {
 	<c:if test="${readShow}">
 		var buttonRead = $("#vulpeButtonRead_${controllerConfig.formName}");
 		if (buttonRead) {
-			buttonRead.${readShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
 		}
 	</c:if>
@@ -80,7 +73,6 @@ $(document).ready(function() {
 	<c:if test="${clearShow}">
 		var buttonClear = $("#vulpeButtonClear_${controllerConfig.formName}");
 		if (buttonClear) {
-			buttonClear.${clearShow ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
 		}
 	</c:if>
@@ -90,7 +82,6 @@ $(document).ready(function() {
 	<c:if test="${buttonCreate_tabular}">
 		var buttonAddDetail_entities = $("#vulpeButtonAddDetail_${controllerConfig.formName}_entities");
 		if (buttonAddDetail_entities) {
-			buttonAddDetail_entities.${buttonCreate_tabular ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
 		}
 	</c:if>
@@ -102,7 +93,6 @@ $(document).ready(function() {
 		<c:if test="${buttonDetail}">
 		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${controllerConfig.formName}_${detail.baseName}");
 		if (buttonAddDetail_${detail.baseName}) {
-			buttonAddDetail_${detail.baseName}.${buttonDetail ? 'show' : 'hide'}();
 			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
 		}
 		</c:if>
