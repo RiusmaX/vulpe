@@ -249,10 +249,32 @@
 
 		<action name="*/*/*" class="{1}.{2}Controller" method="{3}">
 			<result name="success">${resultForward}</result>
+			<result name="create" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="update" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="read" type="chain">
+				<param name="actionName">${resultForward}</param>
+			</result>
 		</action>
 
 		<action name="*/*/*/ajax" class="{1}.{2}Controller" method="{3}">
 			<result name="success">${resultForward}</result>
+			<result name="create" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="update" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="read" type="chain">
+				<param name="actionName">${resultForward}</param>
+			</result>
 		</action>
 
 	</package>
