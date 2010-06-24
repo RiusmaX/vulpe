@@ -5,7 +5,7 @@
 	labelKey="label.gmn.publicacoes.Pedido.crud.publicador"
 	property="publicador"
 	identifier="id" description="nome"
-	action="/core/Publicador/select/prepare" popupId="publicadorSelectPopup"
+	action="/core/Publicador/select" popupId="publicadorSelectPopup"
 	popupProperties="publicador.id=id,publicador.nome=nome"
 	size="40" popupWidth="420px" required="true" autoComplete="true"
 />

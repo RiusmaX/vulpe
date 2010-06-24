@@ -1,7 +1,7 @@
 package br.com.activethread.gmn.publicacoes.model.entity;
 
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Like;

@@ -3,7 +3,7 @@ package br.com.activethread.gmn.ministerio.model.entity;
 import java.util.Date;
 
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 import org.vulpe.view.annotations.View;

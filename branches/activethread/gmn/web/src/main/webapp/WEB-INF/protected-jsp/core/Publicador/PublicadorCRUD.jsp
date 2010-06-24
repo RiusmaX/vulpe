@@ -8,9 +8,10 @@
 	maxlength="60"
 	required="true"
 />
-<v:radio
+<v:select
 	labelKey="label.gmn.core.Publicador.crud.sexo"
 	property="sexo"
+	showBlank="true" autoLoad="false"
 	required="true"
 />
 <v:select

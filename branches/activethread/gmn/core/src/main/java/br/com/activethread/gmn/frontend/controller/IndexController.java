@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
 import br.com.activethread.gmn.controller.ApplicationBaseSimpleController;
 

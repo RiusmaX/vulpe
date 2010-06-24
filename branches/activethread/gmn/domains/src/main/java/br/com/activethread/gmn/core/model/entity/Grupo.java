@@ -5,7 +5,7 @@ import java.util.List;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Like;
 import org.vulpe.model.annotations.db4o.OrderBy;

@@ -11,8 +11,17 @@
 				/>
 			</v:column>
 			<v:column labelKey="label.gmn.core.Grupo.crud.publicadores.sexo">
-				<v:select property="sexo" showBlank="true"
+				<v:select property="sexo"
+					showBlank="true" autoLoad="false"
 					required="true"
+				/>
+			</v:column>
+			<v:column labelKey="label.gmn.core.Grupo.crud.publicadores.congregacao" align="left">
+				<v:select property="congregacao"
+					items="Congregacao"
+					itemKey="id"
+					itemLabel="nome"
+					showBlank="true" autoLoad="true"
 				/>
 			</v:column>
 			<v:column labelKey="label.gmn.core.Grupo.crud.publicadores.usuario" align="left">

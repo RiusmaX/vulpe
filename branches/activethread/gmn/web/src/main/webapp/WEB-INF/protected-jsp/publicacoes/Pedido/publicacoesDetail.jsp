@@ -17,7 +17,7 @@
 					<td>
 						<v:selectPopup property="publicacao"
 							identifier="id" description="nome"
-							action="/publicacoes/Publicacao/select/prepare" popupId="publicacaoSelectPopup"
+							action="/publicacoes/Publicacao/select" popupId="publicacaoSelectPopup"
 							popupProperties="publicacao.id=id,publicacao.nome=nome"
 							size="30" popupWidth="420px" autoComplete="true" required="true"
 						/>

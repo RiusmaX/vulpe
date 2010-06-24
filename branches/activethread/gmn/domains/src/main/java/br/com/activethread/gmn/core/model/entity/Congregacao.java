@@ -5,7 +5,7 @@ import java.util.List;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
@@ -15,6 +15,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
 import org.vulpe.view.annotations.logic.crud.Detail;
+import org.vulpe.view.annotations.output.VulpeColumn;
 
 @CachedClass
 @CodeGenerator(controller = {
@@ -25,6 +26,7 @@ import org.vulpe.view.annotations.logic.crud.Detail;
 @SuppressWarnings("serial")
 public class Congregacao extends AbstractVulpeBaseEntityImpl<Long> {
 
+	@VulpeColumn(sortable = true)
 	@VulpeValidate(type = VulpeValidateType.STRING, minlength = 5, maxlength = 60)
 	@VulpeText(argument = true, size = 40, maxlength = 60, required = true)
 	private String nome;

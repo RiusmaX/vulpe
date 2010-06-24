@@ -10,7 +10,6 @@ import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
 
 import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
@@ -20,8 +19,8 @@ import br.com.activethread.gmn.publicacoes.model.services.PublicacoesServices;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publicacoes.PedidoCRUD")
 @SuppressWarnings("serial")
-@Controller(controllerType = ControllerType.CRUD, serviceClass = PublicacoesServices.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, cardinalityType = CardinalityType.ONE) })
-public class PedidoCRUDController extends VulpeStrutsController<Pedido, Long> {
+@Controller(serviceClass = PublicacoesServices.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, cardinalityType = CardinalityType.ONE) })
+public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 
 	@Override
 	protected void onCreate() {
