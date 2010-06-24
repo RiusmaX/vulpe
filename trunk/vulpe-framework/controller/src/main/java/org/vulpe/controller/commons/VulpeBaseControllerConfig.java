@@ -22,13 +22,12 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.view.tags.Functions;
 
 /**
  * Vulpe Controller Config implementation.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -43,18 +42,27 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 	public VulpeBaseControllerConfig(final Class<?> controllerClass,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
-				controllerClass));
+		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(
+				Controller.class, controllerClass));
 		setControllerName(getControllerUtil().getCurrentControllerName());
-		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(
-				controllerClass, 0);
-		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 1);
+		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance()
+				.getIndexClass(controllerClass, 0);
+		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance()
+				.getIndexClass(controllerClass, 1);
 		this.details = details;
+	}
 
+	public List<VulpeBaseDetailConfig> getDetails() {
+		return this.details;
+	}
+
+	public VulpeBaseDetailConfig getTabularConfig() {
 		if (getControllerType().equals(ControllerType.TABULAR)) {
 			final int newDetails = getController().tabularNewDetails();
-			final int startNewDetails = getController().tabularStartNewDetails();
-			final String[] despiseFields = getController().tabularDespiseFields();
+			final int startNewDetails = getController()
+					.tabularStartNewDetails();
+			final String[] despiseFields = getController()
+					.tabularDespiseFields();
 			String name = Action.ENTITIES;
 			String propertyName = name;
 			if (StringUtils.isNotBlank(getController().tabularName())) {
@@ -64,16 +72,9 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 			if (StringUtils.isNotBlank(getController().tabularPropertyName())) {
 				propertyName = getController().tabularPropertyName();
 			}
-			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails,
-					newDetails, despiseFields));
+			this.details.add(new VulpeBaseDetailConfig(name, propertyName,
+					startNewDetails, newDetails, despiseFields));
 		}
-	}
-
-	public List<VulpeBaseDetailConfig> getDetails() {
-		return this.details;
-	}
-
-	public VulpeBaseDetailConfig getTabularConfig() {
 		return getDetail(Action.ENTITIES);
 	}
 
@@ -100,8 +101,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 			return detailConfig;
 		}
 
-		final String name = Functions.clearChars(Functions.replaceSequence(detail, "[", "]", ""),
-				".");
+		final String name = Functions.clearChars(Functions.replaceSequence(
+				detail, "[", "]", ""), ".");
 		detailConfig = getDetail(name);
 		if (detailConfig != null) {
 			return detailConfig;
@@ -109,7 +110,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID ex
 
 		String propertyName = detail;
 		if (StringUtils.lastIndexOf(detail, '.') >= 0) {
-			propertyName = detail.substring(StringUtils.lastIndexOf(detail, '.') + 1);
+			propertyName = detail.substring(StringUtils
+					.lastIndexOf(detail, '.') + 1);
 		}
 		return getDetail(propertyName);
 	}

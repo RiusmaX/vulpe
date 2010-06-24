@@ -4,7 +4,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.util.focusFirst();
-<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && (controllerConfig.type == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (vulpeBackendMenuType == 'DROPPY' && (controllerConfig.type == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">
+<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && (controllerConfig.controllerType == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (vulpeBackendMenuType == 'DROPPY' && (controllerConfig.controllerType == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">
 	$("#nav").droppy();
 </c:if>
 <c:if test="${pageContext.request.locale ne 'en_US'}">
@@ -56,13 +56,13 @@ $(document).ready(function() {
 		var buttonPrepare = $("#vulpeButtonPrepare_${controllerConfig.formName}");
 		if (buttonPrepare) {
 			buttonPrepare.${prepareShow ? 'show' : 'hide'}();
-			<c:if test="${controllerConfig.type == 'CRUD'}">
+			<c:if test="${controllerConfig.controllerType == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
-			<c:if test="${controllerConfig.type == 'SELECT'}">
+			<c:if test="${controllerConfig.controllerType == 'SELECT'}">
 			<c:set var="prepare" value="Shift+del"/>
 			</c:if>
-			<c:if test="${controllerConfig.type == 'TABULAR'}">
+			<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
 			<c:set var="prepare" value="Ctrl+f9"/>
 			</c:if>
 			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});

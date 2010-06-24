@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;

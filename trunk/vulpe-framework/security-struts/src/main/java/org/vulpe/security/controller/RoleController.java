@@ -15,16 +15,25 @@
  */
 package org.vulpe.security.controller;
 
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE;
+
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
-import org.vulpe.security.model.entity.SecureResource;
+import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
-@Component("security.SecureResourceSelect")
-@Controller(controllerType = ControllerType.SELECT, serviceClass = SecurityServices.class, pageSize = 5)
+@Component("security.RoleController")
+@Controller(serviceClass = SecurityServices.class, pageSize = 5, tabularNewDetails = 4, tabularDespiseFields = { "name" })
 @SuppressWarnings("serial")
-public class SecureResourceSelectController extends VulpeStrutsController<SecureResource, Long> {
+public class RoleController extends VulpeStrutsController<Role, Long> {
+
+	@Override
+	protected void showButtons(final String method) {
+		super.showButtons(method);
+		hideButton(new BaseActionButtons[] { CREATE, UPDATE, DELETE });
+	}
 
 }

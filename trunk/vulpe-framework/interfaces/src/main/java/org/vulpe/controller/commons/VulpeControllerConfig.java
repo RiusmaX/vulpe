@@ -4,19 +4,16 @@ import org.vulpe.model.services.Services;
 
 /**
  * Vulpe Action Config Interface.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  */
 public interface VulpeControllerConfig {
 
-	/**
-	 * Retrieves type of controller.
-	 * 
-	 * @return String of Controller type
-	 */
-	String getType();
+	ControllerType getControllerType();
+
+	void setControllerType(final ControllerType controllerType);
 
 	Class<? extends Services> getServiceClass();
 
@@ -48,27 +45,15 @@ public interface VulpeControllerConfig {
 
 	void setControllerName(final String actionName);
 
-	void setSimpleControllerName(final String simpleControllerName);
-
-	void setReportFile(final String reportFile);
-
 	String getTitleKey();
-
-	void setTitleKey(final String titleKey);
 
 	boolean isSimple();
 
 	void setSimple(final boolean simple);
 
-	void setViewItemsPath(final String viewItemsPath);
-
 	String getViewItemsPath();
 
-	void setViewPath(final String viewPath);
-
 	String getViewPath();
-
-	void setSubReports(String[] subReports);
 
 	String[] getSubReports();
 
@@ -76,5 +61,14 @@ public interface VulpeControllerConfig {
 
 	String getModuleName();
 
-	void setModuleName(final String moduleName);
+	String getMasterTitleKey();
+
+	/**
+	 * Controllers type
+	 *
+	 * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+	 */
+	public enum ControllerType {
+		CRUD, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, NONE
+	}
 }

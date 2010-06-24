@@ -3,7 +3,7 @@
 <ul>
 	<li><a
 		href="javascript:void(0);"
-		onclick="javascript:vulpe.view.request.submitMenu('/audit/Occurrence/select/prepare/ajax');"
+		onclick="javascript:vulpe.view.request.submitMenu('/audit/Occurrence/select/ajax');"
 		title="<fmt:message key='label.vulpe.menu.Audit.Occurrence'/>"><fmt:message key='label.vulpe.menu.Audit.Occurrence'/></a></li>
 </ul>
 </li>

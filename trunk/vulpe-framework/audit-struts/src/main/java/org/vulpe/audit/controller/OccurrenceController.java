@@ -16,19 +16,54 @@
 package org.vulpe.audit.controller;
 
 import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.CREATE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
+import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE_POST;
 
+import java.util.List;
+
+import org.jfree.util.Log;
 import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
 import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.exception.VulpeApplicationException;
 
-@Component("audit.OccurrenceSelect")
-@Controller(controllerType = ControllerType.SELECT, serviceClass = AuditServices.class, pageSize = 5)
+@Component("audit.OccurrenceController")
+@Controller(serviceClass = AuditServices.class, pageSize = 5)
 @SuppressWarnings("serial")
-public class OccurrenceSelectController extends VulpeStrutsController<AuditOccurrence, Long> {
+public class OccurrenceController extends
+		VulpeStrutsController<AuditOccurrence, Long> {
+
+	private List<AuditOccurrence> childOccurrences = null;
+
+	@Override
+	public String update() {
+		final String update = super.update();
+		hideButton(new BaseActionButtons[] { UPDATE_POST, DELETE });
+		return update;
+	}
+
+	@Override
+	protected void onUpdate() {
+		super.onUpdate();
+		try {
+			childOccurrences = getService(AuditServices.class)
+					.findByParentAuditOccurrence(
+							new AuditOccurrence(getEntity().getId()));
+		} catch (VulpeApplicationException e) {
+			Log.error(e);
+		}
+	}
+
+	public List<AuditOccurrence> getChildOccurrences() {
+		return childOccurrences;
+	}
+
+	public void setChildOccurrences(final List<AuditOccurrence> childOccurrences) {
+		this.childOccurrences = childOccurrences;
+	}
 
 	@Override
 	public String prepare() {
@@ -47,5 +82,4 @@ public class OccurrenceSelectController extends VulpeStrutsController<AuditOccur
 	public AuditOccurrenceType[] getListOccurrenceType() {
 		return AuditOccurrenceType.values();
 	}
-
 }

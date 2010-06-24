@@ -18,22 +18,22 @@
 	</c:if>
 	<div id="content">
 		<c:choose>
-			<c:when test="${controllerConfig.type == 'CRUD'}">
+			<c:when test="${controllerConfig.controllerType == 'CRUD'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.type == 'SELECT'}">
+			<c:when test="${controllerConfig.controllerType == 'SELECT'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.type == 'TABULAR'}">
+			<c:when test="${controllerConfig.controllerType == 'TABULAR'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/tabular.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.type == 'REPORT'}">
+			<c:when test="${controllerConfig.controllerType == 'REPORT'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/report.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.type == 'FRONTEND'}">
+			<c:when test="${controllerConfig.controllerType == 'FRONTEND'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/frontend.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.type == 'BACKEND'}">
+			<c:when test="${controllerConfig.controllerType == 'BACKEND'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/backend.jsp" %>
 			</c:when>
 		</c:choose>

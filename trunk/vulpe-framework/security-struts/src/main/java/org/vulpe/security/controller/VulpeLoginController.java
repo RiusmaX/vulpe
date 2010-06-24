@@ -18,7 +18,7 @@ package org.vulpe.security.controller;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Controller.ControllerType;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.AbstractVulpeStrutsSimpleController;
 
 @Component("security.authenticator")

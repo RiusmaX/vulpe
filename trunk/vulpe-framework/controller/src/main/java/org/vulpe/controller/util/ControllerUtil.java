@@ -40,13 +40,14 @@ import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeBaseSimpleControllerConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
  * Utility class to controller
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
+ *
  */
 public class ControllerUtil {
 
@@ -70,12 +71,13 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 * 
+	 *
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(
+					bean, fieldName);
 			if (VulpeValidationUtil.getInstance().isEmpty(value)) {
 				return true;
 			}
@@ -85,7 +87,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 * 
+	 *
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
@@ -97,11 +99,12 @@ public class ControllerUtil {
 			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(
+					bean, fieldName);
 			if (StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
-					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(
-							realBean, fieldName);
+					final Object valueRealBean = VulpeReflectUtil.getInstance()
+							.getFieldValue(realBean, fieldName);
 					if (StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
@@ -114,7 +117,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 * 
+	 *
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
@@ -127,7 +130,8 @@ public class ControllerUtil {
 			return;
 		}
 
-		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
+		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator
+				.hasNext();) {
 			final VulpeBaseEntity<?> bean = iterator.next();
 			if (bean == null) {
 				iterator.remove();
@@ -155,12 +159,13 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 * 
+	 *
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
 	 */
-	public Collection<DuplicatedBean> duplicatedItens(final Collection<VulpeBaseEntity<?>> beans,
+	public Collection<DuplicatedBean> duplicatedItens(
+			final Collection<VulpeBaseEntity<?>> beans,
 			final String despiseFields[]) {
 		final Collection<DuplicatedBean> duplicatedBeans = new ArrayList<DuplicatedBean>();
 		if (beans == null) {
@@ -182,7 +187,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
@@ -191,7 +196,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCurrentControllerName() {
@@ -203,8 +208,8 @@ public class ControllerUtil {
 		base = base.replace(Logic.AJAX, "");
 		getCurrentControllerURI().set(base);
 		base = (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
-				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
-				base, '/'));
+				.contains(View.AUTHENTICATOR)) ? base : base.substring(0,
+				StringUtils.lastIndexOf(base, '/'));
 		getCurrentController().set(base);
 		return base;
 	}
@@ -235,19 +240,21 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param controller
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
+	public VulpeBaseControllerConfig getControllerConfig(
+			final VulpeBaseController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
+			return VulpeCacheHelper.getInstance()
+					.get(getCurrentControllerKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller
-				.getClass(), details);
+		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(
+				controller.getClass(), details);
 		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
 
 		int count = 0;
@@ -256,6 +263,7 @@ public class ControllerUtil {
 				details.add(new VulpeBaseDetailConfig());
 			}
 			final VulpeBaseDetailConfig detailConfig = details.get(count);
+			config.setControllerType(ControllerType.CRUD);
 			detailConfig.setupDetail(config, detail);
 			count++;
 		}
@@ -263,14 +271,15 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param controller
 	 * @return
 	 */
 	public VulpeBaseSimpleControllerConfig getControllerConfig(
 			final VulpeBaseSimpleController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
+			return VulpeCacheHelper.getInstance()
+					.get(getCurrentControllerKey());
 		}
 
 		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(
@@ -290,7 +299,7 @@ public class ControllerUtil {
 	private transient static final ThreadLocal<ServletContext> CURRENT_SERVLET_CONTEXT = new ThreadLocal<ServletContext>();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static ServletContext getServletContext() {
@@ -298,7 +307,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param servletContext
 	 */
 	public static void setServletContext(final ServletContext servletContext) {

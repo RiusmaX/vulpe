@@ -34,16 +34,11 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Action.Forward;
-import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.file.FileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.annotations.Controller.ControllerType;
-import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -58,50 +53,43 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Action base for Struts2
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
-		implements Action, Validateable, ValidationAware, LocaleProvider, Serializable {
+public abstract class AbstractVulpeStrutsSimpleController extends
+		AbstractVulpeBaseSimpleController implements Action, Validateable,
+		ValidationAware, LocaleProvider, Serializable {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeStrutsSimpleController.class);
+	protected static final Logger LOG = Logger
+			.getLogger(AbstractVulpeStrutsSimpleController.class);
 	/**
 	 *
 	 */
 	private final OgnlUtil ognlUtil = new OgnlUtil();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
-	 */
-	public VulpeControllerConfig getControllerConfig() {
-		return getControllerUtil().getControllerConfig(this);
-	}
-
-	public ControllerUtil getControllerUtil() {
-		return ControllerUtil.getInstance(getRequest());
-	}
-
 	/**
 	 * Extension point to read report.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected DownloadInfo doReadReportLoad() {
 		try {
-			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils.getProperty(
-					this, getControllerConfig().getReportDataSource());
-			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils
+					.getProperty(this, getControllerConfig()
+							.getReportDataSource());
+			return StringUtils
+					.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
+					.getInstance().getDownloadInfo(list,
+							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
 							getControllerConfig().getReportFormat(),
 							getControllerConfig().getReportName(),
-							getControllerConfig().isReportDownload()) : StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+							getControllerConfig().isReportDownload())
+					: StrutsReportUtil.getInstance().getDownloadInfo(list,
+							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
 							getControllerConfig().getReportFormat());
 		} catch (Exception e) {
@@ -109,113 +97,54 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#backend()
-	 */
 	@SkipValidation
 	@ResetSession(before = true)
+	@Override
 	public String backend() {
-		backendBefore();
-		onBackend();
-
-		String forward = Forward.SUCCESS;
-		if (getControllerType().equals(ControllerType.BACKEND)) {
-			if (isAjax()) {
-				setResultForward(getControllerConfig().getControllerName().concat(URI.AJAX));
-				forward = Forward.BACKEND;
-			} else {
-				controlResultForward();
-			}
-		} else {
-			controlResultForward();
-		}
-		setResultName(forward);
-
-		backendAfter();
-		return getResultName();
+		return super.backend();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#frontend()
-	 */
 	@SkipValidation
 	@ResetSession(before = true)
+	@Override
 	public String frontend() {
-		frontendBefore();
-		onFrontend();
-
-		String forward = Forward.SUCCESS;
-		if (getControllerType().equals(ControllerType.FRONTEND)) {
-			if (isAjax()) {
-				setResultForward(getControllerConfig().getControllerName().concat(URI.AJAX));
-				forward = Forward.FRONTEND;
-			} else {
-				controlResultForward();
-			}
-		} else {
-			controlResultForward();
-		}
-		setResultName(forward);
-
-		frontendAfter();
-		return getResultName();
+		return super.frontend();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#upload()
-	 */
 	@SkipValidation
+	@Override
 	public String upload() {
-		uploadBefore();
-		onUpload();
-
-		setResultName(Forward.UPLOAD);
-
-		uploadAfter();
-		return getResultName();
+		return super.upload();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#download()
-	 */
 	@SkipValidation
+	@Override
 	public String download() {
-		downloadBefore();
-		onDownload();
-
-		setResultName(Forward.DOWNLOAD);
-
-		downloadAfter();
-		return getResultName();
+		return super.download();
 	}
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	@SuppressWarnings("static-access")
 	protected DownloadInfo prepareDownloadInfo() {
 		try {
 			Object value = null;
-			if (getFormParams() != null && getFormParams().containsKey(getDownloadKey())) {
-				final Object[] array = (Object[]) getFormParams().get(getDownloadKey());
+			if (getFormParams() != null
+					&& getFormParams().containsKey(getDownloadKey())) {
+				final Object[] array = (Object[]) getFormParams().get(
+						getDownloadKey());
 				value = array[1];
 			}
 			if (value == null) {
-				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
-						.getContextMap(), this);
+				value = ognlUtil.getValue(getDownloadKey(), ActionContext
+						.getContext().getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = FileUtil.getInstance().getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = FileUtil.getInstance()
+					.getDownloadInfo(value, getDownloadContentType(),
+							getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());
 			}
@@ -225,6 +154,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 		}
 	}
 
+	@Override
 	public void validate() {
 		if (isBack() && !isExecuted()) {
 			final Collection messages = getActionMessages();
@@ -249,7 +179,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Method retrieve forward.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Result Forward.
 	 */
@@ -271,23 +201,25 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves form parameters
-	 * 
+	 *
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = getControllerUtil().getCurrentControllerKey().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
+		final String keyForm = getControllerUtil().getCurrentControllerKey()
+				.concat(VulpeConstants.PARAMS_SESSION_KEY);
+		Map formParams = (Map) ServletActionContext.getRequest().getSession()
+				.getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(keyForm, formParams);
+			ServletActionContext.getRequest().getSession().setAttribute(
+					keyForm, formParams);
 		}
 		return formParams;
 	}
 
 	/**
 	 * Retrieves current HTTP Session.
-	 * 
+	 *
 	 * @return Http Session
 	 */
 	public HttpSession getSession() {
@@ -296,7 +228,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves current HTTP Request.
-	 * 
+	 *
 	 * @return Http Servlet Request
 	 */
 	public HttpServletRequest getRequest() {
@@ -305,7 +237,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves current HTTP Response.
-	 * 
+	 *
 	 * @return Http Servlet Reponse
 	 */
 	public HttpServletResponse getResponse() {
@@ -382,7 +314,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * Subclasses should override this method to provide their business logic.
 	 * <p/>
 	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
-	 * 
+	 *
 	 * @return returns {@link #SUCCESS}
 	 * @throws Exception
 	 *             can be thrown by subclasses.
@@ -426,15 +358,15 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * invocation to return the specified result, such as {@link #SUCCESS},
 	 * {@link #INPUT}, etc.
 	 * <p/>
-	 * 
+	 *
 	 * The next time this action is invoked (and using the same continuation
 	 * ID), the method will resume immediately after where this method was
 	 * called, with the entire call stack in the execute method restored.
 	 * <p/>
-	 * 
+	 *
 	 * Note: this method can <b>only</b> be called within the {@link #execute()}
 	 * method. <!-- END SNIPPET: pause-method -->
-	 * 
+	 *
 	 * @param result
 	 *            the result to return - the same type of return value in the
 	 *            {@link #execute()} method.

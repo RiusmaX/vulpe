@@ -21,11 +21,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.services.Services;
 
 /**
  * Control configurations.
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -96,12 +97,4 @@ public @interface Controller {
 	// REPORT - configurations
 	Report report() default @Report;
 
-	/**
-	 * Controllers type
-	 * 
-	 * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
-	 */
-	public enum ControllerType {
-		CRUD, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, NONE
-	}
 }

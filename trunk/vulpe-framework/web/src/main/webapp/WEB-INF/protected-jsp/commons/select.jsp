@@ -13,7 +13,7 @@
 	<div id="vulpeSelectTable_${controllerConfig.formName}">
 		<p class="vulpeSelectTable">
 			<jsp:include page="${controllerConfig.viewItemsPath}" />
-			<c:if test="${controllerConfig.type == 'REPORT' && not empty downloadInfo}">
+			<c:if test="${controllerConfig.controllerType == 'REPORT' && not empty downloadInfo}">
 				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
 				<script type="text/javascript">
 					$(document).ready(function() {
