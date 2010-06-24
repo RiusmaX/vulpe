@@ -17,7 +17,7 @@ import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.services.PublicacoesServices;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Component("publicacoes.PedidoCRUD")
+@Component("publicacoes.PedidoController")
 @SuppressWarnings("serial")
 @Controller(serviceClass = PublicacoesServices.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, cardinalityType = CardinalityType.ONE) })
 public class PedidoController extends VulpeStrutsController<Pedido, Long> {

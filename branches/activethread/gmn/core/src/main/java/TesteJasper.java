@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-@SuppressWarnings( { "unchecked", "unused", "deprecation" })
+@SuppressWarnings( { "unchecked", "unused", "deprecation", "rawtypes" })
 public class TesteJasper {
 
 	public void gerar(String layout) throws JRException, SQLException, ClassNotFoundException {
