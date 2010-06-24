@@ -22,6 +22,8 @@ import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButton
 import java.util.List;
 
 import org.jfree.util.Log;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.services.AuditServices;
@@ -30,6 +32,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
 
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("audit.OccurrenceController")
 @Controller(serviceClass = AuditServices.class, pageSize = 5)
 @SuppressWarnings("serial")

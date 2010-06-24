@@ -15,12 +15,15 @@
  */
 package org.vulpe.security.controller;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.AbstractVulpeStrutsSimpleController;
 
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.authenticator")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.OTHER)
@@ -31,7 +34,7 @@ public class VulpeLoginController extends AbstractVulpeStrutsSimpleController {
 	private boolean accessDenied;
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String define() {

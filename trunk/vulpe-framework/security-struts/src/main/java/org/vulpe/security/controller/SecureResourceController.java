@@ -15,6 +15,8 @@
  */
 package org.vulpe.security.controller;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
@@ -23,6 +25,7 @@ import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.SecureResource;
 import org.vulpe.security.model.services.SecurityServices;
 
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.SecureResourceController")
 @Controller(serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "secureResourceRoles", propertyName = "entity.secureResourceRoles", despiseFields = "role", startNewDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
 @SuppressWarnings("serial")

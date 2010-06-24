@@ -19,12 +19,15 @@ import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButton
 import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.DELETE;
 import static org.vulpe.controller.struts.VulpeStrutsController.BaseActionButtons.UPDATE;
 
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityServices;
 
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.RoleController")
 @Controller(serviceClass = SecurityServices.class, pageSize = 5, tabularNewDetails = 4, tabularDespiseFields = { "name" })
 @SuppressWarnings("serial")
