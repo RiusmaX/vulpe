@@ -51,6 +51,7 @@ public class VulpeConstants {
 	public static final String CACHED_ENUM_ARRAY = "vulpeCachedEnumArray";
 	public static final String FRAMEWORK = "vulpe";
 	public static final String DOMAINS = "domains";
+	public static final String CONTEXT = "vulpeContext";
 
 	public class Expression {
 		public static final String PROJECT_PACKAGE = "{project.package}";

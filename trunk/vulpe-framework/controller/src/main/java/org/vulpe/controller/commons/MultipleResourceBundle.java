@@ -25,7 +25,8 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants.View;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
@@ -64,12 +65,12 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 */
 	protected List<ResourceBundle> getBundles() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		final VulpeLocale vulpeLocale = AbstractVulpeBeanFactory.getInstance().getBean(
-				View.VULPE_LOCALE);
-		final boolean checkLocale = (locale == null || (vulpeLocale != null && !locale
-				.getLanguage().equals(vulpeLocale.getLocale().getLanguage())));
+		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
+				VulpeConstants.CONTEXT);
+		final boolean checkLocale = (locale == null || (vulpeContext != null && !locale
+				.getLanguage().equals(vulpeContext.getLocale().getLanguage())));
 		if (checkLocale) {
-			locale = vulpeLocale.getLocale();
+			locale = vulpeContext.getLocale();
 		}
 		List<ResourceBundle> list = cache.get(BUNDLES_KEY);
 		if (list == null || checkLocale) {

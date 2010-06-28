@@ -13,24 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.commons;
+package org.vulpe.commons;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class VulpeLocale {
+public class VulpeContext {
 
-	private Locale locale;
+	public static final String LOCALE = "locale";
 
-	public void setLocale(Locale locale) {
-		this.locale = locale;
+	private Map<String, Object> map = new HashMap<String, Object>();
+
+	public void setLocale(final Locale locale) {
+		map.put(LOCALE, locale);
 	}
 
 	public Locale getLocale() {
-		return locale;
+		return (Locale) map.get(LOCALE);
 	}
-	
-	
+
+	public Object get(final String key) {
+		return map.get(key);
+	}
+
+	public void set(final String key, final Object value) {
+		map.put(key, value);
+	}
 }

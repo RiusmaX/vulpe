@@ -15,15 +15,20 @@
  */
 package org.vulpe.security.context;
 
+
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 public interface VulpeSecurityContext {
 
+	String USER_AUTHENTICATION = "userAuthentication";
+	
 	/**
 	 * Initialize context of security creating roles, secure resources and users
 	 * if necessary.
 	 */
 	void initialize();
 
+
+	boolean isAuthenticated();
 }

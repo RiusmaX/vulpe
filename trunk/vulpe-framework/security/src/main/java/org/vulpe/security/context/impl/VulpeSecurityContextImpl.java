@@ -16,15 +16,20 @@
 package org.vulpe.security.context.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.security.commons.VulpeSecurityUtil;
+import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context.ContextDefaults;
+import org.vulpe.security.commons.VulpeSecurityUtil;
 import org.vulpe.security.context.VulpeSecurityContext;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
@@ -40,6 +45,8 @@ import org.vulpe.security.model.services.SecurityServices;
 public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements VulpeSecurityContext {
 
 	private static final Logger LOG = Logger.getLogger(VulpeSecurityContextImpl.class);
+
+	private Map<String, Object> securityMap = new HashMap<String, Object>();
 
 	/*
 	 * (non-Javadoc)
@@ -128,5 +135,27 @@ public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements Vulpe
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
+	}
+
+	@Override
+	public boolean isAuthenticated() {
+		final Authentication authentication = getAuthentication();
+		final boolean autenticated = authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken);
+		if (autenticated) {
+			AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
+			if (afterUserAuthentication != null) {
+				afterUserAuthentication.execute();
+			}
+		}
+		return autenticated;
+	}
+
+	public void set(final String key, final Object value) {
+		securityMap.put(key, value);
+	}
+
+	public Object get(final String key) {
+		return securityMap.get(key);
 	}
 }
