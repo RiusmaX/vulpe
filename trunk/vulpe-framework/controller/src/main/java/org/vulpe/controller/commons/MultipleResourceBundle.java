@@ -78,7 +78,8 @@ public class MultipleResourceBundle extends ResourceBundle {
 			final String modules[] = project.i18n();
 			list = new ArrayList<ResourceBundle>(modules.length);
 			for (String module : modules) {
-				final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, locale);
+				final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, locale,
+						Thread.currentThread().getContextClassLoader());
 				list.add(resourceBundle);
 			}
 			Collections.reverse(list);

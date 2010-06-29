@@ -29,6 +29,8 @@ public @interface VulpeProject {
 	String name();
 
 	String projectPackage();
+	
+	String characterEncoding() default "UTF-8";
 
 	String[] i18n() default { "VulpeResources", "VulpeSecurityResources", "ApplicationResources" };
 

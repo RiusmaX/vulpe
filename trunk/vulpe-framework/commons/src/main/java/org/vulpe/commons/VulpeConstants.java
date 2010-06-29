@@ -30,6 +30,7 @@ public class VulpeConstants {
 	public static final String AUDIT = "audit";
 	public static final String MAPPING_REQUEST = "MAPPING_REQUEST";
 	public static final String FORM_REQUEST = "FORM_REQUEST";
+	public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
 	public static final Locale PORTUGUESE_LOCALE = new Locale("pt", "BR");
 	public static final String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
 	public static final String STRING_NULL = "";
@@ -52,6 +53,7 @@ public class VulpeConstants {
 	public static final String FRAMEWORK = "vulpe";
 	public static final String DOMAINS = "domains";
 	public static final String CONTEXT = "vulpeContext";
+	public static final String SECURITY_CONTEXT = "vulpeSecurityContext";
 
 	public class Expression {
 		public static final String PROJECT_PACKAGE = "{project.package}";

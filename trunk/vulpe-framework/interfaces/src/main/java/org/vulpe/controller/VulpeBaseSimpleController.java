@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.model.services.Services;
-import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
+import org.vulpe.security.context.VulpeSecurityContext;
 
 public interface VulpeBaseSimpleController {
 
@@ -123,27 +123,13 @@ public interface VulpeBaseSimpleController {
 	Map<String, String> getCachedEnumArray();
 
 	/**
-	 * Checks if user is authenticated.
+	 * Retrieves current security context.
 	 * 
-	 * @return true if authenticated
-	 */
-	boolean isAuthenticated();
-
-	/**
-	 * Retrieves current authenticated user.
-	 * 
-	 * @return UserAutenticationCallback Interface
+	 * @return VulpeSecurityContext Interface
 	 * @since 1.0
 	 */
-	UserAuthenticatedCallback getUserAuthenticatedCallback();
+	VulpeSecurityContext getSecurityContext();
 
-	/**
-	 * Retrieves User Name.
-	 * 
-	 * @return Name of User
-	 * @since 1.0
-	 */
-	String getUserName();
 
 	/**
 	 * Retrieves user authenticated.

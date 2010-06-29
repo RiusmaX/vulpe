@@ -188,7 +188,7 @@
 		</global-results>
 
 		<!-- Back-End -->
-		<action name="backend/*" class="backend.{1}" method="backend">
+		<action name="backend/*" class="backend.{1}Controller" method="backend">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -198,7 +198,27 @@
 			</result>
 		</action>
 
-		<action name="backend/*/ajax" class="backend.{1}" method="backend">
+		<action name="backend/*/ajax" class="backend.{1}Controller" method="backend">
+			<result name="success">${resultForward}</result>
+			<result name="backend" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+		
+		<action name="backend/*/*" class="backend.{1}Controller" method="{2}">
+			<result name="success">${resultForward}</result>
+			<result name="backend" type="chain">
+				<param name="actionName">${resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="backend/*/*/ajax" class="backend.{1}Controller" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -209,7 +229,7 @@
 		</action>
 
 		<!-- Front-End -->
-		<action name="frontend/*" class="frontend.{1}" method="frontend">
+		<action name="frontend/*" class="frontend.{1}Controller" method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -219,7 +239,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/ajax" class="frontend.{1}" method="frontend">
+		<action name="frontend/*/ajax" class="frontend.{1}Controller" method="frontend">
 			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -229,7 +249,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/*" class="frontend.{1}" method="{2}">
+		<action name="frontend/*/*" class="frontend.{1}Controller" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
@@ -238,7 +258,7 @@
 			</result>
 		</action>
 
-		<action name="frontend/*/*/ajax" class="frontend.{1}" method="{2}">
+		<action name="frontend/*/*/ajax" class="frontend.{1}Controller" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>

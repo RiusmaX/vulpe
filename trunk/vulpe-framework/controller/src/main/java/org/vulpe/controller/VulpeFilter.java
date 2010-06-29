@@ -29,6 +29,8 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.util.ControllerUtil;
 
 public class VulpeFilter implements Filter {
@@ -52,8 +54,10 @@ public class VulpeFilter implements Filter {
 			vulpeContext.setLocale(request.getLocale());
 		}
 		ControllerUtil.setServletContext(servletContext);
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		final String characterEncoding = VulpeConfigHelper.get(VulpeProject.class)
+				.characterEncoding();
+		request.setCharacterEncoding(characterEncoding);
+		response.setCharacterEncoding(characterEncoding);
 		chain.doFilter(request, response);
 	}
 

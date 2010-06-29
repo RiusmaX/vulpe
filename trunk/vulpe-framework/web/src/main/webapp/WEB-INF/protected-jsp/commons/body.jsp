@@ -10,8 +10,8 @@
 	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${controllerConfig.formName}_entity.orderBy"/>
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${controllerConfig.formName}_popupKey"/>
 	</c:if>
-	<c:if test="${authenticated && empty popupKey}">
-	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${userName}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
+	<c:if test="${securityContext.authenticated && empty popupKey}">
+	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${securityContext.user.name}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
 	</c:if>
 	<c:if test="${showTitle}">
 		<div id="contentTitle"><fmt:message>${controllerConfig.titleKey}${onlyToSee ? '.view' : ''}</fmt:message></div>

@@ -268,6 +268,8 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 										.get(0);
 								PropertyUtils.setProperty(detail, field.getName(), objectPersisted);
 							}
+						} else {
+							PropertyUtils.setProperty(detail, field.getName(), null);
 						}
 					} catch (Exception e) {
 						throw new VulpeSystemException(e);

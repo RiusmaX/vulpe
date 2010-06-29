@@ -499,14 +499,14 @@ td p {
 	margin-bottom: 5px;
 }
 
-th,.header {
+th,.vulpeTableHeader {
 	color: #333;
 	font: 11px arial, sans-serif;
 	font-weight: bold;
 	background: #fff url(../../images/shadow-bottom.png) bottom repeat-x;
 }
 
-thead th,.header {
+thead th,.vulpeTableHeader {
 	color: #333;
 	font: 11px arial, sans-serif;
 	font-weight: bold;

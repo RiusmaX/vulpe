@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.VulpeConstants.Action.URI;
-import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -43,8 +42,6 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.Services;
-import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
-import org.vulpe.security.authentication.callback.UserAuthenticationCallback;
 import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
@@ -172,14 +169,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		frontendBefore();
 		onFrontend();
 
-		String forward = Forward.SUCCESS;
-		if (isAjax()) {
-			setResultForward(getControllerConfig().getControllerName().concat(URI.AJAX));
-			forward = Forward.FRONTEND;
-		} else {
-			controlResultForward();
-		}
-		setResultName(forward);
+		setResultName(Forward.SUCCESS);
+		controlResultForward();
 
 		frontendAfter();
 		return getResultName();
@@ -816,62 +807,13 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 		this.showTitle = showTitle;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAuthenticated()
-	 */
-	public boolean isAuthenticated() {
-		UserAuthenticationCallback userAuthenticationCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATION);
-		if (userAuthenticationCallback == null) {
-			userAuthenticationCallback = getBean(UserAuthenticationCallback.class);
-			if (userAuthenticationCallback != null) {
-				final boolean authenticated = userAuthenticationCallback.isAuthenticated();
-				getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATED);
-				if (authenticated) {
-					getSession().setAttribute(Security.VULPE_USER_AUTHENTICATION,
-							userAuthenticationCallback);
-				} else {
-					getSession().removeAttribute(Security.VULPE_USER_AUTHENTICATION);
-				}
-				return authenticated;
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getUserAuthenticatedCallback
-	 * ()
-	 */
-	public UserAuthenticatedCallback getUserAuthenticatedCallback() {
-		UserAuthenticatedCallback userAuthenticatedCallback = getSessionAttribute(Security.VULPE_USER_AUTHENTICATED);
-		if (userAuthenticatedCallback == null) {
-			userAuthenticatedCallback = getBean(UserAuthenticatedCallback.class);
-			userAuthenticatedCallback.execute();
-			getSession().setAttribute(Security.VULPE_USER_AUTHENTICATED, userAuthenticatedCallback);
-		}
-		return userAuthenticatedCallback;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getUserName()
-	 */
-	public String getUserName() {
-		if (getUserAuthenticatedCallback() != null) {
-			return getUserAuthenticatedCallback().getName();
-		}
-		return "";
-	}
-
 	public VulpeSecurityContext getSecurityContext() {
-		return this.<VulpeSecurityContext> getBean(VulpeSecurityContext.class);
+		VulpeSecurityContext securityContext = getSessionAttribute(VulpeConstants.SECURITY_CONTEXT);
+		if (securityContext == null) {
+			securityContext = getBean(VulpeSecurityContext.class);
+			setSessionAttribute(VulpeConstants.SECURITY_CONTEXT, securityContext);
+		}
+		return securityContext;
 	}
 
 	/*
@@ -882,10 +824,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 */
 	@Override
 	public String getUserAuthenticated() {
-		if (getUserAuthenticatedCallback() != null) {
-			return getUserAuthenticatedCallback().getUsername();
-		}
-		return "";
+		return getSecurityContext().getUsername();
 	}
 
 	/*

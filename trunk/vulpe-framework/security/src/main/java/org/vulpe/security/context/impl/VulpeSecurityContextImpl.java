@@ -22,8 +22,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
@@ -41,6 +45,7 @@ import org.vulpe.security.model.services.SecurityServices;
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("VulpeSecurityContext")
 public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements VulpeSecurityContext {
 
@@ -142,13 +147,16 @@ public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements Vulpe
 		final Authentication authentication = getAuthentication();
 		final boolean autenticated = authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken);
-		if (autenticated) {
+		return autenticated;
+	}
+
+	public void afterUserAuthenticationCallback() {
+		if (isAuthenticated()) {
 			AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
 			if (afterUserAuthentication != null) {
 				afterUserAuthentication.execute();
 			}
 		}
-		return autenticated;
 	}
 
 	public void set(final String key, final Object value) {
@@ -158,4 +166,32 @@ public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements Vulpe
 	public Object get(final String key) {
 		return securityMap.get(key);
 	}
+
+	private User user;
+
+	public String getUsername() {
+		final Object principal = SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		return principal instanceof UserDetails ? ((UserDetails) principal).getUsername()
+				: principal.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	public User getUser() {
+		if (user == null) {
+			final SecurityServices securityServices = getService(SecurityServices.class);
+			User user = new User(getUsername());
+			try {
+				final List<User> users = securityServices.readUser(user);
+				if (users != null && !users.isEmpty()) {
+					user = users.get(0);
+				}
+			} catch (VulpeApplicationException e) {
+				LOG.error(e);
+			}
+			this.user = user;
+		}
+		return user;
+	}
+
 }
