@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<div id="content">
+<div id="frontendContent">
 <h2><fmt:message key="label.site.frontend.Learn.h2"/></h2><br>
 <h3><fmt:message key="label.site.frontend.Learn.firstproject.h3"/></h3><br>
 <fmt:message key="label.site.frontend.Learn.firstproject.1"/>
