@@ -36,8 +36,8 @@ public class AfterUserAuthenticationCallbackPOJOImpl extends VulpeSecurityStruts
 						publicador);
 				if (publicadores != null && !publicadores.isEmpty()) {
 					publicador = publicadores.get(0);
-					getSession()
-							.setAttribute(Core.CONGREGACAO_USUARIO, publicador.getCongregacao());
+					getSession().setAttribute(Core.CONGREGACAO_USUARIO,
+							publicador.getGrupo().getCongregacao());
 				}
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);

@@ -35,10 +35,6 @@ public class Publicador extends AbstractVulpeBaseEntityImpl<Long> {
 	@VulpeSelect(items = "Grupo", itemKey = "id", itemLabel = "nome", autoLoad = true, argument = true)
 	private Grupo grupo;
 
-	@VulpeColumn(sortable = true, attribute = "nome")
-	@VulpeSelect(items = "Congregacao", itemKey = "id", itemLabel = "nome", autoLoad = true, argument = true)
-	private Congregacao congregacao;
-
 	@VulpeColumn(sortable = true, attribute = "name")
 	@VulpeSelectPopup(identifier = "id", description = "name", action = "/security/User/select/prepare", popupWidth = 420, argument = true, autoComplete = true)
 	private User usuario;
@@ -77,14 +73,6 @@ public class Publicador extends AbstractVulpeBaseEntityImpl<Long> {
 
 	public User getUsuario() {
 		return usuario;
-	}
-
-	public void setCongregacao(Congregacao congregacao) {
-		this.congregacao = congregacao;
-	}
-
-	public Congregacao getCongregacao() {
-		return congregacao;
 	}
 
 	public void setIndicador(boolean indicador) {

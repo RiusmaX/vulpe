@@ -9,7 +9,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.core.model.entity.Congregacao;
 
-@SuppressWarnings({ "serial", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeStrutsController<ENTITY, ID> {
 
