@@ -11,7 +11,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import br.com.activethread.gmn.controller.ApplicationBaseSimpleController;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Component("frontend.Index")
+@Component("frontend.IndexController")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.FRONTEND)
 public class IndexController extends ApplicationBaseSimpleController {

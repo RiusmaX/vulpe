@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
-import org.vulpe.security.authentication.callback.UserAuthenticatedCallback;
 import org.vulpe.security.commons.VulpeSecurityStrutsCallbackUtil;
+import org.vulpe.security.context.VulpeSecurityContext;
 import org.vulpe.security.model.entity.User;
 
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
@@ -23,10 +23,10 @@ public class AfterUserAuthenticationCallbackPOJOImpl extends VulpeSecurityStruts
 
 	@Override
 	public void execute() {
-		UserAuthenticatedCallback userAuthenticatedCallback = getBean(UserAuthenticatedCallback.class);
-		if (userAuthenticatedCallback != null) {
-			userAuthenticatedCallback.execute();
-			final Long userId = userAuthenticatedCallback.getId();
+		VulpeSecurityContext securityContext = getBean(VulpeSecurityContext.class);
+		if (securityContext != null) {
+			securityContext.afterUserAuthenticationCallback();
+			final Long userId = securityContext.getUser().getId();
 			try {
 				Publicador publicador = new Publicador();
 				final User usuario = new User();
