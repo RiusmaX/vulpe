@@ -41,7 +41,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
 
 	public VulpeBaseDetailConfig() {
-		this.setNewDetails(1);
+		this.newDetails = 1;
 	}
 
 	public VulpeBaseDetailConfig(final String name) {
@@ -55,8 +55,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 			final int startNewDetails, final int newDetails, final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
-		setStartNewDetails(startNewDetails);
-		setNewDetails(newDetails);
+		this.startNewDetails = startNewDetails;
+		this.newDetails = newDetails;
 		this.despiseFields = despiseFields.clone();
 		setSimpleName();
 	}
@@ -66,7 +66,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			final CardinalityType cardinalityType) {
 		this.name = name;
 		this.propertyName = propertyName;
-		this.setNewDetails(detailNews);
+		this.newDetails = detailNews;
 		this.despiseFields = despiseFields.clone();
 		this.cardinalityType = cardinalityType;
 		setSimpleName();

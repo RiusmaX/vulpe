@@ -242,8 +242,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void createBefore() {
-		if (!getControllerType().equals(ControllerType.SELECT)
-				&& !getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -395,8 +394,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void updateBefore() {
-		if (!getControllerType().equals(ControllerType.SELECT)
-				&& !getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}

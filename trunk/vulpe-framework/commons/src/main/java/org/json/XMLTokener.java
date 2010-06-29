@@ -38,15 +38,15 @@ public class XMLTokener extends JSONTokener {
 	 * The table of entity values. It initially contains Character values for
 	 * amp, apos, gt, lt, quot.
 	 */
-	public static final java.util.HashMap entity;
+	public static final java.util.HashMap ENTITY;
 
 	static {
-		entity = new java.util.HashMap(8);
-		entity.put("amp", XML.AMP);
-		entity.put("apos", XML.APOS);
-		entity.put("gt", XML.GT);
-		entity.put("lt", XML.LT);
-		entity.put("quot", XML.QUOT);
+		ENTITY = new java.util.HashMap(8);
+		ENTITY.put("amp", XML.AMP);
+		ENTITY.put("apos", XML.APOS);
+		ENTITY.put("gt", XML.GT);
+		ENTITY.put("lt", XML.LT);
+		ENTITY.put("quot", XML.QUOT);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class XMLTokener extends JSONTokener {
 			}
 		}
 		String s = sb.toString();
-		Object e = entity.get(s);
+		Object e = ENTITY.get(s);
 		return e != null ? e : a + s + ";";
 	}
 

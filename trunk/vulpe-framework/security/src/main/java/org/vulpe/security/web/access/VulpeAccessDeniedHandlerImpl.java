@@ -21,20 +21,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 public class VulpeAccessDeniedHandlerImpl implements AccessDeniedHandler {
 	// ~ Static fields/initializers
 	// =====================================================================================
 
 	public static final String SPRING_SECURITY_ACCESS_DENIED_EXCEPTION_KEY = "SPRING_SECURITY_403_EXCEPTION";
-	protected static final Log logger = LogFactory.getLog(AccessDeniedHandlerImpl.class);
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	// ~ Instance fields

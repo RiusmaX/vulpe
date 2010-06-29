@@ -26,8 +26,6 @@ import java.util.Locale;
  */
 public class VulpeConstants {
 
-	public static final String ACTIVE = "active";
-	public static final String AUDIT = "audit";
 	public static final String MAPPING_REQUEST = "MAPPING_REQUEST";
 	public static final String FORM_REQUEST = "FORM_REQUEST";
 	public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
@@ -54,10 +52,6 @@ public class VulpeConstants {
 	public static final String DOMAINS = "domains";
 	public static final String CONTEXT = "vulpeContext";
 	public static final String SECURITY_CONTEXT = "vulpeSecurityContext";
-
-	public class Expression {
-		public static final String PROJECT_PACKAGE = "{project.package}";
-	}
 
 	public class Context {
 		public static final String APPLICATION_SCOPE = "APPLICATION_SCOPE";
@@ -284,13 +278,11 @@ public class VulpeConstants {
 	}
 
 	public class Model {
-
 		public class Entity {
 			public static final String SECURITY_ROLE_PREFIX = "ROLE_";
 		}
 
 		public class DAO {
-
 			public class DB4O {
 				public static final String DATABASE_NAME = "vulpe.fox";
 				public static final String DATABASE_DIRECTORY = "/db4o/data";
@@ -300,12 +292,10 @@ public class VulpeConstants {
 			}
 
 			public class JPA {
-
 			}
 		}
 
 		public class Services {
-
 		}
 	}
 

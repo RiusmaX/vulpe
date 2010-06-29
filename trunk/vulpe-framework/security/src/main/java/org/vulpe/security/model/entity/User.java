@@ -41,15 +41,18 @@ public class User extends BasicUser {
 	}
 
 	public User() {
+		super();
 		// default constructor
 	}
 
 	public User(final String username) {
+		super();
 		this.setUsername(username);
 	}
 
 	public User(final String username, final String password, final boolean active,
 			final List<UserRole> userRoles) {
+		super();
 		this.setUsername(username);
 		this.setPassword(password);
 		this.setActive(active);
@@ -58,20 +61,22 @@ public class User extends BasicUser {
 
 	public User(final String username, final String password, final String name,
 			final String email, final List<UserRole> userRoles) {
+		super();
 		this.setUsername(username);
 		this.setPassword(password);
-		this.setName(name);
-		this.setEmail(email);
+		this.name = name;
+		this.email = email;
 		this.setActive(true);
 		this.setUserRoles(userRoles);
 	}
 
 	public User(final String username, final String password, final String name,
 			final List<UserRole> userRoles) {
+		super();
 		this.setUsername(username);
 		this.setPassword(password);
-		this.setName(name);
-		this.setEmail(username + "@localhost");
+		this.name = name;
+		this.email = username + "@localhost";
 		this.setActive(true);
 		this.setUserRoles(userRoles);
 	}

@@ -381,7 +381,7 @@ public final class VulpeDateUtil {
 		final String month = format.format(calendar.getTime());
 		final String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
 		final String year = Integer.toString(calendar.get(Calendar.YEAR));
-		String ofSepareate = " of ";
+		final String ofSepareate = " of ";
 		return day + ofSepareate + month + ofSepareate + year;
 	}
 
@@ -594,8 +594,8 @@ public final class VulpeDateUtil {
 			calendarEnd2.add(Calendar.DAY_OF_YEAR, 1);
 
 			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd, calendarBegin1.getTime(), end)
-					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2
-							.getTime());
+					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin,
+							calendarEnd2.getTime());
 		}
 
 		int returnedTime = 0;
@@ -631,8 +631,9 @@ public final class VulpeDateUtil {
 			// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
-			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
-					dateTimeEnd), period), 0); // d, e
+			returnedTime = Math.max(
+					Math.min(getMinutesDifference(periodBegin.getTime(), dateTimeEnd), period), 0); // d,
+																									// e
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
 			returnedTime = activityTime; // f
 		} else {
@@ -860,12 +861,12 @@ public final class VulpeDateUtil {
 		final List<Date> dates = new ArrayList<Date>();
 		if (daysOfWeek != null) {
 			final Calendar calendar = Calendar.getInstance();
-			int firstDay = Calendar.getInstance().getActualMinimum(Calendar.DATE);
-			int lastDay = Calendar.getInstance().getActualMaximum(Calendar.DATE);
-			int period = lastDay - firstDay;
+			final int firstDay = Calendar.getInstance().getActualMinimum(Calendar.DATE);
+			final int lastDay = Calendar.getInstance().getActualMaximum(Calendar.DATE);
+			final int period = lastDay - firstDay;
 			for (int i = 1; i <= period; i++) {
 				calendar.set(Calendar.DATE, i);
-				int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+				final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 				for (DaysOfWeek day : daysOfWeek) {
 					if (dayOfWeek == day.getValue()) {
 						dates.add(calendar.getTime());
@@ -903,6 +904,9 @@ public final class VulpeDateUtil {
 				break;
 			case SATURDAY:
 				dayOfWeek = 7;
+				break;
+			default:
+				dayOfWeek = 0;
 				break;
 			}
 			return dayOfWeek;

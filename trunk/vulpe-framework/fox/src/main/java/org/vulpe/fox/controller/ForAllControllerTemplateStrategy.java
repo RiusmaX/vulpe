@@ -28,7 +28,6 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
@@ -51,8 +50,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			}
 			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
 			if (codeGenerator == null
-					|| (codeGenerator.controller().length == 1 && codeGenerator.controller()[0]
-							.controllerType().equals(ControllerType.NONE))) {
+					|| codeGenerator.controller().controllerType().equals(ControllerType.NONE)) {
 				return false;
 			}
 			final DecoratedController controller = new DecoratedController();
@@ -70,56 +68,58 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 					&& !getClassName(clazz.getSuperclass()).equals(
 							AbstractVulpeBaseEntityImpl.class.getName())) {
 				controller.setSuperclassName(getClassName(clazz.getSuperclass()));
-				controller.setControllerSuperclassName(StringUtils.replace(controller
-						.getSuperclassName(), ".model.entity", ".controller"));
+				controller.setControllerSuperclassName(StringUtils.replace(
+						controller.getSuperclassName(), ".model.entity", ".controller"));
 			}
 
 			final List<String> types = new ArrayList<String>();
-			for (Controller control : codeGenerator.controller()) {
-				types.add(control.controllerType().toString());
-				if (control.controllerType().equals(ControllerType.CRUD)
-						&& control.detailsConfig().length > 0) {
-					final List<DecoratedControllerDetail> details = new ArrayList<DecoratedControllerDetail>();
-					int count = control.detailsConfig().length;
-					for (DetailConfig detailConfig : control.detailsConfig()) {
-						final DecoratedControllerDetail detail = new DecoratedControllerDetail();
-						if (count > 1) {
-							detail.setNext(",");
-						}
-						if (detailConfig.despiseFields().length > 1) {
-							final StringBuilder despiseFields = new StringBuilder();
-							for (String despise : detailConfig.despiseFields()) {
-								if (StringUtils.isBlank(despiseFields.toString())) {
-									despiseFields.append("\"" + despise + "\"");
-								} else {
-									despiseFields.append(", \"" + despise + "\"");
-								}
+			final ControllerType controllerType = codeGenerator.controller().controllerType();
+			types.add(controllerType.toString());
+			if (controllerType.equals(ControllerType.ALL)
+					|| controllerType.equals(ControllerType.CRUD)) {
+				final List<DecoratedControllerDetail> details = new ArrayList<DecoratedControllerDetail>();
+				int count = codeGenerator.controller().detailsConfig().length;
+				for (DetailConfig detailConfig : codeGenerator.controller().detailsConfig()) {
+					final DecoratedControllerDetail detail = new DecoratedControllerDetail();
+					if (count > 1) {
+						detail.setNext(",");
+					}
+					if (detailConfig.despiseFields().length > 1) {
+						final StringBuilder despiseFields = new StringBuilder();
+						for (String despise : detailConfig.despiseFields()) {
+							if (StringUtils.isBlank(despiseFields.toString())) {
+								despiseFields.append("\"" + despise + "\"");
+							} else {
+								despiseFields.append(", \"" + despise + "\"");
 							}
-							detail.setDespiseFields(despiseFields.toString());
-						} else {
-							detail.setDespiseFields(detailConfig.despiseFields()[0]);
 						}
+						detail.setDespiseFields(despiseFields.toString());
+					} else {
+						detail.setDespiseFields(detailConfig.despiseFields()[0]);
+					}
 
-						detail.setNewDetails(detailConfig.newDetails());
-						detail.setStartNewDetails(detailConfig.startNewDetails());
-						detail.setName(detailConfig.name());
-						detail.setParentDetailName(detailConfig.parentDetailName());
-						detail.setPropertyName(detailConfig.propertyName());
-						detail.setView(detailConfig.view());
-						details.add(detail);
-						count--;
-					}
-					if (!details.isEmpty()) {
-						controller.setDetails(details);
-					}
+					detail.setNewDetails(detailConfig.newDetails());
+					detail.setStartNewDetails(detailConfig.startNewDetails());
+					detail.setName(detailConfig.name());
+					detail.setParentDetailName(detailConfig.parentDetailName());
+					detail.setPropertyName(detailConfig.propertyName());
+					detail.setView(detailConfig.view());
+					details.add(detail);
+					count--;
 				}
-				if (control.controllerType().equals(ControllerType.SELECT)) {
-					controller.setPageSize(control.pageSize());
+				if (!details.isEmpty()) {
+					controller.setDetails(details);
 				}
-				if (control.controllerType().equals(ControllerType.TABULAR)) {
+
+				if (controllerType.equals(ControllerType.ALL)
+						|| controllerType.equals(ControllerType.SELECT)) {
+					controller.setPageSize(codeGenerator.controller().pageSize());
+				}
+				if (controllerType.equals(ControllerType.ALL)
+						|| controllerType.equals(ControllerType.TABULAR)) {
 					final StringBuilder tabularDespise = new StringBuilder();
-					if (control.tabularDespiseFields().length > 0) {
-						for (String s : control.tabularDespiseFields()) {
+					if (codeGenerator.controller().tabularDespiseFields().length > 0) {
+						for (String s : codeGenerator.controller().tabularDespiseFields()) {
 							if (StringUtils.isBlank(tabularDespise.toString())) {
 								tabularDespise.append("\"" + s + "\"");
 							} else {
@@ -128,10 +128,12 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						}
 					}
 					controller.setTabularDespiseFields(tabularDespise.toString());
-					controller.setTabularStartNewDetails(control.tabularStartNewDetails());
-					controller.setTabularNewDetails(control.tabularNewDetails());
-					controller.setTabularName(control.tabularName());
-					controller.setTabularPropertyName(control.tabularPropertyName());
+					controller.setTabularStartNewDetails(codeGenerator.controller()
+							.tabularStartNewDetails());
+					controller.setTabularNewDetails(codeGenerator.controller().tabularNewDetails());
+					controller.setTabularName(codeGenerator.controller().tabularName());
+					controller.setTabularPropertyName(codeGenerator.controller()
+							.tabularPropertyName());
 				}
 			}
 			controller.setTypes(types);

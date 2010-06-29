@@ -361,9 +361,10 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 *            {@link #execute()} method.
 	 */
 	public void pause(String result) {
+		// pause
 	}
 
 	public void addActionError(final String key, final Object... args) {
-
+		// action error
 	}
 }
