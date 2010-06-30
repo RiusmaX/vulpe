@@ -39,7 +39,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
  * Default implementation of DAO for CRUD's with JPA
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -22,6 +22,9 @@
 		<name>Active Thread</name>
 		<url>http://www.activethread.com.br</url>
 	</organization>
+	<properties>
+		<hibernate.version>3.2.1.ga</hibernate.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
@@ -52,6 +55,36 @@
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-dao-jpa</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.0.1B</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-archive-browsing</artifactId>
+			<version>5.0.0alpha-200607201-119</version>
 		</dependency>
 	</dependencies>
 </project>

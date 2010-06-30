@@ -3,12 +3,12 @@
 <c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 
 <p>
-<c:set var="buttonEL" value="${'${'}addDetailShow${targetConfig.name}${'}'}" /> 
-<c:set var="button" value="${util:eval(pageContext, btEL)}" /> 
-<c:set var="style" value="display: none;" /> 
+<c:set var="buttonEL" value="${'${'}addDetailShow${targetConfig.name}${'}'}" />
+<c:set var="button" value="${util:eval(pageContext, buttonEL)}" />
+<c:set var="style" value="display: none;" />
 <c:if test="${button}">
 	<c:set var="style" value="display: inline;" />
-</c:if> 
+</c:if>
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.addDetail"
 	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.name}"
@@ -19,11 +19,11 @@
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" /> 
-<c:set var="style" value="display: none;" /> 
+	heightIcon="${heightIcon}" />
+<c:set var="style" value="display: none;" />
 <c:if test="${prepareShow}">
 	<c:set var="style" value="display: inline;" />
-</c:if> 
+</c:if>
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.refresh"
 	elementId="vulpeButtonPrepare_${controllerConfig.formName}"
@@ -33,11 +33,11 @@
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" /> 
+	heightIcon="${heightIcon}" />
 <c:set var="style" value="display: none;" />
 <c:if test="${tabularPostShow}">
 	<c:set var="style" value="display: inline;" />
-</c:if> 
+</c:if>
 <v:action validate="true" style="${style}"
 	labelKey="vulpe.label.tabularPost"
 	elementId="vulpeButtonTabularPost_${controllerConfig.formName}"

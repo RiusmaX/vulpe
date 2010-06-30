@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /**
  * Vulpe Constants
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -275,11 +275,12 @@ public class VulpeConstants {
 		public static final String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
 		public static final String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
 		public static final String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
+		public static final String ROLE_PREFIX = "ROLE_";
 	}
 
 	public class Model {
 		public class Entity {
-			public static final String SECURITY_ROLE_PREFIX = "ROLE_";
+
 		}
 
 		public class DAO {

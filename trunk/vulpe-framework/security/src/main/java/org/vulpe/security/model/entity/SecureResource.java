@@ -17,6 +17,15 @@ package org.vulpe.security.model.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
@@ -25,16 +34,19 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
 /**
  * Contains the information of a secured resource. They can be of two types. One
  * for filter invocation and another for method invocation.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
- * 
+ *
  */
 @CachedClass
+@Entity
 @SuppressWarnings("serial")
 public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	/**
@@ -48,11 +60,13 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 	 */
 	private String type = VulpeSecurityConstants.RESOURCE_TYPE_FI;
 
+	@OneToMany(targetEntity = SecureResourceRole.class, mappedBy = "secureResource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OrderBy("id")
 	private List<SecureResourceRole> secureResourceRoles;
 
 	/**
 	 * Returns the resourceName
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getResourceName() {
@@ -61,7 +75,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
 	/**
 	 * Sets the resourceName
-	 * 
+	 *
 	 * @param resourceName
 	 *            The resourceName to set.
 	 */
@@ -71,7 +85,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
 	/**
 	 * Returns the type
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getType() {
@@ -80,7 +94,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
 	/**
 	 * Sets the type
-	 * 
+	 *
 	 * @param type
 	 *            The type to set.
 	 */
@@ -91,7 +105,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 	/**
 	 * Creates a SecureResource with <code>resourceName</code> and
 	 * <code>type</code> params.
-	 * 
+	 *
 	 * @param resourceName
 	 *            secured resource. It can be URL or method name.
 	 * @param type
@@ -106,7 +120,7 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 	/**
 	 * Creates a SecureResource with <code>resourceName</code> and
 	 * <code>secureResourceRoles</code> params.
-	 * 
+	 *
 	 * @param resourceName
 	 *            secured resource. It can be URL or method name.
 	 * @param secureResourceRoles
@@ -124,19 +138,11 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(final SecureResource o) {
 		return CompareToBuilder.reflectionCompare(this, o);
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
 	}
 
 	public List<SecureResourceRole> getSecureResourceRoles() {
@@ -145,5 +151,13 @@ public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
 
 	public void setSecureResourceRoles(final List<SecureResourceRole> secureResourceRoles) {
 		this.secureResourceRoles = secureResourceRoles;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

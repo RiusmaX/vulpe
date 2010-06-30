@@ -17,12 +17,16 @@ package org.vulpe.security.model.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
+@MappedSuperclass
 @SuppressWarnings("serial")
 public class BasicUser extends AbstractVulpeBaseEntityImpl<Long> {
-
-	private Long id;
 
 	private String username;
 
@@ -32,15 +36,8 @@ public class BasicUser extends AbstractVulpeBaseEntityImpl<Long> {
 
 	private boolean active = true;
 
+	@OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<UserRole> userRoles;
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	public String getUsername() {
 		return username;

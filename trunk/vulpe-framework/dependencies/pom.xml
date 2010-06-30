@@ -47,7 +47,7 @@
 			<artifactId>joda-time</artifactId>
 			<version>1.6</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>ejb-api</artifactId>
@@ -276,6 +276,7 @@
 			<groupId>com.db4o</groupId>
 			<artifactId>db4o</artifactId>
 			<version>7.12</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -358,7 +359,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.6.1</version>
 				<configuration>
-					<!-- 
+					<!--
 					<show>private</show>
 					<nohelp>true</nohelp>
 					 -->

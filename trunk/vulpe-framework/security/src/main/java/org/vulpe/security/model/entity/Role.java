@@ -15,15 +15,23 @@
  */
 package org.vulpe.security.model.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.VulpeConstants.Model.Entity;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.db4o.Like;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
+@Entity
 @SuppressWarnings("serial")
 public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@Like
@@ -48,14 +56,6 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 		this.description = description;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -73,17 +73,24 @@ public class Role extends AbstractVulpeBaseEntityImpl<Long> {
 	}
 
 	public void setSimpleName(String simpleName) {
-		if (StringUtils.isNotBlank(simpleName)
-				&& !simpleName.startsWith(Entity.SECURITY_ROLE_PREFIX)) {
-			setName(Entity.SECURITY_ROLE_PREFIX + simpleName);
+		if (StringUtils.isNotBlank(simpleName) && !simpleName.startsWith(Security.ROLE_PREFIX)) {
+			setName(Security.ROLE_PREFIX + simpleName);
 		}
 		this.simpleName = simpleName;
 	}
 
 	public String getSimpleName() {
 		if (StringUtils.isNotBlank(getName())) {
-			simpleName = getName().replace(Entity.SECURITY_ROLE_PREFIX, "");
+			simpleName = getName().replace(Security.ROLE_PREFIX, "");
 		}
 		return simpleName;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

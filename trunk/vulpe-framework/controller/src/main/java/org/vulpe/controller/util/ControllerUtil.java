@@ -77,8 +77,7 @@ public class ControllerUtil {
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(
-					bean, fieldName);
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (VulpeValidationUtil.getInstance().isEmpty(value)) {
 				return true;
 			}
@@ -100,13 +99,12 @@ public class ControllerUtil {
 			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(
-					bean, fieldName);
-			if (StringUtils.isNotBlank(value.toString())) {
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			if (value != null && StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
-					final Object valueRealBean = VulpeReflectUtil.getInstance()
-							.getFieldValue(realBean, fieldName);
-					if (StringUtils.isNotBlank(valueRealBean.toString())
+					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(
+							realBean, fieldName);
+					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
 					}
@@ -130,8 +128,7 @@ public class ControllerUtil {
 			return;
 		}
 
-		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator
-				.hasNext();) {
+		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
 			final VulpeBaseEntity<?> bean = iterator.next();
 			if (bean == null) {
 				iterator.remove();
@@ -164,8 +161,7 @@ public class ControllerUtil {
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
 	 */
-	public Collection<DuplicatedBean> duplicatedItens(
-			final Collection<VulpeBaseEntity<?>> beans,
+	public Collection<DuplicatedBean> duplicatedItens(final Collection<VulpeBaseEntity<?>> beans,
 			final String despiseFields[]) {
 		final Collection<DuplicatedBean> duplicatedBeans = new ArrayList<DuplicatedBean>();
 		if (beans == null) {
@@ -208,8 +204,8 @@ public class ControllerUtil {
 		base = base.replace(Logic.AJAX, "");
 		getCurrentControllerURI().set(base);
 		base = (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
-				.contains(View.AUTHENTICATOR)) ? base : base.substring(0,
-				StringUtils.lastIndexOf(base, '/'));
+				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
+				base, '/'));
 		getCurrentController().set(base);
 		return base;
 	}
@@ -245,16 +241,14 @@ public class ControllerUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseControllerConfig getControllerConfig(
-			final VulpeBaseController controller) {
+	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance()
-					.get(getCurrentControllerKey());
+			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(
-				controller.getClass(), details);
+		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller
+				.getClass(), details);
 		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
 
 		int count = 0;
@@ -278,8 +272,7 @@ public class ControllerUtil {
 	public VulpeBaseSimpleControllerConfig getControllerConfig(
 			final VulpeBaseSimpleController controller) {
 		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance()
-					.get(getCurrentControllerKey());
+			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
 		}
 
 		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(

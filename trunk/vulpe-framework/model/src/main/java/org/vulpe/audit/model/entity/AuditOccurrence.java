@@ -30,7 +30,6 @@ import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -46,16 +45,15 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 
 import com.thoughtworks.xstream.XStream;
 
-@NamedQueries({ @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
-@SuppressWarnings({ "serial", "rawtypes" })
+@NamedQueries( { @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
+@SuppressWarnings( { "serial", "rawtypes" })
 @Entity
 @MappedSuperclass
 @IgnoreAudit
 public class AuditOccurrence extends AbstractVulpeBaseEntityImpl<Long> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auditoccurrence_seq")
-	@SequenceGenerator(name = "auditoccurrence_seq", sequenceName = "auditoccurrence_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private Long parent;

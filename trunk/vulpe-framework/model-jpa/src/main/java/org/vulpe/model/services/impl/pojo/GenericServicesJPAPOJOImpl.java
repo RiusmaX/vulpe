@@ -18,9 +18,13 @@ package org.vulpe.model.services.impl.pojo;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.apache.log4j.Logger;
+import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseCRUDDAOJPAImpl;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
@@ -28,10 +32,10 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.GenericServices;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 @Service("GenericServices")
 @Transactional
 public class GenericServicesJPAPOJOImpl<ENTITY extends AbstractVulpeBaseEntityImpl<ID>, ID extends Serializable & Comparable>
@@ -41,7 +45,7 @@ public class GenericServicesJPAPOJOImpl<ENTITY extends AbstractVulpeBaseEntityIm
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.GenericServices#getList(
 	 * org.vulpe.model.entity.VulpeBaseEntity)
 	 */
@@ -49,6 +53,10 @@ public class GenericServicesJPAPOJOImpl<ENTITY extends AbstractVulpeBaseEntityIm
 		List<T> list = null;
 		try {
 			final VulpeBaseCRUDDAOJPAImpl<ENTITY, ID> dao = new VulpeBaseCRUDDAOJPAImpl<ENTITY, ID>();
+			final EntityManagerFactory entityManagerFactory = AbstractVulpeBeanFactory
+					.getInstance().getBean("entityManagerFactory");
+			dao.setJpaTemplate(new JpaTemplate(entityManagerFactory));
+			dao.setEntityManagerFactory(entityManagerFactory);
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			list = (List<T>) dao.read((ENTITY) entity);
 		} catch (VulpeApplicationException e) {

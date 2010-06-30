@@ -26,20 +26,18 @@ import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseCRUDDAOJPAImpl;
 
-
 @Repository("AuditOccurrenceDAO")
 @Transactional
-public class AuditOccurrenceDAOJPAImpl extends
-		VulpeBaseCRUDDAOJPAImpl<AuditOccurrence, Long> implements AuditOccurrenceDAO {
+public class AuditOccurrenceDAOJPAImpl extends VulpeBaseCRUDDAOJPAImpl<AuditOccurrence, Long>
+		implements AuditOccurrenceDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<AuditOccurrence> findByParent(final AuditOccurrence parent)
+	public List<AuditOccurrence> findByParent(final AuditOccurrence auditOccurrence)
 			throws VulpeApplicationException {
 		final Map<String, Object> map = new HashMap<String, Object>();
-		map.put("parent", parent);
-		return (List<AuditOccurrence>) getJpaTemplate()
-				.findByNamedQueryAndNamedParams("AuditOccurrence.findByParent",
-						map);
+		map.put("parent", auditOccurrence.getParent());
+		return (List<AuditOccurrence>) getJpaTemplate().findByNamedQueryAndNamedParams(
+				"AuditOccurrence.findByParent", map);
 	}
 
 }

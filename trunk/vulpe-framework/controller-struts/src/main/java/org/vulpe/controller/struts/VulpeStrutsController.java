@@ -54,7 +54,7 @@ import com.opensymphony.xwork2.util.OgnlContextState;
 
 /**
  * Vulpe Base Action to Struts2
- * 
+ *
  * @param <ENTITY>
  *            Entity
  * @param <ID>
@@ -64,7 +64,7 @@ import com.opensymphony.xwork2.util.OgnlContextState;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
 public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeStrutsSimpleController implements VulpeBaseController {
 
@@ -150,7 +150,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Returns current action configuration.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -160,7 +160,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Returns current detail configuration.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -170,7 +170,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#create()
 	 */
 	@SkipValidation
@@ -192,7 +192,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to create record.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onCreate() {
@@ -238,7 +238,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createBefore() {
@@ -249,7 +249,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createAfter() {
@@ -258,7 +258,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#createPost()
 	 */
 	@ResetSession
@@ -295,7 +295,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code in confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Entity created.
 	 */
@@ -304,8 +304,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 		final ENTITY entity = prepareEntity(Action.CREATE_POST);
 
-		final ENTITY persistentEntity = (ENTITY) invokeServices(Action.CREATE_POST,
-				Action.CREATE.concat(getControllerConfig().getEntityClass().getSimpleName()),
+		final ENTITY persistentEntity = (ENTITY) invokeServices(Action.CREATE_POST, Action.CREATE
+				.concat(getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
 		setEntity(persistentEntity);
 		setExecuted(true);
@@ -314,7 +314,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to conde before confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createPostBefore() {
@@ -325,7 +325,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 * @param entity
 	 *            Entity to create.
@@ -336,7 +336,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#update()
 	 */
 	@SkipValidation
@@ -358,7 +358,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Make visualization read only.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -373,16 +373,16 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to prepare update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onUpdate() {
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			final ENTITY entity = prepareEntity(Action.UPDATE);
-			final ENTITY persistentEntity = (ENTITY) invokeServices(Action.UPDATE,
-					Action.FIND.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getIdClass() },
-					new Object[] { entity.getId() });
+			final ENTITY persistentEntity = (ENTITY) invokeServices(Action.UPDATE, Action.FIND
+					.concat(getControllerConfig().getEntityClass().getSimpleName()),
+					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity
+							.getId() });
 			setEntity(persistentEntity);
 			setExecuted(false);
 		}
@@ -390,7 +390,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updateBefore() {
@@ -401,7 +401,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updateAfter() {
@@ -410,7 +410,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#updatePost()
 	 */
 	@ResetSession
@@ -451,7 +451,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point prepare confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onUpdatePost() {
@@ -459,16 +459,16 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
 
-		invokeServices(Action.UPDATE_POST,
-				Action.UPDATE.concat(getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
+		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
+				.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
+				.getEntityClass() }, new Object[] { entity });
 
 		setExecuted(true);
 	}
 
 	/**
 	 * Extension point to code before confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updatePostBefore() {
@@ -479,7 +479,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updatePostAfter() {
@@ -488,7 +488,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#delete()
 	 */
 	@SkipValidation
@@ -512,7 +512,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to delete.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onDelete() {
@@ -539,7 +539,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before delete.
-	 * 
+	 *
 	 * @since
 	 */
 	protected void deleteBefore() {
@@ -551,7 +551,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after delete.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteAfter() {
@@ -560,7 +560,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#deleteDetail()
 	 */
 	@SkipValidation
@@ -588,7 +588,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected int onDeleteDetail() {
@@ -634,10 +634,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 							new Object[] { removedDetails });
 				} else {
 					if (entity.getId() != null && size > details.size()) {
-						invokeServices(Action.UPDATE_POST,
-								Action.UPDATE.concat(getControllerConfig().getEntityClass()
-										.getSimpleName()), new Class[] { getControllerConfig()
-										.getEntityClass() }, new Object[] { entity });
+						invokeServices(Action.UPDATE_POST, Action.UPDATE
+								.concat(getControllerConfig().getEntityClass().getSimpleName()),
+								new Class[] { getControllerConfig().getEntityClass() },
+								new Object[] { entity });
 						invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
 								.getEntityClass().getSimpleName()), new Class[] { List.class },
 								new Object[] { removedDetails });
@@ -656,7 +656,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteDetailBefore() {
@@ -669,7 +669,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteDetailAfter() {
@@ -685,7 +685,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String json() {
@@ -698,7 +698,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String autocomplete() {
@@ -712,7 +712,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to read record.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -749,7 +749,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to read record.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onRead() {
@@ -770,10 +770,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			setPaging(paging);
 			setEntities(paging.getList());
 		} else {
-			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ,
-					Action.READ.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass() },
-					new Object[] { entity.clone() });
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
+					.concat(getControllerConfig().getEntityClass().getSimpleName()),
+					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
+							.clone() });
 			setEntities(list);
 
 			if (getControllerType().equals(ControllerType.TABULAR)) {
@@ -800,7 +800,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before read.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void readBefore() {
@@ -813,7 +813,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after read.
-	 * 
+	 *
 	 * @since
 	 */
 	protected void readAfter() {
@@ -822,7 +822,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#tabularPost()
 	 */
 	@ResetSession
@@ -853,14 +853,14 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onTabularPost() {
 		despiseDetails();
 
-		final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.TABULAR_POST,
-				Action.PERSIST.concat(getControllerConfig().getEntityClass().getSimpleName()),
+		final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.TABULAR_POST, Action.PERSIST
+				.concat(getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
 
@@ -869,7 +869,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void tabularPostBefore() {
@@ -880,7 +880,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void tabularPostAfter() {
@@ -889,7 +889,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#addDetail()
 	 */
 	@SkipValidation
@@ -914,7 +914,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 * @param start
 	 *            indicates if use <code>startNewDetails</code> or
@@ -948,9 +948,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					setRequestAttribute(
-							detailConfig.getParentDetailConfig().getBaseName()
-									.concat(Layout.DETAIL_ITEM), parent);
+					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
+							Layout.DETAIL_ITEM), parent);
 				}
 			}
 
@@ -966,7 +965,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to add detail.
-	 * 
+	 *
 	 * @param collection
 	 * @since 1.0
 	 * @throws OgnlException
@@ -985,7 +984,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to prepare detail.
-	 * 
+	 *
 	 * @param detail
 	 *            Detail.
 	 * @since 1.0
@@ -996,7 +995,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code before add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void addDetailBefore() {
@@ -1008,7 +1007,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to code after add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void addDetailAfter() {
@@ -1017,7 +1016,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseController#prepare()
 	 */
 	@SkipValidation
@@ -1135,7 +1134,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to prepare show.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onPrepare() {
@@ -1151,7 +1150,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Extension point to prepare entity.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected ENTITY prepareEntity(final String method) {
@@ -1188,7 +1187,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetails() {
@@ -1201,7 +1200,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to validate detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected boolean validateDetails() {
@@ -1228,19 +1227,19 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @param parent
 	 *            Parent
 	 * @param detailConfig
 	 *            Configuration of detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig) {
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeBaseEntity<?>> beans = (Collection) Ognl.getValue(
-					detailConfig.getPropertyName(), context, parent);
+			final Collection<VulpeBaseEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
+					.getPropertyName(), context, parent);
 			despiseDetailItens(beans, detailConfig);
 			if (beans != null && !detailConfig.getSubDetails().isEmpty()) {
 				for (VulpeBaseEntity<?> bean : beans) {
@@ -1256,12 +1255,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @param beans
 	 *            details
 	 * @param detailConfig
 	 *            Configuration of detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetailItens(final Collection<VulpeBaseEntity<?>> beans,
@@ -1272,7 +1271,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to validate duplicated details.
-	 * 
+	 *
 	 * @param beans
 	 * @param detailConfig
 	 * @return
@@ -1310,7 +1309,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to validate cardinality on details.
-	 * 
+	 *
 	 * @param beans
 	 * @param detailConfig
 	 * @return
@@ -1320,17 +1319,17 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		if (!Cardinality.ZERO.equals(detailConfig.getCardinalityType().getValue())) {
 			if (Cardinality.ONE.equals(detailConfig.getCardinalityType().getValue())) {
 				if (beans == null || beans.size() == 0) {
-					addActionError("vulpe.error.details.cardinality.one.less",
-							getText(detailConfig.getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.less", getText(detailConfig
+							.getTitleKey()));
 					return false;
 				} else if (beans.size() > 1) {
-					addActionError("vulpe.error.details.cardinality.one.only",
-							getText(detailConfig.getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.only", getText(detailConfig
+							.getTitleKey()));
 				}
 			} else if (Cardinality.ONE_OR_MORE.equals(detailConfig.getCardinalityType().getValue())) {
 				if (beans == null || beans.size() == 0) {
-					addActionError("vulpe.error.details.cardinality.one.more",
-							getText(detailConfig.getTitleKey()));
+					addActionError("vulpe.error.details.cardinality.one.more", getText(detailConfig
+							.getTitleKey()));
 					return false;
 				}
 			}
@@ -1340,7 +1339,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to show buttons and configure forward.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void showButtons(final String method) {
@@ -1436,7 +1435,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to manager button.
-	 * 
+	 *
 	 * @param button
 	 *            Button
 	 * @param show
@@ -1445,10 +1444,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	public void buttonControl(final String button, final boolean show) {
 		if (getControllerType().equals(ControllerType.TABULAR)) {
-			setRequestAttribute(
-					Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName()),
-					(Boolean) show);
-		} else if (Button.ADD_DETAIL.equals(button)) {
+			setRequestAttribute(Button.DELETE.concat(getControllerConfig().getTabularConfig()
+					.getBaseName()), (Boolean) show);
+		}
+		if (Button.ADD_DETAIL.equals(button)) {
 			setRequestAttribute(Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig()
 					.getBaseName()), (Boolean) show);
 		} else {
@@ -1458,7 +1457,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to show button.
-	 * 
+	 *
 	 * @param button
 	 *            Button.
 	 * @since 1.0
@@ -1469,7 +1468,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to show buttons.
-	 * 
+	 *
 	 * @param buttons
 	 *            Buttons.
 	 * @since 1.0
@@ -1482,7 +1481,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to hide button.
-	 * 
+	 *
 	 * @param button
 	 *            Button.
 	 * @since 1.0
@@ -1493,7 +1492,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to hide buttons.
-	 * 
+	 *
 	 * @param buttons
 	 *            Buttons.
 	 * @since 1.0
@@ -1506,7 +1505,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/**
 	 * Method to show error
-	 * 
+	 *
 	 * @param message
 	 * @return
 	 */
@@ -1535,7 +1534,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeBaseSimpleController#validateEntity()
 	 */
 	public boolean validateEntity() {
