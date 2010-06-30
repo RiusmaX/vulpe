@@ -1,9 +1,8 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-<?xml version="${version}"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<description>${rootArtifactId}</description>
 	<!-- APP General Configuration -->
@@ -24,12 +23,29 @@
 		<param-name>parentContextKey</param-name>
 		<param-value>mainApplicationContext</param-value>
 	</context-param>
+	<filter>
+		<filter-name>gzip</filter-name>
+		<filter-class>org.vulpe.controller.GZIPFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>gzip</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>vulpe</filter-name>
+		<filter-class>org.vulpe.controller.VulpeFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>vulpe</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
 	<!-- Spring Filter to control EntityManager -->
-	<!--
-		<filter> <filter-name>JpaFilter</filter-name>
+	<filter>
+		<filter-name>JpaFilter</filter-name>
 		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-		</filter>
-	-->
+	</filter>
 	<!-- Spring Security Filter -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -58,10 +74,11 @@
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<!-- Spring Filter Mapping to control EntityManager  -->
-	<!--
-		<filter-mapping> <filter-name>JpaFilter</filter-name>
-		<url-pattern>/*</url-pattern> </filter-mapping> Struts2 Filter Mapping
-	-->
+	<filter-mapping>
+		<filter-name>JpaFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	Struts2 Filter Mapping
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>

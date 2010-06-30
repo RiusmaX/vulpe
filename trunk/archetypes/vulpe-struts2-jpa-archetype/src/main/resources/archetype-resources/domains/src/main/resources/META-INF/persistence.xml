@@ -8,7 +8,7 @@
 	<persistence-unit name="${rootArtifactId}" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/jdbc/${rootArtifactId}</jta-data-source>
-		<jar-file>APP-INF/lib/vulpe-model-1.0.jar,APP-INF/lib/vulpe-audit-1.0.jar</jar-file>
+		<jar-file>APP-INF/lib/vulpe-model-1.0.jar</jar-file>
 		<jar-file>APP-INF/lib/vulpe-audit-1.0.jar</jar-file>
 		<jar-file>APP-INF/lib/vulpe-security-1.0.jar</jar-file>
 		<properties>
@@ -17,7 +17,7 @@
 			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-			<!-- 
+			<!--
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			 -->
 		</properties>

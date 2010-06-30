@@ -18,5 +18,25 @@
 	default-lazy-init="true" default-autowire="byName">
 
 	<context:component-scan base-package="${package}" />
-	
+
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager" ref="jtaTransactionManager" />
+	</bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="${rootArtifactId}" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+	</bean>
+
+	<bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="userTransactionName" value="UserTransaction" />
+		<property name="transactionManagerName" value="java:/TransactionManager" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="jtaTransactionManager" />
+
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
 </beans>
