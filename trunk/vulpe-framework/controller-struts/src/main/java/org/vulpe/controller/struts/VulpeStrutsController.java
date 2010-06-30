@@ -31,10 +31,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.json.JSONArray;
 import org.vulpe.commons.VulpeConstants.Action;
+import org.vulpe.commons.VulpeConstants.Error;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.VulpeConstants.Action.Validate.Cardinality;
-import org.vulpe.commons.VulpeConstants.Error;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
@@ -500,14 +500,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		addActionMessage(getText("vulpe.msg.delete"));
 
 		setResultName(Forward.SUCCESS);
-		if (getControllerType().equals(ControllerType.SELECT)) {
-			setResultForward(getControllerConfig().getControllerName().concat(Action.URI.READ));
-		} else {
-			setResultForward(getControllerConfig().getOwnerController().concat(Action.URI.READ));
-		}
-
 		deleteAfter();
-		return getResultName();
+		return read();
 	}
 
 	/**

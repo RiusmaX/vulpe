@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation to indicate creation of view from entity.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -34,6 +34,6 @@ public @interface View {
 	ViewType[] viewType();
 
 	enum ViewType {
-		CRUD, SELECT, TABULAR, NONE
+		CRUD, SELECT, TABULAR, NONE, ALL
 	}
 }

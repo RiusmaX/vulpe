@@ -1,7 +1,7 @@
 <#include "macros.ftl"/>
 <@forAllValidView ; type, view>
 <#list view.types as t>
-<#if t == 'SELECT'>
+<#if t == 'SELECT' || t == 'ALL'>
 ################################################################################
 # View Select: ${view.name}
 ################################################################################
@@ -148,7 +148,8 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	</jsp:attribute>
 </v:table>
 </@file>
-<#elseif t == 'CRUD'>
+</#if>
+<#if t == 'CRUD' || t == 'ALL'>
 ################################################################################
 # View CRUD: ${view.name}
 ################################################################################
@@ -375,7 +376,8 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 </v:table>
 </@file>
 </#list>
-<#elseif t == 'TABULAR'>
+</#if>
+<#if t == 'TABULAR' || t == 'ALL'>
 ################################################################################
 # View Tabular: ${view.name}
 ################################################################################

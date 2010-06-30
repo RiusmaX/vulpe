@@ -169,7 +169,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<c:set var="deleteLayer" value="${deleteFormName}_select_table"/>
+					<c:set var="deleteLayer" value="vulpeSelectTable_${deleteFormName}"/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
