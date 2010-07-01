@@ -33,7 +33,7 @@
 
 <c:if test="${show eq true}">
 	<c:if test="${empty sortPropertyInfo}">
-		<c:set var="sortPropertyInfo" value="${controllerConfig.formName}_entity.orderBy"/>
+		<c:set var="sortPropertyInfo" value="${vulpeFormName}_entity.orderBy"/>
 	</c:if>
 
 	<c:if test="${empty renderId}">
@@ -123,7 +123,7 @@
 			<c:set var="pagingActionName" value="${controllerConfig.controllerName}/read"/>
 		</c:if>
 		<c:if test="${empty pagingFormName}">
-			<c:set var="pagingFormName" value="${controllerConfig.formName}"/>
+			<c:set var="pagingFormName" value="${vulpeFormName}"/>
 		</c:if>
 		<c:if test="${empty pagingLayerFields}">
 			<c:set var="pagingLayerFields" value="${pagingFormName}"/>

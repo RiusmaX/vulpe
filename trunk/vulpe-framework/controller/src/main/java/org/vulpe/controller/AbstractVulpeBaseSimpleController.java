@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
-import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -780,7 +779,18 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * Define Result Forward to render normal or AJAX request
 	 */
 	protected void controlResultForward() {
-		setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+		setResultForward(getControllerType().equals(ControllerType.CRUD_SELECT) ? Layout.PROTECTED_JSP_COMMONS
+				.concat(Layout.BODY_TWICE_JSP)
+				: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+	}
+
+	/**
+	 *
+	 * @param controllerType
+	 */
+	protected void setBodyTwice(final ControllerType controllerType) {
+		setRequestAttribute(Layout.BODY_TWICE, true);
+		setRequestAttribute(Layout.BODY_TWICE_TYPE, controllerType);
 	}
 
 	/*

@@ -176,7 +176,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String create() {
-		getControllerConfig().setControllerType(ControllerType.CRUD);
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			getControllerConfig().setControllerType(ControllerType.CRUD);
+		}
 		setOperation(Action.CREATE);
 		createBefore();
 		onCreate();
@@ -184,7 +186,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		showButtons(Action.CREATE);
 
 		setResultName(Forward.SUCCESS);
-		controlResultForward();
+		if (getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			setBodyTwice(ControllerType.CRUD);
+			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+		} else {
+			controlResultForward();
+		}
 
 		createAfter();
 		return getResultName();
@@ -242,7 +249,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void createBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -263,7 +271,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String createPost() {
-		getControllerConfig().setControllerType(ControllerType.CRUD);
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			getControllerConfig().setControllerType(ControllerType.CRUD);
+		}
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
@@ -318,7 +328,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void createPostBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -342,7 +353,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String update() {
-		getControllerConfig().setControllerType(ControllerType.CRUD);
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			getControllerConfig().setControllerType(ControllerType.CRUD);
+		}
 		setOperation(Action.UPDATE);
 		updateBefore();
 		onUpdate();
@@ -350,7 +363,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		showButtons(Action.UPDATE);
 
 		setResultName(Forward.SUCCESS);
-		controlResultForward();
+		if (getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			setBodyTwice(ControllerType.CRUD);
+			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+		} else {
+			controlResultForward();
+		}
 
 		updateAfter();
 		return getResultName();
@@ -377,7 +395,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void onUpdate() {
-		if (getControllerType().equals(ControllerType.CRUD)) {
+		if (getControllerType().equals(ControllerType.CRUD)
+				|| getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			final ENTITY entity = prepareEntity(Action.UPDATE);
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Action.UPDATE, Action.FIND
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
@@ -394,7 +413,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void updateBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -415,7 +435,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String updatePost() {
-		getControllerConfig().setControllerType(ControllerType.CRUD);
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			getControllerConfig().setControllerType(ControllerType.CRUD);
+		}
 		setOperation(Action.UPDATE_POST);
 		updatePostBefore();
 		controlResultForward();
@@ -472,7 +494,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void updatePostBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)) {
+		if (!getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -538,7 +561,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	protected void deleteBefore() {
 		if (!getControllerType().equals(ControllerType.SELECT)
-				&& !getControllerType().equals(ControllerType.CRUD)) {
+				&& !getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -712,7 +736,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String read() {
-		setOperation(Action.READ);
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			setOperation(Action.READ);
+		}
 		readBefore();
 		onRead();
 		showButtons(Action.READ);
@@ -733,6 +759,13 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			} else {
 				controlResultForward();
 			}
+		} else if (getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			setBodyTwice(ControllerType.SELECT);
+			if (isAjax()) {
+				setResultForward(getControllerConfig().getViewSelectItemsPath());
+			} else {
+				setResultForward(getControllerConfig().getViewSelectPath());
+			}
 		} else {
 			controlResultForward();
 		}
@@ -752,7 +785,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		}
 
 		final ENTITY entity = prepareEntity(Action.READ);
-		if (getControllerType().equals(ControllerType.SELECT)
+		if ((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
+				ControllerType.CRUD_SELECT))
 				&& getControllerConfig().getPageSize() > 0) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
 					: getPaging().getPage();
@@ -799,6 +833,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	protected void readBefore() {
 		if (!getControllerType().equals(ControllerType.SELECT)
+				&& !getControllerType().equals(ControllerType.CRUD_SELECT)
 				&& !getControllerType().equals(ControllerType.TABULAR)
 				&& !getControllerType().equals(ControllerType.REPORT)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
@@ -1016,6 +1051,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@SkipValidation
 	@ResetSession(before = true)
 	public String prepare() {
+		getControllerConfig().setControllerType(ControllerType.CRUD_SELECT);
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
@@ -1037,13 +1073,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 			}
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
-			if (isAjax()) {
-				setResultForward(getControllerConfig().getControllerName().concat(
-						Action.URI.READ_AJAX));
-				setResultName(Forward.READ);
-			} else {
-				return read();
-			}
+			return read();
 		} else {
 			controlResultForward();
 		}
@@ -1378,6 +1408,22 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			showButtons(Button.READ, Button.PREPARE, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
+		} else if (getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			if ((Action.CREATE.equals(method) || Action.PREPARE.equals(method))
+					|| (Action.CREATE.equals(getOperation()) || Action.CREATE_POST
+							.equals(getOperation()))) {
+				showButtons(ControllerType.CRUD, Button.CREATE_POST, Button.CLEAR);
+			} else if (Action.UPDATE.equals(method)
+					|| (Action.UPDATE.equals(getOperation()) || Action.UPDATE_POST
+							.equals(getOperation()))) {
+				showButtons(Button.PREPARE, Button.CREATE, Button.UPDATE_POST, Button.DELETE,
+						Button.CLEAR);
+			} else if (Action.VIEW.equals(method)) {
+				showButtons();
+			}
+
+			showButtons(ControllerType.SELECT, Button.READ, Button.PREPARE, Button.UPDATE,
+					Button.DELETE);
 		}
 	}
 
@@ -1470,6 +1516,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public void showButtons(final String... buttons) {
 		for (String button : buttons) {
 			showButton(button);
+		}
+	}
+
+	public void showButtons(final ControllerType controllerType, final String... buttons) {
+		for (String button : buttons) {
+			showButton(controllerType + "_" + button);
 		}
 	}
 

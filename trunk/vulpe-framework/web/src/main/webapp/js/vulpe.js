@@ -49,7 +49,7 @@ var vulpe = {
 		},
 		messages: {
 			error: {
-				checkfield: 'vulpe.error.validate.checkfield', 
+				checkfield: 'vulpe.error.validate.checkfield',
 				checkfields: 'vulpe.error.validate.checkfield',
 				validate: {
 					date:'vulpe.error.validate.date',
@@ -62,7 +62,7 @@ var vulpe = {
 					mask:'vulpe.error.validate.mask',
 					maxlength:'vulpe.error.validate.maxlength',
 					minlength:'vulpe.error.validate.minlength',
-					required:'vulpe.error.validate.required'	
+					required:'vulpe.error.validate.required'
 				}
 			},
 			exclusion: 'vulpe.msg.confirm.exclusion',
@@ -95,7 +95,7 @@ var vulpe = {
 		theme: 'default'
 	},
 	// vulpe.util
-	util: { 
+	util: {
 		get: function(id, parent) {
 			if (vulpe.util.isEmpty(id)) {
 				return null;
@@ -132,7 +132,7 @@ var vulpe = {
 			var index = id.substring(id.lastIndexOf(":") + 1, id.length);
 			return index;
 		},
-		
+
 		getElementConfig: function(id) {
 			return vulpe.config.elements[id];
 		},
@@ -158,7 +158,7 @@ var vulpe = {
 				}
 			}
 		},
-		
+
 		controlMultiselect: function(id, check) {
 			var multiselect = vulpe.util.get(id);
 			var content = multiselect.val();
@@ -312,9 +312,9 @@ var vulpe = {
 		}
 	},
 	// vulpe.validate
-	validate: { 
+	validate: {
 		forms: new Array(),
-		
+
 		isArray: function(obj) {
 			if (obj.length) {
 				return true;
@@ -462,7 +462,7 @@ var vulpe = {
 				if (typeField == 'radio') {
 					isValid = false;
 					for (var i = 0; i < config.field.length; i++) {
-						field = jQuery(config.field[i]); 
+						field = jQuery(config.field[i]);
 						if (field.attr("checked")) {
 							isValid = true;
 							break;
@@ -753,7 +753,7 @@ var vulpe = {
 
 		validateAttributes: function(formName) {
 			var valid = true;
-			var parent = "";
+			var parent = "#" + formName;
 			if (vulpe.util.existsVulpePopups()) {
 				parent += "#" + vulpe.util.getLastVulpePopup();
 			}
@@ -790,7 +790,7 @@ var vulpe = {
 				$(messageLayer).removeClass("vulpeMessageSuccess");
 				$(messageLayer).addClass("vulpeMessageValidation");
 				if (fields.length > 1) {
-					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>"); 
+					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>");
 				} else {
 					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
 				}
@@ -801,7 +801,7 @@ var vulpe = {
 			}
 			return valid;
 		},
-		
+
 		validateAttribute: function(field) {
 			var valid = true;
 			var idField = field.attr("id");
@@ -809,7 +809,7 @@ var vulpe = {
 			if (config) {
 				if (config.type == "DATE") {
 					valid = vulpe.validate.validateDate({
-						field: field, 
+						field: field,
 						datePatternStrict: config.datePattern
 					});
 				} else if (config.type == "INTEGER") {
@@ -855,7 +855,7 @@ var vulpe = {
 			}
 			return valid;
 		},
-		
+
 		validateLoginForm: function(formName) {
 			var form = vulpe.util.getElement(formName);
 			var j_username = vulpe.util.getElement("j_username");
@@ -874,7 +874,7 @@ var vulpe = {
 
 	},
 	// vulpe.view
-	view: { 
+	view: {
 		confirmExclusion: function(command) {
 			vulpe.command = command;
 			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.exclusion);
@@ -900,9 +900,9 @@ var vulpe = {
 		},
 
 		isSelection: false,
-		
+
 		popups: new Array(),
-		
+
 		resetFields: function(formName) {
 			vulpe.util.get(formName).resetForm();
 			return true;
@@ -1063,7 +1063,7 @@ var vulpe = {
 
 		showMessages: function() {
 			jQuery(vulpe.config.layers.modalMessages).modal({
-				title: function() { 
+				title: function() {
 					var popupTitle = jQuery("#messageTitle", "#modalMessages");
 					if (popupTitle) {
 						popupTitle.hide();
@@ -1114,8 +1114,8 @@ var vulpe = {
 				}
 			});
 			jQuery(document).bind("keydown", "Esc", function(evt) {
-				vulpe.view.hidePopup(elementId); 
-				return false; 
+				vulpe.view.hidePopup(elementId);
+				return false;
 			});
 			vulpe.util.focusFirst("#" + elementId);
 			return popup;
@@ -1572,7 +1572,7 @@ var vulpe = {
 				if (!popup || popup.length == 0) {
 					hotkeys.triggersMap = {};
 				}
-				
+
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",
@@ -1640,7 +1640,7 @@ var vulpe = {
 		}
 	},
 	// vulpe.exception
-	exception: { 
+	exception: {
 		focusFirstError: function(layerFields) {
 			var fields = jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(layerFields));
 			if (fields && fields.length > 0) {

@@ -45,7 +45,7 @@
 <c:if test="${empty elementId}">
 	<c:set var="prepareName" value="${fn:replace(name, '[', ':')}"/>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '].', ':')}"/>
-	<c:set var="elementId" value="${controllerConfig.formName}_${prepareName}"/>
+	<c:set var="elementId" value="${vulpeFormName}_${prepareName}"/>
 </c:if>
 
 <c:if test="${not empty property && empty value}">

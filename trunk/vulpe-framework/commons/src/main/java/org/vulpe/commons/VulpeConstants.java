@@ -232,6 +232,9 @@ public class VulpeConstants {
 			public static final String JS_CONTEXT = "/js/";
 			public static final String CSS_CONTEXT = "/css/";
 			public static final String THEMES_CONTEXT = "/themes/";
+			public static final String SUFFIX_FORM = "Form";
+			public static final String BODY_TWICE = "vulpeBodyTwice";
+			public static final String BODY_TWICE_TYPE = "vulpeBodyTwiceType";
 			public static final String SUFFIX_JSP = ".jsp";
 			public static final String SUFFIX_JSP_TABULAR = "Tabular.jsp";
 			public static final String SUFFIX_JSP_OTHER = ".jsp";
@@ -243,6 +246,7 @@ public class VulpeConstants {
 			public static final String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
 			public static final String SUFFIX_JSP_CRUD = "CRUD.jsp";
 
+			public static final String BODY_TWICE_JSP = "bodyTwice.jsp";
 			public static final String BODY_JSP = "body.jsp";
 			public static final String BODY_CRUD_JSP = "crud.jsp";
 			public static final String BODY_CRUD_ACTIONS_JSP = "crudActions.jsp";

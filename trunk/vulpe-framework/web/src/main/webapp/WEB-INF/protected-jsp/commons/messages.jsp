@@ -9,12 +9,12 @@
 						<c:set var="msgs" value="${msgs}${msg}<br/>"/>
 					</c:forEach>
 					<c:set var="fieldName" value="${entry.key}"/>
-					<c:if test="${fn:startsWith(fieldName, controllerConfig.formName) eq false}">
-						<c:set var="fieldName" value="${controllerConfig.formName}_${fieldName}"/>
+					<c:if test="${fn:startsWith(fieldName, vulpeFormName) eq false}">
+						<c:set var="fieldName" value="${vulpeFormName}_${fieldName}"/>
 					</c:if>
 					vulpe.exception.setupError('${fieldName}', '${msgs}');
 				</c:forEach>
-				vulpe.exception.focusFirstError('${controllerConfig.formName}');
+				vulpe.exception.focusFirstError('${vulpeFormName}');
 				$("#messages").removeClass("vulpeMessageError");
 				$("#messages").removeClass("vulpeMessageSuccess");
 				$("#messages").addClass("vulpeMessageValidation");

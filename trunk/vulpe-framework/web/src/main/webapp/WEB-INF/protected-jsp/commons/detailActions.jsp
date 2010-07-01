@@ -15,7 +15,7 @@
 </c:if> <v:action
 	layerFields="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}"
 	validate="false" style="${style}" labelKey="vulpe.label.addDetail"
-	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.baseName}"
+	elementId="vulpeButtonAddDetail_${vulpeFormName}_${targetConfig.baseName}"
 	action="${controllerConfig.controllerName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
 	layer="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}" />

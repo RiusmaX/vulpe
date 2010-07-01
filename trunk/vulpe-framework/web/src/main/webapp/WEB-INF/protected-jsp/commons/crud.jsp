@@ -1,5 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-
+<c:if test="${vulpeBodyTwice}">
+<fieldset>
+<legend><fmt:message>${fn:replace(controllerConfig.titleKey,'crud_select', 'crud')}</fmt:message></legend>
+</c:if>
 <div id="vulpeCRUD">
 	<div id="vulpeCRUDActions" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/crudActions.jsp" %>
@@ -23,7 +26,7 @@
 	<div id="vulpeCRUDBody">
 		<c:remove var="targetConfig" scope="request"/>
 		<c:remove var="targetConfigPropertyName" scope="request"/>
-		<jsp:include page="${controllerConfig.viewPath}" />
+		<jsp:include page="${controllerConfig.controllerType == 'CRUD_SELECT' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
 	</div>
 
 	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
@@ -53,7 +56,7 @@
 				$(tabsName).tabs({
 				    show: function(event, ui) {
 				    	var selected = $(tabsName).tabs('option', 'selected');
-				        vulpe.util.selectTab("${controllerConfig.formName}", selected);
+				        vulpe.util.selectTab("${vulpeFormName}", selected);
 				        return true;
 			    	}
 				});
@@ -82,22 +85,25 @@
 					vulpe.util.focusFirst(parent);
 				}
                 jQuery(document).bind('keydown', {combi: 'left', disableInInput: true}, function (evt){
-                    tabControl(-1); 
-                    return false; 
+                    tabControl(-1);
+                    return false;
                 });
 				jQuery(document).bind('keydown', 'Ctrl+left', function (evt){
-                    tabControl(-1); 
-                    return false; 
+                    tabControl(-1);
+                    return false;
                 });
                 jQuery(document).bind('keydown', {combi: 'right', disableInInput: true}, function (evt){
-                    tabControl(1); 
+                    tabControl(1);
                     return false;
                 });
 				jQuery(document).bind('keydown', 'Ctrl+right', function (evt){
-                    tabControl(1); 
+                    tabControl(1);
                     return false;
                 });
 			});
 		</script>
 	</c:if>
 </div>
+<c:if test="${vulpeBodyTwice}">
+</fieldset>
+</c:if>

@@ -66,7 +66,7 @@
 		<c:set var="styleClass" value="vulpeColumnHeader"/>
 	</c:if>
 
-	<c:if test="${empty updateValue && isSelectTableTag && updateShow}">
+	<c:if test="${empty updateValue && isSelectTableTag && (updateShow || SELECT_updateShow)}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -86,7 +86,7 @@
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<c:when test="${isSelectTableTag && deleteShow}">
+			<c:when test="${isSelectTableTag && (deleteShow || SELECT_deleteShow)}">
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="select"/>
 			</c:when>
@@ -114,13 +114,13 @@
 			<c:set var="updateActionName" value="${controllerConfig.controllerName}/update"/>
 		</c:if>
 		<c:if test="${empty updateFormName}">
-			<c:set var="updateFormName" value="${controllerConfig.formName}"/>
+			<c:set var="updateFormName" value="${vulpeFormName}"/>
 		</c:if>
 		<c:if test="${empty updateLayerFields}">
 			<c:set var="updateLayerFields" value="${updateFormName}"/>
 		</c:if>
 		<c:if test="${empty updateLayer}">
-			<c:set var="updateLayer" value="body"/>
+			<c:set var="updateLayer" value="${vulpeBodyTwice ? 'crud' : 'body'}"/>
 		</c:if>
 		<c:if test="${not empty updateValue}">
 			<c:set var="elementId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
@@ -154,7 +154,7 @@
 			<c:set var="deleteActionName" value="${controllerConfig.controllerName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
 		</c:if>
 		<c:if test="${empty deleteFormName}">
-			<c:set var="deleteFormName" value="${controllerConfig.formName}"/>
+			<c:set var="deleteFormName" value="${vulpeFormName}"/>
 		</c:if>
 		<c:if test="${empty deleteLayerFields}">
 			<c:set var="deleteLayerFields" value="${deleteFormName}"/>

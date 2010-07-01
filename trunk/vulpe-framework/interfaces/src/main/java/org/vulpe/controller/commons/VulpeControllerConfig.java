@@ -29,6 +29,10 @@ public interface VulpeControllerConfig {
 
 	String getFormName();
 
+	String getSelectFormName();
+
+	String getCRUDFormName();
+
 	boolean isDetailsInTabs();
 
 	String getReportFormat();

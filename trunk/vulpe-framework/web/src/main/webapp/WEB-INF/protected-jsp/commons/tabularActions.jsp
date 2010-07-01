@@ -11,7 +11,7 @@
 </c:if>
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.addDetail"
-	elementId="vulpeButtonAddDetail_${controllerConfig.formName}_${targetConfig.name}"
+	elementId="vulpeButtonAddDetail_${vulpeFormName}_${targetConfig.name}"
 	action="${controllerConfig.controllerName}/addDetail/ajax"
 	queryString="detail=${targetConfigPropertyName}"
 	helpKey="vulpe.help.tabularNew"
@@ -26,7 +26,7 @@
 </c:if>
 <v:action validate="false" style="${style}"
 	labelKey="vulpe.label.refresh"
-	elementId="vulpeButtonPrepare_${controllerConfig.formName}"
+	elementId="vulpeButtonPrepare_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/tabular/ajax"
 	helpKey="vulpe.help.refresh"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
@@ -40,7 +40,7 @@
 </c:if>
 <v:action validate="true" style="${style}"
 	labelKey="vulpe.label.tabularPost"
-	elementId="vulpeButtonTabularPost_${controllerConfig.formName}"
+	elementId="vulpeButtonTabularPost_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/tabularPost/ajax"
 	helpKey="vulpe.help.tabularPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
