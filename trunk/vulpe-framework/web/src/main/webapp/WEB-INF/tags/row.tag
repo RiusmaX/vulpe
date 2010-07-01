@@ -62,6 +62,9 @@
 			</c:otherwise>
 		</c:choose>
 	</c:if>
+	<c:if test="${isHeaderTableTag}">
+		<c:set var="styleClass" value="vulpeColumnHeader"/>
+	</c:if>
 
 	<c:if test="${empty updateValue && isSelectTableTag && updateShow}">
 		<c:set var="updateValue" value="id"/>

@@ -21,7 +21,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 <#else>
 	property="${field.name}"
 </#if>
-<#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
+<#if field.type == 'text' || field.type == 'textarea' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
 	mask="${field.mask}"
 	</#if>
@@ -30,6 +30,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	</#if>
 	<#if (field.maxlength > 0)>
 	maxlength="${field.maxlength}"
+	</#if>
+	<#if field.type == 'textarea'>
+	cols="${field.cols}" rows="${field.rows}"
 	</#if>
 </#if>
 <#if field.type == 'select'>
@@ -169,7 +172,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 <#else>
 	property="${field.name}"
 </#if>
-<#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
+<#if field.type == 'text' || field.type == 'textarea' || field.type == 'password' || field.type == 'date'>
 	<#if field.mask?has_content>
 	mask="${field.mask}"
 	</#if>
@@ -178,6 +181,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	</#if>
 	<#if (field.size > 0)>
 	maxlength="${field.maxlength}"
+	</#if>
+	<#if field.type == 'textarea'>
+	cols="${field.cols}" rows="${field.rows}"
 	</#if>
 </#if>
 <#if field.type == 'select'>
@@ -286,7 +292,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					size="${detailField.size}" popupWidth="${detailField.popupWidth}px"
 					autoComplete="${detailField.autoComplete}"
 				</#if>
-				<#if detailField.type == 'text' || detailField.type == 'password' || detailField.type == 'date'>
+				<#if detailField.type == 'text' || detailField.type == 'textarea' || detailField.type == 'password' || detailField.type == 'date'>
 					<#if detailField.mask?has_content>
 					mask="${detailField.mask}"
 					</#if>
@@ -295,6 +301,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					</#if>
 					<#if (detailField.size > 0)>
 					maxlength="${detailField.maxlength}"
+					</#if>
+					<#if detailField.type == 'textarea'>
+					cols="${detailField.cols}" rows="${detailField.rows}"
 					</#if>
 				</#if>
 				<#if detailField.type == 'select'>
@@ -403,7 +412,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 				<#else>
 					property="${field.name}"
 				</#if>
-				<#if field.type == 'text' || field.type == 'password' || field.type == 'date'>
+				<#if field.type == 'text' || field.type == 'textarea' || field.type == 'password' || field.type == 'date'>
 					<#if field.mask?has_content>
 					mask="${field.mask}"
 					</#if>
@@ -412,6 +421,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					</#if>
 					<#if (field.size > 0)>
 					maxlength="${field.maxlength}"
+					</#if>
+					<#if field.type == 'textarea'>
+					cols="${field.cols}" rows="${field.rows}"
 					</#if>
 				</#if>
 				<#if field.type == 'select'>

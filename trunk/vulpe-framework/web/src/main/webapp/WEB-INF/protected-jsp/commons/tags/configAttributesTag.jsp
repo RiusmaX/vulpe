@@ -20,7 +20,7 @@
 	<c:set var="styleClass" value="${styleClass} vulpeRequired"/>
 </c:if>
 
-<c:if test="${not empty vulpeShowAsMobile}">
+<c:if test="${not empty vulpeShowAsMobile || vulpeBreakLabel}">
 	<c:set var="breakLabel" value="${true}"/>
 </c:if>
 

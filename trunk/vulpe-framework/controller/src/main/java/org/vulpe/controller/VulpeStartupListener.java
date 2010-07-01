@@ -31,7 +31,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Class to manager startup of application.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
@@ -40,7 +40,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seejavax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
 	 * ServletContextEvent)
 	 */
@@ -53,7 +53,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
 	 * .ServletContextEvent)
@@ -119,6 +119,8 @@ public class VulpeStartupListener implements ServletContextListener {
 					vulpeProject.view().heightMobileButtonIcon());
 			evt.getServletContext().setAttribute(VulpeConstants.Context.View.MESSAGE_SLIDE_UP_TIME,
 					vulpeProject.view().messageSlideUpTime());
+			evt.getServletContext().setAttribute(VulpeConstants.Context.View.BREAK_LABEL,
+					vulpeProject.view().breakLabel());
 		}
 		if (vulpeProject.mobileEnabled()) {
 			evt.getServletContext().setAttribute(VulpeConstants.Context.SHOW_AS_MOBILE, true);

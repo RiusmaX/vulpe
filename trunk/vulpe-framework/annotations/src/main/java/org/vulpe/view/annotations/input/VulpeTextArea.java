@@ -13,38 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.config.annotations;
+package org.vulpe.view.annotations.input;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Documented
+/**
+ * Annotation to represent textarea input on view.
+ *
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PACKAGE)
-public @interface VulpeView {
+@Target(ElementType.FIELD)
+public @interface VulpeTextArea {
 
-	int messageSlideUpTime() default 10000;
+	String name() default "";
 
-	boolean showButtonAsImage() default false;
+	int cols() default 50;
 
-	boolean showButtonIcon() default false;
+	int rows() default 3;
 
-	boolean showButtonText() default true;
+	boolean required() default false;
 
-	int widthButtonIcon() default 16;
+	boolean argument() default false;
 
-	int widthMobileButtonIcon() default 32;
+	String label() default "";
 
-	int heightButtonIcon() default 16;
-
-	int heightMobileButtonIcon() default 32;
-
-	boolean backendCenteredLayout() default false;
-
-	boolean frontendCenteredLayout() default false;
-
-	boolean breakLabel() default false;
 }

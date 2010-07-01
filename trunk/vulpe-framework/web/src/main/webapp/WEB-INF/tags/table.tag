@@ -186,7 +186,7 @@
 		<thead>
 			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
 			<c:if test="${not empty tableHeader}">
-				<tr>
+				<tr class="vulpeTableHeader">
 					${tableHeader}
 				</tr>
 			</c:if>
@@ -196,7 +196,7 @@
 		</thead>
 		<c:if test="${not empty tableFooter}">
 			<tfoot>
-				<tr>
+				<tr class="vulpeTableFooter">
 					${tableFooter}
 				</tr>
 			</tfoot>

@@ -42,6 +42,7 @@ import org.vulpe.view.annotations.input.VulpeRadio;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
+import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateScope;
 import org.vulpe.view.annotations.logic.crud.Detail;
@@ -53,7 +54,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.jelly.apt.strategies.TemplateBlockStrategy#preProcess(net.sf.jelly
 	 * .apt.TemplateBlock, net.sf.jelly.apt.TemplateOutput,
@@ -185,6 +186,17 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setSize(text.size());
 			decoratedViewField.setMask(text.mask());
 			decoratedViewField.setType("text");
+		}
+		final VulpeTextArea textarea = fDeclaration == null ? field
+				.getAnnotation(VulpeTextArea.class) : fDeclaration
+				.getAnnotation(VulpeTextArea.class);
+		if (textarea != null) {
+			name = textarea.name();
+			decoratedViewField.setArgument(textarea.argument());
+			decoratedViewField.setRequired(textarea.required());
+			decoratedViewField.setCols(textarea.cols());
+			decoratedViewField.setRows(textarea.rows());
+			decoratedViewField.setType("textarea");
 		}
 		final VulpePassword password = fDeclaration == null ? field
 				.getAnnotation(VulpePassword.class) : fDeclaration

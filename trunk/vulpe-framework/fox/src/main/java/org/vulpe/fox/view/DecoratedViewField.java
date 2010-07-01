@@ -25,6 +25,8 @@ public class DecoratedViewField implements Serializable {
 	private String label;
 	private int size;
 	private int maxlength;
+	private int rows;
+	private int cols;
 	private String mask = "";
 	private String items = "";
 	private String itemKey = "";
@@ -361,6 +363,22 @@ public class DecoratedViewField implements Serializable {
 
 	public String getValidateRequiredScope() {
 		return validateRequiredScope;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public void setCols(int cols) {
+		this.cols = cols;
+	}
+
+	public int getCols() {
+		return cols;
 	}
 
 }
