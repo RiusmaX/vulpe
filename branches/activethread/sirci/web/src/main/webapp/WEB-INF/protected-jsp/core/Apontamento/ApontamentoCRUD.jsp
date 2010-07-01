@@ -1,11 +1,10 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:hidden property="id"/>
-<v:text
+<v:textarea
 	labelKey="label.sirci.core.Apontamento.crud.descricao"
 	property="descricao"
-	size="50"
-	maxlength="256"
+	cols="50" rows="3"
 	required="true"
 />
 <v:select
@@ -27,10 +26,9 @@
 	property="impactoApontamento"
 	showBlank="true" autoLoad="false"
 />
-<v:text
+<v:textarea
 	labelKey="label.sirci.core.Apontamento.crud.recomendacao"
 	property="recomendacao"
-	size="100"
-	maxlength="2.048"
+	cols="50" rows="3"
 	required="true"
 />

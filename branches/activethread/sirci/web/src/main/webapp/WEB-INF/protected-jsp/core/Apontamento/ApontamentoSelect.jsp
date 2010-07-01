@@ -1,10 +1,9 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
-<v:text
+<v:textarea
 	labelKey="label.sirci.core.Apontamento.select.descricao"
 	property="descricao"
-	size="50"
-	maxlength="256"
+	cols="50" rows="3"
 	required="true"
 />
 <v:select

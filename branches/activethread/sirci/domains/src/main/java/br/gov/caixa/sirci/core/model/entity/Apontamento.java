@@ -17,7 +17,7 @@ import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeSelect;
-import org.vulpe.view.annotations.input.VulpeText;
+import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 @CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = {
@@ -27,7 +27,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
 	@VulpeColumn(sortable = true)
-	@VulpeText(size = 50, maxlength = 256, required = true, argument = true)
+	@VulpeTextArea(required = true, argument = true)
 	@Column(length = 256)
 	private String descricao;
 
@@ -47,7 +47,7 @@ public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 	@Enumerated(EnumType.ORDINAL)
 	private ImpactoApontamento impactoApontamento;
 
-	@VulpeText(size = 100, maxlength = 2048, required = true)
+	@VulpeTextArea(required = true)
 	@Column(length = 2048)
 	private String recomendacao;
 

@@ -2,10 +2,9 @@
 		name = "sirci",
 		projectPackage = "br.gov.caixa.sirci",
 		view = @VulpeView(
-//				showButtonAsImage = true,
-//				showButtonIcon = false,
-//				showButtonText = false
-		)
+				breakLabel = true
+		),
+		theme = "caixa"
 )
 package org.vulpe.config;
 
