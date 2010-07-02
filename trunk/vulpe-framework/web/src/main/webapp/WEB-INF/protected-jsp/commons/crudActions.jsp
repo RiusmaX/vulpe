@@ -3,6 +3,10 @@
 <c:set var="heightIcon"	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 
 <p>
+<c:set var="layer" value="body" />
+<c:if test="${vulpeBodyTwice}">
+	<c:set var="layer" value="crud" />
+</c:if>
 <c:set var="style" value="display: none;" />
 <c:if test="${clearShow || CRUD_clearShow}">
 	<c:set var="style" value="display: inline;" />
@@ -24,7 +28,7 @@
 	elementId="vulpeButtonCreate_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)"
-	helpKey="vulpe.help.create"
+	helpKey="vulpe.help.create" layer="${layer}"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
@@ -51,7 +55,7 @@
 	style="${style}" labelKey="vulpe.label.delete"
 	elementId="vulpeButtonDelete_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/delete/ajax"
-	helpKey="vulpe.help.delete"
+	helpKey="vulpe.help.delete" layer="${layer}"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
@@ -79,7 +83,7 @@
 	validate="false" style="${style}" labelKey="vulpe.label.prepare"
 	elementId="vulpeButtonPrepare_${vulpeFormName}"
 	action="${not empty urlBack ? urlBack : action}"
-	layer="${not empty layerUrlBack ? layerUrlBack : layer}"
+	layer="${not empty layerUrlBack ? layerUrlBack : ''}"
 	helpKey="vulpe.help.prepare"
 	icon="themes/${vulpeTheme}/images/icons/button-back-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
