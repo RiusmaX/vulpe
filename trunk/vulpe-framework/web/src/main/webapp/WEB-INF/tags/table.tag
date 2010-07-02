@@ -129,7 +129,7 @@
 			<c:set var="pagingLayerFields" value="${pagingFormName}"/>
 		</c:if>
 		<c:if test="${empty pagingLayer}">
-			<c:set var="pagingLayer" value="${pagingFormName}_select_table"/>
+			<c:set var="pagingLayer" value="vulpeSelectTable_${pagingFormName}"/>
 		</c:if>
 	</c:if>
 

@@ -3,10 +3,6 @@
 <c:set var="heightIcon"	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 
 <p>
-<c:set var="layer" value="body" />
-<c:if test="${vulpeBodyTwice}">
-	<c:set var="layer" value="crud" />
-</c:if>
 <c:set var="style" value="display: none;" />
 <c:if test="${clearShow || CRUD_clearShow}">
 	<c:set var="style" value="display: inline;" />
@@ -28,7 +24,7 @@
 	elementId="vulpeButtonCreate_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/create/ajax"
 	beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)"
-	helpKey="vulpe.help.create" layer="${layer}"
+	helpKey="vulpe.help.create"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
@@ -41,7 +37,7 @@
 <v:action style="${style}" labelKey="vulpe.label.createPost"
 	elementId="vulpeButtonCreatePost_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/createPost/ajax"
-	helpKey="vulpe.help.createPost" layer="${layer}"
+	helpKey="vulpe.help.createPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
@@ -55,7 +51,7 @@
 	style="${style}" labelKey="vulpe.label.delete"
 	elementId="vulpeButtonDelete_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/delete/ajax"
-	helpKey="vulpe.help.delete" layer="${layer}"
+	helpKey="vulpe.help.delete"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
@@ -68,7 +64,7 @@
 <v:action style="${style}" labelKey="vulpe.label.updatePost"
 	elementId="vulpeButtonUpdatePost_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/updatePost/ajax"
-	helpKey="vulpe.help.updatePost" layer="${layer}"
+	helpKey="vulpe.help.updatePost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"
