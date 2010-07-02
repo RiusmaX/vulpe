@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-        <artifactId>sirci</artifactId>
-        <groupId>br.gov.caixa</groupId>
-        <version>1.0</version>
-    </parent>
+		<artifactId>sirci</artifactId>
+		<groupId>br.gov.caixa</groupId>
+		<version>1.0</version>
+	</parent>
 
 	<groupId>br.gov.caixa.sirci</groupId>
 	<artifactId>sirci-domains</artifactId>
@@ -13,6 +14,13 @@
 	<packaging>jar</packaging>
 	<name>sirci - Domains</name>
 
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -31,16 +39,21 @@
 								<property name="maven.repo" value="${env.M2_REPO}" />
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
-										<pathelement location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+										<pathelement
+											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
-								<property name="tools.dir" value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+								<property name="tools.dir"
+									value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
-								<available file="${tools.dir}" property="tools.dir.present" type="dir" />
+								<available file="${tools.dir}" property="tools.dir.present"
+									type="dir" />
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<unjar
+											src="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
+											dest="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>

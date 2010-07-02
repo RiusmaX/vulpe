@@ -432,6 +432,7 @@ html,body {
 	border: #999999 solid 0px;
 	display: table;
 	padding: 0px;
+	position: relative;
 }
 
 #body table {
