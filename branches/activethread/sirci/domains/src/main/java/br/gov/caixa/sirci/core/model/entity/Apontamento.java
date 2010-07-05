@@ -27,24 +27,24 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
 	@VulpeColumn(sortable = true)
-	@VulpeTextArea(required = true, argument = true)
+	@VulpeTextArea(required = true)
 	@Column(length = 256)
 	private String descricao;
 
 	@VulpeColumn(sortable = true, attribute = "descricao")
-	@VulpeSelect(items = "TipoApontamento", itemKey = "id", itemLabel = "descricao", required = true, autoLoad = true, argument = true)
+	@VulpeSelect(items = "TipoApontamento", itemKey = "id", itemLabel = "descricao", required = true, autoLoad = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipoApontamento", referencedColumnName = "id")
 	private TipoApontamento tipoApontamento;
 
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(argument = true)
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private SituacaoApontamento situacaoApontamento;
 
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(argument = true)
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private ImpactoApontamento impactoApontamento;
 
 	@VulpeTextArea(required = true)

@@ -14,6 +14,7 @@
 	<packaging>jar</packaging>
 	<name>sirci - Domains</name>
 
+	<!--
 	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -21,6 +22,7 @@
 			<version>5.1.9</version>
 		</dependency>
 	</dependencies>
+	-->
 	<build>
 		<plugins>
 			<plugin>

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.annotations.CachedClass;
@@ -44,4 +45,9 @@ public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
 		return super.getId();
 	}
 
+	@Transient
+	@Override
+	public String getOrderBy() {
+		return "obj.descricao";
+	}
 }
