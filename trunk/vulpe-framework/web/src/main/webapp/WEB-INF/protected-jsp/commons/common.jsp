@@ -10,7 +10,7 @@
 	</c:when>
 	</c:choose>
 </c:if>
-<c:if test="${empty vulpeShowActions || !vulpeShowActions}">
+<c:if test="${empty vulpeShowActions || !vulpeShowActions || vulpeBodySelect}">
 <c:set var="vulpeShowActions" value="true" scope="request"/>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
@@ -24,42 +24,42 @@ $(document).ready(function() {
 
 	if (document.forms['${vulpeFormName}']) {
 	<c:if test="${createShow || SELECT_createShow || CRUD_createShow}">
-		var buttonCreate = $("#vulpeButtonCreate_${vulpeFormName}");
+		var buttonCreate = vulpe.util.getElement("vulpeButtonCreate_${vulpeFormName}");
 		if (buttonCreate) {
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (evt){buttonCreate.click(); return false;});
 		}
 	</c:if>
 
 	<c:if test="${createPostShow || SELECT_createPostShow || CRUD_createPostShow}">
-		var buttonCreatePost = $("#vulpeButtonCreatePost_${vulpeFormName}");
+		var buttonCreatePost = vulpe.util.getElement("vulpeButtonCreatePost_${vulpeFormName}");
 		if (buttonCreatePost) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
 		}
 	</c:if>
 
 	<c:if test="${updatePostShow || SELECT_updatePostShow || CRUD_updatePostShow}">
-		var buttonUpdatePost = $("#vulpeButtonUpdatePost_${vulpeFormName}");
+		var buttonUpdatePost = vulpe.util.getElement("vulpeButtonUpdatePost_${vulpeFormName}");
 		if (buttonUpdatePost) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
 		}
 	</c:if>
 
 	<c:if test="${tabularPostShow}">
-		var buttonTabularPost = $("#vulpeButtonTabularPost_${vulpeFormName}");
+		var buttonTabularPost = vulpe.util.getElement("vulpeButtonTabularPost_${vulpeFormName}");
 		if (buttonTabularPost) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
 		}
 	</c:if>
 
 	<c:if test="${deleteShow || SELECT_deleteShow || CRUD_deleteShow}">
-		var buttonDelete = $("#vulpeButtonDelete_${vulpeFormName}");
+		var buttonDelete = vulpe.util.getElement("vulpeButtonDelete_${vulpeFormName}");
 		if (buttonDelete) {
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
 		}
 	</c:if>
 
 	<c:if test="${prepareShow || SELECT_prepareShow || CRUD_prepareShow}">
-		var buttonPrepare = $("#vulpeButtonPrepare_${vulpeFormName}");
+		var buttonPrepare = vulpe.util.getElement("vulpeButtonPrepare_${vulpeFormName}");
 		if (buttonPrepare) {
 			<c:if test="${controllerConfig.controllerType == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
@@ -75,14 +75,14 @@ $(document).ready(function() {
 	</c:if>
 
 	<c:if test="${readShow || SELECT_readShow || CRUD_readShow}">
-		var buttonRead = $("#vulpeButtonRead_${vulpeFormName}");
+		var buttonRead = vulpe.util.getElement("vulpeButtonRead_${vulpeFormName}");
 		if (buttonRead) {
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
 		}
 	</c:if>
 
 	<c:if test="${clearShow || SELECT_clearShow || CRUD_clearShow}">
-		var buttonClear = $("#vulpeButtonClear_${vulpeFormName}");
+		var buttonClear = vulpe.util.getElement("vulpeButtonClear_${vulpeFormName}");
 		if (buttonClear) {
 			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
 		}
@@ -91,7 +91,7 @@ $(document).ready(function() {
 	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
 	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
 	<c:if test="${buttonCreate_tabular}">
-		var buttonAddDetail_entities = $("#vulpeButtonAddDetail_${vulpeFormName}_entities");
+		var buttonAddDetail_entities = vulpe.util.getElement("vulpeButtonAddDetail_${vulpeFormName}_entities");
 		if (buttonAddDetail_entities) {
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
 		}
@@ -102,7 +102,7 @@ $(document).ready(function() {
 		<c:set var="buttonDetailEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
-		var buttonAddDetail_${detail.baseName} = $("#vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
+		var buttonAddDetail_${detail.baseName} = vulpe.util.getElement("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
 		if (buttonAddDetail_${detail.baseName}) {
 			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
 		}

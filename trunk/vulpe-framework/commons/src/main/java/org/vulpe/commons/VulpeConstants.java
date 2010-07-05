@@ -115,6 +115,7 @@ public class VulpeConstants {
 		public static final String READ = "read";
 		public static final String PAGING = "paging";
 		public static final String PREPARE = "prepare";
+		public static final String TWICE = "twice";
 		public static final String ADD_DETAIL = "addDetail";
 		public static final String TABULAR_POST = "tabularPost";
 		public static final String FIND = "find";

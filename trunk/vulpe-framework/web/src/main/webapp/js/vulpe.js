@@ -1337,7 +1337,7 @@ var vulpe = {
 						buttons: {
 							Ok: function() {
 								$(this).dialog('close');
-								vulpe.view.resetFields(formName);
+								//vulpe.view.resetFields(formName);
 								for (i = 0; i < selectedIds.length; i++) {
 									if (selectedIds != "") {
 										selections[i].checked;

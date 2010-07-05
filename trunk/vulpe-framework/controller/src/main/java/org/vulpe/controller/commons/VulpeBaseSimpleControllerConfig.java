@@ -407,7 +407,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		} else {
 			this.viewPath += getModuleName().concat("/").concat(getSimpleControllerName()).concat(
 					"/").concat(getSimpleControllerName());
-			if (getControllerType().equals(ControllerType.CRUD_SELECT)) {
+			if (getControllerType().equals(ControllerType.TWICE)) {
 				this.viewCRUDPath = this.viewPath + Layout.SUFFIX_JSP_CRUD;
 				this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
 				this.viewSelectItemsPath = this.viewItemsPath

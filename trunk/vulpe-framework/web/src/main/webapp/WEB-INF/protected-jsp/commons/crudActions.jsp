@@ -55,7 +55,7 @@
 	style="${style}" labelKey="vulpe.label.delete"
 	elementId="vulpeButtonDelete_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/delete/ajax"
-	helpKey="vulpe.help.delete" layer="${layer}"
+	helpKey="vulpe.help.delete"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"

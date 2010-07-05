@@ -779,7 +779,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * Define Result Forward to render normal or AJAX request
 	 */
 	protected void controlResultForward() {
-		setResultForward(getControllerType().equals(ControllerType.CRUD_SELECT) ? Layout.PROTECTED_JSP_COMMONS
+		setResultForward(getControllerType().equals(ControllerType.TWICE) ? Layout.PROTECTED_JSP_COMMONS
 				.concat(Layout.BODY_TWICE_JSP)
 				: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}

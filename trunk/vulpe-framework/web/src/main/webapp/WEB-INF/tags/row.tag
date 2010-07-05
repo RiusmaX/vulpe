@@ -122,7 +122,7 @@
 		<c:if test="${empty updateLayer}">
 			<c:set var="updateLayer" value="${vulpeBodyTwice ? 'crud' : 'body'}"/>
 		</c:if>
-		<c:if test="${not empty updateValue}">
+		<c:if test="${not empty updateValue && !isHeaderTableTag}">
 			<c:set var="elementId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
 			<c:choose>
 				<c:when test="${empty onclick}">

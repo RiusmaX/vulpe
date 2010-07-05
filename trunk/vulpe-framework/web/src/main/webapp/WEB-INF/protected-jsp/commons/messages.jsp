@@ -28,7 +28,7 @@
 	<c:choose>
 		<c:when test="${IS_EXCEPTION}">
 			<c:if test="${empty fieldErrors}">
-				<h1><fmt:message key="vulpe.error.alert" /></h1>
+				<div id="messageTitle" style="display: none"><fmt:message key="vulpe.error.alert" /></div>
 			</c:if>
 			<!--IS_EXCEPTION-->
 			<c:choose>

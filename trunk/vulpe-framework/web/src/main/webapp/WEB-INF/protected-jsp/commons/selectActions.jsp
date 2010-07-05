@@ -4,6 +4,10 @@
 <c:set var="heightIcon"
 	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 <p>
+<c:set var="layer" value="body" />
+<c:if test="${vulpeBodyTwice}">
+	<c:set var="layer" value="select" />
+</c:if>
 <c:set var="style" value="display: none;" />
 <c:if test="${clearShow || SELECT_clearShow}">
 	<c:set var="style" value="display: inline;" />
@@ -18,7 +22,7 @@
 <c:if test="${prepareShow || SELECT_prepareShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if>
-<v:action validate="false" layer="${popup ? popupKey : ''}" style="${style}"
+<v:action validate="false" layer="${popup ? popupKey : layer}" style="${style}"
 	labelKey="vulpe.label.clear" elementId="vulpeButtonPrepare_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/prepare/ajax" helpKey="vulpe.help.clear"
 	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"

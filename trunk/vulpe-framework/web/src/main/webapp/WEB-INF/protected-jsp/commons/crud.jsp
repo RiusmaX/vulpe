@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:if test="${vulpeBodyTwice}">
 <fieldset>
-<legend><fmt:message>${fn:replace(controllerConfig.titleKey,'crud_select', 'crud')}</fmt:message></legend>
+<legend><fmt:message>${fn:replace(controllerConfig.titleKey, '.twice', '.crud')}</fmt:message></legend>
 </c:if>
 <div id="vulpeCRUD">
 	<div id="vulpeCRUDActions" class="vulpeActions">
@@ -26,7 +26,7 @@
 	<div id="vulpeCRUDBody">
 		<c:remove var="targetConfig" scope="request"/>
 		<c:remove var="targetConfigPropertyName" scope="request"/>
-		<jsp:include page="${controllerConfig.controllerType == 'CRUD_SELECT' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
+		<jsp:include page="${controllerConfig.controllerType == 'TWICE' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
 	</div>
 
 	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">

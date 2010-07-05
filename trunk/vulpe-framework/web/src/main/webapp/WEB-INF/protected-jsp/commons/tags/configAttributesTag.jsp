@@ -26,7 +26,7 @@
 
 <c:if test="${empty targetName}">
 	<c:if test="${empty targetConfig}">
-		<c:set var="targetName" value="entity"/>
+		<c:set var="targetName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/>
 	</c:if>
 	<c:if test="${not empty targetConfig}">
 		<c:set var="targetName" value="${targetConfigPropertyName}[${currentStatus.index}]"/>

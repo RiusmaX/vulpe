@@ -73,6 +73,6 @@ public interface VulpeControllerConfig {
 	 * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
 	 */
 	public enum ControllerType {
-		CRUD, CRUD_SELECT, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE
+		CRUD, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE
 	}
 }
