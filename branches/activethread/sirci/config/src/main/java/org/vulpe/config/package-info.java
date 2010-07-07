@@ -4,7 +4,8 @@
 		view = @VulpeView(
 				breakLabel = true
 		),
-		theme = "caixa"
+		theme = "caixa",
+		audit = false
 )
 package org.vulpe.config;
 
