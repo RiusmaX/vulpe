@@ -36,6 +36,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=$
 	</#if>
 </#if>
 <#if field.type == 'select'>
+	<#if (field.size > 0)>
+	size="${field.size}"
+	</#if>
 	<#if field.items?has_content>
 	items="${field.items}"
 	</#if>
@@ -187,6 +190,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	</#if>
 </#if>
 <#if field.type == 'select'>
+	<#if (field.size > 0)>
+	size="${field.size}"
+	</#if>
 	<#if field.items?has_content>
 	items="${field.items}"
 	</#if>
@@ -307,6 +313,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					</#if>
 				</#if>
 				<#if detailField.type == 'select'>
+					<#if (detailField.size > 0)>
+					size="${detailField.size}"
+					</#if>
 					<#if detailField.items?has_content>
 					items="${detailField.items}"
 					</#if>
@@ -427,6 +436,9 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					</#if>
 				</#if>
 				<#if field.type == 'select'>
+					<#if (field.size > 0)>
+					size="${field.size}"
+					</#if>
 					<#if field.items?has_content>
 					items="${field.items}"
 					</#if>
