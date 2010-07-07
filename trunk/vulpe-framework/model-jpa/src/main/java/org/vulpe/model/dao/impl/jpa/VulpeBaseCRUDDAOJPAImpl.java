@@ -49,7 +49,7 @@ import org.vulpe.model.entity.LogicEntity.Status;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPAImpl<ENTITY, ID> {
 
@@ -191,7 +191,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
 				final Query query = entityManager.createQuery("select count(*) ".concat(hql
-						.substring(hql.toLowerCase().indexOf("from"))));
+						.substring(hql.toLowerCase().indexOf("from"), hql.toLowerCase().indexOf(
+								"order by"))));
 				setParams(query, params);
 				return query.getSingleResult();
 			}
