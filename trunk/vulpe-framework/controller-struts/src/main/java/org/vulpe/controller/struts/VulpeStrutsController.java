@@ -332,7 +332,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	}
 
 	/**
-	 * Extension point to conde before confirm create.
+	 * Extension point to code before confirm create.
 	 *
 	 * @since 1.0
 	 */
