@@ -244,6 +244,9 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					decoratedViewField.setItemLabel(select.itemLabel());
 				}
 			}
+			if (select.size() > 0) {
+				decoratedViewField.setSize(select.size());
+			}
 			decoratedViewField.setShowBlank(select.showBlank());
 			decoratedViewField.setAutoLoad(select.autoLoad());
 			decoratedViewField.setType("select");
