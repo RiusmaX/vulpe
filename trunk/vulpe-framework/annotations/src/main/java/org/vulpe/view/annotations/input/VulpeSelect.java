@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation to represent select input on view.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -46,5 +46,7 @@ public @interface VulpeSelect {
 	boolean argument() default false;
 
 	String label() default "";
+
+	int size() default 0;
 
 }
