@@ -24,6 +24,10 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@VulpeValidate(requiredScope = { VulpeValidateScope.CRUD, VulpeValidateScope.SELECT })
 	@VulpeColumn(sortable = true)
 	@VulpeText(required = true, argument = true, size = 50, maxlength = 50)
@@ -38,16 +42,17 @@ public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
 		return descricao;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Override
-	public Long getId() {
-		return super.getId();
-	}
-
 	@Transient
 	@Override
 	public String getOrderBy() {
 		return "obj.descricao";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

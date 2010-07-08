@@ -108,7 +108,8 @@ td .titulo {
 	top: 3px;
 }
 
-.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation
+	{
 	border: 1px solid;
 	margin: 0px 0px 1px 0px;
 	/*padding: 15px 10px 15px 50px;*/
@@ -144,7 +145,7 @@ td .titulo {
 }
 
 .vulpeIconOff {
-	filter: progid :     DXImageTransform.Microsoft.Alpha (     opacity =       40 );
+	filter: progid :       DXImageTransform.Microsoft.Alpha (       opacity =         40 );
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
@@ -215,7 +216,7 @@ td .titulo {
 	padding: 0px;
 	width: 90px;
 	cursor: pointer;
-    color: #ffffff;
+	color: #ffffff;
 }
 
 .required {
@@ -336,9 +337,7 @@ body,html {
 }
 
 fieldset {
-	margin-left: 10px;
 	border: 1px solid #e1e4d7;
-	padding-bottom: 10px;
 }
 
 h1 {
@@ -397,7 +396,7 @@ tfoot {
 	text-align: center;
 }
 
-.vulpeTableHeader, .vulpeTableFooter {
+.vulpeTableHeader,.vulpeTableFooter {
 	color: #fff;
 	font-weight: bold;
 	background-color: #0039BA;
@@ -440,8 +439,12 @@ html,body {
 	width: 96%;
 }
 
-#body td,th {
+#body td,#body th {
 	padding: 5px;
+}
+
+#vulpeCRUD td,#vulpeCRUD th,#vulpeSelect td {
+	padding: 0px;
 }
 
 #container {
@@ -450,16 +453,21 @@ html,body {
 	width: 100%;
 }
 
+#content {
+	padding: 5px;
+}
+
 #copyright {
-	font-size: 9px;
+	font-size: 8px;
 }
 
 #copyright a {
+	color: #eee;
 	text-decoration: none;
 }
 
 #copyright a:hover {
-	color: #999;
+	color: #ccc;
 	text-decoration: none;
 }
 
@@ -470,7 +478,12 @@ html,body {
 
 #footer {
 	text-align: center;
-	margin-top: 10px;
+	margin-bottom: 0;
+	background-color: #012883;
+	color: #fff;
+	position: fixed;
+	width: 100%;
+	height: 100%;
 }
 
 #frontend {
@@ -485,9 +498,18 @@ html,body {
 }
 
 #header {
-	width: 100%;
-	height: 50px;
+	background: url(../../images/background-header.jpg) no-repeat;
+	background-color: #012883;
+	width : 100%;
+	height: 58px;
 	top: 0;
+	width: 100%;
+}
+
+#header #logo {
+	background: url(../../images/logo.jpg) no-repeat;
+	width: 281px;
+	height: 57px;
 }
 
 #loading {
@@ -496,7 +518,7 @@ html,body {
 }
 
 #paging {
-
+	font-size: 9px;
 }
 
 #pagingFirstPage {
@@ -527,7 +549,6 @@ html,body {
 	width: 16px
 }
 
-
 #menu {
 	background: url(../../images/fundo-azul.png) repeat-x;
 	width: 100%;
@@ -536,7 +557,7 @@ html,body {
 
 #messages {
 	position: absolute;
-	top: 74px;
+	top: 79px;
 	width: 100%;
 	margin-left: 0px;
 	margin-right: 0px;
@@ -580,11 +601,12 @@ html,body {
 }
 
 #poweredby a {
+	color: #eee;
 	text-decoration: none;
 }
 
 #poweredby a:hover {
-	color: #999;
+	color: #ccc;
 	text-decoration: none;
 }
 
@@ -633,9 +655,11 @@ html,body {
 	padding-left: 20px;
 	padding-top: 3px;
 }
+
 #crud {
 	margin-top: 10px
 }
+
 #select {
 	margin-top: 10px
 }

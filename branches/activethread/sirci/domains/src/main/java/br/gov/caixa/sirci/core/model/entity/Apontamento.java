@@ -26,6 +26,10 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@VulpeColumn(sortable = true)
 	@VulpeTextArea(required = true)
 	@Column(length = 256)
@@ -37,14 +41,32 @@ public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 	@JoinColumn(name = "tipoApontamento", referencedColumnName = "id")
 	private TipoApontamento tipoApontamento;
 
+	@VulpeSelect(items = "OrgaoOrigem", itemKey = "id", itemLabel = "descricao", required = true, autoLoad = true)
+	private transient OrgaoOrigem orgaoOrigem;
+
+	@VulpeSelect(items = "${listaDocumentoOrigem}", itemKey = "id", itemLabel = "descricao", required = true, autoLoad = true, size = 3)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "documentoOrigem", referencedColumnName = "id")
+	private DocumentoOrigem documentoOrigem;
+
+	@VulpeSelect(items = "Unidade", itemKey = "id", itemLabel = "nome", required = true, autoLoad = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "unidadeResponsavel", referencedColumnName = "id")
+	private Unidade unidadeResponsavel;
+
+	@VulpeSelect(items = "Unidade", itemKey = "id", itemLabel = "nome", required = true, autoLoad = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "unidadeCoresponsavel", referencedColumnName = "id")
+	private Unidade unidadeCoresponsavel;
+
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(argument = true)
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private SituacaoApontamento situacaoApontamento;
 
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(argument = true)
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private ImpactoApontamento impactoApontamento;
 
 	@VulpeTextArea(required = true)
@@ -65,13 +87,6 @@ public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
 	public void setRecomendacao(String recomendacao) {
 		this.recomendacao = recomendacao;
-	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Override
-	public Long getId() {
-		return super.getId();
 	}
 
 	public void setTipoApontamento(TipoApontamento tipoApontamento) {
@@ -96,5 +111,45 @@ public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
 	public void setImpactoApontamento(ImpactoApontamento impactoApontamento) {
 		this.impactoApontamento = impactoApontamento;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public OrgaoOrigem getOrgaoOrigem() {
+		return orgaoOrigem;
+	}
+
+	public void setOrgaoOrigem(OrgaoOrigem orgaoOrigem) {
+		this.orgaoOrigem = orgaoOrigem;
+	}
+
+	public DocumentoOrigem getDocumentoOrigem() {
+		return documentoOrigem;
+	}
+
+	public void setDocumentoOrigem(DocumentoOrigem documentoOrigem) {
+		this.documentoOrigem = documentoOrigem;
+	}
+
+	public Unidade getUnidadeResponsavel() {
+		return unidadeResponsavel;
+	}
+
+	public void setUnidadeResponsavel(Unidade unidadeResponsavel) {
+		this.unidadeResponsavel = unidadeResponsavel;
+	}
+
+	public Unidade getUnidadeCoresponsavel() {
+		return unidadeCoresponsavel;
+	}
+
+	public void setUnidadeCoresponsavel(Unidade unidadeCoresponsavel) {
+		this.unidadeCoresponsavel = unidadeCoresponsavel;
 	}
 }

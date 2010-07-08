@@ -8,11 +8,6 @@
 	<persistence-unit name="sirci" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<non-jta-data-source>java:comp/env/jdbc/sirci</non-jta-data-source>
-		<!--
-		<jar-file>WEB-INF/lib/vulpe-model-1.0.jar</jar-file>
-		<jar-file>WEB-INF/lib/vulpe-audit-1.0.jar</jar-file>
-		<jar-file>WEB-INF/lib/vulpe-security-1.0.jar</jar-file>
-		-->
 		<class>org.vulpe.audit.model.entity.AuditOccurrence</class>
 		<class>org.vulpe.security.model.entity.Role</class>
 		<class>org.vulpe.security.model.entity.SecureResource</class>
@@ -20,7 +15,7 @@
 		<class>org.vulpe.security.model.entity.User</class>
 		<class>org.vulpe.security.model.entity.UserRole</class>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
