@@ -38,6 +38,7 @@ import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.entity.LogicEntity;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -225,6 +226,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		int countParam = 0;
+		final StringBuilder order = new StringBuilder();
 		for (Field field : fields) {
 			if ((VulpeReflectUtil.getInstance().isAnnotationInField(Transient.class,
 					entity.getClass(), field.getName()) || Modifier.isTransient(field
@@ -233,8 +235,16 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 							entity.getClass(), field.getName())) {
 				continue;
 			}
+			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
+			if (orderBy != null) {
+				if (StringUtils.isNotBlank(order.toString())) {
+					order.append(",");
+				}
+				order.append("obj.").append(field.getName()).append(" ").append(
+						orderBy.type().name());
+			}
 			field.setAccessible(true);
-			Object value;
+			Object value = null;
 			try {
 				value = field.get(entity);
 			} catch (Exception e) {
@@ -306,16 +316,16 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		}
 
 		// add order by
-		if (StringUtils.isNotEmpty(entity.getOrderBy())) {
+		if (StringUtils.isNotEmpty(entity.getOrderBy()) || StringUtils.isNotEmpty(order.toString())) {
 			if (hql.toString().toLowerCase().contains("order by")) {
 				hql.append(",");
 			} else {
 				hql.append(" order by");
 			}
 			hql.append(" ");
-			hql.append(entity.getOrderBy());
+			hql.append(StringUtils.isNotEmpty(entity.getOrderBy()) ? entity.getOrderBy() : order
+					.toString());
 		}
-
 		return hql.toString();
 	}
 

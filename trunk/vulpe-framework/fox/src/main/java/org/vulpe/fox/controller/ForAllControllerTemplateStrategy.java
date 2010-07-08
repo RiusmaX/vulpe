@@ -31,7 +31,6 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
 import com.sun.mirror.declaration.FieldDeclaration;
 
@@ -62,15 +61,6 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),
 					".model.entity", ".controller"));
 			controller.setModuleName(getModuleName(clazz));
-
-			if (clazz.getSuperclass() != null
-					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
-					&& !getClassName(clazz.getSuperclass()).equals(
-							AbstractVulpeBaseEntityImpl.class.getName())) {
-				controller.setSuperclassName(getClassName(clazz.getSuperclass()));
-				controller.setControllerSuperclassName(StringUtils.replace(
-						controller.getSuperclassName(), ".model.entity", ".controller"));
-			}
 
 			final List<String> types = new ArrayList<String>();
 			final ControllerType controllerType = codeGenerator.controller().controllerType();

@@ -21,7 +21,7 @@ package org.vulpe.model.entity;
  * 
  */
 @SuppressWarnings("serial")
-public class VulpeBaseSimpleEntity extends AbstractVulpeBaseEntityImpl<Long> {
+public class VulpeBaseSimpleEntity extends AbstractVulpeBaseEntity<Long> {
 
 	public Long getId() {
 		return null;

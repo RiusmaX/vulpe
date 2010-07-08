@@ -51,14 +51,14 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	}
 
 	@Override
-	protected void onUpdatePost() {
+	protected boolean onUpdatePost() {
 		if (StringUtils.isBlank(getEntity().getPassword())
 				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
 			getEntity().setPassword(getPassword());
 		} else {
 			setPassword(getEntity().getPassword());
 		}
-		super.onUpdatePost();
+		return super.onUpdatePost();
 	}
 
 	@Override

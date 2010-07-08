@@ -26,7 +26,6 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
 
 import com.sun.mirror.declaration.FieldDeclaration;
 
@@ -56,15 +55,6 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 			manager.setManagerPackageName(StringUtils.replace(clazz.getPackage().toString(),
 					".model.entity", ".model.manager"));
 			manager.setModuleName(getModuleName(clazz));
-
-			if (clazz.getSuperclass() != null
-					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
-					&& !getClassName(clazz.getSuperclass()).equals(
-							AbstractVulpeBaseEntityImpl.class.getName())) {
-				manager.setSuperclassName(getClassName(clazz.getSuperclass()));
-				manager.setManagerSuperclassName(StringUtils.replace(manager.getSuperclassName(),
-						".model.entity", ".model.manager"));
-			}
 
 			manager.setIdType(getIDType(clazz.getSuperclass()));
 			if (manager.getIdType() == null) {

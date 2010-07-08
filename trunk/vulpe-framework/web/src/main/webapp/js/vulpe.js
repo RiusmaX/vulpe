@@ -71,7 +71,9 @@ var vulpe = {
 			selectedExclusion: 'vulpe.msg.confirm.selected.exclusion',
 			selectRecordsExclusion: 'vulpe.msg.select.records.exclusion',
 			upload: 'vulpe.error.upload',
+			close: 'vulpe.messages.close'
 		},
+		messageSlideUp: true,
 		messageSlideUpTime: 10000,
 		os: {
 			iPhone: (BrowserDetect.OS == "iPhone/iPod")
@@ -789,15 +791,14 @@ var vulpe = {
 				$(messageLayer).removeClass("vulpeMessageError");
 				$(messageLayer).removeClass("vulpeMessageSuccess");
 				$(messageLayer).addClass("vulpeMessageValidation");
-				if (fields.length > 1) {
-					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfields + "</li></ul>");
-				} else {
-					$(messageLayer).html("<ul><li class='vulpeAlertError'>" + vulpe.config.messages.error.checkfield + "</li></ul>");
-				}
+				var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
+				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + (fields.length > 1 ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield) + "</li></ul>" + messagesClose);
 				$(messageLayer).slideDown("slow");
-				setTimeout(function() {
-					$(messageLayer).slideUp("slow");
-				}, vulpe.config.messageSlideUpTime);
+				if (eval(vulpe.config.messageSlideUp)) {
+					setTimeout(function() {
+						$(messageLayer).slideUp("slow");
+					}, vulpe.config.messageSlideUpTime);
+				}
 			}
 			return valid;
 		},

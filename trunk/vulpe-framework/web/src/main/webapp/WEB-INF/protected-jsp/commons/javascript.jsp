@@ -27,7 +27,7 @@ vulpe.config.contextPath = '${pageContext.request.contextPath}';
 vulpe.config.theme = '${vulpeTheme}';
 vulpe.config.messages = {
 	error: {
-		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>', 
+		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>',
 		checkfields: '<fmt:message key="vulpe.error.validate.checkfields"/>',
 		validate: {
 			date:'<fmt:message key="vulpe.error.validate.date"/>',
@@ -40,7 +40,7 @@ vulpe.config.messages = {
 			mask:'<fmt:message key="vulpe.error.validate.mask"/>',
 			maxlength:'<fmt:message key="vulpe.error.validate.maxlength"/>',
 			minlength:'<fmt:message key="vulpe.error.validate.minlength"/>',
-			required:'<fmt:message key="vulpe.error.validate.required"/>'	
+			required:'<fmt:message key="vulpe.error.validate.required"/>'
 		}
 	},
 	exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',
@@ -48,12 +48,14 @@ vulpe.config.messages = {
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
 	selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
-	upload: '<fmt:message key="vulpe.error.upload"/>'
+	upload: '<fmt:message key="vulpe.error.upload"/>',
+	close: '<fmt:message key="vulpe.messages.close"/>'
 }
 vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
 	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>',
 }
+vulpe.config.messageSlideUp = '${vulpeMessageSlideUp}';
 vulpe.config.messageSlideUpTime = '${vulpeMessageSlideUpTime}';
 <c:if test="${vulpeShowAsMobile}">
 vulpe.config.popup.mobile = true;

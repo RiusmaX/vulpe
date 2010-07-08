@@ -40,7 +40,7 @@ import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.xml.XMLAttribute;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.commons.xml.XMLReader;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 import com.thoughtworks.xstream.XStream;
@@ -50,7 +50,7 @@ import com.thoughtworks.xstream.XStream;
 @Entity
 @MappedSuperclass
 @IgnoreAudit
-public class AuditOccurrence extends AbstractVulpeBaseEntityImpl<Long> {
+public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -117,6 +117,8 @@ public class VulpeStartupListener implements ServletContextListener {
 			evt.getServletContext().setAttribute(
 					VulpeConstants.Context.View.HEIGHT_MOBILE_BUTTON_ICON,
 					vulpeProject.view().heightMobileButtonIcon());
+			evt.getServletContext().setAttribute(VulpeConstants.Context.View.MESSAGE_SLIDE_UP,
+					vulpeProject.view().messageSlideUp());
 			evt.getServletContext().setAttribute(VulpeConstants.Context.View.MESSAGE_SLIDE_UP_TIME,
 					vulpeProject.view().messageSlideUpTime());
 			evt.getServletContext().setAttribute(VulpeConstants.Context.View.BREAK_LABEL,

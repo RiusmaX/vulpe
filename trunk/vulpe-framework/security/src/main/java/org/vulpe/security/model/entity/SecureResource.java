@@ -28,7 +28,7 @@ import javax.persistence.OrderBy;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
 /**
@@ -43,7 +43,7 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
 @CachedClass
 @Entity
 @SuppressWarnings("serial")
-public class SecureResource extends AbstractVulpeBaseEntityImpl<Long> {
+public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

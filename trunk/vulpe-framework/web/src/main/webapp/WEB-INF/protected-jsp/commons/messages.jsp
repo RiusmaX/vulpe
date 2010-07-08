@@ -19,9 +19,11 @@
 				$("#messages").removeClass("vulpeMessageSuccess");
 				$("#messages").addClass("vulpeMessageValidation");
 				$("#messages").slideDown("slow");
+				<c:if test="${vulpeMessageSlideUp}">
 				setTimeout(function() {
 				  $("#messages").slideUp("slow");
 				}, ${vulpeMessageSlideUpTime});
+				</c:if>
 			});
 		</script>
 	</c:if>
@@ -49,6 +51,7 @@
 							</c:forEach>
 						</c:if>
 					</ul>
+					<div id="closeMessages"><a href="javascript:void(0);" onclick="$('#messages').slideUp('slow')"><fmt:message key="vulpe.messages.close"/></a></div>
 					<script charset="utf-8">
 						vulpe.view.onhidemessages = '${util:urlEncode(onHideMessages)}';
 					</script>
@@ -78,11 +81,9 @@
 			<script charset="utf-8" type="text/javascript">
 				$(document).ready(function() {
 					var msg = '<ul>';
-
 					$("#messages").removeClass("vulpeMessageError");
 					$("#messages").removeClass("vulpeMessageSuccess");
 					$("#messages").removeClass("vulpeMessageValidation");
-
 					<c:if test="${not empty actionErrors}">
 					$("#messages").addClass("vulpeMessageError");
 						<c:forEach items="${actionErrors}" var="msg">
@@ -95,14 +96,15 @@
 					msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
 					</c:if>
-
-					msg += '</ul>';
+					msg += '</ul><div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'#messages\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
 
 					$("#messages").html(msg);
 					$("#messages").slideDown("slow");
+					<c:if test="${vulpeMessageSlideUp}">
 					setTimeout(function() {
 			          $("#messages").slideUp("slow");
 					}, ${vulpeMessageSlideUpTime});
+					</c:if>
 				});
 			</script>
 		</c:otherwise>

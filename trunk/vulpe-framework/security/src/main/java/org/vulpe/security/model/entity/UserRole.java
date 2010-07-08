@@ -23,11 +23,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @Entity
 @SuppressWarnings("serial")
-public class UserRole extends AbstractVulpeBaseEntityImpl<Long> {
+public class UserRole extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

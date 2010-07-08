@@ -19,21 +19,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 @SuppressWarnings("serial")
 public class DecoratedController implements Serializable {
 
 	private String name;
 	private String idType;
 	private String moduleName;
-	private String superclassName;
-	private String controllerSuperclassName;
 	private String projectPackageName;
 	private String packageName;
 	private String servicePackageName;
 	private String controllerPackageName;
-	private String controllerSuperclassPackageName;
 	private int pageSize = 5;
 	private String tabularDespiseFields = "";
 	private int tabularNewDetails = 1;
@@ -72,19 +67,6 @@ public class DecoratedController implements Serializable {
 		this.packageName = packageName;
 	}
 
-	public String getSuperclassSimpleName() {
-		return StringUtils.substring(superclassName,
-				StringUtils.lastIndexOf(superclassName, ".") + 1);
-	}
-
-	public String getSuperclassName() {
-		return superclassName;
-	}
-
-	public void setSuperclassName(final String superclassName) {
-		this.superclassName = superclassName;
-	}
-
 	public String getIdType() {
 		return idType;
 	}
@@ -99,27 +81,6 @@ public class DecoratedController implements Serializable {
 
 	public void setControllerPackageName(final String daoPackageName) {
 		this.controllerPackageName = daoPackageName;
-	}
-
-	public String getControllerSuperclassSimpleName() {
-		return StringUtils.substring(controllerSuperclassName, StringUtils.lastIndexOf(
-				controllerSuperclassName, ".") + 1);
-	}
-
-	public String getControllerSuperclassName() {
-		return controllerSuperclassName;
-	}
-
-	public void setControllerSuperclassName(final String daoSuperclassName) {
-		this.controllerSuperclassName = daoSuperclassName;
-	}
-
-	public String getControllerSuperclassPackageName() {
-		return controllerSuperclassPackageName;
-	}
-
-	public void setControllerSuperclassPackageName(final String daoSuperclassPackageName) {
-		this.controllerSuperclassPackageName = daoSuperclassPackageName;
 	}
 
 	public void setTypes(final List<String> types) {

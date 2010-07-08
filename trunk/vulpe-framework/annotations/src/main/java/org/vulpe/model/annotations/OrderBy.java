@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.model.annotations.db4o;
+package org.vulpe.model.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -75,6 +75,7 @@ public class VulpeConstants {
 			public static final String WIDTH_MOBILE_BUTTON_ICON = "vulpeWidthMobileButtonIcon";
 			public static final String HEIGHT_BUTTON_ICON = "vulpeHeightButtonIcon";
 			public static final String HEIGHT_MOBILE_BUTTON_ICON = "vulpeHeightMobileButtonIcon";
+			public static final String MESSAGE_SLIDE_UP = "vulpeMessageSlideUp";
 			public static final String MESSAGE_SLIDE_UP_TIME = "vulpeMessageSlideUpTime";
 			public static final String BREAK_LABEL = "vulpeBreakLabel";
 		}

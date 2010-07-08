@@ -40,7 +40,9 @@ import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.SODAQueries;
 import org.vulpe.model.annotations.db4o.SODAQuery;
 import org.vulpe.model.annotations.db4o.SODAQueryAttribute;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.model.entity.VulpeBaseSimpleEntity;
 
 import com.sun.mirror.declaration.FieldDeclaration;
@@ -75,8 +77,11 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			// if super class isn't Object
 			if (clazz.getSuperclass() != null
 					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
-					&& !getClassName(clazz.getSuperclass()).equals(
-							AbstractVulpeBaseEntityImpl.class.getName())) {
+					&& (!getClassName(clazz.getSuperclass()).equals(
+							AbstractVulpeBaseEntity.class.getName())
+							&& !getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseJPAEntity.class.getName()) && !getClassName(
+							clazz.getSuperclass()).equals(VulpeBaseDB4OEntity.class.getName()))) {
 				dao.setSuperclassName(getClassName(clazz.getSuperclass()));
 				dao.setDaoSuperclassName(StringUtils.replace(dao.getSuperclassName(), ".entity",
 						".dao")

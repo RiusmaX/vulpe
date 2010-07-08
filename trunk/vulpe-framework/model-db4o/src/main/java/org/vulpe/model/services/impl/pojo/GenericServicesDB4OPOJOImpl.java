@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseCRUDDAODB4OImpl;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.GenericServices;
 
@@ -34,7 +34,7 @@ import org.vulpe.model.services.GenericServices;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Service("GenericServices")
 @Transactional
-public class GenericServicesDB4OPOJOImpl<ENTITY extends AbstractVulpeBaseEntityImpl<ID>, ID extends Serializable & Comparable>
+public class GenericServicesDB4OPOJOImpl<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		implements GenericServices {
 
 	private static final Logger LOG = Logger.getLogger(GenericServicesDB4OPOJOImpl.class);

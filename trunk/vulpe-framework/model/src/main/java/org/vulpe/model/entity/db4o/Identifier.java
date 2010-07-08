@@ -16,7 +16,7 @@
 package org.vulpe.model.entity.db4o;
 
 /**
- * 
+ *
  * @author <a href="mailto:geraldo.matos@activethread.com.br">Geraldo
  *         Felipe</a>.
  * @version $Revision: 1.0 $

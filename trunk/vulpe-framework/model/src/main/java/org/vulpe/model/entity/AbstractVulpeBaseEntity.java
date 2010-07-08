@@ -25,19 +25,15 @@ import org.apache.log4j.Logger;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
 import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.xml.XMLDateConversor;
-import org.vulpe.config.annotations.VulpeDomains;
 
 import com.thoughtworks.xstream.XStream;
 
 @SuppressWarnings({ "unchecked", "serial", "rawtypes" })
-public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comparable> implements
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
 		VulpeBaseEntity<ID> {
 
-	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntityImpl.class);
-
-	private ID id;
+	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
 	private String lastUserUpdated;
 
@@ -47,18 +43,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 	@IgnoreAudit
 	private transient String orderBy;
 
-	public AbstractVulpeBaseEntityImpl() {
-		if (!VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
-			this.orderBy = "obj.id";
-		}
-	}
-
-	public ID getId() {
-		return id;
-	}
-
-	public void setId(ID id) {
-		this.id = id;
+	public AbstractVulpeBaseEntity() {
 	}
 
 	public boolean isSelected() {
@@ -79,7 +64,7 @@ public abstract class AbstractVulpeBaseEntityImpl<ID extends Serializable & Comp
 
 	@Override
 	public boolean equals(final Object obj) {
-		final AbstractVulpeBaseEntityImpl<ID> entity = (AbstractVulpeBaseEntityImpl<ID>) obj;
+		final AbstractVulpeBaseEntity<ID> entity = (AbstractVulpeBaseEntity<ID>) obj;
 		if ((obj == null || obj.getClass() != this.getClass())
 				|| (entity.getId() == null || getId() == null)) {
 			return false;

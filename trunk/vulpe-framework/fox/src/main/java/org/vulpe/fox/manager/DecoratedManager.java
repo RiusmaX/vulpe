@@ -19,8 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-
 @SuppressWarnings("serial")
 public class DecoratedManager implements Serializable {
 
@@ -28,12 +26,9 @@ public class DecoratedManager implements Serializable {
 	private String entityName;
 	private String idType;
 	private String moduleName;
-	private String superclassName;
-	private String managerSuperclassName;
 	private String packageName;
 	private String daoPackageName;
 	private String managerPackageName;
-	private String managerSuperclassPackageName;
 
 	private List<DecoratedManagerMethod> methods;
 
@@ -64,19 +59,6 @@ public class DecoratedManager implements Serializable {
 		this.packageName = packageName;
 	}
 
-	public String getSuperclassSimpleName() {
-		return StringUtils.substring(superclassName, StringUtils.lastIndexOf(
-				superclassName, ".") + 1);
-	}
-
-	public String getSuperclassName() {
-		return superclassName;
-	}
-
-	public void setSuperclassName(final String superclassName) {
-		this.superclassName = superclassName;
-	}
-
 	public String getIdType() {
 		return idType;
 	}
@@ -91,27 +73,6 @@ public class DecoratedManager implements Serializable {
 
 	public void setManagerPackageName(final String daoPackageName) {
 		this.managerPackageName = daoPackageName;
-	}
-
-	public String getManagerSuperclassSimpleName() {
-		return StringUtils.substring(managerSuperclassName, StringUtils
-				.lastIndexOf(managerSuperclassName, ".") + 1);
-	}
-
-	public String getManagerSuperclassName() {
-		return managerSuperclassName;
-	}
-
-	public void setManagerSuperclassName(final String daoSuperclassName) {
-		this.managerSuperclassName = daoSuperclassName;
-	}
-
-	public String getManagerSuperclassPackageName() {
-		return managerSuperclassPackageName;
-	}
-
-	public void setManagerSuperclassPackageName(final String daoSuperclassPackageName) {
-		this.managerSuperclassPackageName = daoSuperclassPackageName;
 	}
 
 	public void setModuleName(final String moduleName) {

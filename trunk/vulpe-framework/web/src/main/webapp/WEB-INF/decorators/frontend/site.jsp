@@ -44,12 +44,12 @@
 				<div id="header">
 					<%@include file="/WEB-INF/protected-jsp/commons/frontend/header.jsp" %>
 				</div>
-				<div id="messages" style="display: none;" class="vulpeMessages"></div>
 				<div id="menu">
 					<ul id="nav">
 						<%@include file="/WEB-INF/protected-jsp/commons/frontend/menu.jsp" %>
 					</ul>
 				</div>
+				<div id="messages" style="display: none;" class="vulpeMessages"></div>
 				<div id="body">
 					<decorator:body/>
 				</div>

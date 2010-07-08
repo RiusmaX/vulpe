@@ -22,11 +22,11 @@ import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
-public class BasicUser extends AbstractVulpeBaseEntityImpl<Long> {
+public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	private String username;
 

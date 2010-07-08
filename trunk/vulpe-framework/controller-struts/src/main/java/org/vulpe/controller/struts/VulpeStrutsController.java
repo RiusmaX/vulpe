@@ -454,8 +454,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		if (!validateDetails()) {
 			return Forward.SUCCESS;
 		}
-		onUpdatePost();
-		addActionMessage(getText("vulpe.msg.update.post"));
+		if (onUpdatePost()) {
+			addActionMessage(getText("vulpe.msg.update.post"));
+		}
 
 		setResultName(Forward.SUCCESS);
 		if (entity.getClass().isAnnotationPresent(CachedClass.class)) {
@@ -488,7 +489,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 *
 	 * @since 1.0
 	 */
-	protected void onUpdatePost() {
+	protected boolean onUpdatePost() {
 		despiseDetails();
 
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
@@ -498,6 +499,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				.getEntityClass() }, new Object[] { entity });
 
 		setExecuted(true);
+		return true;
 	}
 
 	/**
@@ -530,13 +532,14 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public String delete() {
 		setOperation(Action.DELETE);
 		deleteBefore();
-		onDelete();
 		showButtons(Action.DELETE);
-		addActionMessage(getText("vulpe.msg.delete"));
+		if (onDelete()) {
+			addActionMessage(getText("vulpe.msg.delete"));
+		}
 
 		setResultName(Forward.SUCCESS);
 		deleteAfter();
-		if (getControllerType().equals(ControllerType.TWICE)) {
+		if (getControllerType().equals(ControllerType.TWICE) && getEntity().getId() != null) {
 			setEntity(null);
 			onRead();
 			controlResultForward();
@@ -550,7 +553,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 *
 	 * @since 1.0
 	 */
-	protected void onDelete() {
+	protected boolean onDelete() {
 		final ENTITY entity = prepareEntity(Action.DELETE);
 		final List<ENTITY> entities = new ArrayList<ENTITY>();
 		if (getSelected() != null && !getSelected().isEmpty()) {
@@ -570,6 +573,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				: entities });
 
 		setExecuted(true);
+		return true;
 	}
 
 	/**
