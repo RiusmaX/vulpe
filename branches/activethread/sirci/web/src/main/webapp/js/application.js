@@ -7,6 +7,6 @@ var app = {
 
 	},
 	carregarDocumentos: function (formName) {
-		vulpe.view.request.submitAjax(formName, '/core/Apontamento/listarDocumentoOrigem/ajax', 'documentos');
+		vulpe.view.request.submitAjax(formName, '/core/Apontamento/listarDocumentoOrigem/ajax', 'documentos','','',true);
 	}
 }
