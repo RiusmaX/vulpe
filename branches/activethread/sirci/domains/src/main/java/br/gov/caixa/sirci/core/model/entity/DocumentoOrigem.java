@@ -9,12 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 
 @CodeGenerator(manager = true)
 @Entity
 @SuppressWarnings("serial")
-public class DocumentoOrigem extends AbstractVulpeBaseEntityImpl<Long> {
+public class DocumentoOrigem extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +30,7 @@ public class DocumentoOrigem extends AbstractVulpeBaseEntityImpl<Long> {
 	}
 
 	public DocumentoOrigem(final OrgaoOrigem orgaoOrigem) {
+		this.orgaoOrigem = orgaoOrigem;
 	}
 
 	public Long getId() {

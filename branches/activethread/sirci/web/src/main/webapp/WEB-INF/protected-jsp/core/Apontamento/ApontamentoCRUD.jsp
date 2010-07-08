@@ -26,7 +26,7 @@
 </td>
 </tr>
 <tr>
-<td>
+<td valign="top">
 <v:select
 	labelKey="label.sirci.core.Apontamento.crud.orgaoOrigem"
 	property="orgaoOrigem.id"
@@ -37,7 +37,7 @@
 	required="true" onchange="app.carregarDocumentos('${vulpeFormName}')"
 />
 </td>
-<td>
+<td valign="top">
 <div id="documentos">
 <v:select
 	labelKey="label.sirci.core.Apontamento.crud.documentoOrigem"

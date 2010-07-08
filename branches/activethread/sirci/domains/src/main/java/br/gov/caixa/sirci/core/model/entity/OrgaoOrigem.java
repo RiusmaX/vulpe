@@ -7,13 +7,13 @@ import javax.persistence.Id;
 
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 
 @CodeGenerator(manager = true)
 @CachedClass
 @Entity
 @SuppressWarnings("serial")
-public class OrgaoOrigem extends AbstractVulpeBaseEntityImpl<Long> {
+public class OrgaoOrigem extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

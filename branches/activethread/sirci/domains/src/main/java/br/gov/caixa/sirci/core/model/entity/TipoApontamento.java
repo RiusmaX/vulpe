@@ -5,12 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.annotations.OrderBy;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -22,7 +22,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = { ViewType.ALL }))
 @Entity
 @SuppressWarnings("serial")
-public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
+public class TipoApontamento extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +32,7 @@ public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
 	@VulpeColumn(sortable = true)
 	@VulpeText(required = true, argument = true, size = 50, maxlength = 50)
 	@Column(length = 50)
+	@OrderBy
 	private String descricao;
 
 	public void setDescricao(String descricao) {
@@ -40,12 +41,6 @@ public class TipoApontamento extends AbstractVulpeBaseEntityImpl<Long> {
 
 	public String getDescricao() {
 		return descricao;
-	}
-
-	@Transient
-	@Override
-	public String getOrderBy() {
-		return "obj.descricao";
 	}
 
 	public Long getId() {

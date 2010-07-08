@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -24,7 +24,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 		ViewType.SELECT, ViewType.CRUD }))
 @Entity
 @SuppressWarnings("serial")
-public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
+public class Apontamento extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -72,6 +72,13 @@ public class Apontamento extends AbstractVulpeBaseEntityImpl<Long> {
 	@VulpeTextArea(required = true)
 	@Column(length = 2048)
 	private String recomendacao;
+
+	public Apontamento() {
+	}
+
+	public Apontamento(final TipoApontamento tipoApontamento) {
+		this.tipoApontamento = tipoApontamento;
+	}
 
 	public String getDescricao() {
 		return descricao;

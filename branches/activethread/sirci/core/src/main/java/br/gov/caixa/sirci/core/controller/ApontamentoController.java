@@ -42,4 +42,28 @@ public class ApontamentoController extends ApplicationBaseController<Apontamento
 		setResultForward(Layout.PROTECTED_JSP + "core/Apontamento/documentos.jsp");
 		return Forward.SUCCESS;
 	}
+
+	@Override
+	public String create() {
+		getSession().removeAttribute(LISTA_DOCUMENTO_ORIGEM);
+		return super.create();
+	}
+
+	@Override
+	public String update() {
+		getSession().removeAttribute(LISTA_DOCUMENTO_ORIGEM);
+		return super.update();
+	}
+
+	@Override
+	public String delete() {
+		getSession().removeAttribute(LISTA_DOCUMENTO_ORIGEM);
+		return super.delete();
+	}
+
+	@Override
+	public String twice() {
+		getSession().removeAttribute(LISTA_DOCUMENTO_ORIGEM);
+		return super.twice();
+	}
 }
