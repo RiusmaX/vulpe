@@ -472,10 +472,25 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 						list.set(count, entity);
 						break;
 					}
-					count++;
+					++count;
 				}
 			}
 			getCachedClass().put(entityName, list);
+		}
+		final String selectTableKey = getControllerUtil().getCurrentControllerKey()
+				+ Action.SELECT_TABLE;
+		final List<ENTITY> entities = getSessionAttribute(selectTableKey);
+		if (entities != null && !entities.isEmpty()) {
+			final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
+			int index = 0;
+			for (ENTITY entity : entitiesOld) {
+				if (entity.getId().equals(getEntity().getId())) {
+					entities.remove(index);
+					entities.add(index, getEntity());
+					++index;
+				}
+			}
+			setSessionAttribute(selectTableKey, entities);
 		}
 		updatePostAfter();
 		if (getControllerType().equals(ControllerType.TWICE)) {
@@ -1373,7 +1388,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					lines.append(StringUtils.isBlank(lines.toString()) ? String
 							.valueOf(duplicatedBean.getLine()) : ", " + duplicatedBean.getLine());
 				}
-				count++;
+				++count;
 			}
 			if (getControllerType().equals(ControllerType.TABULAR)) {
 				addActionError("vulpe.error.tabular.duplicated", lines.toString());
