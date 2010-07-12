@@ -26,7 +26,7 @@ public class ApontamentoController extends ApplicationBaseController<Apontamento
 
 	private static final String LISTA_DOCUMENTO_ORIGEM = "listaDocumentoOrigem";
 
-	public String listarDocumentoOrigem() {
+	private void recuperarListaDocumentoOrigem() {
 		try {
 			if (getEntity().getOrgaoOrigem() != null
 					&& getEntity().getOrgaoOrigem().getId() != null) {
@@ -39,6 +39,9 @@ public class ApontamentoController extends ApplicationBaseController<Apontamento
 		} catch (VulpeApplicationException e) {
 			e.printStackTrace();
 		}
+	}
+	public String listarDocumentoOrigem() {
+		recuperarListaDocumentoOrigem();
 		setResultForward(Layout.PROTECTED_JSP + "core/Apontamento/documentos.jsp");
 		return Forward.SUCCESS;
 	}
@@ -53,6 +56,13 @@ public class ApontamentoController extends ApplicationBaseController<Apontamento
 	public String update() {
 		getSession().removeAttribute(LISTA_DOCUMENTO_ORIGEM);
 		return super.update();
+	}
+
+	@Override
+	protected void updateAfter() {
+		super.updateAfter();
+		getEntity().setOrgaoOrigem(getEntity().getDocumentoOrigem().getOrgaoOrigem());
+		recuperarListaDocumentoOrigem();
 	}
 
 	@Override

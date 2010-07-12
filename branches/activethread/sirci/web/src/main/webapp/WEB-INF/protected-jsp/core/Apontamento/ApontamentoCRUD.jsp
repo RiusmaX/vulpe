@@ -78,14 +78,14 @@
 <v:select
 	labelKey="label.sirci.core.Apontamento.crud.situacaoApontamento"
 	property="situacaoApontamento"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" required="true"
 />
 </td>
 <td>
 <v:select
 	labelKey="label.sirci.core.Apontamento.crud.impactoApontamento"
 	property="impactoApontamento"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" required="true"
 />
 </td>
 </tr>
