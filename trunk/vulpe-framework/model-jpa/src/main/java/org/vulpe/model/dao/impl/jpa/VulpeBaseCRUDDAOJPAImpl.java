@@ -191,9 +191,12 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		// getting total records
 		final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
-				final Query query = entityManager.createQuery("select count(*) ".concat(hql
-						.substring(hql.toLowerCase().indexOf("from"), hql.toLowerCase().indexOf(
-								"order by"))));
+				String hqlString = "select count(*) ".concat(hql.substring(hql.toLowerCase()
+						.indexOf("from")));
+				if (hqlString.contains("order by")) {
+					hqlString = hqlString.substring(0, hqlString.toLowerCase().indexOf("order by"));
+				}
+				final Query query = entityManager.createQuery(hqlString);
 				setParams(query, params);
 				return query.getSingleResult();
 			}
