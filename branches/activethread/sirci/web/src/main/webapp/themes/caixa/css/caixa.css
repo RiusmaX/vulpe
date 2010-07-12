@@ -640,7 +640,7 @@ html,body {
 	color: #d00;
 	background-color: #ddd;
 	display: block;
-	font-size: 30px;
+	font-size: 20px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
@@ -649,7 +649,7 @@ html,body {
 
 #error h2 {
 	display: block;
-	font-size: 20px;
+	font-size: 16px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
