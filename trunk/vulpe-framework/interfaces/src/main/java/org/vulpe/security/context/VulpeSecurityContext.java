@@ -15,12 +15,14 @@
  */
 package org.vulpe.security.context;
 
+import java.io.Serializable;
+
 import org.vulpe.model.entity.VulpeBaseEntity;
 
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-public interface VulpeSecurityContext {
+public interface VulpeSecurityContext extends Serializable {
 
 	String USER_AUTHENTICATION = "userAuthentication";
 
@@ -31,7 +33,7 @@ public interface VulpeSecurityContext {
 	void initialize();
 
 	boolean isAuthenticated();
-	
+
 	void afterUserAuthenticationCallback();
 
 	<T extends VulpeBaseEntity<Long>> T getUser();
