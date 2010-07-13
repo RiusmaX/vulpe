@@ -203,11 +203,9 @@ td .titulo {
 .vulpeSubmit {
 	background: url(../../images/fundo-azul.png) repeat-x;
 	border: 1px #12327C solid;
-	font-size: 11px;
 	height: 20px;
 	padding: 0px;
 	width: 90px;
-	cursor: pointer;
 	color: #ffffff;
 }
 
@@ -247,7 +245,7 @@ td .titulo {
 	background-color: #eee;
 	display: block;
 	font-family: arial;
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: bold;
 	height: 15px;
 	margin: 1px;
@@ -312,7 +310,7 @@ a:hover {
 body {
 	text-align: left;
 	font-weight: normal;
-	font-size: 10pt;
+	font-size: 8pt;
 	color: #000000;
 	font-style: normal;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -346,6 +344,7 @@ h1 {
 input,select,textarea {
 	color: #000;
 	font-size: 8pt;
+	font-family: verdana, arial, sans-serif;
 }
 
 input[type="checkbox"] {
@@ -361,12 +360,10 @@ legend {
 }
 
 ol,ul {
-	font-size: 10px;
 	margin: 10px 60px;
 }
 
 p {
-	font-size: 10px;
 	margin: 10px;
 }
 
@@ -429,14 +426,14 @@ html,body {
 
 #body table {
 	margin-left: 10px;
-	width: 96%;
+	width: 98.5%;
 }
 
 #body td,#body th {
 	padding: 5px;
 }
 
-#vulpeCRUD td,#vulpeCRUD th,#vulpeSelect td {
+#vulpeCRUDBody td,#vulpeCRUDBody th,#vulpeSelectForm td {
 	padding: 0px;
 }
 
@@ -510,44 +507,12 @@ html,body {
 	cursor: wait;
 }
 
-#paging {
-	font-size: 9px;
-}
-
-#pagingFirstPage {
-	background: url(../images/icons/button-go-first.png) no-repeat;
-	display: block;
-	height: 16px;
-	width: 16px
-}
-
-#pagingPreviousPage {
-	background: url(../images/icons/button-go-previous.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
-}
-
-#pagingNextPage {
-	background: url(../images/icons/button-go-next.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
-}
-
-#pagingLastPage {
-	background: url(../images/icons/button-go-last.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
-}
-
 #menu {
 	background: url(../../images/fundo-azul.png) repeat-x;
 	width: 100%;
 	height: 23px;
 	position: relative;
-	z-index: 10001;
+	z-index: 200;
 }
 
 #messages {
@@ -555,7 +520,7 @@ html,body {
 	width: 99.9%;
 	margin-left: 0px;
 	margin-right: 0px;
-	z-index: 10000;
+	z-index: 150;
 	padding: 0px;
 }
 
@@ -619,7 +584,6 @@ html,body {
 	text-align: right;
 	width: 39px;
 	cursor: pointer;
-	font-size: 11px;
 }
 
 #error {
@@ -664,4 +628,12 @@ html,body {
 
 #select {
 	margin-top: 10px
+}
+
+#vulpeCRUDBodyTabs ul {
+	font-size: 12px;
+}
+
+#vulpeCRUDBodyTabs li {
+	font-weight: bold;
 }

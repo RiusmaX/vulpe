@@ -91,12 +91,14 @@
 ----------------------------------*/
 .ui-widget {
 	font-family: Verdana, Arial, sans-serif;
+	/*
 	font-size: 1.1em;
+	*/
 }
 
 .ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
 	{
-	font-size: 1em;
+	/*font-size: 1em;*/
 }
 
 .ui-widget-content {
