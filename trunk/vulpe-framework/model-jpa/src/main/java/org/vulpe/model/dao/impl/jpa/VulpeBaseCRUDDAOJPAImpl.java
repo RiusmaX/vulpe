@@ -288,9 +288,10 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 						Param.class, entity.getClass(), name);
 				if (param == null) {
 					if (value instanceof String) {
-						hql.append("upper(obj.").append(name).append(") like upper(:");
+						hql.append("upper(obj.").append(name).append(") like upper(:").append(name)
+								.append(")");
 					} else {
-						hql.append("obj.").append(name).append(" = :");
+						hql.append("obj.").append(name).append(" = :").append(name);
 					}
 				} else {
 					hql.append(param.alias());
@@ -302,9 +303,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 					}
 					hql.append(" ");
 					hql.append(param.operator().getValue());
-					hql.append(" :");
+					hql.append(" :").append(name);
 				}
-				hql.append(name).append(")");
 				if (count < countParam) {
 					hql.append(" and ");
 				}
