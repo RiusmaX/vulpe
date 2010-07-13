@@ -25,6 +25,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.model.annotations.CachedClass;
@@ -42,6 +43,7 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
  */
 @CachedClass
 @Entity
+@Table(name = "VulpeSecureResource")
 @SuppressWarnings("serial")
 public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 

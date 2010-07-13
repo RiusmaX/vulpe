@@ -38,10 +38,9 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	private List<AuditOccurrence> childOccurrences = null;
 
 	@Override
-	public String update() {
-		final String update = super.update();
-		hideButtons(Button.UPDATE_POST, Button.DELETE);
-		return update;
+	protected void updateAfter() {
+		super.updateAfter();
+		hideButtons(Button.CREATE, Button.UPDATE_POST, Button.DELETE, Button.CLEAR);
 	}
 
 	@Override
@@ -64,17 +63,15 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	}
 
 	@Override
-	public String prepare() {
-		final String prepare = super.prepare();
+	protected void prepareAfter() {
 		hideButton(Button.CREATE);
-		return prepare;
+		super.prepareAfter();
 	}
 
 	@Override
-	public String read() {
-		final String read = super.read();
+	protected void readAfter() {
 		hideButton(Button.CREATE);
-		return read;
+		super.readAfter();
 	}
 
 	public AuditOccurrenceType[] getListOccurrenceType() {

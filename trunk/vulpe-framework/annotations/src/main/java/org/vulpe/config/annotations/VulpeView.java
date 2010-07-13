@@ -49,4 +49,8 @@ public @interface VulpeView {
 	boolean frontendCenteredLayout() default false;
 
 	boolean breakLabel() default false;
+
+	boolean showCopyright() default true;
+
+	boolean showPoweredBy() default true;
 }

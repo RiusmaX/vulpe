@@ -53,7 +53,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Action base for Struts2
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -70,7 +70,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Extension point to read report.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected DownloadInfo doReadReportLoad() {
@@ -119,7 +119,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	@SuppressWarnings("static-access")
@@ -160,39 +160,8 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	}
 
 	/**
-	 * Result Forward.
-	 */
-	private String resultForward;
-	/**
-	 * Result Name.
-	 */
-	private String resultName;
-
-	/**
-	 * Method retrieve forward.
-	 * 
-	 * @since 1.0
-	 * @return Result Forward.
-	 */
-	public String getResultForward() {
-		return resultForward;
-	}
-
-	public void setResultForward(final String resultForward) {
-		this.resultForward = resultForward;
-	}
-
-	public String getResultName() {
-		return resultName;
-	}
-
-	public void setResultName(final String resultName) {
-		this.resultName = resultName;
-	}
-
-	/**
 	 * Retrieves form parameters
-	 * 
+	 *
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
@@ -208,7 +177,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves current HTTP Session.
-	 * 
+	 *
 	 * @return Http Session
 	 */
 	public HttpSession getSession() {
@@ -217,7 +186,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves current HTTP Request.
-	 * 
+	 *
 	 * @return Http Servlet Request
 	 */
 	public HttpServletRequest getRequest() {
@@ -226,7 +195,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 
 	/**
 	 * Retrieves current HTTP Response.
-	 * 
+	 *
 	 * @return Http Servlet Reponse
 	 */
 	public HttpServletResponse getResponse() {
@@ -303,7 +272,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * Subclasses should override this method to provide their business logic.
 	 * <p/>
 	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
-	 * 
+	 *
 	 * @return returns {@link #SUCCESS}
 	 * @throws Exception
 	 *             can be thrown by subclasses.
@@ -347,15 +316,15 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 * invocation to return the specified result, such as {@link #SUCCESS},
 	 * {@link #INPUT}, etc.
 	 * <p/>
-	 * 
+	 *
 	 * The next time this action is invoked (and using the same continuation
 	 * ID), the method will resume immediately after where this method was
 	 * called, with the entire call stack in the execute method restored.
 	 * <p/>
-	 * 
+	 *
 	 * Note: this method can <b>only</b> be called within the {@link #execute()}
 	 * method. <!-- END SNIPPET: pause-method -->
-	 * 
+	 *
 	 * @param result
 	 *            the result to return - the same type of return value in the
 	 *            {@link #execute()} method.

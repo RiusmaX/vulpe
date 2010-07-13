@@ -16,6 +16,7 @@
 package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaCallback;
@@ -33,6 +36,7 @@ import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
 import org.vulpe.model.entity.VulpeBaseEntity;
@@ -42,7 +46,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
@@ -77,6 +81,21 @@ public abstract class AbstractVulpeBaseDAOJPAImpl<ENTITY extends VulpeBaseEntity
 	}
 
 	public <T> T merge(final T entity) {
+		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		for (Field field : fields) {
+			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+			if (oneToMany != null) {
+				try {
+					List<ENTITY> entities = (List<ENTITY>) PropertyUtils.getProperty(entity, field
+							.getName());
+					for (ENTITY entity2 : entities) {
+						PropertyUtils.setProperty(entity2, oneToMany.mappedBy(), entity);
+					}
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
 		return (T) getTransactionTemplate().execute(new TransactionCallback() {
 			public Object doInTransaction(final TransactionStatus status) {
 				final T merged = getJpaTemplate().merge(entity);

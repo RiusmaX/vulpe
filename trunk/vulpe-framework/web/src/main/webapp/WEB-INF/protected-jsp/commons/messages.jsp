@@ -51,7 +51,6 @@
 							</c:forEach>
 						</c:if>
 					</ul>
-					<div id="closeMessages"><a href="javascript:void(0);" onclick="$('#messages').slideUp('slow')"><fmt:message key="vulpe.messages.close"/></a></div>
 					<script charset="utf-8">
 						vulpe.view.onhidemessages = '${util:urlEncode(onHideMessages)}';
 					</script>
@@ -97,7 +96,10 @@
 						</c:forEach>
 					</c:if>
 					msg += '</ul><div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'#messages\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
-
+					jQuery(document).bind("keydown", "Esc", function(evt) {
+						$('#messages').slideUp('slow');
+						return false;
+					});
 					$("#messages").html(msg);
 					$("#messages").slideDown("slow");
 					<c:if test="${vulpeMessageSlideUp}">

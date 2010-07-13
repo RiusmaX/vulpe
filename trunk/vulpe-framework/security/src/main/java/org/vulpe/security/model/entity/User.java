@@ -21,8 +21,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "VulpeUser")
 @SuppressWarnings("serial")
 public class User extends BasicUser {
 

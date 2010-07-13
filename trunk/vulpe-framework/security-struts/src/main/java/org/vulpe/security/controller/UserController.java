@@ -28,7 +28,7 @@ import org.vulpe.security.model.services.SecurityServices;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.UserController")
-@Controller(serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
+@Controller(serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
 @SuppressWarnings("serial")
 public class UserController extends VulpeStrutsController<User, Long> {
 
@@ -36,8 +36,7 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	public String createPost() {
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(
-						getEntity().getPasswordConfirm()))) {
+				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
 			return showError("vulpe.security.user.password.not.match");
 		}
 		setPassword(getEntity().getPassword());
@@ -65,8 +64,7 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	public String updatePost() {
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(
-						getEntity().getPasswordConfirm()))) {
+				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
 			return showError("vulpe.security.user.password.not.match");
 		}
 		return super.updatePost();

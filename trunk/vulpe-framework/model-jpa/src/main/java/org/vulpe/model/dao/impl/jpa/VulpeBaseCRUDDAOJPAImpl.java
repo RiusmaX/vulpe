@@ -38,6 +38,7 @@ import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.entity.LogicEntity;
@@ -254,6 +255,10 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 				throw new VulpeSystemException(e);
 			}
 			if (isNotEmpty(value)) {
+				final AutoComplete autoComplete = field.getAnnotation(AutoComplete.class);
+				if (autoComplete != null) {
+					value = "%" + value + "%";
+				}
 				params.put(field.getName(), value);
 				countParam++;
 			}
@@ -282,12 +287,10 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 				final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(
 						Param.class, entity.getClass(), name);
 				if (param == null) {
-					hql.append("obj.");
-					hql.append(name);
 					if (value instanceof String) {
-						hql.append(" like :");
+						hql.append("upper(obj.").append(name).append(") like upper(:");
 					} else {
-						hql.append(" = :");
+						hql.append("obj.").append(name).append(" = :");
 					}
 				} else {
 					hql.append(param.alias());
@@ -301,7 +304,7 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 					hql.append(param.operator().getValue());
 					hql.append(" :");
 				}
-				hql.append(name);
+				hql.append(name).append(")");
 				if (count < countParam) {
 					hql.append(" and ");
 				}

@@ -794,6 +794,10 @@ var vulpe = {
 				var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
 				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + (fields.length > 1 ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield) + "</li></ul>" + messagesClose);
 				$(messageLayer).slideDown("slow");
+				jQuery(document).bind("keydown", "Esc", function(evt) {
+					$('#messages').slideUp('slow');
+					return false;
+				});
 				if (eval(vulpe.config.messageSlideUp)) {
 					setTimeout(function() {
 						$(messageLayer).slideUp("slow");

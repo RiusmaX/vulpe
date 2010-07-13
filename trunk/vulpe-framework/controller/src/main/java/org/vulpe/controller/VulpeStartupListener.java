@@ -123,6 +123,10 @@ public class VulpeStartupListener implements ServletContextListener {
 					vulpeProject.view().messageSlideUpTime());
 			evt.getServletContext().setAttribute(VulpeConstants.Context.View.BREAK_LABEL,
 					vulpeProject.view().breakLabel());
+			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_COPYRIGHT,
+					vulpeProject.view().showCopyright());
+			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_POWERED_BY,
+					vulpeProject.view().showPoweredBy());
 		}
 		if (vulpeProject.mobileEnabled()) {
 			evt.getServletContext().setAttribute(VulpeConstants.Context.SHOW_AS_MOBILE, true);

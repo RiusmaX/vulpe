@@ -29,7 +29,7 @@ import org.vulpe.commons.xml.XMLDateConversor;
 
 import com.thoughtworks.xstream.XStream;
 
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
 public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
 		VulpeBaseEntity<ID> {
 

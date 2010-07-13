@@ -30,6 +30,7 @@ import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -48,6 +49,7 @@ import com.thoughtworks.xstream.XStream;
 @NamedQueries( { @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
 @SuppressWarnings( { "serial", "rawtypes" })
 @Entity
+@Table(name = "VulpeAuditOccurrence")
 @MappedSuperclass
 @IgnoreAudit
 public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {

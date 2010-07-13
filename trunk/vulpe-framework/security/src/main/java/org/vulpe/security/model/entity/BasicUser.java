@@ -36,7 +36,7 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	private boolean active = true;
 
-	@OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<UserRole> userRoles;
 
 	public String getUsername() {

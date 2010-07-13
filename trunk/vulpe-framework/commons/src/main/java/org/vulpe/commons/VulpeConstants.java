@@ -78,6 +78,8 @@ public class VulpeConstants {
 			public static final String MESSAGE_SLIDE_UP = "vulpeMessageSlideUp";
 			public static final String MESSAGE_SLIDE_UP_TIME = "vulpeMessageSlideUpTime";
 			public static final String BREAK_LABEL = "vulpeBreakLabel";
+			public static final String SHOW_COPYRIGHT = "vulpeShowCopyright";
+			public static final String SHOW_POWERED_BY = "vulpeShowPoweredBy";
 		}
 
 		public static final String SHOW_AS_MOBILE = "vulpeShowAsMobile";

@@ -22,10 +22,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @Entity
+@Table(name = "VulpeSecureResourceRole")
 @SuppressWarnings("serial")
 public class SecureResourceRole extends AbstractVulpeBaseEntity<Long> {
 
@@ -34,11 +36,11 @@ public class SecureResourceRole extends AbstractVulpeBaseEntity<Long> {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "secureResource", referencedColumnName = "id")
+	@JoinColumn(name = "vulpeSecureResource", referencedColumnName = "id")
 	private SecureResource secureResource;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "role", referencedColumnName = "id")
+	@JoinColumn(name = "vulpeTole", referencedColumnName = "id")
 	private Role role;
 
 	public SecureResourceRole() {

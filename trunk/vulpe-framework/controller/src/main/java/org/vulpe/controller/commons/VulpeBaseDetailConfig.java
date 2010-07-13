@@ -137,11 +137,11 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.despiseFields = detail.despiseFields();
 		}
 
-		if (detail.startNewDetails() > 1) {
+		if (detail.startNewDetails() > 0) {
 			this.setStartNewDetails(detail.startNewDetails());
 		}
 
-		if (detail.newDetails() > 1) {
+		if (detail.newDetails() > 0) {
 			this.setNewDetails(detail.newDetails());
 		}
 

@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Security;
@@ -27,6 +28,7 @@ import org.vulpe.model.annotations.db4o.Like;
 import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @Entity
+@Table(name = "VulpeRole")
 @SuppressWarnings("serial")
 public class Role extends AbstractVulpeBaseEntity<Long> {
 

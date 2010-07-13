@@ -758,7 +758,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	public String autocomplete() {
 		if (getEntities() == null || getEntities().isEmpty()) {
-			read();
+			onRead();
 		}
 		JSONArray jsonArray = new JSONArray(getEntities());
 		setRequestAttribute("JSON", jsonArray.toString());
@@ -901,7 +901,6 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 */
 	@ResetSession
 	public String tabularPost() {
-
 		if (getEntities() != null) {
 			setOperation(Action.TABULAR_POST);
 			tabularPostBefore();

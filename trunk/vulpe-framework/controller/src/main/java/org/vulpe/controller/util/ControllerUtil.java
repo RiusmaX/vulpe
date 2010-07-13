@@ -242,14 +242,15 @@ public class ControllerUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
-		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
+		final String key = getCurrentControllerKey();
+		if (VulpeCacheHelper.getInstance().contains(key)) {
+			return VulpeCacheHelper.getInstance().get(key);
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
 		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller
 				.getClass(), details);
-		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
+		VulpeCacheHelper.getInstance().put(key, config);
 
 		int count = 0;
 		for (DetailConfig detail : config.getDetailsConfig()) {
@@ -271,13 +272,14 @@ public class ControllerUtil {
 	 */
 	public VulpeBaseSimpleControllerConfig getControllerConfig(
 			final VulpeBaseSimpleController controller) {
-		if (VulpeCacheHelper.getInstance().contains(getCurrentControllerKey())) {
-			return VulpeCacheHelper.getInstance().get(getCurrentControllerKey());
+		final String key = getCurrentControllerKey();
+		if (VulpeCacheHelper.getInstance().contains(key)) {
+			return VulpeCacheHelper.getInstance().get(key);
 		}
 
 		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(
 				controller.getClass());
-		VulpeCacheHelper.getInstance().put(getCurrentControllerKey(), config);
+		VulpeCacheHelper.getInstance().put(key, config);
 
 		return config;
 	}
