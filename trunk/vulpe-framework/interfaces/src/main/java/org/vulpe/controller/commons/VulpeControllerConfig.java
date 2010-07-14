@@ -19,6 +19,8 @@ public interface VulpeControllerConfig {
 
 	int getPageSize();
 
+	int getTabularPageSize();
+
 	String getOwnerController();
 
 	String getMethod();

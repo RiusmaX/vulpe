@@ -172,7 +172,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<c:set var="deleteLayer" value="vulpeSelectTable_${deleteFormName}"/>
+					<c:set var="deleteLayer" value="${controllerConfig.controllerType == 'TABULAR' ? '' : 'vulpeSelectTable_'}${deleteFormName}"/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

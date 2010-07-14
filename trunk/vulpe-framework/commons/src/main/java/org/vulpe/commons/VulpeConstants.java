@@ -309,7 +309,4 @@ public class VulpeConstants {
 		}
 	}
 
-	public class Modifiers {
-		public static final int TRANSIENT = 130;
-	}
 }

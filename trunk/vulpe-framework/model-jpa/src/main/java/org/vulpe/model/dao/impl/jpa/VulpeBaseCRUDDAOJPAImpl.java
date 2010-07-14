@@ -28,6 +28,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.Transient;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.orm.jpa.JpaCallback;
@@ -39,6 +40,7 @@ import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.AutoComplete;
+import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.entity.LogicEntity;
@@ -232,11 +234,10 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 		int countParam = 0;
 		final StringBuilder order = new StringBuilder();
 		for (Field field : fields) {
-			if ((VulpeReflectUtil.getInstance().isAnnotationInField(Transient.class,
-					entity.getClass(), field.getName()) || Modifier.isTransient(field
+			if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
+					|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
 					.getModifiers()))
-					&& !VulpeReflectUtil.getInstance().isAnnotationInField(Param.class,
-							entity.getClass(), field.getName())) {
+					&& !field.isAnnotationPresent(Param.class)) {
 				continue;
 			}
 			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
@@ -247,10 +248,9 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 				order.append("obj.").append(field.getName()).append(" ").append(
 						orderBy.type().name());
 			}
-			field.setAccessible(true);
 			Object value = null;
 			try {
-				value = field.get(entity);
+				value = PropertyUtils.getProperty(entity, field.getName());
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}

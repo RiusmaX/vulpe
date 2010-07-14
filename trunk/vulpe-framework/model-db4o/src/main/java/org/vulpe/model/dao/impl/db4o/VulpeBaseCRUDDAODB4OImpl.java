@@ -17,6 +17,7 @@ package org.vulpe.model.dao.impl.db4o;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ import javax.persistence.Transient;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeValidationUtil;
 import org.vulpe.commons.VulpeConstants.Model.DAO.DB4O;
@@ -39,8 +39,8 @@ import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.OrderBy.OrderType;
 import org.vulpe.model.annotations.Param.OperatorType;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.LogicEntity;
+import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.LogicEntity.Status;
 
 import com.db4o.ObjectContainer;
@@ -49,10 +49,10 @@ import com.db4o.query.Query;
 
 /**
  * Default implementation of DAO for CRUD's with DB4O.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAODB4OImpl<ENTITY, ID> {
 
@@ -60,7 +60,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#create(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -79,7 +79,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#delete(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -107,7 +107,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeBaseCRUDDAO#delete(java.util. List)
 	 */
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {
@@ -118,7 +118,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -136,7 +136,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -167,7 +167,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeBaseCRUDDAO#read(br.com.activethread
 	 * .framework.model.entity.BaseEntity)
 	 */
@@ -190,7 +190,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#paging(br.com.
 	 * activethread.framework.model.entity.BaseEntity, java.lang.Integer,
 	 * java.lang.Integer)
@@ -254,7 +254,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -272,7 +272,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 	}
 
 	/**
-	 * 
+	 *
 	 * @param entity
 	 * @return
 	 */
@@ -362,7 +362,7 @@ public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID ext
 						query.descend(paramName).constrain(value).greater().equal();
 					}
 				}
-				if (field.getModifiers() != VulpeConstants.Modifiers.TRANSIENT) {
+				if (Modifier.isTransient(field.getModifiers())) {
 					if (String.class.isAssignableFrom(field.getType())) {
 						final Like like = field.getAnnotation(Like.class);
 						if (like == null) {

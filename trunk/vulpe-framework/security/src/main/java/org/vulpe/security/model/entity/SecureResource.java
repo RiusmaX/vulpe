@@ -29,7 +29,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
 /**
@@ -45,7 +45,7 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
 @Entity
 @Table(name = "VulpeSecureResource")
 @SuppressWarnings("serial")
-public class SecureResource extends AbstractVulpeBaseEntity<Long> {
+public class SecureResource extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

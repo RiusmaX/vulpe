@@ -17,6 +17,7 @@ package org.vulpe.controller.struts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -105,6 +106,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * Selected tab index
 	 */
 	private int selectedTab;
+
+	/**
+	 * Tabular size to paging
+	 */
+	private int tabularSize;
 
 	public ID getId() {
 		return id;
@@ -599,7 +605,8 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	protected void deleteBefore() {
 		if (!getControllerType().equals(ControllerType.SELECT)
 				&& !getControllerType().equals(ControllerType.CRUD)
-				&& !getControllerType().equals(ControllerType.TWICE)) {
+				&& !getControllerType().equals(ControllerType.TWICE)
+				&& !getControllerType().equals(ControllerType.TABULAR)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
 	}
@@ -622,9 +629,12 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	public String deleteDetail() {
 		setOperation(Action.UPDATE_POST);
 		deleteDetailBefore();
-		final int size = onDeleteDetail();
 		showButtons(Action.UPDATE);
-		addActionMessage(getText(size > 1 ? "vulpe.msg.delete.details" : "vulpe.msg.delete.detail"));
+		final int size = onDeleteDetail();
+		if (size > 0) {
+			addActionMessage(getText(size > 1 ? "vulpe.msg.delete.details"
+					: "vulpe.msg.delete.detail"));
+		}
 		setResultName(Forward.SUCCESS);
 		if (isAjax()) {
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
@@ -645,6 +655,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * Extension point to delete detail items.
 	 *
 	 * @since 1.0
+	 * @return number of items affected
 	 */
 	protected int onDeleteDetail() {
 		final ENTITY entity = prepareEntity(Action.DELETE);
@@ -832,18 +843,28 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		}
 
 		ENTITY entity = prepareEntity(Action.READ);
-		if ((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
-				ControllerType.TWICE))
-				&& getControllerConfig().getPageSize() > 0) {
+		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
+				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
+				|| (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig()
+						.getTabularPageSize() > 0)) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
 					: getPaging().getPage();
+			final Integer pageSize = getControllerType().equals(ControllerType.TABULAR) ? getControllerConfig()
+					.getTabularPageSize()
+					: getControllerConfig().getPageSize();
 			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(Action.READ,
 					Action.PAGING.concat(getControllerConfig().getEntityClass().getSimpleName()),
 					new Class[] { getControllerConfig().getEntityClass(), Integer.class,
-							Integer.class }, new Object[] { entity.clone(),
-							getControllerConfig().getPageSize(), page });
+							Integer.class }, new Object[] { entity.clone(), pageSize, page });
 			setPaging(paging);
 			setEntities(paging.getList());
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				setTabularSize(paging.getSize());
+				if (paging.getList() == null || paging.getList().isEmpty()) {
+					setDetail(Action.ENTITIES);
+					onAddDetail(true);
+				}
+			}
 		} else {
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
@@ -930,13 +951,19 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @since 1.0
 	 */
 	protected void onTabularPost() {
+		final int size = getEntities().size();
 		despiseDetails();
-
+		final int sizeDespise = getEntities().size();
+		setTabularSize(getTabularSize() - (size - sizeDespise));
+		for (ENTITY entity : getEntities()) {
+			updateAuditInformation(entity);
+		}
 		final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.TABULAR_POST, Action.PERSIST
 				.concat(getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
 
+		mountTabularPaging(false);
 		setExecuted(true);
 	}
 
@@ -1026,6 +1053,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				}
 			}
 
+			mountTabularPaging(true);
 			return detailConfig;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -1048,7 +1076,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-		detail.setLastUserUpdated(getUserAuthenticated());
+		updateAuditInformation(detail);
 		final ENTITY preparedDetail = prepareDetail(detail);
 		if (!preparedDetail.equals(detail)) {
 			accessor.setProperty(context, collection, index, preparedDetail);
@@ -1247,6 +1275,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	protected ENTITY prepareEntity(final String method) {
 		ENTITY entity = Action.READ.equals(method) ? getEntitySelect() : getEntity();
 		try {
+			if (entity == null) {
+				entity = getControllerConfig().getEntityClass().newInstance();
+			}
+			updateAuditInformation(entity);
 			if (Action.READ.equals(method) && getEntitySelect() == null) {
 				setEntitySelect(getControllerConfig().getEntityClass().newInstance());
 				entity = getEntitySelect();
@@ -1254,9 +1286,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					|| (Action.DELETE.equals(method) && (getControllerType().equals(
 							ControllerType.SELECT) || getControllerType().equals(
 							ControllerType.TWICE)))) {
-				entity = getControllerConfig().getEntityClass().newInstance();
 				entity.setId(getId());
-				entity.setLastUserUpdated(getUserAuthenticated());
 			}
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -1658,6 +1688,32 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 
 	public ENTITY getEntitySelect() {
 		return entitySelect;
+	}
+
+	protected void updateAuditInformation(final ENTITY entity) {
+		entity.setUserOfLastUpdate(getUserAuthenticated());
+		entity.setDateOfLastUpdate(Calendar.getInstance().getTime());
+	}
+
+	public void setTabularSize(int tabularSize) {
+		this.tabularSize = tabularSize;
+	}
+
+	public int getTabularSize() {
+		return tabularSize;
+	}
+
+	protected void mountTabularPaging(final boolean add) {
+		if (getControllerType().equals(ControllerType.TABULAR)
+				&& getControllerConfig().getTabularPageSize() > 0) {
+			if (add) {
+				setTabularSize(getTabularSize()
+						+ getControllerConfig().getController().tabularNewDetails());
+			}
+			setPaging(new Paging<ENTITY>(getTabularSize(), getControllerConfig()
+					.getTabularPageSize(), getPaging().getPage()));
+			getPaging().setList(getEntities());
+		}
 	}
 
 }

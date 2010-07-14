@@ -2,8 +2,11 @@ package org.vulpe.model.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.MappedSuperclass;
+
 import org.apache.commons.lang.StringUtils;
 
+@MappedSuperclass
 @SuppressWarnings( { "serial", "unchecked" })
 public abstract class AbstractVulpeBaseJPAEntity<ID extends Serializable & Comparable> extends
 		AbstractVulpeBaseEntity<ID> {

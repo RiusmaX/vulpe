@@ -18,7 +18,6 @@ package org.vulpe.security.controller;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.Role;
@@ -29,11 +28,5 @@ import org.vulpe.security.model.services.SecurityServices;
 @Controller(serviceClass = SecurityServices.class, pageSize = 5, tabularStartNewDetails = 4, tabularNewDetails = 1, tabularDespiseFields = { "name" })
 @SuppressWarnings("serial")
 public class RoleController extends VulpeStrutsController<Role, Long> {
-
-	@Override
-	protected void showButtons(final String method) {
-		super.showButtons(method);
-		hideButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
-	}
 
 }

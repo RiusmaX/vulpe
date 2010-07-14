@@ -521,7 +521,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:tabular showSize="true"/></th>
+		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
 </@file>

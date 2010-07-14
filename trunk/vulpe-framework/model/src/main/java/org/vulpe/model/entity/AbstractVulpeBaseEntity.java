@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
@@ -26,16 +27,22 @@ import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
+import org.vulpe.model.annotations.IgnoreAutoFilter;
 
 import com.thoughtworks.xstream.XStream;
 
+@MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial", "rawtypes" })
 public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
 		VulpeBaseEntity<ID> {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
-	private String lastUserUpdated;
+	@IgnoreAutoFilter
+	private String userOfLastUpdate;
+
+	@IgnoreAutoFilter
+	private Date dateOfLastUpdate;
 
 	@IgnoreAudit
 	private transient boolean selected;
@@ -138,14 +145,6 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		return false;
 	}
 
-	public String getLastUserUpdated() {
-		return lastUserUpdated;
-	}
-
-	public void setLastUserUpdated(String lastUserUpdated) {
-		this.lastUserUpdated = lastUserUpdated;
-	}
-
 	@Override
 	public VulpeBaseEntity<ID> clone() {
 		VulpeBaseEntity<ID> entity = null;
@@ -155,6 +154,22 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 			LOG.error(e);
 		}
 		return entity;
+	}
+
+	public void setDateOfLastUpdate(Date dateOfLastUpdate) {
+		this.dateOfLastUpdate = dateOfLastUpdate;
+	}
+
+	public Date getDateOfLastUpdate() {
+		return dateOfLastUpdate;
+	}
+
+	public void setUserOfLastUpdate(String userOfLastUpdate) {
+		this.userOfLastUpdate = userOfLastUpdate;
+	}
+
+	public String getUserOfLastUpdate() {
+		return userOfLastUpdate;
 	}
 
 }

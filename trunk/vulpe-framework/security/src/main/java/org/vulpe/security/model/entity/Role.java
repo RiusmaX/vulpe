@@ -25,12 +25,12 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 
 @Entity
 @Table(name = "VulpeRole")
 @SuppressWarnings("serial")
-public class Role extends AbstractVulpeBaseEntity<Long> {
+public class Role extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

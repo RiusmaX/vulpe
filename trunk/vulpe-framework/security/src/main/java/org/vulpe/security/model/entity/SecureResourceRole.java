@@ -24,12 +24,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 
 @Entity
 @Table(name = "VulpeSecureResourceRole")
 @SuppressWarnings("serial")
-public class SecureResourceRole extends AbstractVulpeBaseEntity<Long> {
+public class SecureResourceRole extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +39,7 @@ public class SecureResourceRole extends AbstractVulpeBaseEntity<Long> {
 	@JoinColumn(name = "vulpeSecureResource", referencedColumnName = "id")
 	private SecureResource secureResource;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "vulpeTole", referencedColumnName = "id")
 	private Role role;
 

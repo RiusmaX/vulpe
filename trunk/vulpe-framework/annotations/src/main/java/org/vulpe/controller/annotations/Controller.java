@@ -94,6 +94,11 @@ public @interface Controller {
 	 */
 	String tabularPropertyName() default "";
 
+	/**
+	 * Page size of tabular
+	 */
+	int tabularPageSize() default 0;
+
 	// REPORT - configurations
 	Report report() default @Report;
 

@@ -19,12 +19,19 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class VulpeContext {
 
 	public static final String LOCALE = "locale";
+	public static final String HTTP_REQUEST = "httpRequest";
+	public static final String HTTP_RESPONSE = "httpSession";
+	public static final String HTTP_SESSION = "httpSession";
 
 	private Map<String, Object> map = new HashMap<String, Object>();
 
@@ -34,6 +41,30 @@ public class VulpeContext {
 
 	public Locale getLocale() {
 		return (Locale) map.get(LOCALE);
+	}
+
+	public HttpServletRequest getRequest() {
+		return (HttpServletRequest) map.get(HTTP_REQUEST);
+	}
+
+	public void setRequest(final HttpServletRequest request) {
+		map.put(HTTP_REQUEST, request);
+	}
+
+	public HttpServletResponse getResponse() {
+		return (HttpServletResponse) map.get(HTTP_RESPONSE);
+	}
+
+	public void setResponse(final HttpServletResponse response) {
+		map.put(HTTP_RESPONSE, response);
+	}
+
+	public HttpSession getSession() {
+		return (HttpSession) map.get(HTTP_SESSION);
+	}
+
+	public void setSession(final HttpSession session) {
+		map.put(HTTP_SESSION, session);
 	}
 
 	public Object get(final String key) {

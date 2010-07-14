@@ -16,10 +16,11 @@
 package org.vulpe.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Default entity Interface
- * 
+ *
  * @param <ID>
  *            Type of entity identifier
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
@@ -46,9 +47,13 @@ public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends S
 
 	String toXMLAudit();
 
-	String getLastUserUpdated();
+	String getUserOfLastUpdate();
 
-	void setLastUserUpdated(final String username);
+	void setUserOfLastUpdate(final String username);
+
+	Date getDateOfLastUpdate();
+
+	void setDateOfLastUpdate(final Date date);
 
 	VulpeBaseEntity<ID> clone();
 }

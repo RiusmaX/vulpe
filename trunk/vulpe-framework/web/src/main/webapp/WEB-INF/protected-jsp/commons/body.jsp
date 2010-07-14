@@ -14,6 +14,9 @@
 	<c:if test="${!onlyToSee}">
 	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}_operation"/>
 	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}_paging.page"/>
+	<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
+	<input type="hidden" name="tabularSize" value="${tabularSize}" id="${vulpeFormName}_tabularSize"/>
+	</c:if>
 	<input type="hidden" name="id" value="${id}" id="${vulpeFormName}_id"/>
 	<input type="hidden" name="selectedTab" value="${selectedTab}" id="${vulpeFormName}_selectedTab"/>
 	<input type="hidden" name="executed" value="${executed}" id="${vulpeFormName}_executed"/>

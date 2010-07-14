@@ -117,6 +117,16 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * (non-Javadoc)
 	 *
 	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getTabularPageSize()
+	 */
+	public int getTabularPageSize() {
+		return this.controller.tabularPageSize();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getOwnerController()
 	 */
 	public String getOwnerController() {

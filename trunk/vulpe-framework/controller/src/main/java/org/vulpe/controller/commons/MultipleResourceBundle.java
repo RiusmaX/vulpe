@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -28,13 +27,12 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
-import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Class to provide multiple Resource Bundle in application.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -43,15 +41,10 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	private static final Logger LOG = Logger.getLogger(MultipleResourceBundle.class);
 
-	private final static String BUNDLES_KEY = MultipleResourceBundle.class.getName().concat(
-			".bundles");
-
 	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
 
-	private Locale locale;
-
 	/**
-	 * 
+	 *
 	 * @return Instance of MultipleResourceBundle
 	 */
 	public static MultipleResourceBundle getInstance() {
@@ -60,37 +53,27 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Gets all bundles in application
-	 * 
+	 *
 	 * @return list of bundles in application
 	 */
 	protected List<ResourceBundle> getBundles() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
 				VulpeConstants.CONTEXT);
-		final boolean checkLocale = (locale == null || (vulpeContext != null && !locale
-				.getLanguage().equals(vulpeContext.getLocale().getLanguage())));
-		if (checkLocale) {
-			locale = vulpeContext.getLocale();
+		VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
+		final String modules[] = project.i18n();
+		List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
+		for (String module : modules) {
+			final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
+					.getLocale());
+			list.add(resourceBundle);
 		}
-		List<ResourceBundle> list = cache.get(BUNDLES_KEY);
-		if (list == null || checkLocale) {
-			VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
-			final String modules[] = project.i18n();
-			list = new ArrayList<ResourceBundle>(modules.length);
-			for (String module : modules) {
-				final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, locale,
-						Thread.currentThread().getContextClassLoader());
-				list.add(resourceBundle);
-			}
-			Collections.reverse(list);
-			cache.put(BUNDLES_KEY, list);
-		}
+		Collections.reverse(list);
 		return list;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.ResourceBundle#getKeys()
 	 */
 	@Override
@@ -111,7 +94,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
 	 */
 	@Override
@@ -131,7 +114,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 						return value;
 					}
 				} catch (MissingResourceException e) {
-					LOG.debug(e);
+					LOG.debug(resourceBundle.getLocale().getDisplayName() + " - missing key: "  + key);
 				}
 			}
 		}
@@ -140,7 +123,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Method to get key description.
-	 * 
+	 *
 	 * @param servletContext
 	 * @param key
 	 * @return

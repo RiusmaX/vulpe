@@ -8,7 +8,14 @@
 <%@ attribute name="afterJs" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="showSize" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <c:if test="${showSize}">
+<c:choose>
+<c:when test="${controllerType=='TABULAR' && (empty paging || empty paging.list)}">
+${fn:length(entities)}
+</c:when>
+<c:otherwise>
 ${paging.size}
+</c:otherwise>
+</c:choose>
 </c:if>
 
 <c:if test="${not empty list}">

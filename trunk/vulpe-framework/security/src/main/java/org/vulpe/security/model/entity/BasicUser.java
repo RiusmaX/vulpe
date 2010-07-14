@@ -22,11 +22,11 @@ import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
-public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
+public abstract class BasicUser extends AbstractVulpeBaseJPAEntity<Long> {
 
 	private String username;
 
@@ -36,7 +36,7 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	private boolean active = true;
 
-	@OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(targetEntity = UserRole.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<UserRole> userRoles;
 
 	public String getUsername() {

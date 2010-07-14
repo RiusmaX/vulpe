@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.controller.commons;
+package org.vulpe.model.annotations;
 
-import java.text.MessageFormat;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import org.springframework.stereotype.Component;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-@Component
-public class I18NService {
-
-	public String getText(final String key) {
-		return MultipleResourceBundle.getInstance().getString(key);
-	}
-
-	public String getText(final String key, final Object... args) {
-		return MessageFormat.format(getText(key), args);
-	}
+/**
+ * Disabled audit on entity or attribute of entity
+ * 
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ */
+@Target( { FIELD, TYPE })
+@Retention(RUNTIME)
+public @interface IgnoreAutoFilter {
 
 }

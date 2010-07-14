@@ -17,6 +17,7 @@ package org.vulpe.model.dao.impl.db4o;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +27,6 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.db4o.DB4OUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -40,10 +40,10 @@ import com.db4o.ObjectSet;
 
 /**
  * Default implementation of DAO for CRUD's with DB4O.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
@@ -52,7 +52,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeBaseDAO#merge(java.lang.Object)
 	 */
 	public <T> T merge(final T entity) {
@@ -82,7 +82,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Get identifier to entity.
-	 * 
+	 *
 	 * @param <T>
 	 * @param entity
 	 * @return
@@ -102,7 +102,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Get entity by example.
-	 * 
+	 *
 	 * @param entity
 	 * @return
 	 */
@@ -113,7 +113,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Get list of entity by example.
-	 * 
+	 *
 	 * @param entity
 	 * @return
 	 */
@@ -133,14 +133,14 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Verified if entity property is empty and set to null;
-	 * 
+	 *
 	 * @param object
 	 */
 	public void emptyToNull(final Object object) {
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(object.getClass());
 		for (Field field : fields) {
 			try {
-				if ((field.getModifiers() == VulpeConstants.Modifiers.TRANSIENT || field
+				if ((Modifier.isTransient(field.getModifiers()) || field
 						.isAnnotationPresent(Transient.class))
 						&& !field.isAnnotationPresent(Param.class)) {
 					if (!field.getType().isPrimitive()) {
@@ -169,7 +169,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Repair relationship of entity.
-	 * 
+	 *
 	 * @param <T>
 	 * @param entity
 	 */
@@ -243,7 +243,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Repair entity.
-	 * 
+	 *
 	 * @param <T>
 	 * @param detail
 	 * @param container
@@ -283,7 +283,7 @@ public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntit
 
 	/**
 	 * Get instance of Object Container.
-	 * 
+	 *
 	 * @return returns ObjectContainer.
 	 */
 	public ObjectContainer getObjectContainer() {
