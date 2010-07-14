@@ -88,7 +88,7 @@
 		<c:choose>
 			<c:when test="${isSelectTableTag && (deleteShow || SELECT_deleteShow)}">
 				<c:set var="deleteValue" value="id"/>
-				<c:set var="deleteType" value="select"/>
+				<c:set var="deleteType" value="${controllerConfig.controllerType == 'TABULAR' ? 'detail' : 'select'}"/>
 			</c:when>
 			<c:when test="${not empty targetConfig}">
 				<c:set var="deleteShowEL" value="${'${'}deleteShow${targetConfig.baseName}${'}'}"/>
@@ -150,6 +150,9 @@
 	</c:if>
 
 	<c:if test="${not empty deleteValue && deleteValue ne 'false'}">
+		<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
+		<c:set var="elementId" value="${currentItem.id}"/>
+		</c:if>
 		<c:if test="${empty deleteActionName}">
 			<c:set var="deleteActionName" value="${controllerConfig.controllerName}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/>
 		</c:if>

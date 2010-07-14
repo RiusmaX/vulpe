@@ -587,6 +587,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					throw new VulpeSystemException(e);
 				}
 			}
+			if (getControllerConfig().getTabularPageSize() > 0) {
+				setTabularSize(getTabularSize() - (getEntities().size() - getSelected().size()));
+			}
+		} else {
+			setTabularSize(getTabularSize() - 1);
 		}
 		invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig().getEntityClass()
 				.getSimpleName()), new Class[] { entities.isEmpty() ? getControllerConfig()
@@ -698,6 +703,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
 							.getEntityClass().getSimpleName()), new Class[] { List.class },
 							new Object[] { removedDetails });
+					if (getControllerConfig().getTabularPageSize() > 0) {
+						setTabularSize(getTabularSize() - removedDetails.size());
+					}
 				} else {
 					if (entity.getId() != null && size > details.size()) {
 						invokeServices(Action.UPDATE_POST, Action.UPDATE
@@ -954,7 +962,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		final int size = getEntities().size();
 		despiseDetails();
 		final int sizeDespise = getEntities().size();
-		setTabularSize(getTabularSize() - (size - sizeDespise));
+		if (getControllerConfig().getTabularPageSize() > 0) {
+			setTabularSize(getTabularSize() - (size - sizeDespise));
+		}
 		for (ENTITY entity : getEntities()) {
 			updateAuditInformation(entity);
 		}
@@ -1284,8 +1294,9 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				entity = getEntitySelect();
 			} else if (Action.UPDATE.equals(method)
 					|| (Action.DELETE.equals(method) && (getControllerType().equals(
-							ControllerType.SELECT) || getControllerType().equals(
-							ControllerType.TWICE)))) {
+							ControllerType.SELECT)
+							|| getControllerType().equals(ControllerType.TABULAR) || getControllerType()
+							.equals(ControllerType.TWICE)))) {
 				entity.setId(getId());
 			}
 		} catch (Exception e) {
