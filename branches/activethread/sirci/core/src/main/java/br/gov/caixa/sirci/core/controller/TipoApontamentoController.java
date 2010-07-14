@@ -22,7 +22,7 @@ import br.gov.caixa.sirci.core.model.services.CoreServices;
 @Component("core.TipoApontamentoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = "descricao", tabularPageSize = 10)
+@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = "descricao", tabularPageSize = 10, tabularFilter = true)
 public class TipoApontamentoController extends
 		ApplicationBaseController<TipoApontamento, java.lang.Long> {
 
