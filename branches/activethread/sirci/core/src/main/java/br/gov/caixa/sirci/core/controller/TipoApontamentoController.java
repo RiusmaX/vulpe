@@ -22,7 +22,7 @@ import br.gov.caixa.sirci.core.model.services.CoreServices;
 @Component("core.TipoApontamentoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = "descricao", tabularPageSize = 10)
 public class TipoApontamentoController extends
 		ApplicationBaseController<TipoApontamento, java.lang.Long> {
 
@@ -55,5 +55,14 @@ public class TipoApontamentoController extends
 			return false;
 		}
 		return super.onDelete();
+	}
+
+	@Override
+	protected int onDeleteDetail() {
+		if (verificarApontamentos(VulpeConstants.Action.DELETE)) {
+			addActionError(getText("sirci.mn.002"));
+			return 0;
+		}
+		return super.onDeleteDetail();
 	}
 }
