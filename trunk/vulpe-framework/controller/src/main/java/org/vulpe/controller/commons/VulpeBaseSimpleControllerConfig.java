@@ -503,4 +503,14 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return viewSelectPath;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getTabularFilter()
+	 */
+	@Override
+	public boolean getTabularFilter() {
+		return getController().tabularFilter();
+	}
 }

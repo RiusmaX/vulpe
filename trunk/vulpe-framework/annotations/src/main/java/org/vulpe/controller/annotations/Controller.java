@@ -99,6 +99,11 @@ public @interface Controller {
 	 */
 	int tabularPageSize() default 0;
 
+	/**
+	 * Show tabular filter
+	 */
+	boolean tabularFilter() default false;
+
 	// REPORT - configurations
 	Report report() default @Report;
 

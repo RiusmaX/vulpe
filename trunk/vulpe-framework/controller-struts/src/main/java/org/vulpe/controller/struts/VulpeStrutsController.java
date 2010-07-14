@@ -923,6 +923,10 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		// extension point
 	}
 
+	public String tabularFilter() {
+		return read();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -973,7 +977,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
 
-		mountTabularPaging(false);
+		tabularMountPaging(false);
 		setExecuted(true);
 	}
 
@@ -1063,7 +1067,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				}
 			}
 
-			mountTabularPaging(true);
+			tabularMountPaging(true);
 			return detailConfig;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -1239,20 +1243,18 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	@ResetSession(before = true)
 	public String tabular() {
 		getControllerConfig().setControllerType(ControllerType.TABULAR);
+		if (getControllerConfig().getTabularFilter()) {
+			try {
+				setEntitySelect(getControllerConfig().getEntityClass().newInstance());
+			} catch (Exception e) {
+				LOG.error(e);
+			}
+		}
 		prepareBefore();
 		onPrepare();
-		showButtons(Action.PREPARE);
-
-		setResultName(Forward.SUCCESS);
-		if (isAjax()) {
-			setResultForward(getControllerConfig().getControllerName().concat(Action.URI.READ_AJAX));
-			setResultName(Forward.READ);
-		} else {
-			return read();
-		}
-
+		showButtons(Action.TABULAR);
 		prepareAfter();
-		return getResultName();
+		return read();
 	}
 
 	/**
@@ -1516,8 +1518,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
 			showButtons(Button.READ, Button.CLEAR);
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
-			showButtons(Button.READ, Button.PREPARE, Button.DELETE, Button.TABULAR_POST,
+			showButtons(Button.TABULAR_REFRESH, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
+			if (getControllerConfig().getTabularFilter()) {
+				showButton(Button.TABULAR_FILTER);
+			}
 		} else if (getControllerType().equals(ControllerType.TWICE)) {
 			if (Action.DELETE.equals(method) || Action.CREATE.equals(method)
 					|| Action.TWICE.equals(method)) {
@@ -1714,7 +1719,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		return tabularSize;
 	}
 
-	protected void mountTabularPaging(final boolean add) {
+	protected void tabularMountPaging(final boolean add) {
 		if (getControllerType().equals(ControllerType.TABULAR)
 				&& getControllerConfig().getTabularPageSize() > 0) {
 			if (add) {

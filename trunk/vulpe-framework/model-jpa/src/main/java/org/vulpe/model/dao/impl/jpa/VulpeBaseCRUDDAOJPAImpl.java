@@ -329,8 +329,8 @@ public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID exte
 				hql.append(" order by");
 			}
 			hql.append(" ");
-			hql.append(StringUtils.isNotEmpty(entity.getOrderBy()) ? entity.getOrderBy() : order
-					.toString());
+			hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
+					.getOrderBy());
 		}
 		return hql.toString();
 	}

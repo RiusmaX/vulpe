@@ -3,6 +3,20 @@
 <c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 
 <p>
+<c:set var="style" value="display: none;" />
+<c:if test="${tabularFilterShow}">
+	<c:set var="style" value="display: inline;" />
+</c:if>
+<v:action validate="false" style="${style}"
+	labelKey="vulpe.label.tabularFilter"
+	elementId="vulpeButtonTabularFilter_${vulpeFormName}"
+	action="${controllerConfig.controllerName}/tabularFilter/ajax"
+	helpKey="vulpe.help.tabularFilter"
+	icon="themes/${vulpeTheme}/images/icons/button-filter-${widthIcon}x${heightIcon}.png"
+	showButtonAsImage="${vulpeShowButtonAsImage}"
+	showButtonIcon="${vulpeShowButtonIcon}"
+	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
+	heightIcon="${heightIcon}" />
 <c:set var="buttonEL" value="${'${'}addDetailShow${targetConfig.name}${'}'}" />
 <c:set var="button" value="${util:eval(pageContext, buttonEL)}" />
 <c:set var="style" value="display: none;" />
@@ -25,10 +39,10 @@
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action validate="false" style="${style}"
-	labelKey="vulpe.label.refresh"
-	elementId="vulpeButtonPrepare_${vulpeFormName}"
+	labelKey="vulpe.label.tabularRefresh"
+	elementId="vulpeButtonTabularRefresh_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/tabular/ajax"
-	helpKey="vulpe.help.refresh"
+	helpKey="vulpe.help.tabularRefresh"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"

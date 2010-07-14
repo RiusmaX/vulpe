@@ -67,11 +67,22 @@ $(document).ready(function() {
 			<c:if test="${controllerConfig.controllerType == 'SELECT'}">
 			<c:set var="prepare" value="Shift+del"/>
 			</c:if>
-			<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
-			<c:set var="prepare" value="Ctrl+f9"/>
-			</c:if>
 			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
 		}
+	</c:if>
+
+	<c:if test="${tabularFilterShow}">
+	var buttonTabularFilter = vulpe.util.getElement("vulpeButtonTabularFilter_${vulpeFormName}");
+	if (buttonTabularFilter) {
+		jQuery(document).bind('keydown', 'Ctrl+f7', function (){buttonTabularFilter.click();});
+	}
+	</c:if>
+
+	<c:if test="${tabularRefreshShow}">
+	var buttonTabularRefresh = vulpe.util.getElement("vulpeButtonTabularRefresh_${vulpeFormName}");
+	if (buttonTabularRefresh) {
+		jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularRefresh.click();});
+	}
 	</c:if>
 
 	<c:if test="${readShow || SELECT_readShow || CRUD_readShow}">
