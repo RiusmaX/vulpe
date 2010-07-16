@@ -241,12 +241,12 @@
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" align="center">
-					<input type="checkbox" name="selected" value="${elementId}" tabindex="100000">
+					<input type="checkbox" name="selected" value="${elementId}" tabindex="100000" title="<fmt:message key='vulpe.help.delete.selected'/>">
 				</td>
 			</c:when>
 			<c:otherwise>
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='vulpe.help.delete.all.selected'/>">
 				</th>
 			</c:otherwise>
 		</c:choose>
@@ -255,12 +255,12 @@
 		<c:if test="${!onlyToSee && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='vulpe.help.delete.all.selected'/>">
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%">
-					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000"/>
+					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="vulpe.help.delete.selected" />
 				</v:column>
 			</c:if>
 		</c:if>

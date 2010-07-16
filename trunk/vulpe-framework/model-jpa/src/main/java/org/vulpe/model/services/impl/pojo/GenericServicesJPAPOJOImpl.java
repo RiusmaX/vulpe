@@ -35,7 +35,7 @@ import org.vulpe.model.services.GenericServices;
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked" })
 @Service("GenericServices")
 @Transactional
 public class GenericServicesJPAPOJOImpl<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable>

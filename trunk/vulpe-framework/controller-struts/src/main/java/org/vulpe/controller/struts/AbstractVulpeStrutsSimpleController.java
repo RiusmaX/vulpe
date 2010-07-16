@@ -58,7 +58,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings({ "unchecked", "serial" })
 public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
 		implements Action, Validateable, ValidationAware, LocaleProvider, Serializable {
 

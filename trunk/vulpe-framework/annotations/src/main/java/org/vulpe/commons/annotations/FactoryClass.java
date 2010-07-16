@@ -30,6 +30,6 @@ import org.vulpe.commons.factory.Factory;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface FactoryClass {
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	Class<? extends Factory> value();
 }

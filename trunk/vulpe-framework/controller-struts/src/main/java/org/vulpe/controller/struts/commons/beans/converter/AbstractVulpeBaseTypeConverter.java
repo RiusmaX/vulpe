@@ -21,7 +21,7 @@ import ognl.DefaultTypeConverter;
 
 import org.apache.commons.beanutils.Converter;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public abstract class AbstractVulpeBaseTypeConverter extends DefaultTypeConverter implements
 		Converter {
 

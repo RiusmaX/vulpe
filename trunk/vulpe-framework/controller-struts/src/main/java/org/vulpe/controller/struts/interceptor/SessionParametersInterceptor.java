@@ -32,7 +32,7 @@ import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
 import com.opensymphony.xwork2.util.OgnlContextState;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings({ "serial", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class SessionParametersInterceptor extends ParametersInterceptor {
 
 	private ActionInvocation invocation;

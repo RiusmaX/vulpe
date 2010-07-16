@@ -23,10 +23,9 @@ import java.util.Map;
 
 import org.apache.struts2.util.StrutsTypeConverter;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class XEnumConverter extends StrutsTypeConverter {
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object convertFromString(final Map context, final String[] values, final Class toClass) {
 		final List<Enum> result = new ArrayList<Enum>();

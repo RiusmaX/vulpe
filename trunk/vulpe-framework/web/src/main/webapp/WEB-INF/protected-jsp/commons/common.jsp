@@ -78,10 +78,10 @@ $(document).ready(function() {
 	}
 	</c:if>
 
-	<c:if test="${tabularRefreshShow}">
-	var buttonTabularRefresh = vulpe.util.getElement("vulpeButtonTabularRefresh_${vulpeFormName}");
-	if (buttonTabularRefresh) {
-		jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularRefresh.click();});
+	<c:if test="${tabularReloadShow}">
+	var buttonTabularReload = vulpe.util.getElement("vulpeButtonTabularReload_${vulpeFormName}");
+	if (buttonTabularReload) {
+		jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularReload.click();});
 	}
 	</c:if>
 

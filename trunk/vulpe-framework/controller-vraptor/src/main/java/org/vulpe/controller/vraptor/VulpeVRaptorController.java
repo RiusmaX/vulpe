@@ -59,7 +59,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings({ "unchecked", "serial" })
 public class VulpeVRaptorController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeVRaptorSimpleController implements VulpeBaseController {
 

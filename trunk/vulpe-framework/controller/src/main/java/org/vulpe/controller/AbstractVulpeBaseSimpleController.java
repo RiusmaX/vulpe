@@ -328,7 +328,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 *
 	 * @since 1.0
 	 */
-	public void addActionError(final String key, final String... args) {
+	public void addActionError(final String key, final Object... args) {
 		addActionError(getText(key, args));
 	}
 
@@ -354,7 +354,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 *
 	 * @since 1.0
 	 */
-	public void addActionMessage(final String key, final String... args) {
+	public void addActionMessage(final String key, final Object... args) {
 		addActionMessage(getText(key, args));
 	}
 
@@ -393,22 +393,21 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	}
 
 	public String getTextArg(final String key, final String arg) {
-		return getText(key, new String[] { getText(arg) });
+		return getText(key, getText(arg));
 	}
 
 	public String getTextArg(final String key, final String arg1, final String arg2) {
-		return getText(key, new String[] { getText(arg1), getText(arg2) });
+		return getText(key, getText(arg1), getText(arg2));
 	}
 
 	public String getTextArg(final String key, final String arg1, final String arg2,
 			final String arg3) {
-		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3) });
+		return getText(key, getText(arg1), getText(arg2), getText(arg3));
 	}
 
 	public String getTextArg(final String key, final String arg1, final String arg2,
 			final String arg3, final String arg4) {
-		return getText(key, new String[] { getText(arg1), getText(arg2), getText(arg3),
-				getText(arg4) });
+		return getText(key, getText(arg1), getText(arg2), getText(arg3), getText(arg4));
 	}
 
 	private boolean uploaded;
@@ -892,7 +891,5 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	public abstract void addActionMessage(final String message);
 
 	public abstract void addActionError(final String message);
-
-	public abstract void addActionError(final String key, final Object... args);
 
 }

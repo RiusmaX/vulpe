@@ -32,7 +32,7 @@ public @interface VulpeDomains {
 
 	Class<? extends VulpeBaseEntity<?>>[] cachedClass() default {};
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings("unchecked")
 	Class[] cachedEnum() default {};
 
 }

@@ -32,15 +32,14 @@ import com.opensymphony.xwork2.util.XWorkCollectionPropertyAccessor;
 import com.opensymphony.xwork2.util.XWorkConverter;
 
 /**
- * Classe utilizada para corrigir problemas ao realizar binding de Set's.
- * 
+ * Utility class to fix bugs on Set data binding.
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Object getProperty(final Map context, final Object target, final Object name)
 			throws OgnlException {
 		if (target instanceof Set && name instanceof Number) {
@@ -60,8 +59,8 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			final Class beanClass = XWorkConverter.getInstance().getObjectTypeDeterminer()
 					.getElementClass(lastClass, lastProperty, name);
 			if (OgnlContextState.isCreatingNullObjects(context)
-					&& XWorkConverter.getInstance().getObjectTypeDeterminer()
-							.shouldCreateIfNew(lastClass, lastProperty, target, null, true)) {
+					&& XWorkConverter.getInstance().getObjectTypeDeterminer().shouldCreateIfNew(
+							lastClass, lastProperty, target, null, true)) {
 				boolean seted = false;
 				if (list.size() <= index) {
 					for (int i = list.size(); i < index; i++) {
@@ -79,10 +78,8 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 					}
 				} else if (list.get(index) == null) {
 					try {
-						list.set(
-								index,
-								(result = ObjectFactory.getObjectFactory().buildBean(beanClass,
-										context)));
+						list.set(index, (result = ObjectFactory.getObjectFactory().buildBean(
+								beanClass, context)));
 						seted = true;
 					} catch (Exception exc) {
 						throw new XWorkException(exc);
@@ -90,7 +87,6 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 				} else {
 					result = list.get(index);
 				}
-				// reinclui lista no set pra garantir os indices
 				if (seted) {
 					set.clear();
 					for (Object object : list) {
@@ -113,10 +109,6 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 	private transient final List<WeakReference<Object[]>> cache = Collections
 			.synchronizedList(new ArrayList<WeakReference<Object[]>>());
 
-	/**
-	 * Obtem o List correspondente do Set
-	 */
-	@SuppressWarnings("unchecked")
 	private List getList(final Set set) {
 		final List<WeakReference<Object[]>> excluds = new ArrayList<WeakReference<Object[]>>();
 		try {
@@ -142,24 +134,20 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void setProperty(final Map context, final Object target, final Object name,
 			final Object value) throws OgnlException {
 		if (target instanceof Set && name instanceof Number) {
 			final Set set = (Set) target;
 			final List list = getList(set);
 			final int index = ((Number) name).intValue();
-			// se o indice for maior q a lista entao dá erro...
 			if (index > list.size()) {
 				throw new NoSuchPropertyException(target, name);
 			} else {
-				// se o indice for do tamanho da lista então adiciona
 				if (index == list.size()) {
 					list.add(value);
 				} else {
 					list.set(index, value);
 				}
-				// reinclui lista no set pra garantir os indices
 				set.clear();
 				set.addAll(list);
 				return;

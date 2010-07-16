@@ -45,6 +45,7 @@ import org.vulpe.security.model.services.SecurityServices;
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
+@SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("VulpeSecurityContext")
 public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements VulpeSecurityContext {
@@ -55,7 +56,7 @@ public class VulpeSecurityContextImpl extends VulpeSecurityUtil implements Vulpe
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.security.context.VulpeSecurityContext#initialize()
 	 */
 	@Override

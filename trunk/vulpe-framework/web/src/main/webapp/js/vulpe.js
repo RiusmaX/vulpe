@@ -1240,7 +1240,6 @@ var vulpe = {
 			},
 
 			submitPaging: function(page, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
-				vulpe.view.resetFields(formName);
 				vulpe.util.getElement(formName + vulpe.config.pagingPage).value = page;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
@@ -1261,13 +1260,11 @@ var vulpe = {
 				if (vulpe.view.isSelection) {
 					return false;
 				}
-				vulpe.view.resetFields(formName);
 				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
 			submitDelete: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
-				vulpe.view.resetFields(formName);
 				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
@@ -1342,7 +1339,6 @@ var vulpe = {
 						buttons: {
 							Ok: function() {
 								$(this).dialog('close');
-								//vulpe.view.resetFields(formName);
 								for (i = 0; i < selectedIds.length; i++) {
 									if (selectedIds != "") {
 										selections[i].checked;

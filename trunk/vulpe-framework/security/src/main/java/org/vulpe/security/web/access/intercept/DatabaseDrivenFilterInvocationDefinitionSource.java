@@ -38,7 +38,7 @@ import org.vulpe.security.model.entity.SecureResource;
  * @since 1.0
  * 
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		FilterInvocationSecurityMetadataSource {
 

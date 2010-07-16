@@ -32,10 +32,10 @@ import org.vulpe.model.services.Services;
 
 /**
  * Class to lookup Services
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class VulpeServiceLocator {
 	/**
 	 * Returns VulpeServiceLocator instance
@@ -54,7 +54,7 @@ public class VulpeServiceLocator {
 
 	/**
 	 * Returns instance of service created by Factory
-	 * 
+	 *
 	 * @param <T>
 	 *            Service Interface Type
 	 * @param classe
@@ -75,11 +75,10 @@ public class VulpeServiceLocator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param clazz
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public <T extends Services> T getEJB(final Class<T> clazz) {
 		try {
 			final InitialContext ctx = new InitialContext();
@@ -95,7 +94,7 @@ public class VulpeServiceLocator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param classe
 	 * @return
 	 */
@@ -107,12 +106,11 @@ public class VulpeServiceLocator {
 
 	/**
 	 * Método auxiliar para obter a instancia do factory
-	 * 
+	 *
 	 * @param <T>
 	 * @param clazz
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	protected <T extends Services> Factory<T> getFactory(final Class<T> clazz) {
 		try {
 			if (!VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".factory"))) {
@@ -135,13 +133,12 @@ public class VulpeServiceLocator {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 * 
+	 *
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
 	 * @see Services
 	 */
-	@SuppressWarnings("unchecked")
 	public <T extends Services> T getService(final Class<T> serviceClass) {
 		T service = null;
 		try {

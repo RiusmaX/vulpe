@@ -31,7 +31,7 @@ import org.vulpe.security.model.entity.UserRole;
  * @see {@link org.springframework.security.providers.AuthenticationProvider}
  * 
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class VulpeSecurityAuthenticationProvider implements AuthenticationProvider {
 
 	@Qualifier("UserAuthenticationService")

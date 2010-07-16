@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.vulpe.commons.beans.Paging;
 
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings({ "unchecked", "serial" })
 public class SessionPaging<BEAN extends Serializable> extends Paging<BEAN> {
 	private List<BEAN> fullList;
 

@@ -28,7 +28,7 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class XMLDateConversor implements Converter {
 
 	private static final Logger LOG = Logger.getLogger(XMLDateConversor.class);

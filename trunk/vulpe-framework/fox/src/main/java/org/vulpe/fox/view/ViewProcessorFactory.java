@@ -28,7 +28,7 @@ public class ViewProcessorFactory extends FreemarkerProcessorFactory {
 
 	protected AnnotationProcessor newProcessor(final URL url) {
 		return new FreemarkerProcessor(url) {
-			@SuppressWarnings("rawtypes")
+			@SuppressWarnings("unchecked")
 			@Override
 			protected Collection<FreemarkerTransform> getTransforms() {
 				final Collection<FreemarkerTransform> list = super.getTransforms();

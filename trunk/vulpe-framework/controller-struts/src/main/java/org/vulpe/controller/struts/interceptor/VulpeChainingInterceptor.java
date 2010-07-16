@@ -32,7 +32,7 @@ import com.opensymphony.xwork2.util.CompoundRoot;
 import com.opensymphony.xwork2.util.OgnlUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class VulpeChainingInterceptor extends ChainingInterceptor {
 
 	/*

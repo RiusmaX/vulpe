@@ -43,7 +43,7 @@ import com.db4o.ObjectSet;
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked" })
 public abstract class AbstractVulpeBaseDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 

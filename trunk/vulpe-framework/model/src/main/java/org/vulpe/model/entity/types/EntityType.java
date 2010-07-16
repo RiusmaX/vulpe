@@ -35,7 +35,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.services.Services;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class EntityType implements UserType, ParameterizedType {
 	/**
 	 * Returned Class
@@ -138,7 +138,6 @@ public class EntityType implements UserType, ParameterizedType {
 		return obj.hashCode();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setParameterValues(final Properties props) {
 		try {
 			this.returnedClass = (Class<? extends VulpeBaseEntity<?>>) Class.forName(props

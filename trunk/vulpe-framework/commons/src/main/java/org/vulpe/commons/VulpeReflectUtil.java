@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class VulpeReflectUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeReflectUtil.class);

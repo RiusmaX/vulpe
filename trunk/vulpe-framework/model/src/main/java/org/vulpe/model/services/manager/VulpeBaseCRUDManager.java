@@ -28,7 +28,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public interface VulpeBaseCRUDManager<ENTITY_CLASS extends VulpeBaseEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeBaseCRUDDAO<ENTITY_CLASS, ENTITY_ID>>
 		extends VulpeBaseManager {
 	/**

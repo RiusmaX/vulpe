@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ActionChainResult;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
-@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class SessionActionChainResult extends ActionChainResult {
 	private boolean saveParams;
 	private boolean sendParams;

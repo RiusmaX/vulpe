@@ -38,7 +38,7 @@ import org.vulpe.view.tags.Functions;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.XWorkConverter;
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public final class StrutsFunctions extends Functions {
 
 	private static final Logger LOG = Logger.getLogger(StrutsFunctions.class.getName());

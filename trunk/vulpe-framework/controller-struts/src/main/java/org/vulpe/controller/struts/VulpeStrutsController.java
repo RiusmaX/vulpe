@@ -65,7 +65,7 @@ import com.opensymphony.xwork2.util.OgnlContextState;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
+@SuppressWarnings( { "unchecked", "serial" })
 public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeStrutsSimpleController implements VulpeBaseController {
 
@@ -73,6 +73,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * List of entities
 	 */
 	private List<ENTITY> entities;
+
 	/**
 	 * Current CRUD Entity
 	 */
@@ -87,6 +88,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * Identifier for selections
 	 */
 	private ID id;
+
 	/**
 	 * List of selected identifiers
 	 */
@@ -1518,7 +1520,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
 			showButtons(Button.READ, Button.CLEAR);
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
-			showButtons(Button.TABULAR_REFRESH, Button.DELETE, Button.TABULAR_POST,
+			showButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
 			if (getControllerConfig().getTabularFilter()) {
 				showButton(Button.TABULAR_FILTER);

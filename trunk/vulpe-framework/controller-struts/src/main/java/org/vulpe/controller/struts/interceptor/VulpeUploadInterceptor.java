@@ -39,18 +39,18 @@ import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
+ *
  */
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings( { "unchecked", "serial" })
 public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 	private static final Logger LOG = Logger.getLogger(VulpeUploadInterceptor.class);
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.apache.struts2.interceptor.FileUploadInterceptor#intercept(com.
 	 * opensymphony.xwork2.ActionInvocation)
 	 */
@@ -83,9 +83,9 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
-				LOG.debug(getTextMessage("struts.messages.bypass.request",
-						new Object[] { proxy.getNamespace(), proxy.getActionName() }, ActionContext
-								.getContext().getLocale()));
+				LOG.debug(getTextMessage("struts.messages.bypass.request", new Object[] {
+						proxy.getNamespace(), proxy.getActionName() }, ActionContext.getContext()
+						.getLocale()));
 			}
 			return invocation.invoke();
 		}
@@ -174,7 +174,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param objArray
 	 * @return
 	 */
@@ -191,7 +191,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	protected static final String DEFAULT_MESSAGE = "no.message.found";
 
 	/**
-	 * 
+	 *
 	 * @param messageKey
 	 * @param args
 	 * @param locale

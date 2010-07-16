@@ -22,11 +22,10 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class PagingWSConvert<BEAN extends VulpeBaseEntity<?>, BEANDELEGATE extends AbstractVulpeBaseEntityDelegate<?, ?>>
 		implements WSConvert<Paging<BEAN>, Paging<BEANDELEGATE>> {
 
-	@SuppressWarnings("unchecked")
 	public Paging<BEAN> toBean(final Paging<BEANDELEGATE> wsBean) {
 		final Paging<BEAN> paging = new Paging<BEAN>();
 		paging.setFirstPage(wsBean.getFirstPage());
@@ -61,7 +60,6 @@ public class PagingWSConvert<BEAN extends VulpeBaseEntity<?>, BEANDELEGATE exten
 		return paging;
 	}
 
-	@SuppressWarnings("unchecked")
 	private BEANDELEGATE getInstanceVO(final BEAN bean) {
 		if (bean == null) {
 			return null;

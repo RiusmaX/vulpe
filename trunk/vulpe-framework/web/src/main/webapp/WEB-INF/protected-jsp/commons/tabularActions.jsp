@@ -35,14 +35,14 @@
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" />
 <c:set var="style" value="display: none;" />
-<c:if test="${tabularRefreshShow}">
+<c:if test="${tabularReloadShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action validate="false" style="${style}"
-	labelKey="vulpe.label.tabularRefresh"
-	elementId="vulpeButtonTabularRefresh_${vulpeFormName}"
+	labelKey="vulpe.label.tabularReload"
+	elementId="vulpeButtonTabularReload_${vulpeFormName}"
 	action="${controllerConfig.controllerName}/tabular/ajax"
-	helpKey="vulpe.help.tabularRefresh"
+	helpKey="vulpe.help.tabularReload"
 	icon="themes/${vulpeTheme}/images/icons/button-refresh-${widthIcon}x${heightIcon}.png"
 	showButtonAsImage="${vulpeShowButtonAsImage}"
 	showButtonIcon="${vulpeShowButtonIcon}"

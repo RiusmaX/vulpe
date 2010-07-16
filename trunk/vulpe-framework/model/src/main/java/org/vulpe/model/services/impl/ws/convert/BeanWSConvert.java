@@ -24,7 +24,7 @@ import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class BeanWSConvert<ENTITY extends VulpeBaseEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>
 		implements WSConvert<ENTITY, VODELEGATE> {
 

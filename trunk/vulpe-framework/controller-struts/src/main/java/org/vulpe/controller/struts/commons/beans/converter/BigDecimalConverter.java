@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class BigDecimalConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 	private static final Logger LOG = Logger.getLogger(BigDecimalConverter.class);
 

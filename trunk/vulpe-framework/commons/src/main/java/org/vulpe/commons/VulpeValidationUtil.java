@@ -25,7 +25,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * Utility class to validation.
  * 
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class VulpeValidationUtil {
 
 	/**

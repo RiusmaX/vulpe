@@ -53,7 +53,7 @@ import org.vulpe.model.entity.LogicEntity.Status;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked" })
 public class VulpeBaseCRUDDAOJPAImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPAImpl<ENTITY, ID> {
 

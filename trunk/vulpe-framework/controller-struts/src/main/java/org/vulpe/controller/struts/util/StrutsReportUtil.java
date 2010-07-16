@@ -42,7 +42,7 @@ import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeBaseEntity;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
 	 * Returns StrutsReportUtil instance
@@ -59,7 +59,6 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		// default constructor
 	}
 
-	@SuppressWarnings("unchecked")
 	public byte[] getJasperReport(final String fileName, final String[] subReports,
 			final Collection<VulpeBaseEntity<?>> collection, final String format) {
 		try {

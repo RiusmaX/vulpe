@@ -35,7 +35,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * Utility class to send mail.
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public final class VulpeEmailUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeEmailUtil.class.getName());

@@ -26,7 +26,7 @@ import java.util.Date;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:geraldo.matos@activethread.com.br">Geraldo Matos</a>
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public interface VulpeBaseEntity<ID extends Serializable & Comparable> extends Serializable,
 		Comparable<VulpeBaseEntity<ID>>, Cloneable {
 	ID getId();

@@ -37,7 +37,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @TransactionType
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class VulpeBaseCRUDManagerImpl<ENTITY_CLASS extends VulpeBaseEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeBaseCRUDDAO<ENTITY_CLASS, ENTITY_ID>>
 		implements VulpeBaseCRUDManager<ENTITY_CLASS, ENTITY_ID, ENTITY_DAO> {
 

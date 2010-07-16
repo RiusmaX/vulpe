@@ -31,7 +31,7 @@ package org.json;
  * @author JSON.org
  * @version 2010-01-30
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class XMLTokener extends JSONTokener {
 
 	/**

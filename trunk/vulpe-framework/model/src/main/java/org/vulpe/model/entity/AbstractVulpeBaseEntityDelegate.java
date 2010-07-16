@@ -25,7 +25,7 @@ import org.vulpe.exception.VulpeSystemException;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+@SuppressWarnings({ "unchecked", "serial" })
 public abstract class AbstractVulpeBaseEntityDelegate<T extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		implements Serializable {
 

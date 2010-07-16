@@ -52,7 +52,7 @@ import com.db4o.query.Query;
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked" })
 public class VulpeBaseCRUDDAODB4OImpl<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAODB4OImpl<ENTITY, ID> {
 

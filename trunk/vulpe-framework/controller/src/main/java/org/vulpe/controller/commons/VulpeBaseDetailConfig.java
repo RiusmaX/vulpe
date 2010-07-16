@@ -25,7 +25,7 @@ import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.view.tags.Functions;
 
-@SuppressWarnings({ "serial", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class VulpeBaseDetailConfig implements Serializable {
 
 	private String name;
@@ -108,7 +108,6 @@ public class VulpeBaseDetailConfig implements Serializable {
 		return simpleName;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void setupDetail(final VulpeBaseControllerConfig config, final DetailConfig detail) {
 		if (detail == null) {
 			return;

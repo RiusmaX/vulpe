@@ -42,7 +42,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
  * parameter is present and its visible counterpart is not, set a new request
  * parameter to an empty Sting.
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class MultiselectInterceptor extends AbstractInterceptor {
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,6 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 	 * @see com.opensymphony.xwork2.interceptor.Interceptor#intercept(com.opensymphony.xwork2.ActionInvocation)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public String intercept(final ActionInvocation actionInvocation) throws Exception {
 		final Map parameters = actionInvocation.getInvocationContext()
 				.getParameters();

@@ -93,7 +93,7 @@ import org.vulpe.model.annotations.AutoComplete;
  * @author JSON.org
  * @version 2010-01-05
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class JSONObject {
 
 	/**

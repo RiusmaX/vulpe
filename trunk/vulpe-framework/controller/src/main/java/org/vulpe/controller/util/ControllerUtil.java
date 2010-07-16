@@ -49,7 +49,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  *
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class ControllerUtil {
 
 	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
@@ -142,9 +142,7 @@ public class ControllerUtil {
 				final VulpeBaseEntity<?> entity = (VulpeBaseEntity<?>) bean;
 				// if item is selected to be delete, then ignore
 				if (entity.isSelected()) {
-					if (ignoreExclud && entity.getId() != null) {
-						beans.add(bean);
-					} else {
+					if (!ignoreExclud || entity.getId() == null) {
 						iterator.remove();
 						continue;
 					}

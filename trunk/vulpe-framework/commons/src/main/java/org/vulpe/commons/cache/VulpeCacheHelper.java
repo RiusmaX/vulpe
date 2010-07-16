@@ -27,7 +27,7 @@ import org.vulpe.exception.VulpeSystemException;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public final class VulpeCacheHelper {
 	private static final VulpeCacheHelper INSTANCE = new VulpeCacheHelper();
 

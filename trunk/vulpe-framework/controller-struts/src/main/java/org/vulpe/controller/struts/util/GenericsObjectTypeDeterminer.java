@@ -30,7 +30,7 @@ import com.opensymphony.xwork2.util.DefaultObjectTypeDeterminer;
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class GenericsObjectTypeDeterminer extends DefaultObjectTypeDeterminer {
 
 	@Override

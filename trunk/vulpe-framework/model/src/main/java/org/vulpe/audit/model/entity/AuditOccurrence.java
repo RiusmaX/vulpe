@@ -47,7 +47,7 @@ import org.vulpe.model.entity.VulpeBaseEntity;
 import com.thoughtworks.xstream.XStream;
 
 @NamedQueries( { @NamedQuery(name = "AuditOccurrence.findByParent", query = "select obj from AuditOccurrence obj where obj.parent = :parent") })
-@SuppressWarnings( { "serial", "rawtypes" })
+@SuppressWarnings( { "serial", "unchecked" })
 @Entity
 @Table(name = "VulpeAuditOccurrence")
 @MappedSuperclass

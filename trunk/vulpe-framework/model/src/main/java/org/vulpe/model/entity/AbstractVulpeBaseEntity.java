@@ -32,7 +32,7 @@ import org.vulpe.model.annotations.IgnoreAutoFilter;
 import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
-@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
+@SuppressWarnings( { "unchecked", "serial" })
 public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
 		VulpeBaseEntity<ID> {
 

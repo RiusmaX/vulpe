@@ -25,12 +25,11 @@ import org.apache.log4j.Logger;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class EnumConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
 	private static final Logger LOG = Logger.getLogger(EnumConverter.class);
 
-	@SuppressWarnings("unchecked")
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {

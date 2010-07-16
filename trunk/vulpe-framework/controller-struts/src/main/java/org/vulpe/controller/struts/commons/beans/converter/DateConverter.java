@@ -24,7 +24,7 @@ import org.vulpe.commons.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("unchecked")
 public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
 	private static final Logger LOG = Logger.getLogger(DateConverter.class);

@@ -35,16 +35,16 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeExceptionMappingInterceptor extends
 		com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -67,7 +67,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -88,7 +88,7 @@ public class VulpeExceptionMappingInterceptor extends
 		} else if (newException instanceof VulpeSystemException) {
 			final VulpeSystemException sException = (VulpeSystemException) newException;
 			if (sException.getArgs() != null && sException.getArgs().length > 0) {
-				action.addActionMessage(newException.getMessage(), sException.getArgs());
+				action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
 			} else {
 				action.addActionMessage(newException.getMessage(), (sException.getCause() == null
 						|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "desconhecido"
@@ -96,15 +96,15 @@ public class VulpeExceptionMappingInterceptor extends
 			}
 		} else if (newException instanceof VulpeApplicationException) {
 			final VulpeApplicationException sException = (VulpeApplicationException) newException;
-			action.addActionMessage(newException.getMessage(), sException.getArgs());
+			action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
 		} else {
 			final String key = newException.getClass().getName().toLowerCase();
 			String value = action.getText(key);
 			if (StringUtils.isBlank(value) || value.equals(key)) {
 				String msg = newException.getMessage();
-				final MessageFormat msgFormat = buildMessageFormat(
-						TextParseUtil.translateVariables(msg, invocation.getStack()), invocation
-								.getInvocationContext().getLocale());
+				final MessageFormat msgFormat = buildMessageFormat(TextParseUtil
+						.translateVariables(msg, invocation.getStack()), invocation
+						.getInvocationContext().getLocale());
 				msg = msgFormat.format(null);
 				value = action.getText(msg);
 				if (StringUtils.isBlank(value) || value.equals(msg)) {
@@ -125,18 +125,19 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
 	protected Throwable getException(final Throwable exception) {
 		final Throwable newException = exception;
 		return newException.getCause() instanceof InvocationTargetException ? getException(((InvocationTargetException) newException
-				.getCause()).getTargetException()) : newException;
+				.getCause()).getTargetException())
+				: newException;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pattern
 	 * @param locale
 	 * @return

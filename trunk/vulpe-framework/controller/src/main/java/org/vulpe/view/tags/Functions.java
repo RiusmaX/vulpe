@@ -47,7 +47,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * 
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked" })
 public class Functions {
 
 	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
