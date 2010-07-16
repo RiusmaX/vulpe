@@ -380,7 +380,7 @@ td {
 td p {
 	margin: 0;
 	line-height: 1.7em;
-	margin-bottom: 5px;
+	padding: 3px;
 }
 
 tfoot {
@@ -533,6 +533,18 @@ html,body {
 
 #paging {
 
+}
+
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
 }
 
 #pagingFirstPage {
