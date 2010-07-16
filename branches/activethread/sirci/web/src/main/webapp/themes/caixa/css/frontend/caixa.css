@@ -209,11 +209,11 @@ td .titulo {
 	color: #ffffff;
 }
 
-.required {
+.vulpeRequired {
 	border: 1px solid #ffccbc;
 }
 
-.thumb {
+.vulpeThumb {
 	border: 1px solid #000;
 }
 

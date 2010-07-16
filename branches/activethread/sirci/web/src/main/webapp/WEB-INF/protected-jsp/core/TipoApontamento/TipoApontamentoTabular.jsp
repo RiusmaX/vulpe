@@ -2,8 +2,7 @@
 <table>
 	<tr>
 		<td><v:text labelKey="label.sirci.core.TipoApontamento.tabular.descricao"
-			targetName="entitySelect" targetValue="${entitySelect}" property="descricao" size="50"
-			maxlength="50" /></td>
+			targetName="entitySelect" property="descricao" size="50" maxlength="50" /></td>
 	</tr>
 </table>
 <v:table>
