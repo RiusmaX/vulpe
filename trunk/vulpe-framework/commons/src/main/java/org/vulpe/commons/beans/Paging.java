@@ -68,7 +68,7 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 		this.size = size;
 		this.page = page;
 		this.pageSize = pageSize;
-		Integer pages = this.size / this.pageSize;
+		final Integer pages = this.size / this.pageSize;
 		if (this.size % this.pageSize > 0) {
 			this.pages = pages + 1;
 		} else {
@@ -213,4 +213,5 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 	public void setSize(final Integer size) {
 		this.size = size;
 	}
+
 }

@@ -127,6 +127,8 @@ public class VulpeStartupListener implements ServletContextListener {
 					vulpeProject.view().showCopyright());
 			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_POWERED_BY,
 					vulpeProject.view().showPoweredBy());
+			evt.getServletContext().setAttribute(VulpeConstants.Context.View.PAGING_GOOGLE_STYLE,
+					vulpeProject.view().pagingGoogleStyle());
 		}
 		if (vulpeProject.mobileEnabled()) {
 			evt.getServletContext().setAttribute(VulpeConstants.Context.SHOW_AS_MOBILE, true);

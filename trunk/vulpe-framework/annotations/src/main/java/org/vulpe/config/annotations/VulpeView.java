@@ -53,4 +53,6 @@ public @interface VulpeView {
 	boolean showCopyright() default true;
 
 	boolean showPoweredBy() default true;
+
+	boolean pagingGoogleStyle() default true;
 }
