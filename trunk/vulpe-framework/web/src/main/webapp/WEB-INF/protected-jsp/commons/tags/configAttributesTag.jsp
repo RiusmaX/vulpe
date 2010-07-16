@@ -34,13 +34,19 @@
 </c:if>
 
 <c:if test="${empty targetValue}">
-	<c:if test="${empty targetConfig}">
+	<c:choose>
+	<c:when test="${empty targetConfig}">
 		<c:set var="targetValueEL" value="${'${'}${targetName}${'}'}"/>
 		<c:set var="targetValue" value="${util:eval(pageContext, targetValueEL)}"/>
-	</c:if>
-	<c:if test="${not empty targetConfig}">
+	</c:when>
+	<c:otherwise>
 		<c:set var="targetValue" value="${currentItem}"/>
-	</c:if>
+		<c:if test="${empty targetValue && not empty targetName}">
+			<c:set var="targetValueEL" value="${'${'}${targetName}${'}'}"/>
+			<c:set var="targetValue" value="${util:eval(pageContext, targetValueEL)}"/>
+		</c:if>
+	</c:otherwise>
+	</c:choose>
 </c:if>
 
 <c:if test="${not empty property && empty name}">

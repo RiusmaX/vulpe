@@ -102,6 +102,9 @@ public class ControllerUtil {
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (value != null && StringUtils.isNotBlank(value.toString())) {
 				for (VulpeBaseEntity<?> realBean : beans) {
+					if (realBean.getId() != null && realBean.getId().equals(bean.getId())) {
+						continue;
+					}
 					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(
 							realBean, fieldName);
 					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())

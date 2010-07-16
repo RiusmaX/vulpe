@@ -8,8 +8,20 @@
 <c:if test="${paragraph}">
 	</p>
 </c:if>
-<c:if test="${not empty validateType}">
 <script type="text/javascript">
+<c:if test="${not empty requiredField}">
+vulpe.util.get('${elementId}').blur(function() {
+	var requiredFieldId = "${vulpeFormName}_${fn:replace(prepareName, property, requiredField)}";
+	var value = $(this).val();
+	var requiredFieldValue = vulpe.util.get(requiredFieldId).val();
+	if (value == "" || requiredFieldValue != "") {
+		vulpe.util.get(requiredFieldId).removeClass("vulpeRequired");
+	} else {
+		vulpe.util.get(requiredFieldId).addClass("vulpeRequired");
+	}
+});
+</c:if>
+<c:if test="${not empty validateType}">
 vulpe.config.elements["${elementId}"] = {
 	type: '${validateType}'
 	<c:if test="${not empty validateRange}">,range: '${validateRange}'</c:if>
@@ -20,5 +32,5 @@ vulpe.config.elements["${elementId}"] = {
 	<c:if test="${not empty validateMask}">,mask: '${validateMask}'</c:if>
 	<c:if test="${not empty validateDatePattern}">,datePattern: '${validateDatePattern}'</c:if>
 }
-</script>
 </c:if>
+</script>

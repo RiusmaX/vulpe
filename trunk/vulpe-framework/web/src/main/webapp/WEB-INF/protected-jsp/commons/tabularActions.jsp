@@ -35,7 +35,7 @@
 	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
 	heightIcon="${heightIcon}" />
 <c:set var="style" value="display: none;" />
-<c:if test="${prepareShow}">
+<c:if test="${tabularRefreshShow}">
 	<c:set var="style" value="display: inline;" />
 </c:if>
 <v:action validate="false" style="${style}"

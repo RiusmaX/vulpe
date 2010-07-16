@@ -25,7 +25,7 @@ import org.vulpe.security.model.services.SecurityServices;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.RoleController")
-@Controller(serviceClass = SecurityServices.class, pageSize = 5, tabularStartNewDetails = 4, tabularNewDetails = 1, tabularDespiseFields = { "name" })
+@Controller(serviceClass = SecurityServices.class, pageSize = 5, tabularStartNewDetails = 4, tabularNewDetails = 1, tabularDespiseFields = { "name", "description" })
 @SuppressWarnings("serial")
 public class RoleController extends VulpeStrutsController<Role, Long> {
 
