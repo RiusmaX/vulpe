@@ -50,7 +50,12 @@ ${paging.size}
 				<c:set var="linkStyle" value="" />
 			</c:otherwise>
 		</c:choose>
-		<a href="javascript:void(0);" onclick="${link}" class="${linkStyle}">${page}</a>
+		<c:choose>
+			<c:when test="${list.pages > 1}">
+			<a href="javascript:void(0);" onclick="${link}" class="${linkStyle}">${page}</a>
+			</c:when>
+			<c:otherwise>${page}</c:otherwise>
+		</c:choose>
 	</c:forEach>
 	</c:when>
 	<c:otherwise>
