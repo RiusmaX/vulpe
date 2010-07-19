@@ -23,14 +23,16 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @Entity
 @Table(name = "VulpeRole")
 @SuppressWarnings("serial")
-public class Role extends AbstractVulpeBaseJPAEntity<Long> {
+public class Role extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,5 +96,13 @@ public class Role extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String getOrderBy() {
+		if (!VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+			super.setOrderBy("obj.id");
+		}
+		return super.getOrderBy();
 	}
 }

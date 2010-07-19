@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.vulpe.commons.VulpeConstants.Action.URI;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -36,9 +36,8 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		if (request.getRequestURI().endsWith(URI.AJAX)) {
-			setLoginFormUrl(URI.AUTHENTICATOR + URI.AJAX);
-		}
+		setLoginFormUrl(URI.AUTHENTICATOR
+				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
 		super.commence(request, response, authException);
 	}
 }

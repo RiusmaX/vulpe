@@ -28,8 +28,10 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
 /**
@@ -45,7 +47,7 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
 @Entity
 @Table(name = "VulpeSecureResource")
 @SuppressWarnings("serial")
-public class SecureResource extends AbstractVulpeBaseJPAEntity<Long> {
+public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -161,5 +163,13 @@ public class SecureResource extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String getOrderBy() {
+		if (!VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+			super.setOrderBy("obj.id");
+		}
+		return super.getOrderBy();
 	}
 }

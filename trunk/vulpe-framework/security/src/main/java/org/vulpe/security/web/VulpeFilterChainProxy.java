@@ -21,16 +21,12 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.FilterChainProxy;
-import org.vulpe.commons.VulpeConstants.Action;
-import org.vulpe.commons.VulpeConstants.Security;
-import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -39,7 +35,7 @@ public class VulpeFilterChainProxy extends FilterChainProxy {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.security.web.FilterChainProxy#doFilter(javax.servlet
 	 * .ServletRequest, javax.servlet.ServletResponse,
@@ -52,12 +48,7 @@ public class VulpeFilterChainProxy extends FilterChainProxy {
 			chain.doFilter(request, response);
 			return;
 		}
-		final HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if (httpRequest != null && !httpRequest.getRequestURI().contains(Action.URI.AUTHENTICATOR)
-				&& !httpRequest.getRequestURI().endsWith(Layout.SUFFIX_JSP)) {
-			httpRequest.getSession().setAttribute(Security.VULPE_SECURITY_URL_REQUESTED,
-					httpRequest.getRequestURI());
-		}
+
 		super.doFilter(request, response, chain);
 	}
 }

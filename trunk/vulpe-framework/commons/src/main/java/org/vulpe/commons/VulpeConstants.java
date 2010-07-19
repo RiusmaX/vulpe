@@ -80,7 +80,7 @@ public class VulpeConstants {
 			public static final String BREAK_LABEL = "vulpeBreakLabel";
 			public static final String SHOW_COPYRIGHT = "vulpeShowCopyright";
 			public static final String SHOW_POWERED_BY = "vulpeShowPoweredBy";
-			public static final String PAGING_GOOGLE_STYLE = "vulpePagingGoogleStyle";
+			public static final String PAGING_STYLE = "vulpePagingStyle";
 		}
 
 		public static final String SHOW_AS_MOBILE = "vulpeShowAsMobile";
@@ -161,6 +161,7 @@ public class VulpeConstants {
 
 		public class URI {
 			public static final String AUTHENTICATOR = "/authenticator";
+			public static final String SPRING_SECURITY = "/j_spring_security_check";
 			public static final String AJAX = "/ajax";
 			public static final String CREATE = "/create";
 			public static final String CREATE_AJAX = "/create/ajax";
@@ -285,7 +286,6 @@ public class VulpeConstants {
 	}
 
 	public class Security {
-		public static final String VULPE_SECURITY_URL_REQUESTED = "vulpeSecurityURLRequested";
 		public static final String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
 		public static final String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
 		public static final String ROLE_PREFIX = "ROLE_";

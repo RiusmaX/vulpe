@@ -24,12 +24,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeDomains;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @Entity
 @Table(name = "VulpeSecureResourceRole")
 @SuppressWarnings("serial")
-public class SecureResourceRole extends AbstractVulpeBaseJPAEntity<Long> {
+public class SecureResourceRole extends AbstractVulpeBaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,6 +79,14 @@ public class SecureResourceRole extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String getOrderBy() {
+		if (!VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+			super.setOrderBy("obj.id");
+		}
+		return super.getOrderBy();
 	}
 
 }

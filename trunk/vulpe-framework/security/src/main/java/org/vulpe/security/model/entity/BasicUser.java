@@ -22,11 +22,13 @@ import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeDomains;
+import org.vulpe.model.entity.AbstractVulpeBaseEntity;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
-public abstract class BasicUser extends AbstractVulpeBaseJPAEntity<Long> {
+public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	private String username;
 
@@ -78,4 +80,13 @@ public abstract class BasicUser extends AbstractVulpeBaseJPAEntity<Long> {
 	public void setPasswordConfirm(final String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+
+	@Override
+	public String getOrderBy() {
+		if (!VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+			super.setOrderBy("obj.id");
+		}
+		return super.getOrderBy();
+	}
+
 }

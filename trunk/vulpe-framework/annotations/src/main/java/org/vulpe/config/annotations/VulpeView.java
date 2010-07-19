@@ -54,5 +54,9 @@ public @interface VulpeView {
 
 	boolean showPoweredBy() default true;
 
-	boolean pagingGoogleStyle() default true;
+	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
+
+	public enum PagingStyle {
+		NUMERIC, PAGE_OF
+	}
 }
