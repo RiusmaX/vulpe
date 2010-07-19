@@ -11,7 +11,7 @@
 }
 
 .vulpeAlertMessage {
-	
+
 }
 
 .vulpeOrderAsc {
@@ -417,7 +417,7 @@ tfoot th, .vulpeTableFooter {
 }
 
 #copyright {
-	
+
 }
 
 #copyright a {
@@ -487,7 +487,19 @@ tfoot th, .vulpeTableFooter {
 }
 
 #paging {
-	
+
+}
+
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
 }
 
 #pagingFirstPage {
@@ -575,4 +587,11 @@ tfoot th, .vulpeTableFooter {
 	margin: 0px;
 	padding-left: 20px;
 	padding-top: 3px;
+}
+
+#messages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
 }
