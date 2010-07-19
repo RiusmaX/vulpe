@@ -50,7 +50,7 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 	}
 
 	@Override
-	protected void onUpdatePost() {
+	protected boolean onUpdatePost() {
 		getEntity().setDataValidade(gerarDataValidade());
 		getEntity().setEntregue(validarEntrega());
 		if (getEntity().isEntregue()) {
@@ -59,7 +59,7 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 			getEntity().setDataEntrega(null);
 		}
 
-		super.onUpdatePost();
+		return super.onUpdatePost();
 	}
 
 	private boolean validarEntrega() {

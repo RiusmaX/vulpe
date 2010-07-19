@@ -11,11 +11,11 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
-public class Pedido extends AbstractVulpeBaseEntityImpl<Long> {
+public class Pedido extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, required = true, autoComplete = true)

@@ -3,11 +3,11 @@ package br.com.activethread.gmn.anuncios.model.entity;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
-public class ReuniaoServicoDiscurso extends AbstractVulpeBaseEntityImpl<Long> {
+public class ReuniaoServicoDiscurso extends VulpeBaseDB4OEntity<Long> {
 
 	private ReuniaoServico reuniaoServico;
 

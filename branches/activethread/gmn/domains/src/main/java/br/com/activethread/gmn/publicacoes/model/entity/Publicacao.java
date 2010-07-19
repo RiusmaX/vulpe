@@ -3,23 +3,22 @@ package br.com.activethread.gmn.publicacoes.model.entity;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.annotations.db4o.OrderBy;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import br.com.activethread.gmn.publicacoes.model.entity.TipoPublicacao;
 import br.com.activethread.gmn.comuns.model.entity.ClassificacaoPublicacao;
 
 @CodeGenerator(view = @View(popupProperties = "id,codigo,nome", viewType = {
 		ViewType.CRUD, ViewType.SELECT }))
 @CachedClass
 @SuppressWarnings("serial")
-public class Publicacao extends AbstractVulpeBaseEntityImpl<Long> {
+public class Publicacao extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
 	@VulpeText(mask = "I", size = 10, maxlength = 10, argument = true)

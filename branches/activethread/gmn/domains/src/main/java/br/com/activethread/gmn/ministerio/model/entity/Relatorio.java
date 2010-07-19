@@ -3,9 +3,8 @@ package br.com.activethread.gmn.ministerio.model.entity;
 import java.util.Date;
 
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeDate;
@@ -17,11 +16,10 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
-@CodeGenerator(controller = { @Controller(controllerType = ControllerType.CRUD),
-		@Controller(controllerType = ControllerType.SELECT) }, manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = {
 		ViewType.SELECT, ViewType.CRUD }))
 @SuppressWarnings("serial")
-public class Relatorio extends AbstractVulpeBaseEntityImpl<Long> {
+public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, autoComplete = true)

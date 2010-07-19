@@ -8,7 +8,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -18,13 +18,10 @@ import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 @CachedClass
-@CodeGenerator(controller = {
-		@Controller(controllerType = ControllerType.TABULAR, tabularDespiseFields = "nome", tabularStartNewDetails = 5, tabularNewDetails = 1),
-		@Controller(controllerType = ControllerType.SELECT, pageSize = 5),
-		@Controller(controllerType = ControllerType.CRUD, detailsConfig = { @DetailConfig(name = "grupos", propertyName = "entity.grupos", despiseFields = "nome", startNewDetails = 3, newDetails = 1, cardinalityType = CardinalityType.ONE) }) }, manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(pageSize = 5, tabularDespiseFields = "nome", tabularStartNewDetails = 5, tabularNewDetails = 1, controllerType = ControllerType.CRUD, detailsConfig = { @DetailConfig(name = "grupos", propertyName = "entity.grupos", despiseFields = "nome", startNewDetails = 3, newDetails = 1, cardinalityType = CardinalityType.ONE) }), manager = true, view = @View(viewType = {
 		ViewType.CRUD, ViewType.SELECT, ViewType.TABULAR }))
 @SuppressWarnings("serial")
-public class Congregacao extends AbstractVulpeBaseEntityImpl<Long> {
+public class Congregacao extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
 	@VulpeValidate(type = VulpeValidateType.STRING, minlength = 5, maxlength = 60)

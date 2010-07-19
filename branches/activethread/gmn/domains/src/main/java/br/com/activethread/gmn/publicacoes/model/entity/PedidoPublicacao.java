@@ -1,6 +1,6 @@
 package br.com.activethread.gmn.publicacoes.model.entity;
 
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -10,7 +10,7 @@ import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
 
 @SuppressWarnings("serial")
-public class PedidoPublicacao extends AbstractVulpeBaseEntityImpl<Long> {
+public class PedidoPublicacao extends VulpeBaseDB4OEntity<Long> {
 
 	private Pedido pedido;
 

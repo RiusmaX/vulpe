@@ -2,9 +2,9 @@ package br.com.activethread.gmn.core.model.entity;
 
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.annotations.db4o.OrderBy;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
@@ -19,7 +19,7 @@ import br.com.activethread.gmn.comuns.model.entity.Sexo;
 @CodeGenerator(view = @View(popupProperties = "id,nome", viewType = { ViewType.CRUD,
 		ViewType.SELECT }))
 @SuppressWarnings("serial")
-public class Publicador extends AbstractVulpeBaseEntityImpl<Long> {
+public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
 	@VulpeText(maxlength = 60, size = 50, required = true, argument = true)

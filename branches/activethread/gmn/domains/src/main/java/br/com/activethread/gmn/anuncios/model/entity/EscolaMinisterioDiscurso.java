@@ -5,11 +5,11 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 
 import br.com.activethread.gmn.comuns.model.entity.TipoDiscurso;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityImpl;
+import org.vulpe.model.entity.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
-public class EscolaMinisterioDiscurso extends AbstractVulpeBaseEntityImpl<Long> {
+public class EscolaMinisterioDiscurso extends VulpeBaseDB4OEntity<Long> {
 
 	private EscolaMinisterio escolaMinisterio;
 
