@@ -29,6 +29,6 @@
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="6"><fmt:message key="vulpe.total.records"/>&nbsp;<v:tabular showSize="true"/></th>
+		<th colspan="6"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
