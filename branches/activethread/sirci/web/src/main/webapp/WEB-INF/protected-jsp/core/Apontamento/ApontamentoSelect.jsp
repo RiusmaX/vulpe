@@ -5,14 +5,14 @@
 <v:select
 	labelKey="label.sirci.core.Apontamento.select.situacaoApontamento"
 	property="situacaoApontamento"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" headerKey="label.sirci.selecao.todas"
 />
 </td>
 <td>
 <v:select
 	labelKey="label.sirci.core.Apontamento.select.impactoApontamento"
 	property="impactoApontamento"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" headerKey="label.sirci.selecao.todos"
 />
 </td>
 </tr>
