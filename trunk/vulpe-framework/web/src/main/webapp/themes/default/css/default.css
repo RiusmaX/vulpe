@@ -361,6 +361,18 @@
 
 }
 
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
+}
+
 #pagingFirstPage {
 	background: url(../images/icons/button-go-first.png) no-repeat;
 	display: inline-table;
@@ -511,4 +523,11 @@ thead th,.vulpeTableHeader {
 	font: 11px arial, sans-serif;
 	font-weight: bold;
 	background: #fff url(../images/shadow-top.png) top repeat-x;
+}
+
+#messages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
 }

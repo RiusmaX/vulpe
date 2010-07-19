@@ -11,7 +11,7 @@
 }
 
 .vulpeAlertMessage {
-	
+
 }
 
 .vulpeButton {
@@ -88,7 +88,7 @@
 }
 
 .vulpeIconOff {
-	filter: progid :                     DXImageTransform .                     Microsoft .      
+	filter: progid :                     DXImageTransform .                     Microsoft .
 		         Alpha(opacity =                     40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
@@ -274,7 +274,7 @@
 }
 
 #copyright {
-	
+
 }
 
 #copyright a {
@@ -358,7 +358,19 @@
 }
 
 #paging {
-	
+
+}
+
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
 }
 
 #pagingFirstPage {
@@ -511,4 +523,11 @@ thead th,.vulpeTableHeader {
 	font: 11px arial, sans-serif;
 	font-weight: bold;
 	background: #fff url(../../images/shadow-top.png) top repeat-x;
+}
+
+#messages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
 }
