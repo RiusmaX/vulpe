@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="anuncios/src/main/resources"/>
-	<classpathentry kind="src" path="domains/generated/main/java"/>
 	<classpathentry kind="src" path="anuncios/src/main/java"/>
 	<classpathentry kind="src" path="ministerio/src/main/resources"/>
 	<classpathentry kind="src" path="ministerio/src/main/java"/>

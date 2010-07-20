@@ -3,7 +3,7 @@ package br.com.activethread.gmn.anuncios.model.entity;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 
-import org.vulpe.model.entity.VulpeBaseDB4OEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")

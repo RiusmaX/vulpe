@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import br.com.activethread.gmn.publicacoes.model.dao.PublicacaoDAO;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
 
-import org.vulpe.model.services.manager.VulpeBaseCRUDManagerImpl;
+import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 
 @Service
-public class PublicacaoManager extends VulpeBaseCRUDManagerImpl<Publicacao, Long, PublicacaoDAO> {
+public class PublicacaoManager extends VulpeBaseManager<Publicacao, Long, PublicacaoDAO> {
 
 }

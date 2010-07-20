@@ -12,7 +12,7 @@ import org.vulpe.security.model.entity.User;
 
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.core.model.entity.Publicador;
-import br.com.activethread.gmn.core.model.services.CoreServices;
+import br.com.activethread.gmn.core.model.services.CoreService;
 
 @Component("AfterUserAuthenticationCallback")
 public class AfterUserAuthenticationCallbackPOJOImpl extends VulpeSecurityStrutsCallbackUtil
@@ -32,7 +32,7 @@ public class AfterUserAuthenticationCallbackPOJOImpl extends VulpeSecurityStruts
 				final User usuario = new User();
 				usuario.setId(userId);
 				publicador.setUsuario(usuario);
-				List<Publicador> publicadores = getService(CoreServices.class).readPublicador(
+				List<Publicador> publicadores = getService(CoreService.class).readPublicador(
 						publicador);
 				if (publicadores != null && !publicadores.isEmpty()) {
 					publicador = publicadores.get(0);

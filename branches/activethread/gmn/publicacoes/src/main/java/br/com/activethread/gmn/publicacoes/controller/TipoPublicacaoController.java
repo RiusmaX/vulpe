@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 
 import br.com.activethread.gmn.publicacoes.model.entity.TipoPublicacao;
-import br.com.activethread.gmn.publicacoes.model.services.PublicacoesServices;
+import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 
 
@@ -18,7 +18,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("publicacoes.TipoPublicacaoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = PublicacoesServices.class, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = { "descricao" })
+@Controller(serviceClass = PublicacoesService.class, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = { "descricao" })
 public class TipoPublicacaoController extends ApplicationBaseController<TipoPublicacao, java.lang.Long> {
 
 }

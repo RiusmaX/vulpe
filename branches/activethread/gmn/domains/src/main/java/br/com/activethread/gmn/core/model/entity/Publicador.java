@@ -4,7 +4,7 @@ import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.db4o.Like;
-import org.vulpe.model.entity.VulpeBaseDB4OEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;

@@ -9,7 +9,7 @@ import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.controller.annotations.Controller;
 
 import br.com.activethread.gmn.anuncios.model.entity.EscolaMinisterio;
-import br.com.activethread.gmn.anuncios.model.services.AnunciosServices;
+import br.com.activethread.gmn.anuncios.model.services.AnunciosService;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 
 
@@ -19,7 +19,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("anuncios.EscolaMinisterioController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = AnunciosServices.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", startNewDetails = 1, newDetails = 4) }, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", startNewDetails = 1, newDetails = 4) }, tabularStartNewDetails = 1, tabularNewDetails = 1)
 public class EscolaMinisterioController extends ApplicationBaseController<EscolaMinisterio, java.lang.Long> {
 
 }
