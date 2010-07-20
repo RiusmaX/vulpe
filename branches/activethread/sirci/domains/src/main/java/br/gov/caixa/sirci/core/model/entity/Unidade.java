@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 
 @CodeGenerator(manager = true)
 @CachedClass

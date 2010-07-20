@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeSelect;

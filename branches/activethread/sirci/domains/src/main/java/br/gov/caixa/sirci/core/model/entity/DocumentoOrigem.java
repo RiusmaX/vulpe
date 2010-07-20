@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 
 @CodeGenerator(manager = true)
 @Entity

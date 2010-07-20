@@ -13,7 +13,7 @@ import org.vulpe.exception.VulpeApplicationException;
 import br.gov.caixa.sirci.controller.ApplicationBaseController;
 import br.gov.caixa.sirci.core.model.entity.Apontamento;
 import br.gov.caixa.sirci.core.model.entity.DocumentoOrigem;
-import br.gov.caixa.sirci.core.model.services.CoreServices;
+import br.gov.caixa.sirci.core.model.services.CoreService;
 
 /**
  * Controller implementation of Apontamento
@@ -21,7 +21,7 @@ import br.gov.caixa.sirci.core.model.services.CoreServices;
 @Component("core.ApontamentoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(serviceClass = CoreService.class, pageSize = 5, tabularStartNewDetails = 1, tabularNewDetails = 1)
 public class ApontamentoController extends ApplicationBaseController<Apontamento, java.lang.Long> {
 
 	private static final String LISTA_DOCUMENTO_ORIGEM = "listaDocumentoOrigem";
@@ -30,7 +30,7 @@ public class ApontamentoController extends ApplicationBaseController<Apontamento
 		try {
 			if (getEntity().getOrgaoOrigem() != null
 					&& getEntity().getOrgaoOrigem().getId() != null) {
-				final List<DocumentoOrigem> listaDocumentoOrigem = getService(CoreServices.class)
+				final List<DocumentoOrigem> listaDocumentoOrigem = getService(CoreService.class)
 						.readDocumentoOrigem(new DocumentoOrigem(getEntity().getOrgaoOrigem()));
 				setSessionAttribute(LISTA_DOCUMENTO_ORIGEM, listaDocumentoOrigem);
 			} else {

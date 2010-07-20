@@ -14,7 +14,7 @@ import org.vulpe.exception.VulpeApplicationException;
 import br.gov.caixa.sirci.controller.ApplicationBaseController;
 import br.gov.caixa.sirci.core.model.entity.Apontamento;
 import br.gov.caixa.sirci.core.model.entity.TipoApontamento;
-import br.gov.caixa.sirci.core.model.services.CoreServices;
+import br.gov.caixa.sirci.core.model.services.CoreService;
 
 /**
  * Controller implementation of TipoApontamento
@@ -22,7 +22,7 @@ import br.gov.caixa.sirci.core.model.services.CoreServices;
 @Component("core.TipoApontamentoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreServices.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = "descricao", tabularPageSize = 10, tabularFilter = true)
+@Controller(controllerType = ControllerType.TWICE, serviceClass = CoreService.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = "descricao", tabularPageSize = 10, tabularFilter = true)
 public class TipoApontamentoController extends
 		ApplicationBaseController<TipoApontamento, java.lang.Long> {
 
@@ -31,7 +31,7 @@ public class TipoApontamentoController extends
 	private boolean verificarApontamentos(final String method) {
 		List<Apontamento> apontamentos = null;
 		try {
-			apontamentos = getService(CoreServices.class).readApontamento(
+			apontamentos = getService(CoreService.class).readApontamento(
 					new Apontamento(prepareEntity(method)));
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
