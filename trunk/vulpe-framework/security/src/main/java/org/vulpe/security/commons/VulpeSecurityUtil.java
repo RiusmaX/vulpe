@@ -17,8 +17,8 @@ package org.vulpe.security.commons;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
-import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.model.services.VulpeService;
 
 /**

@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.model.services;
+package org.vulpe.commons;
 
 import javax.naming.InitialContext;
 import javax.rmi.PortableRemoteObject;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.annotations.FactoryClass;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.factory.Factory;
-import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.factory.VulpeFactoryLocator;
 import org.vulpe.commons.helper.VulpeCacheHelper;
