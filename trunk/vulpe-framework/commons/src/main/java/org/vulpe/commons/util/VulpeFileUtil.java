@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.file;
+package org.vulpe.commons.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.vulpe.commons.file.FileUtil;
 import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 /**
@@ -31,20 +31,20 @@ import org.vulpe.exception.VulpeSystemException;
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
-public class FileUtil {
+public class VulpeFileUtil {
 
 	/**
-	 * Returns FileUtil instance
+	 * Returns VulpeFileUtil instance
 	 */
-	public static FileUtil getInstance() {
+	public static VulpeFileUtil getInstance() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(FileUtil.class)) {
-			cache.put(FileUtil.class, new FileUtil());
+		if (!cache.contains(VulpeFileUtil.class)) {
+			cache.put(VulpeFileUtil.class, new VulpeFileUtil());
 		}
-		return cache.get(FileUtil.class);
+		return cache.get(VulpeFileUtil.class);
 	}
 
-	protected FileUtil() {
+	protected VulpeFileUtil() {
 		// default constructor
 	}
 

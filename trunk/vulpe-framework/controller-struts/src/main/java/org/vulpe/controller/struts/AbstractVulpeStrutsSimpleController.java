@@ -35,7 +35,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.file.FileUtil;
+import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
@@ -134,7 +134,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
 						.getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = FileUtil.getInstance().getDownloadInfo(value,
+			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
 					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());

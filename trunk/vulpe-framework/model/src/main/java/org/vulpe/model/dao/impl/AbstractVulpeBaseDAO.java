@@ -24,7 +24,7 @@ import javax.persistence.OneToMany;
 
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.entity.AuditOccurrence;
-import org.vulpe.commons.audit.AuditOccurrenceType;
+import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeDAO;

@@ -20,12 +20,12 @@ import javax.rmi.PortableRemoteObject;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.vulpe.commons.annotations.FactoryClass;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.factory.Factory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
-import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.factory.VulpeFactoryLocator;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.VulpeService;

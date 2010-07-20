@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.util.ControllerUtil;

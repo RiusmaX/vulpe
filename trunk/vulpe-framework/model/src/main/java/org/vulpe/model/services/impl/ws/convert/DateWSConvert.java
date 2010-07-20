@@ -19,7 +19,7 @@ import java.util.Date;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.vulpe.commons.VulpeConvertUtil;
+import org.vulpe.commons.util.VulpeConvertUtil;
 
 /**
  * 

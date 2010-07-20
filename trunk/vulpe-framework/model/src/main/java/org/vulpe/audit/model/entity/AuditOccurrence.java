@@ -37,7 +37,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.validator.Length;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
-import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.xml.XMLAttribute;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.commons.xml.XMLReader;

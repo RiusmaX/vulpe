@@ -17,7 +17,7 @@ package org.vulpe.commons.factory;
 
 import org.vulpe.commons.factory.Factory;
 import org.vulpe.commons.factory.VulpeFactoryLocator;
-import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
 /**

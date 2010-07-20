@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.controller.struts.VulpeStrutsController;
 
 import com.opensymphony.xwork2.ActionInvocation;

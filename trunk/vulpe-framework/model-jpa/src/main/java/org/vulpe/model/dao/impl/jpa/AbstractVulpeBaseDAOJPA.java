@@ -36,7 +36,7 @@ import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
 import org.vulpe.model.entity.VulpeEntity;

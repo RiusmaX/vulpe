@@ -27,8 +27,8 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.db4o.DB4OUtil;
+import org.vulpe.commons.util.VulpeDB4OUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
@@ -287,28 +287,28 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 * @return returns ObjectContainer.
 	 */
 	public ObjectContainer getObjectContainer() {
-		return DB4OUtil.getInstance().getObjectContainer();
+		return VulpeDB4OUtil.getInstance().getObjectContainer();
 	}
 
 	/**
 	 * Close DB4O instance.
 	 */
 	public void close() {
-		DB4OUtil.getInstance().close();
+		VulpeDB4OUtil.getInstance().close();
 	}
 
 	/**
 	 * Commit data.
 	 */
 	public void commit() {
-		DB4OUtil.getInstance().commit();
+		VulpeDB4OUtil.getInstance().commit();
 	}
 
 	/**
 	 * Rollback data.
 	 */
 	public void rollback() {
-		DB4OUtil.getInstance().rollback();
+		VulpeDB4OUtil.getInstance().rollback();
 	}
 
 }

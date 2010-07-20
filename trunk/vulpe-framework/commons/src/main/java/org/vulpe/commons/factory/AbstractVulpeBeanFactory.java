@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.beans;
+package org.vulpe.commons.factory;
 
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
-import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
 public abstract class AbstractVulpeBeanFactory {

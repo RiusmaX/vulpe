@@ -22,9 +22,9 @@ import java.util.List;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Transient;
 
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.beans.Paging;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.Sufix;
 import org.vulpe.model.annotations.TransactionType;

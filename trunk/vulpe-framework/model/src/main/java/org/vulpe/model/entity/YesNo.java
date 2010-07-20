@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.audit;
+package org.vulpe.model.entity;
 
-public enum AuditOccurrenceType {
-
-	INSERT, UPDATE, DELETE, READ
-
+public enum YesNo {
+	Y, N
 }

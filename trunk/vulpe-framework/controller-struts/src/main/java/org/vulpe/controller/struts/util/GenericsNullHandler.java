@@ -25,8 +25,8 @@ import ognl.NullHandler;
 import ognl.Ognl;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.model.entity.VulpeEntity;
 
 import com.opensymphony.xwork2.ObjectFactory;

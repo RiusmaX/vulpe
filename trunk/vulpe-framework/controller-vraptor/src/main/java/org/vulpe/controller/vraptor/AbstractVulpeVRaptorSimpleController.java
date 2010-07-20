@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.file.FileUtil;
+import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.util.ControllerUtil;
@@ -111,7 +111,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 				// ActionContext.getContext()
 				// .getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = FileUtil.getInstance().getDownloadInfo(value,
+			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
 					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());

@@ -19,8 +19,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeConstants.Action;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.tags.Functions;

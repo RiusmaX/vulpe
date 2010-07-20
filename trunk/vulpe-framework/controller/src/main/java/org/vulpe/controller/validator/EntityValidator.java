@@ -18,7 +18,7 @@ package org.vulpe.controller.validator;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;

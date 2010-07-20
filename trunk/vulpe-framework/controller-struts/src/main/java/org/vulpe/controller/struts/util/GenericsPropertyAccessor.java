@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 
 import ognl.NoSuchPropertyException;
 import ognl.OgnlContext;

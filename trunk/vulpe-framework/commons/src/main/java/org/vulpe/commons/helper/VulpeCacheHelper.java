@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.cache;
+package org.vulpe.commons.helper;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vulpe.commons.cache.VulpeCacheHelper;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
 /**

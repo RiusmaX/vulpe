@@ -17,7 +17,7 @@ package org.vulpe.commons.helper;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.vulpe.commons.beans.SpringBeanFactory;
+import org.vulpe.commons.factory.SpringBeanFactory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.model.services.GenericService;
 import org.vulpe.model.services.VulpeService;

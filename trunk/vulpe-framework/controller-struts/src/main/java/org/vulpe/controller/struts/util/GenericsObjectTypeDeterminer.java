@@ -19,8 +19,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
-import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 
 import com.opensymphony.xwork2.util.DefaultObjectTypeDeterminer;
 

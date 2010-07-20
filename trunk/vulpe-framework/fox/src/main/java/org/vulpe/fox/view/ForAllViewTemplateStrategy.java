@@ -27,8 +27,8 @@ import net.sf.jelly.apt.TemplateOutput;
 import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;

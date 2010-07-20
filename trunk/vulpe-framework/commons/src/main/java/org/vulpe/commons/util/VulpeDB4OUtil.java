@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.db4o;
+package org.vulpe.commons.util;
 
 import java.io.File;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.db4o.DB4OUtil;
+import org.vulpe.commons.util.VulpeDB4OUtil;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
@@ -28,11 +28,11 @@ import com.db4o.cs.Db4oClientServer;
 import com.db4o.cs.config.ServerConfiguration;
 import com.db4o.io.FileStorage;
 
-public class DB4OUtil {
+public class VulpeDB4OUtil {
 
-	private static DB4OUtil instance = new DB4OUtil();
+	private static VulpeDB4OUtil instance = new VulpeDB4OUtil();
 
-	public static DB4OUtil getInstance() {
+	public static VulpeDB4OUtil getInstance() {
 		return instance;
 	}
 

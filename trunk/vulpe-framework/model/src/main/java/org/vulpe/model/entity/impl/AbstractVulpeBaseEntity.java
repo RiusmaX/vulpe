@@ -25,7 +25,7 @@ import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
-import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.entity.VulpeEntity;

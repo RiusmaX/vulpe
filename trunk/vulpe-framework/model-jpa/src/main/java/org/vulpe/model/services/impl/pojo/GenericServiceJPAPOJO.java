@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 import org.vulpe.model.entity.VulpeEntity;

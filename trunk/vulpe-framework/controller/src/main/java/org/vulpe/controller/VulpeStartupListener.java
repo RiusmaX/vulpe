@@ -21,9 +21,9 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
-import org.vulpe.commons.db4o.DB4OUtil;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.helper.CachedObjectsHelper;
@@ -47,7 +47,7 @@ public class VulpeStartupListener implements ServletContextListener {
 	public void contextDestroyed(final ServletContextEvent evt) {
 		LOG.debug("Entering in Context Detroyed");
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
-			DB4OUtil.getInstance().shutdown();
+			VulpeDB4OUtil.getInstance().shutdown();
 		}
 	}
 
@@ -61,7 +61,7 @@ public class VulpeStartupListener implements ServletContextListener {
 	public void contextInitialized(final ServletContextEvent evt) {
 		LOG.debug("Entering in Context Initialized");
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
-			DB4OUtil.getInstance().getObjectServer();
+			VulpeDB4OUtil.getInstance().getObjectServer();
 			final VulpeSecurityContext vulpeSecurityContext = AbstractVulpeBeanFactory
 					.getInstance().getBean(VulpeSecurityContext.class.getSimpleName());
 			if (vulpeSecurityContext != null) {

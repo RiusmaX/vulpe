@@ -35,7 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.vulpe.commons.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.model.annotations.AutoComplete;
 
 /**

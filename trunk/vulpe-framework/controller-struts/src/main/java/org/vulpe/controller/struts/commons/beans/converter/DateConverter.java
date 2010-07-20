@@ -20,7 +20,7 @@ import java.util.Date;
 import ognl.TypeConverter;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeDateUtil;
+import org.vulpe.commons.util.VulpeDateUtil;
 
 import com.opensymphony.xwork2.util.TypeConversionException;
 

@@ -20,7 +20,7 @@ import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeValidationUtil;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
