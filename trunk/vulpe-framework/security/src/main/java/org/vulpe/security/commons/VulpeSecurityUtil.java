@@ -19,7 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 
 /**
  * Vulpe Security Callback utility class.
@@ -37,9 +37,9 @@ public class VulpeSecurityUtil {
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
-	 * @see Services
+	 * @see VulpeService
 	 */
-	public <T extends Services> T getService(final Class<T> serviceClass) {
+	public <T extends VulpeService> T getService(final Class<T> serviceClass) {
 		return VulpeServiceLocator.getInstance().getService(serviceClass);
 	}
 

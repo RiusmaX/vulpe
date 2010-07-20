@@ -16,8 +16,8 @@
 package org.vulpe.model.services.impl.ws.convert;
 
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeBaseEntity;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
+import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntityDelegate;
 
 /**
  * 
@@ -25,7 +25,7 @@ import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings({ "unchecked" })
-public class BeanWSConvert<ENTITY extends VulpeBaseEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>
+public class BeanWSConvert<ENTITY extends VulpeEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>
 		implements WSConvert<ENTITY, VODELEGATE> {
 
 	public ENTITY toBean(final VODELEGATE wsBean) {

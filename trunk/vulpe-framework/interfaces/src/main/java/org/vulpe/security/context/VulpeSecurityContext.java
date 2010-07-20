@@ -17,7 +17,7 @@ package org.vulpe.security.context;
 
 import java.io.Serializable;
 
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
@@ -36,7 +36,7 @@ public interface VulpeSecurityContext extends Serializable {
 
 	void afterUserAuthenticationCallback();
 
-	<T extends VulpeBaseEntity<Long>> T getUser();
+	<T extends VulpeEntity<Long>> T getUser();
 
 	String getUsername();
 

@@ -21,7 +21,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -30,7 +30,7 @@ public @interface VulpeDomains {
 
 	boolean useDB4O() default false;
 
-	Class<? extends VulpeBaseEntity<?>>[] cachedClass() default {};
+	Class<? extends VulpeEntity<?>>[] cachedClass() default {};
 
 	@SuppressWarnings("unchecked")
 	Class[] cachedEnum() default {};

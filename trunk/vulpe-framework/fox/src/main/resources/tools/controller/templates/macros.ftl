@@ -37,7 +37,7 @@
  -->
 <#macro forAllValidController>
 	<@forAllTypes var="type">
-		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeBaseEntity")>
+		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeEntity")>
 			<@forAllController var="controller" declaration=type>
 				<#nested type controller>
 			</@forAllController>

@@ -40,7 +40,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
@@ -51,7 +51,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimpleController,
+public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleController,
 		Serializable {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseSimpleController.class);
@@ -72,7 +72,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getSystemDate()
+	 * @see org.vulpe.controller.VulpeSimpleController#getSystemDate()
 	 */
 	public Date getSystemDate() {
 		return calendar.getTime();
@@ -81,7 +81,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentYear()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentYear()
 	 */
 	public int getCurrentYear() {
 		return calendar.get(Calendar.YEAR);
@@ -90,7 +90,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentMonth()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentMonth()
 	 */
 	public int getCurrentMonth() {
 		return calendar.get(Calendar.MONTH);
@@ -99,7 +99,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCurrentDay()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentDay()
 	 */
 	public int getCurrentDay() {
 		return calendar.get(Calendar.DAY_OF_MONTH);
@@ -115,7 +115,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#backend()
+	 * @see org.vulpe.controller.VulpeSimpleController#backend()
 	 */
 	public String backend() {
 		getControllerConfig().setControllerType(ControllerType.BACKEND);
@@ -155,7 +155,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#frontend()
+	 * @see org.vulpe.controller.VulpeSimpleController#frontend()
 	 */
 	public String frontend() {
 		getControllerConfig().setControllerType(ControllerType.FRONTEND);
@@ -195,7 +195,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#upload()
+	 * @see org.vulpe.controller.VulpeSimpleController#upload()
 	 */
 	public String upload() {
 		uploadBefore();
@@ -235,7 +235,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#download()
+	 * @see org.vulpe.controller.VulpeSimpleController#download()
 	 */
 	public String download() {
 		downloadBefore();
@@ -284,12 +284,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#invokeServices(java.lang
+	 * org.vulpe.controller.VulpeSimpleController#invokeServices(java.lang
 	 * .String, java.lang.String, java.lang.Class<?>[], java.lang.Object[])
 	 */
 	public Object invokeServices(final String eventName, final String serviceName,
 			final Class<?>[] argsType, final Object[] argsValues) {
-		final Services service = getService();
+		final VulpeService service = getService();
 		try {
 			final Method method = service.getClass().getMethod(serviceName, argsType);
 			return method.invoke(service, argsValues);
@@ -301,9 +301,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getService()
+	 * @see org.vulpe.controller.VulpeSimpleController#getService()
 	 */
-	public Services getService() {
+	public VulpeService getService() {
 		return getService(getControllerConfig().getServiceClass());
 	}
 
@@ -311,10 +311,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getService(java.lang.Class
+	 * org.vulpe.controller.VulpeSimpleController#getService(java.lang.Class
 	 * )
 	 */
-	public <T extends Services> T getService(final Class<T> serviceClass) {
+	public <T extends VulpeService> T getService(final Class<T> serviceClass) {
 		return VulpeServiceLocator.getInstance().getService(serviceClass);
 	}
 
@@ -468,7 +468,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isAjax()
+	 * @see org.vulpe.controller.VulpeSimpleController#isAjax()
 	 */
 	public boolean isAjax() {
 		return ajax;
@@ -477,7 +477,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setAjax(boolean)
+	 * @see org.vulpe.controller.VulpeSimpleController#setAjax(boolean)
 	 */
 	public void setAjax(final boolean ajax) {
 		this.ajax = ajax;
@@ -494,7 +494,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOperation()
+	 * @see org.vulpe.controller.VulpeSimpleController#getOperation()
 	 */
 	public String getOperation() {
 		return operation;
@@ -504,7 +504,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setOperation(java.lang
+	 * org.vulpe.controller.VulpeSimpleController#setOperation(java.lang
 	 * .String)
 	 */
 	public void setOperation(final String operation) {
@@ -514,7 +514,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isUploaded()
+	 * @see org.vulpe.controller.VulpeSimpleController#isUploaded()
 	 */
 	public boolean isUploaded() {
 		return uploaded;
@@ -523,7 +523,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setUploaded(boolean)
+	 * @see org.vulpe.controller.VulpeSimpleController#setUploaded(boolean)
 	 */
 	public void setUploaded(final boolean uploaded) {
 		this.uploaded = uploaded;
@@ -532,7 +532,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getOnHideMessages()
+	 * @see org.vulpe.controller.VulpeSimpleController#getOnHideMessages()
 	 */
 	public String getOnHideMessages() {
 		return onHideMessages;
@@ -542,7 +542,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setOnHideMessages(java
+	 * org.vulpe.controller.VulpeSimpleController#setOnHideMessages(java
 	 * .lang.String)
 	 */
 	public void setOnHideMessages(final String onHideMessages) {
@@ -552,7 +552,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isBack()
+	 * @see org.vulpe.controller.VulpeSimpleController#isBack()
 	 */
 	public boolean isBack() {
 		return back;
@@ -561,7 +561,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setBack(boolean)
+	 * @see org.vulpe.controller.VulpeSimpleController#setBack(boolean)
 	 */
 	public void setBack(final boolean back) {
 		this.back = back;
@@ -570,7 +570,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isExecuted()
+	 * @see org.vulpe.controller.VulpeSimpleController#isExecuted()
 	 */
 	public boolean isExecuted() {
 		return executed;
@@ -579,7 +579,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setExecuted(boolean)
+	 * @see org.vulpe.controller.VulpeSimpleController#setExecuted(boolean)
 	 */
 	public void setExecuted(final boolean executed) {
 		this.executed = executed;
@@ -588,7 +588,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getDownloadKey()
+	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadKey()
 	 */
 	public String getDownloadKey() {
 		return downloadKey;
@@ -598,7 +598,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadKey(java.lang
+	 * org.vulpe.controller.VulpeSimpleController#setDownloadKey(java.lang
 	 * .String)
 	 */
 	public void setDownloadKey(final String downloadKey) {
@@ -609,7 +609,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentType()
+	 * org.vulpe.controller.VulpeSimpleController#getDownloadContentType()
 	 */
 	public String getDownloadContentType() {
 		return downloadContentType;
@@ -619,7 +619,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentType
+	 * org.vulpe.controller.VulpeSimpleController#setDownloadContentType
 	 * (java.lang.String)
 	 */
 	public void setDownloadContentType(final String downloadContentType) {
@@ -630,7 +630,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getDownloadContentDisposition
+	 * org.vulpe.controller.VulpeSimpleController#getDownloadContentDisposition
 	 * ()
 	 */
 	public String getDownloadContentDisposition() {
@@ -641,7 +641,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setDownloadContentDisposition
+	 * org.vulpe.controller.VulpeSimpleController#setDownloadContentDisposition
 	 * (java.lang.String)
 	 */
 	public void setDownloadContentDisposition(final String downloadContentDisposition) {
@@ -651,7 +651,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getPopupKey()
+	 * @see org.vulpe.controller.VulpeSimpleController#getPopupKey()
 	 */
 	public String getPopupKey() {
 		return popupKey;
@@ -661,7 +661,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setPopupKey(java.lang.
+	 * org.vulpe.controller.VulpeSimpleController#setPopupKey(java.lang.
 	 * String)
 	 */
 	public void setPopupKey(final String popupKey) {
@@ -671,7 +671,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isPopup()
+	 * @see org.vulpe.controller.VulpeSimpleController#isPopup()
 	 */
 	public boolean isPopup() {
 		return StringUtils.isNotEmpty(getPopupKey());
@@ -680,7 +680,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedClass()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCachedClass()
 	 */
 	public Map<String, Object> getCachedClass() {
 		return (Map<String, Object>) VulpeCacheHelper.getInstance()
@@ -690,7 +690,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnum()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCachedEnum()
 	 */
 	public Map<String, Object> getCachedEnum() {
 		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
@@ -699,7 +699,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getCachedEnumArray()
+	 * @see org.vulpe.controller.VulpeSimpleController#getCachedEnumArray()
 	 */
 	public Map<String, String> getCachedEnumArray() {
 		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
@@ -731,7 +731,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setUrlBack(java.lang.String
+	 * org.vulpe.controller.VulpeSimpleController#setUrlBack(java.lang.String
 	 * )
 	 */
 	public void setUrlBack(final String urlBack) {
@@ -742,7 +742,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#setLayerUrlBack(java.lang
+	 * org.vulpe.controller.VulpeSimpleController#setLayerUrlBack(java.lang
 	 * .String)
 	 */
 	public void setLayerUrlBack(final String layerUrlBack) {
@@ -761,7 +761,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getControllerConfig()
+	 * @see org.vulpe.controller.VulpeSimpleController#getControllerConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
 		return getControllerUtil().getControllerConfig(this);
@@ -795,7 +795,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#isShowTitle()
+	 * @see org.vulpe.controller.VulpeSimpleController#isShowTitle()
 	 */
 	public boolean isShowTitle() {
 		return showTitle;
@@ -804,7 +804,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#setShowTitle(boolean)
+	 * @see org.vulpe.controller.VulpeSimpleController#setShowTitle(boolean)
 	 */
 	public void setShowTitle(boolean showTitle) {
 		this.showTitle = showTitle;
@@ -823,7 +823,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getUserAuthenticated()
+	 * org.vulpe.controller.VulpeSimpleController#getUserAuthenticated()
 	 */
 	@Override
 	public String getUserAuthenticated() {
@@ -834,7 +834,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.String)
+	 * org.vulpe.controller.VulpeSimpleController#getBean(java.lang.String)
 	 */
 	public <T> T getBean(final String beanName) {
 		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
@@ -844,7 +844,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getBean(java.lang.Class)
+	 * org.vulpe.controller.VulpeSimpleController#getBean(java.lang.Class)
 	 */
 	public <T> T getBean(final Class<T> clazz) {
 		return (T) getBean(clazz.getSimpleName());
@@ -854,7 +854,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getSessionAttribute(java
+	 * org.vulpe.controller.VulpeSimpleController#getSessionAttribute(java
 	 * .lang.String)
 	 */
 	public <T> T getSessionAttribute(final String attributeName) {
@@ -869,7 +869,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeBaseSimp
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.VulpeBaseSimpleController#getRequestAttribute(java
+	 * org.vulpe.controller.VulpeSimpleController#getRequestAttribute(java
 	 * .lang.String)
 	 */
 	public <T> T getRequestAttribute(final String attributeName) {

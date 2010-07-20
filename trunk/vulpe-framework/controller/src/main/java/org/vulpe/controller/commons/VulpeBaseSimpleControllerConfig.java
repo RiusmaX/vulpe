@@ -30,7 +30,7 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.util.ControllerUtil;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 
 /**
  * Vulpe Simple Controller Config implementation.
@@ -100,7 +100,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getServiceClass()
 	 */
-	public Class<? extends Services> getServiceClass() {
+	public Class<? extends VulpeService> getServiceClass() {
 		return this.controller.serviceClass();
 	}
 

@@ -13,8 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.vulpe.security.authentication.data.AuthenticationResponse;
-import org.vulpe.security.authentication.model.services.UserAuthenticationService;
+import org.vulpe.security.authentication.data.VulpeAuthenticationResponse;
+import org.vulpe.security.authentication.model.services.VulpeUserAuthenticationService;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 import org.vulpe.security.exception.VulpeSecurityException;
 import org.vulpe.security.model.entity.User;
@@ -24,29 +24,29 @@ import org.vulpe.security.model.entity.UserRole;
  * This is a customized <code>AuthenticationProvider</code> used for dynamic
  * data based authentication. Here authentication is externalized and is
  * performed by a common authentication service.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  * @see {@link org.springframework.security.providers.AuthenticationProvider}
- * 
+ *
  */
 @SuppressWarnings("unchecked")
 public class VulpeSecurityAuthenticationProvider implements AuthenticationProvider {
 
-	@Qualifier("UserAuthenticationService")
+	@Qualifier("VulpeUserAuthenticationService")
 	@Autowired
-	private UserAuthenticationService authenticationService;
+	private VulpeUserAuthenticationService authenticationService;
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.springframework.security.providers.AuthenticationProvider#
 	 * authenticate(org. acegisecurity.Authentication)
 	 */
 	public Authentication authenticate(final Authentication authentication)
 			throws AuthenticationException {
-		AuthenticationResponse authResponse = null;
+		VulpeAuthenticationResponse authResponse = null;
 		try {
 			authResponse = authenticationService.authenticateUser(authentication.getPrincipal()
 					.toString(), authentication.getCredentials().toString());
@@ -80,7 +80,7 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.security.providers.AuthenticationProvider#supports
 	 * (java.lang .Class)
@@ -91,15 +91,15 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 
 	/**
 	 * Sets the authService
-	 * 
+	 *
 	 * @param authService
 	 *            The authService to set.
 	 */
-	public void setAuthenticationService(final UserAuthenticationService authService) {
+	public void setAuthenticationService(final VulpeUserAuthenticationService authService) {
 		this.authenticationService = authService;
 	}
 
-	public UserAuthenticationService getAuthenticationService() {
+	public VulpeUserAuthenticationService getAuthenticationService() {
 		return authenticationService;
 	}
 }

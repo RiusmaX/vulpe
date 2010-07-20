@@ -41,8 +41,8 @@ import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.xml.XMLAttribute;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.commons.xml.XMLReader;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -139,10 +139,10 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	@Transient
-	public VulpeBaseEntity fromXMLHistory() {
+	public VulpeEntity fromXMLHistory() {
 		final XStream xstream = new XStream();
 		xstream.registerConverter(new XMLDateConversor(), 1);
-		return (VulpeBaseEntity) xstream.fromXML(getDataHistory());
+		return (VulpeEntity) xstream.fromXML(getDataHistory());
 	}
 
 	public List<XMLAttribute> getHistoryAttributes() {

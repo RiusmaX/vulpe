@@ -40,7 +40,7 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 @SuppressWarnings("unchecked")
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
@@ -60,7 +60,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 	}
 
 	public byte[] getJasperReport(final String fileName, final String[] subReports,
-			final Collection<VulpeBaseEntity<?>> collection, final String format) {
+			final Collection<VulpeEntity<?>> collection, final String format) {
 		try {
 			String fullFileName = fileName;
 			if (ControllerUtil.getServletContext() != null) {
@@ -110,7 +110,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		}
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<VulpeBaseEntity<?>> collection,
+	public DownloadInfo getDownloadInfo(final Collection<VulpeEntity<?>> collection,
 			final String fileName, final String[] subReports, final String format) {
 		String contentType = null;
 		if (format.equals(StrutsReportUtil.FORMAT_CSV)) {
@@ -132,7 +132,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		return data == null ? null : new DownloadInfo(data, contentType);
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<VulpeBaseEntity<?>> collection,
+	public DownloadInfo getDownloadInfo(final Collection<VulpeEntity<?>> collection,
 			final String fileName, final String[] subReports, final String format,
 			final String reportName, final boolean reportDownload) {
 		DownloadInfo downloadInfo = getDownloadInfo(collection, fileName, subReports, format);

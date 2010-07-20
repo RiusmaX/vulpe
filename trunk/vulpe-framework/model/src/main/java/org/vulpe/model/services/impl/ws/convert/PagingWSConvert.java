@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeBaseEntity;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
+import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntityDelegate;
 
 @SuppressWarnings("unchecked")
-public class PagingWSConvert<BEAN extends VulpeBaseEntity<?>, BEANDELEGATE extends AbstractVulpeBaseEntityDelegate<?, ?>>
+public class PagingWSConvert<BEAN extends VulpeEntity<?>, BEANDELEGATE extends AbstractVulpeBaseEntityDelegate<?, ?>>
 		implements WSConvert<Paging<BEAN>, Paging<BEANDELEGATE>> {
 
 	public Paging<BEAN> toBean(final Paging<BEANDELEGATE> wsBean) {

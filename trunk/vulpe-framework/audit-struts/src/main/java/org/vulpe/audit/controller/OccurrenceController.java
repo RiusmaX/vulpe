@@ -22,7 +22,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
-import org.vulpe.audit.model.services.AuditServices;
+import org.vulpe.audit.model.services.AuditService;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.controller.annotations.Controller;
@@ -31,7 +31,7 @@ import org.vulpe.exception.VulpeApplicationException;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("audit.OccurrenceController")
-@Controller(serviceClass = AuditServices.class, pageSize = 5)
+@Controller(serviceClass = AuditService.class, pageSize = 5)
 @SuppressWarnings("serial")
 public class OccurrenceController extends VulpeStrutsController<AuditOccurrence, Long> {
 
@@ -47,7 +47,7 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	protected void onUpdate() {
 		super.onUpdate();
 		try {
-			childOccurrences = getService(AuditServices.class).findByParentAuditOccurrence(
+			childOccurrences = getService(AuditService.class).findByParentAuditOccurrence(
 					new AuditOccurrence(getEntity().getId()));
 		} catch (VulpeApplicationException e) {
 			Log.error(e);

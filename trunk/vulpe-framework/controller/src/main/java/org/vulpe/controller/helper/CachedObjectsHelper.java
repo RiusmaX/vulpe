@@ -34,7 +34,7 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Class to control Cached Objects.
@@ -126,8 +126,8 @@ public final class CachedObjectsHelper {
 			for (String cachedClass : cachedClasses) {
 				try {
 					final Class classicClass = Class.forName(cachedClass);
-					if (VulpeBaseEntity.class.isAssignableFrom(classicClass)) {
-						final Class<? extends VulpeBaseEntity<?>> clazz = (Class<? extends VulpeBaseEntity<?>>) classicClass;
+					if (VulpeEntity.class.isAssignableFrom(classicClass)) {
+						final Class<? extends VulpeEntity<?>> clazz = (Class<? extends VulpeEntity<?>>) classicClass;
 						mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper
 								.getService().getList(clazz.newInstance()));
 					}
@@ -191,11 +191,11 @@ public final class CachedObjectsHelper {
 	 * @param servletContext
 	 */
 	public static void putObjectsInCache(final ServletContext servletContext) {
-		final Class<? extends VulpeBaseEntity<?>>[] cachedClass = VulpeConfigHelper.get(
+		final Class<? extends VulpeEntity<?>>[] cachedClass = VulpeConfigHelper.get(
 				VulpeDomains.class).cachedClass();
 		final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
 		if (cachedClass != null) {
-			for (Class<? extends VulpeBaseEntity<?>> clazz : cachedClass) {
+			for (Class<? extends VulpeEntity<?>> clazz : cachedClass) {
 				try {
 					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
 							.getList(clazz.newInstance()));

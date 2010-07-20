@@ -15,9 +15,9 @@
  */
 package org.vulpe.security.model.dao;
 
-import org.vulpe.model.dao.VulpeBaseCRUDDAO;
+import org.vulpe.model.dao.VulpeDAO;
 import org.vulpe.security.model.entity.Role;
 
-public interface RoleDAO extends VulpeBaseCRUDDAO<Role, Long> {
+public interface RoleDAO extends VulpeDAO<Role, Long> {
 
 }

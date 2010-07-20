@@ -24,11 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.audit.model.dao.AuditOccurrenceDAO;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.model.dao.impl.jpa.VulpeBaseCRUDDAOJPAImpl;
+import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 
 @Repository("AuditOccurrenceDAO")
 @Transactional
-public class AuditOccurrenceDAOJPAImpl extends VulpeBaseCRUDDAOJPAImpl<AuditOccurrence, Long>
+public class AuditOccurrenceDAOJPAImpl extends VulpeBaseDAOJPA<AuditOccurrence, Long>
 		implements AuditOccurrenceDAO {
 
 	@SuppressWarnings("unchecked")

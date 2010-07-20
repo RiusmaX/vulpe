@@ -214,7 +214,7 @@ ${ident} *${line}
  -->
 <#function isInstanceOf type clazz>
 	<#local ret = false>
-	<#if type == clazz>
+	<#if type == clazz || type?index_of(clazz) != -1>
 		<#local ret = true>
 	<#elseif type.superinterfaces??>
 		<#list type.superinterfaces as i>
@@ -238,7 +238,7 @@ ${ident} *${line}
 <#macro forAllValidClasses>
 	<@forAllTypes var="type">
 		<#if type?last_index_of("Manager") != -1>
-			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.VulpeBaseManager")>
+			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.impl.VulpeBaseManager")>
 				<#assign typeVariables = findTypeVariables(type, type.superclass)>
 				<#local signatureClass = getSignatureClass(type)>
 				<#nested type signatureClass>

@@ -38,7 +38,7 @@
  -->
 <#macro forAllValidManager>
 	<@forAllTypes var="type">
-		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeBaseEntity")>
+		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeEntity")>
 			<@forAllManager var="manager" declaration=type>
 				<#nested type manager>
 			</@forAllManager>

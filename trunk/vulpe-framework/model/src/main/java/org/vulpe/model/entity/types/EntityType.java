@@ -32,19 +32,19 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeBaseEntity;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.services.VulpeService;
 
 @SuppressWarnings("unchecked")
 public class EntityType implements UserType, ParameterizedType {
 	/**
 	 * Returned Class
 	 */
-	private transient Class<? extends VulpeBaseEntity<?>> returnedClass = null;
+	private transient Class<? extends VulpeEntity<?>> returnedClass = null;
 	/**
 	 * Service class
 	 */
-	private transient Class<? extends Services> serviceClass = null;
+	private transient Class<? extends VulpeService> serviceClass = null;
 	/**
 	 * ID of class
 	 */
@@ -66,8 +66,8 @@ public class EntityType implements UserType, ParameterizedType {
 	}
 
 	public boolean equals(final Object obj0, final Object obj1) throws HibernateException {
-		final VulpeBaseEntity<?> entity1 = (VulpeBaseEntity<?>) obj0;
-		final VulpeBaseEntity<?> entity2 = (VulpeBaseEntity<?>) obj1;
+		final VulpeEntity<?> entity1 = (VulpeEntity<?>) obj0;
+		final VulpeEntity<?> entity2 = (VulpeEntity<?>) obj1;
 		if (entity1 == null) {
 			return entity2 == null;
 		}
@@ -94,7 +94,7 @@ public class EntityType implements UserType, ParameterizedType {
 
 	public void nullSafeSet(final PreparedStatement pstm, final Object value, final int index)
 			throws HibernateException, SQLException {
-		final VulpeBaseEntity<?> entity = (VulpeBaseEntity<?>) value;
+		final VulpeEntity<?> entity = (VulpeEntity<?>) value;
 		if (entity == null || entity.getId() == null) {
 			pstm.setNull(index, type);
 		} else {
@@ -107,8 +107,8 @@ public class EntityType implements UserType, ParameterizedType {
 			return null;
 		} else {
 			try {
-				final VulpeBaseEntity<?> origin = (VulpeBaseEntity<?>) value;
-				final VulpeBaseEntity<?> destination = this.returnedClass.newInstance();
+				final VulpeEntity<?> origin = (VulpeEntity<?>) value;
+				final VulpeEntity<?> destination = this.returnedClass.newInstance();
 				VulpeReflectUtil.getInstance().copy(destination, origin);
 				return destination;
 			} catch (Exception e) {
@@ -122,7 +122,7 @@ public class EntityType implements UserType, ParameterizedType {
 	}
 
 	public Serializable disassemble(final Object value) throws HibernateException {
-		return (VulpeBaseEntity<?>) value;
+		return (VulpeEntity<?>) value;
 	}
 
 	public Object assemble(final Serializable cached, final Object owner) throws HibernateException {
@@ -140,13 +140,13 @@ public class EntityType implements UserType, ParameterizedType {
 
 	public void setParameterValues(final Properties props) {
 		try {
-			this.returnedClass = (Class<? extends VulpeBaseEntity<?>>) Class.forName(props
+			this.returnedClass = (Class<? extends VulpeEntity<?>>) Class.forName(props
 					.getProperty("returnedClass"));
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
 		try {
-			this.serviceClass = (Class<? extends Services>) Class.forName(props
+			this.serviceClass = (Class<? extends VulpeService>) Class.forName(props
 					.getProperty("serviceClass"));
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -164,12 +164,12 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	protected VulpeBaseEntity<?> invokeFind(final Object identifier) {
+	protected VulpeEntity<?> invokeFind(final Object identifier) {
 		try {
-			final Services services = VulpeServiceLocator.getInstance().lookup(this.serviceClass);
+			final VulpeService services = VulpeServiceLocator.getInstance().lookup(this.serviceClass);
 			final Method method = services.getClass().getMethod(
 					VulpeConstants.Action.FIND.concat(this.returnedClass.getSimpleName()), this.idClass);
-			return (VulpeBaseEntity<?>) method.invoke(services, identifier);
+			return (VulpeEntity<?>) method.invoke(services, identifier);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}

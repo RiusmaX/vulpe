@@ -28,10 +28,10 @@ import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.factory.VulpeFactoryLocator;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 
 /**
- * Class to lookup Services
+ * Class to lookup VulpeService
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
@@ -61,7 +61,7 @@ public class VulpeServiceLocator {
 	 *            Service Interface class
 	 * @return Instance of service
 	 */
-	public <T extends Services> T lookup(final Class<T> classe) {
+	public <T extends VulpeService> T lookup(final Class<T> classe) {
 		try {
 			final Factory<T> factory = getFactory(classe);
 			return factory.instance();
@@ -79,7 +79,7 @@ public class VulpeServiceLocator {
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Services> T getEJB(final Class<T> clazz) {
+	public <T extends VulpeService> T getEJB(final Class<T> clazz) {
 		try {
 			final InitialContext ctx = new InitialContext();
 			final Object objref = ctx.lookup(clazz.getSimpleName());
@@ -111,7 +111,7 @@ public class VulpeServiceLocator {
 	 * @param clazz
 	 * @return
 	 */
-	protected <T extends Services> Factory<T> getFactory(final Class<T> clazz) {
+	protected <T extends VulpeService> Factory<T> getFactory(final Class<T> clazz) {
 		try {
 			if (!VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".factory"))) {
 				final FactoryClass factoryClass = VulpeReflectUtil.getInstance()
@@ -137,9 +137,9 @@ public class VulpeServiceLocator {
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
-	 * @see Services
+	 * @see VulpeService
 	 */
-	public <T extends Services> T getService(final Class<T> serviceClass) {
+	public <T extends VulpeService> T getService(final Class<T> serviceClass) {
 		T service = null;
 		try {
 			service = (T) AbstractVulpeBeanFactory.getInstance().getBean(

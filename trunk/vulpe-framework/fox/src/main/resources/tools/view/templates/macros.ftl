@@ -37,7 +37,7 @@
  -->
 <#macro forAllValidView>
 	<@forAllTypes var="type">
-		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeBaseEntity")>
+		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeEntity")>
 			<@forAllView var="view" declaration=type>
 				<#nested type view>
 			</@forAllView>

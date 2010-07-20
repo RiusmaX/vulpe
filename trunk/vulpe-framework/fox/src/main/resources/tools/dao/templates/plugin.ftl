@@ -1,7 +1,7 @@
 <#include "macros.ftl"/>
 <#include "dao.ftl"/>
 <#if DB4O == true>
-	<#include "daoDB4OImpl.ftl"/>
+	<#include "daoDB4O.ftl"/>
 <#else>
-	<#include "daoJPAImpl.ftl"/>
+	<#include "daoJPA.ftl"/>
 </#if>

@@ -27,7 +27,7 @@ import ognl.Ognl;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeReflectUtil.DeclaredType;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.util.InstantiatingNullHandler;
@@ -41,7 +41,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
-public class GenericsNullHandler<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
+public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends InstantiatingNullHandler implements NullHandler {
 
 	private static final Logger LOG = Logger

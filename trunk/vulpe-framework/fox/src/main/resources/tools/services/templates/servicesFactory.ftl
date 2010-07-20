@@ -1,6 +1,6 @@
 <#include "macros.ftl"/>
-Generating ServicesFactory: ${basePackageName}.services.${baseClassName}ServicesFactory
-<@javaSource name="${basePackageName}.services.${baseClassName}ServicesFactory">
+Generating ServiceFactory: ${basePackageName}.services.${baseClassName}ServiceFactory
+<@javaSource name="${basePackageName}.services.${baseClassName}ServiceFactory">
 package ${basePackageName}.services;
 
 import javax.naming.Context;
@@ -14,20 +14,20 @@ import org.vulpe.commons.beans.AbstractVulpeBeanFactory;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.LookupType;
 
-public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}Services> {
-	private static final Logger LOG = Logger.getLogger( ${baseClassName}ServicesFactory.class.getName() );
+public class ${baseClassName}ServiceFactory implements Factory<${baseClassName}Service> {
+	private static final Logger LOG = Logger.getLogger( ${baseClassName}ServiceFactory.class.getName() );
 
-	public static ${baseClassName}ServicesFactory getInstance(){
+	public static ${baseClassName}ServiceFactory getInstance(){
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("Getting ${baseClassName}ServicesFactory");
+			LOG.debug("Getting ${baseClassName}ServiceFactory");
 		}
-		return FactoryLocator.getInstance().getFactory(${baseClassName}ServicesFactory.class);
+		return FactoryLocator.getInstance().getFactory(${baseClassName}ServiceFactory.class);
 	}
 
 	private java.util.Properties props = null;
-	private ${baseClassName}Services services = null;
+	private ${baseClassName}Service services = null;
 
-	public ${baseClassName}ServicesFactory() {
+	public ${baseClassName}ServiceFactory() {
 		try {
 			props = org.vulpe.commons.file.FileUtil.getInstance().getResourceProperties("${baseClassName?uncap_first}.properties");
 		} catch (Exception e) {
@@ -35,7 +35,7 @@ public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}
 		}
 	}
 
-	public ${baseClassName}Services instance() {
+	public ${baseClassName}Service instance() {
 		LookupType lt = LookupType.valueOf(props.getProperty("services.factory.lookup.type"));
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Getting ${baseClassName}");
@@ -44,7 +44,7 @@ public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}
 			if (LookupType.EJB.equals(lt)) {
 				if (services == null) {
 					Context ctx = new InitialContext(props);
-					services = (${baseClassName}Services) ctx.lookup("${baseClassName}ServicesRemote");
+					services = (${baseClassName}Service) ctx.lookup("${baseClassName}ServiceRemote");
 				}
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Retrieve ${baseClassName} EJB");
@@ -52,7 +52,7 @@ public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}
 				return services;
 			} else if (LookupType.POJO.equals(lt)) {
 				try{
-					return BeanFactory.getInstance().getBean("${baseClassName}ServicesPOJOImpl");
+					return BeanFactory.getInstance().getBean("${baseClassName}ServicePOJO");
 				} finally {
 					if (LOG.isDebugEnabled()) {
 						LOG.debug("Retrieve ${baseClassName} POJO");
@@ -60,7 +60,7 @@ public class ${baseClassName}ServicesFactory implements Factory<${baseClassName}
 				}
 			} else if (LookupType.WS.equals(lt)) {
 				try{
-					return BeanFactory.getInstance().getBean("${baseClassName}ServicesWSDelegate");
+					return BeanFactory.getInstance().getBean("${baseClassName}ServiceWSDelegate");
 				} finally {
 					if (LOG.isDebugEnabled()) {
 						LOG.debug("Retrieve ${baseClassName} WS");

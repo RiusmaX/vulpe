@@ -39,7 +39,7 @@ import org.vulpe.commons.VulpeConstants.Action.Validate.Cardinality;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
-import org.vulpe.controller.VulpeBaseController;
+import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
@@ -48,7 +48,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.OgnlContextState;
@@ -66,8 +66,8 @@ import com.opensymphony.xwork2.util.OgnlContextState;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
-		extends AbstractVulpeStrutsSimpleController implements VulpeBaseController {
+public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends AbstractVulpeStrutsSimpleController implements VulpeController {
 
 	/**
 	 * List of entities
@@ -185,7 +185,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#create()
+	 * @see org.vulpe.controller.VulpeController#create()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -282,7 +282,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#createPost()
+	 * @see org.vulpe.controller.VulpeController#createPost()
 	 */
 	@ResetSession
 	public String createPost() {
@@ -365,7 +365,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#update()
+	 * @see org.vulpe.controller.VulpeController#update()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -448,7 +448,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#updatePost()
+	 * @see org.vulpe.controller.VulpeController#updatePost()
 	 */
 	@ResetSession
 	public String updatePost() {
@@ -549,7 +549,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#delete()
+	 * @see org.vulpe.controller.VulpeController#delete()
 	 */
 	@SkipValidation
 	public String delete() {
@@ -630,7 +630,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#deleteDetail()
+	 * @see org.vulpe.controller.VulpeController#deleteDetail()
 	 */
 	@SkipValidation
 	public String deleteDetail() {
@@ -668,15 +668,15 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		final ENTITY entity = prepareEntity(Action.DELETE);
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final List<VulpeBaseEntity<?>> details = (List<VulpeBaseEntity<?>>) Ognl.getValue(
+			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(
 					getDetail(), context, this);
-			final List<VulpeBaseEntity<?>> removedDetails = new ArrayList<VulpeBaseEntity<?>>();
+			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
 			final int size = details.size();
 			int removed = 0;
 			if (getDetailIndex() == null) {
-				for (final Iterator<VulpeBaseEntity<?>> iterator = details.iterator(); iterator
+				for (final Iterator<VulpeEntity<?>> iterator = details.iterator(); iterator
 						.hasNext();) {
-					final VulpeBaseEntity<?> detail = (VulpeBaseEntity<?>) iterator.next();
+					final VulpeEntity<?> detail = (VulpeEntity<?>) iterator.next();
 					if (detail.isSelected()) {
 						if (detail.getId() != null) {
 							removedDetails.add(detail);
@@ -686,7 +686,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 					}
 				}
 			} else {
-				final VulpeBaseEntity<?> detail = details.get(getDetailIndex().intValue());
+				final VulpeEntity<?> detail = details.get(getDetailIndex().intValue());
 				if (detail.getId() != null) {
 					removedDetails.add(detail);
 				}
@@ -694,7 +694,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 				removed++;
 			}
 			boolean save = false;
-			for (VulpeBaseEntity<?> baseEntity : removedDetails) {
+			for (VulpeEntity<?> baseEntity : removedDetails) {
 				if (baseEntity.getId() != null) {
 					save = true;
 					break;
@@ -932,7 +932,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#tabularPost()
+	 * @see org.vulpe.controller.VulpeController#tabularPost()
 	 */
 	@ResetSession
 	public String tabularPost() {
@@ -1006,7 +1006,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#addDetail()
+	 * @see org.vulpe.controller.VulpeController#addDetail()
 	 */
 	@SkipValidation
 	public String addDetail() {
@@ -1134,7 +1134,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseController#prepare()
+	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
@@ -1346,7 +1346,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 		for (VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
 			if (detailConfig.getParentDetailConfig() == null) {
 				try {
-					final Collection<VulpeBaseEntity<?>> beans = (Collection) Ognl.getValue(
+					final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(
 							detailConfig.getPropertyName(), context, this);
 					if (!validateCardinality(beans, detailConfig)) {
 						return false;
@@ -1376,11 +1376,11 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	protected void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig) {
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeBaseEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
+			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
 					.getPropertyName(), context, parent);
 			despiseDetailItens(beans, detailConfig);
 			if (beans != null && !detailConfig.getSubDetails().isEmpty()) {
-				for (VulpeBaseEntity<?> bean : beans) {
+				for (VulpeEntity<?> bean : beans) {
 					for (VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
 						despiseDetail(bean, subDetailConfig);
 					}
@@ -1401,7 +1401,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 *
 	 * @since 1.0
 	 */
-	protected void despiseDetailItens(final Collection<VulpeBaseEntity<?>> beans,
+	protected void despiseDetailItens(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		getControllerUtil().despiseItens(beans, detailConfig.getDespiseFields(),
 				getControllerType().equals(ControllerType.TABULAR));
@@ -1414,7 +1414,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @param detailConfig
 	 * @return
 	 */
-	protected boolean validateDuplicatedDetailItens(final Collection<VulpeBaseEntity<?>> beans,
+	protected boolean validateDuplicatedDetailItens(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
 		final Collection<DuplicatedBean> duplicatedBeans = getControllerUtil().duplicatedItens(
@@ -1452,7 +1452,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	 * @param detailConfig
 	 * @return
 	 */
-	protected boolean validateCardinality(final Collection<VulpeBaseEntity<?>> beans,
+	protected boolean validateCardinality(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		if (!Cardinality.ZERO.equals(detailConfig.getCardinalityType().getValue())) {
 			if (Cardinality.ONE.equals(detailConfig.getCardinalityType().getValue())) {
@@ -1694,7 +1694,7 @@ public class VulpeStrutsController<ENTITY extends VulpeBaseEntity<ID>, ID extend
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#validateEntity()
+	 * @see org.vulpe.controller.VulpeSimpleController#validateEntity()
 	 */
 	public boolean validateEntity() {
 		return EntityValidator.validate(getEntity());

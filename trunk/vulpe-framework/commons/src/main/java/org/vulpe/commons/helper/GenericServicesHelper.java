@@ -19,8 +19,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.vulpe.commons.beans.SpringBeanFactory;
 import org.vulpe.commons.model.services.VulpeServiceLocator;
-import org.vulpe.model.services.GenericServices;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.GenericService;
+import org.vulpe.model.services.VulpeService;
 
 
 public final class GenericServicesHelper {
@@ -33,19 +33,19 @@ public final class GenericServicesHelper {
 	/**
 	 * Method find generic services and returns POJO or EJB implementation.
 	 *
-	 * @return Generic Services Implementation.
+	 * @return Generic VulpeService Implementation.
 	 * @since 1.0
-	 * @see Services
+	 * @see VulpeService
 	 */
-	public static GenericServices getService() {
-		GenericServices service = null;
+	public static GenericService getService() {
+		GenericService service = null;
 		try {
-			service = (GenericServices) SpringBeanFactory.getInstance().getBean(
-					GenericServices.class.getSimpleName());
+			service = (GenericService) SpringBeanFactory.getInstance().getBean(
+					GenericService.class.getSimpleName());
 		} catch (NoSuchBeanDefinitionException e) {
 			if (service == null) {
 				service = VulpeServiceLocator.getInstance().getEJB(
-						GenericServices.class);
+						GenericService.class);
 			}
 			LOG.error(e);
 		}
@@ -58,10 +58,10 @@ public final class GenericServicesHelper {
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
-	 * @see Services
+	 * @see VulpeService
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T extends Services> T getService(final Class<T> serviceClass) {
+	public static <T extends VulpeService> T getService(final Class<T> serviceClass) {
 		T service = null;
 		try {
 			service = (T) SpringBeanFactory.getInstance().getBean(

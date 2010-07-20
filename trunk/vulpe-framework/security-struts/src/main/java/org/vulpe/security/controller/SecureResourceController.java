@@ -23,11 +23,11 @@ import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.SecureResource;
-import org.vulpe.security.model.services.SecurityServices;
+import org.vulpe.security.model.services.SecurityService;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.SecureResourceController")
-@Controller(serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "secureResourceRoles", propertyName = "entity.secureResourceRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
+@Controller(serviceClass = SecurityService.class, detailsConfig = { @DetailConfig(name = "secureResourceRoles", propertyName = "entity.secureResourceRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
 @SuppressWarnings("serial")
 public class SecureResourceController extends
 		VulpeStrutsController<SecureResource, Long> {

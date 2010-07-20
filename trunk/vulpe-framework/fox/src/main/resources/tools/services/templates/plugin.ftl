@@ -2,11 +2,11 @@
 <#include "services.ftl"/>
 <#if EJB == true>
 	<#if springServiceLookup == true>
-		<#include "servicesEJBImpl-spring.ftl"/>
+		<#include "servicesEJB-spring.ftl"/>
 	<#else>
-		<#include "servicesEJBImpl.ftl"/>
+		<#include "servicesEJB.ftl"/>
 	</#if>
 </#if>
 <#if POJO == true>
-	<#include "servicesPOJOImpl.ftl"/>
+	<#include "servicesPOJO.ftl"/>
 </#if>

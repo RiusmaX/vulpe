@@ -24,7 +24,7 @@ import javax.persistence.OneToMany;
 
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
 @MappedSuperclass
 @SuppressWarnings("serial")

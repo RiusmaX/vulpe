@@ -54,7 +54,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.VulpeBaseSimpleController#getActionConfig()
+	 * @see org.vulpe.controller.VulpeSimpleController#getActionConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
 		return getControllerUtil().getControllerConfig(this);
@@ -71,7 +71,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 	 */
 	protected DownloadInfo doReadReportLoad() {
 		try {
-			// List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>)
+			// List<VulpeEntity<?>> list = (List<VulpeEntity<?>>)
 			// PropertyUtils.getProperty(
 			// this, getActionConfig().getReportDataSource());
 			// return StringUtils.isNotBlank(getActionConfig().getReportName())

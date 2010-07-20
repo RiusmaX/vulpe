@@ -40,10 +40,10 @@ import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.SODAQueries;
 import org.vulpe.model.annotations.db4o.SODAQuery;
 import org.vulpe.model.annotations.db4o.SODAQueryAttribute;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
-import org.vulpe.model.entity.AbstractVulpeBaseJPAEntity;
-import org.vulpe.model.entity.VulpeBaseDB4OEntity;
-import org.vulpe.model.entity.VulpeBaseSimpleEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
+import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
 import com.sun.mirror.declaration.FieldDeclaration;
 

@@ -17,9 +17,9 @@ public interface ${dao.daoName} extends ${dao.daoSuperclassName}<${dao.name}> {
 </#if>
 <#else>
 <#if dao.inheritance>
-public interface ${dao.daoName}<ENTITY_CLASS extends ${dao.name}> extends org.vulpe.model.dao.VulpeBaseCRUDDAO<ENTITY_CLASS, ${dao.idType}> {
+public interface ${dao.daoName}<ENTITY_CLASS extends ${dao.name}> extends org.vulpe.model.dao.VulpeDAO<ENTITY_CLASS, ${dao.idType}> {
 <#else>
-public interface ${dao.daoName} extends org.vulpe.model.dao.VulpeBaseCRUDDAO<${dao.name}, ${dao.idType}> {
+public interface ${dao.daoName} extends org.vulpe.model.dao.VulpeDAO<${dao.name}, ${dao.idType}> {
 </#if>
 </#if>
 	<#list dao.methods as method>

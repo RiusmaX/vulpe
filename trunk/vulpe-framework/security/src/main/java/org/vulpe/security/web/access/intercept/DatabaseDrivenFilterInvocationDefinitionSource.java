@@ -25,7 +25,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
-import org.vulpe.security.authorization.model.services.AuthorizationService;
+import org.vulpe.security.authorization.model.services.VulpeAuthorizationService;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
 
@@ -42,9 +42,9 @@ import org.vulpe.security.model.entity.SecureResource;
 public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		FilterInvocationSecurityMetadataSource {
 
-	@Qualifier("AuthorizationService")
+	@Qualifier("VulpeAuthorizationService")
 	@Autowired
-	private AuthorizationService authorizationService;
+	private VulpeAuthorizationService authorizationService;
 
 	public Collection<ConfigAttribute> lookupAttributes(final String url) {
 		String newUrl = url;
@@ -85,11 +85,11 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		return null;
 	}
 
-	public AuthorizationService getAuthorizationService() {
+	public VulpeAuthorizationService getAuthorizationService() {
 		return authorizationService;
 	}
 
-	public void setAuthorizationService(final AuthorizationService authorizationService) {
+	public void setAuthorizationService(final VulpeAuthorizationService authorizationService) {
 		this.authorizationService = authorizationService;
 	}
 

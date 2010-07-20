@@ -19,7 +19,7 @@ import java.util.Collection;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.vulpe.commons.cache.VulpeCacheHelper;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to validation.
@@ -62,8 +62,8 @@ public class VulpeValidationUtil {
 			return !((Collection) value).isEmpty();
 		}
 
-		if (value instanceof VulpeBaseEntity<?>) {
-			return ((VulpeBaseEntity<?>) value).getId() != null;
+		if (value instanceof VulpeEntity<?>) {
+			return ((VulpeEntity<?>) value).getId() != null;
 		}
 
 		if (value.getClass().isArray()) {

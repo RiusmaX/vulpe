@@ -31,7 +31,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.entity.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
 /**

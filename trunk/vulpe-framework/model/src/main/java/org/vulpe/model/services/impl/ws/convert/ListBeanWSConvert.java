@@ -18,15 +18,15 @@ package org.vulpe.model.services.impl.ws.convert;
 import java.util.Collection;
 
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeBaseEntity;
-import org.vulpe.model.entity.AbstractVulpeBaseEntityDelegate;
+import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntityDelegate;
 
 /**
  * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings({ "unchecked" })
-public class ListBeanWSConvert<ENTITY extends VulpeBaseEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>
+public class ListBeanWSConvert<ENTITY extends VulpeEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>
 		implements WSConvert<Collection<ENTITY>, Collection<VODELEGATE>> {
 
 	public Collection<ENTITY> toBean(final Collection<VODELEGATE> wsBean) {

@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 
 /**
  * Control configurations.
@@ -41,7 +41,7 @@ public @interface Controller {
 	/**
 	 * Service interface
 	 */
-	Class<? extends Services> serviceClass() default Services.class;
+	Class<? extends VulpeService> serviceClass() default VulpeService.class;
 
 	// SELECT - configurations
 	/**

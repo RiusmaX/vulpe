@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import org.vulpe.commons.VulpeReflectUtil;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
 
@@ -36,7 +36,7 @@ public class EntityValidator {
 	 * @param entity
 	 * @return
 	 */
-	public static boolean validate(VulpeBaseEntity entity) {
+	public static boolean validate(VulpeEntity entity) {
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		for (Field field : fields) {
 			final VulpeValidate validate = field.getAnnotation(VulpeValidate.class);

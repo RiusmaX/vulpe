@@ -26,6 +26,7 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
 import com.sun.mirror.declaration.FieldDeclaration;
 
@@ -38,8 +39,7 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 		if (super.preProcess(block, output, model)
 				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
-			if (getClassName(clazz.getSuperclass()).equals(
-					"org.vulpe.model.entity.VulpeBaseSimpleEntity")) {
+			if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())) {
 				return false;
 			}
 			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);

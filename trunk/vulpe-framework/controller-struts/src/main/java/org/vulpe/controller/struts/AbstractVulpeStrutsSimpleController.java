@@ -41,7 +41,7 @@ import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -75,7 +75,7 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	 */
 	protected DownloadInfo doReadReportLoad() {
 		try {
-			List<VulpeBaseEntity<?>> list = (List<VulpeBaseEntity<?>>) PropertyUtils.getProperty(
+			List<VulpeEntity<?>> list = (List<VulpeEntity<?>>) PropertyUtils.getProperty(
 					this, getControllerConfig().getReportDataSource());
 			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
 					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),

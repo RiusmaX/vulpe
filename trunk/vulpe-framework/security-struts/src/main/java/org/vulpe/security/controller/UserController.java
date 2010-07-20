@@ -24,11 +24,11 @@ import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.User;
-import org.vulpe.security.model.services.SecurityServices;
+import org.vulpe.security.model.services.SecurityService;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.UserController")
-@Controller(serviceClass = SecurityServices.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
+@Controller(serviceClass = SecurityService.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
 @SuppressWarnings("serial")
 public class UserController extends VulpeStrutsController<User, Long> {
 

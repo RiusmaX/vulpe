@@ -34,14 +34,14 @@ import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.cache.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.controller.VulpeBaseController;
-import org.vulpe.controller.VulpeBaseSimpleController;
+import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.VulpeSimpleController;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeBaseSimpleControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to controller
@@ -94,14 +94,14 @@ public class ControllerUtil {
 	 * @param duplicatedBeans
 	 * @return if duplicated, returns true
 	 */
-	public boolean duplicatedItem(final Collection<VulpeBaseEntity<?>> beans,
-			final VulpeBaseEntity<?> bean, final String[] fieldNames,
+	public boolean duplicatedItem(final Collection<VulpeEntity<?>> beans,
+			final VulpeEntity<?> bean, final String[] fieldNames,
 			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
 			if (value != null && StringUtils.isNotBlank(value.toString())) {
-				for (VulpeBaseEntity<?> realBean : beans) {
+				for (VulpeEntity<?> realBean : beans) {
 					if (realBean.getId() != null && realBean.getId().equals(bean.getId())) {
 						continue;
 					}
@@ -125,21 +125,21 @@ public class ControllerUtil {
 	 *            indicate if marked items must be removed or ignored on model
 	 *            layer.
 	 */
-	public void despiseItens(final Collection<VulpeBaseEntity<?>> beans,
+	public void despiseItens(final Collection<VulpeEntity<?>> beans,
 			final String despiseFields[], final boolean ignoreExclud) {
 		if (beans == null) {
 			return;
 		}
 
-		for (final Iterator<VulpeBaseEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
-			final VulpeBaseEntity<?> bean = iterator.next();
+		for (final Iterator<VulpeEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
+			final VulpeEntity<?> bean = iterator.next();
 			if (bean == null) {
 				iterator.remove();
 				continue;
 			}
 
-			if (bean instanceof VulpeBaseEntity) {
-				final VulpeBaseEntity<?> entity = (VulpeBaseEntity<?>) bean;
+			if (bean instanceof VulpeEntity) {
+				final VulpeEntity<?> entity = (VulpeEntity<?>) bean;
 				// if item is selected to be delete, then ignore
 				if (entity.isSelected()) {
 					if (!ignoreExclud || entity.getId() == null) {
@@ -162,7 +162,7 @@ public class ControllerUtil {
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
 	 */
-	public Collection<DuplicatedBean> duplicatedItens(final Collection<VulpeBaseEntity<?>> beans,
+	public Collection<DuplicatedBean> duplicatedItens(final Collection<VulpeEntity<?>> beans,
 			final String despiseFields[]) {
 		final Collection<DuplicatedBean> duplicatedBeans = new ArrayList<DuplicatedBean>();
 		if (beans == null) {
@@ -170,7 +170,7 @@ public class ControllerUtil {
 		}
 
 		int line = 1;
-		for (VulpeBaseEntity<?> bean : beans) {
+		for (VulpeEntity<?> bean : beans) {
 			if (bean == null) {
 				continue;
 			}
@@ -242,7 +242,7 @@ public class ControllerUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public VulpeBaseControllerConfig getControllerConfig(final VulpeBaseController controller) {
+	public VulpeBaseControllerConfig getControllerConfig(final VulpeController controller) {
 		final String key = getCurrentControllerKey();
 		if (VulpeCacheHelper.getInstance().contains(key)) {
 			return VulpeCacheHelper.getInstance().get(key);
@@ -272,7 +272,7 @@ public class ControllerUtil {
 	 * @return
 	 */
 	public VulpeBaseSimpleControllerConfig getControllerConfig(
-			final VulpeBaseSimpleController controller) {
+			final VulpeSimpleController controller) {
 		final String key = getCurrentControllerKey();
 		if (VulpeCacheHelper.getInstance().contains(key)) {
 			return VulpeCacheHelper.getInstance().get(key);

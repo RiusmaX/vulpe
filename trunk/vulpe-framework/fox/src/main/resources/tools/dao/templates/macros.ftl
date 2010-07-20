@@ -40,7 +40,7 @@
  -->
 <#macro forAllValidDAO>
 	<@forAllTypes var="type">
-		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeBaseEntity")>
+		<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.entity.VulpeEntity")>
 			<@forAllDAO var="dao" declaration=type>
 				<#nested type dao>
 			</@forAllDAO>

@@ -32,7 +32,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
-import org.vulpe.model.entity.VulpeBaseSimpleEntity;
+import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeCheckboxlist;

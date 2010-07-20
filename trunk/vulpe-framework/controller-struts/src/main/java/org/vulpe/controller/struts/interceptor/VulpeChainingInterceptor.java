@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.vulpe.commons.VulpeConstants.Action;
-import org.vulpe.controller.VulpeBaseController;
+import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;
@@ -45,7 +45,7 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 	@SuppressWarnings("static-access")
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
-		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeBaseController) {
+		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeController) {
 			if (Action.READ.equals(invocation.getProxy().getMethod())) {
 				if (invocation.getAction() instanceof ValidationAware) {
 					final ValueStack stack = invocation.getStack();

@@ -17,12 +17,12 @@ package org.vulpe.security.model.dao.impl.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.model.dao.impl.jpa.VulpeBaseCRUDDAOJPAImpl;
+import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 import org.vulpe.security.model.dao.RoleDAO;
 import org.vulpe.security.model.entity.Role;
 
 @Repository("RoleDAO")
 @Transactional
-public class RoleDAOJPAImpl extends VulpeBaseCRUDDAOJPAImpl<Role, Long> implements RoleDAO {
+public class RoleDAOJPAImpl extends VulpeBaseDAOJPA<Role, Long> implements RoleDAO {
 
 }

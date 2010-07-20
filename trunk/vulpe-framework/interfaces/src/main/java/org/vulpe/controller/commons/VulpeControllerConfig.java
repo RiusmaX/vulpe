@@ -1,6 +1,6 @@
 package org.vulpe.controller.commons;
 
-import org.vulpe.model.services.Services;
+import org.vulpe.model.services.VulpeService;
 
 /**
  * Vulpe Action Config Interface.
@@ -15,7 +15,7 @@ public interface VulpeControllerConfig {
 
 	void setControllerType(final ControllerType controllerType);
 
-	Class<? extends Services> getServiceClass();
+	Class<? extends VulpeService> getServiceClass();
 
 	int getPageSize();
 

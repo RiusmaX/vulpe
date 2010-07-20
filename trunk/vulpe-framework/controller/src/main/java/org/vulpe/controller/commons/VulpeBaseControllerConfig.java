@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeReflectUtil;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.tags.Functions;
 
 /**
@@ -33,7 +33,7 @@ import org.vulpe.view.tags.Functions;
  * @since 1.0
  */
 @SuppressWarnings( { "serial", "unchecked" })
-public class VulpeBaseControllerConfig<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
+public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeBaseSimpleControllerConfig implements Serializable {
 	private final List<VulpeBaseDetailConfig> details;
 	private final Class<ID> idClass;

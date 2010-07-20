@@ -27,24 +27,24 @@ import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.commons.audit.AuditOccurrenceType;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.model.dao.VulpeBaseCRUDDAO;
-import org.vulpe.model.entity.VulpeBaseEntity;
+import org.vulpe.model.dao.VulpeDAO;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Abstract Base to implementation of CRUD DAO.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
+ *
  */
 @SuppressWarnings({ "unchecked" })
-public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeBaseEntity<ID>, ID extends Serializable & Comparable>
-		implements VulpeBaseCRUDDAO<ENTITY, ID> {
+public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		implements VulpeDAO<ENTITY, ID> {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAO.class.getName());
 
 	/**
 	 * Make audit.
-	 * 
+	 *
 	 * @param entity
 	 * @param auditOccurrenceType
 	 * @param occurrenceParent
