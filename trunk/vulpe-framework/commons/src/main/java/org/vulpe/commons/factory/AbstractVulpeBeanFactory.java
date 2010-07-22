@@ -30,7 +30,7 @@ public abstract class AbstractVulpeBeanFactory {
 		if (!cache.contains(AbstractVulpeBeanFactory.class)) {
 			try {
 				final Class<AbstractVulpeBeanFactory> beanFactory = (Class<AbstractVulpeBeanFactory>) Class
-						.forName("org.vulpe.commons.beans.SpringBeanFactory");
+						.forName(SpringBeanFactory.class.getName());
 				cache.put(AbstractVulpeBeanFactory.class, beanFactory.newInstance());
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);

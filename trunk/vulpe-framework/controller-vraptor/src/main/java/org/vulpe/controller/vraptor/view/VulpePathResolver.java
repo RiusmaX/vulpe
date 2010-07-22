@@ -52,20 +52,4 @@ public class VulpePathResolver extends DefaultPathResolver {
 		return Layout.PROTECTED_JSP_COMMONS + Layout.BODY_JSP;
 	}
 
-	@Override
-	protected String extractControllerFromName(String baseName) {
-		if (baseName.endsWith("Controller")) {
-			return baseName.substring(0, baseName.lastIndexOf(""));
-		} else if (baseName.endsWith("CRUDController")) {
-			return baseName.substring(0, baseName.lastIndexOf("CRUDController"));
-		} else if (baseName.endsWith("SelectController")) {
-			return baseName.substring(0, baseName.lastIndexOf("SelectController"));
-		} else if (baseName.endsWith("TabularController")) {
-			return baseName.substring(0, baseName.lastIndexOf("TabularController"));
-		} else if (baseName.endsWith("ReportController")) {
-			return baseName.substring(0, baseName.lastIndexOf("ReportController"));
-		}
-		return baseName;
-	}
-
 }
