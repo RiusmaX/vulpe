@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<Context path="/sirci" privileged="true">
-	<Resource name="jdbc/sirci" auth="Container" type="javax.sql.DataSource"
-		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://127.0.0.1:5432/sirci" username="sirci"
-		password="sirci" maxActive="20" maxIdle="10" maxWait="-1" />
-	<Logger className="org.apache.catalina.logger.FileLogger" prefix="sirci." suffix=".out"
-		timestamp="true" />
-</Context>
