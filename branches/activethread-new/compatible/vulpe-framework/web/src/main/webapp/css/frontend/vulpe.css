@@ -1,0 +1,463 @@
+/************************************************************************
+* CSS - Vulpe Framework	- Classes										*
+************************************************************************/
+.vulpeActions {
+	width: 100%;
+	text-align: right;
+}
+
+.vulpeAlertError {
+	color: red;
+}
+
+.vulpeAlertMessage {
+	
+}
+
+.vulpeButton {
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+}
+
+.vulpeBlockLabel {
+	display: block;
+	width: 135px;
+	float: left;
+}
+
+.vulpeBlockshort {
+	display: block;
+	width: 90px;
+	float: left;
+}
+
+.vulpeDrag {
+	cursor: move;
+}
+
+.vulpeEntities {
+	border: 1px solid #eee;
+	margin-bottom: 15px;
+}
+
+.vulpeMessageError {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('../../images/icons/message-error.png');
+}
+
+.vulpeFieldError {
+	background-color: #ffccbc;
+}
+
+.vulpeIconOff {
+	filter: progid :                                     DXImageTransform .
+		                               
+		    Microsoft .      
+		       
+		                 Alpha(opacity =                                     40);
+	-moz-opacity: 0.4;
+	opacity: 0.4;
+}
+
+.vulpeImageErrorMessage {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImageFieldLoading {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImagePopupButton {
+	cursor: pointer;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeLineOff {
+	background: #fff;
+}
+
+.vulpeLineOn {
+	background: #eee;
+}
+
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation
+	{
+	border: 1px solid;
+	margin: 0px 0px 1px 0px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.vulpeMessageInfo {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('../../images/icons/message-info.png');
+}
+
+.vulpeMessageSuccess {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('../../images/icons/message-success.png');
+}
+
+.vulpeMessageValidation {
+	color: #D63301;
+	background-color: #FFCCBA;
+	background-image: url('../../images/icons/message-validation.png');
+}
+
+.vulpeMessageWarning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('../../images/icons/message-warning.png');
+}
+
+.vulpeMessages {
+	background-color: #fff;
+	overflow: auto;
+}
+
+.vulpeMessages h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: move;
+}
+
+.vulpeNoBoarder {
+	border: none;
+}
+
+.vulpeNob {
+	font-weight: normal
+}
+
+.vulpeOrderAsc {
+	background: url(../../images/icons/order-asc.gif) right;
+	background-color: #eee;
+	background-repeat: no-repeat;
+}
+
+.vulpeOrderDesc {
+	background: url(../../images/icons/order-desc.gif) right;
+	background-color: #eee;
+	background-repeat: no-repeat;
+}
+
+.vulpePaging {
+	width: 150px;
+	margin: 5px auto;
+	text-align: center;
+}
+
+.vulpePaging a {
+	text-decoration: none;
+}
+
+.vulpePopup {
+	background-color: #fff;
+	border: 1px solid #333;
+}
+
+.vulpePopup h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: default;
+}
+
+.vulpePopupCaption {
+	display: block;
+	font-size: 13px;
+	height: 20px;
+	margin: 0px;
+	padding-left: 10px;
+	padding-top: 3px;
+	width: auto;
+}
+
+.vulpeRequired {
+	border: 1px solid #ffccbc;
+}
+
+.vulpeSelectedRow {
+	background-color: #ffccbc;
+	cursor: pointer;
+}
+
+.vulpeSimpleLabel {
+	font-weight: normal;
+}
+
+.vulpeSubmit {
+	border: 1px #CCCCCC solid;
+	height: 20px;
+	padding: 0px;
+	width: 90px;
+	cursor: pointer;
+}
+
+.vulpeThumb {
+	border: 1px solid #000;
+}
+
+.tooltip {
+	display: none;
+	background: url(../../images/tooltip/black-arrow.png);
+	font-size: 12px;
+	height: 70px;
+	width: 160px;
+	padding: 25px;
+	color: #fff;
+	border: 0px;
+}
+
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+	padding-top: 40px;
+	height: 55px;
+}
+
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+}
+
+/************************************************************************
+* CSS - Vulpe Framework	- ID Elements									*
+************************************************************************/
+#body {
+	
+}
+
+#container {
+	
+}
+
+#content {
+	width: auto;
+}
+
+#contentTitle {
+	font-size: 12px;
+	font-weight: bold;
+	height: 10px;
+	padding: 10px 15px 10px 15px;
+}
+
+#copyright {
+	
+}
+
+#copyright a {
+	text-decoration: none;
+}
+
+#copyright a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#error {
+	background-color: #eee;
+	height: 100%;
+}
+
+#error a {
+	font-size: 13px;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#error h1 {
+	color: #d00;
+	background-color: #ddd;
+	display: block;
+	font-size: 30px;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#error h2 {
+	display: block;
+	font-size: 20px;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#errors {
+	width: 400px;
+	margin: 0 auto
+}
+
+#footer {
+	display: block;
+	font-size: 10px;
+	height: 20px;
+	width: auto;
+}
+
+#header {
+	width: 100%;
+	height: 99px;
+}
+
+#loading {
+	width: 100%;
+	height: 16px;
+	cursor: wait;
+}
+
+#menu {
+	width: auto;
+}
+
+#paging {
+	
+}
+
+#pagingFirstPage {
+	background: url(../../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingPreviousPage {
+	background: url(../../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingNextPage {
+	background: url(../../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingLastPage {
+	background: url(../../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#userAuthenticated {
+	text-align: right;
+}
+
+#poweredby {
+	font-size: 9px;
+}
+
+#poweredby a {
+	text-decoration: none;
+}
+
+#poweredby a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#search {
+	
+}
+
+/************************************************************************
+* CSS - Vulpe Framework	- DOM Objects									*
+************************************************************************/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body,form,html {
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+a,a:visited {
+	color: #030;
+}
+
+a:hover {
+	text-decoration: none
+}
+
+h1 {
+	font-size: 20px;
+	margin: 0px;
+	padding-left: 15px;
+	padding-top: 3px;
+}
+
+h2 {
+	font-size: 17px;
+	margin: 0px;
+	padding-left: 15px;
+	padding-top: 3px;
+}
+
+input,select,textarea {
+	border: 1px solid #030;
+	color: #030;
+}
+
+label {
+	font-weight: bold
+}
+
+legend {
+	font-weight: bold;
+}
+
+ol,ul {
+	font-size: 11px;
+	margin: 10px 60px;
+}
+
+p {
+	font-size: 11px;
+	margin: 10px 28px;
+}
+
+tbody tr {
+	margin: 0px;
+	padding: 0px;
+}
+
+td {
+	color: #030;
+}
+
+td p {
+	margin: 0;
+	line-height: 1.7em;
+	margin-bottom: 5px;
+}
+
+thead th,th,.vulpeTableHeader {
+	color: #333;
+	font-weight: bold;
+}
+
+tfoot th,.vulpeTableFooter {
+}

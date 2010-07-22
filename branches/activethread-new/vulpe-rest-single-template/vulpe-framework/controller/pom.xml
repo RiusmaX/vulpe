@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe-controller</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>Vulpe Framework - Controller</name>
+
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-dependencies</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<description>Vulpe Framework ;) Quick and Smart - Controller</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>*.xml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="maven.repo" value="${env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement
+											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<if>
+									<equals arg1="${deployServer}" arg2="tomcat" />
+									<then>
+										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/"
+											overwrite="true">
+											<fileset
+												file="${project.build.directory}/${artifactId}-${version}.jar" />
+										</copy>
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
