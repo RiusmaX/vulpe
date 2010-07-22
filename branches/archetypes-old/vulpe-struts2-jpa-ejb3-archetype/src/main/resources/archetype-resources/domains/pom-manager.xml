@@ -1,0 +1,104 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+        <artifactId>${rootArtifactId}</artifactId>
+        <groupId>${groupId}</groupId>
+        <version>${version}</version>
+    </parent>
+
+	<groupId>${package}</groupId>
+	<artifactId>${rootArtifactId}-domains</artifactId>
+	<version>${version}</version>
+	<packaging>jar</packaging>
+	<name>${rootArtifactId} - Domains</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unjar-fox</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
+								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement
+											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/${version}b3/ant-contrib-${version}b3.jar" />
+									</classpath>
+								</taskdef>
+								<property name="tools.dir"
+									value="${symbol_dollar}{maven.repo}/org/vulpe/fox/${version}/fox-${version}/tools" />
+								<property name="tools.dir.present" value="false" />
+								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present"
+									type="dir" />
+								<if>
+									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
+									<then>
+										<unjar
+											src="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
+											dest="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>apt-maven-plugin</artifactId>
+				<configuration>
+					<factory>org.vulpe.fox.manager.ManagerProcessorFactory</factory>
+					<options>
+						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/manager/templates/plugin.ftl</param>
+					</options>
+					<outputDirectory>${symbol_dollar}{basedir}/../</outputDirectory>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.vulpe</groupId>
+						<artifactId>vulpe-fox</artifactId>
+						<version>1.0</version>
+						<exclusions>
+							<exclusion>
+								<groupId>com.sun</groupId>
+								<artifactId>tools</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+						<version>1.3.03</version>
+					</dependency>
+					<dependency>
+						<groupId>${package}</groupId>
+						<artifactId>${rootArtifactId}-config</artifactId>
+						<version>${version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
