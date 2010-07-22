@@ -1,0 +1,114 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${package}</groupId>
+	<artifactId>${rootArtifactId}-web</artifactId>
+	<version>${version}</version>
+	<packaging>war</packaging>
+	<name>${rootArtifactId} - Web</name>
+	<description>${rootArtifactId}</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-struts</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-commons</artifactId>
+			<version>${version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-domains</artifactId>
+			<version>${version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-core</artifactId>
+			<version>${version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-beta-1</version>
+				<configuration>
+					<warName>${rootArtifactId}</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<if>
+									<equals arg1="${symbol_dollar}{deployServer}" arg2="tomcat" />
+									<then>
+										<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
+										<if>
+											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
+											<then>
+												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
+													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${symbol_dollar}{deployMode}" arg2="quick-restart" />
+												<then>
+													<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
+														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar" />
+													</copy>
+												</then>
+											</elseif>
+											<else>
+												<delete dir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{projectName}" />
+												<if>
+													<equals arg1="${symbol_dollar}{deleteWork}" arg2="true" />
+													<then>
+														<delete dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${rootArtifactId}" />
+													</then>
+												</if>
+												<unwar src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" dest="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
+											</else>
+										</if>
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
