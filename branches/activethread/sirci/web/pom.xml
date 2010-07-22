@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+        <artifactId>sirci</artifactId>
+        <groupId>br.gov.caixa</groupId>
+        <version>1.0</version>
+    </parent>
+
+	<groupId>br.gov.caixa.sirci</groupId>
+	<artifactId>sirci-web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>sirci - Web</name>
+	<description>sirci</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-struts</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.caixa.sirci</groupId>
+			<artifactId>sirci-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.caixa.sirci</groupId>
+			<artifactId>sirci-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>br.gov.caixa.sirci</groupId>
+			<artifactId>sirci-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-beta-1</version>
+				<configuration>
+					<warName>sirci</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="maven.repo" value="${env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<if>
+									<equals arg1="${deployServer}" arg2="tomcat" />
+									<then>
+										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+										<copy tofile="${tomcat.home}/conf/Catalina/localhost/sirci.xml" overwrite="true">
+											<fileset file="${project.build.directory}/sirci-web-1.0/META-INF/context.xml" />
+										</copy>
+										<if>
+											<equals arg1="${deployMode}" arg2="quick" />
+											<then>
+												<copy todir="${tomcat.home}/webapps/sirci/" overwrite="true">
+													<fileset dir="${project.build.directory}/sirci-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${deployMode}" arg2="quick-restart" />
+												<then>
+													<copy todir="${tomcat.home}/webapps/sirci/" overwrite="true">
+														<fileset dir="${project.build.directory}/sirci-web-1.0/" excludes="**/*.jar" />
+													</copy>
+												</then>
+											</elseif>
+											<else>
+												<delete dir="${tomcat.home}/webapps/${projectName}" />
+												<if>
+													<equals arg1="${deleteWork}" arg2="true" />
+													<then>
+														<delete dir="${tomcat.home}/work/Catalina/localhost/sirci" />
+													</then>
+												</if>
+												<unwar src="${project.build.directory}/sirci.war" dest="${tomcat.home}/webapps/sirci" />
+											</else>
+										</if>
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
