@@ -1,8 +1,0 @@
-mvn archetype:generate -B 
-	-DarchetypeGroupId=org.vulpe.archetypes.vulpe-struts2-jpa 
-	-DarchetypeArtifactId=vulpe-struts2-jpa-archetype 
-	-DarchetypeVersion=1.0 
-	-DgroupId=br.vulpe 
-	-Dpackage=my.package
-	-DartifactId=myapplication 
-	-Dversion=1.0
