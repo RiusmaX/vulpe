@@ -58,6 +58,12 @@
 			<artifactId>gmn-ministerio</artifactId>
 			<version>1.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>br.com.activethread.gmn</groupId>
+			<artifactId>gmn-controller</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
