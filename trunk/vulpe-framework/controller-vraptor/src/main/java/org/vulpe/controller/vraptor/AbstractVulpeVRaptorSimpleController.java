@@ -167,7 +167,6 @@ public abstract class AbstractVulpeVRaptorSimpleController extends
 
 	@Path("/")
 	public void vraptor() {
-		result.include("controllerConfig", getControllerConfig());
 		if (getControllerType().equals(ControllerType.FRONTEND)) {
 			frontend();
 		} else if (getControllerType().equals(ControllerType.BACKEND)) {
