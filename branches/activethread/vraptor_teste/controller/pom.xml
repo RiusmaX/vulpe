@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+        <artifactId>vraptor_teste</artifactId>
+        <groupId>br.teste</groupId>
+        <version>1.0</version>
+    </parent>
+
+	<groupId>br.teste.vraptor_teste</groupId>
+	<artifactId>vraptor_teste-controller</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>vraptor_teste - Controller</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.teste.vraptor_teste</groupId>
+			<artifactId>vraptor_teste-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>br.teste.vraptor_teste</groupId>
+			<artifactId>vraptor_teste-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+</project>
