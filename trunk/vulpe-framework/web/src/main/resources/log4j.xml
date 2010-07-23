@@ -21,19 +21,16 @@
 
 	<category name="org">
 		<priority value="WARN" />
-		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</category>
 
 	<category name="com">
 		<priority value="WARN" />
-		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</category>
 
 	<category name="freemarker">
 		<priority value="ERROR" />
-		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</category>
 
