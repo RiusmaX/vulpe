@@ -12,7 +12,7 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent</artifactId>
+		<artifactId>vulpe-parent-vraptor</artifactId>
 		<version>1.0</version>
 	</parent>
 
@@ -22,6 +22,24 @@
 			<artifactId>vulpe-web</artifactId>
 			<version>1.0</version>
 			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-vraptor</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-audit-vraptor</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-security-vraptor</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
 		</dependency>
 	</dependencies>
 
