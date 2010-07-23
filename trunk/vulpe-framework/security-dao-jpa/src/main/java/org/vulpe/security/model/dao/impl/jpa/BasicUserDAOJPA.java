@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.model.dao.impl.db4o;
+package org.vulpe.security.model.dao.impl.jpa;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.model.dao.impl.db4o.VulpeBaseDAODB4O;
-import org.vulpe.security.model.dao.UserDAO;
-import org.vulpe.security.model.entity.User;
+import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
+import org.vulpe.security.model.dao.BasicUserDAO;
+import org.vulpe.security.model.entity.BasicUser;
 
-@Repository("UserDAO")
+@Repository("BasicUserDAO")
 @Transactional
-public class UserDAODB4OImpl extends VulpeBaseDAODB4O<User, Long> implements UserDAO {
+public class BasicUserDAOJPA<ENTITY_CLASS extends BasicUser> extends
+		VulpeBaseDAOJPA<ENTITY_CLASS, Long> implements BasicUserDAO<ENTITY_CLASS> {
 
 }

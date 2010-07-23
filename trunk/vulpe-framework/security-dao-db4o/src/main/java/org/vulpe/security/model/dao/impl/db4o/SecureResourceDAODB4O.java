@@ -18,11 +18,12 @@ package org.vulpe.security.model.dao.impl.db4o;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseDAODB4O;
-import org.vulpe.security.model.dao.RoleDAO;
-import org.vulpe.security.model.entity.Role;
+import org.vulpe.security.model.dao.SecureResourceDAO;
+import org.vulpe.security.model.entity.SecureResource;
 
-@Repository("RoleDAO")
+@Repository("SecureResourceDAO")
 @Transactional
-public class RoleDAODB4OImpl extends VulpeBaseDAODB4O<Role, Long> implements RoleDAO {
+public class SecureResourceDAODB4O extends VulpeBaseDAODB4O<SecureResource, Long>
+		implements SecureResourceDAO {
 
 }

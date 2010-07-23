@@ -28,7 +28,7 @@ import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 
 @Repository("AuditOccurrenceDAO")
 @Transactional
-public class AuditOccurrenceDAOJPAImpl extends VulpeBaseDAOJPA<AuditOccurrence, Long>
+public class AuditOccurrenceDAOJPA extends VulpeBaseDAOJPA<AuditOccurrence, Long>
 		implements AuditOccurrenceDAO {
 
 	@SuppressWarnings("unchecked")

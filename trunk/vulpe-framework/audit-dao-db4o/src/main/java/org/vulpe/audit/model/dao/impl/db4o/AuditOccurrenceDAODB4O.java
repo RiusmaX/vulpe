@@ -13,17 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.model.dao.impl.jpa;
+package org.vulpe.audit.model.dao.impl.db4o;
+
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
-import org.vulpe.security.model.dao.SecureResourceDAO;
-import org.vulpe.security.model.entity.SecureResource;
+import org.vulpe.audit.model.dao.AuditOccurrenceDAO;
+import org.vulpe.audit.model.entity.AuditOccurrence;
+import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.model.dao.impl.db4o.VulpeBaseDAODB4O;
 
-@Repository("SecureResourceDAO")
+
+@Repository("AuditOccurrenceDAO")
 @Transactional
-public class SecureResourceDAOJPAImpl extends VulpeBaseDAOJPA<SecureResource, Long>
-		implements SecureResourceDAO {
+public class AuditOccurrenceDAODB4O extends
+		VulpeBaseDAODB4O<AuditOccurrence, Long> implements AuditOccurrenceDAO {
+
+	public List<AuditOccurrence> findByParent(final AuditOccurrence parent)
+			throws VulpeApplicationException {
+		return getList(parent);
+	}
 
 }

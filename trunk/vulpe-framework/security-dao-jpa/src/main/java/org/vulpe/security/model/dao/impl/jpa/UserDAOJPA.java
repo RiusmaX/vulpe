@@ -23,6 +23,6 @@ import org.vulpe.security.model.entity.User;
 
 @Repository("UserDAO")
 @Transactional
-public class UserDAOJPAImpl extends VulpeBaseDAOJPA<User, Long> implements UserDAO {
+public class UserDAOJPA extends VulpeBaseDAOJPA<User, Long> implements UserDAO {
 
 }

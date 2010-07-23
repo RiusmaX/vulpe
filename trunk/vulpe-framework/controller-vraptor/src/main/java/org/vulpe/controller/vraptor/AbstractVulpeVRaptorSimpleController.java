@@ -25,24 +25,28 @@ import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.commons.VulpeControllerConfig;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
+import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.core.RequestInfo;
 
 /**
  * Action base for VRaptor
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  */
 @SuppressWarnings( { "serial" })
-public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpeBaseSimpleController {
+public abstract class AbstractVulpeVRaptorSimpleController extends
+		AbstractVulpeBaseSimpleController {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeVRaptorSimpleController.class);
+	protected static final Logger LOG = Logger
+			.getLogger(AbstractVulpeVRaptorSimpleController.class);
 
 	@Autowired
 	protected RequestInfo requestInfo;
@@ -53,7 +57,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#getActionConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
@@ -66,7 +70,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/**
 	 * Extension point to read report.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected DownloadInfo doReadReportLoad() {
@@ -94,7 +98,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected DownloadInfo prepareDownloadInfo() {
@@ -124,7 +128,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/**
 	 * Retrieves current HTTP Session.
-	 * 
+	 *
 	 * @return Http Session
 	 */
 	public HttpSession getSession() {
@@ -133,7 +137,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/**
 	 * Retrieves current HTTP Request.
-	 * 
+	 *
 	 * @return Http Servlet Request
 	 */
 	public HttpServletRequest getRequest() {
@@ -142,7 +146,7 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	/**
 	 * Retrieves current HTTP Response.
-	 * 
+	 *
 	 * @return Http Servlet Reponse
 	 */
 	public HttpServletResponse getResponse() {
@@ -159,6 +163,16 @@ public abstract class AbstractVulpeVRaptorSimpleController extends AbstractVulpe
 
 	public void addActionError(final String key, final Object... args) {
 		result.include("notice", getText(key));
+	}
+
+	@Path("/")
+	public void vraptor() {
+		result.include("controllerConfig", getControllerConfig());
+		if (getControllerType().equals(ControllerType.FRONTEND)) {
+			frontend();
+		} else if (getControllerType().equals(ControllerType.BACKEND)) {
+			backend();
+		}
 	}
 
 }

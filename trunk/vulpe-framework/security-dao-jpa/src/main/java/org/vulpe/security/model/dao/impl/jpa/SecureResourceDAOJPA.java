@@ -18,12 +18,12 @@ package org.vulpe.security.model.dao.impl.jpa;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
-import org.vulpe.security.model.dao.BasicUserDAO;
-import org.vulpe.security.model.entity.BasicUser;
+import org.vulpe.security.model.dao.SecureResourceDAO;
+import org.vulpe.security.model.entity.SecureResource;
 
-@Repository("BasicUserDAO")
+@Repository("SecureResourceDAO")
 @Transactional
-public class BasicUserDAOJPAImpl<ENTITY_CLASS extends BasicUser> extends
-		VulpeBaseDAOJPA<ENTITY_CLASS, Long> implements BasicUserDAO<ENTITY_CLASS> {
+public class SecureResourceDAOJPA extends VulpeBaseDAOJPA<SecureResource, Long>
+		implements SecureResourceDAO {
 
 }

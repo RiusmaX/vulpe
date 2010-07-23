@@ -24,7 +24,7 @@
 	</organization>
 
 	<properties>
-		<vraptor.version>3.1.2</vraptor.version>
+		<vraptor.version>3.1.3</vraptor.version>
 	</properties>
 
 	<dependencies>
