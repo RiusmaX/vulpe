@@ -229,7 +229,6 @@
 
 #content {
 	width: auto;
-	text-align: left;
 }
 
 #contentTitle {
@@ -262,6 +261,7 @@
 	background-color: #fff;
 	padding-bottom: 17px;
 	width: 100%;
+	text-align: left;
 }
 
 #body table {

@@ -1,9 +1,16 @@
 package org.vulpe.controller.vraptor.interceptor;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.controller.vraptor.VulpeVRaptorController;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeStringUtil;
+import org.vulpe.controller.vraptor.AbstractVulpeVRaptorSimpleController;
 
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Result;
@@ -31,14 +38,35 @@ public class VulpeControllerInterceptor implements Interceptor {
 		return true;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void intercept(InterceptorStack stack, ResourceMethod method, Object resourceInstance)
 			throws InterceptionException {
 		LOG.debug("Intercepting " + request.getRequestURI());
-		if (resourceInstance != null && resourceInstance instanceof VulpeVRaptorController) {
-			VulpeVRaptorController controller = (VulpeVRaptorController) resourceInstance;
-			result.include("controllerConfig", controller.getControllerConfig());
+		if (resourceInstance != null
+				&& resourceInstance instanceof AbstractVulpeVRaptorSimpleController) {
+			AbstractVulpeVRaptorSimpleController controller = (AbstractVulpeVRaptorSimpleController) resourceInstance;
+			List<Field> fields = VulpeReflectUtil.getInstance().getFields(controller.getClass());
+			for (Field field : fields) {
+				try {
+					result.include(field.getName(), PropertyUtils.getProperty(controller, field
+							.getName()));
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+			List<Method> methods = VulpeReflectUtil.getInstance().getMethods(controller.getClass());
+			for (Method method2 : methods) {
+				String methodName = method2.getName();
+				if (methodName.contains("get")
+						&& (method2.getParameterTypes() == null || method2.getParameterTypes().length == 0)) {
+					try {
+						methodName = VulpeStringUtil.lowerCaseFirst(methodName.substring(3));
+						result.include(methodName, method2.invoke(controller, new Object[] {}));
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+				}
+			}
 		}
 		stack.next(method, resourceInstance);
 	}
