@@ -13,6 +13,7 @@
 		<module>dependencies</module>
 		<module>parents/base</module>
 		<module>parents/struts</module>
+		<module>parents/vraptor</module>
 		<module>interfaces</module>
 		<module>annotations</module>
 		<module>commons</module>
@@ -35,6 +36,7 @@
 		<module>parents/struts-base</module>
 		<module>parents/struts-db4o</module>
 		<module>parents/struts-jpa</module>
+		<module>parents/vraptor-db4o</module>
 		<module>fox</module>
 		<module>web</module>
 		<module>web-struts</module>
