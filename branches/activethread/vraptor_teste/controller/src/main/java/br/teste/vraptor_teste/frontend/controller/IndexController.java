@@ -14,6 +14,6 @@ import br.com.caelum.vraptor.Resource;
 @Controller(controllerType = ControllerType.FRONTEND)
 public class IndexController extends AbstractVulpeVRaptorSimpleController {
 
-	Logger log = Logger.getLogger(IndexController.class);
+	private static final Logger LOG = Logger.getLogger(IndexController.class);
 
 }

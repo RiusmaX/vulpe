@@ -22,7 +22,7 @@
 	</context-param>
 	<context-param>
 		<param-name>br.com.caelum.vraptor.packages</param-name>
-		<param-value>org.vulpe</param-value>
+		<param-value>org.vulpe,br.teste.vraptor_teste</param-value>
 	</context-param>
 	<context-param>
 		<param-name>br.com.caelum.vraptor.provider</param-name>
