@@ -2,16 +2,15 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>${rootArtifactId}</artifactId>
-		<groupId>${groupId}</groupId>
-		<version>${version}</version>
-	</parent>
-	
+        <artifactId>${rootArtifactId}</artifactId>
+        <groupId>${groupId}</groupId>
+        <version>${version}</version>
+    </parent>
+
 	<groupId>${package}</groupId>
 	<artifactId>${rootArtifactId}-domains</artifactId>
 	<version>${version}</version>
@@ -37,14 +36,14 @@
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
 										<pathelement
-											location="${symbol_dollar}symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/${symbol_dollar}version}b3/ant-contrib-${symbol_dollar}version}b3.jar" />
+											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<property name="tools.dir"
-									value="${symbol_dollar}symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+									value="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
-								<available file="${symbol_dollar}{tools.dir}"
-									property="tools.dir.present" type="dir" />
+								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present"
+									type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
@@ -66,7 +65,7 @@
 					<options>
 						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/controller/templates/plugin.ftl</param>
 					</options>
-					<outputDirectory>${symbol_dollar}{basedir}/../web/src/main/java</outputDirectory>
+					<outputDirectory>${symbol_dollar}{basedir}/../</outputDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>

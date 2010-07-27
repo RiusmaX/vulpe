@@ -2,16 +2,15 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<artifactId>${rootArtifactId}</artifactId>
-		<groupId>${groupId}</groupId>
-		<version>${version}</version>
-	</parent>
-	
+        <artifactId>${rootArtifactId}</artifactId>
+        <groupId>${groupId}</groupId>
+        <version>${version}</version>
+    </parent>
+
 	<groupId>${package}</groupId>
 	<artifactId>${rootArtifactId}-domains</artifactId>
 	<version>${version}</version>
@@ -37,14 +36,14 @@
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
 									<classpath>
 										<pathelement
-											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/${version}b3/ant-contrib-${version}b3.jar" />
+											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
 									</classpath>
 								</taskdef>
 								<property name="tools.dir"
-									value="${symbol_dollar}{maven.repo}/org/vulpe/fox/${version}/fox-${version}/tools" />
+									value="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/${version}/vulpe-fox-${version}/tools" />
 								<property name="tools.dir.present" value="false" />
-								<available file="${symbol_dollar}{tools.dir}"
-									property="tools.dir.present" type="dir" />
+								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present"
+									type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
