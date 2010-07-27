@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import ${manager.daoPackageName}.${manager.entityName}DAO;
 import ${manager.packageName}.${manager.entityName};
-import org.vulpe.model.services.manager.impl.VulpeBaseCRUDManager;
+import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 
 /**
  * Manager implementation of ${manager.entityName}
  */
 @Service
-public class ${manager.name} extends VulpeBaseCRUDManager<${manager.entityName}, ${manager.idType}, ${manager.entityName}DAO> {
+public class ${manager.name} extends VulpeBaseManager<${manager.entityName}, ${manager.idType}, ${manager.entityName}DAO> {
 
 }
 
