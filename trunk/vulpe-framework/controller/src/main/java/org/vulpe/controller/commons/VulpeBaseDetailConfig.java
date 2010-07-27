@@ -25,7 +25,7 @@ import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.view.tags.Functions;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeBaseDetailConfig implements Serializable {
 
 	private String name;
@@ -55,8 +55,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 			final int startNewDetails, final int newDetails, final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
-		this.startNewDetails = startNewDetails;
-		this.newDetails = newDetails;
+		this.startNewDetails = startNewDetails == 0 ? 1 : startNewDetails;
+		this.newDetails = newDetails == 0 ? 1 : newDetails;
 		this.despiseFields = despiseFields.clone();
 		setSimpleName();
 	}
@@ -124,9 +124,9 @@ public class VulpeBaseDetailConfig implements Serializable {
 			setSimpleName();
 		}
 
-		this.viewPath = config.getViewPath()
-				.substring(0, StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/")
-				.concat(getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
+		this.viewPath = config.getViewPath().substring(0,
+				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/").concat(
+				getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
 
 		if (StringUtils.isEmpty(getTitleKey()) && StringUtils.isNotEmpty(getPropertyName())) {
 			setTitleKey(config.getTitleKey().concat(".").concat(getBaseName()));

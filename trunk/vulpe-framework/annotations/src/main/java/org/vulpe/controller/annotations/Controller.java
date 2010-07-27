@@ -77,12 +77,12 @@ public @interface Controller {
 	/**
 	 * Quantity of new records in tabular
 	 */
-	int tabularNewDetails() default 1;
+	int tabularNewDetails() default 0;
 
 	/**
 	 * Quantity of new records in tabular on start
 	 */
-	int tabularStartNewDetails() default 1;
+	int tabularStartNewDetails() default 0;
 
 	/**
 	 * Name of list

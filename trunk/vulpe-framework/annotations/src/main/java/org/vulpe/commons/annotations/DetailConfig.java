@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * Detail configuration
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -31,12 +31,12 @@ public @interface DetailConfig {
 	/**
 	 * Quantity of news details
 	 */
-	int newDetails() default 1;
+	int newDetails() default 0;
 
 	/**
 	 * Quantity of news details on start
 	 */
-	int startNewDetails() default 1;
+	int startNewDetails() default 0;
 
 	/**
 	 * Attributes to despise details
