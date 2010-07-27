@@ -44,6 +44,12 @@
 			<artifactId>${rootArtifactId}-core</artifactId>
 			<version>${version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-controller</artifactId>
+			<version>${version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
