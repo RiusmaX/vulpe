@@ -36,11 +36,11 @@ public @interface VulpeView {
 
 	boolean showButtonText() default true;
 
-	int widthButtonIcon() default 16;
+	int widthButtonIcon() default 32;
 
 	int widthMobileButtonIcon() default 32;
 
-	int heightButtonIcon() default 16;
+	int heightButtonIcon() default 32;
 
 	int heightMobileButtonIcon() default 32;
 
