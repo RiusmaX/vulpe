@@ -7,19 +7,18 @@
 
 	<persistence-unit name="${rootArtifactId}" transaction-type="JTA">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:/jdbc/${rootArtifactId}</jta-data-source>
-		<jar-file>APP-INF/lib/vulpe-model-1.0.jar</jar-file>
-		<jar-file>APP-INF/lib/vulpe-audit-1.0.jar</jar-file>
-		<jar-file>APP-INF/lib/vulpe-security-1.0.jar</jar-file>
+		<jta-data-source>java:comp/env/jdbc/${rootArtifactId}</jta-data-source>
+		<class>org.vulpe.audit.model.entity.AuditOccurrence</class>
+		<class>org.vulpe.security.model.entity.Role</class>
+		<class>org.vulpe.security.model.entity.SecureResource</class>
+		<class>org.vulpe.security.model.entity.SecureResourceRole</class>
+		<class>org.vulpe.security.model.entity.User</class>
+		<class>org.vulpe.security.model.entity.UserRole</class>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
-			<property name="hibernate.transaction.factory_class" value="org.hibernate.ejb.transaction.JoinableCMTTransactionFactory" />
-			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<!-- 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
-			 -->
 		</properties>
 	</persistence-unit>
 </persistence>
