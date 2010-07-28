@@ -23,7 +23,7 @@
 	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${vulpeFormName}_entity.orderBy"/>
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}_popupKey"/>
 	</c:if>
-	<c:if test="${securityContext.authenticated && empty popupKey}">
+	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">
 	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${securityContext.user.name}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
 	</c:if>
 	<c:if test="${showTitle && empty vulpeBodyTwice}">
