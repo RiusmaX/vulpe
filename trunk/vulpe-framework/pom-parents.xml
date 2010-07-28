@@ -14,6 +14,10 @@
 		<module>parents/base</module>
 		<module>parents/struts</module>
 		<module>parents/vraptor</module>
+		<module>parents/struts-base</module>
+		<module>parents/struts-db4o</module>
+		<module>parents/struts-jpa</module>
+		<module>parents/vraptor-base</module>
 		<module>parents/vraptor-db4o</module>
 	</modules>
 	<description>Vulpe Framework ;) Quick and Smart</description>
