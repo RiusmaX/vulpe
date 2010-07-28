@@ -30,20 +30,30 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
 			<version>1.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-struts</artifactId>
 			<version>1.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-struts</artifactId>
+			<version>1.0</version>
+			<type>war</type>
 		</dependency>
 	</dependencies>
 </project>

@@ -4,44 +4,52 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>vulpe-parent-vraptor-db4o</artifactId>
+	<artifactId>vulpe-parent-vraptor-base</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-	<name>Vulpe Framework - Parent VRaptor db4o</name>
+	<name>Vulpe Framework - Parent Base VRaptor</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-vraptor-base</artifactId>
+		<artifactId>vulpe-parent-vraptor</artifactId>
 		<version>1.0</version>
 	</parent>
 
-	<description>Vulpe Framework ;) Quick and Smart - Parent VRaptor db4o</description>
+	<description>Vulpe Framework ;) Quick and Smart - Parent Base VRaptor</description>
 	<url>http://vulpe.org</url>
 	<inceptionYear>2010</inceptionYear>
 	<organization>
 		<name>Active Thread</name>
 		<url>http://www.activethread.com.br</url>
 	</organization>
+
 	<dependencies>
 		<dependency>
-			<groupId>com.db4o</groupId>
-			<artifactId>db4o</artifactId>
-			<version>7.12</version>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web</artifactId>
+			<version>1.0</version>
+			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-model-db4o</artifactId>
+			<artifactId>vulpe-controller-vraptor</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-audit-dao-db4o</artifactId>
+			<artifactId>vulpe-audit-vraptor</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security-dao-db4o</artifactId>
+			<artifactId>vulpe-security-vraptor</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-vraptor</artifactId>
+			<version>1.0</version>
+			<type>war</type>
 		</dependency>
 	</dependencies>
 </project>

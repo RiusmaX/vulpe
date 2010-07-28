@@ -36,6 +36,7 @@
 		<module>parents/struts-base</module>
 		<module>parents/struts-db4o</module>
 		<module>parents/struts-jpa</module>
+		<module>parents/vraptor-base</module>
 		<module>parents/vraptor-db4o</module>
 		<module>fox</module>
 		<module>web</module>
