@@ -7,7 +7,7 @@
 	<artifactId>vulpe-parent-vraptor-base</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-	<name>Vulpe Framework - Parent Base VRaptor</name>
+	<name>Vulpe Framework - Parent VRaptor Base</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
@@ -15,7 +15,7 @@
 		<version>1.0</version>
 	</parent>
 
-	<description>Vulpe Framework ;) Quick and Smart - Parent Base VRaptor</description>
+	<description>Vulpe Framework ;) Quick and Smart - Parent VRaptor Base</description>
 	<url>http://vulpe.org</url>
 	<inceptionYear>2010</inceptionYear>
 	<organization>
