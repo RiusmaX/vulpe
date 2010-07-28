@@ -668,8 +668,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final ENTITY entity = prepareEntity(Action.DELETE);
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(
-					getDetail(), context, this);
+			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(getDetail(),
+					context, this);
 			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
 			final int size = details.size();
 			int removed = 0;
@@ -979,7 +979,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
 
-		tabularMountPaging(false);
+		tabularPagingMount(false);
 		setExecuted(true);
 	}
 
@@ -1054,6 +1054,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
+			if (collection != null && getControllerType().equals(ControllerType.TABULAR)) {
+				setTabularSize(collection.size());
+			}
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
@@ -1069,7 +1072,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				}
 			}
 
-			tabularMountPaging(true);
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				tabularPagingMount(true);
+			}
 			return detailConfig;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -1721,12 +1726,14 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return tabularSize;
 	}
 
-	protected void tabularMountPaging(final boolean add) {
+	protected void tabularPagingMount(final boolean add) {
 		if (getControllerType().equals(ControllerType.TABULAR)
 				&& getControllerConfig().getTabularPageSize() > 0) {
 			if (add) {
 				setTabularSize(getTabularSize()
 						+ getControllerConfig().getController().tabularNewDetails());
+			} else {
+				setTabularSize(getEntities().size());
 			}
 			setPaging(new Paging<ENTITY>(getTabularSize(), getControllerConfig()
 					.getTabularPageSize(), getPaging().getPage()));

@@ -970,7 +970,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
 
-		tabularMountPaging(false);
+		tabularPagingMount(false);
 		setExecuted(true);
 	}
 
@@ -1044,6 +1044,9 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 						.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
+			if (collection != null && getControllerType().equals(ControllerType.TABULAR)) {
+				setTabularSize(collection.size());
+			}
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
@@ -1059,7 +1062,9 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				}
 			}
 
-			tabularMountPaging(true);
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				tabularPagingMount(true);
+			}
 			return detailConfig;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -1706,12 +1711,14 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		return tabularSize;
 	}
 
-	protected void tabularMountPaging(final boolean add) {
+	protected void tabularPagingMount(final boolean add) {
 		if (getControllerType().equals(ControllerType.TABULAR)
 				&& getControllerConfig().getTabularPageSize() > 0) {
 			if (add) {
 				setTabularSize(getTabularSize()
 						+ getControllerConfig().getController().tabularNewDetails());
+			} else {
+				setTabularSize(getEntities().size());
 			}
 			setPaging(new Paging<ENTITY>(getTabularSize(), getControllerConfig()
 					.getTabularPageSize(), getPaging().getPage()));
