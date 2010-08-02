@@ -23,38 +23,38 @@ $(document).ready(function() {
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
 	<c:if test="${createShow || SELECT_createShow || CRUD_createShow}">
-		var buttonCreate = vulpe.util.getElement("vulpeButtonCreate_${vulpeFormName}");
-		if (buttonCreate) {
+		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
+		if (buttonCreate.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonCreate.click(); return false;});
 		}
 	</c:if>
 	<c:if test="${createPostShow || SELECT_createPostShow || CRUD_createPostShow}">
-		var buttonCreatePost = vulpe.util.getElement("vulpeButtonCreatePost_${vulpeFormName}");
-		if (buttonCreatePost) {
+		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost_${vulpeFormName}");
+		if (buttonCreatePost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
 		}
 	</c:if>
 	<c:if test="${updatePostShow || SELECT_updatePostShow || CRUD_updatePostShow}">
-		var buttonUpdatePost = vulpe.util.getElement("vulpeButtonUpdatePost_${vulpeFormName}");
-		if (buttonUpdatePost) {
+		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost_${vulpeFormName}");
+		if (buttonUpdatePost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
 		}
 	</c:if>
 	<c:if test="${tabularPostShow}">
-		var buttonTabularPost = vulpe.util.getElement("vulpeButtonTabularPost_${vulpeFormName}");
-		if (buttonTabularPost) {
+		var buttonTabularPost = vulpe.util.get("vulpeButtonTabularPost_${vulpeFormName}");
+		if (buttonTabularPost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
 		}
 	</c:if>
 	<c:if test="${deleteShow || SELECT_deleteShow || CRUD_deleteShow}">
-		var buttonDelete = vulpe.util.getElement("vulpeButtonDelete_${vulpeFormName}");
-		if (buttonDelete) {
+		var buttonDelete = vulpe.util.get("vulpeButtonDelete_${vulpeFormName}");
+		if (buttonDelete.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
 		}
 	</c:if>
 	<c:if test="${prepareShow || SELECT_prepareShow || CRUD_prepareShow}">
-		var buttonPrepare = vulpe.util.getElement("vulpeButtonPrepare_${vulpeFormName}");
-		if (buttonPrepare) {
+		var buttonPrepare = vulpe.util.get("vulpeButtonPrepare_${vulpeFormName}");
+		if (buttonPrepare.attr("onclick")) {
 			<c:if test="${controllerConfig.controllerType == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
@@ -65,36 +65,36 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${tabularFilterShow}">
-		var buttonTabularFilter = vulpe.util.getElement("vulpeButtonTabularFilter_${vulpeFormName}");
-		if (buttonTabularFilter) {
+		var buttonTabularFilter = vulpe.util.get("vulpeButtonTabularFilter_${vulpeFormName}");
+		if (buttonTabularFilter.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f7', function (){buttonTabularFilter.click();});
 			jQuery(document).bind('keydown', 'return', function (){buttonTabularFilter.click(); return false;});
 		}
 	</c:if>
 	<c:if test="${tabularReloadShow}">
-		var buttonTabularReload = vulpe.util.getElement("vulpeButtonTabularReload_${vulpeFormName}");
-		if (buttonTabularReload) {
+		var buttonTabularReload = vulpe.util.get("vulpeButtonTabularReload_${vulpeFormName}");
+		if (buttonTabularReload.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularReload.click();});
 		}
 	</c:if>
 	<c:if test="${readShow || SELECT_readShow || CRUD_readShow}">
-		var buttonRead = vulpe.util.getElement("vulpeButtonRead_${vulpeFormName}");
-		if (buttonRead) {
+		var buttonRead = vulpe.util.get("vulpeButtonRead_${vulpeFormName}");
+		if (buttonRead.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
 			jQuery(document).bind('keydown', 'return', function (){buttonRead.click(); return false;});
 		}
 	</c:if>
 	<c:if test="${clearShow || SELECT_clearShow || CRUD_clearShow}">
-		var buttonClear = vulpe.util.getElement("vulpeButtonClear_${vulpeFormName}");
-		if (buttonClear) {
+		var buttonClear = vulpe.util.get("vulpeButtonClear_${vulpeFormName}");
+		if (buttonClear.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
 		}
 	</c:if>
 	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
 	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
 	<c:if test="${buttonCreate_tabular}">
-		var buttonAddDetail_entities = vulpe.util.getElement("vulpeButtonAddDetail_${vulpeFormName}_entities");
-		if (buttonAddDetail_entities) {
+		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_entities");
+		if (buttonAddDetail_entities.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
 		}
 	</c:if>
@@ -103,8 +103,8 @@ $(document).ready(function() {
 		<c:set var="buttonDetailEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
-		var buttonAddDetail_${detail.baseName} = vulpe.util.getElement("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
-		if (buttonAddDetail_${detail.baseName}) {
+		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
+		if (buttonAddDetail_${detail.baseName}.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
 		}
 		</c:if>

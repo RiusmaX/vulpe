@@ -34,6 +34,7 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.OrderBy.OrderType;
@@ -329,6 +330,9 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		}
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getInstance().getFields(getEntityClass())) {
+			if (field.isAnnotationPresent(IgnoreAutoFilter.class)) {
+				continue;
+			}
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
 					field.getName());
 			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass())
@@ -362,7 +366,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 						query.descend(paramName).constrain(value).greater().equal();
 					}
 				}
-				if (Modifier.isTransient(field.getModifiers())) {
+				if (!Modifier.isTransient(field.getModifiers())) {
 					if (String.class.isAssignableFrom(field.getType())) {
 						final Like like = field.getAnnotation(Like.class);
 						if (like == null) {
