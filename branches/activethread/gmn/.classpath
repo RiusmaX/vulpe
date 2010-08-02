@@ -50,7 +50,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.0.2.RELEASE/spring-tx-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.2.RELEASE/spring-web-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-annotations/1.0/vulpe-annotations-1.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/com/sun/tools/1.6.0_07/tools-1.6.0_07.jar" sourcepath="/DOWNLOADS/jdk-6u20-ea-src-b02-jrl-01_apr_2010.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/activethread/gmn/gmn-domains/1.0/gmn-domains-1.0.jar" sourcepath="M2_REPO/br/com/activethread/gmn/gmn-domains/1.0/gmn-domains-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/activethread/gmn/gmn-anuncios/1.0/gmn-anuncios-1.0.jar" sourcepath="M2_REPO/br/com/activethread/gmn/gmn-anuncios/1.0/gmn-anuncios-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/activethread/gmn/gmn-publicacoes/1.0/gmn-publicacoes-1.0.jar" sourcepath="M2_REPO/br/com/activethread/gmn/gmn-publicacoes/1.0/gmn-publicacoes-1.0-sources.jar"/>
