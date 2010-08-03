@@ -5,7 +5,7 @@
 	<h1><fmt:message key='label.site.menu.Learn' /></h1>
 	</li>
 	<li><a href="javascript:void(0);"
-		onclick="vulpe.view.request.submitMenu('/Learn/frontend/ajax.action');"><fmt:message key='label.site.bottom.first.steps'/></a></li>
+		onclick="vulpe.view.request.submitMenu('/frontend/Learn/ajax');"><fmt:message key='label.site.bottom.first.steps'/></a></li>
 	<li>Tutorial</li>
 </ul>
 <ul>
@@ -28,6 +28,6 @@
 	<li>
 	<h1><fmt:message key='label.site.menu.Download' /></h1>
 	</li>
-	<li><a href="http://repository.vulpeforge.org/packages/all-in-one/vulpe-all-in-one-1.0-win32.7z" target="_blank">Vulpe 1.0 All-in-one (Windows 32bit)</a></li>
+	<li><a href="http://files.vulpeforge.org/all-in-one/vulpe-all-in-one-1.0-win32.exe" target="_blank">Vulpe 1.0 All-in-one (Windows 32bit)</a></li>
 </ul>
 </div>
