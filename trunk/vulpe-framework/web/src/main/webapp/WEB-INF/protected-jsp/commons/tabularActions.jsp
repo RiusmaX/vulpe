@@ -1,8 +1,6 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
-<c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
-
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <p>
+<%@include file="/WEB-INF/protected-jsp/commons/crudActionsExtended.jsp"%>
 <c:set var="style" value="display: none;" />
 <c:if test="${tabularFilterShow}">
 	<c:set var="style" value="display: inline;" />

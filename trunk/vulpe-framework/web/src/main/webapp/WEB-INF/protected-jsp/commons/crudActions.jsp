@@ -1,8 +1,6 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
-<c:set var="heightIcon"	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
-
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <p>
+<%@include file="/WEB-INF/protected-jsp/commons/crudActionsExtended.jsp"%>
 <c:set var="layer" value="body" />
 <c:if test="${vulpeBodyTwice}">
 	<c:set var="layer" value="crud" />
@@ -15,10 +13,7 @@
 	elementId="vulpeButtonClear_${vulpeFormName}"
 	javascript="document.forms['${vulpeFormName}'].reset();"
 	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonClear"/>
 <c:set var="style" value="display: none;" />
 <c:if test="${createShow || CRUD_createShow}">
 	<c:set var="style" value="display: inline;" />
@@ -30,10 +25,7 @@
 	beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)"
 	helpKey="vulpe.help.create" layer="${layer}"
 	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonCreate" />
 <c:set var="style" value="display: none;" />
 <c:if test="${createPostShow || CRUD_createPostShow}">
 	<c:set var="style" value="display: inline;" />
@@ -43,10 +35,7 @@
 	action="${controllerConfig.controllerName}/createPost/ajax"
 	helpKey="vulpe.help.createPost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonCreatePost" />
 <c:set var="style" value="display: none;" />
 <c:if test="${deleteShow || CRUD_deleteShow}">
 	<c:set var="style" value="display: inline;" />
@@ -57,10 +46,7 @@
 	action="${controllerConfig.controllerName}/delete/ajax"
 	helpKey="vulpe.help.delete"
 	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonDelete" />
 <c:set var="style" value="display: none;" />
 <c:if test="${updatePostShow || CRUD_updatePostShow}">
 	<c:set var="style" value="display: inline;" />
@@ -70,10 +56,7 @@
 	action="${controllerConfig.controllerName}/updatePost/ajax"
 	helpKey="vulpe.help.updatePost"
 	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonUpdatePost" />
 <c:set var="style" value="display: none;" />
 <c:if test="${prepareShow || CRUD_prepareShow}">
 	<c:set var="style" value="display: inline;" />
@@ -86,10 +69,7 @@
 	layer="${not empty layerUrlBack ? layerUrlBack : ''}"
 	helpKey="vulpe.help.prepare"
 	icon="themes/${vulpeTheme}/images/icons/button-back-${widthIcon}x${heightIcon}.png"
-	showButtonAsImage="${vulpeShowButtonAsImage}"
-	showButtonIcon="${vulpeShowButtonIcon}"
-	showButtonText="${vulpeShowButtonText}" widthIcon="${widthIcon}"
-	heightIcon="${heightIcon}" />
+	iconClass="vulpeButtonBack" />
 <c:remove var="urlBack" scope="session" />
 <c:remove var="layerUrlBack" scope="session" />
 </p>

@@ -21,6 +21,48 @@
 	width: auto;
 }
 
+.vulpeButtonBack32x32 {
+	background: url(../../images/icons/button-back-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonClear32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonCreate32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonCreatePost32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonRead32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonUpdate32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
+.vulpeButtonUpdatePost32x32 {
+	background: url(../../images/icons/button-clear-32x32.png);
+	width: 32px;
+	height: 32px;
+}
+
 .vulpeBlockLabel {
 	display: block;
 	width: 135px;

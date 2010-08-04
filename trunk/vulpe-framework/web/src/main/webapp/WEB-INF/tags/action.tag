@@ -29,13 +29,13 @@
 
 <c:set var="show" value="${true}" />
 <c:if test="${empty showButtonAsImage}">
-	<c:set var="showButtonAsImage" value="${true}" />
+	<c:set var="showButtonAsImage" value="${vulpeShowButtonAsImage}" />
 </c:if>
 <c:if test="${empty showButtonIcon}">
-	<c:set var="showButtonIcon" value="${false}" />
+	<c:set var="showButtonIcon" value="${vulpeShowButtonIcon}" />
 </c:if>
 <c:if test="${empty showButtonText}">
-	<c:set var="showButtonText" value="${false}" />
+	<c:set var="showButtonText" value="${vulpeShowButtonText}" />
 </c:if>
 
 <c:if test="${not empty logged && logged eq true && util:isLogged(pageContext) eq false}">
@@ -97,10 +97,10 @@
 		<c:otherwise>
 			<c:if test="${not empty icon}">
 				<c:if test="${empty widthIcon}">
-					<c:set var="widthIcon" value="16" />
+					<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
 				</c:if>
 				<c:if test="${empty heightIcon}">
-					<c:set var="heightIcon" value="16" />
+					<c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
 				</c:if>
 				<c:if test="${empty borderIcon}">
 					<c:set var="borderIcon" value="0" />

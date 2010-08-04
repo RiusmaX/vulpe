@@ -1,5 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <c:set var="index" value="" />
 <c:if test="${not empty targetConfig.parentDetailConfig}">
 	<c:set var="indexEL"
@@ -7,7 +6,9 @@
 	<c:set var="currentDetailIndex" value="${util:eval(pageContext, indexEL)}" />
 </c:if>
 
-<p><c:set var="buttonDetailEL"
+<p>
+<%@include file="/WEB-INF/protected-jsp/commons/detailActionsExtended.jsp"%>
+<c:set var="buttonDetailEL"
 	value="${'${'}addDetailShow${targetConfig.baseName}${'}'}" /> <c:set
 	var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" /> <c:set var="style"
 	value="display: none;" /> <c:if test="${buttonDetail}">

@@ -1,9 +1,6 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:set var="widthIcon"
-	value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
-<c:set var="heightIcon"
-	value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <p>
+<%@include file="/WEB-INF/protected-jsp/commons/selectActionsExtended.jsp"%>
 <c:set var="layer" value="body" />
 <c:if test="${vulpeBodyTwice}">
 	<c:set var="layer" value="select" />

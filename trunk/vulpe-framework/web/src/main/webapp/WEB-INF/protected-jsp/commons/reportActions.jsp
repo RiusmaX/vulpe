@@ -1,6 +1,6 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <p>
+<%@include file="/WEB-INF/protected-jsp/commons/crudActionsExtended.jsp"%>
 	<c:set var="style" value="display: none;"/>
 	<c:if test="${prepareShow}">
 		<c:set var="style" value="display: inline;"/>
