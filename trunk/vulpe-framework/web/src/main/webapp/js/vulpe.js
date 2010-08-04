@@ -1683,7 +1683,8 @@ var vulpe = {
 				} else {
 					var field = vulpe.util.get(fieldName);
 					var required = field.attr("class").indexOf("vulpeRequired") != -1;
-					if (required && field.val().length == 0) {
+					var length = field.val().length;
+					if (required && length == 0) {
 						vulpe.exception.showFieldError(this);
 					} else {
 						if (config.min) {
@@ -1701,13 +1702,13 @@ var vulpe = {
 							}
 						}
 						if (config.minlength) {
-							if (vulpe.util.trim(field.val()).length >= config.minlength) {
+							if (vulpe.util.trim(field.val()).length >= config.minlength || length == 0) {
 								vulpe.exception.hideFieldError(this);
 							} else {
 								vulpe.exception.showFieldError(this);
 							}
 						} else if (config.maxlength) {
-							if (vulpe.util.trim(field.val()).length <= config.maxlength) {
+							if (vulpe.util.trim(field.val()).length <= config.maxlength || length == 0) {
 								vulpe.exception.hideFieldError(this);
 							} else {
 								vulpe.exception.showFieldError(this);
