@@ -27,23 +27,17 @@ import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
-import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.VulpeSimpleEntity;
 
 import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends VulpeBaseSimpleEntity implements
 		VulpeEntity<ID> {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
-
-	@IgnoreAutoFilter
-	private String userOfLastUpdate;
-
-	@IgnoreAutoFilter
-	private Date dateOfLastUpdate;
 
 	@IgnoreAudit
 	private transient boolean selected;
@@ -87,7 +81,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
-	public int compareTo(final VulpeEntity<ID> entity) {
+	public int compareTo(final VulpeSimpleEntity entity) {
 		if (this.equals(entity)) {
 			return 0;
 		}
@@ -96,11 +90,15 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 			return 999999999;
 		}
 
-		if (entity.getId() == null) {
-			return -999999999;
-		}
+		if (entity instanceof VulpeEntity) {
+			final VulpeEntity persistentEntity = (VulpeEntity) entity;
+			if (persistentEntity.getId() == null) {
+				return -999999999;
+			}
 
-		return getId().compareTo(entity.getId());
+			return getId().compareTo(persistentEntity.getId());
+		}
+		return 0;
 	}
 
 	@Transient
@@ -148,29 +146,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Override
 	public VulpeEntity<ID> clone() {
-		VulpeEntity<ID> entity = null;
-		try {
-			entity = (VulpeEntity<ID>) super.clone();
-		} catch (CloneNotSupportedException e) {
-			LOG.error(e);
-		}
-		return entity;
-	}
-
-	public void setDateOfLastUpdate(Date dateOfLastUpdate) {
-		this.dateOfLastUpdate = dateOfLastUpdate;
-	}
-
-	public Date getDateOfLastUpdate() {
-		return dateOfLastUpdate;
-	}
-
-	public void setUserOfLastUpdate(String userOfLastUpdate) {
-		this.userOfLastUpdate = userOfLastUpdate;
-	}
-
-	public String getUserOfLastUpdate() {
-		return userOfLastUpdate;
+		return (VulpeEntity<ID>) super.clone();
 	}
 
 }

@@ -773,13 +773,14 @@ var vulpe = {
 						}
 					}
 				}
-			} else {
-				fields = jQuery("input", parent);
-				for (var i = 0; i < fields.length; i++) {
-					var field = jQuery(fields[i]);
-					if (!vulpe.validate.validateAttribute(field)) {
-						valid = false;
-					}
+			}
+			var allFields = jQuery("input", parent);
+			var invalidFields = 0;
+			for (var i = 0; i < allFields.length; i++) {
+				var field = jQuery(allFields[i]);
+				if (!vulpe.validate.validateAttribute(field)) {
+					valid = false;
+					invalidFields++;
 				}
 			}
 			if (!valid) {
@@ -791,8 +792,9 @@ var vulpe = {
 				$(messageLayer).removeClass("vulpeMessageError");
 				$(messageLayer).removeClass("vulpeMessageSuccess");
 				$(messageLayer).addClass("vulpeMessageValidation");
+				var manyFields = (invalidFields > 1 || fields.length > 1);
 				var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
-				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + (fields.length > 1 ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield) + "</li></ul>" + messagesClose);
+				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + (manyFields ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield) + "</li></ul>" + messagesClose);
 				$(messageLayer).slideDown("slow");
 				jQuery(document).bind("keydown", "Esc", function(evt) {
 					$('#messages').slideUp('slow');
@@ -1669,8 +1671,8 @@ var vulpe = {
 			});
 			vulpe.util.get(messageSuffix).show();
 			var errorController = function () {
-				var config = vulpe.config.elements[fieldName];
-				if (!vulpe.config.elements[fieldName]) {
+				var config = vulpe.util.getElementConfig(fieldName);
+				if (!config) {
 					if (this.value.length == 0) {
 						vulpe.exception.showFieldError(this);
 					} else {
@@ -1680,32 +1682,36 @@ var vulpe = {
 					}
 				} else {
 					var field = vulpe.util.get(fieldName);
-					if (config.min) {
-						if (field.val() >= config.min) {
-							vulpe.exception.hideFieldError(this);
-						} else {
-							vulpe.exception.showFieldError(this);
+					var required = field.attr("class").indexOf("vulpeRequired") != -1;
+					if (required && field.val().length == 0) {
+						vulpe.exception.showFieldError(this);
+					} else {
+						if (config.min) {
+							if (field.val() >= config.min) {
+								vulpe.exception.hideFieldError(this);
+							} else {
+								vulpe.exception.showFieldError(this);
+							}
 						}
-					}
-					if (config.max) {
-						if (field.val() <= config.max) {
-							vulpe.exception.hideFieldError(this);
-						} else {
-							vulpe.exception.showFieldError(this);
+						if (config.max) {
+							if (field.val() <= config.max) {
+								vulpe.exception.hideFieldError(this);
+							} else {
+								vulpe.exception.showFieldError(this);
+							}
 						}
-					}
-					if (config.minlength) {
-						if (vulpe.util.trim(field.val()).length >= config.minlength) {
-							vulpe.exception.hideFieldError(this);
-						} else {
-							vulpe.exception.showFieldError(this);
-						}
-					}
-					if (config.maxlength) {
-						if (vulpe.util.trim(field.val()).length <= config.maxlength) {
-							vulpe.exception.hideFieldError(this);
-						} else {
-							vulpe.exception.showFieldError(this);
+						if (config.minlength) {
+							if (vulpe.util.trim(field.val()).length >= config.minlength) {
+								vulpe.exception.hideFieldError(this);
+							} else {
+								vulpe.exception.showFieldError(this);
+							}
+						} else if (config.maxlength) {
+							if (vulpe.util.trim(field.val()).length <= config.maxlength) {
+								vulpe.exception.hideFieldError(this);
+							} else {
+								vulpe.exception.showFieldError(this);
+							}
 						}
 					}
 				}

@@ -41,10 +41,12 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
-import org.vulpe.model.entity.VulpeLogicEntity;
+import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
@@ -255,9 +257,18 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				throw new VulpeSystemException(e);
 			}
 			if (isNotEmpty(value)) {
-				final AutoComplete autoComplete = field.getAnnotation(AutoComplete.class);
-				if (autoComplete != null) {
+				if (field.isAnnotationPresent(AutoComplete.class)) {
 					value = "%" + value + "%";
+				}
+				final Like like = field.getAnnotation(Like.class);
+				if (like != null) {
+					if (like.type().equals(LikeType.BEGIN)) {
+						value = value + "%";
+					} else if (like.type().equals(LikeType.END)) {
+						value = "%" + value;
+					} else {
+						value = "%" + value + "%";
+					}
 				}
 				params.put(field.getName(), value);
 				countParam++;
@@ -288,7 +299,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						Param.class, entity.getClass(), name);
 				if (param == null) {
 					if (value instanceof String) {
-						hql.append("upper(obj.").append(name).append(") like upper(:").append(name)
+						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
+								Like.class, entity.getClass(), name);
+						hql.append("upper(obj.").append(name).append(") ").append(
+								like != null ? "like" : "=").append(" upper(:").append(name)
 								.append(")");
 					} else {
 						hql.append("obj.").append(name).append(" = :").append(name);

@@ -48,6 +48,7 @@ import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 
 
 /**
@@ -1699,8 +1700,11 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	}
 
 	protected void updateAuditInformation(final ENTITY entity) {
-		entity.setUserOfLastUpdate(getUserAuthenticated());
-		entity.setDateOfLastUpdate(Calendar.getInstance().getTime());
+		if (entity instanceof AbstractVulpeBaseAuditEntity) {
+			final AbstractVulpeBaseAuditEntity auditEntity = (AbstractVulpeBaseAuditEntity) entity;
+			auditEntity.setUserOfLastUpdate(getUserAuthenticated());
+			auditEntity.setDateOfLastUpdate(Calendar.getInstance().getTime());
+		}
 	}
 
 	public void setTabularSize(int tabularSize) {

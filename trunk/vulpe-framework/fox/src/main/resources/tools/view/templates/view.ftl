@@ -7,8 +7,8 @@
 ################################################################################
 label.${view.projectName}.${view.moduleName}.${view.name}.select=Select of ${view.name?capitalize}
 label.${view.projectName}.${view.moduleName}.${view.name}.select.header=List of ${view.name?capitalize}
-<#list view.arguments as field>
-label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}=${field.name?capitalize}
+<#list view.labels as label>
+label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${label?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>

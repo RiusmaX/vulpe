@@ -29,6 +29,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context;
@@ -145,6 +146,9 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 
 	@Override
 	public boolean isAuthenticated() {
+		if (!VulpeConfigHelper.isSecurityEnabled()) {
+			return false;
+		}
 		final Authentication authentication = getAuthentication();
 		final boolean autenticated = authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken);

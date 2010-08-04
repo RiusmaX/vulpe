@@ -59,7 +59,7 @@ $(document).ready(function() {
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
 			<c:if test="${controllerConfig.controllerType == 'SELECT'}">
-			<c:set var="prepare" value="Shift+del"/>
+			<c:set var="prepare" value="Ctrl+Shift+del"/>
 			</c:if>
 			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
 		}
@@ -87,7 +87,7 @@ $(document).ready(function() {
 	<c:if test="${clearShow || SELECT_clearShow || CRUD_clearShow}">
 		var buttonClear = vulpe.util.get("vulpeButtonClear_${vulpeFormName}");
 		if (buttonClear.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Shift+del', function (){buttonClear.click();});
+			jQuery(document).bind('keydown', 'Ctrl+Shift+del', function (){buttonClear.click();});
 		}
 	</c:if>
 	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>

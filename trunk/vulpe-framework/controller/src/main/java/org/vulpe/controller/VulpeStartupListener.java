@@ -62,10 +62,12 @@ public class VulpeStartupListener implements ServletContextListener {
 		LOG.debug("Entering in Context Initialized");
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 			VulpeDB4OUtil.getInstance().getObjectServer();
-			final VulpeSecurityContext vulpeSecurityContext = AbstractVulpeBeanFactory
-					.getInstance().getBean(VulpeSecurityContext.class.getSimpleName());
-			if (vulpeSecurityContext != null) {
-				vulpeSecurityContext.initialize();
+			if (VulpeConfigHelper.isSecurityEnabled()) {
+				final VulpeSecurityContext vulpeSecurityContext = AbstractVulpeBeanFactory
+						.getInstance().getBean(VulpeSecurityContext.class.getSimpleName());
+				if (vulpeSecurityContext != null) {
+					vulpeSecurityContext.initialize();
+				}
 			}
 		}
 

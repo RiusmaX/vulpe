@@ -16,7 +16,6 @@
 package org.vulpe.model.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Default entity Interface
@@ -24,11 +23,10 @@ import java.util.Date;
  * @param <ID>
  *            Type of entity identifier
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
- * @author <a href="mailto:geraldo.matos@activethread.com.br">Geraldo Matos</a>
+ * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
  */
 @SuppressWarnings("unchecked")
-public interface VulpeEntity<ID extends Serializable & Comparable> extends Serializable,
-		Comparable<VulpeEntity<ID>>, Cloneable {
+public interface VulpeEntity<ID extends Serializable & Comparable> extends VulpeSimpleEntity {
 	ID getId();
 
 	void setId(final ID id);
@@ -46,14 +44,6 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Seria
 	boolean isHistoryAuditable();
 
 	String toXMLAudit();
-
-	String getUserOfLastUpdate();
-
-	void setUserOfLastUpdate(final String username);
-
-	Date getDateOfLastUpdate();
-
-	void setDateOfLastUpdate(final Date date);
 
 	VulpeEntity<ID> clone();
 }

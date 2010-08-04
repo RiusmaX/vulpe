@@ -13,15 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.model.annotations.db4o;
+package org.vulpe.model.entity;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.Serializable;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.METHOD })
-public @interface Like {
+/**
+ * Default simple entity Interface
+ *
+ * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
+ */
+public interface VulpeSimpleEntity extends Serializable,
+		Comparable<VulpeSimpleEntity>, Cloneable {
+
+	VulpeSimpleEntity clone();
 
 }

@@ -31,6 +31,7 @@ public class DecoratedView implements Serializable {
 	private List<DecoratedViewField> arguments;
 	private List<DecoratedViewField> items;
 	private List<DecoratedViewField> fields;
+	private List<String> labels;
 
 	public String getName() {
 		return name;
@@ -110,6 +111,14 @@ public class DecoratedView implements Serializable {
 
 	public List<DecoratedViewDetail> getDetails() {
 		return details;
+	}
+
+	public void setLabels(List<String> labels) {
+		this.labels = labels;
+	}
+
+	public List<String> getLabels() {
+		return labels;
 	}
 
 }

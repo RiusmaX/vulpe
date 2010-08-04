@@ -15,20 +15,32 @@
  */
 package org.vulpe.model.entity.impl;
 
+import org.apache.log4j.Logger;
+import org.vulpe.model.entity.VulpeSimpleEntity;
+
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
+ *
  */
 @SuppressWarnings("serial")
-public class VulpeBaseSimpleEntity extends AbstractVulpeBaseEntity<Long> {
+public class VulpeBaseSimpleEntity implements VulpeSimpleEntity {
 
-	public Long getId() {
-		return null;
+	private static final Logger LOG = Logger.getLogger(VulpeBaseSimpleEntity.class);
+
+	@Override
+	public int compareTo(VulpeSimpleEntity entity) {
+		return 0;
 	}
 
-	public void setId(final Long identifier) {
-		// do nothing
+	@Override
+	public VulpeSimpleEntity clone() {
+		VulpeSimpleEntity entity = null;
+		try {
+			entity = (VulpeSimpleEntity) super.clone();
+		} catch (CloneNotSupportedException e) {
+			LOG.error(e);
+		}
+		return entity;
 	}
-
 }

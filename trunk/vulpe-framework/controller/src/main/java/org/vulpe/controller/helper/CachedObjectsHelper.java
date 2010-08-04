@@ -92,7 +92,11 @@ public final class CachedObjectsHelper {
 			final List<URL> urls = new ArrayList<URL>();
 			for (URL url : urlsWebInfLib) {
 				final String jarName = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
-				if (jarName.contains(VulpeConstants.FRAMEWORK)
+				if (!VulpeConfigHelper.isSecurityEnabled()
+						&& jarName.contains(VulpeConstants.VULPE_SECURITY)) {
+					continue;
+				}
+				if (jarName.contains(VulpeConstants.VULPE)
 						|| jarName.contains(VulpeConstants.DOMAINS)) {
 					urls.add(url);
 				}
@@ -168,8 +172,8 @@ public final class CachedObjectsHelper {
 							}
 							array.append("}");
 							mapCachedEnumArray.put(enumName, array.toString());
-							LOG.debug("Reading object: ".concat(enumName).concat(" [")
-									.concat(valuesDescricption.toString()).concat("]"));
+							LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(
+									valuesDescricption.toString()).concat("]"));
 							mapCachedEnum.put(enumName, list);
 						} catch (Exception e) {
 							LOG.error(e);
@@ -224,9 +228,9 @@ public final class CachedObjectsHelper {
 						}
 						valuesDescricption.append(object);
 						final ValueBean value = new ValueBean(object.toString(),
-								VulpeConstants.View.LABEL.concat(projectName)
-										.concat(VulpeConstants.View.ENUM).concat(enumName)
-										.concat(".").concat(object.toString()));
+								VulpeConstants.View.LABEL.concat(projectName).concat(
+										VulpeConstants.View.ENUM).concat(enumName).concat(".")
+										.concat(object.toString()));
 						array.append("'");
 						array.append(value.getId());
 						array.append("':'");
@@ -235,8 +239,8 @@ public final class CachedObjectsHelper {
 					}
 					array.append("}");
 					mapCachedEnumArray.put(enumName, array.toString());
-					LOG.debug("Reading object: ".concat(enumName).concat(" [")
-							.concat(valuesDescricption.toString()).concat("]"));
+					LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(
+							valuesDescricption.toString()).concat("]"));
 					mapCachedEnum.put(enumName, list);
 				} catch (Exception e) {
 					LOG.error(e);

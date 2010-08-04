@@ -103,6 +103,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 	protected void prepareFields(final DecoratedClassDeclaration clazz, final DecoratedView view) {
 		final List<DecoratedViewDetail> details = new ArrayList<DecoratedViewDetail>();
 		final List<DecoratedViewField> fields = new ArrayList<DecoratedViewField>();
+		final List<String> labels = new ArrayList<String>();
 		final List<DecoratedViewField> items = new ArrayList<DecoratedViewField>();
 		final List<DecoratedViewField> arguments = new ArrayList<DecoratedViewField>();
 		for (FieldDeclaration field : clazz.getFields()) {
@@ -165,11 +166,15 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				}
 				items.add(decoratedViewField);
 			}
+			if (column != null || decoratedViewField.isArgument()) {
+				labels.add(decoratedViewField.getName());
+			}
 		}
 		view.setDetails(details);
 		view.setFields(fields);
 		view.setArguments(arguments);
 		view.setItems(items);
+		view.setLabels(labels);
 		view.setColumnSpan(items.size() + 5);
 	}
 
@@ -329,7 +334,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setValidateScope(scope.toString());
 			StringBuilder requiredScope = new StringBuilder();
 			for (VulpeValidateScope validadeRequiredScope : validate.requiredScope()) {
-				if ("".equals(scope.toString())) {
+				if ("".equals(requiredScope.toString())) {
 					requiredScope.append(validadeRequiredScope.name());
 				} else {
 					requiredScope.append(",").append(validadeRequiredScope.name());
