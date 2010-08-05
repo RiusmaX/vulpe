@@ -5,71 +5,25 @@
 <c:if test="${vulpeBodyTwice}">
 	<c:set var="layer" value="crud" />
 </c:if>
-<c:set var="style" value="display: none;" />
 <c:if test="${clearShow || CRUD_clearShow}">
-	<c:set var="style" value="display: inline;" />
+<v:action labelKey="clear" helpKey="clear" elementId="Clear" javascript="document.forms['${vulpeFormName}'].reset();" icon="clear" iconClass="Clear"/>
 </c:if>
-<v:action style="${style}" labelKey="vulpe.label.clear"
-	elementId="vulpeButtonClear_${vulpeFormName}"
-	javascript="document.forms['${vulpeFormName}'].reset();"
-	icon="themes/${vulpeTheme}/images/icons/button-clear-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonClear"/>
-<c:set var="style" value="display: none;" />
 <c:if test="${createShow || CRUD_createShow}">
-	<c:set var="style" value="display: inline;" />
+<v:action validate="false" style="${style}" labelKey="create" elementId="Create" action="create" beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)" helpKey="create" layer="${layer}" icon="add" iconClass="Create" />
 </c:if>
-<v:action validate="false" style="${style}"
-	labelKey="vulpe.label.create"
-	elementId="vulpeButtonCreate_${vulpeFormName}"
-	action="${controllerConfig.controllerName}/create/ajax"
-	beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)"
-	helpKey="vulpe.help.create" layer="${layer}"
-	icon="themes/${vulpeTheme}/images/icons/button-add-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonCreate" />
-<c:set var="style" value="display: none;" />
 <c:if test="${createPostShow || CRUD_createPostShow}">
-	<c:set var="style" value="display: inline;" />
+<v:action labelKey="createPost" elementId="CreatePost" action="createPost"	helpKey="createPost" icon="save" iconClass="CreatePost" />
 </c:if>
-<v:action style="${style}" labelKey="vulpe.label.createPost"
-	elementId="vulpeButtonCreatePost_${vulpeFormName}"
-	action="${controllerConfig.controllerName}/createPost/ajax"
-	helpKey="vulpe.help.createPost"
-	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonCreatePost" />
-<c:set var="style" value="display: none;" />
 <c:if test="${deleteShow || CRUD_deleteShow}">
-	<c:set var="style" value="display: inline;" />
+<v:action beforeJs="vulpe.view.confirmExclusion()" validate="false"	labelKey="delete" elementId="Delete" action="delete" helpKey="delete" icon="delete" iconClass="Delete" />
 </c:if>
-<v:action beforeJs="vulpe.view.confirmExclusion()" validate="false"
-	style="${style}" labelKey="vulpe.label.delete"
-	elementId="vulpeButtonDelete_${vulpeFormName}"
-	action="${controllerConfig.controllerName}/delete/ajax"
-	helpKey="vulpe.help.delete"
-	icon="themes/${vulpeTheme}/images/icons/button-delete-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonDelete" />
-<c:set var="style" value="display: none;" />
 <c:if test="${updatePostShow || CRUD_updatePostShow}">
-	<c:set var="style" value="display: inline;" />
+<v:action labelKey="updatePost"	elementId="UpdatePost"	action="updatePost"	helpKey="updatePost" icon="save" iconClass="UpdatePost" />
 </c:if>
-<v:action style="${style}" labelKey="vulpe.label.updatePost"
-	elementId="vulpeButtonUpdatePost_${vulpeFormName}"
-	action="${controllerConfig.controllerName}/updatePost/ajax"
-	helpKey="vulpe.help.updatePost"
-	icon="themes/${vulpeTheme}/images/icons/button-save-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonUpdatePost" />
-<c:set var="style" value="display: none;" />
 <c:if test="${prepareShow || CRUD_prepareShow}">
-	<c:set var="style" value="display: inline;" />
-</c:if>
 <c:set var="action"	value="${controllerConfig.ownerController}/select/ajax${operation == 'update' || operation == 'updatePost' ? '?back=true' : ''}" />
-<v:action
-	validate="false" style="${style}" labelKey="vulpe.label.prepare"
-	elementId="vulpeButtonPrepare_${vulpeFormName}"
-	action="${not empty urlBack ? urlBack : action}"
-	layer="${not empty layerUrlBack ? layerUrlBack : ''}"
-	helpKey="vulpe.help.prepare"
-	icon="themes/${vulpeTheme}/images/icons/button-back-${widthIcon}x${heightIcon}.png"
-	iconClass="vulpeButtonBack" />
+<v:action validate="false" labelKey="prepare" elementId="Prepare" action="${not empty urlBack ? urlBack : action}"	layer="${not empty layerUrlBack ? layerUrlBack : ''}" helpKey="prepare" icon="back" iconClass="Back" />
 <c:remove var="urlBack" scope="session" />
 <c:remove var="layerUrlBack" scope="session" />
+</c:if>
 </p>
