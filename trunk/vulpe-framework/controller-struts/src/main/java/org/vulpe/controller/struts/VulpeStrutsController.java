@@ -782,6 +782,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		if (getEntities() == null || getEntities().isEmpty()) {
 			onRead();
 		}
+		for (ENTITY entity : getEntities()) {
+			entity.setAutoComplete(getEntitySelect().getAutoComplete());
+		}
 		JSONArray jsonArray = new JSONArray(getEntities());
 		setRequestAttribute("JSON", jsonArray.toString());
 		return Forward.JSON;
@@ -1433,7 +1436,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			int count = 1;
 			for (DuplicatedBean duplicatedBean : duplicatedBeans) {
 				if (duplicatedBeans.size() > 1 && duplicatedBeans.size() == count) {
-					lines.append(" " + getText("vulpe.label.and") + " " + duplicatedBean.getLine());
+					lines.append(" " + getText("label.vulpe.and") + " " + duplicatedBean.getLine());
 				} else {
 					lines.append(StringUtils.isBlank(lines.toString()) ? String
 							.valueOf(duplicatedBean.getLine()) : ", " + duplicatedBean.getLine());

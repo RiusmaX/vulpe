@@ -47,11 +47,11 @@
 		<c:set var="beforeJs" value="" />
 	</c:if>
 	<c:set var="buttonPrefix" value="vulpeButton" />
-	<c:set var="labelKeyPrefix" value="vulpe.label." />
+	<c:set var="labelKeyPrefix" value="label.vulpe." />
 	<c:if test="${not empty labelKey && !fn:contains(labelKey, '.')}">
 		<c:set var="labelKey" value="${labelKeyPrefix}${labelKey}" />
 	</c:if>
-	<c:set var="helpKeyPrefix" value="vulpe.help." />
+	<c:set var="helpKeyPrefix" value="help.vulpe." />
 	<c:if test="${not empty helpKey && !fn:contains(helpKey, '.')}">
 		<c:set var="helpKey" value="${helpKeyPrefix}${helpKey}" />
 	</c:if>

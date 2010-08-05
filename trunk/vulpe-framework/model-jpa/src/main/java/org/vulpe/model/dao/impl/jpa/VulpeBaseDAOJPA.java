@@ -39,7 +39,6 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
@@ -233,45 +232,53 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 */
 	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
-		int countParam = 0;
 		final StringBuilder order = new StringBuilder();
-		for (Field field : fields) {
-			if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
-					|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
-					.getModifiers()))
-					&& !field.isAnnotationPresent(Param.class)) {
-				continue;
-			}
-			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
-			if (orderBy != null) {
-				if (StringUtils.isNotBlank(order.toString())) {
-					order.append(",");
-				}
-				order.append("obj.").append(field.getName()).append(" ").append(
-						orderBy.type().name());
-			}
-			Object value = null;
+		int countParam = 0;
+		if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
 			try {
-				value = PropertyUtils.getProperty(entity, field.getName());
+				String value = "%" + PropertyUtils.getProperty(entity, entity.getAutoComplete())
+						+ "%";
+				params.put(entity.getAutoComplete(), value);
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
-			if (isNotEmpty(value)) {
-				if (field.isAnnotationPresent(AutoComplete.class)) {
-					value = "%" + value + "%";
+		} else {
+			for (Field field : fields) {
+				if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
+						|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
+						.getModifiers()))
+						&& !field.isAnnotationPresent(Param.class)) {
+					continue;
 				}
-				final Like like = field.getAnnotation(Like.class);
-				if (like != null) {
-					if (like.type().equals(LikeType.BEGIN)) {
-						value = value + "%";
-					} else if (like.type().equals(LikeType.END)) {
-						value = "%" + value;
-					} else {
-						value = "%" + value + "%";
+				final OrderBy orderBy = field.getAnnotation(OrderBy.class);
+				if (orderBy != null) {
+					if (StringUtils.isNotBlank(order.toString())) {
+						order.append(",");
 					}
+					order.append("obj.").append(field.getName()).append(" ").append(
+							orderBy.type().name());
 				}
-				params.put(field.getName(), value);
-				countParam++;
+				Object value = null;
+				try {
+					value = PropertyUtils.getProperty(entity, field.getName());
+				} catch (Exception e) {
+					throw new VulpeSystemException(e);
+				}
+				if (isNotEmpty(value)) {
+					final String paramName = field.getName();
+					final Like like = field.getAnnotation(Like.class);
+					if (like != null) {
+						if (like.type().equals(LikeType.BEGIN)) {
+							value = value + "%";
+						} else if (like.type().equals(LikeType.END)) {
+							value = "%" + value;
+						} else {
+							value = "%" + value + "%";
+						}
+					}
+					params.put(paramName, value);
+					countParam++;
+				}
 			}
 		}
 
@@ -279,7 +286,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
 		if (namedQuery == null) {
-			hql.append("select obj from ");
+			hql.append("select ");
+			if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
+				hql.append("new ").append(entity.getClass().getSimpleName());
+				hql.append("(obj.id, obj.").append(entity.getAutoComplete()).append(")");
+			} else {
+				hql.append("obj");
+			}
+			hql.append(" from ");
 			hql.append(entity.getClass().getSimpleName());
 			hql.append(" obj");
 		} else {

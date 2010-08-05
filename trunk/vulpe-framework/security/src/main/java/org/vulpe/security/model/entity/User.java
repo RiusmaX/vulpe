@@ -23,6 +23,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.vulpe.model.annotations.Like;
+
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
@@ -32,6 +34,7 @@ public class User extends BasicUser {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Like
 	private String name;
 
 	private String email;
@@ -60,6 +63,12 @@ public class User extends BasicUser {
 	public User(final String username) {
 		super();
 		this.setUsername(username);
+	}
+
+	public User(final Long id, final String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public User(final String username, final String password, final boolean active,

@@ -21,7 +21,7 @@
 <div id="error">
 	<h1><fmt:message key="vulpe.error.internal" /></h1>
 	<div id="message">
-		<strong><fmt:message key="vulpe.label.message" />:</strong>
+		<strong><fmt:message key="label.vulpe.message" />:</strong>
 		${pageContext.errorData.throwable}
 	</div>
 </div>

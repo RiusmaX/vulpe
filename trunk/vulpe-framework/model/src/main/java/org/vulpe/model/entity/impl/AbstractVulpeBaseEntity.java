@@ -45,6 +45,9 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@IgnoreAudit
 	private transient String orderBy;
 
+	@IgnoreAudit
+	private transient String autoComplete;
+
 	public AbstractVulpeBaseEntity() {
 	}
 
@@ -147,6 +150,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@Override
 	public VulpeEntity<ID> clone() {
 		return (VulpeEntity<ID>) super.clone();
+	}
+
+	public void setAutoComplete(String autoComplete) {
+		this.autoComplete = autoComplete;
+	}
+
+	public String getAutoComplete() {
+		return autoComplete;
 	}
 
 }

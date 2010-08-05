@@ -37,7 +37,7 @@
 	
 	<c:if test="${not empty showBlank && showBlank}">
 		<c:if test="${empty headerKey}">
-			<c:set var="headerKey" value="vulpe.label.select"/>
+			<c:set var="headerKey" value="label.vulpe.select"/>
 		</c:if>
 		<fmt:message key="${headerKey}" var="headerLabel"/>
 	</c:if>

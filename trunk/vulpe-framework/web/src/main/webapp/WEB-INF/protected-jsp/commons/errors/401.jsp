@@ -21,7 +21,7 @@
 <h1><fmt:message key="vulpe.error.401.subtitle" /></h1>
 <h2><fmt:message key="vulpe.error.401" /></h2>
 <div id="home"><a href="${pageContext.request.contextPath}"><fmt:message
-	key="vulpe.label.home" /></a></div>
+	key="label.vulpe.home" /></a></div>
 </div>
 </body>
 </html>

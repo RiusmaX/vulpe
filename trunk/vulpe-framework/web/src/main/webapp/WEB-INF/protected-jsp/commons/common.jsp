@@ -136,7 +136,7 @@ $(document).ready(function() {
 		bgiframe: true,
 		modal: true,
 		buttons: {
-			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+			'<fmt:message key="label.vulpe.button.ok"/>': function() {
 				$(this).dialog('close');
 			}
 		}
@@ -152,13 +152,13 @@ $(document).ready(function() {
 			opacity: 0.5
 		},
 		buttons: {
-			'<fmt:message key="vulpe.label.button.ok"/>': function() {
+			'<fmt:message key="label.vulpe.button.ok"/>': function() {
 				$(this).dialog('close');
 				if (vulpe.command) {
 					vulpe.command();
 				}
 			},
-			'<fmt:message key="vulpe.label.button.cancel"/>': function() {
+			'<fmt:message key="label.vulpe.button.cancel"/>': function() {
 				$(this).dialog('close');
 			}
 		}

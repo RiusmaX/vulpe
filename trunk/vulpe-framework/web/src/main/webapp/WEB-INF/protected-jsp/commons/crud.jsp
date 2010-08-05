@@ -18,7 +18,7 @@
 				</c:if>
 			</c:forEach>
 			<c:if test="${not empty vulpeCRUDFooter}">
-				<li><a href="#vulpeCRUDFooter"><fmt:message key="vulpe.label.completion"/></a></li>
+				<li><a href="#vulpeCRUDFooter"><fmt:message key="label.vulpe.completion"/></a></li>
 			</c:if>
 		</ul>
 	</c:if>

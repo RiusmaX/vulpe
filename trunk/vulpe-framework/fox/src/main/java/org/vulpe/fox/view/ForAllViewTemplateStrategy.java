@@ -301,8 +301,6 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		final VulpeSelectPopup selectPopup = fDeclaration == null ? field
 				.getAnnotation(VulpeSelectPopup.class) : fDeclaration
 				.getAnnotation(VulpeSelectPopup.class);
-		final AutoComplete autoComplete = fDeclaration == null ? field
-				.getAnnotation(AutoComplete.class) : fDeclaration.getAnnotation(AutoComplete.class);
 		if (selectPopup != null) {
 			name = selectPopup.name();
 			decoratedViewField.setArgument(selectPopup.argument());
@@ -315,6 +313,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setAutoComplete(selectPopup.autoComplete());
 			decoratedViewField.setType("selectPopup");
 		}
+		final AutoComplete autoComplete = fDeclaration == null ? field
+				.getAnnotation(AutoComplete.class) : fDeclaration.getAnnotation(AutoComplete.class);
 		if (autoComplete != null) {
 			decoratedViewField.setAutoComplete(true);
 		}

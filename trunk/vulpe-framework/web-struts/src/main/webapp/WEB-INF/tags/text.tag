@@ -106,7 +106,7 @@
 						}));
 					}
 					var urlAutoComplete = vulpe.util.getURLComplete("${autoCompleteURL}");
-					var queryString = "entitySelect.${autoComplete}=" + request.term;
+					var queryString = "entitySelect.autoComplete=${autoComplete}&entitySelect.${autoComplete}=" + request.term;
 					$.ajax({
 						type: "POST",
 						url: urlAutoComplete,

@@ -43,6 +43,6 @@
 
 	<c:set var="autoCompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
 	<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${autoComplete ? false : true}" elementId="${elementId}" size="${size}" showAsText="${showAsText}" autoComplete="${description}" autoCompleteURL="${autoCompleteAction}" autoCompleteSelect="true" required="${required}" targetValue="${targetValue}" targetName="${targetName}">
-		<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="vulpe.label.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
+		<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="label.vulpe.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
 	</v:text>
 </c:if>

@@ -22,7 +22,7 @@
 	<h2><fmt:message key="vulpe.error.503" /></h2>
 	<div id="home">
 		<a href="${pageContext.request.contextPath}">
-			<fmt:message key="vulpe.label.home" />
+			<fmt:message key="label.vulpe.home" />
 		</a>
 	</div>
 </div>

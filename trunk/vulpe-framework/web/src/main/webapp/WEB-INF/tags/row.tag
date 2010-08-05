@@ -71,7 +71,7 @@
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
 		<c:if test="${empty updateLabelKey}">
-			<c:set var="updateLabelKey" value="vulpe.label.update"/>
+			<c:set var="updateLabelKey" value="label.vulpe.update"/>
 		</c:if>
 		<c:choose>
 			<c:when test="${not empty currentItem}">
@@ -104,7 +104,7 @@
 			<c:set var="deleteName" value="selected"/>
 		</c:if>
 		<c:if test="${empty deleteLabelKey}">
-			<c:set var="deleteLabelKey" value="vulpe.label.delete"/>
+			<c:set var="deleteLabelKey" value="label.vulpe.delete"/>
 		</c:if>
 		<c:set var="deleteValue" value="${'${'}currentItem.${deleteValue}${'}'}"/>
 	</c:if>
@@ -230,7 +230,7 @@
 
 	<tr id="${elementId}" onclick="${onclick}" onmouseover="${onmouseover}" onmouseout="${onmouseout}" class="${styleClass}" style="${style}" rowspan="${rowspan}">
 		<c:if test="${showLine}">
-			<v:column labelKey="vulpe.label.line" width="1%">
+			<v:column labelKey="label.vulpe.line" width="1%">
 				<c:if test="${!isHeaderTableTag}">
 					${currentStatus.index + 1}.
 				</c:if>
@@ -241,12 +241,12 @@
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" align="center">
-					<input type="checkbox" name="selected" value="${elementId}" tabindex="100000" title="<fmt:message key='vulpe.help.delete.selected'/>">
+					<input type="checkbox" name="selected" value="${elementId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>">
 				</td>
 			</c:when>
 			<c:otherwise>
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='vulpe.help.delete.all.selected'/>">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:otherwise>
 		</c:choose>
@@ -255,12 +255,12 @@
 		<c:if test="${!onlyToSee && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='vulpe.help.delete.all.selected'/>">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%">
-					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="vulpe.help.delete.selected" />
+					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${deleteName}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" />
 				</v:column>
 			</c:if>
 		</c:if>
@@ -271,10 +271,10 @@
 				<v:column role="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true">
 					<c:choose>
 						<c:when test="${deleteType eq 'detail'}">
-							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
+							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16"/>
 						</c:when>
 						<c:otherwise>
-							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="vulpe.label.delete.selected" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-delete-all.png"/>
+							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16"/>
 						</c:otherwise>
 					</c:choose>
 				</v:column>
@@ -282,10 +282,10 @@
 			<c:if test="${!isHeaderTableTag}">
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
-						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${currentStatus.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
+						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDeleteDetail('${targetConfig.baseName}', ${currentStatus.index}, '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
 					</c:when>
 					<c:otherwise>
-						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/button-row-delete.png" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
+						<v:columnAction role="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});" width="1%"/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>

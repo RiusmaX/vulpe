@@ -25,7 +25,6 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
-import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
@@ -44,7 +43,6 @@ public class Role extends AbstractVulpeBaseEntity<Long> {
 	private transient String simpleName;
 
 	@Like
-	@AutoComplete
 	private String description;
 
 	public Role() {
@@ -53,6 +51,11 @@ public class Role extends AbstractVulpeBaseEntity<Long> {
 
 	public Role(final String name) {
 		this.name = name;
+	}
+
+	public Role(final Long id, final String description) {
+		this.id = id;
+		this.description = description;
 	}
 
 	public Role(final String name, final String description) {
