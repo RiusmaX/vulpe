@@ -71,7 +71,7 @@
 		<c:when test="${empty elementId}">
 			<c:set var="elementId" value="${labelKey}" />
 		</c:when>
-		<c:when test="${fn:contains(elementId, 'vulpeButton')}">
+		<c:when test="${!fn:contains(elementId, 'vulpeButton')}">
 			<c:set var="elementId" value="${buttonPrefix}${elementId}_${vulpeFormName}" />
 		</c:when>
 	</c:choose>
