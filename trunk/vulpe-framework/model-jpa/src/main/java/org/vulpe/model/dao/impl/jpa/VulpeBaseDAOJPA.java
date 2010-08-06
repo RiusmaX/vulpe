@@ -286,12 +286,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
 		if (namedQuery == null) {
-			hql.append("select ");
+			hql.append("select obj");
 			if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
-				hql.append("new ").append(entity.getClass().getSimpleName());
-				hql.append("(obj.id, obj.").append(entity.getAutoComplete()).append(")");
-			} else {
-				hql.append("obj");
+				hql.append(".id, obj.").append(entity.getAutoComplete());
 			}
 			hql.append(" from ");
 			hql.append(entity.getClass().getSimpleName());
