@@ -49,11 +49,12 @@
 	background-color: #ffccbc;
 }
 
-.vulpeIconOff {
-	filter: progid :                                     DXImageTransform .
-		    Microsoft .
+.vulpeRequiredField {
+	display: none;
+}
 
-		                 Alpha(opacity =                                     40);
+.vulpeIconOff {
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
@@ -369,4 +370,20 @@ td {
 
 td p {
 
+}
+
+.vulpeDelete {
+	text-align: center;
+}
+
+.vulpeSelect {
+	text-align: center;
+}
+
+#vulpeDeleteAll {
+	text-align: center;
+}
+
+#vulpeSelectAll {
+	text-align: center;
 }

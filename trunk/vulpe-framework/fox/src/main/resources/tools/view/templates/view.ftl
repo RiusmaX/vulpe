@@ -182,7 +182,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	<#if (field.size > 0)>
 	size="${field.size}"
 	</#if>
-	<#if (field.size > 0)>
+	<#if (field.maxlength > 0)>
 	maxlength="${field.maxlength}"
 	</#if>
 	<#if field.type == 'textarea'>
@@ -305,7 +305,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					<#if (detailField.size > 0)>
 					size="${detailField.size}"
 					</#if>
-					<#if (detailField.size > 0)>
+					<#if (detailField.maxlength > 0)>
 					maxlength="${detailField.maxlength}"
 					</#if>
 					<#if detailField.type == 'textarea'>
@@ -428,7 +428,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					<#if (field.size > 0)>
 					size="${field.size}"
 					</#if>
-					<#if (field.size > 0)>
+					<#if (field.maxlength > 0)>
 					maxlength="${field.maxlength}"
 					</#if>
 					<#if field.type == 'textarea'>

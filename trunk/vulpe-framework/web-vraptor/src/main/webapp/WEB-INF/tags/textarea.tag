@@ -23,4 +23,11 @@
 	</c:choose>
 	<jsp:doBody/>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<script type="text/javascript">
+		jQuery(function($){
+			vulpe.util.get('${elementId}').focus(function() {
+				$(this).effect("highlight");
+			});
+		});
+	</script>
 </c:if>

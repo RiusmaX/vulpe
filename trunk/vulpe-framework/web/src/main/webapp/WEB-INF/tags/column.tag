@@ -1,9 +1,11 @@
+<%@ attribute name="elementId" required="false" rtexprvalue="true" %>
 <%@ attribute name="labelKey" required="false" rtexprvalue="true" %>
 <%@ attribute name="value" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
 <%@ attribute name="align" required="false" rtexprvalue="true" %>
 <%@ attribute name="labelAlign" required="false" rtexprvalue="true" %>
 <%@ attribute name="style" required="false" rtexprvalue="true" %>
+<%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="labelStyle" required="false" rtexprvalue="true" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="role" required="false" rtexprvalue="true" %>
@@ -54,6 +56,12 @@
 </c:if>
 
 <c:if test="${show eq true}">
+	<c:if test="${not empty elementId}">
+		<c:set var="elementId">id="${elementId}" </c:set>
+	</c:if>
+	<c:if test="${not empty styleClass}">
+		<c:set var="styleClass"> class="${styleClass}"</c:set>
+	</c:if>
 	<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 		<c:if test="${not empty labelKey}">
 			<fmt:message key="${labelKey}" var="label"/>
@@ -70,16 +78,31 @@
 			</c:if>
 			<c:choose>
 			<c:when test="${vulpeUseDB4O}">
-				<c:set var="idTh">id="${sortPropertyInfoTableTag}_${property}" </c:set>
+				<c:set var="elementId">id="${sortPropertyInfoTableTag}_${property}" </c:set>
 				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${property}');">${label}</a></c:set>
 			</c:when>
 			<c:otherwise>
-				<c:set var="idTh">id="${sortPropertyInfoTableTag}_${alias}.${property}" </c:set>
+				<c:set var="elementId">id="${sortPropertyInfoTableTag}_${alias}.${property}" </c:set>
 				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${property}');">${label}</a></c:set>
 			</c:otherwise>
 			</c:choose>
 		</c:if>
-		<th onclick="${onclick}" onmouseover="${onmouseover}" onmouseout="${onmouseout}" colspan="${colspan}" ${idTh}${width}scope="col" style="${labelStyle}">
+		<c:if test="${not empty onclick}">
+			<c:set var="onclick">onclick="${onclick}" </c:set>
+		</c:if>
+		<c:if test="${not empty onmouseover}">
+			<c:set var="onmouseover">onmouseover="${onmouseover}" </c:set>
+		</c:if>
+		<c:if test="${not empty onmouseout}">
+			<c:set var="onmouseout">onmouseout="${onmouseout}" </c:set>
+		</c:if>
+		<c:if test="${not empty labelStyle}">
+			<c:set var="labelStyle"> style="${labelStyle}"</c:set>
+		</c:if>
+		<c:if test="${empty styleClass}">
+			<c:set var="styleClass"> class="vulpeColumnHeader"</c:set>
+		</c:if>
+		<th ${elementId}${onclick}${onmouseover}${onmouseout}colspan="${colspan}" ${width}scope="col"${labelStyle}${styleClass}>
 			${label}
 			<c:if test="${showBodyInHeader}">
 				<jsp:doBody/>
@@ -101,7 +124,28 @@
 				<c:set var="value" value="${propertyValue}"/>
 			</c:if>
 		</c:if>
-		<td onclick="${selectCheckOff}${onclick}" onmouseover="${onmouseover}" onmouseout="${onmouseout}" colspan="${colspan}" style="${style}">
+		<c:if test="${not empty onclick}">
+			<c:set var="onclick">onclick="${onclick}" </c:set>
+		</c:if>
+		<c:if test="${not empty onmouseover}">
+			<c:set var="onmouseover">onmouseover="${onmouseover}" </c:set>
+		</c:if>
+		<c:if test="${not empty onmouseout}">
+			<c:set var="onmouseout">onmouseout="${onmouseout}" </c:set>
+		</c:if>
+		<c:if test="${not empty selectCheckOff}">
+			<c:set var="onclick">onclick="${selectCheckOff}${onclick}" </c:set>
+		</c:if>
+		<c:if test="${not empty colspan}">
+			<c:set var="colspan">colspan="${colspan}" </c:set>
+		</c:if>
+		<c:if test="${not empty style}">
+			<c:set var="style">style="${style}"</c:set>
+		</c:if>
+		<c:if test="${empty styleClass}">
+			<c:set var="styleClass"> class="vulpeColumn"</c:set>
+		</c:if>
+		<td ${elementId}${onclick}${onmouseover}${onmouseout}${colspan}${style}${styleClass}>
 			<c:if test="${not empty value}">
 				<c:choose>
 				<c:when test="${!isImage}">
