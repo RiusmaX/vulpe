@@ -1,0 +1,635 @@
+/************************************************************************
+* CSS - Vulpe Framework											*
+************************************************************************/ /* Classes */
+.vulpeActions {
+	width: 100%;
+	text-align: right;
+}
+
+.vulpeAlertError {
+	color: red;
+}
+
+.vulpeAlertMessage {
+
+}
+
+.vulpeOrderAsc {
+	background: #eee url(../images/icons/order-asc.gif) right no-repeat;
+}
+
+.vulpeButton {
+	background: url(../images/background-button.png) repeat-x;
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+}
+
+.vulpeBlockLabel {
+	display: block;
+	width: auto;
+	float: left;
+}
+
+.vulpeBlockshort {
+	display: block;
+	width: 90px;
+	float: left;
+}
+
+.vulpeOrderDesc {
+	background: #eee url(../images/icons/order-desc.gif) right no-repeat;
+}
+
+.vulpeFieldError {
+	background-color: #ffccbc;
+}
+
+.vulpeRequired {
+	border: 1px solid #999;
+}
+
+.vulpeRequiredField {
+	color: red;
+	display: inline;
+}
+
+.vulpeDrag {
+	cursor: move;
+}
+
+.vulpeEntities {
+	border: 1px solid #eee;
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+
+.vulpeLineOff {
+	background: #fff;
+	height: 25px;
+}
+
+.vulpeLineOn {
+	background: #eee;
+	height: 25px;
+}
+
+.vulpeMessages {
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	background-color: #fff;
+	border: 1px solid #333;
+	font-weight: normal;
+	overflow: auto;
+	padding: 1px;
+}
+
+.vulpeImageErrorMessage {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImageFieldLoading {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImagePopupButton {
+	cursor: pointer;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
+	border: 1px solid;
+	margin: 0px 0px 1px 0px;
+	/*padding: 15px 10px 15px 50px;*/
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.vulpeMessageError {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('../images/icons/message-error.png');
+}
+
+.vulpeMessageInfo {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('../images/icons/message-info.png');
+}
+
+.vulpeMessages h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: default;
+	height: 40px;
+}
+
+.vulpeNoBoarder {
+	border: none;
+}
+
+.vulpeNob {
+	font-weight: normal
+}
+
+.vulpeIconOff {
+	filter: progid : DXImageTransform.Microsoft.Alpha ( opacity =   40 );
+	-moz-opacity: 0.4;
+	opacity: 0.4;
+}
+
+.vulpePaging {
+	width: 150px;
+	margin: 5px auto;
+	text-align: center;
+}
+
+.vulpePaging a {
+	text-decoration: none;
+}
+
+.vulpePopup {
+	background-color: #fff;
+	border: 1px solid #999;
+	border-top: 1px solid #F9F9F9;
+	padding: 1px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+}
+
+.vulpePopup h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: default;
+}
+
+.vulpePopupCaption {
+	background: none;
+	display: block;
+	font-size: 12px;
+	height: 20px;
+	letter-spacing: 1px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+	width: auto;
+}
+
+.vulpeSelectedRow {
+	background-color: #ffccbc; /*E8EBE2*/
+	cursor: pointer;
+}
+
+.vulpeSimpleLabel {
+	font-weight: normal;
+}
+
+.vulpeMessageSuccess {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('../images/icons/message-success.png');
+}
+
+.vulpeSubmit {
+	background: url(../images/background-button.png) repeat-x;
+	border: 1px #CCCCCC solid;
+	font-weight: 700;
+	height: 20px;
+	padding: 0px;
+	width: 90px;
+	cursor: pointer;
+}
+
+.tooltip {
+	display: none;
+	background: url(../images/tooltip/black-arrow.png);
+	font-size: 12px;
+	height: 70px;
+	width: 160px;
+	padding: 25px;
+	color: #fff;
+	border: 0px;
+}
+
+.tooltip.bottom {
+	background: url(../images/tooltip/black-arrow-bottom.png);
+	padding-top: 40px;
+	height: 55px;
+}
+
+.tooltip.bottom {
+	background: url(../images/tooltip/black-arrow-bottom.png);
+}
+
+/*
+#content {
+	width: auto;
+	position: fixed;
+}
+*/
+#contentTitle {
+	background-color: #eee;
+	border-top: 1px #ddd solid;
+	/*border-bottom: 1px #ddd solid;*/
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	height: 20px;
+	letter-spacing: 1px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+	width: auto;
+}
+
+#userAuthenticated {
+	background-color: #000;
+	display: block;
+	height: 19px;
+	letter-spacing: 1px;
+	margin: 0;
+	padding-left: 20px;
+	padding-top: 3px;
+	text-align: right;
+	width: auto;
+	font-size: 11px;
+	color: #fff;
+}
+
+#userAuthenticated  a {
+	border-left: 1px solid #fff;
+	color: #fff;
+	padding: 2px;
+	text-decoration: none;
+}
+
+#userAuthenticated  a:hover {
+	text-decoration: underline;
+	background-color: #999;
+}
+
+#userAuthenticated  a:visited {
+	color: #fff;
+}
+
+.vulpeMessageValidation {
+	color: #D63301;
+	background-color: #FFCCBA;
+	background-image: url('../images/icons/message-validation.png');
+}
+
+.vulpeMessageWarning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('../images/icons/message-warning.png');
+}
+
+/* DOM Objects */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a,a:visited {
+	color: #333;
+}
+
+a:hover {
+	text-decoration: none
+}
+
+body {
+	color: #333;
+	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
+	font-size: 11px;
+}
+
+body,html {
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+fieldset {
+	margin-left: 28px;
+	border: 1px solid #e1e4d7;
+	padding-bottom: 10px;
+}
+
+h1 {
+	background: url(../images/background-all.png) repeat-x;
+	display: block;
+	font-size: 12px;
+	height: 20px;
+	letter-spacing: 1px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+	width: auto;
+}
+
+input,select,textarea {
+	border: 1px solid #999;
+	color: #333;
+	font-size: 11px;
+	padding: 1px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+label {
+	font-weight: bold
+}
+
+legend {
+	font-weight: bold;
+}
+
+ol,ul {
+	font-size: 11px;
+	margin: 10px 60px;
+}
+
+p {
+	font-size: 11px;
+	margin: 5px 28px;
+}
+
+tbody tr {
+	margin: 0px;
+	padding: 0px;
+}
+
+td {
+	color: #333;
+}
+
+td p {
+	margin: 0;
+	margin-bottom: 3px;
+}
+
+thead th,th,.vulpeTableHeader {
+	color: #333;
+	font-size: 12px;
+	font-weight: bold;
+	background: #fff url(../images/shadow-bottom.png) bottom repeat-x;
+}
+
+thead th,.vulpeTableHeader {
+	background: #fff url(../images/shadow-top.png) top repeat-x;
+}
+
+tfoot th, .vulpeTableFooter {
+	font-size: 12px;
+}
+
+/* ID Elements */
+#body {
+	background-color: #fff;
+	padding-bottom: 30px;
+	width: 100%;
+	text-align: left;
+}
+
+#body td, #body th {
+	padding: 3px;
+}
+
+#vulpeCRUDBody td,#vulpeCRUDBody th,#vulpeSelectForm td {
+	padding: 0px;
+}
+
+.vulpeDelete {
+	text-align: center;
+}
+
+.vulpeSelect {
+	text-align: center;
+	padding-left: 2px;
+}
+
+#vulpeDeleteAll {
+	text-align: center;
+}
+
+#vulpeSelectAll {
+	text-align: center;
+}
+
+#body table {
+	margin-left: 27px;
+	width: 95.5%;
+}
+
+#container {
+	margin: 0 auto;
+	min-height: 100%;
+	position: absolute;
+	width: 100%;
+	text-align: left;
+}
+
+#copyright {
+
+}
+
+#copyright a {
+	text-decoration: none;
+}
+
+#copyright a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#errors {
+	width: 400px;
+	margin: 0 auto
+}
+
+#footer {
+	background: url(../images/background-all.png) repeat-x;
+	font-size: 10px;
+	height: 30px;
+	width: 100%;
+	max-width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 0px;
+}
+
+#header {
+	width: 100%;
+	height: 124px;
+	top: 0;
+}
+
+#header .administrador {
+	background-color: #ccc;
+	color: #999;
+	font-size: 16px;
+	height: 19px;
+	padding: 3px;
+	vertical-align: top;
+	width: auto;
+}
+
+#header .sitra {
+	background-color: #333;
+	color: #fff;
+	font-size: 18px;
+	height: 36px;
+	padding: 3px;
+	vertical-align: top;
+	width: auto;
+}
+
+#header .sistema_transferencia {
+	background-color: #999;
+	color: #eee;
+	font-size: 16px;
+	height: 26px;
+	padding: 3px;
+	vertical-align: top;
+	width: auto;
+}
+
+#loading {
+	background: url(../images/icons/loader.gif) center no-repeat;
+	cursor: wait;
+}
+
+#paging {
+
+}
+
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
+}
+
+#vulpeButtonPagingFirstPage {
+	background: url(../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingPreviousPage {
+	background: url(../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingNextPage {
+	background: url(../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingLastPage {
+	background: url(../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#poweredby {
+	font-size: 9px;
+}
+
+#poweredby a {
+	text-decoration: none;
+}
+
+#poweredby a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#search {
+	float: right;
+	height: 24px;
+	margin-top: 66px;
+	text-align: right;
+	width: 39px;
+	cursor: pointer;
+	font-size: 11px;
+}
+
+#error {
+	background-color: #eee;
+	height: 100%;
+}
+
+#error #message {
+	padding: 3px 20px 20px;
+}
+
+#error a {
+	font-size: 13px;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#error h1 {
+	color: #d00;
+	background-color: #ddd;
+	display: block;
+	font-size: 30px;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#error h2 {
+	display: block;
+	font-size: 20px;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#messages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
+}
+
+#objetos td {
+	padding: 0px;
+}
+
+#itens td {
+	padding: 2px;
+}

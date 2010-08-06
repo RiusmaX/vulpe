@@ -1,0 +1,9 @@
+#Tue Aug 03 16:54:06 BRT 2010
+WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
+defaultDestination=TOMCAT_HOME/webapps/sitra/WEB-INF/classes
+defaultVariables=
+eclipse.preferences.version=1
+includeTeamPrivateFiles=false
+map|0=target/classes|,|,|,|,
+map|1=web/src/main/webapp|TOMCAT_HOME/webapps/sitra|,|,|,
+useCurrentDateForDestinationFiles=false
