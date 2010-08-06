@@ -18,7 +18,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("ministerio.RelatorioController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = MinisterioService.class, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(serviceClass = MinisterioService.class, pageSize = 5)
 public class RelatorioController extends ApplicationBaseController<Relatorio, java.lang.Long> {
 
 }

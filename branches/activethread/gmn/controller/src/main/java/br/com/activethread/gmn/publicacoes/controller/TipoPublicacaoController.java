@@ -18,7 +18,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("publicacoes.TipoPublicacaoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = PublicacoesService.class, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = { "descricao" })
+@Controller(serviceClass = PublicacoesService.class, pageSize = 5, tabularStartNewDetails = 5, tabularNewDetails = 1, tabularDespiseFields = { "descricao" })
 public class TipoPublicacaoController extends ApplicationBaseController<TipoPublicacao, java.lang.Long> {
 
 }

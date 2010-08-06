@@ -19,7 +19,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("anuncios.ReuniaoServicoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", startNewDetails = 1, newDetails = 3) }, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, pageSize = 5)
 public class ReuniaoServicoController extends ApplicationBaseController<ReuniaoServico, java.lang.Long> {
 
 }
