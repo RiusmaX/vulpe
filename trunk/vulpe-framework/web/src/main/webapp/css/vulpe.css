@@ -387,3 +387,8 @@ td p {
 #vulpeSelectAll {
 	text-align: center;
 }
+
+#vulpeTabNavigation {
+	font-size: 0.8em;
+	text-align: center;
+}

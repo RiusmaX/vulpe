@@ -172,6 +172,11 @@ $(document).ready(function() {
 			column.className = order.css;
 		}
 	}
+	var requiredFields = $("span[class='vulpeRequiredField']");
+	if (requiredFields.length > 0) {
+		$("#legend").show();
+		$("#vulpeRequiredFieldLegend").show();
+	}
 });
 </script>
 </c:if>

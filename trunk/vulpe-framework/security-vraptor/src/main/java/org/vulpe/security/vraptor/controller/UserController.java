@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.vraptor.VulpeVRaptorController;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityService;
@@ -28,7 +29,7 @@ import br.com.caelum.vraptor.Resource;
 
 @Resource
 @Path("/security/User")
-@Controller(serviceClass = SecurityService.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, pageSize = 5)
+@Controller(serviceClass = SecurityService.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, cardinalityType = CardinalityType.ONE_OR_MORE) }, select = @Select(pageSize = 5))
 @SuppressWarnings("serial")
 public class UserController extends VulpeVRaptorController<User, Long> {
 

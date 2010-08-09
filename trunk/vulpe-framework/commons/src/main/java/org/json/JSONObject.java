@@ -35,9 +35,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.vulpe.commons.util.VulpeReflectUtil;
-
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its external
  * form is a string wrapped in curly braces with colons between the names and
@@ -936,11 +933,7 @@ public class JSONObject {
 						}
 
 						Object result = method.invoke(bean, (Object[]) null);
-						Field field = VulpeReflectUtil.getInstance().getField(klass, key);
 						Object wrap = wrap(result);
-						if (field.getName().equals("autoComplete")) {
-							map.put("value", PropertyUtils.getProperty(bean, wrap.toString()));
-						}
 						map.put(key, wrap);
 					}
 				}

@@ -21,7 +21,7 @@ public interface VulpeControllerConfig {
 
 	int getTabularPageSize();
 
-	boolean getTabularFilter();
+	boolean isTabularShowFilter();
 
 	String getOwnerController();
 

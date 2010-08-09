@@ -103,13 +103,13 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 
 				if (controllerType.equals(ControllerType.ALL)
 						|| controllerType.equals(ControllerType.SELECT)) {
-					controller.setPageSize(codeGenerator.controller().pageSize());
+					controller.setPageSize(codeGenerator.controller().select().pageSize());
 				}
 				if (controllerType.equals(ControllerType.ALL)
 						|| controllerType.equals(ControllerType.TABULAR)) {
 					final StringBuilder tabularDespise = new StringBuilder();
-					if (codeGenerator.controller().tabularDespiseFields().length > 0) {
-						for (String s : codeGenerator.controller().tabularDespiseFields()) {
+					if (codeGenerator.controller().tabular().despiseFields().length > 0) {
+						for (String s : codeGenerator.controller().tabular().despiseFields()) {
 							if (StringUtils.isBlank(tabularDespise.toString())) {
 								tabularDespise.append("\"" + s + "\"");
 							} else {
@@ -118,12 +118,13 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						}
 					}
 					controller.setTabularDespiseFields(tabularDespise.toString());
-					controller.setTabularStartNewDetails(codeGenerator.controller()
-							.tabularStartNewDetails());
-					controller.setTabularNewDetails(codeGenerator.controller().tabularNewDetails());
-					controller.setTabularName(codeGenerator.controller().tabularName());
-					controller.setTabularPropertyName(codeGenerator.controller()
-							.tabularPropertyName());
+					controller.setTabularStartNewRecords(codeGenerator.controller().tabular()
+							.startNewRecords());
+					controller.setTabularNewRecords(codeGenerator.controller().tabular()
+							.newRecords());
+					controller.setTabularName(codeGenerator.controller().tabular().name());
+					controller.setTabularPropertyName(codeGenerator.controller().tabular()
+							.propertyName());
 				}
 			}
 			controller.setTypes(types);

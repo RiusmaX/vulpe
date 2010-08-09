@@ -23,6 +23,7 @@ import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.audit.model.services.AuditService;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.vraptor.VulpeVRaptorController;
 import org.vulpe.exception.VulpeApplicationException;
 
@@ -31,7 +32,7 @@ import br.com.caelum.vraptor.Resource;
 
 @Resource
 @Path("/audit/Occurrence")
-@Controller(serviceClass = AuditService.class, pageSize = 5)
+@Controller(serviceClass = AuditService.class, select = @Select(pageSize = 5))
 @SuppressWarnings("serial")
 public class OccurrenceController extends VulpeVRaptorController<AuditOccurrence, Long> {
 

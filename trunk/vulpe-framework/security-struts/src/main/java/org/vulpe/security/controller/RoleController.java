@@ -19,13 +19,16 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
+import org.vulpe.controller.annotations.Tabular;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.services.SecurityService;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.RoleController")
-@Controller(serviceClass = SecurityService.class, pageSize = 5, tabularStartNewDetails = 4, tabularNewDetails = 1, tabularDespiseFields = { "name", "description" }, tabularFilter = true, tabularPageSize = 10)
+@Controller(serviceClass = SecurityService.class, select = @Select(pageSize = 5), tabular = @Tabular(startNewRecords = 4, newRecords = 1, despiseFields = {
+		"name", "description" }, showFilter = true, pageSize = 10))
 @SuppressWarnings("serial")
 public class RoleController extends VulpeStrutsController<Role, Long> {
 

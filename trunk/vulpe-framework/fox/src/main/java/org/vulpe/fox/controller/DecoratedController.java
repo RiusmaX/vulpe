@@ -31,8 +31,8 @@ public class DecoratedController implements Serializable {
 	private String controllerPackageName;
 	private int pageSize = 5;
 	private String tabularDespiseFields = "";
-	private int tabularNewDetails = 1;
-	private int tabularStartNewDetails = 1;
+	private int tabularNewRecords = 1;
+	private int tabularStartNewRecords = 1;
 	private String tabularName = "";
 	private String tabularPropertyName = "";
 	private List<String> types;
@@ -155,19 +155,19 @@ public class DecoratedController implements Serializable {
 		return projectPackageName;
 	}
 
-	public void setTabularNewDetails(int tabularNewDetails) {
-		this.tabularNewDetails = tabularNewDetails;
+	public void setTabularNewRecords(int tabularNewRecords) {
+		this.tabularNewRecords = tabularNewRecords;
 	}
 
-	public int getTabularNewDetails() {
-		return tabularNewDetails;
+	public int getTabularNewRecords() {
+		return tabularNewRecords;
 	}
 
-	public void setTabularStartNewDetails(int tabularStartNewDetails) {
-		this.tabularStartNewDetails = tabularStartNewDetails;
+	public void setTabularStartNewRecords(int tabularStartNewRecords) {
+		this.tabularStartNewRecords = tabularStartNewRecords;
 	}
 
-	public int getTabularStartNewDetails() {
-		return tabularStartNewDetails;
+	public int getTabularStartNewRecords() {
+		return tabularStartNewRecords;
 	}
 }

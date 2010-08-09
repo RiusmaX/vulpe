@@ -811,6 +811,9 @@ var vulpe = {
 
 		validateAttribute: function(field) {
 			var valid = true;
+			if (field.val() == "%") {
+				return valid;
+			}
 			var idField = field.attr("id");
 			var config = vulpe.util.getElementConfig(idField);
 			if (config) {

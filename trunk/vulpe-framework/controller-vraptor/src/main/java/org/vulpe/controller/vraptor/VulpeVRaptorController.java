@@ -1236,7 +1236,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	@ResetSession(before = true)
 	public String tabular() {
 		getControllerConfig().setControllerType(ControllerType.TABULAR);
-		if (getControllerConfig().getTabularFilter()) {
+		if (getControllerConfig().isTabularShowFilter()) {
 			try {
 				setEntitySelect(getControllerConfig().getEntityClass().newInstance());
 			} catch (Exception e) {
@@ -1497,7 +1497,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				showButtons();
 			}
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
-			if (getControllerConfig().getController().showReport()) {
+			if (getControllerConfig().getController().select().showReport()) {
 				showButtons(Button.READ, Button.REPORT, Button.PREPARE, Button.CREATE,
 						Button.UPDATE, Button.DELETE);
 			} else {
@@ -1513,7 +1513,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			showButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
-			if (getControllerConfig().getTabularFilter()) {
+			if (getControllerConfig().isTabularShowFilter()) {
 				showButton(Button.TABULAR_FILTER);
 			}
 		} else if (getControllerType().equals(ControllerType.TWICE)) {
@@ -1720,7 +1720,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				&& getControllerConfig().getTabularPageSize() > 0) {
 			if (add) {
 				setTabularSize(getTabularSize()
-						+ getControllerConfig().getController().tabularNewDetails());
+						+ getControllerConfig().getController().tabular().newRecords());
 			} else {
 				setTabularSize(getEntities().size());
 			}

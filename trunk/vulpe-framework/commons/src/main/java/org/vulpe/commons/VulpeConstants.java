@@ -134,6 +134,7 @@ public class VulpeConstants {
 		public static final String ENTITIES = "entities";
 		public static final String SELECT_FORM = "_selectForm";
 		public static final String SELECT_TABLE = "_selectTable";
+		public static final String SELECT_PAGING = "_selectPaging";
 
 		public class Button {
 			public static final String CREATE = "createShow";

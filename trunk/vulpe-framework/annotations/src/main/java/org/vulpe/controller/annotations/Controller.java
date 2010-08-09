@@ -25,9 +25,10 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.services.VulpeService;
 
 /**
- * Control configurations.
+ * Controller configurations.
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -39,17 +40,14 @@ public @interface Controller {
 	ControllerType controllerType() default ControllerType.ALL;
 
 	/**
+	 * Base name to mount view (JSPs)
+	 */
+	String viewBaseName() default "";
+
+	/**
 	 * Service interface
 	 */
 	Class<? extends VulpeService> serviceClass() default VulpeService.class;
-
-	// SELECT - configurations
-	/**
-	 * Page size of selection
-	 */
-	int pageSize() default 0;
-
-	boolean showReport() default false;
 
 	// CRUD - configurations
 	/**
@@ -68,41 +66,11 @@ public @interface Controller {
 	 */
 	String ownerController() default "";
 
+	// SELECT - configurations
+	Select select() default @Select;
+
 	// TABULAR - configurations
-	/**
-	 * Fields to despise items in tabular
-	 */
-	String[] tabularDespiseFields() default {};
-
-	/**
-	 * Quantity of new records in tabular
-	 */
-	int tabularNewDetails() default 0;
-
-	/**
-	 * Quantity of new records in tabular on start
-	 */
-	int tabularStartNewDetails() default 0;
-
-	/**
-	 * Name of list
-	 */
-	String tabularName() default "";
-
-	/**
-	 * Name of attribute in the list
-	 */
-	String tabularPropertyName() default "";
-
-	/**
-	 * Page size of tabular
-	 */
-	int tabularPageSize() default 0;
-
-	/**
-	 * Show tabular filter
-	 */
-	boolean tabularFilter() default false;
+	Tabular tabular() default @Tabular;
 
 	// REPORT - configurations
 	Report report() default @Report;

@@ -62,17 +62,16 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	public VulpeBaseDetailConfig getTabularConfig() {
 		if (getControllerType().equals(ControllerType.TABULAR)
 				&& (this.details == null || this.details.isEmpty())) {
-			final int newDetails = getController().tabularNewDetails();
-			final int startNewDetails = getController().tabularStartNewDetails();
-			final String[] despiseFields = getController().tabularDespiseFields();
+			final int newDetails = getController().tabular().newRecords();
+			final int startNewDetails = getController().tabular().startNewRecords();
+			final String[] despiseFields = getController().tabular().despiseFields();
 			String name = Action.ENTITIES;
 			String propertyName = name;
-			if (StringUtils.isNotBlank(getController().tabularName())) {
-				name = getController().tabularName();
-				propertyName = getController().tabularName();
+			if (StringUtils.isNotBlank(getController().tabular().name())) {
+				name = getController().tabular().name();
 			}
-			if (StringUtils.isNotBlank(getController().tabularPropertyName())) {
-				propertyName = getController().tabularPropertyName();
+			if (StringUtils.isNotBlank(getController().tabular().propertyName())) {
+				propertyName = getController().tabular().propertyName();
 			}
 			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails,
 					newDetails, despiseFields));
