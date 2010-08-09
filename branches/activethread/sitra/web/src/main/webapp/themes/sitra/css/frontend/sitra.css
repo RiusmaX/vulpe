@@ -527,7 +527,10 @@ html,body {
 
 #footer {
 	text-align: center;
-	margin-top: 10px;
+}
+
+#legend {
+	margin-bottom: 10px;
 }
 
 #frontend {

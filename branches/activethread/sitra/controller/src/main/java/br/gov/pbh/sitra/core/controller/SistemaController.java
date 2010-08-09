@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.annotations.DetailConfig;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 
 import br.gov.pbh.sitra.core.model.entity.Sistema;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 import br.gov.pbh.sitra.controller.ApplicationBaseController;
-
 
 /**
  * Controller implementation of Sistema
@@ -19,7 +19,7 @@ import br.gov.pbh.sitra.controller.ApplicationBaseController;
 @Component("core.SistemaController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 5, newDetails = 1) }, pageSize = 5)
+@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
 public class SistemaController extends ApplicationBaseController<Sistema, java.lang.Long> {
 
 }

@@ -35,7 +35,7 @@
 					</tr>
 					<tr style="background-color: #D8D9F2">
 						<td colspan="4">
-							<c:set var="style" value="display: none; overflow:auto; width: 100%; height:75px"/>
+							<c:set var="style" value="display: none; overflow:auto; width: 100%; height:70px"/>
 							<div id="itens${currentStatus.index}" style="${fn:length(currentItem.objetoItens) > 1 ? style : ''}">
 							<table cellpadding="0" cellspacing="0" style="width: 99%; margin-left: 5px" id="itens">
 								<tr>
@@ -48,7 +48,7 @@
 								<c:forEach items="${currentItem.objetoItens}" var="objeto" varStatus="objetoStatus">
 								<tr class="${(objetoStatus.index % 2) == 0 ? 'vulpeLineOn' : 'vulpeLineOff'}">
 									<td><v:show type="enum" targetValue="${objeto}" property="tipoObjeto"/></td>
-									<td><v:show property="objetoItens[0].nomeObjeto"/></td>
+									<td><v:show targetValue="${objeto}" property="nomeObjeto"/></td>
 									<td><v:show type="enum" targetValue="${objeto}" property="status"/></td>
 								</tr>
 								</c:forEach>

@@ -24,7 +24,7 @@ import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-//@CodeGenerator(controller = @Controller(pageSize = 5, detailsConfig = { @DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 5, newDetails = 1) }), manager = true, view = @View(viewType = {
+//@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 5, newDetails = 1) }), manager = true, view = @View(viewType = {
 //		ViewType.SELECT, ViewType.CRUD }))
 @CachedClass
 @Entity

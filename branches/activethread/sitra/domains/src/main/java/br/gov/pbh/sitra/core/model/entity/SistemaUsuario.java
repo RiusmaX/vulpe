@@ -73,20 +73,20 @@ public class SistemaUsuario extends AbstractVulpeBaseJPAEntity<Long> {
 		return usuario;
 	}
 
+	public Boolean getPublicaHomologacao() {
+		return publicaHomologacao;
+	}
+
 	public void setPublicaHomologacao(Boolean publicaHomologacao) {
 		this.publicaHomologacao = publicaHomologacao;
 	}
 
-	public Boolean isPublicaHomologacao() {
-		return publicaHomologacao;
+	public Boolean getPublicaProducao() {
+		return publicaProducao;
 	}
 
 	public void setPublicaProducao(Boolean publicaProducao) {
 		this.publicaProducao = publicaProducao;
-	}
-
-	public Boolean isPublicaProducao() {
-		return publicaProducao;
 	}
 
 }

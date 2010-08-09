@@ -46,7 +46,7 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 	@VulpeSelect(showBlank = false)
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
-	private Status status;
+	private Status status = Status.N;
 
 	@Column(name = "LOG_PROCESSAMENTO")
 	private Blob logProcessamento;

@@ -19,11 +19,11 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 /**
  * Controller implementation of Objeto
  */
-@Component("core.ObjetoController")
+@Component("core.ObjetoPublicacaoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
-public class ObjetoController extends ApplicationBaseController<Objeto, java.lang.Long> {
+@Controller(serviceClass = CoreService.class, viewBaseName = "Objeto", detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
+public class ObjetoPublicacaoController extends ApplicationBaseController<Objeto, java.lang.Long> {
 
 	@Override
 	protected void showButtons(String method) {
@@ -37,8 +37,8 @@ public class ObjetoController extends ApplicationBaseController<Objeto, java.lan
 				hideButton(Button.PREPARE);
 			}
 			hideButton(Button.CREATE);
-			getTabs().put("master", new Tab("Atualizar de"));
-			getTabs().put("objetoItens", new Tab("Objetos a serem Transferidos"));
+			getTabs().put("master", new Tab("Publicar em"));
+			getTabs().put("objetoItens", new Tab("Objetos a serem Publicados"));
 		}
 	}
 
