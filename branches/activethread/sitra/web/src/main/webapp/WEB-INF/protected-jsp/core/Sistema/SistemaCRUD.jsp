@@ -66,7 +66,7 @@
 			property="ownerHomologacao"
 			size="20"
 			maxlength="20"
-			required="true"
+			required="true" upperCase="true"
 		/>
 		</td>
 		<td>
@@ -86,7 +86,7 @@
 			property="ownerProducao"
 			size="20"
 			maxlength="20"
-			required="true"
+			required="true" upperCase="true"
 		/>
 		</td>
 		<td>

@@ -17,18 +17,19 @@
 <td>
 <v:select
 	labelKey="label.sitra.core.Objeto.crud.origem"
-	property="origem"
-	showBlank="true" autoLoad="false"
+	property="origem" items="${now['origem']}"
+	showBlank="true" autoLoad="false" required="true"
 />
 </td>
 <td>
 <v:select
 	labelKey="label.sitra.core.Objeto.crud.destino"
-	property="destino"
-	showBlank="true" autoLoad="false"
+	property="destino" items="${now['destino']}"
+	showBlank="true" autoLoad="false" required="true"
 />
 </td>
 </tr>
+<c:if test="${empty now['publicacao']}">
 <tr>
 <td colspan="3">
 <v:checkbox
@@ -38,6 +39,8 @@
 />
 </td>
 </tr>
+</c:if>
+<c:if test="${now['publicacao']}">
 <tr>
 <td colspan="3">
 <v:text
@@ -68,4 +71,5 @@
 />
 </td>
 </tr>
+</c:if>
 </table>

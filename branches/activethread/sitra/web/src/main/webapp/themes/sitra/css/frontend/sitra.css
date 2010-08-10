@@ -566,6 +566,7 @@ html,body {
 	background-color: #333;
 	color: #fff;
 	font-size: 18px;
+	font-family: "Trebuchet MS", arial;
 	height: 20px;
 	padding: 3px;
 	vertical-align: top;
@@ -584,6 +585,7 @@ html,body {
 	background-color: #999;
 	color: #eee;
 	font-size: 16px;
+	font-family: "Trebuchet MS", arial;
 	height: 17px;
 	padding: 3px;
 	vertical-align: top;
