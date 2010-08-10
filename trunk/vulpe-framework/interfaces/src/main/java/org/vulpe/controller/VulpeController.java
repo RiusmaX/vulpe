@@ -15,11 +15,19 @@
  */
 package org.vulpe.controller;
 
+/**
+ * Controller Interface.
+ *
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @version 1.0
+ * @since 1.0
+ */
+
 public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to control add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -27,7 +35,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to create new record.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -35,7 +43,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -43,7 +51,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to delete record.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -51,7 +59,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -59,7 +67,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to prepare show.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -67,7 +75,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -75,7 +83,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to update.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -83,7 +91,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -91,8 +99,32 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Checks if entity is valid.
-	 * 
+	 *
 	 * @return
 	 */
 	boolean validateEntity();
+
+	String autocomplete();
+
+	void buttonControl(final String button, final boolean show);
+
+	void hideButton(final String button);
+
+	void hideButtons(final String... buttons);
+
+	String json();
+
+	void deleteHide(final String detail);
+
+	void deleteDetailShow(final String detail);
+
+	boolean isDeleteDetailShow(final String detail);
+
+	void addDetailHide(final String detail);
+
+	void addDetailShow(final String detail);
+
+	boolean isAddDetailShow(final String detail);
+
+	boolean isAddDetailShow();
 }

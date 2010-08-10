@@ -77,7 +77,7 @@
 				<c:set var="alias" value="obj"/>
 			</c:if>
 			<c:choose>
-			<c:when test="${vulpeUseDB4O}">
+			<c:when test="${global['useDB4O']}">
 				<c:set var="elementId">id="${sortPropertyInfoTableTag}_${property}" </c:set>
 				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${property}');">${label}</a></c:set>
 			</c:when>

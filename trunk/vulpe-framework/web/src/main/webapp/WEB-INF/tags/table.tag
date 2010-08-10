@@ -48,14 +48,14 @@
 	<c:set var="name" value=""/>
 	<c:set var="baseName" value=""/>
 	<c:set var="itemName" value=""/>
-	<c:if test="${empty pagingList && (empty detailConfig || controllerConfig.controllerType == 'TABULAR') && empty items}">
+	<c:if test="${empty pagingList && (empty detailConfig || now['controllerType'] == 'TABULAR') && empty items}">
 		<c:set var="pagingList" value="${(not empty paging && paging.list ne null ? paging : null)}" />
 		<c:if test="${empty pagingList}">
 			<c:set var="detailConfig" value="${targetConfig}"/>
 		</c:if>
 		<c:if test="${not empty pagingList}">
 			<c:set var="name" value="entities"/>
-			<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
+			<c:if test="${now['controllerType'] == 'TABULAR'}">
 				<c:set var="detailConfig" value="${targetConfig}"/>
 			</c:if>
 		</c:if>
@@ -132,7 +132,7 @@
 			<c:set var="pagingLayerFields" value="${pagingFormName}"/>
 		</c:if>
 		<c:if test="${empty pagingLayer}">
-			<c:set var="pagingLayer" value="${controllerConfig.controllerType == 'TABULAR' ? '' : 'vulpeSelectTable_'}${pagingFormName}"/>
+			<c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable_'}${pagingFormName}"/>
 		</c:if>
 	</c:if>
 

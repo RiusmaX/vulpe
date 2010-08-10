@@ -3,7 +3,7 @@
 <%@ page isErrorPage="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<fmt:setBundle basename="${vulpeI18nManager}" />
+<fmt:setBundle basename="${global['i18nManager']}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +11,7 @@
 <title><fmt:message key="vulpe.error.500.title" /></title>
 <style media="all" type="text/css">
 @import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
-@import	"${pageContext.request.contextPath}/themes/${vulpeTheme}/css/frontend/${vulpeTheme}.css";
+@import	"${pageContext.request.contextPath}/themes/${global['theme']}/css/frontend/${global['theme']}.css";
 </style>
 </head>
 <body>

@@ -485,7 +485,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return getTitleKey().concat(View.MASTER);
 	}
 
-	public void setViewSelectItemsPath(String viewSelectItemsPath) {
+	public void setViewSelectItemsPath(final String viewSelectItemsPath) {
 		this.viewSelectItemsPath = viewSelectItemsPath;
 	}
 
@@ -493,7 +493,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return viewSelectItemsPath;
 	}
 
-	public void setViewCRUDPath(String viewCRUDPath) {
+	public void setViewCRUDPath(final String viewCRUDPath) {
 		this.viewCRUDPath = viewCRUDPath;
 	}
 
@@ -501,7 +501,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return viewCRUDPath;
 	}
 
-	public void setViewSelectPath(String viewSelectPath) {
+	public void setViewSelectPath(final String viewSelectPath) {
 		this.viewSelectPath = viewSelectPath;
 	}
 

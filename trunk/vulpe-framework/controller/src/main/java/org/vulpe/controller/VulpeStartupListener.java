@@ -15,12 +15,17 @@
  */
 package org.vulpe.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Context;
+import org.vulpe.commons.VulpeConstants.Configuration.Global;
+import org.vulpe.commons.VulpeConstants.Configuration.Global.Mobile;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeDB4OUtil;
@@ -37,6 +42,11 @@ import org.vulpe.security.context.VulpeSecurityContext;
 public class VulpeStartupListener implements ServletContextListener {
 
 	private static final Logger LOG = Logger.getLogger(VulpeStartupListener.class);
+
+	/**
+	 * Global map
+	 */
+	public Map<String, Object> global = new HashMap<String, Object>();
 
 	/*
 	 * (non-Javadoc)
@@ -72,88 +82,58 @@ public class VulpeStartupListener implements ServletContextListener {
 		}
 
 		// sets scopes as attributes to use in tags and JSPs
-		evt.getServletContext().setAttribute(VulpeConstants.Context.APPLICATION_SCOPE,
+		evt.getServletContext().setAttribute(Context.APPLICATION_SCOPE,
 				Integer.valueOf(PageContext.APPLICATION_SCOPE));
-		evt.getServletContext().setAttribute(VulpeConstants.Context.PAGE_SCOPE,
+		evt.getServletContext().setAttribute(Context.PAGE_SCOPE,
 				Integer.valueOf(PageContext.PAGE_SCOPE));
-		evt.getServletContext().setAttribute(VulpeConstants.Context.REQUEST_SCOPE,
+		evt.getServletContext().setAttribute(Context.REQUEST_SCOPE,
 				Integer.valueOf(PageContext.REQUEST_SCOPE));
-		evt.getServletContext().setAttribute(VulpeConstants.Context.SESSION_SCOPE,
+		evt.getServletContext().setAttribute(Context.SESSION_SCOPE,
 				Integer.valueOf(PageContext.SESSION_SCOPE));
 
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
-		evt.getServletContext().setAttribute(VulpeConstants.Context.I18N_MANAGER,
-				vulpeProject.i18nManager());
-		evt.getServletContext().setAttribute(VulpeConstants.Context.THEME,
-				VulpeConfigHelper.getTheme());
-		evt.getServletContext().setAttribute(VulpeConstants.Context.AUDIT_ENABLED,
-				VulpeConfigHelper.isAuditEnabled());
-		evt.getServletContext().setAttribute(VulpeConstants.Context.SECURITY_ENABLED,
-				VulpeConfigHelper.isSecurityEnabled());
-		evt.getServletContext().setAttribute(VulpeConstants.Context.FRONTEND_MENU_TYPE,
-				vulpeProject.frontendMenuType());
-		evt.getServletContext().setAttribute(VulpeConstants.Context.BACKEND_MENU_TYPE,
-				vulpeProject.backendMenuType());
+		global.put(Global.I18N_MANAGER, vulpeProject.i18nManager());
+		global.put(Global.AUDIT_ENABLED, VulpeConfigHelper.isAuditEnabled());
+		global.put(Global.SECURITY_ENABLED, VulpeConfigHelper.isSecurityEnabled());
+		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
+
+		global.put(Global.THEME, VulpeConfigHelper.getTheme());
+		global.put(Global.FRONTEND_MENU_TYPE, vulpeProject.frontendMenuType());
+		global.put(Global.BACKEND_MENU_TYPE, vulpeProject.backendMenuType());
 
 		if (vulpeProject.view() != null) {
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.View.BACKEND_CENTERED_LAYOUT,
-					vulpeProject.view().backendCenteredLayout());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.View.FRONTEND_CENTERED_LAYOUT,
-					vulpeProject.view().frontendCenteredLayout());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_BUTTON_AS_IMAGE,
-					vulpeProject.view().showButtonAsImage());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_BUTTON_ICON,
-					vulpeProject.view().showButtonIcon());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_BUTTON_TEXT,
-					vulpeProject.view().showButtonText());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.WIDTH_BUTTON_ICON,
-					vulpeProject.view().widthButtonIcon());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.View.WIDTH_MOBILE_BUTTON_ICON,
-					vulpeProject.view().widthMobileButtonIcon());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.HEIGHT_BUTTON_ICON,
-					vulpeProject.view().heightButtonIcon());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.View.HEIGHT_MOBILE_BUTTON_ICON,
-					vulpeProject.view().heightMobileButtonIcon());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.MESSAGE_SLIDE_UP,
-					vulpeProject.view().messageSlideUp());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.MESSAGE_SLIDE_UP_TIME,
-					vulpeProject.view().messageSlideUpTime());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.BREAK_LABEL,
-					vulpeProject.view().breakLabel());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_COPYRIGHT,
-					vulpeProject.view().showCopyright());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.SHOW_POWERED_BY,
-					vulpeProject.view().showPoweredBy());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.View.PAGING_STYLE,
-					vulpeProject.view().pagingStyle());
+			global.put(Global.BACKEND_CENTERED_LAYOUT, vulpeProject.view().backendCenteredLayout());
+			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view()
+					.frontendCenteredLayout());
+			global.put(Global.SHOW_BUTTON_AS_IMAGE, vulpeProject.view().showButtonAsImage());
+			global.put(Global.SHOW_BUTTON_ICON, vulpeProject.view().showButtonIcon());
+			global.put(Global.SHOW_BUTTON_TEXT, vulpeProject.view().showButtonText());
+			global.put(Global.WIDTH_BUTTON_ICON, vulpeProject.view().widthButtonIcon());
+			global
+					.put(Global.WIDTH_MOBILE_BUTTON_ICON, vulpeProject.view()
+							.widthMobileButtonIcon());
+			global.put(Global.HEIGHT_BUTTON_ICON, vulpeProject.view().heightButtonIcon());
+			global.put(Global.HEIGHT_MOBILE_BUTTON_ICON, vulpeProject.view()
+					.heightMobileButtonIcon());
+			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
+			global.put(Global.MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
+			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
+			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
+			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
+			global.put(Global.PAGING_STYLE, vulpeProject.view().pagingStyle());
 		}
+		global.put(Global.SHOW_AS_MOBILE, vulpeProject.mobileEnabled());
 		if (vulpeProject.mobileEnabled()) {
-			evt.getServletContext().setAttribute(VulpeConstants.Context.SHOW_AS_MOBILE, true);
-			evt.getServletContext().setAttribute(VulpeConstants.Context.Mobile.VIEWPORT_WIDHT,
-					vulpeProject.mobile().viewportWidth());
-			evt.getServletContext().setAttribute(VulpeConstants.Context.Mobile.VIEWPORT_HEIGHT,
-					vulpeProject.mobile().viewportHeight());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.Mobile.VIEWPORT_USER_SCALABLE,
-					vulpeProject.mobile().viewportUserScalable());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.Mobile.VIEWPORT_INITIAL_SCALE,
-					vulpeProject.mobile().viewportInitialScale());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.Mobile.VIEWPORT_MAXIMUM_SCALE,
-					vulpeProject.mobile().viewportMaximumScale());
-			evt.getServletContext().setAttribute(
-					VulpeConstants.Context.Mobile.VIEWPORT_MINIMUM_SCALE,
-					vulpeProject.mobile().viewportMinimumScale());
+			global.put(Mobile.VIEWPORT_WIDHT, vulpeProject.mobile().viewportWidth());
+			global.put(Mobile.VIEWPORT_HEIGHT, vulpeProject.mobile().viewportHeight());
+			global.put(Mobile.VIEWPORT_USER_SCALABLE, vulpeProject.mobile().viewportUserScalable());
+			global.put(Mobile.VIEWPORT_INITIAL_SCALE, vulpeProject.mobile().viewportInitialScale());
+			global.put(Mobile.VIEWPORT_MAXIMUM_SCALE, vulpeProject.mobile().viewportMaximumScale());
+			global.put(Mobile.VIEWPORT_MINIMUM_SCALE, vulpeProject.mobile().viewportMinimumScale());
 		}
-		evt.getServletContext().setAttribute(VulpeConstants.Context.VULPE_USE_DB4O,
-				VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
-
+		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
+		evt.getServletContext().setAttribute(Context.GLOBAL, global);
 		CachedObjectsHelper.putAnnotedObjectsInCache(evt.getServletContext());
 	}
 

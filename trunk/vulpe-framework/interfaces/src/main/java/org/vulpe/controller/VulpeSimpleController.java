@@ -15,50 +15,28 @@
  */
 package org.vulpe.controller;
 
-import java.util.Date;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
 
+/**
+ * Simple Controller Interface.
+ *
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public interface VulpeSimpleController {
 
 	/**
-	 * Method returns current date time of system.
-	 * 
-	 * @since 1.0
-	 * @return VulpeDate.
-	 */
-	Date getSystemDate();
-
-	/**
-	 * Method returns current year from date of system.
-	 * 
-	 * @since 1.0
-	 * @return Year.
-	 */
-	int getCurrentYear();
-
-	/**
-	 * Method returns current month from date of system.
-	 * 
-	 * @since 1.0
-	 * @return Month.
-	 */
-	int getCurrentMonth();
-
-	/**
-	 * Method returns current day from date of system.
-	 * 
-	 * @since 1.0
-	 * @return Day.
-	 */
-	int getCurrentDay();
-
-	/**
 	 * Method to invoke services.
-	 * 
+	 *
 	 * @param eventName
 	 *            Name of event
 	 * @param serviceName
@@ -67,7 +45,7 @@ public interface VulpeSimpleController {
 	 *            Types of arguments
 	 * @param argsValues
 	 *            Arguments values
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Object
 	 */
@@ -76,7 +54,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Return current action configuration.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -84,7 +62,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 * 
+	 *
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -94,7 +72,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Retrieves current action service configured.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Service Implementation.
 	 * @see VulpeService
@@ -103,44 +81,43 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Retrieves map of cached class
-	 * 
+	 *
 	 * @return Map with cached classes
 	 */
 	Map<String, Object> getCachedClass();
 
 	/**
 	 * Retrieves map of cached enumeration
-	 * 
+	 *
 	 * @return Map with cached enumerations
 	 */
 	Map<String, Object> getCachedEnum();
 
 	/**
 	 * Retrieves map of cached enumeration in array to checkbox list
-	 * 
+	 *
 	 * @return Map with cached enumerations array
 	 */
 	Map<String, String> getCachedEnumArray();
 
 	/**
 	 * Retrieves current security context.
-	 * 
+	 *
 	 * @return VulpeSecurityContext Interface
 	 * @since 1.0
 	 */
 	VulpeSecurityContext getSecurityContext();
 
-
 	/**
 	 * Retrieves user authenticated.
-	 * 
+	 *
 	 * @return
 	 */
 	String getUserAuthenticated();
 
 	/**
 	 * Method to prepare back-end show.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -148,7 +125,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Method to prepare front-end show.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -156,7 +133,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Method to download file.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -164,7 +141,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Method to upload file.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -216,13 +193,9 @@ public interface VulpeSimpleController {
 
 	void setLayerUrlBack(final String layerUrlBack);
 
-	boolean isShowTitle();
-
-	void setShowTitle(boolean showTitle);
-
 	/**
 	 * Retrieves a Spring Bean by name.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param beanName
@@ -234,7 +207,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Retrieves a Spring Bean by class.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param clazz
@@ -246,7 +219,7 @@ public interface VulpeSimpleController {
 
 	/**
 	 * Retrieves a Session Attribute.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param attributeName
@@ -257,8 +230,16 @@ public interface VulpeSimpleController {
 	<T> T getSessionAttribute(final String attributeName);
 
 	/**
-	 * Retrieves a Request Attribute.
-	 * 
+	 * Sets attribute on session scope.
+	 *
+	 * @param attributeName
+	 * @param attributeValue
+	 */
+	void setSessionAttribute(final String attributeName, final Object attributeValue);
+
+	/**
+	 * Retrieves a attribute on request scope.
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param attributeName
@@ -268,4 +249,56 @@ public interface VulpeSimpleController {
 	 */
 	<T> T getRequestAttribute(final String attributeName);
 
+	/**
+	 * Sets attribute on request scope.
+	 *
+	 * @param attributeName
+	 * @param attributeValue
+	 */
+	void setRequestAttribute(final String attributeName, final Object attributeValue);
+
+	/**
+	 * Retrieves key of select form object (entitySelect) attribute on session
+	 * scope.
+	 *
+	 * @return
+	 */
+	String getSelectFormKey();
+
+	/**
+	 * Retrieves key of select table object (entities) attribute on session
+	 * scope.
+	 *
+	 * @return
+	 */
+	String getSelectTableKey();
+
+	/**
+	 * Retrieves key of select paging object (paging) attribute on session
+	 * scope.
+	 *
+	 * @return
+	 */
+	String getSelectPagingKey();
+
+	/**
+	 * Retrieves current HTTP Request.
+	 *
+	 * @return Http Servlet Request
+	 */
+	HttpServletRequest getRequest();
+
+	/**
+	 * Retrieves current HTTP Response.
+	 *
+	 * @return Http Servlet Reponse
+	 */
+	HttpServletResponse getResponse();
+
+	/**
+	 * Retrieves current HTTP Session.
+	 *
+	 * @return Http Session
+	 */
+	HttpSession getSession();
 }

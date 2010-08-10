@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:if test="${vulpeBodyTwice}">
 <fieldset>
-<legend><fmt:message>${fn:replace(controllerConfig.titleKey, '.twice', '.crud')}</fmt:message></legend>
+<legend><fmt:message>${fn:replace(now['titleKey'], '.twice', '.crud')}</fmt:message></legend>
 </c:if>
 <div id="vulpeCRUD">
 	<div id="vulpeCRUDActions" class="vulpeActions">
@@ -9,15 +9,16 @@
 	</div>
 	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeCRUDBodyTabs">
-		<ul>
-			<c:set var="tabTitle"><fmt:message key="${controllerConfig.titleKey}"/></c:set>
+		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
+		<ul title="${tabNavigationTitle}">
+			<c:set var="tabTitle"><fmt:message key="${now['titleKey']}"/></c:set>
 			<c:if test="${not empty tabs || not empty tabs['master']}">
 				<c:set var="tabTitle" value="${tabs['master'].title}"/>
 			</c:if>
 			<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody">${tabTitle}</a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
-					<c:set var="tabTitle" value="${detail.titleKey}"/>
+					<c:set var="tabTitle"><fmt:message key="${detail.titleKey}"/></c:set>
 					<c:if test="${not empty tabs || not empty tabs[detail.name]}">
 						<c:set var="tabTitle" value="${tabs[detail.name].title}"/>
 					</c:if>
@@ -32,7 +33,7 @@
 	<div id="vulpeCRUDBody">
 		<c:remove var="targetConfig" scope="request"/>
 		<c:remove var="targetConfigPropertyName" scope="request"/>
-		<jsp:include page="${controllerConfig.controllerType == 'TWICE' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
 	</div>
 	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<c:forEach items="${controllerConfig.details}" var="detail">
@@ -53,7 +54,6 @@
 	</div>
 	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		</div>
-		<div id="vulpeTabNavigation"><fmt:message key="label.vulpe.tabs.navigation"/></div>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				var tabsName = '#vulpeCRUDBodyTabs';

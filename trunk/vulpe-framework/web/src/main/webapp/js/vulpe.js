@@ -1261,8 +1261,8 @@ var vulpe = {
 				vulpe.view.request.submitFormAction(actionURL, formName, layerFields, '', layer, false, beforeJs, afterJs);
 			},
 
-			submitUpdate: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs) {
-				if (vulpe.view.isSelection) {
+			submitUpdate: function(id, actionURL, formName, layerFields, layer, beforeJs, afterJs, verify) {
+				if (verify && vulpe.view.isSelection) {
 					return false;
 				}
 				vulpe.util.getElement(formName + vulpe.config.identifier).value = id;

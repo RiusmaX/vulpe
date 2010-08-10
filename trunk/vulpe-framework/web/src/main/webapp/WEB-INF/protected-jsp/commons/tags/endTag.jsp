@@ -1,6 +1,6 @@
 <c:if test="${!showAsText || !onlyToSee}">
-<img id="${elementId}_loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/ajax/field-loader.gif" />
-<img id="${elementId}_ErrorMessage" src="${pageContext.request.contextPath}/themes/${vulpeTheme}/images/icons/field-error-stop.png" onclick="vulpe.util.get('${elementId}').focus();" class="vulpeImageErrorMessage" />
+<img id="${elementId}_loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" />
+<img id="${elementId}_ErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" onclick="vulpe.util.get('${elementId}').focus();" class="vulpeImageErrorMessage" />
 </c:if>
 <c:if test="${required}"><span class="vulpeRequiredField">*</span></c:if>
 <c:if test="${paragraph}"></p></c:if>

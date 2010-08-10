@@ -18,10 +18,10 @@ package org.vulpe.controller;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,8 +30,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
+import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Tab;
@@ -46,7 +49,7 @@ import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
- * Action base for Struts2
+ * Simple Base Controller implementation.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
@@ -61,52 +64,39 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	@Autowired
 	protected I18NService i18nService;
 
-	private Map<String, Tab> tabs = new HashMap<String, Tab>();
+	@Autowired
+	protected VulpeContext vulpeContext;
+
+	/**
+	 * Global map
+	 */
+	public static Map<String, Object> ever = new HashMap<String, Object>();
+
+	/**
+	 * Temporal map
+	 */
+	public Map<String, Object> now = new HashMap<String, Object>();
 
 	/**
 	 * Calendar
 	 */
 	private final Calendar calendar = Calendar.getInstance();
 
-	/**
-	 * Show Title
-	 */
-	private boolean showTitle = true;
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getSystemDate()
-	 */
-	public Date getSystemDate() {
-		return calendar.getTime();
+	{
+		now.put(Now.SHOW_CONTENT_TITLE, true);
+		now.put(Now.SYSTEM_DATE, calendar.getTime());
+		now.put(Now.CURRENT_DAY, calendar.get(Calendar.DAY_OF_MONTH));
+		now.put(Now.CURRENT_MONTH, calendar.get(Calendar.MONTH));
+		now.put(Now.CURRENT_YEAR, calendar.get(Calendar.YEAR));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentYear()
-	 */
-	public int getCurrentYear() {
-		return calendar.get(Calendar.YEAR);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentMonth()
-	 */
-	public int getCurrentMonth() {
-		return calendar.get(Calendar.MONTH);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCurrentDay()
-	 */
-	public int getCurrentDay() {
-		return calendar.get(Calendar.DAY_OF_MONTH);
+	@PostConstruct
+	public void loadNow() {
+		now.put(Now.CONTROLLER_TYPE, getControllerType());
+		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
+		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
+		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
+		now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
 	}
 
 	/**
@@ -702,26 +692,32 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 				VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 
-	/**
-	 * Retrieves current HTTP Session.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @return Http Session
+	 * @see org.vulpe.controller.VulpeSimpleController#getSession()
 	 */
-	public abstract HttpSession getSession();
+	public HttpSession getSession() {
+		return getRequest().getSession();
+	}
 
-	/**
-	 * Retrieves current HTTP Request.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @return Http Servlet Request
+	 * @see org.vulpe.controller.VulpeSimpleController#getRequest()
 	 */
-	public abstract HttpServletRequest getRequest();
+	public HttpServletRequest getRequest() {
+		return vulpeContext.getRequest();
+	}
 
-	/**
-	 * Retrieves current HTTP Response.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @return Http Servlet Reponse
+	 * @see org.vulpe.controller.VulpeSimpleController#getResponse()
 	 */
-	public abstract HttpServletResponse getResponse();
+	public HttpServletResponse getResponse() {
+		return vulpeContext.getResponse();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -761,8 +757,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return getControllerUtil().getControllerConfig(this);
 	}
 
-	/*
+	/**
 	 *
+	 * @return
 	 */
 	public ControllerUtil getControllerUtil() {
 		return ControllerUtil.getInstance(getRequest());
@@ -789,21 +786,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#isShowTitle()
+	 * @see org.vulpe.controller.VulpeSimpleController#getSecurityContext()
 	 */
-	public boolean isShowTitle() {
-		return showTitle;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#setShowTitle(boolean)
-	 */
-	public void setShowTitle(boolean showTitle) {
-		this.showTitle = showTitle;
-	}
-
 	public VulpeSecurityContext getSecurityContext() {
 		VulpeSecurityContext securityContext = getSessionAttribute(VulpeConstants.SECURITY_CONTEXT);
 		if (securityContext == null) {
@@ -851,6 +835,13 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return (T) getSession().getAttribute(attributeName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#setSessionAttribute(java.lang
+	 * .String, java.lang.Object)
+	 */
 	public void setSessionAttribute(final String attributeName, final Object attributeValue) {
 		getSession().setAttribute(attributeName, attributeValue);
 	}
@@ -865,6 +856,13 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return (T) getRequest().getAttribute(attributeName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#setRequestAttribute(java.lang
+	 * .String, java.lang.Object)
+	 */
 	public void setRequestAttribute(final String attributeName, final Object attributeValue) {
 		getRequest().setAttribute(attributeName, attributeValue);
 	}
@@ -881,12 +879,51 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	public abstract void addActionError(final String message);
 
-	public void setTabs(Map<String, Tab> tabs) {
-		this.tabs = tabs;
-	}
-
 	public Map<String, Tab> getTabs() {
+		if (now.containsKey("tabs")) {
+			return (Map<String, Tab>) now.get("tabs");
+		}
+		final Map<String, Tab> tabs = new HashMap<String, Tab>();
+		now.put("tabs", tabs);
 		return tabs;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeSimpleController#getSelectFormKey()
+	 */
+	public String getSelectFormKey() {
+		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_FORM;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeSimpleController#getSelectTableKey()
+	 */
+	public String getSelectTableKey() {
+		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_TABLE;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeSimpleController#getSelectPagingKey()
+	 */
+	public String getSelectPagingKey() {
+		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_PAGING;
+	}
+
+	public static Map<String, Object> getEver() {
+		return ever;
+	}
+
+	protected void changeControllerType(final ControllerType controllerType) {
+		getControllerConfig().setControllerType(controllerType);
+		now.put(Now.CONTROLLER_TYPE, controllerType);
+		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
+	}
+
 
 }

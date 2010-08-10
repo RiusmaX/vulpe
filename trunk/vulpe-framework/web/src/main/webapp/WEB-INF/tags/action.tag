@@ -34,13 +34,13 @@
 </c:if>
 <c:if test="${show eq true}">
 	<c:if test="${empty showButtonAsImage}">
-		<c:set var="showButtonAsImage" value="${vulpeShowButtonAsImage}" />
+		<c:set var="showButtonAsImage" value="${global['showButtonAsImage']}" />
 	</c:if>
 	<c:if test="${empty showButtonIcon}">
-		<c:set var="showButtonIcon" value="${vulpeShowButtonIcon}" />
+		<c:set var="showButtonIcon" value="${global['showButtonIcon']}" />
 	</c:if>
 	<c:if test="${empty showButtonText}">
-		<c:set var="showButtonText" value="${vulpeShowButtonText}" />
+		<c:set var="showButtonText" value="${global['showButtonText']}" />
 	</c:if>
 	<c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmExclusion()')}">
 		<c:set var="showDeleteConfirmation" value="true" />
@@ -101,15 +101,15 @@
 		<c:otherwise>
 			<c:if test="${not empty icon}">
 				<c:if test="${empty widthIcon}">
-					<c:set var="widthIcon" value="${vulpeShowAsMobile ? vulpeWidthMobileButtonIcon : vulpeWidthButtonIcon}" />
+					<c:set var="widthIcon" value="${global['showAsMobile'] ? global['widthMobileButtonIcon'] : global['widthButtonIcon']}" />
 				</c:if>
 				<c:if test="${empty heightIcon}">
-					<c:set var="heightIcon" value="${vulpeShowAsMobile ? vulpeHeightMobileButtonIcon : vulpeHeightButtonIcon}" />
+					<c:set var="heightIcon" value="${global['showAsMobile'] ? global['heightMobileButtonIcon'] : global['heightButtonIcon']}" />
 				</c:if>
 				<c:if test="${empty borderIcon}">
 					<c:set var="borderIcon" value="0" />
 				</c:if>
-				<c:set var="iconPrefix"	value="themes/${vulpeTheme}/images/icons/button" />
+				<c:set var="iconPrefix"	value="themes/${global['theme']}/images/icons/button" />
 				<c:set var="icon" value="${iconPrefix}-${icon}-${widthIcon}x${heightIcon}.png" />
 				<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}">
 					<c:set var="icon" value="${pageContext.request.contextPath}/${icon}" />

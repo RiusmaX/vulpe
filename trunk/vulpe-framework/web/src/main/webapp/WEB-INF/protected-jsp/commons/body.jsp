@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<c:set var="vulpeFormName" value="${controllerConfig.formName}" scope="request"/>
+<c:set var="vulpeFormName" value="${now['formName']}" scope="request"/>
 <c:if test="${vulpeBodyTwice}">
 	<c:choose>
 	<c:when test="${vulpeBodyTwiceType == 'CRUD'}">
@@ -14,7 +14,7 @@
 	<c:if test="${!onlyToSee}">
 	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}_operation"/>
 	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}_paging.page"/>
-	<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
+	<c:if test="${now['controllerType'] == 'TABULAR'}">
 	<input type="hidden" name="tabularSize" value="${tabularSize}" id="${vulpeFormName}_tabularSize"/>
 	</c:if>
 	<input type="hidden" name="id" value="${id}" id="${vulpeFormName}_id"/>
@@ -26,8 +26,8 @@
 	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">
 	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${securityContext.user.name}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
 	</c:if>
-	<c:if test="${showTitle && empty vulpeBodyTwice}">
-		<div id="contentTitle"><fmt:message>${controllerConfig.titleKey}${onlyToSee ? '.view' : ''}</fmt:message></div>
+	<c:if test="${now['showContentTitle'] && empty vulpeBodyTwice}">
+	<div id="contentTitle"><fmt:message>${now['titleKey']}${onlyToSee ? '.view' : ''}</fmt:message></div>
 	</c:if>
 	<div id="content">
 		<c:choose>
@@ -41,22 +41,22 @@
 				</c:when>
 				</c:choose>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'CRUD'}">
+			<c:when test="${now['controllerType'] == 'CRUD'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'SELECT'}">
+			<c:when test="${now['controllerType'] == 'SELECT'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'TABULAR'}">
+			<c:when test="${now['controllerType'] == 'TABULAR'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/tabular.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'REPORT'}">
+			<c:when test="${now['controllerType'] == 'REPORT'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/report.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'FRONTEND'}">
+			<c:when test="${now['controllerType'] == 'FRONTEND'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/frontend.jsp" %>
 			</c:when>
-			<c:when test="${controllerConfig.controllerType == 'BACKEND'}">
+			<c:when test="${now['controllerType'] == 'BACKEND'}">
 				<%@include file="/WEB-INF/protected-jsp/commons/backend.jsp" %>
 			</c:when>
 		</c:choose>

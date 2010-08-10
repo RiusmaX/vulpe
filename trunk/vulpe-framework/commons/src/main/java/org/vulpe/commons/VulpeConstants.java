@@ -59,43 +59,58 @@ public class VulpeConstants {
 		public static final String PAGE_SCOPE = "PAGE_SCOPE";
 		public static final String REQUEST_SCOPE = "REQUEST_SCOPE";
 		public static final String SESSION_SCOPE = "SESSION_SCOPE";
-		public static final String THEME = "vulpeTheme";
-		public static final String I18N_MANAGER = "vulpeI18nManager";
-		public static final String AUDIT_ENABLED = "vulpeAuditEnabled";
-		public static final String SECURITY_ENABLED = "vulpeSecurityEnabled";
-		public static final String FRONTEND_MENU_TYPE = "vulpeFrontendMenuType";
-		public static final String BACKEND_MENU_TYPE = "vulpeBackendMenuType";
+		public static final String GLOBAL = "global";
 
-		public class View {
-			public static final String BACKEND_CENTERED_LAYOUT = "vulpeBackendCenteredLayout";
-			public static final String FRONTEND_CENTERED_LAYOUT = "vulpeFrontendCenteredLayout";
-			public static final String SHOW_BUTTON_AS_IMAGE = "vulpeShowButtonAsImage";
-			public static final String SHOW_BUTTON_ICON = "vulpeShowButtonIcon";
-			public static final String SHOW_BUTTON_TEXT = "vulpeShowButtonText";
-			public static final String WIDTH_BUTTON_ICON = "vulpeWidthButtonIcon";
-			public static final String WIDTH_MOBILE_BUTTON_ICON = "vulpeWidthMobileButtonIcon";
-			public static final String HEIGHT_BUTTON_ICON = "vulpeHeightButtonIcon";
-			public static final String HEIGHT_MOBILE_BUTTON_ICON = "vulpeHeightMobileButtonIcon";
-			public static final String MESSAGE_SLIDE_UP = "vulpeMessageSlideUp";
-			public static final String MESSAGE_SLIDE_UP_TIME = "vulpeMessageSlideUpTime";
-			public static final String BREAK_LABEL = "vulpeBreakLabel";
-			public static final String SHOW_COPYRIGHT = "vulpeShowCopyright";
-			public static final String SHOW_POWERED_BY = "vulpeShowPoweredBy";
+	}
+
+	public class Configuration {
+		public class Global {
+			public static final String USE_DB4O = "useDB4O";
+			public static final String AUDIT_ENABLED = "auditEnabled";
+			public static final String SECURITY_ENABLED = "securityEnabled";
+			public static final String I18N_MANAGER = "i18nManager";
+			public static final String THEME = "theme";
+			public static final String FRONTEND_MENU_TYPE = "frontendMenuType";
+			public static final String BACKEND_MENU_TYPE = "backendMenuType";
+			public static final String BACKEND_CENTERED_LAYOUT = "backendCenteredLayout";
+			public static final String FRONTEND_CENTERED_LAYOUT = "frontendCenteredLayout";
+			public static final String SHOW_BUTTON_AS_IMAGE = "showButtonAsImage";
+			public static final String SHOW_BUTTON_ICON = "showButtonIcon";
+			public static final String SHOW_BUTTON_TEXT = "showButtonText";
+			public static final String WIDTH_BUTTON_ICON = "widthButtonIcon";
+			public static final String WIDTH_MOBILE_BUTTON_ICON = "widthMobileButtonIcon";
+			public static final String HEIGHT_BUTTON_ICON = "heightButtonIcon";
+			public static final String HEIGHT_MOBILE_BUTTON_ICON = "heightMobileButtonIcon";
+			public static final String MESSAGE_SLIDE_UP = "messageSlideUp";
+			public static final String MESSAGE_SLIDE_UP_TIME = "messageSlideUpTime";
+			public static final String BREAK_LABEL = "breakLabel";
+			public static final String SHOW_COPYRIGHT = "showCopyright";
+			public static final String SHOW_POWERED_BY = "showPoweredBy";
 			public static final String PAGING_STYLE = "vulpePagingStyle";
+
+			public static final String SHOW_AS_MOBILE = "showAsMobile";
+
+			public class Mobile {
+				public static final String VIEWPORT_WIDHT = "viewportWidth";
+				public static final String VIEWPORT_HEIGHT = "viewportHeight";
+				public static final String VIEWPORT_USER_SCALABLE = "viewportUserScalable";
+				public static final String VIEWPORT_INITIAL_SCALE = "viewportInitialScale";
+				public static final String VIEWPORT_MAXIMUM_SCALE = "viewportMaximumScale";
+				public static final String VIEWPORT_MINIMUM_SCALE = "viewportMinimumScale";
+			}
 		}
 
-		public static final String SHOW_AS_MOBILE = "vulpeShowAsMobile";
-
-		public class Mobile {
-			public static final String VIEWPORT_WIDHT = "viewportWidth";
-			public static final String VIEWPORT_HEIGHT = "viewportHeight";
-			public static final String VIEWPORT_USER_SCALABLE = "viewportUserScalable";
-			public static final String VIEWPORT_INITIAL_SCALE = "viewportInitialScale";
-			public static final String VIEWPORT_MAXIMUM_SCALE = "viewportMaximumScale";
-			public static final String VIEWPORT_MINIMUM_SCALE = "viewportMinimumScale";
+		public class Now {
+			public static final String SHOW_CONTENT_TITLE = "showContentTitle";
+			public static final String SYSTEM_DATE = "systemDate";
+			public static final String CURRENT_YEAR = "currentYear";
+			public static final String CURRENT_MONTH = "currentMonth";
+			public static final String CURRENT_DAY = "currentDay";
+			public static final String CONTROLLER_TYPE = "controllerType";
+			public static final String MASTER_TITLE_KEY = "masterTitleKey";
+			public static final String TITLE_KEY = "titleKey";
+			public static final String FORM_NAME = "formName";
 		}
-
-		public static final String VULPE_USE_DB4O = "vulpeUseDB4O";
 	}
 
 	public class Error {
@@ -137,19 +152,19 @@ public class VulpeConstants {
 		public static final String SELECT_PAGING = "_selectPaging";
 
 		public class Button {
-			public static final String CREATE = "createShow";
-			public static final String CREATE_POST = "createPostShow";
-			public static final String DELETE = "deleteShow";
-			public static final String UPDATE = "updateShow";
-			public static final String UPDATE_POST = "updatePostShow";
-			public static final String PREPARE = "prepareShow";
-			public static final String READ = "readShow";
-			public static final String REPORT = "reportShow";
-			public static final String CLEAR = "clearShow";
-			public static final String TABULAR_RELOAD = "tabularReloadShow";
-			public static final String TABULAR_POST = "tabularPostShow";
-			public static final String TABULAR_FILTER = "tabularFilterShow";
-			public static final String ADD_DETAIL = "addDetailShow";
+			public static final String CREATE = "create";
+			public static final String CREATE_POST = "createPost";
+			public static final String DELETE = "delete";
+			public static final String UPDATE = "update";
+			public static final String UPDATE_POST = "updatePost";
+			public static final String PREPARE = "prepare";
+			public static final String READ = "read";
+			public static final String REPORT = "report";
+			public static final String CLEAR = "clear";
+			public static final String TABULAR_RELOAD = "tabularReload";
+			public static final String TABULAR_POST = "tabularPost";
+			public static final String TABULAR_FILTER = "tabularFilter";
+			public static final String ADD_DETAIL = "addDetail";
 		}
 
 		public class Validate {

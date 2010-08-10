@@ -19,10 +19,10 @@
 				$("#messages").removeClass("vulpeMessageSuccess");
 				$("#messages").addClass("vulpeMessageValidation");
 				$("#messages").slideDown("slow");
-				<c:if test="${vulpeMessageSlideUp}">
+				<c:if test="${global['messageSlideUp']}">
 				setTimeout(function() {
 				  $("#messages").slideUp("slow");
-				}, ${vulpeMessageSlideUpTime});
+				}, ${global['messageSlideUpTime']});
 				</c:if>
 			});
 		</script>
@@ -102,10 +102,10 @@
 					});
 					$("#messages").html(msg);
 					$("#messages").slideDown("slow");
-					<c:if test="${vulpeMessageSlideUp}">
+					<c:if test="${global['messageSlideUp']}">
 					setTimeout(function() {
 			          $("#messages").slideUp("slow");
-					}, ${vulpeMessageSlideUpTime});
+					}, ${global['messageSlideUpTime']});
 					</c:if>
 				});
 			</script>

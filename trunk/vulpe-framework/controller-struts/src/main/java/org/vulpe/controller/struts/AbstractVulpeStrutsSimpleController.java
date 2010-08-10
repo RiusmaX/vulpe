@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import ognl.OgnlException;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -173,33 +169,6 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 			ServletActionContext.getRequest().getSession().setAttribute(keyForm, formParams);
 		}
 		return formParams;
-	}
-
-	/**
-	 * Retrieves current HTTP Session.
-	 *
-	 * @return Http Session
-	 */
-	public HttpSession getSession() {
-		return ServletActionContext.getRequest().getSession();
-	}
-
-	/**
-	 * Retrieves current HTTP Request.
-	 *
-	 * @return Http Servlet Request
-	 */
-	public HttpServletRequest getRequest() {
-		return ServletActionContext.getRequest();
-	}
-
-	/**
-	 * Retrieves current HTTP Response.
-	 *
-	 * @return Http Servlet Reponse
-	 */
-	public HttpServletResponse getResponse() {
-		return ServletActionContext.getResponse();
 	}
 
 	private final ValidationAwareSupport validationAware = new ValidationAwareSupport();

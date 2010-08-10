@@ -28,7 +28,7 @@ ${paging.size}
 		labelKey="label.vulpe.previous"
 		javascript="vulpe.view.request.submitPaging(${empty list.previousPage ? 0 : list.previousPage}, '${actionName}/ajax', '${formName}', '${layerFields}', '${layer}', '${not empty list.previousPage ? beforeJs : 'false'}', '${afterJs}');" />
 	<c:choose>
-	<c:when test="${vulpePagingStyle == 'NUMERIC'}">
+	<c:when test="${global['pagingStyle'] == 'NUMERIC'}">
 	<c:set var="begin" value="${list.page - 5 <= 0 ? 1 : list.page - 5}"/>
 	<c:set var="end" value="${list.page + 5 <= begin + 9 ? begin + 9 : list.page + 4}"/>
 	<c:if test="${begin < 0}">

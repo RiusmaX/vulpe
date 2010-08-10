@@ -15,82 +15,82 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.util.focusFirst();
-<c:if test="${(vulpeFrontendMenuType == 'DROPPY' && (controllerConfig.controllerType == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (vulpeBackendMenuType == 'DROPPY' && (controllerConfig.controllerType == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">
+<c:if test="${(global['frontendMenuType'] == 'DROPPY' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['backendMenuType'] == 'DROPPY' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">
 	$("#nav").droppy();
 </c:if>
 <c:if test="${pageContext.request.locale ne 'en_US'}">
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
-	<c:if test="${createShow || SELECT_createShow || CRUD_createShow}">
+	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
 		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonCreate.click(); return false;});
 		}
 	</c:if>
-	<c:if test="${createPostShow || SELECT_createPostShow || CRUD_createPostShow}">
+	<c:if test="${now['buttons']['createPost'] || now['buttons']['SELECT_createPost'] || now['buttons']['CRUD_createPost']}">
 		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost_${vulpeFormName}");
 		if (buttonCreatePost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
 		}
 	</c:if>
-	<c:if test="${updatePostShow || SELECT_updatePostShow || CRUD_updatePostShow}">
+	<c:if test="${now['buttons']['updatePost'] || now['buttons']['SELECT_updatePost'] || now['buttons']['CRUD_updatePost']}">
 		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost_${vulpeFormName}");
 		if (buttonUpdatePost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
 		}
 	</c:if>
-	<c:if test="${tabularPostShow}">
+	<c:if test="${now['buttons']['tabularPost']}">
 		var buttonTabularPost = vulpe.util.get("vulpeButtonTabularPost_${vulpeFormName}");
 		if (buttonTabularPost.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
 		}
 	</c:if>
-	<c:if test="${deleteShow || SELECT_deleteShow || CRUD_deleteShow}">
+	<c:if test="${now['buttons']['delete'] || now['buttons']['SELECT_delete'] || now['buttons']['CRUD_delete']}">
 		var buttonDelete = vulpe.util.get("vulpeButtonDelete_${vulpeFormName}");
 		if (buttonDelete.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
 		}
 	</c:if>
-	<c:if test="${prepareShow || SELECT_prepareShow || CRUD_prepareShow}">
+	<c:if test="${now['buttons']['prepare'] || now['buttons']['SELECT_prepare'] || now['buttons']['CRUD_prepare']}">
 		var buttonPrepare = vulpe.util.get("vulpeButtonPrepare_${vulpeFormName}");
 		if (buttonPrepare.attr("onclick")) {
-			<c:if test="${controllerConfig.controllerType == 'CRUD'}">
+			<c:if test="${now['controllerType'] == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
-			<c:if test="${controllerConfig.controllerType == 'SELECT'}">
+			<c:if test="${now['controllerType'] == 'SELECT'}">
 			<c:set var="prepare" value="Alt+Shift+del"/>
 			</c:if>
 			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
 		}
 	</c:if>
-	<c:if test="${tabularFilterShow}">
+	<c:if test="${now['buttons']['tabularFilter']}">
 		var buttonTabularFilter = vulpe.util.get("vulpeButtonTabularFilter_${vulpeFormName}");
 		if (buttonTabularFilter.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f7', function (){buttonTabularFilter.click();});
 			jQuery(document).bind('keydown', 'return', function (){buttonTabularFilter.click(); return false;});
 		}
 	</c:if>
-	<c:if test="${tabularReloadShow}">
+	<c:if test="${now['buttons']['tabularReload']}">
 		var buttonTabularReload = vulpe.util.get("vulpeButtonTabularReload_${vulpeFormName}");
 		if (buttonTabularReload.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularReload.click();});
 		}
 	</c:if>
-	<c:if test="${readShow || SELECT_readShow || CRUD_readShow}">
+	<c:if test="${now['buttons']['read'] || now['buttons']['SELECT_read'] || now['buttons']['CRUD_read']}">
 		var buttonRead = vulpe.util.get("vulpeButtonRead_${vulpeFormName}");
 		if (buttonRead.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
 			jQuery(document).bind('keydown', 'return', function (){buttonRead.click(); return false;});
 		}
 	</c:if>
-	<c:if test="${clearShow || SELECT_clearShow || CRUD_clearShow}">
+	<c:if test="${now['buttons']['clear'] || now['buttons']['SELECT_clear'] || now['buttons']['CRUD_clear']}">
 		var buttonClear = vulpe.util.get("vulpeButtonClear_${vulpeFormName}");
 		if (buttonClear.attr("onclick")) {
 			jQuery(document).bind('keydown', 'Alt+Shift+del', function (){buttonClear.click();});
 		}
 	</c:if>
-	<c:set var="buttonCreate_tabular_EL" value="${'${'}addDetailShow${targetConfig.name}${'}'}"/>
+	<c:set var="buttonCreate_tabular_EL" value="${'${'}now['buttons']['addDetai${targetConfig.name}']${'}'}"/>
 	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
 	<c:if test="${buttonCreate_tabular}">
 		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_entities");
@@ -100,7 +100,7 @@ $(document).ready(function() {
 	</c:if>
 	<c:if test="${!controllerConfig.simple}">
 	<c:forEach items="${controllerConfig.details}" var="detail">
-		<c:set var="buttonDetailEL" value="${'${'}addDetailShow${detail.baseName}${'}'}"/>
+		<c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${detail.baseName}']${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
 		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");

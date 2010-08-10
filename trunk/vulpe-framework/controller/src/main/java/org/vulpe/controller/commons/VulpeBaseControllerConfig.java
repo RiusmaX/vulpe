@@ -35,10 +35,16 @@ import org.vulpe.view.tags.Functions;
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeBaseSimpleControllerConfig implements Serializable {
+
 	private final List<VulpeBaseDetailConfig> details;
 	private final Class<ID> idClass;
 	private final Class<ENTITY> entityClass;
 
+	/**
+	 *
+	 * @param controllerClass
+	 * @param details
+	 */
 	public VulpeBaseControllerConfig(final Class<?> controllerClass,
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
@@ -51,6 +57,10 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		this.details = details;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public List<VulpeBaseDetailConfig> getDetails() {
 		if (!getControllerType().equals(ControllerType.TABULAR)
 				&& getController().detailsConfig().length == 0) {
@@ -59,6 +69,10 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		return this.details;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public VulpeBaseDetailConfig getTabularConfig() {
 		if (getControllerType().equals(ControllerType.TABULAR)
 				&& (this.details == null || this.details.isEmpty())) {
@@ -79,14 +93,27 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		return getDetail(Action.ENTITIES);
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Class<ENTITY> getEntityClass() {
 		return this.entityClass;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Class<ID> getIdClass() {
 		return this.idClass;
 	}
 
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
 	public VulpeBaseDetailConfig getDetail(final String name) {
 		for (VulpeBaseDetailConfig detail : details) {
 			if (detail.getName().equals(name)) {
@@ -96,6 +123,11 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		return null;
 	}
 
+	/**
+	 *
+	 * @param detail
+	 * @return
+	 */
 	public VulpeBaseDetailConfig getDetailConfig(final String detail) {
 		VulpeBaseDetailConfig detailConfig = getDetail(detail);
 		if (detailConfig != null) {

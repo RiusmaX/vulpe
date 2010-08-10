@@ -7,7 +7,7 @@
 </c:if>
 <p>
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsExtended.jsp"%>
-<c:set var="buttonDetailEL" value="${'${'}addDetailShow${targetConfig.baseName}${'}'}" />
+<c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${targetConfig.baseName}']${'}'}" />
 <c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" />
 <c:set var="style" value="display: none;" />
 <c:if test="${buttonDetail}">

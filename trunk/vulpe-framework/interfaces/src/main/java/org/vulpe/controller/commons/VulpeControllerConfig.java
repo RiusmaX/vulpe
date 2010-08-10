@@ -71,6 +71,18 @@ public interface VulpeControllerConfig {
 
 	String getMasterTitleKey();
 
+	void setViewSelectItemsPath(final String viewSelectItemsPath);
+
+	String getViewSelectItemsPath();
+
+	void setViewCRUDPath(final String viewCRUDPath);
+
+	String getViewCRUDPath();
+
+	void setViewSelectPath(final String viewSelectPath);
+
+	String getViewSelectPath();
+
 	/**
 	 * Controllers type
 	 *

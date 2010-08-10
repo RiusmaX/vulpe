@@ -3,7 +3,7 @@
 <c:if test="${vulpeBodyTwice}">
 <c:set var="vulpeBodySelect" value="${true}" scope="request"/>
 <fieldset>
-<legend><fmt:message>${fn:replace(controllerConfig.titleKey, '.twice', '.select')}</fmt:message></legend>
+<legend><fmt:message>${fn:replace(now['titleKey'], '.twice', '.select')}</fmt:message></legend>
 </c:if>
 <div id="vulpeSelect">
 	<div id="vulpeSelectActions" class="vulpeActions">
@@ -11,15 +11,15 @@
 	</div>
 	<div id="vulpeSelectForm">
 		<p class="vulpeSelectForm">
-			<jsp:include page="${controllerConfig.controllerType == 'TWICE' ? controllerConfig.viewSelectPath : controllerConfig.viewPath}" />
+			<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectPath : controllerConfig.viewPath}" />
 		</p>
 	</div>
 
 	<div id="vulpeSelectTable_${vulpeFormName}">
 		<p class="vulpeSelectTable">
 			<c:remove var="vulpeBodySelect" scope="request"/>
-			<jsp:include page="${controllerConfig.controllerType == 'TWICE' ? controllerConfig.viewSelectItemsPath : controllerConfig.viewItemsPath}" />
-			<c:if test="${controllerConfig.controllerType == 'REPORT' && not empty downloadInfo}">
+			<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectItemsPath : controllerConfig.viewItemsPath}" />
+			<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">
 				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
 				<script type="text/javascript">
 					$(document).ready(function() {

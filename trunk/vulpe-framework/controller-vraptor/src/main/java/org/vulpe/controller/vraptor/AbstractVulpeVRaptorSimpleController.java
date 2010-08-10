@@ -15,10 +15,6 @@
  */
 package org.vulpe.controller.vraptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -124,33 +120,6 @@ public abstract class AbstractVulpeVRaptorSimpleController extends
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-	}
-
-	/**
-	 * Retrieves current HTTP Session.
-	 *
-	 * @return Http Session
-	 */
-	public HttpSession getSession() {
-		return requestInfo.getRequest().getSession();
-	}
-
-	/**
-	 * Retrieves current HTTP Request.
-	 *
-	 * @return Http Servlet Request
-	 */
-	public HttpServletRequest getRequest() {
-		return requestInfo.getRequest();
-	}
-
-	/**
-	 * Retrieves current HTTP Response.
-	 *
-	 * @return Http Servlet Reponse
-	 */
-	public HttpServletResponse getResponse() {
-		return requestInfo.getResponse();
 	}
 
 	public void addActionMessage(final String message) {

@@ -57,7 +57,7 @@
 	<c:if test="${isHeaderTableTag}">
 		<c:set var="styleClass" value="vulpeColumnHeader"/>
 	</c:if>
-	<c:if test="${empty updateValue && isSelectTableTag && (updateShow || SELECT_updateShow)}">
+	<c:if test="${empty updateValue && isSelectTableTag && (now['buttons']['update'] || now['buttons']['SELECT_update'])}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -76,12 +76,12 @@
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<c:when test="${isSelectTableTag && (deleteShow || SELECT_deleteShow)}">
+			<c:when test="${isSelectTableTag && (now['buttons']['delete'] || now['buttons']['SELECT_delete'])}">
 				<c:set var="deleteValue" value="id"/>
-				<c:set var="deleteType" value="${controllerConfig.controllerType == 'TABULAR' ? 'detail' : 'select'}"/>
+				<c:set var="deleteType" value="${now['controllerType'] == 'TABULAR' ? 'detail' : 'select'}"/>
 			</c:when>
 			<c:when test="${not empty targetConfig}">
-				<c:set var="deleteShowEL" value="${'${'}deleteShow${targetConfig.baseName}${'}'}"/>
+				<c:set var="deleteShowEL" value="${'${'}now['buttons']['delete${targetConfig.baseName}']${'}'}"/>
 				<c:if test="${util:eval(pageContext, deleteShowEL)}">
 					<c:set var="deleteValue" value="selected"/>
 					<c:set var="deleteType" value="detail"/>
@@ -121,7 +121,7 @@
 							<c:set var="onclick" value="vulpe.view.request.submitView('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')"/>
 						</c:when>
 						<c:otherwise>
-							<c:set var="onclick" value="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')"/>
+							<c:set var="onclick" value="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}', true)"/>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -131,7 +131,7 @@
 							<c:set var="onclick" value="${onclick}; vulpe.view.request.submitView('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}');"/>
 						</c:when>
 						<c:otherwise>
-							<c:set var="onclick" value="${onclick}; vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}');"/>
+							<c:set var="onclick" value="${onclick}; vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}', true);"/>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -140,7 +140,7 @@
 		</c:if>
 	</c:if>
 	<c:if test="${not empty deleteValue && deleteValue ne 'false'}">
-		<c:if test="${controllerConfig.controllerType == 'TABULAR'}">
+		<c:if test="${now['controllerType'] == 'TABULAR'}">
 		<c:set var="elementId" value="${currentItem.id}"/>
 		</c:if>
 		<c:if test="${empty deleteActionName}">
@@ -165,7 +165,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<c:set var="deleteLayer" value="${controllerConfig.controllerType == 'TABULAR' ? '' : 'vulpeSelectTable_'}${deleteFormName}"/>
+					<c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable_'}${deleteFormName}"/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

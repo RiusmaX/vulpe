@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -196,7 +197,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@ResetSession(before = true)
 	public String create() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			getControllerConfig().setControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.CRUD);
 		}
 		setOperation(Action.CREATE);
 		createBefore();
@@ -292,7 +293,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@ResetSession
 	public String createPost() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			getControllerConfig().setControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.CRUD);
 		}
 		setOperation(Action.CREATE_POST);
 		createPostBefore();
@@ -376,7 +377,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@ResetSession(before = true)
 	public String update() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			getControllerConfig().setControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.CRUD);
 		}
 		setOperation(Action.UPDATE);
 		updateBefore();
@@ -458,7 +459,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@ResetSession
 	public String updatePost() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			getControllerConfig().setControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.CRUD);
 		}
 		setOperation(Action.UPDATE_POST);
 		updatePostBefore();
@@ -763,10 +764,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		setRequestAttribute(Layout.TARGET_CONFIG_PROPERTY_NAME, getDetail());
 	}
 
-	/**
-	 *
-	 * @return
-	 */
 	public String json() {
 		if (getEntities() == null || getEntities().isEmpty()) {
 			read();
@@ -776,10 +773,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return Forward.JSON;
 	}
 
-	/**
-	 *
-	 * @return
-	 */
 	public String autocomplete() {
 		if (getEntities() == null || getEntities().isEmpty()) {
 			onRead();
@@ -1195,7 +1188,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@SkipValidation
 	@ResetSession(before = true)
 	public String twice() {
-		getControllerConfig().setControllerType(ControllerType.TWICE);
+		changeControllerType(ControllerType.TWICE);
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.TWICE);
@@ -1210,7 +1203,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@SkipValidation
 	@ResetSession(before = true)
 	public String select() {
-		getControllerConfig().setControllerType(ControllerType.SELECT);
+		changeControllerType(ControllerType.SELECT);
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
@@ -1236,7 +1229,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@SkipValidation
 	@ResetSession(before = true)
 	public String report() {
-		getControllerConfig().setControllerType(ControllerType.REPORT);
+		changeControllerType(ControllerType.REPORT);
 		prepareBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
@@ -1259,7 +1252,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@SkipValidation
 	@ResetSession(before = true)
 	public String tabular() {
-		getControllerConfig().setControllerType(ControllerType.TABULAR);
+		changeControllerType(ControllerType.TABULAR);
 		if (getControllerConfig().isTabularShowFilter()) {
 			try {
 				setEntitySelect(getControllerConfig().getEntityClass().newInstance());
@@ -1612,14 +1605,17 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	public void buttonControl(final String button, final boolean show) {
 		if (getControllerType().equals(ControllerType.TABULAR)) {
-			setRequestAttribute(Button.DELETE.concat(getControllerConfig().getTabularConfig()
-					.getBaseName()), (Boolean) show);
+			getButtons().put(
+					Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName()),
+					(Boolean) show);
 		}
 		if (Button.ADD_DETAIL.equals(button)) {
-			setRequestAttribute(Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig()
-					.getBaseName()), (Boolean) show);
+			getButtons().put(
+					Button.ADD_DETAIL
+							.concat(getControllerConfig().getTabularConfig().getBaseName()),
+					(Boolean) show);
 		} else {
-			setRequestAttribute(button, show);
+			getButtons().put(button, show);
 		}
 	}
 
@@ -1715,7 +1711,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return EntityValidator.validate(getEntity());
 	}
 
-	public void setEntitySelect(ENTITY entitySelect) {
+	public void setEntitySelect(final ENTITY entitySelect) {
 		this.entitySelect = entitySelect;
 	}
 
@@ -1731,7 +1727,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		}
 	}
 
-	public void setTabularSize(int tabularSize) {
+	public void setTabularSize(final int tabularSize) {
 		this.tabularSize = tabularSize;
 	}
 
@@ -1754,16 +1750,13 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		}
 	}
 
-	public String getSelectFormKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_FORM;
-	}
-
-	public String getSelectTableKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_TABLE;
-	}
-
-	public String getSelectPagingKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_PAGING;
+	public Map<String, Object> getButtons() {
+		if (now.containsKey("buttons")) {
+			return (Map<String, Object>) now.get("buttons");
+		}
+		final Map<String, Object> buttons = new HashMap<String, Object>();
+		now.put("buttons", buttons);
+		return buttons;
 	}
 
 }
