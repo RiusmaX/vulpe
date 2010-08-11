@@ -33,8 +33,8 @@ import org.vulpe.security.model.entity.User;
 
 /**
  *
- * This <code>VulpeUserAuthenticationDAO</code> implementation uses data available in
- * memory to authenticate the user.
+ * This <code>VulpeUserAuthenticationDAO</code> implementation uses data
+ * available in memory to authenticate the user.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0

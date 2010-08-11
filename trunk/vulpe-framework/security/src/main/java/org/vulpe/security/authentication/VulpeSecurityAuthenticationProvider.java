@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.vulpe.security.authentication.data.VulpeAuthenticationResponse;
 import org.vulpe.security.authentication.model.services.VulpeUserAuthenticationService;
+import org.vulpe.security.commons.VulpeDigestUtil;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 import org.vulpe.security.exception.VulpeSecurityException;
 import org.vulpe.security.model.entity.User;
@@ -49,7 +50,8 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 		VulpeAuthenticationResponse authResponse = null;
 		try {
 			authResponse = authenticationService.authenticateUser(authentication.getPrincipal()
-					.toString(), authentication.getCredentials().toString());
+					.toString(), VulpeDigestUtil.encrypt(
+					authentication.getCredentials().toString(), "md5"));
 		} catch (VulpeSecurityException e) {
 			throw new BadCredentialsException("Exception occurred while executing service", e);
 		}

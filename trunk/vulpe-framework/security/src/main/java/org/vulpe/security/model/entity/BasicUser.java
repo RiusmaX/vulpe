@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
+import org.vulpe.security.commons.VulpeDigestUtil;
 
 @MappedSuperclass
 @SuppressWarnings("serial")
@@ -54,7 +55,7 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public void setPassword(final String password) {
-		this.password = password;
+		this.password = VulpeDigestUtil.encrypt(password, "md5");
 	}
 
 	public boolean isActive() {
@@ -78,7 +79,7 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public void setPasswordConfirm(final String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+		this.passwordConfirm = VulpeDigestUtil.encrypt(passwordConfirm, "md5");
 	}
 
 	@Override

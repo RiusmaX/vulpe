@@ -18,28 +18,29 @@ package org.vulpe.security.commons;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * 
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
- */
-public final class VulpeCriptoUtil {
+import org.apache.log4j.Logger;
 
-	private VulpeCriptoUtil() {
+/**
+ *
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ *
+ */
+public final class VulpeDigestUtil {
+
+	private static final Logger LOG = Logger.getLogger(VulpeDigestUtil.class);
+
+	private VulpeDigestUtil() {
 	}
 
 	private static final String HEX_DIGITS = "0123456789abcdef";
 
 	/**
-	 * Realiza um digest em um array de bytes através do algoritmo especificado
-	 * 
+	 * Do digest on byte array with specified algorithm.
+	 *
 	 * @param input
-	 *            - O array de bytes a ser criptografado
 	 * @param algorithm
-	 *            - O algoritmo a ser utilizado
-	 * @return byte[] - O resultado da criptografia
+	 * @return byte[]
 	 * @throws NoSuchAlgorithmException
-	 *             - Caso o algoritmo fornecido não seja válido
 	 */
 	public static byte[] digest(byte[] input, final String algorithm)
 			throws NoSuchAlgorithmException {
@@ -49,11 +50,10 @@ public final class VulpeCriptoUtil {
 	}
 
 	/**
-	 * Converte o array de bytes em uma representação hexadecimal.
-	 * 
+	 * Convert o byte array to hex.
+	 *
 	 * @param input
-	 *            - O array de bytes a ser convertido.
-	 * @return Uma String com a representação hexa do array
+	 * @return
 	 */
 	public static String byteArrayToHexString(final byte[] bytes) {
 		final StringBuffer buffer = new StringBuffer();
@@ -68,19 +68,15 @@ public final class VulpeCriptoUtil {
 	}
 
 	/**
-	 * Converte uma String hexa no array de bytes correspondente.
-	 * 
+	 * Convert hex String to byte array.
+	 *
 	 * @param hexa
-	 *            - A String hexa
-	 * @return O vetor de bytes
+	 * @return
 	 * @throws IllegalArgumentException
-	 *             - Caso a String não seja uma representação hexadecimal válida
 	 */
 	public static byte[] hexStringToByteArray(final String hexa) throws IllegalArgumentException {
-
-		// verifica se a String possui uma quantidade par de elementos
 		if (hexa.length() % 2 != 0) {
-			throw new IllegalArgumentException("String hexa inválida");
+			throw new IllegalArgumentException("Invalid hex string");
 		}
 
 		final byte[] bytes = new byte[hexa.length() / 2];
@@ -90,5 +86,15 @@ public final class VulpeCriptoUtil {
 					.indexOf(hexa.charAt(i + 1))));
 		}
 		return bytes;
+	}
+
+	public static String encrypt(final String value, final String algorithm) {
+		try {
+			byte[] bytes = digest(value.getBytes(), algorithm);
+			return byteArrayToHexString(bytes);
+		} catch (NoSuchAlgorithmException e) {
+			LOG.error(e);
+		}
+		return value;
 	}
 }
