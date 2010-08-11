@@ -15,7 +15,6 @@
  */
 package org.vulpe.controller;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -56,8 +55,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleController,
-		Serializable {
+public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleController {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseSimpleController.class);
 
@@ -68,12 +66,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	protected VulpeContext vulpeContext;
 
 	/**
-	 * Global map
+	 * Global attributes map
 	 */
 	public static Map<String, Object> ever = new HashMap<String, Object>();
 
 	/**
-	 * Temporal map
+	 * Temporal attributes map
 	 */
 	public Map<String, Object> now = new HashMap<String, Object>();
 
@@ -443,16 +441,22 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	private DownloadInfo downloadInfo;
 
-	/**
-	 * Method retrieve forward.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @since 1.0
-	 * @return Result Forward.
+	 * @see org.vulpe.controller.VulpeSimpleController#getResultForward()
 	 */
 	public String getResultForward() {
 		return resultForward;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#setResultForward(java.lang
+	 * .String)
+	 */
 	public void setResultForward(final String resultForward) {
 		this.resultForward = resultForward;
 	}
@@ -765,10 +769,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return ControllerUtil.getInstance(getRequest());
 	}
 
-	/**
-	 * Define Result Forward to render normal or AJAX request
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeSimpleController#controlResultForward()
 	 */
-	protected void controlResultForward() {
+	public void controlResultForward() {
 		setResultForward(getControllerType().equals(ControllerType.TWICE) ? Layout.PROTECTED_JSP_COMMONS
 				.concat(Layout.BODY_TWICE_JSP)
 				: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
@@ -894,7 +900,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectFormKey()
 	 */
 	public String getSelectFormKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_FORM;
+		return getControllerKey() + Action.SELECT_FORM;
 	}
 
 	/*
@@ -903,7 +909,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectTableKey()
 	 */
 	public String getSelectTableKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_TABLE;
+		return getControllerKey() + Action.SELECT_TABLE;
 	}
 
 	/*
@@ -912,7 +918,16 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectPagingKey()
 	 */
 	public String getSelectPagingKey() {
-		return getControllerUtil().getCurrentControllerKey() + Action.SELECT_PAGING;
+		return getControllerKey() + Action.SELECT_PAGING;
+	}
+
+	private String getControllerKey() {
+		String key = getControllerUtil().getCurrentControllerKey();
+		if (StringUtils.isNotEmpty(getControllerConfig().getViewBaseName())) {
+			key = key.substring(0, key.lastIndexOf(".") + 1)
+					+ getControllerConfig().getViewBaseName();
+		}
+		return key;
 	}
 
 	public static Map<String, Object> getEver() {
@@ -924,6 +939,5 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		now.put(Now.CONTROLLER_TYPE, controllerType);
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
 	}
-
 
 }

@@ -32,14 +32,14 @@ import org.vulpe.security.exception.VulpeSecurityUserNotFoundException;
 import org.vulpe.security.model.entity.User;
 
 /**
- * 
+ *
  * This <code>VulpeUserAuthenticationDAO</code> implementation uses data available in
  * memory to authenticate the user.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
- * 
+ *
  */
 @Repository("VulpeUserAuthenticationDAO")
 @Transactional
@@ -49,7 +49,7 @@ public class VulpeUserAuthenticationDAOJPA extends VulpeBaseDAOJPA<User, Long> i
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.security.authentication.model.dao.UserAuthenticationDAO#
 	 * authenticateUser(java.lang.String, java.lang.String)
 	 */
@@ -65,7 +65,7 @@ public class VulpeUserAuthenticationDAOJPA extends VulpeBaseDAOJPA<User, Long> i
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		if (user == null) {
+		if (user == null || user.getId() == null) {
 			throw new VulpeSecurityUserNotFoundException(username);
 		}
 		if (!password.equals(user.getPassword())) {

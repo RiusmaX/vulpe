@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 /**
  * Select view configurations.
  *
- * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

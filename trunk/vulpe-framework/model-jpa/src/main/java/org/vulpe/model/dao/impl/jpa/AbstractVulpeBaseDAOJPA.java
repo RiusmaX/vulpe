@@ -17,6 +17,10 @@ package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,7 @@ import javax.persistence.Query;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
+import org.hibernate.ejb.HibernateEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.orm.jpa.JpaTemplate;
@@ -39,10 +44,11 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
+import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
- * Default implementation of DAO for CRUD's with JPA
+ * Default implementation of DAO with JPA
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
@@ -80,6 +86,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		this.jpaTemplate = jpaTemplate;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
+	 */
 	public <T> T merge(final T entity) {
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		for (Field field : fields) {
@@ -117,6 +128,73 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				return query.getResultList();
 			}
 		});
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAOJPA#executeCallableStatement(java.lang.String
+	 * , java.util.List)
+	 */
+	public CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
+			throws VulpeApplicationException {
+		CallableStatement cstmt = null;
+		try {
+			final EntityManager entityManager = getJpaTemplate().getEntityManagerFactory()
+					.createEntityManager();
+			final Connection connection = ((HibernateEntityManager) entityManager).getSession()
+					.connection();
+			final StringBuilder call = new StringBuilder();
+			call.append("{call ");
+			call.append(name);
+			int count = 0;
+			if (parameters != null) {
+				call.append("(");
+				do {
+					if (count > 0) {
+						call.append(",");
+					}
+					call.append("?");
+					count++;
+				} while (count < parameters.size());
+				call.append(")");
+			}
+			call.append("}");
+			if (parameters != null) {
+				cstmt = connection.prepareCall(call.toString());
+				count = 0;
+				for (Parameter parameter : parameters) {
+					count++;
+					if (parameter.getType() == Types.ARRAY) {
+						// Connection nativeConnection =
+						// cstmt.getConnection().getMetaData().getConnection();
+						// ArrayDescriptor objectArrayDescriptor =
+						// ArrayDescriptor.createDescriptor(
+						// parameter.getArrayType(), nativeConnection);
+						// Array array = new ARRAY(objectArrayDescriptor,
+						// nativeConnection, parameter
+						// .getArrayValues());
+						// cstmt.setArray(count, array);
+					} else {
+						cstmt.setObject(count, parameter.getValue(), parameter.getType());
+					}
+					if (parameter.isOut()) {
+						if (parameter.getType() == Types.ARRAY) {
+							cstmt
+									.registerOutParameter(count, Types.ARRAY, parameter
+											.getArrayType());
+						} else {
+							cstmt.registerOutParameter(count, parameter.getType());
+						}
+					}
+				}
+			}
+			cstmt.execute();
+		} catch (SQLException e) {
+			throw new VulpeApplicationException(e.getMessage());
+		}
+		return cstmt;
 	}
 
 	/**

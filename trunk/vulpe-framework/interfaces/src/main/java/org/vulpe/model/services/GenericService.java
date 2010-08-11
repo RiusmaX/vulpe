@@ -20,16 +20,17 @@ import java.util.List;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 public interface GenericService extends VulpeService {
 
 	/**
-	 * 
+	 *
 	 * @param <T>
 	 * @param entity
 	 * @return
 	 */
-	<T extends VulpeEntity<?>> List<T> getList(T entity);
+	<T extends VulpeEntity<?>> List<T> getList(final T entity);
+
 }

@@ -50,7 +50,6 @@ import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 
-
 /**
  * Vulpe Base Action to VRaptor
  *
@@ -62,7 +61,7 @@ import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial" })
+@SuppressWarnings( { "unchecked", "serial" })
 public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeVRaptorSimpleController implements VulpeController {
 
@@ -232,7 +231,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	private void createDetails(final List<VulpeBaseDetailConfig> details, final boolean subDetail) {
 		for (VulpeBaseDetailConfig detail : details) {
 			if (subDetail) {
-				final Map context = null;//ActionContext.getContext().getContextMap();
+				final Map context = null;// ActionContext.getContext().getContextMap();
 				try {
 					final Collection collection = (Collection) Ognl.getValue(getDetail(), context,
 							this);
@@ -658,10 +657,10 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 */
 	protected int onDeleteDetail() {
 		final ENTITY entity = prepareEntity(Action.DELETE);
-		final Map context = null;//ActionContext.getContext().getContextMap();
+		final Map context = null;// ActionContext.getContext().getContextMap();
 		try {
-			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(
-					getDetail(), context, this);
+			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(getDetail(),
+					context, this);
 			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
 			final int size = details.size();
 			int removed = 0;
@@ -1030,12 +1029,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 */
 	protected VulpeBaseDetailConfig onAddDetail(final boolean start) {
 		boolean createNullObjects = false;
-		final Map context = null;//ActionContext.getContext().getContextMap();
+		final Map context = null;// ActionContext.getContext().getContextMap();
 		try {
-//			if (!OgnlContextState.isCreatingNullObjects(context)) {
-//				OgnlContextState.setCreatingNullObjects(context, true);
-//				createNullObjects = true;
-//			}
+			// if (!OgnlContextState.isCreatingNullObjects(context)) {
+			// OgnlContextState.setCreatingNullObjects(context, true);
+			// createNullObjects = true;
+			// }
 
 			int newDetails = 1;
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
@@ -1071,7 +1070,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			throw new VulpeSystemException(e);
 		} finally {
 			if (createNullObjects) {
-//				OgnlContextState.setCreatingNullObjects(context, false);
+				// OgnlContextState.setCreatingNullObjects(context, false);
 			}
 		}
 	}
@@ -1084,7 +1083,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 * @throws OgnlException
 	 */
 	protected void doAddDetail(final Collection collection) throws OgnlException {
-		final Map context = null;//ActionContext.getContext().getContextMap();
+		final Map context = null;// ActionContext.getContext().getContextMap();
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
@@ -1333,7 +1332,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 * @since 1.0
 	 */
 	protected boolean validateDetails() {
-		final Map context = null;//ActionContext.getContext().getContextMap();
+		final Map context = null;// ActionContext.getContext().getContextMap();
 		for (VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
 			if (detailConfig.getParentDetailConfig() == null) {
 				try {
@@ -1365,7 +1364,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 * @since 1.0
 	 */
 	protected void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig) {
-		final Map context = null;//ActionContext.getContext().getContextMap();
+		final Map context = null;// ActionContext.getContext().getContextMap();
 		try {
 			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
 					.getPropertyName(), context, parent);
@@ -1466,12 +1465,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		return true;
 	}
 
-	/**
-	 * Method to show buttons and configure forward.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String)
 	 */
-	protected void showButtons(final String method) {
+	public void showButtons(final String method) {
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getControllerConfig().getDetails() != null) {
 				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {

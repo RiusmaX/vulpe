@@ -47,6 +47,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	private String controllerName;
 	private String moduleName;
 	private String simpleControllerName;
+	private String viewBaseName;
 	private String viewCRUDPath;
 	private String viewSelectPath;
 	private String viewSelectItemsPath;
@@ -174,7 +175,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * ()
 	 */
 	public String getSimpleControllerName() {
-		if (StringUtils.isBlank(this.simpleControllerName)) {
+		if (StringUtils.isBlank(this.simpleControllerName) && controllerName.contains("/")) {
 			final String[] parts = controllerName.split("/");
 			this.simpleControllerName = parts[1];
 		}
@@ -192,6 +193,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		if (getControllerType().equals(ControllerType.FRONTEND)
 				|| getControllerType().equals(ControllerType.BACKEND)) {
 			formName.append(VulpeStringUtil.lowerCaseFirst(getSimpleControllerName()).concat(type));
+		} else if (controllerName.equals(View.AUTHENTICATOR)) {
+			formName.append(controllerName);
 		} else {
 			formName.append(getModuleName().concat(getSimpleControllerName().concat(type)));
 		}
@@ -356,7 +359,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		final String controllerKey = getControllerUtil().getCurrentControllerKey();
 		if (StringUtils.isNotBlank(getController().viewBaseName())) {
 			titleKey.append(controllerKey.substring(0, controllerKey.lastIndexOf(".") + 1)).append(
-					getController().viewBaseName().toLowerCase());
+					getController().viewBaseName());
 		} else {
 			titleKey.append(controllerKey);
 		}
@@ -518,5 +521,10 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	@Override
 	public boolean isTabularShowFilter() {
 		return getController().tabular().showFilter();
+	}
+
+	public String getViewBaseName() {
+		this.viewBaseName = getController().viewBaseName();
+		return viewBaseName;
 	}
 }

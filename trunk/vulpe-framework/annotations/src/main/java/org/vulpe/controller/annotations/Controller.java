@@ -28,7 +28,7 @@ import org.vulpe.model.services.VulpeService;
  * Controller configurations.
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
- * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

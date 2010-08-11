@@ -172,9 +172,9 @@
 		</interceptors>
 
 		<global-results>
+			<result name="index">/index.jsp</result>
 			<result name="upload">/WEB-INF/protected-jsp/commons/upload.jsp</result>
-			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp
-			</result>
+			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp</result>
 			<result name="json">/WEB-INF/protected-jsp/commons/json.jsp</result>
 			<result name="download" type="stream">
 				<param name="contentType">${downloadInfo.contentType}</param>
@@ -207,7 +207,7 @@
 				<param name="clearParams">true</param>
 			</result>
 		</action>
-		
+
 		<action name="backend/*/*" class="backend.{1}Controller" method="{2}">
 			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">

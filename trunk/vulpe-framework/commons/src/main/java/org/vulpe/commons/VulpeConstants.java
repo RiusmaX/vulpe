@@ -86,7 +86,7 @@ public class VulpeConstants {
 			public static final String BREAK_LABEL = "breakLabel";
 			public static final String SHOW_COPYRIGHT = "showCopyright";
 			public static final String SHOW_POWERED_BY = "showPoweredBy";
-			public static final String PAGING_STYLE = "vulpePagingStyle";
+			public static final String PAGING_STYLE = "pagingStyle";
 
 			public static final String SHOW_AS_MOBILE = "showAsMobile";
 

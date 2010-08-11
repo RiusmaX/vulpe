@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * Default simple entity Interface
  *
- * @author <a href="mailto:felipe@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 public interface VulpeSimpleEntity extends Serializable,
 		Comparable<VulpeSimpleEntity>, Cloneable {

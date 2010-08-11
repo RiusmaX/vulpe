@@ -15,7 +15,6 @@
  */
 package org.vulpe.controller.struts;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +55,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  */
 @SuppressWarnings({ "unchecked", "serial" })
 public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
-		implements Action, Validateable, ValidationAware, LocaleProvider, Serializable {
+		implements Action, Validateable, ValidationAware, LocaleProvider {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeStrutsSimpleController.class);
 	/**

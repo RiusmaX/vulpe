@@ -49,7 +49,7 @@ import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
- * Default implementation of DAO for CRUD's with JPA.
+ * Default implementation of DAO with JPA.
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
@@ -310,10 +310,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						Param.class, entity.getClass(), name);
 				if (param == null) {
 					if (value instanceof String) {
-						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-								Like.class, entity.getClass(), name);
-						hql.append("upper(obj.").append(name).append(") ").append(
-								like != null ? "like" : "=").append(" upper(:").append(name)
+						// final Like like =
+						// VulpeReflectUtil.getInstance().getAnnotationInField(
+						// Like.class, entity.getClass(), name);
+						// hql.append("upper(obj.").append(name).append(") ").append(
+						// like != null ? "like" :
+						// "=").append(" upper(:").append(name)
+						// .append(")");
+						hql.append("upper(obj.").append(name).append(") like upper(:").append(name)
 								.append(")");
 					} else {
 						hql.append("obj.").append(name).append(" = :").append(name);

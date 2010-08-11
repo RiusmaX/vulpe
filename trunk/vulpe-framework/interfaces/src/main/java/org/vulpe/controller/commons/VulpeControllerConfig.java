@@ -83,6 +83,8 @@ public interface VulpeControllerConfig {
 
 	String getViewSelectPath();
 
+	String getViewBaseName();
+
 	/**
 	 * Controllers type
 	 *

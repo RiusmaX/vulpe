@@ -880,8 +880,7 @@ var vulpe = {
 				}
 			}
 			return false;
-		},
-
+		}
 	},
 	// vulpe.view
 	view: {

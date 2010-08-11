@@ -127,4 +127,11 @@ public interface VulpeController extends VulpeSimpleController {
 	boolean isAddDetailShow(final String detail);
 
 	boolean isAddDetailShow();
+
+	/**
+	 * Method to show buttons and configure forward.
+	 *
+	 * @since 1.0
+	 */
+	void showButtons(final String method);
 }

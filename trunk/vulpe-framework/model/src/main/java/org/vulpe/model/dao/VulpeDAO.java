@@ -16,10 +16,12 @@
 package org.vulpe.model.dao;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
 import java.util.List;
 
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
@@ -96,4 +98,17 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @return ENTITY
 	 */
 	ENTITY find(ID id) throws VulpeApplicationException;
+
+	/**
+	 * Execute callable statement.
+	 *
+	 * @param name
+	 *            Full name of procedure
+	 * @param parameters
+	 *            List of parameters
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
+	CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
+			throws VulpeApplicationException;
 }

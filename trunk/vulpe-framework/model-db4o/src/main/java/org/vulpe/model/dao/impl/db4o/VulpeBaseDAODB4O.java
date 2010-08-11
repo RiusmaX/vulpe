@@ -18,6 +18,7 @@ package org.vulpe.model.dao.impl.db4o;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.OrderBy.OrderType;
 import org.vulpe.model.annotations.Param.OperatorType;
+import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.VulpeLogicEntity.Status;
@@ -262,8 +264,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	public boolean isNotEmpty(final Object value) {
 		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
 			if (value instanceof VulpeEntity) {
-				return VulpeValidationUtil.getInstance().isNotEmpty(
-						((VulpeEntity) value).getId());
+				return VulpeValidationUtil.getInstance().isNotEmpty(((VulpeEntity) value).getId());
 			} else {
 				return true;
 			}
@@ -421,5 +422,18 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			}
 		}
 		return query;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
+	 * java.util.List)
+	 */
+	@Override
+	public CallableStatement executeCallableStatement(String name, List<Parameter> parameters)
+			throws VulpeApplicationException {
+		return null;
 	}
 }

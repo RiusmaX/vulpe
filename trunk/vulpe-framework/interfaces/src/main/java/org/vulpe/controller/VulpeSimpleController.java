@@ -15,6 +15,7 @@
  */
 package org.vulpe.controller;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +33,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
  * @version 1.0
  * @since 1.0
  */
-public interface VulpeSimpleController {
+public interface VulpeSimpleController extends Serializable {
 
 	/**
 	 * Method to invoke services.
@@ -301,4 +302,19 @@ public interface VulpeSimpleController {
 	 * @return Http Session
 	 */
 	HttpSession getSession();
+
+	/**
+	 * Define Result Forward to render normal or AJAX request
+	 */
+	void controlResultForward();
+
+	/**
+	 * Method retrieve forward.
+	 *
+	 * @since 1.0
+	 * @return Result Forward.
+	 */
+	String getResultForward();
+
+	void setResultForward(final String resultForward);
 }

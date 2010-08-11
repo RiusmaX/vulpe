@@ -1483,12 +1483,13 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return true;
 	}
 
-	/**
-	 * Method to show buttons and configure forward.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String)
 	 */
-	protected void showButtons(final String method) {
+	public void showButtons(final String method) {
+		getButtons().clear();
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getControllerConfig().getDetails() != null) {
 				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
@@ -1520,7 +1521,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			} else {
 				showButtons(Button.READ, Button.PREPARE, Button.CREATE, Button.UPDATE,
 						Button.DELETE);
-
 			}
 			if (isPopup()) {
 				hideButtons(Button.CREATE, Button.UPDATE, Button.DELETE);

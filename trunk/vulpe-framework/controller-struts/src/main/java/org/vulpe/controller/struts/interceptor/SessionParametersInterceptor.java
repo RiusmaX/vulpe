@@ -18,9 +18,11 @@ package org.vulpe.controller.struts.interceptor;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -32,7 +34,7 @@ import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
 import com.opensymphony.xwork2.util.OgnlContextState;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked" })
 public class SessionParametersInterceptor extends ParametersInterceptor {
 
 	private ActionInvocation invocation;
@@ -40,7 +42,13 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	@Override
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
-
+		if (invocation.getAction() instanceof VulpeController) {
+			VulpeController controller = (VulpeController) invocation.getAction();
+			if (StringUtils.isEmpty(controller.getResultForward())) {
+				controller.controlResultForward();
+				controller.showButtons(controller.getOperation());
+			}
+		}
 		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
 				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
@@ -77,7 +85,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */

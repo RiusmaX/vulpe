@@ -31,6 +31,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
@@ -62,6 +63,7 @@ public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 	 * type of secured resource. One for function invocation and another for
 	 * method invocation.
 	 */
+	@IgnoreAutoFilter
 	private String type = VulpeSecurityConstants.RESOURCE_TYPE_FI;
 
 	@OneToMany(targetEntity = SecureResourceRole.class, mappedBy = "secureResource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
