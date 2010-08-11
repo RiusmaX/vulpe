@@ -9,8 +9,8 @@
 				/>
 			</v:column>
 			<v:column labelKey="label.sitra.core.Objeto.crud.objetoItens.nomeObjeto">
-				<v:text property="nomeObjeto"
-					size="40"
+				<v:text property="nomeObjeto" upperCase="true"
+					size="60"
 				/>
 			</v:column>
 			<v:column labelKey="label.sitra.core.Objeto.crud.objetoItens.status">

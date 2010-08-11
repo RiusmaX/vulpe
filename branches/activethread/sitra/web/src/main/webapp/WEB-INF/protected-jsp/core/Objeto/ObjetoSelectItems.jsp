@@ -5,7 +5,7 @@
 		<th colspan="7"><fmt:message key="label.sitra.core.Objeto.select.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
-		<v:row showUpdateButton="true">
+		<v:row showUpdateButton="true" updateActionName="${fn:startsWith(currentItem.descricao, 'ATUALIZA') ? '' : 'core/ObjetoPublicacao/update'}">
 			<v:column>
 				<table cellpadding="0" cellspacing="0" id="objetos" style="width: 100%; margin: 0">
 					<tr>

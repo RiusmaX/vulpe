@@ -20,6 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.Param.OperatorType;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
@@ -31,7 +32,6 @@ import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-//@CodeGenerator(controller = @Controller(pageSize = 5, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }), view = @View(viewType = { ViewType.SELECT }))
 @Entity
 @Table(name = "TRANSFERENCIA_OBJ")
 @SuppressWarnings("serial")
@@ -57,6 +57,11 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@VulpeSelect(argument = true)
 	@Param(alias = "obj.objetoItens", name = "tipoObjeto")
 	private transient TipoObjeto tipoObjeto;
+
+	@VulpeText(argument = true, size = 60)
+	@Like
+	@Param(alias = "obj.objetoItens", name = "nomeObjeto")
+	private transient String nomeObjeto;
 
 	@Param(alias = "obj", name = "data", operator = OperatorType.GREATER_OR_EQUAL)
 	@VulpeDate(argument = true)
@@ -255,6 +260,14 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public TipoObjeto getTipoObjeto() {
 		return tipoObjeto;
+	}
+
+	public void setNomeObjeto(String nomeObjeto) {
+		this.nomeObjeto = nomeObjeto;
+	}
+
+	public String getNomeObjeto() {
+		return nomeObjeto;
 	}
 
 }

@@ -9,7 +9,7 @@ import org.vulpe.model.entity.VulpeEntity;
 @SuppressWarnings( { "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeStrutsController<ENTITY, ID> {
-	
+
 	protected static final Logger LOG = Logger.getLogger(ApplicationBaseController.class);
-	
+
 }

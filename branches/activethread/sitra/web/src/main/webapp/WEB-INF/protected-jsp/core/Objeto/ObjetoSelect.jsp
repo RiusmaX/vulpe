@@ -3,7 +3,8 @@
 	<tr>
 		<td><v:select labelKey="label.sitra.core.Objeto.select.tipoObjeto" property="tipoObjeto"
 			showBlank="true" autoLoad="false" /></td>
-		<td></td>
+		<td colspan="2"><v:text labelKey="label.sitra.core.Objeto.select.objetos"
+			property="nomeObjeto" size="60" upperCase="true" /></td>
 	</tr>
 	<tr>
 		<td>
@@ -11,6 +12,8 @@
 		<v:date property="dataInicial" paragraph="false" />até<v:date property="dataFinal"
 			paragraph="false" /></p>
 		</td>
+		<td><v:select labelKey="label.sitra.core.Objeto.select.usuario" property="usuario"
+			items="${now['usuarios']}" showBlank="true" autoLoad="false" /></td>
 		<td><v:select labelKey="label.sitra.core.Objeto.select.destino" property="destino"
 			showBlank="true" autoLoad="false" /></td>
 	</tr>

@@ -46,7 +46,7 @@
 <v:text
 	labelKey="label.sitra.core.Objeto.crud.descricao"
 	property="descricao"
-	size="100"
+	size="100" upperCase="true"
 	required="true"
 />
 </td>

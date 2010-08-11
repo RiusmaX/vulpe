@@ -47,6 +47,13 @@ public class SistemaUsuario extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "IND_PUBLICA_PRODUCAO")
 	private Boolean publicaProducao;
 
+	public SistemaUsuario() {
+	}
+
+	public SistemaUsuario(final Sistema sistema) {
+		this.sistema = sistema;
+	}
+
 	@Override
 	public Long getId() {
 		return id;

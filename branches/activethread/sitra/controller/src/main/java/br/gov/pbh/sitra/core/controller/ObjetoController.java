@@ -7,17 +7,19 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Action.Button;
+import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+import org.vulpe.exception.VulpeApplicationException;
 
-import br.gov.pbh.sitra.controller.ApplicationBaseController;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
@@ -27,37 +29,46 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
-public class ObjetoController extends ApplicationBaseController<Objeto, java.lang.Long> {
+public class ObjetoController extends ObjetoBaseController {
+
+	private List<SistemaUsuario> sistemaUsuarios;
 
 	@Override
 	public void loadNow() {
 		super.loadNow();
 		final String keyPrefix = Ambiente.class.getName();
-		List<ValueBean> origem = new ArrayList<ValueBean>();
+		final List<ValueBean> origem = new ArrayList<ValueBean>();
 		origem.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 				Ambiente.H.name()))));
 		origem.add(new ValueBean(Ambiente.P.name(), getText(keyPrefix.concat(".").concat(
 				Ambiente.P.name()))));
 		now.put("origem", origem);
-		List<ValueBean> destino = new ArrayList<ValueBean>();
+		final List<ValueBean> destino = new ArrayList<ValueBean>();
 		destino.add(new ValueBean(Ambiente.D.name(), getText(keyPrefix.concat(".").concat(
 				Ambiente.D.name()))));
 		destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 				Ambiente.H.name()))));
 		now.put("destino", destino);
+		if (sistemaUsuarios == null) {
+			try {
+				sistemaUsuarios = getService(CoreService.class).readSistemaUsuario(
+						new SistemaUsuario(sistemas.get(0)));
+				final List<ValueBean> usuarios = new ArrayList<ValueBean>();
+				for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
+					final String username = sistemaUsuario.getUsuario().getUsername();
+					usuarios.add(new ValueBean(username, username));
+				}
+				now.put("usuarios", usuarios);
+			} catch (VulpeApplicationException e) {
+				LOG.error(e);
+			}
+		}
 	}
 
 	@Override
-	protected void showButtons(String method) {
+	public void showButtons(String method) {
 		super.showButtons(method);
-		if (getControllerType().equals(ControllerType.SELECT)) {
-			hideButton(Button.CREATE);
-		}
 		if (getControllerType().equals(ControllerType.CRUD)) {
-			final List<Objeto> objetos = getSessionAttribute(getSelectTableKey());
-			if (objetos == null || objetos.isEmpty()) {
-				hideButton(Button.PREPARE);
-			}
 			hideButton(Button.CREATE);
 			getTabs().put("master", new Tab("Atualizar de"));
 			getTabs().put("objetoItens", new Tab("Objetos a serem Transferidos"));
@@ -65,23 +76,21 @@ public class ObjetoController extends ApplicationBaseController<Objeto, java.lan
 	}
 
 	@Override
-	protected void createPostBefore() {
-		super.createPostBefore();
-		atualizarDadosObjeto();
+	protected void createPostAfter(Objeto entity) {
+		super.createPostAfter(entity);
+		getButtons().put("transferir", true);
 	}
 
 	@Override
-	protected void updatePostBefore() {
-		super.updatePostBefore();
-		atualizarDadosObjeto();
+	protected void updateAfter() {
+		super.updateAfter();
+		getButtons().put("transferir", true);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void atualizarDadosObjeto() {
+	protected void atualizarDadosObjeto() {
+		super.atualizarDadosObjeto();
 		final Objeto objeto = getEntity();
 		objeto.setDescricao("ATUALIZAÇÃO AMBIENTE");
-		final List<Sistema> sistemas = (List<Sistema>) getCachedClass().get(
-				Sistema.class.getSimpleName());
 		for (Sistema sistema : sistemas) {
 			if (sistema.getId().equals(objeto.getSistema().getId())) {
 				objeto.setSistema(sistema);
@@ -100,4 +109,15 @@ public class ObjetoController extends ApplicationBaseController<Objeto, java.lan
 		}
 
 	}
+
+	public String transferir() {
+		try {
+			String retorno = getService(CoreService.class).transferir(getEntity());
+			addActionMessage(retorno);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return Forward.SUCCESS;
+	}
+
 }
