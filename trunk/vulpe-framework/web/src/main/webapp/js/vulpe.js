@@ -757,7 +757,7 @@ var vulpe = {
 			var valid = true;
 			var parent = "#" + formName;
 			if (vulpe.util.existsVulpePopups()) {
-				parent += "#" + vulpe.util.getLastVulpePopup();
+				parent = "#" + vulpe.util.getLastVulpePopup();
 			}
 			var fields = jQuery("[class*='vulpeRequired']", parent);
 			if (fields && fields.length > 0) {
