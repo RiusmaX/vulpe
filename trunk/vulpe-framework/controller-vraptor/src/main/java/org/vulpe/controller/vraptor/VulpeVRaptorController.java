@@ -1476,7 +1476,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 					if (Action.VIEW.equals(method)) {
 						addDetailHide(detail.getBaseName());
-						deleteHide(detail.getBaseName());
+						deleteDetailHide(detail.getBaseName());
 					} else {
 						addDetailShow(detail.getBaseName());
 						deleteDetailShow(detail.getBaseName());
@@ -1564,7 +1564,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		setRequestAttribute(Button.DELETE.concat(detail), Boolean.TRUE);
 	}
 
-	public void deleteHide(final String detail) {
+	public void deleteDetailHide(final String detail) {
 		setRequestAttribute(Button.DELETE.concat(detail), Boolean.FALSE);
 	}
 

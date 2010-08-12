@@ -114,7 +114,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	String json();
 
-	void deleteHide(final String detail);
+	void deleteDetailHide(final String detail);
 
 	void deleteDetailShow(final String detail);
 

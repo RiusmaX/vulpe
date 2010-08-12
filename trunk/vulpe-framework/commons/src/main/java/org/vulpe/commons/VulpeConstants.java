@@ -220,6 +220,7 @@ public class VulpeConstants {
 
 			public static final String ERRORS = "errors";
 			public static final String MESSAGES = "messages";
+			public static final String REDIRECT = "redirect";
 		}
 
 		public class Shortcut {

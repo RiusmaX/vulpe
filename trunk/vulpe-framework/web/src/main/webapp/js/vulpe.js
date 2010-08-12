@@ -1364,7 +1364,7 @@ var vulpe = {
 			},
 
 			submitFormAction: function(actionURL, formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
-				if (actionURL.indexOf("Post") != -1 || actionURL.indexOf("read") != -1) {
+				if (actionURL.indexOf("Post") != -1 || actionURL.indexOf("read") != -1 || actionURL.indexOf("Validate") != -1) {
 					if (!vulpe.validate.validateAttributes(formName)) {
 						return false;
 					}

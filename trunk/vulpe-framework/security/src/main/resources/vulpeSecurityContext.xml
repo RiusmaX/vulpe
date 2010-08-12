@@ -10,14 +10,14 @@
 			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd"
 	default-lazy-init="true" default-autowire="byName">
 
-	<!--
-		<context:annotation-config /> <context:component-scan
-		base-package="org.vulpe.security.authentication" />
-	-->
+	<context:annotation-config />
+	<context:component-scan base-package="org.vulpe.security" />
+
 	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
 
 	<bean id="filterChainProxy" class="org.vulpe.security.web.VulpeFilterChainProxy">
 		<security:filter-chain-map path-type="ant">
+			<security:filter-chain pattern="/index.jsp" filters="none" />
 			<security:filter-chain pattern="/images/*" filters="none" />
 			<security:filter-chain pattern="/js/**" filters="none" />
 			<security:filter-chain pattern="/css/**" filters="none" />

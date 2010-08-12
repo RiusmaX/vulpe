@@ -402,6 +402,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	private boolean uploaded;
 	/**
+	 * URL Redirect.
+	 */
+	private String urlRedirect;
+
+	/**
 	 * Result Forward.
 	 */
 	private String resultForward;
@@ -936,8 +941,19 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	protected void changeControllerType(final ControllerType controllerType) {
 		getControllerConfig().setControllerType(controllerType);
-		now.put(Now.CONTROLLER_TYPE, controllerType);
-		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
+		loadNow();
 	}
 
+	public void setUrlRedirect(String urlRedirect) {
+		this.urlRedirect = urlRedirect;
+	}
+
+	public String getUrlRedirect() {
+		return urlRedirect;
+	}
+
+	protected String redirectTo(final String url, final boolean ajax) {
+		setUrlRedirect(url + (ajax ? "/ajax" : ""));
+		return Forward.REDIRECT;
+	}
 }

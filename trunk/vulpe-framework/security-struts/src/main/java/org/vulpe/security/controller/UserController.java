@@ -54,7 +54,7 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	protected boolean onUpdatePost() {
 		if (StringUtils.isBlank(getEntity().getPassword())
 				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
-			getEntity().setPassword(getPassword());
+			getEntity().setPasswordEncrypted(getPassword());
 		} else {
 			setPassword(getEntity().getPassword());
 		}
@@ -72,10 +72,10 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	}
 
 	public String getPassword() {
-		return (String) getRequest().getAttribute("password");
+		return (String) getRequestAttribute("password");
 	}
 
 	public void setPassword(final String password) {
-		getRequest().setAttribute("password", password);
+		setRequestAttribute("password", password);
 	}
 }

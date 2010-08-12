@@ -58,6 +58,10 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 		this.password = VulpeDigestUtil.encrypt(password, "md5");
 	}
 
+	public void setPasswordEncrypted(final String password) {
+		this.password = password;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
@@ -80,6 +84,10 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	public void setPasswordConfirm(final String passwordConfirm) {
 		this.passwordConfirm = VulpeDigestUtil.encrypt(passwordConfirm, "md5");
+	}
+
+	public void setPasswordConfirmEncrypted(final String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 	@Override

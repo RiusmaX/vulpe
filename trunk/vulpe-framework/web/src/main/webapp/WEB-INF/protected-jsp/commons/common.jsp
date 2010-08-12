@@ -126,10 +126,12 @@ $(document).ready(function() {
 			$(this).val('${executed}');
 			$(this).attr('defaultValue', $(this).val());
 		});
+		<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
 		vulpe.util.get('${vulpeFormName}_entity.orderBy').each(function(){
 			$(this).val('${entity.orderBy}');
 			$(this).attr('defaultValue', $(this).val());
 		});
+		</c:if>
 	}
 	$("#alertDialog").dialog({
 		autoOpen: false,

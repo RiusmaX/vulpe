@@ -26,21 +26,21 @@ public @interface Param {
 
 	/**
 	 * Operator.
-	 * 
+	 *
 	 * @return
 	 */
 	OperatorType operator() default OperatorType.EQUAL;
 
 	/**
 	 * Attribute name.
-	 * 
+	 *
 	 * @return
 	 */
 	String name() default "";
 
 	/**
 	 * Only use with JPA.
-	 * 
+	 *
 	 * @return
 	 */
 	String alias() default "obj";

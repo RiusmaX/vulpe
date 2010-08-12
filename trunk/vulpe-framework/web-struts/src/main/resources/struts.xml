@@ -173,6 +173,7 @@
 
 		<global-results>
 			<result name="index">/index.jsp</result>
+			<result name="redirect" type="redirect">${urlRedirect}</result>
 			<result name="upload">/WEB-INF/protected-jsp/commons/upload.jsp</result>
 			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp</result>
 			<result name="json">/WEB-INF/protected-jsp/commons/json.jsp</result>

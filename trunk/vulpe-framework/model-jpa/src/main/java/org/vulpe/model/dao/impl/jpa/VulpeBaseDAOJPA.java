@@ -63,8 +63,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#create(br.com.
-	 * activethread.framework.model.entity.BaseEntity)
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
 	public ENTITY create(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -82,8 +82,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#delete(br.com.
-	 * activethread.framework.model.entity.BaseEntity)
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
 	public void delete(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -125,8 +125,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
-	 * activethread.framework.model.entity.BaseEntity)
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
 	public void update(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -164,8 +164,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.model.dao.VulpeDAO#read(br.com.activethread
-	 * .framework.model.entity.BaseEntity)
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
 	public List<ENTITY> read(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
@@ -180,9 +180,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#paging(br.com.
-	 * activethread.framework.model.entity.BaseEntity, java.lang.Integer,
-	 * java.lang.Integer)
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
+	 * java.lang.Integer, java.lang.Integer)
 	 */
 	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize, final Integer page)
 			throws VulpeApplicationException {
@@ -195,12 +195,18 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		// getting total records
 		final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
 			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
-				String hqlString = "select count(*) ".concat(hql.substring(hql.toLowerCase()
-						.indexOf("from")));
+				StringBuilder hqlCount = new StringBuilder();
+				hqlCount.append("select count(*) from ");
+				hqlCount.append(entity.getClass().getSimpleName()).append(
+						" objc where objc.id in (");
+				hqlCount.append("select distinct obj.id ");
+				String hqlString = hql.substring(hql.toLowerCase().indexOf("from"));
 				if (hqlString.contains("order by")) {
 					hqlString = hqlString.substring(0, hqlString.toLowerCase().indexOf("order by"));
 				}
-				final Query query = entityManager.createQuery(hqlString);
+				hqlCount.append(hqlString);
+				hqlCount.append(")");
+				final Query query = entityManager.createQuery(hqlCount.toString());
 				setParams(query, params);
 				return query.getSingleResult();
 			}
@@ -286,7 +292,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
 		if (namedQuery == null) {
-			hql.append("select obj");
+			hql.append("select distinct obj");
 			if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
 				hql.append(".id, obj.").append(entity.getAutoComplete());
 			}
@@ -331,7 +337,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						hql.append(param.name());
 					}
 					hql.append(" ");
-					hql.append(param.operator().getValue());
+					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
+							Like.class, entity.getClass(), name);
+					if (like != null) {
+						hql.append("like");
+					} else {
+						hql.append(param.operator().getValue());
+					}
 					hql.append(" :").append(name);
 				}
 				if (count < countParam) {

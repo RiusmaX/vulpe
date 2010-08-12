@@ -1495,7 +1495,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 					if (Action.VIEW.equals(method)) {
 						addDetailHide(detail.getBaseName());
-						deleteHide(detail.getBaseName());
+						deleteDetailHide(detail.getBaseName());
 					} else {
 						addDetailShow(detail.getBaseName());
 						deleteDetailShow(detail.getBaseName());
@@ -1558,32 +1558,32 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	private Integer detailIndex;
 
 	public boolean isAddDetailShow() {
-		return (Boolean) getRequestAttribute(Button.ADD_DETAIL.concat(getControllerConfig()
+		return (Boolean) getButtons().get(Button.ADD_DETAIL.concat(getControllerConfig()
 				.getTabularConfig().getBaseName()));
 	}
 
 	public boolean isAddDetailShow(final String detail) {
-		return (Boolean) getRequestAttribute(Button.ADD_DETAIL.concat(detail));
+		return (Boolean) getButtons().get(Button.ADD_DETAIL.concat(detail));
 	}
 
 	public void addDetailShow(final String detail) {
-		setRequestAttribute(Button.ADD_DETAIL.concat(detail), Boolean.TRUE);
+		getButtons().put(Button.ADD_DETAIL.concat(detail), Boolean.TRUE);
 	}
 
 	public void addDetailHide(final String detail) {
-		setRequestAttribute(Button.ADD_DETAIL.concat(detail), Boolean.FALSE);
+		getButtons().put(Button.ADD_DETAIL.concat(detail), Boolean.FALSE);
 	}
 
 	public boolean isDeleteDetailShow(final String detail) {
-		return (Boolean) getRequestAttribute(Button.DELETE.concat(detail));
+		return (Boolean) getButtons().get(Button.DELETE.concat(detail));
 	}
 
 	public void deleteDetailShow(final String detail) {
-		setRequestAttribute(Button.DELETE.concat(detail), Boolean.TRUE);
+		getButtons().put(Button.DELETE.concat(detail), Boolean.TRUE);
 	}
 
-	public void deleteHide(final String detail) {
-		setRequestAttribute(Button.DELETE.concat(detail), Boolean.FALSE);
+	public void deleteDetailHide(final String detail) {
+		getButtons().put(Button.DELETE.concat(detail), Boolean.FALSE);
 	}
 
 	public String getDetail() {
