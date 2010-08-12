@@ -269,6 +269,7 @@
 	width: auto;
 	font-size: 11px;
 	color: #fff;
+	border-top: 1px solid #cccccc;
 }
 
 #userAuthenticated  a {
@@ -333,7 +334,7 @@ fieldset {
 }
 
 h1 {
-	background: url(../images/background-all.png) repeat-x;
+	background: none;
 	display: block;
 	font-size: 12px;
 	height: 20px;

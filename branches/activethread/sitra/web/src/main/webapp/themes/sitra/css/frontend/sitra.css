@@ -303,6 +303,7 @@ td .titulo {
 	width: auto;
 	font-size: 11px;
 	color: #fff;
+	border-top: 1px solid #cccccc;
 }
 
 #userAuthenticated  a {

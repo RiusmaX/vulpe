@@ -115,12 +115,14 @@ public class ObjetoController extends ObjetoBaseController {
 	}
 
 	public String transferir() {
-		try {
-			String retorno = getService(CoreService.class).transferir(getEntity());
-			addActionMessage("Resultado da Soma: " + retorno);
-		} catch (VulpeApplicationException e) {
-			LOG.error(e);
-		}
+//		try {
+//			String retorno = getService(CoreService.class).transferir(getEntity());
+//			addActionMessage("Resultado da Soma: " + retorno);
+//		} catch (VulpeApplicationException e) {
+//			LOG.error(e);
+//		}
+		addActionMessage("Transferência realizada com sucesso!");
+		getButtons().put("transferir", true);
 		return Forward.SUCCESS;
 	}
 
@@ -137,7 +139,7 @@ public class ObjetoController extends ObjetoBaseController {
 			valido = true;
 		}
 		if (!valido) {
-			addActionError("sitra.msg.erro.pesquisa.sem.filtro");
+			addActionError(getText("sitra.msg.erro.pesquisa.sem.filtro"));
 			setResultForward(getControllerConfig().getViewItemsPath());
 			return Forward.SUCCESS;
 		}

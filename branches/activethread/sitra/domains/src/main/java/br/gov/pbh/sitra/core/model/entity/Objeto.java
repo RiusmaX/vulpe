@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -75,9 +76,10 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "IND_COMPILA_INVALIDO")
 	private Boolean compilarInvalidos;
 
+	@IgnoreAutoFilter
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS", length = 1)
-	private Status status;
+	private Status status = Status.N;
 
 	@Column(name = "OWNER_ORIGEM")
 	private String ownerOrigem;
@@ -98,6 +100,7 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "DESTINO")
 	private Ambiente destino;
 
+	@Lob
 	@Column(name = "LOG_COMPILA")
 	private Blob logCompila;
 
