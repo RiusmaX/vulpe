@@ -18,38 +18,22 @@ package org.vulpe.commons.util;
 import java.util.Collection;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to validation.
- * 
+ *
  */
 @SuppressWarnings("unchecked")
 public class VulpeValidationUtil {
 
 	/**
-	 * Returns instance of VulpeValidationUtil
-	 */
-	public static VulpeValidationUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(VulpeValidationUtil.class)) {
-			cache.put(VulpeValidationUtil.class, new VulpeValidationUtil());
-		}
-		return cache.get(VulpeValidationUtil.class);
-	}
-
-	protected VulpeValidationUtil() {
-		//
-	}
-
-	/**
 	 * Validate if value is not empty
-	 * 
+	 *
 	 * @param value
 	 * @return returns true if is not empty
 	 */
-	public boolean isNotEmpty(final Object value) {
+	public static boolean isNotEmpty(final Object value) {
 		if (value == null) {
 			return false;
 		}
@@ -75,11 +59,11 @@ public class VulpeValidationUtil {
 
 	/**
 	 * Validate if value is empty.
-	 * 
+	 *
 	 * @param value
 	 * @return returns true if is empty
 	 */
-	public boolean isEmpty(final Object value) {
+	public static boolean isEmpty(final Object value) {
 		return !isNotEmpty(value);
 	}
 }

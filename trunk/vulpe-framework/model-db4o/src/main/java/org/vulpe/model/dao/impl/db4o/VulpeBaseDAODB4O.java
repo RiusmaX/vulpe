@@ -262,9 +262,9 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @return
 	 */
 	public boolean isNotEmpty(final Object value) {
-		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.isNotEmpty(value)) {
 			if (value instanceof VulpeEntity) {
-				return VulpeValidationUtil.getInstance().isNotEmpty(((VulpeEntity) value).getId());
+				return VulpeValidationUtil.isNotEmpty(((VulpeEntity) value).getId());
 			} else {
 				return true;
 			}

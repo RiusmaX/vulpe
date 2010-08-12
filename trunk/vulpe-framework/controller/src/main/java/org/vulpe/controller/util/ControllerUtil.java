@@ -78,7 +78,7 @@ public class ControllerUtil {
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
-			if (VulpeValidationUtil.getInstance().isEmpty(value)) {
+			if (VulpeValidationUtil.isEmpty(value)) {
 				return true;
 			}
 		}
@@ -125,8 +125,8 @@ public class ControllerUtil {
 	 *            indicate if marked items must be removed or ignored on model
 	 *            layer.
 	 */
-	public void despiseItens(final Collection<VulpeEntity<?>> beans,
-			final String despiseFields[], final boolean ignoreExclud) {
+	public void despiseItens(final Collection<VulpeEntity<?>> beans, final String despiseFields[],
+			final boolean ignoreExclud) {
 		if (beans == null) {
 			return;
 		}
@@ -198,6 +198,9 @@ public class ControllerUtil {
 	 */
 	public String getCurrentControllerName() {
 		String base = getRequest().getRequestURI();
+		if (StringUtils.isEmpty(base)) {
+			return "";
+		}
 		if (base.endsWith(Layout.SUFFIX_JSP)) {
 			return getCurrentController().get();
 		}
@@ -241,7 +244,6 @@ public class ControllerUtil {
 	 * @param controller
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public VulpeBaseControllerConfig getControllerConfig(final VulpeController controller) {
 		final String key = getCurrentControllerKey();
 		if (VulpeCacheHelper.getInstance().contains(key)) {

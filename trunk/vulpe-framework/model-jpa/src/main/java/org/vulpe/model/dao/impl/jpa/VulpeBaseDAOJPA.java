@@ -292,7 +292,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
 		if (namedQuery == null) {
-			hql.append("select distinct obj");
+			hql.append("select obj");
 			if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
 				hql.append(".id, obj.").append(entity.getAutoComplete());
 			}
@@ -407,10 +407,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 * @return
 	 */
 	public boolean isNotEmpty(final Object value) {
-		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.isNotEmpty(value)) {
 			if (value instanceof VulpeEntity) {
 				final VulpeEntity entity = (VulpeEntity) value;
-				return VulpeValidationUtil.getInstance().isNotEmpty(entity.getId());
+				return VulpeValidationUtil.isNotEmpty(entity.getId());
 			} else {
 				return true;
 			}

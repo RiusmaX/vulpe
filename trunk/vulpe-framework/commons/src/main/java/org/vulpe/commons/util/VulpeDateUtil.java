@@ -30,7 +30,7 @@ import org.vulpe.commons.VulpeConstants;
 
 /**
  * Utility class to date format.
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 public final class VulpeDateUtil {
@@ -64,7 +64,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date.
-	 * 
+	 *
 	 * @author <a href="mailto:smendes@cit.com.br">Silvio Mendes</a>
 	 * @since 12/04/2006
 	 * @return VulpeDate Data corrente
@@ -77,7 +77,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date plus one millisecond more.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getCurrentDatePlusOne() {
@@ -88,7 +88,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date decrease one millisecond.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getCurrentDateMinusOne() {
@@ -99,7 +99,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves yesterday date.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getYesterdayDate() {
@@ -117,7 +117,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on TimeStamp format: ddmmaahhmmss.
-	 * 
+	 *
 	 * @param timestamp
 	 * @return
 	 */
@@ -371,7 +371,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on extensive format. Example: 01 of Jully of 2010.
-	 * 
+	 *
 	 * @return
 	 */
 	public String getExtensiveDate() {
@@ -461,7 +461,7 @@ public final class VulpeDateUtil {
 
 	public static String convertDateTimeToString(final Date dateTime) {
 		String formatedDateTime = null;
-		if (!VulpeValidationUtil.getInstance().isEmpty(formatedDateTime)) {
+		if (!VulpeValidationUtil.isEmpty(formatedDateTime)) {
 			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
 					VulpeConstants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(formatedDateTime);
@@ -471,7 +471,7 @@ public final class VulpeDateUtil {
 
 	public static String convertDateToString(final Date dateTime) {
 		String formatedDateTime = null;
-		if (!VulpeValidationUtil.getInstance().isEmpty(dateTime)) {
+		if (!VulpeValidationUtil.isEmpty(dateTime)) {
 			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY,
 					VulpeConstants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
@@ -481,7 +481,7 @@ public final class VulpeDateUtil {
 
 	public static String convertDateTimeSecondToString(final Date dateTime) {
 		String formatedDateTime = null;
-		if (!VulpeValidationUtil.getInstance().isEmpty(dateTime)) {
+		if (!VulpeValidationUtil.isEmpty(dateTime)) {
 			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS,
 					VulpeConstants.PORTUGUESE_LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
@@ -505,7 +505,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Converte um objeto date em uma String com o dia da semana que ele
 	 * representa abreviado (Seg/Ter/Qua/Qui/Sex).
-	 * 
+	 *
 	 * Ex: Data: 04/10/2005 Valor retornado: Ter
 	 */
 	public static String getExtensiveAbbreviatedDate(final Date date) {
@@ -650,7 +650,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Verifica um periodo de horas.
-	 * 
+	 *
 	 * Verifica se a hora informada está dentro do periodo inicial e final
 	 * informado ( desconsiderando o dia ).
 	 */
@@ -692,7 +692,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves time of activity on period.
-	 * 
+	 *
 	 * @param dateTimeStart
 	 * @param dateTimeEnd
 	 * @param start
@@ -758,7 +758,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Adds days on Date.
-	 * 
+	 *
 	 * @param date
 	 * @param numberOfDays
 	 * @return
@@ -776,7 +776,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves Time Zone (GTM)
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getOffSetTimeZone() {
@@ -827,7 +827,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks whether the dates are on the same day.
-	 * 
+	 *
 	 * @param date1
 	 * @param date2
 	 * @return
@@ -841,7 +841,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if data is between period.
-	 * 
+	 *
 	 * @param date
 	 * @param periodStart
 	 * @param periodEnd
@@ -854,7 +854,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves dates by days of week on month
-	 * 
+	 *
 	 * @param days
 	 * @return
 	 */

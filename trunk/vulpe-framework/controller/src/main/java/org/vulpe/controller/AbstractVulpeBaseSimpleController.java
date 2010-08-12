@@ -89,12 +89,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	}
 
 	@PostConstruct
-	public void loadNow() {
+	protected void loadNow() {
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
-		now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
+		// now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
 	}
 
 	/**
@@ -956,4 +956,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		setUrlRedirect(url + (ajax ? "/ajax" : ""));
 		return Forward.REDIRECT;
 	}
+
+	protected String redirectTo(final String url) {
+		return redirectTo(url, isAjax());
+	}
+
 }

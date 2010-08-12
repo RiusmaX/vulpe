@@ -44,9 +44,12 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 		super.setParameters(action, stack, parameters);
 		if (invocation.getAction() instanceof VulpeController) {
 			VulpeController controller = (VulpeController) invocation.getAction();
-			if (StringUtils.isEmpty(controller.getResultForward())) {
-				controller.controlResultForward();
-				controller.showButtons(controller.getOperation());
+			if (!"autocomplete".equals(invocation.getProxy().getMethod())
+					|| !"json".equals(invocation.getProxy().getMethod())) {
+				if (StringUtils.isEmpty(controller.getResultForward())) {
+					controller.controlResultForward();
+					controller.showButtons(controller.getOperation());
+				}
 			}
 		}
 		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
@@ -63,7 +66,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 						final String name = (String) iterator.next();
 						final Object[] value = (Object[]) params.get(name);
 						OgnlContextState.setCreatingNullObjects(stack.getContext(), false);
-						if (VulpeValidationUtil.getInstance().isEmpty(stack.findValue(name))) {
+						if (VulpeValidationUtil.isEmpty(stack.findValue(name))) {
 							OgnlContextState.setCreatingNullObjects(stack.getContext(), true);
 							stack.setValue(name, value[1]);
 						}

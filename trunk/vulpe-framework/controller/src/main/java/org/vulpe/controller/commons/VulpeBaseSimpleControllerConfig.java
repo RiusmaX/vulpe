@@ -175,6 +175,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * ()
 	 */
 	public String getSimpleControllerName() {
+		this.simpleControllerName = "";
 		if (StringUtils.isBlank(this.simpleControllerName) && controllerName.contains("/")) {
 			final String[] parts = controllerName.split("/");
 			this.simpleControllerName = parts[1];

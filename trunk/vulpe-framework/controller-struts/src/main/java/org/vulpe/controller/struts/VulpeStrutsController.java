@@ -43,6 +43,7 @@ import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
@@ -766,16 +767,26 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	public String json() {
 		if (getEntities() == null || getEntities().isEmpty()) {
-			read();
+			ENTITY entity = prepareEntity(Action.READ);
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
+					.concat(getControllerConfig().getEntityClass().getSimpleName()),
+					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
+							.clone() });
+			setEntities(list);
 		}
 		JSONArray jsonArray = new JSONArray(getEntities());
-		setRequestAttribute("JSON", jsonArray.toString());
+		now.put("JSON", jsonArray.toString());
 		return Forward.JSON;
 	}
 
 	public String autocomplete() {
 		if (getEntities() == null || getEntities().isEmpty()) {
-			onRead();
+			final ENTITY entity = prepareEntity(Action.READ);
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
+					.concat(getControllerConfig().getEntityClass().getSimpleName()),
+					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
+							.clone() });
+			setEntities(list);
 		}
 		final List<ValueBean> values = new ArrayList<ValueBean>();
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
@@ -790,14 +801,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				values.add(new ValueBean(entity.getId().toString(), value));
 			}
 		} else {
-			for (Iterator iterator = getEntities().iterator(); iterator.hasNext();) {
-				Object[] type = (Object[]) iterator.next();
-				values.add(new ValueBean(type[0].toString(), type[1].toString()));
+			if (VulpeValidationUtil.isNotEmpty(getEntities())) {
+				for (Iterator iterator = getEntities().iterator(); iterator.hasNext();) {
+					Object[] type = (Object[]) iterator.next();
+					values.add(new ValueBean(type[0].toString(), type[1].toString()));
+				}
 			}
-
 		}
 		final JSONArray jsonArray = new JSONArray(values);
-		setRequestAttribute("JSON", jsonArray.toString());
+		now.put("JSON", jsonArray.toString());
 		return Forward.JSON;
 	}
 
@@ -865,7 +877,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			}
 		}
 
-		ENTITY entity = prepareEntity(Action.READ);
+		final ENTITY entity = prepareEntity(Action.READ);
 		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
 				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
 				|| (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig()
@@ -1558,8 +1570,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	private Integer detailIndex;
 
 	public boolean isAddDetailShow() {
-		return (Boolean) getButtons().get(Button.ADD_DETAIL.concat(getControllerConfig()
-				.getTabularConfig().getBaseName()));
+		return (Boolean) getButtons().get(
+				Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName()));
 	}
 
 	public boolean isAddDetailShow(final String detail) {

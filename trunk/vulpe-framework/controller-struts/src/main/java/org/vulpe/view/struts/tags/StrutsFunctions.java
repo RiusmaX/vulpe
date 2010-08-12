@@ -160,7 +160,7 @@ public final class StrutsFunctions extends Functions {
 		final String key = (property.contains(baseName)) ? property : baseName.concat(property);
 
 		final Object value = getProperty(pageContext, property);
-		if (VulpeValidationUtil.getInstance().isNotEmpty(value)) {
+		if (VulpeValidationUtil.isNotEmpty(value)) {
 			final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
 					.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
@@ -223,7 +223,7 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static Object saveInSession(final String key, final Object value, final Boolean expire) {
 		final Object newValue = value;
-		if (VulpeValidationUtil.getInstance().isNotEmpty(newValue)) {
+		if (VulpeValidationUtil.isNotEmpty(newValue)) {
 			getFormParams().put(key, new Object[] { expire, newValue });
 		} else {
 			getFormParams().remove(key);
@@ -242,7 +242,7 @@ public final class StrutsFunctions extends Functions {
 	public static Object saveImageInSession(final String key, final Object value,
 			final Boolean expire, final Integer width) {
 		final Object newValue = value;
-		if (VulpeValidationUtil.getInstance().isNotEmpty(newValue)) {
+		if (VulpeValidationUtil.isNotEmpty(newValue)) {
 			final Byte[] bytes = (Byte[]) newValue;
 			byte[] imageData = new byte[bytes.length];
 			for (int i = 0; i < bytes.length; i++) {

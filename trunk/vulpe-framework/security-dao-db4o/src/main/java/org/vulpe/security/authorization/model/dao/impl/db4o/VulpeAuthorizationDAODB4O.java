@@ -97,7 +97,7 @@ public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, 
 		if (secureResources != null) {
 			for (SecureResource secureResource : secureResources) {
 				secureObjects.put(secureResource.getResourceName(), secureResource);
-				if (VulpeValidationUtil.getInstance().isNotEmpty(
+				if (VulpeValidationUtil.isNotEmpty(
 						secureResource.getSecureResourceRoles())) {
 					final List<Role> roles = new ArrayList<Role>();
 					for (SecureResourceRole secureResourceRole : secureResource

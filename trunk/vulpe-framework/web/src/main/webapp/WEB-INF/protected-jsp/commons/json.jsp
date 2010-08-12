@@ -1,1 +1,1 @@
-${JSON}
+${now['JSON']}
