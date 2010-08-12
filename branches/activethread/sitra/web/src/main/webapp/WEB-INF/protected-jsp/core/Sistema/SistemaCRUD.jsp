@@ -60,54 +60,64 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
-		<v:text
-			labelKey="label.sitra.core.Sistema.crud.ownerHomologacao"
-			property="ownerHomologacao"
-			size="20"
-			maxlength="20"
-			required="true" upperCase="true"
-		/>
-		</td>
-		<td>
-		<v:text
-			labelKey="label.sitra.core.Sistema.crud.dblinkHomologacao"
-			property="dblinkHomologacao"
-			size="50"
-			maxlength="100"
-			required="true"
-		/>
-		</td>
-	</tr>
-	<tr>
-		<td>
-		<v:text
-			labelKey="label.sitra.core.Sistema.crud.ownerProducao"
-			property="ownerProducao"
-			size="20"
-			maxlength="20"
-			required="true" upperCase="true"
-		/>
-		</td>
-		<td>
-		<v:text
-			labelKey="label.sitra.core.Sistema.crud.dblinkProducao"
-			property="dblinkProducao"
-			size="50"
-			maxlength="100"
-			required="true"
-		/>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-		<v:text
-			labelKey="label.sitra.core.Sistema.crud.dblinkDesenvolvimento"
-			property="dblinkDesenvolvimento"
-			size="50"
-			maxlength="100"
-			required="true"
-		/>
+		<td colspan="2" align="left">
+		<fieldset>
+		<legend>&nbsp;Servidores&nbsp;</legend>
+		<table>
+			<tr>
+				<td></td>
+				<td><v:label key="label.sitra.core.Sistema.crud.producao"/></td>
+				<td><v:label key="label.sitra.core.Sistema.crud.homologacao"/></td>
+				<td><v:label key="label.sitra.core.Sistema.crud.desenvolvimento"/></td>
+			</tr>
+			<tr>
+				<td><v:label key="label.sitra.core.Sistema.crud.owner"/></td>
+				<td>
+				<v:text
+					property="ownerProducao"
+					size="20"
+					maxlength="20"
+					required="true" upperCase="true"
+				/>
+				</td>
+				<td colspan="2">
+				<v:text
+					property="ownerHomologacao"
+					size="20"
+					maxlength="20"
+					required="true" upperCase="true"
+				/>
+				</td>
+			</tr>
+			<tr>
+				<td><v:label key="label.sitra.core.Sistema.crud.dblink"/></td>
+				<td>
+				<v:text
+					property="dblinkProducao"
+					size="40"
+					maxlength="100"
+					required="true"
+				/>
+				</td>
+				<td>
+				<v:text
+					property="dblinkHomologacao"
+					size="40"
+					maxlength="100"
+					required="true"
+				/>
+				</td>
+				<td>
+				<v:text
+					property="dblinkDesenvolvimento"
+					size="40"
+					maxlength="100"
+					required="true"
+				/>
+				</td>
+			</tr>
+		</table>
+		</fieldset>
 		</td>
 	</tr>
 </table>

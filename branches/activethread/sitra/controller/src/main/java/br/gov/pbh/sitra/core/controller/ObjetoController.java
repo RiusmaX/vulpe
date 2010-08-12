@@ -1,8 +1,10 @@
 package br.gov.pbh.sitra.core.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
 
+import br.gov.pbh.sitra.commons.ApplicationConstants;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
@@ -51,8 +54,9 @@ public class ObjetoController extends ObjetoBaseController {
 		now.put("destino", destino);
 		if (sistemaUsuarios == null) {
 			try {
+				final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
 				sistemaUsuarios = getService(CoreService.class).readSistemaUsuario(
-						new SistemaUsuario(sistemas.get(0)));
+						new SistemaUsuario(sistema));
 				final List<ValueBean> usuarios = new ArrayList<ValueBean>();
 				for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
 					final String username = sistemaUsuario.getUsuario().getUsername();
@@ -113,11 +117,51 @@ public class ObjetoController extends ObjetoBaseController {
 	public String transferir() {
 		try {
 			String retorno = getService(CoreService.class).transferir(getEntity());
-			addActionMessage(retorno);
+			addActionMessage("Resultado da Soma: " + retorno);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
 		return Forward.SUCCESS;
 	}
+
+	@Override
+	public String read() {
+		boolean valido = false;
+		if (getEntitySelect() != null
+				&& (getEntitySelect().getTipoObjeto() != null || StringUtils
+						.isNotEmpty(getEntitySelect().getNomeObjeto()))
+				|| getEntitySelect().getDataInicial() != null
+				|| getEntitySelect().getDataFinal() != null
+				|| StringUtils.isNotEmpty(getEntitySelect().getUsuario())
+				|| getEntitySelect().getDestino() != null) {
+			valido = true;
+		}
+		if (!valido) {
+			addActionError("sitra.msg.erro.pesquisa.sem.filtro");
+			setResultForward(getControllerConfig().getViewItemsPath());
+			return Forward.SUCCESS;
+		}
+		final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
+		getEntitySelect().setSistema(sistema);
+		Calendar calendar = Calendar.getInstance();
+		if (getEntitySelect().getDataInicial() != null) {
+			calendar.setTime(getEntitySelect().getDataInicial());
+			calendar.set(Calendar.HOUR, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			getEntitySelect().setDataInicial(calendar.getTime());
+		}
+		if (getEntitySelect().getDataFinal() != null) {
+			calendar.setTime(getEntitySelect().getDataFinal());
+			calendar.set(Calendar.HOUR, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 99);
+			getEntitySelect().setDataFinal(calendar.getTime());
+		}
+		return super.read();
+	}
+
 
 }

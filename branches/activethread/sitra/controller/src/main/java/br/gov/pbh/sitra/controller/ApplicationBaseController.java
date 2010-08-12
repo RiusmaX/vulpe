@@ -1,8 +1,8 @@
 package br.gov.pbh.sitra.controller;
 
 import java.io.Serializable;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.model.entity.VulpeEntity;
 

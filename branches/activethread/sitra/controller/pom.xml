@@ -16,6 +16,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.gov.pbh.sitra</groupId>
+			<artifactId>sitra-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.pbh.sitra</groupId>
 			<artifactId>sitra-domains</artifactId>
 			<version>1.0</version>
 		</dependency>
