@@ -35,13 +35,20 @@ public class UserController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	public String createPost() {
+		setPassword(getEntity().getPassword());
+		return super.createPost();
+	}
+
+	@Override
+	public boolean validateEntity() {
+		boolean valid = super.validateEntity();
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 				.isNotBlank(getEntity().getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			return showError("vulpe.security.user.password.not.match");
+			addActionError(getText("vulpe.security.user.password.not.match"));
+			valid = false;
 		}
-		setPassword(getEntity().getPassword());
-		return super.createPost();
+		return valid;
 	}
 
 	@Override
@@ -58,24 +65,20 @@ public class UserController extends VulpeStrutsController<User, Long> {
 		} else {
 			setPassword(getEntity().getPassword());
 		}
-		return super.onUpdatePost();
-	}
-
-	@Override
-	public String updatePost() {
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 				.isNotBlank(getEntity().getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			return showError("vulpe.security.user.password.not.match");
+			addActionError(getText("vulpe.security.user.password.not.match"));
+			return false;
 		}
-		return super.updatePost();
+		return super.onUpdatePost();
 	}
 
 	public String getPassword() {
-		return (String) getRequestAttribute("password");
+		return (String) getSessionAttribute("vulpeUserPassword");
 	}
 
 	public void setPassword(final String password) {
-		setRequestAttribute("password", password);
+		setSessionAttribute("vulpeUserPassword", password);
 	}
 }

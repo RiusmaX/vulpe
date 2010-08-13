@@ -174,10 +174,14 @@ $(document).ready(function() {
 			column.className = order.css;
 		}
 	}
-	var requiredFields = $("span[class='vulpeRequiredField']");
-	if (requiredFields.length > 0) {
-		$("#legend").show();
-		$("#vulpeRequiredFieldLegend").show();
+	var fields = jQuery("[class*='vulpeRequired']");
+	if (fields && fields.length > 0) {
+		for (var i = 0; i < fields.length; i++) {
+			var field = jQuery(fields[i]);
+			var idField = field.attr("id");
+			var id = idField + "FieldRequired";
+			vulpe.util.get(idField + "_ErrorMessage").after("<span id='" + id + "' class='vulpeFieldRequired'>*</span>");
+		}
 	}
 });
 </script>

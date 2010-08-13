@@ -27,6 +27,7 @@ ${paging.size}
 		styleClass="${empty list.previousPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true"
 		labelKey="label.vulpe.previous"
 		javascript="vulpe.view.request.submitPaging(${empty list.previousPage ? 0 : list.previousPage}, '${actionName}/ajax', '${formName}', '${layerFields}', '${layer}', '${not empty list.previousPage ? beforeJs : 'false'}', '${afterJs}');" />
+	&nbsp;
 	<c:choose>
 	<c:when test="${global['pagingStyle'] == 'NUMERIC'}">
 	<c:set var="begin" value="${list.page - 5 <= 0 ? 1 : list.page - 5}"/>
@@ -62,6 +63,7 @@ ${paging.size}
 		<fmt:message key="label.vulpe.page" />&nbsp;${list.page}&nbsp;<fmt:message key="label.vulpe.of" />&nbsp;${list.pages}
 	</c:otherwise>
 	</c:choose>
+	&nbsp;
 	<v:action elementId="vulpeButtonPagingNextPage" styleClass="${empty list.nextPage ? 'vulpeIconOff' : ''}"
 		showButtonAsImage="true" labelKey="label.vulpe.next"
 		javascript="vulpe.view.request.submitPaging(${empty list.nextPage ? 0 : list.nextPage}, '${actionName}/ajax', '${formName}', '${layerFields}', '${layer}', '${not empty list.nextPage ? beforeJs : 'false'}', '${afterJs}');" />

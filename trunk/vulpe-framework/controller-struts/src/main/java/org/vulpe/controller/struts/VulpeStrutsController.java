@@ -33,6 +33,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Error;
 import org.vulpe.commons.VulpeConstants.Action.Button;
@@ -766,17 +767,20 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	}
 
 	public String json() {
-		if (getEntities() == null || getEntities().isEmpty()) {
-			ENTITY entity = prepareEntity(Action.READ);
-			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
-					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
-							.clone() });
-			setEntities(list);
+		final Object object = onJson();
+		if (VulpeValidationUtil.isNotEmpty(object)) {
+			try {
+				JSONArray jsonArray = new JSONArray(object);
+				now.put("JSON", jsonArray.toString());
+			} catch (JSONException e) {
+				LOG.error(e);
+			}
 		}
-		JSONArray jsonArray = new JSONArray(getEntities());
-		now.put("JSON", jsonArray.toString());
 		return Forward.JSON;
+	}
+
+	protected Object onJson() {
+		return null;
 	}
 
 	public String autocomplete() {
@@ -949,6 +953,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		// extension point
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeController#tabularFilter()
+	 */
+	@ResetSession
 	public String tabularFilter() {
 		return read();
 	}
@@ -1212,6 +1222,11 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return getResultName();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeController#select()
+	 */
 	@SkipValidation
 	@ResetSession(before = true)
 	public String select() {
@@ -1261,6 +1276,11 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return getResultName();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.VulpeController#tabular()
+	 */
 	@SkipValidation
 	@ResetSession(before = true)
 	public String tabular() {

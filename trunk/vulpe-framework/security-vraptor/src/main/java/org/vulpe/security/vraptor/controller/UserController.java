@@ -58,16 +58,18 @@ public class UserController extends VulpeVRaptorController<User, Long> {
 		} else {
 			setPassword(getEntity().getPassword());
 		}
+		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
+				.isNotBlank(getEntity().getPasswordConfirm()))
+				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
+			addActionError(getText("vulpe.security.user.password.not.match"));
+			return false;
+		}
 		return super.onUpdatePost();
 	}
 
 	@Override
 	public String updatePost() {
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			return showError("vulpe.security.user.password.not.match");
-		}
+
 		return super.updatePost();
 	}
 

@@ -15,6 +15,7 @@
  */
 package org.vulpe.controller;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,12 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.VulpeConstants.Configuration.Global;
 import org.vulpe.commons.VulpeConstants.Configuration.Global.Mobile;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.config.annotations.VulpeDomains;
@@ -135,6 +138,15 @@ public class VulpeStartupListener implements ServletContextListener {
 		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
 		evt.getServletContext().setAttribute(Context.GLOBAL, global);
 		CachedObjectsHelper.putAnnotedObjectsInCache(evt.getServletContext());
+		loadControllerMethods();
+	}
+
+	private void loadControllerMethods() {
+		final Map<String, String> mapControllerMethods = new HashMap<String, String>();
+		for (Method method : VulpeController.class.getMethods()) {
+			mapControllerMethods.put(method.getName(), method.getName());
+		}
+		VulpeCacheHelper.getInstance().put(VulpeConstants.CONTROLLER_METHODS, mapControllerMethods);
 	}
 
 }

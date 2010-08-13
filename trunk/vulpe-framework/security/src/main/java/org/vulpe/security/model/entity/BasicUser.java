@@ -22,6 +22,7 @@ import javax.persistence.FetchType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
+import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
@@ -55,7 +56,9 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public void setPassword(final String password) {
-		this.password = VulpeDigestUtil.encrypt(password, "md5");
+		if (StringUtils.isNotEmpty(password)) {
+			this.password = VulpeDigestUtil.encrypt(password, "md5");
+		}
 	}
 
 	public void setPasswordEncrypted(final String password) {
@@ -83,7 +86,9 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public void setPasswordConfirm(final String passwordConfirm) {
-		this.passwordConfirm = VulpeDigestUtil.encrypt(passwordConfirm, "md5");
+		if (StringUtils.isNotEmpty(passwordConfirm)) {
+			this.passwordConfirm = VulpeDigestUtil.encrypt(passwordConfirm, "md5");
+		}
 	}
 
 	public void setPasswordConfirmEncrypted(final String passwordConfirm) {

@@ -134,4 +134,10 @@ public interface VulpeController extends VulpeSimpleController {
 	 * @since 1.0
 	 */
 	void showButtons(final String method);
+
+	String select();
+
+	String tabular();
+
+	String tabularFilter();
 }
