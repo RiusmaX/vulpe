@@ -53,7 +53,7 @@ td .titulo {
 	border: 1px solid #999;
 }
 
-.vulpeRequiredField {
+.vulpeFieldRequired {
 	color: red;
 	display: inline;
 }
