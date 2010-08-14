@@ -1,4 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <table>
 	<tr>
 		<td><v:select labelKey="label.sitra.core.Objeto.select.tipoObjeto" property="tipoObjeto"

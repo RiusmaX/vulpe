@@ -1,4 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
