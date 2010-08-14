@@ -11,17 +11,89 @@
 		<c:if test="${global['showAsMobile']}">
 		<meta name="viewport" content="width=${global['viewportWidth']}, height=${global['viewportHeight']}, user-scalable=${global['viewportUserScalable']}, initial-scale=${global['viewportInitialScale']}, maximum-scale=${global['viewportMaximumScale']}, minimum-scale=${global['viewportMinimumScale']}" />
 		</c:if>
-		<title><fmt:message key="vulpe.security.title.application"/></title>
+		<title><fmt:message key="vulpe.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['theme']}/images/icon.png" rel="shortcut icon"/>
 		<%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>
 		<%@include file="/WEB-INF/protected-jsp/commons/css.jsp" %>
 		<decorator:head/>
 	</head>
 	<body>
-		<div id="authenticator" align="${global['backendCenteredLayout'] ? 'center' : ''}">
+		<c:if test="${vulpeCurrentLayout == 'FRONTEND'}">
+			<c:set var="align">align="center"</c:set>
+		</c:if>
+		<c:if test="${vulpeCurrentLayout == 'BACKEND'}">
+			<c:set var="align">align="center"</c:set>
+		</c:if>
+		<div id="container" ${align}>
 			<div id="loading" style="display: none;"></div>
+			<div id="modalMessages" style="display: none;" class="vulpeMessages"></div>
+			<div id="confirmationDialog" title="<fmt:message key='vulpe.dialog.confirmation.title'/>" style="display: none">
+				<p>
+					<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+					<span id="confirmationMessage"></span>
+				</p>
+			</div>
+			<div id="alertDialog" title="<fmt:message key='vulpe.dialog.warning.title'/>" style="display: none;">
+				<p>
+					<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+					<span id="vulpeAlertMessage"></span>
+				</p>
+			</div>
+			<div id="successDialog" title="<fmt:message key='vulpe.dialog.success.title'/>" style="display: none;">
+				<p>
+					<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+					<span id="successMessage"></span>
+				</p>
+			</div>
+			<c:if test="${vulpeCurrentLayout == 'FRONTEND'}">
+			<div id="frontend">
+			</c:if>
+			<div id="header">
+				<c:choose>
+					<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
+						<%@include file="/WEB-INF/protected-jsp/commons/frontend/header.jsp" %>
+					</c:when>
+					<c:otherwise>
+						<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
+					</c:otherwise>
+				</c:choose>
+				<div id="menu">
+					<ul id="nav">
+						<c:choose>
+							<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
+								<%@include file="/WEB-INF/protected-jsp/commons/frontend/menu.jsp" %>
+							</c:when>
+							<c:otherwise>
+								<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
+							</c:otherwise>
+						</c:choose>
+						<c:if test="${vulpeCurrentLayout == 'BACKEND'}">
+							<c:if test="${global['auditEnabled']}">
+								<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
+							</c:if>
+							<c:if test="${global['securityEnabled']}">
+								<%@include file="/WEB-INF/protected-jsp/commons/security/menu.jsp" %>
+							</c:if>
+						</c:if>
+					</ul>
+				</div>
+			</div>
+			<div id="messages" style="display: none;" class="vulpeMessages"></div>
 			<div id="body">
 				<decorator:body/>
+			</div>
+			<c:if test="${vulpeCurrentLayout == 'FRONTEND'}">
+			</div>
+			</c:if>
+			<div id="footer">
+				<c:choose>
+					<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
+						<%@include file="/WEB-INF/protected-jsp/commons/frontend/footer.jsp" %>
+					</c:when>
+					<c:otherwise>
+						<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</body>

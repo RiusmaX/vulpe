@@ -4,6 +4,8 @@
 		<pattern>/login.jsp*</pattern>
 		<pattern>/accessDenied.jsp*</pattern>
 		<pattern>*/errors/*</pattern>
+		<pattern>*/j_spring_security_check*</pattern>
+		<pattern>*/authenticator?loginError=*</pattern>
 	</excludes>
 	<decorator name="default" page="site.jsp">
 		<pattern>/*</pattern>
@@ -12,6 +14,6 @@
 		<pattern>*/frontend*</pattern>
 	</decorator>
 	<decorator name="authenticator" page="authenticator.jsp">
-		<pattern>*/authenticator*</pattern>
+		<pattern>*/authenticator</pattern>
 	</decorator>
 </decorators>

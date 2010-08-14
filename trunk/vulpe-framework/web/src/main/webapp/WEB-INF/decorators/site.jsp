@@ -19,7 +19,10 @@
 		<decorator:head/>
 	</head>
 	<body>
-		<div id="container" align="${global['backendCenteredLayout'] ? 'center' : ''}">
+		<c:if test="${not empty global['backendCenteredLayout']}">
+			<c:set var="align">align="center"</c:set>
+		</c:if>
+		<div id="container" ${align}>
 			<div id="loading" style="display: none;"></div>
 			<div id="modalMessages" style="display: none;" class="vulpeMessages"></div>
 			<div id="confirmationDialog" title="<fmt:message key='vulpe.dialog.confirmation.title'/>" style="display: none">

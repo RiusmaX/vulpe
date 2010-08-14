@@ -12,6 +12,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <#list view.arguments as field>
 <v:${field.type}
@@ -121,6 +122,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 </@file>
 <@file name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
@@ -165,6 +167,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}CRUD.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
 <#list view.fields as field>
@@ -284,6 +287,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 </#list>
 <@file name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableBody">
@@ -406,6 +410,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 </#list>
 <@file name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
