@@ -9,43 +9,40 @@
 <%@ attribute name="autoLoad" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="multiple" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
-
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
-
 <c:if test="${show eq true}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
-	
+
 	<c:if test="${empty autoLoad}">
 		<c:set var="autoLoad" value="${false}"/>
 	</c:if>
-	
+
 	<c:if test="${not empty property && empty items && !autoLoad}">
 		<c:set var="items" value="${util:listInField(targetValue, property)}"/>
 	</c:if>
-	
+
 	<c:if test="${autoLoad}">
 		<c:set var="itemsEL" value="${'${'}cachedClass['${items}']${'}'}"/>
 		<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 	</c:if>
-	
+
 	<c:if test="${empty itemLabel}">
 		<c:set var="itemLabel" value="value"/>
 	</c:if>
 	<c:if test="${empty itemKey}">
 		<c:set var="itemKey" value="id"/>
 	</c:if>
-	
+
 	<c:if test="${not empty showBlank && showBlank}">
 		<c:if test="${empty headerKey}">
 			<c:set var="headerKey" value="label.vulpe.select"/>
 		</c:if>
 		<fmt:message key="${headerKey}" var="headerLabel"/>
 	</c:if>
-	
+
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
 		<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
 	</c:if>
-	
+
 	<c:choose>
 	<c:when test="${showAsText}">
 		<c:forEach items="${items}" var="item">

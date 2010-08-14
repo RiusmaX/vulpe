@@ -43,3 +43,4 @@
 <%@ attribute name="validateMax" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="validateMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="validateMaxLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>

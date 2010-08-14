@@ -1,10 +1,11 @@
 <c:if test="${!showAsText || !onlyToSee}">
 <img id="${elementId}_loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" />
-<img id="${elementId}_ErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" onclick="vulpe.util.get('${elementId}').focus();" class="vulpeImageErrorMessage" />
+<img id="${elementId}_ErrorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" />
 </c:if>
 <c:if test="${paragraph}"></p></c:if>
-<c:if test="${not empty requiredField || not empty validateType}">
 <script type="text/javascript">
+vulpe.util.get('${elementId}').focus();
+<c:if test="${not empty requiredField || not empty validateType}">
 <c:if test="${not empty requiredField}">
 vulpe.util.get('${elementId}').blur(function() {
 	var requiredFieldId = "${vulpeFormName}_${fn:replace(prepareName, property, requiredField)}";
@@ -35,5 +36,5 @@ vulpe.config.elements["${elementId}"] = {
 	<c:if test="${not empty validateDatePattern}">,datePattern: '${validateDatePattern}'</c:if>
 }
 </c:if>
-</script>
 </c:if>
+</script>
