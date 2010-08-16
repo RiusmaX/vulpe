@@ -32,6 +32,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.Like;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 import org.vulpe.security.commons.VulpeSecurityConstants;
 
@@ -57,6 +58,7 @@ public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 	/**
 	 * name of secured resource
 	 */
+	@Like
 	private String resourceName;
 
 	/**

@@ -4,7 +4,9 @@
 </c:if>
 <c:if test="${paragraph}"></p></c:if>
 <script type="text/javascript">
-vulpe.util.get('${elementId}').focus();
+vulpe.util.get('${elementId}_ErrorMessage').click(function(){
+	vulpe.util.get('${elementId}').focus()
+});
 <c:if test="${not empty requiredField || not empty validateType}">
 <c:if test="${not empty requiredField}">
 vulpe.util.get('${elementId}').blur(function() {

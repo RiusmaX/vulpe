@@ -1,9 +1,11 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<v:column labelKey="label.vulpe.security.SecureResource.crud.secureResourceRoles.role">
+				<v:hidden property="role.name"/>
 				<v:selectPopup labelKey="label.vulpe.security.SecureResource.crud.secureResourceRoles.role.name"
 					property="role" identifier="id" description="description" readonly="true"
 					action="/security/Role/select" popupId="roleSelectPopup"

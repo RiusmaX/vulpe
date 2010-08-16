@@ -30,8 +30,6 @@
 </form>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var authenticator = vulpe.util.getElement("authenticator");
-		var container = vulpe.util.getElement("container");
 		vulpe.util.get('j_username').focus(function() {
 			$(this).effect("highlight");
 		});
@@ -45,17 +43,10 @@
 		} else if (j_password.value == '') {
 			j_password.focus();
 		}
-
-		if (authenticator && container == null) {
-			vulpe.util.get('buttonSubmitLoginForm').click(function() {
-				return vulpe.validate.validateLoginForm('vulpeLoginForm');
-			});
-		} else {
-			vulpe.util.get('buttonSubmitLoginForm').click(function() {
-				vulpe.view.request.submitLoginForm('vulpeLoginForm', 'vulpeLoginForm', '', 'body', false, '', '');
-				return false;
-			});
-		}
+		vulpe.util.get('buttonSubmitLoginForm').click(function() {
+			vulpe.view.request.submitLoginForm('vulpeLoginForm', 'vulpeLoginForm', '', 'body', false, '', '');
+			return false;
+		});
 	});
 
 </script>

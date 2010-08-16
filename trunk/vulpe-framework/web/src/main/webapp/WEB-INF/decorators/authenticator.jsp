@@ -13,6 +13,19 @@
 		</c:if>
 		<title><fmt:message key="vulpe.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['theme']}/images/icon.png" rel="shortcut icon"/>
+		<c:if test="${empty vulpeCurrentLayout}">
+			<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>
+		</c:if>
+		<c:if test="${not empty SPRING_SECURITY_SAVED_REQUEST_KEY}">
+			<c:choose>
+				<c:when test="${fn:contains(SPRING_SECURITY_SAVED_REQUEST_KEY, '/frontend]')}">
+					<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="vulpeCurrentLayout" value="BACKEND" scope="session"/>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 		<%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>
 		<%@include file="/WEB-INF/protected-jsp/commons/css.jsp" %>
 		<decorator:head/>

@@ -23,7 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.util.VulpeReflectUtil;
 
 /**
  *
@@ -38,6 +40,17 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 			AuthenticationException authException) throws IOException, ServletException {
 		setLoginFormUrl(URI.AUTHENTICATOR
 				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
+		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
+				.getAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY);
+		if (savedRequest != null) {
+			String requestURI = savedRequest.getRequestURI();
+			if (!requestURI.endsWith(URI.AJAX)) {
+				requestURI += URI.AJAX;
+			}
+			VulpeReflectUtil.getInstance().setFieldValue(savedRequest, "requestURI", requestURI);
+			request.getSession().setAttribute(
+					DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
+		}
 		super.commence(request, response, authException);
 	}
 }

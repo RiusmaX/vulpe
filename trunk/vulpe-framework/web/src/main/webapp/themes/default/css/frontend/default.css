@@ -354,7 +354,6 @@
 
 #error h2 {
 	display: block;
-	font-size: 20px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
@@ -507,7 +506,6 @@ h1 {
 }
 
 h2 {
-	font-size: 17px;
 	margin: 0px 0px 0px 0px;
 	padding-left: 15px;
 	padding-top: 3px;

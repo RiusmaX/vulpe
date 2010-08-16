@@ -43,7 +43,7 @@ public class VulpeAuthorizationDAOJPA extends VulpeBaseDAOJPA<SecureResource, Lo
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.security.authorization.model.dao.
 	 * VulpeAuthorizationDAO#getSecureObject(java.lang.String)
 	 */
@@ -78,7 +78,7 @@ public class VulpeAuthorizationDAOJPA extends VulpeBaseDAOJPA<SecureResource, Lo
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.vulpe.security.authorization.model.dao. VulpeAuthorizationDAO
 	 * #getSecureObjectRoles(org.vulpe.security.authentication
 	 * .model.entity.SecureResource)
@@ -96,6 +96,7 @@ public class VulpeAuthorizationDAOJPA extends VulpeBaseDAOJPA<SecureResource, Lo
 				.get(SecureResource.class.getSimpleName());
 		if (secureResources != null) {
 			for (SecureResource secureResource : secureResources) {
+				secureObjects.clear();
 				secureObjects.put(secureResource.getResourceName(), secureResource);
 				if (VulpeValidationUtil.isNotEmpty(
 						secureResource.getSecureResourceRoles())) {
