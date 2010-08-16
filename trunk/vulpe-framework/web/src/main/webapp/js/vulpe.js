@@ -17,6 +17,11 @@ var vulpe = {
 	command: function() {},
 	//vulpe.config
 	config: {
+		authenticator: {
+			url: {
+				redirect: ''
+			}
+		},
 		browser: {
 			firefox: (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla"),
 			ie: (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer"),
@@ -1592,23 +1597,30 @@ var vulpe = {
 							vulpe.exception.handlerError(data, status);
 						} else {
 							try {
-								var html = "";
-								if (vulpe.util.existsVulpePopups(layer)) {
-									var messagePopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"messages\"></div>";
-									html = messagePopup + data;
+								var authenticator = urlStr.indexOf("/j_spring_security_check") != -1;
+								var loginError = data.indexOf("vulpeLoginForm") == -1;
+								var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
+								if (authenticator && loginError &&  validUrlRedirect) {
+									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
-									html = data;
-								}
-								vulpe.util.get(layer).html(html);
-								if (vulpe.util.isNotEmpty(afterJs)) {
-									try {
-										eval(webtoolkit.url.decode(afterJs));
-										vulpe.view.request.invokeGlobalsAfterJs();
-										if (typeof afterCallback == "function") {
-											afterCallback();
+									var html = "";
+									if (vulpe.util.existsVulpePopups(layer)) {
+										var messagePopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"messages\"></div>";
+										html = messagePopup + data;
+									} else {
+										html = data;
+									}
+									vulpe.util.get(layer).html(html);
+									if (vulpe.util.isNotEmpty(afterJs)) {
+										try {
+											eval(webtoolkit.url.decode(afterJs));
+											vulpe.view.request.invokeGlobalsAfterJs();
+											if (typeof afterCallback == "function") {
+												afterCallback();
+											}
+										} catch(e) {
+											// do nothing
 										}
-									} catch(e) {
-										// do nothing
 									}
 								}
 							} catch(e) {

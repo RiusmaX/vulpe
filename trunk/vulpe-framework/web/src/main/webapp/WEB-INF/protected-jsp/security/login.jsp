@@ -30,6 +30,10 @@
 </form>
 <script type="text/javascript">
 	$(document).ready(function() {
+		vulpe.config.authenticator.url.redirect = "${SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl}";
+		if (vulpe.config.authenticator.url.redirect == "") {
+			vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
+		}
 		vulpe.util.get('j_username').focus(function() {
 			$(this).effect("highlight");
 		});
@@ -43,11 +47,11 @@
 		} else if (j_password.value == '') {
 			j_password.focus();
 		}
+
 		vulpe.util.get('buttonSubmitLoginForm').click(function() {
 			vulpe.view.request.submitLoginForm('vulpeLoginForm', 'vulpeLoginForm', '', 'body', false, '', '');
 			return false;
 		});
 	});
-
 </script>
 </div>

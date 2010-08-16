@@ -45,17 +45,17 @@
 			</div>
 			<div id="header">
 				<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
-				<div id="menu">
-					<ul id="nav">
-						<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
-						<c:if test="${global['auditEnabled']}">
-							<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
-						</c:if>
-						<c:if test="${global['securityEnabled']}">
-							<%@include file="/WEB-INF/protected-jsp/commons/security/menu.jsp" %>
-						</c:if>
-					</ul>
-				</div>
+			</div>
+			<div id="menu">
+				<ul id="nav">
+					<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
+					<c:if test="${global['auditEnabled']}">
+						<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
+					</c:if>
+					<c:if test="${global['securityEnabled']}">
+						<%@include file="/WEB-INF/protected-jsp/commons/security/menu.jsp" %>
+					</c:if>
+				</ul>
 			</div>
 			<div id="messages" style="display: none;" class="vulpeMessages"></div>
 			<div id="body">
