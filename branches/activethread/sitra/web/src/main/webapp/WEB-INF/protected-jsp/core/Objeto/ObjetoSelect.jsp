@@ -14,7 +14,7 @@
 			paragraph="false" /></p>
 		</td>
 		<td><v:select labelKey="label.sitra.core.Objeto.select.usuario" property="usuario"
-			items="${now['usuarios']}" showBlank="true" autoLoad="false" /></td>
+			items="${usuarios}" showBlank="true" autoLoad="false" /></td>
 		<td><v:select labelKey="label.sitra.core.Objeto.select.destino" property="destino"
 			showBlank="true" autoLoad="false" /></td>
 	</tr>

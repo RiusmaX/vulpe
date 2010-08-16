@@ -16,13 +16,11 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
-import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
@@ -33,8 +31,6 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
 public class ObjetoController extends ObjetoBaseController {
-
-	private List<SistemaUsuario> sistemaUsuarios;
 
 	@Override
 	public void loadNow() {
@@ -52,21 +48,6 @@ public class ObjetoController extends ObjetoBaseController {
 		destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 				Ambiente.H.name()))));
 		now.put("destino", destino);
-		if (sistemaUsuarios == null) {
-			try {
-				final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
-				sistemaUsuarios = getService(CoreService.class).readSistemaUsuario(
-						new SistemaUsuario(sistema));
-				final List<ValueBean> usuarios = new ArrayList<ValueBean>();
-				for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
-					final String username = sistemaUsuario.getUsuario().getUsername();
-					usuarios.add(new ValueBean(username, username));
-				}
-				now.put("usuarios", usuarios);
-			} catch (VulpeApplicationException e) {
-				LOG.error(e);
-			}
-		}
 	}
 
 	@Override
