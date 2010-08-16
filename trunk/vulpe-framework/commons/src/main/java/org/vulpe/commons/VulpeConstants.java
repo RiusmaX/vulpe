@@ -305,8 +305,9 @@ public class VulpeConstants {
 	}
 
 	public class Security {
-		public static final String VULPE_USER_AUTHENTICATION = "vulpeUserAuthentication";
-		public static final String VULPE_USER_AUTHENTICATED = "vulpeUserAuthenticated";
+		public static final String USER_AUTHENTICATION = "vulpeUserAuthentication";
+		public static final String USER_AUTHENTICATED = "vulpeUserAuthenticated";
+		public static final String LOGOUT_EXECUTED = "vulpeLogoutExecuted";
 		public static final String ROLE_PREFIX = "ROLE_";
 	}
 

@@ -35,6 +35,7 @@ import org.springframework.security.web.util.UrlUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.View;
 
 public class VulpeLogoutFilter extends GenericFilterBean {
@@ -100,6 +101,7 @@ public class VulpeLogoutFilter extends GenericFilterBean {
 			}
 
 			request.getSession(true).setAttribute(View.CURRENT_LAYOUT, vulpeCurrentLayout);
+			request.getSession(true).setAttribute(Security.LOGOUT_EXECUTED, true);
 			logoutSuccessHandler.onLogoutSuccess(request, response, auth);
 
 			return;
@@ -110,12 +112,12 @@ public class VulpeLogoutFilter extends GenericFilterBean {
 
 	/**
 	 * Allow subclasses to modify when a logout should take place.
-	 * 
+	 *
 	 * @param request
 	 *            the request
 	 * @param response
 	 *            the response
-	 * 
+	 *
 	 * @return <code>true</code> if logout should occur, <code>false</code>
 	 *         otherwise
 	 */
