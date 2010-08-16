@@ -203,10 +203,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	protected void setParams(final Query query, final Map<String, Object> params) {
 		if (params != null) {
 			for (String name : params.keySet()) {
-				Object value = params.get(name);
-				if (value instanceof String) {
-					value = "%".concat(value.toString()).concat("%");
-				}
+				final Object value = params.get(name);
 				query.setParameter(name, value);
 			}
 		}

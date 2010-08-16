@@ -111,4 +111,6 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 */
 	CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
 			throws VulpeApplicationException;
+
+	boolean exists(ENTITY entity) throws VulpeApplicationException;
 }

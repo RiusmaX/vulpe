@@ -13,26 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.model.services;
+package org.vulpe.model.annotations;
 
-import java.util.List;
-
-import org.vulpe.model.entity.VulpeEntity;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * Annotation to indicate Not Exist Equal
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-public interface GenericService extends VulpeService {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface NotExistEqual {
 
-	/**
-	 *
-	 * @param <T>
-	 * @param entity
-	 * @return
-	 */
-	<T extends VulpeEntity<?>> List<T> getList(final T entity);
+	Param[] params();
 
-	<T extends VulpeEntity<?>> boolean exists(final T entity);
-
+	String message() default "";
 }

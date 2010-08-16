@@ -4,17 +4,17 @@
 <div id="contentTitle"><fmt:message>vulpe.security.login.title.application</fmt:message></div>
 <div id="content"><c:if
 	test="${not empty param.loginError}">
-	<p><font color="red"><fmt:message key="vulpe.security.message.error.login.failed" /> <c:choose>
+	<p><font color="red"><fmt:message key="vulpe.security.error.login.failed" /> <c:choose>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'UserNotFound')}">
-			<fmt:message key="vulpe.security.message.error.user.not.found">
+			<fmt:message key="vulpe.security.error.user.not.found">
 				<fmt:param value="${SPRING_SECURITY_LAST_USERNAME}" />
 			</fmt:message>
 		</c:when>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'InvalidPassword')}">
-			<fmt:message key="vulpe.security.message.error.invalid.password" />
+			<fmt:message key="vulpe.security.error.invalid.password" />
 		</c:when>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'InactiveUser')}">
-			<fmt:message key="vulpe.security.message.error.invulpe.user">
+			<fmt:message key="vulpe.security.error.invulpe.user">
 				<fmt:param value="${SPRING_SECURITY_LAST_USERNAME}" />
 			</fmt:message>
 		</c:when>

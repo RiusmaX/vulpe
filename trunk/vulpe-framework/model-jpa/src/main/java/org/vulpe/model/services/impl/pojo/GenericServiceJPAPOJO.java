@@ -42,6 +42,9 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 		implements GenericService {
 
 	private static final Logger LOG = Logger.getLogger(GenericServiceJPAPOJO.class);
+	final VulpeBaseDAOJPA<ENTITY, ID> dao = new VulpeBaseDAOJPA<ENTITY, ID>();
+	final EntityManagerFactory entityManagerFactory = AbstractVulpeBeanFactory.getInstance()
+			.getBean("entityManagerFactory");
 
 	/*
 	 * (non-Javadoc)
@@ -52,9 +55,6 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 	public <T extends VulpeEntity<?>> List<T> getList(final T entity) {
 		List<T> list = null;
 		try {
-			final VulpeBaseDAOJPA<ENTITY, ID> dao = new VulpeBaseDAOJPA<ENTITY, ID>();
-			final EntityManagerFactory entityManagerFactory = AbstractVulpeBeanFactory
-					.getInstance().getBean("entityManagerFactory");
 			dao.setJpaTemplate(new JpaTemplate(entityManagerFactory));
 			dao.setEntityManagerFactory(entityManagerFactory);
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
@@ -63,6 +63,19 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 			LOG.error(e);
 		}
 		return list;
+	}
+
+	@Override
+	public <T extends VulpeEntity<?>> boolean exists(T entity) {
+		try {
+			dao.setJpaTemplate(new JpaTemplate(entityManagerFactory));
+			dao.setEntityManagerFactory(entityManagerFactory);
+			dao.setEntityClass((Class<ENTITY>) entity.getClass());
+			return dao.exists((ENTITY) entity);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return false;
 	}
 
 }

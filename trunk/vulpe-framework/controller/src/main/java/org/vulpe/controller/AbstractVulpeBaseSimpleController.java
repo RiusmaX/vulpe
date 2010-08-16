@@ -113,10 +113,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		getControllerConfig().setControllerType(ControllerType.BACKEND);
 		backendBefore();
 		onBackend();
-
 		setResultName(Forward.SUCCESS);
 		controlResultForward();
-
 		backendAfter();
 		return getResultName();
 	}
@@ -153,10 +151,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		getControllerConfig().setControllerType(ControllerType.FRONTEND);
 		frontendBefore();
 		onFrontend();
-
 		setResultName(Forward.SUCCESS);
 		controlResultForward();
-
 		frontendAfter();
 		return getResultName();
 	}
@@ -192,7 +188,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	public String upload() {
 		uploadBefore();
 		onUpload();
-
 		uploadAfter();
 		return Forward.UPLOAD;
 	}

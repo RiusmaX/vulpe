@@ -28,7 +28,7 @@ import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 import org.vulpe.model.services.GenericService;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @SuppressWarnings({ "unchecked" })
@@ -41,7 +41,7 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.GenericService#getList(
 	 * org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -55,6 +55,12 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 			LOG.error(e);
 		}
 		return list;
+	}
+
+	@Override
+	public <T extends VulpeEntity<?>> boolean exists(T entity) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

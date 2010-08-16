@@ -24,10 +24,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.Param.OperatorType;
 
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
+@NotExistEqual(params = { @Param(name = "username", operator = OperatorType.EQUAL) }, message = "vulpe.security.error.user.exists")
 public class User extends BasicUser {
 
 	@Id

@@ -41,6 +41,7 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.Like.LikeType;
@@ -316,14 +317,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						Param.class, entity.getClass(), name);
 				if (param == null) {
 					if (value instanceof String) {
-						// final Like like =
-						// VulpeReflectUtil.getInstance().getAnnotationInField(
-						// Like.class, entity.getClass(), name);
-						// hql.append("upper(obj.").append(name).append(") ").append(
-						// like != null ? "like" :
-						// "=").append(" upper(:").append(name)
-						// .append(")");
-						hql.append("upper(obj.").append(name).append(") like upper(:").append(name)
+						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
+								Like.class, entity.getClass(), name);
+						hql.append("upper(obj.").append(name).append(") ").append(
+								like != null ? "like" : "=").append(" upper(:").append(name)
 								.append(")");
 					} else {
 						hql.append("obj.").append(name).append(" = :").append(name);
@@ -382,9 +379,6 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		getEntityClass();
 	}
 
-	/**
-	 * Retorna a classe de entidade do DAO
-	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
 			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
@@ -417,6 +411,48 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		} else {
 			return false;
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
+	 */
+	@Override
+	public boolean exists(final ENTITY entity) throws VulpeApplicationException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Exists object: ".concat(entity.toString()));
+		}
+		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
+		if (notExistEqual != null) {
+			final Param[] params = notExistEqual.params();
+			// getting total records
+			final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
+				public Object doInJpa(final EntityManager entityManager)
+						throws PersistenceException {
+					final StringBuilder hql = new StringBuilder();
+					hql.append("select count(*) from ");
+					hql.append(entity.getClass().getSimpleName()).append(" obj where ");
+					final Map<String, Object> values = new HashMap<String, Object>();
+					for (Param param : params) {
+						hql.append("obj.").append(param.name()).append(" ").append(
+								param.operator().getValue()).append(" :").append(param.name());
+						try {
+							values.put(param.name(), PropertyUtils
+									.getProperty(entity, param.name()));
+						} catch (Exception e) {
+							LOG.error(e);
+						}
+					}
+					final Query query = entityManager.createQuery(hql.toString());
+					setParams(query, values);
+					return query.getSingleResult();
+				}
+			});
+			return size > 0;
+		}
+		return false;
 	}
 
 }

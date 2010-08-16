@@ -55,8 +55,10 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
+import org.vulpe.model.services.GenericService;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.OgnlContextState;
@@ -1515,6 +1517,10 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return true;
 	}
 
+	protected boolean validateExists() {
+		return getService(GenericService.class).exists(getEntity());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -1740,6 +1746,17 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @see org.vulpe.controller.VulpeSimpleController#validateEntity()
 	 */
 	public boolean validateEntity() {
+		if (validateExists()) {
+			final NotExistEqual notExistEqual = getEntity().getClass().getAnnotation(
+					NotExistEqual.class);
+			String message = "vulpe.error.entity.exists";
+			if (StringUtils.isNotEmpty(notExistEqual.message())) {
+				message = notExistEqual.message();
+			}
+			addActionError(getText(message));
+
+			return false;
+		}
 		return EntityValidator.validate(getEntity());
 	}
 

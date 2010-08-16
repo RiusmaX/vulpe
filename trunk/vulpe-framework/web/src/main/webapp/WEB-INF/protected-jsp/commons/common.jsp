@@ -179,8 +179,10 @@ $(document).ready(function() {
 		for (var i = 0; i < fields.length; i++) {
 			var field = jQuery(fields[i]);
 			var idField = field.attr("id");
-			var id = idField + "FieldRequired";
-			vulpe.util.get(idField + "_ErrorMessage").after("<span id='" + id + "' class='vulpeFieldRequired'>*</span>");
+			var idRequiredField = idField + "FieldRequired";
+			if (vulpe.util.get(idRequiredField).length == 0) {
+				vulpe.util.get(idField + "_ErrorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
+			}
 		}
 	}
 });
