@@ -2,8 +2,10 @@ package br.gov.pbh.sitra.core.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Action.Button;
+import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants;
@@ -54,12 +56,40 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 
 	@Override
 	public String select() {
-		if (getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO) == null) {
-			final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
-			String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
-			return redirectTo(url, isAjax());
+		final String redirecionar = validarSistemaSelecionado();
+		if (StringUtils.isNotEmpty(redirecionar)) {
+			return redirecionar;
 		}
 		return super.select();
 	}
 
+	@Override
+	public String create() {
+		final String redirecionar = validarSistemaSelecionado();
+		if (StringUtils.isNotEmpty(redirecionar)) {
+			return redirecionar;
+		}
+		return super.create();
+	}
+
+	@Override
+	public String update() {
+		final String redirecionar = validarSistemaSelecionado();
+		if (StringUtils.isNotEmpty(redirecionar)) {
+			return redirecionar;
+		}
+		return super.update();
+	}
+
+	private String validarSistemaSelecionado() {
+		if (getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO) == null) {
+			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
+				setAjax(true);
+			}
+			final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
+			String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
+			return redirectTo(url, isAjax());
+		}
+		return null;
+	}
 }

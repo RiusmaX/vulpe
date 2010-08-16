@@ -336,7 +336,6 @@ fieldset {
 h1 {
 	background: none;
 	display: block;
-	font-size: 12px;
 	height: 20px;
 	letter-spacing: 1px;
 	margin: 0px 0px 0px 0px;
@@ -478,7 +477,7 @@ tfoot th, .vulpeTableFooter {
 
 #header {
 	width: 100%;
-	height: 124px;
+	height: 99px;
 	top: 0;
 }
 
@@ -607,7 +606,6 @@ tfoot th, .vulpeTableFooter {
 	color: #d00;
 	background-color: #ddd;
 	display: block;
-	font-size: 30px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
@@ -616,7 +614,6 @@ tfoot th, .vulpeTableFooter {
 
 #error h2 {
 	display: block;
-	font-size: 20px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
