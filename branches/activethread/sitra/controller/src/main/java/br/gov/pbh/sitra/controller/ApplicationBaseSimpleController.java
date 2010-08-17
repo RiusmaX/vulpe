@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.beans.ValueBean;
-import org.vulpe.controller.struts.AbstractVulpeStrutsSimpleController;
+import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants;
@@ -16,7 +16,7 @@ import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ApplicationBaseSimpleController extends AbstractVulpeStrutsSimpleController {
+public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController {
 
 	protected static final Logger LOG = Logger.getLogger(ApplicationBaseSimpleController.class);
 
