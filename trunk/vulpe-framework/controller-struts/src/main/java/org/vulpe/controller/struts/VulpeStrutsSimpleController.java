@@ -17,26 +17,16 @@ package org.vulpe.controller.struts;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import ognl.OgnlException;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.struts.util.StrutsReportUtil;
-import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.exception.VulpeValidationException;
-import org.vulpe.model.entity.VulpeEntity;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -44,7 +34,6 @@ import com.opensymphony.xwork2.LocaleProvider;
 import com.opensymphony.xwork2.Validateable;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.ValidationAwareSupport;
-import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Action base for Struts2
@@ -53,38 +42,11 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked", "serial" })
-public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController
-		implements Action, Validateable, ValidationAware, LocaleProvider {
+@SuppressWarnings( { "unchecked", "serial" })
+public class VulpeStrutsSimpleController extends AbstractVulpeBaseSimpleController implements
+		Action, Validateable, ValidationAware, LocaleProvider {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeStrutsSimpleController.class);
-	/**
-	 *
-	 */
-	private final OgnlUtil ognlUtil = new OgnlUtil();
-
-	/**
-	 * Extension point to read report.
-	 *
-	 * @since 1.0
-	 */
-	protected DownloadInfo doReadReportLoad() {
-		try {
-			List<VulpeEntity<?>> list = (List<VulpeEntity<?>>) PropertyUtils.getProperty(
-					this, getControllerConfig().getReportDataSource());
-			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(),
-							getControllerConfig().getReportFormat(),
-							getControllerConfig().getReportName(),
-							getControllerConfig().isReportDownload()) : StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(),
-							getControllerConfig().getReportFormat());
-		} catch (Exception e) {
-			throw new VulpeSystemException(e);
-		}
-	}
+	protected static final Logger LOG = Logger.getLogger(VulpeStrutsSimpleController.class);
 
 	@SkipValidation
 	@ResetSession(before = true)
@@ -98,46 +60,6 @@ public abstract class AbstractVulpeStrutsSimpleController extends AbstractVulpeB
 	@Override
 	public String frontend() {
 		return super.frontend();
-	}
-
-	@SkipValidation
-	@Override
-	public String upload() {
-		return super.upload();
-	}
-
-	@SkipValidation
-	@Override
-	public String download() {
-		return super.download();
-	}
-
-	/**
-	 * Extension point to prepare download.
-	 *
-	 * @since 1.0
-	 */
-	@SuppressWarnings("static-access")
-	protected DownloadInfo prepareDownloadInfo() {
-		try {
-			Object value = null;
-			if (getFormParams() != null && getFormParams().containsKey(getDownloadKey())) {
-				final Object[] array = (Object[]) getFormParams().get(getDownloadKey());
-				value = array[1];
-			}
-			if (value == null) {
-				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
-						.getContextMap(), this);
-			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
-			if (downloadInfo != null) {
-				downloadInfo.setKey(getDownloadKey());
-			}
-			return downloadInfo;
-		} catch (OgnlException e) {
-			throw new VulpeSystemException(e);
-		}
 	}
 
 	@Override

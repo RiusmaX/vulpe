@@ -2,8 +2,13 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
 <script type="text/javascript">
 	jQuery(function($){
-		<c:if test="${upperCase && empty mask}">
-		vulpe.util.get('${elementId}').bestupper();
+		<c:if test="${empty mask}">
+		<c:if test="${upperCase}">
+		vulpe.util.get('${elementId}').upperCase();
+		</c:if>
+		<c:if test="${lowerCase}">
+		vulpe.util.get('${elementId}').lowerCase();
+		</c:if>
 		</c:if>
 		vulpe.util.get('${elementId}').focus(function() {
 			$(this).effect("highlight");

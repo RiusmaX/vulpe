@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
 <%@ attribute name="mask" required="false" rtexprvalue="true" %>
+<%@ attribute name="lowerCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="upperCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
 <%@ attribute name="readonly" required="false" rtexprvalue="true" %>

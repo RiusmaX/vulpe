@@ -17,13 +17,10 @@ package org.vulpe.controller.vraptor;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.util.ControllerUtil;
-import org.vulpe.exception.VulpeSystemException;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -38,11 +35,9 @@ import br.com.caelum.vraptor.core.RequestInfo;
  * @since 1.0
  */
 @SuppressWarnings( { "serial" })
-public abstract class AbstractVulpeVRaptorSimpleController extends
-		AbstractVulpeBaseSimpleController {
+public class VulpeVRaptorSimpleController extends AbstractVulpeBaseSimpleController {
 
-	protected static final Logger LOG = Logger
-			.getLogger(AbstractVulpeVRaptorSimpleController.class);
+	protected static final Logger LOG = Logger.getLogger(VulpeVRaptorSimpleController.class);
 
 	@Autowired
 	protected RequestInfo requestInfo;
@@ -62,64 +57,6 @@ public abstract class AbstractVulpeVRaptorSimpleController extends
 
 	public ControllerUtil getControllerUtil() {
 		return ControllerUtil.getInstance(getRequest());
-	}
-
-	/**
-	 * Extension point to read report.
-	 *
-	 * @since 1.0
-	 */
-	protected DownloadInfo doReadReportLoad() {
-		try {
-			// List<VulpeEntity<?>> list = (List<VulpeEntity<?>>)
-			// PropertyUtils.getProperty(
-			// this, getActionConfig().getReportDataSource());
-			// return StringUtils.isNotBlank(getActionConfig().getReportName())
-			// ? StrutsReportUtil
-			// .getInstance()
-			// .getDownloadInfo(list, getActionConfig().getReportFile(),
-			// getActionConfig().getSubReports(),
-			// getActionConfig().getReportFormat(),
-			// getActionConfig().getReportName(),
-			// getActionConfig().isReportDownload())
-			// : StrutsReportUtil.getInstance().getDownloadInfo(list,
-			// getActionConfig().getReportFile(),
-			// getActionConfig().getSubReports(),
-			// getActionConfig().getReportFormat());
-			return null;
-		} catch (Exception e) {
-			throw new VulpeSystemException(e);
-		}
-	}
-
-	/**
-	 * Extension point to prepare download.
-	 *
-	 * @since 1.0
-	 */
-	protected DownloadInfo prepareDownloadInfo() {
-		try {
-			Object value = null;
-			// if (getFormParams() != null &&
-			// getFormParams().containsKey(getDownloadKey())) {
-			// final Object[] array = (Object[])
-			// getFormParams().get(getDownloadKey());
-			// value = array[1];
-			// }
-			if (value == null) {
-				// value = ognlUtil.getValue(getDownloadKey(),
-				// ActionContext.getContext()
-				// .getContextMap(), this);
-			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
-			if (downloadInfo != null) {
-				downloadInfo.setKey(getDownloadKey());
-			}
-			return downloadInfo;
-		} catch (Exception e) {
-			throw new VulpeSystemException(e);
-		}
 	}
 
 	public void addActionMessage(final String message) {

@@ -35,7 +35,6 @@ import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.View.Layout;
-import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -96,13 +95,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
 		// now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
 	}
-
-	/**
-	 * Extension point to read report.
-	 *
-	 * @since 1.0
-	 */
-	protected abstract DownloadInfo doReadReportLoad();
 
 	/*
 	 * (non-Javadoc)
@@ -178,93 +170,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	protected void frontendAfter() {
 		LOG.debug("frontendAfter");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#upload()
-	 */
-	public String upload() {
-		uploadBefore();
-		onUpload();
-		uploadAfter();
-		return Forward.UPLOAD;
-	}
-
-	/**
-	 * Extension point to upload.
-	 *
-	 * @since 1.0
-	 */
-	protected void onUpload() {
-		setUploaded(true);
-	}
-
-	/**
-	 * Extension point to code before upload.
-	 *
-	 * @since 1.0
-	 */
-	protected void uploadAfter() {
-		LOG.debug("uploadAfter");
-	}
-
-	/**
-	 * Extension point to code after upload.
-	 *
-	 * @since 1.0
-	 */
-	protected void uploadBefore() {
-		LOG.debug("uploadBefore");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#download()
-	 */
-	public String download() {
-		downloadBefore();
-		onDownload();
-
-		downloadAfter();
-		return Forward.DOWNLOAD;
-	}
-
-	/**
-	 * Extension point to download.
-	 *
-	 * @since 1.0
-	 */
-	protected void onDownload() {
-		final DownloadInfo downloadInfo = prepareDownloadInfo();
-		setDownloadInfo(downloadInfo);
-	}
-
-	/**
-	 * Extension point to prepare download.
-	 *
-	 * @since 1.0
-	 */
-	protected abstract DownloadInfo prepareDownloadInfo();
-
-	/**
-	 * Extension point to code before download.
-	 *
-	 * @since 1.0
-	 */
-	protected void downloadAfter() {
-		LOG.debug("downloadAfter");
-	}
-
-	/**
-	 * Extension point to code after download.
-	 *
-	 * @since 1.0
-	 */
-	protected void downloadBefore() {
-		LOG.debug("downloadBefore");
 	}
 
 	/*
@@ -355,27 +260,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		addActionMessage(getText(key));
 	}
 
-	/**
-	 * Method to retrieve download info.
-	 *
-	 * @since 1.0
-	 * @return DownlodInfo object.
-	 */
-	public DownloadInfo getDownloadInfo() {
-		return downloadInfo;
-	}
-
-	/**
-	 * Set download info.
-	 *
-	 * @param downloadInfo
-	 *            Download Info.
-	 *
-	 * @since 1.0
-	 */
-	public void setDownloadInfo(final DownloadInfo downloadInfo) {
-		this.downloadInfo = downloadInfo;
-	}
 
 	public String getTextArg(final String key, final String arg) {
 		return getText(key, getText(arg));
@@ -395,7 +279,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return getText(key, getText(arg1), getText(arg2), getText(arg3), getText(arg4));
 	}
 
-	private boolean uploaded;
 	/**
 	 * URL Redirect.
 	 */
@@ -424,22 +307,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 *
 	 */
 	private String onHideMessages;
-	/**
-	 *
-	 */
-	private String downloadKey;
-	/**
-	 * Download content type.
-	 */
-	private String downloadContentType;
-	/**
-	 *
-	 */
-	private String downloadContentDisposition;
-	/**
-	 * Download information.
-	 */
-	private DownloadInfo downloadInfo;
+
 
 	/*
 	 * (non-Javadoc)
@@ -506,23 +374,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		this.operation = operation;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#isUploaded()
-	 */
-	public boolean isUploaded() {
-		return uploaded;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#setUploaded(boolean)
-	 */
-	public void setUploaded(final boolean uploaded) {
-		this.uploaded = uploaded;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -579,65 +430,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		this.executed = executed;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadKey()
-	 */
-	public String getDownloadKey() {
-		return downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadKey(java.lang
-	 * .String)
-	 */
-	public void setDownloadKey(final String downloadKey) {
-		this.downloadKey = downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadContentType()
-	 */
-	public String getDownloadContentType() {
-		return downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadContentType
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentType(final String downloadContentType) {
-		this.downloadContentType = downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#getDownloadContentDisposition
-	 * ()
-	 */
-	public String getDownloadContentDisposition() {
-		return downloadContentDisposition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setDownloadContentDisposition
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentDisposition(final String downloadContentDisposition) {
-		this.downloadContentDisposition = downloadContentDisposition;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -954,6 +746,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	protected String redirectTo(final String url) {
 		return redirectTo(url, isAjax());
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 }

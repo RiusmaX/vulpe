@@ -20,7 +20,7 @@
 		</c:when>
 	</c:choose></font></p>
 </c:if> <v:text elementId="j_username" name="j_username" targetName=""
-	labelKey="label.vulpe.security.login.username"
+	labelKey="label.vulpe.security.login.username" lowerCase="true"
 	value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" /> <v:password
 	elementId="j_password" name="j_password" targetName=""
 	labelKey="label.vulpe.security.login.password" />

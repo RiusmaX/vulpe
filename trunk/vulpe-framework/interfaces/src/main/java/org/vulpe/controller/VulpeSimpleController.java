@@ -132,21 +132,6 @@ public interface VulpeSimpleController extends Serializable {
 	 */
 	String frontend();
 
-	/**
-	 * Method to download file.
-	 *
-	 * @since 1.0
-	 * @return Navigation.
-	 */
-	String download();
-
-	/**
-	 * Method to upload file.
-	 *
-	 * @since 1.0
-	 * @return Navigation.
-	 */
-	String upload();
 
 	boolean isAjax();
 
@@ -155,10 +140,6 @@ public interface VulpeSimpleController extends Serializable {
 	String getOperation();
 
 	void setOperation(final String operation);
-
-	boolean isUploaded();
-
-	void setUploaded(final boolean uploaded);
 
 	String getOnHideMessages();
 
@@ -171,18 +152,6 @@ public interface VulpeSimpleController extends Serializable {
 	boolean isExecuted();
 
 	void setExecuted(final boolean executed);
-
-	String getDownloadKey();
-
-	void setDownloadKey(final String downloadKey);
-
-	String getDownloadContentType();
-
-	void setDownloadContentType(final String downloadContentType);
-
-	String getDownloadContentDisposition();
-
-	void setDownloadContentDisposition(final String downloadContentDisposition);
 
 	String getPopupKey();
 

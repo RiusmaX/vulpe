@@ -21,6 +21,11 @@
 			<artifactId>vulpe-commons</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-model</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<description>Vulpe Framework ;) Quick and Smart - Controller</description>

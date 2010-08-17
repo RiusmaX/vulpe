@@ -10,7 +10,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.controller.vraptor.AbstractVulpeVRaptorSimpleController;
+import org.vulpe.controller.vraptor.VulpeVRaptorSimpleController;
 
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Result;
@@ -43,8 +43,8 @@ public class VulpeControllerInterceptor implements Interceptor {
 			throws InterceptionException {
 		LOG.debug("Intercepting " + request.getRequestURI());
 		if (resourceInstance != null
-				&& resourceInstance instanceof AbstractVulpeVRaptorSimpleController) {
-			AbstractVulpeVRaptorSimpleController controller = (AbstractVulpeVRaptorSimpleController) resourceInstance;
+				&& resourceInstance instanceof VulpeVRaptorSimpleController) {
+			VulpeVRaptorSimpleController controller = (VulpeVRaptorSimpleController) resourceInstance;
 			List<Field> fields = VulpeReflectUtil.getInstance().getFields(controller.getClass());
 			for (Field field : fields) {
 				try {

@@ -1,5 +1,5 @@
 (function($) {
-		
+
 /*
  *
  * Copyright (c) 2007 Tulio Faria (http://www.tuliofaria.net - http://www.iwtech.com.br)
@@ -12,27 +12,27 @@
  * $LastChangedDate$
  * $Rev$
  */
-	$.fn.floatnumber = function(separator,precision) {	
+	$.fn.floatnumber = function(separator,precision) {
 		return this.each(function() {
 			var input = $(this);
-			var valid = false;   
+			var valid = false;
 
 			function blur(){
 				var re = new RegExp(",", "g");
 				s = input.val();
 				s = s.replace(re, ".");
-				
+
 				if (s == "")
 				    s = "0";
-				
+
 				if (!isNaN(s)){
 					n = parseFloat(s);
-					
+
 					s = n.toFixed(precision);
-					
+
 					re2 = new RegExp("\\.", "g");
 					s = s.replace(re2, separator);
-					
+
 					input.val(s);
 				}
 			}
@@ -65,20 +65,20 @@
 				//value = value.replace("+", "");
 				//value = value.replace("*", "");
 				tam = value.length;
-				
-				if (tam < max && key != 8) { 
-					tam = value.length + 1; 
+
+				if (tam < max && key != 8) {
+					tam = value.length + 1;
 				}
-				
-				if (key == 8) { 
-					tam = tam - 1; 
+
+				if (key == 8) {
+					tam = tam - 1;
 				}
-				 
-				if (tam <= 2) { 
-					input.val(value) ; 
+
+				if (tam <= 2) {
+					input.val(value) ;
 				}
 				if ((tam > 2) && (tam <= 5)) {
-					input.val(value.substr(0, tam - 2) + ',' + value.substr(tam - 2, tam)) ; 
+					input.val(value.substr(0, tam - 2) + ',' + value.substr(tam - 2, tam)) ;
 				}
 				if ((tam >= 6) && (tam <= 8)) {
 					input.val(value.substr(0, tam - 5) + '.' + value.substr(tam - 5, 3) + ',' + value.substr(tam - 2, tam)) ;
@@ -135,21 +135,21 @@
 			input.bind("blur", blur);
 		})
 	};
-	
-	
+
+
 /*
  *
  * Copyright (c) 2006/2007 Sam Collett (http://www.texotela.co.uk)
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Version 1.0
  * Demo: http://www.texotela.co.uk/code/jquery/numeric/
  *
  * $LastChangedDate$
  * $Rev$
  */
- 
+
 /*
  * Allows only valid characters to be entered into input boxes.
  * Note: does not validate that the final text is a valid number
@@ -164,7 +164,7 @@
  * @example  $(".numeric").numeric(null, callback);
  *
  */
-	
+
 	$.fn.numeric = function(decimal, callback) {
 		decimal = decimal || ".";
 		callback = typeof callback == "function" ? callback : function(){};
@@ -264,7 +264,7 @@
 		);
 		return this;
 	};
-	
+
 /**
 * Vinter.validate()
 * Version 1.6
@@ -272,7 +272,7 @@
 *
 *	Vinter.validate is (c) 2008 Lars Huring, Olov Nilzén and Vinter (www.vinterwebb.se) and is released under the MIT License:
 *	http://www.opensource.org/licenses/mit-license.php
-* 
+*
 * Changelog:
 * 1.1:
 * - Added checkbox validation
@@ -308,7 +308,7 @@
 */
 	$.validate = function(options)
 	{
-		
+
 		// Set up some options
 		options = options || {};
 		options.fieldset = options.fieldset || "";
@@ -321,27 +321,27 @@
 		options.selectboxdefault = options.selectboxdefault || [""];
 		options.selectboxdefaultclass = options.selectboxdefaultclass || "defaultval";
 		options.usedefault = options.usedefault || false;
-		
+
 	    var errors = new Array();
 		$(options.messagecontainer).empty();
-		
+
 		$("." + options.notvalidclass).each(function(i, item) {
 			$(item).removeClass(options.notvalidclass);
 		});
-		
-		function isEmail(str) 
+
+		function isEmail(str)
 	    {
 		    var regex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
 		    return regex.test(str);
 	    }
-	    
-	    function isNumber(str) 
+
+	    function isNumber(str)
 	    {
 		    var regex = /^[0-9-]*$/;
 		    return regex.test(str);
 	    }
-	    
-	    function isEmpty(item) 
+
+	    function isEmpty(item)
 	    {
 		    if (item.value == "")
 		        return true;
@@ -351,33 +351,33 @@
 
             return false;
 	    }
-		
+
 		function getMsg(item)
 		{
 			return $(item.parentNode).find(options.errormsg).html();
 		}
-		
+
 		function validateTextBox(item)
 		{
 			if (isEmpty(item) == true || ($(item).hasClass("email") && isEmail(item.value) == false))
 				errors.push({id: item.id, msg: getMsg(item), type: "text"});
-				
+
 			if (isEmpty(item) == false && $(item).hasClass("number") && isNumber(item.value) == false)
 				errors.push({id: item.id, msg: getMsg(item), type: "number"});
 		}
-		
+
 		function validateCheckbox(item)
 		{
 			if(item.checked != true)
 				errors.push({id: item.id, msg: getMsg(item), type: "checkbox"});
 		}
-		
+
 		function validateSelect(item)
-		{	
+		{
 			if ($.inArray(item.value, options.selectboxdefault) > -1 || item[item.selectedIndex].className == options.selectboxdefaultclass)
 				errors.push({id: item.id, msg: getMsg(item), type: "select-one"});
 		}
-		
+
 		// Loop
 		$(options.fieldset + " .required").each(function(i, item) {
 
@@ -387,43 +387,43 @@
 				case "checkbox":
 					validateCheckbox(item);
 					break;
-					
+
 				case "text":
 				case "file":
 				case "textarea":
 					validateTextBox(item);
 					break;
-				
+
 				case "select-one":
 					validateSelect(item);
 			}
-			
+
 		});
-		
+
 		/*
 		* Validate checkbox groups
 		*/
 		$(options.fieldset + " .checkboxgroup," + options.fieldset + " .radiogroup").each(function(i, item) {
-			
+
 			var checked = 0;
 			var msg = $(item).find(options.errormsg).text();
-			
+
 			$(item).find("input[type=checkbox], input[type=radio]").each(function(i, item) {
 				if (item.checked)
 					checked++;
 			});
-			
+
 			if(checked == 0)
 				errors.push({id: item.id, msg: msg, type: "group"});
-			
+
 		});
-		
+
 		/*
 		* Check errors length and output to page.
-		*/	
+		*/
 		if (errors.length > 0)
 		{
-			
+
 			// Onerror returns errors array to callback
 			if (typeof(options.onerror) == "function")
 			{
@@ -432,31 +432,31 @@
 			}
 
 			$(options.messagecontainer).fadeIn("slow");
-			
+
 			$("<h4/>")
 				.text(options.messageheader)
 				.appendTo($(options.messagecontainer));
-			
+
 			var ul = $("<ul/>");
-			
+
 			$(errors).each(function(i, item) {
-				
+
 				$("#" + item.id).addClass(options.notvalidclass);
 				$("<li />").html(item.msg).attr("id", options.erroridprefix + item.id).appendTo(ul);
-				
+
 			});
-			
+
 			ul.appendTo($(options.messagecontainer));
-			
+
 			return false;
 		}
-		
+
 		// Hide if there are no errors
 		$(options.messagecontainer).fadeOut();
 		return true;
-	
+
 	};
-	
+
 	/**
 	* @Copyright (c) 2008 Aurélio Saraiva (aureliosaraiva@gmail.com)
 	* @Page http://inovaideia.com.br/maskInputMoney
@@ -604,11 +604,94 @@
 		return this.trigger("unmaskMoney");
 	};
 
-	/* Copyright (c) 2009 Mustafa OZCAN (http://www.mustafaozcan.net)
-	* Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
-	* and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
-	* Version: 1.0
-	* Requires: jquery.1.2.6+
-	*/
-	$.fn.bestupper = function(settings) { var defaults = { ln: 'en', clear: true }, settings = $.extend({}, defaults, settings); this.each(function() { var $this = $(this); if ($this.is('textarea') || $this.is('input:text')) { $this.keypress(function(e) { var pressedKey = e.charCode == undefined ? e.keyCode : e.charCode; var str = String.fromCharCode(pressedKey); if (pressedKey < 97 || pressedKey > 122) { if (settings.ln == 'en' || !isTRChar(pressedKey)) return; } if (settings.ln == 'tr' && pressedKey == 105) str = '\u0130'; if (this.createTextRange) { window.event.keyCode = str.toUpperCase().charCodeAt(0); return; } else { var startpos = this.selectionStart; var endpos = this.selectionEnd; this.value = this.value.substr(0, startpos) + str.toUpperCase() + this.value.substr(endpos); this.setSelectionRange(startpos + 1, startpos + 1); return false; } }); if (settings.clear) { $this.blur(function(e) { if (settings.ln == 'tr') this.value = this.value.replace(/i/g, "\u0130"); this.value = this.value.replace(/^\s+|\s+$/g, "").replace(/\s{2,}/g, " ").toUpperCase(); }); } } }); }; function isTRChar(key) { var trchar = [231, 246, 252, 287, 305, 351]; for (var i = 0; i < trchar.length; i++) { if (trchar[i] == key) return true; } return false; };
+	$.fn.upperCase = function(settings) {
+		var defaults = {
+			ln : 'en',
+			clear : true
+		}, settings = $.extend( {}, defaults, settings);
+		this.each(function() {
+			var $this = $(this);
+			if ($this.is('textarea') || $this.is('input:text')) {
+				$this.keypress(function(e) {
+					var pressedKey = e.charCode == undefined ? e.keyCode : e.charCode;
+					var str = String.fromCharCode(pressedKey);
+					if (pressedKey < 97 || (pressedKey > 122 && (pressedKey < 128 && pressedKey > 165))) {
+						if (settings.ln == 'en' || !isTRChar(pressedKey))
+							return;
+					}
+					if (settings.ln == 'tr' && pressedKey == 105)
+						str = '\u0130';
+					if (this.createTextRange) {
+						window.event.keyCode = str.toUpperCase().charCodeAt(0);
+						return;
+					} else {
+						var startpos = this.selectionStart;
+						var endpos = this.selectionEnd;
+						this.value = this.value.substr(0, startpos) + str.toUpperCase()
+								+ this.value.substr(endpos);
+						this.setSelectionRange(startpos + 1, startpos + 1);
+						return false;
+					}
+				});
+				if (settings.clear) {
+					$this.blur(function(e) {
+						if (settings.ln == 'tr')
+							this.value = this.value.replace(/i/g, "\u0130");
+						this.value = this.value.replace(/^\s+|\s+$/g, "").replace(/\s{2,}/g, " ")
+								.toUpperCase();
+					});
+				}
+			}
+		});
+	};
+	function isTRChar(key) {
+		var trchar = [ 231, 246, 252, 287, 305, 351 ];
+		for ( var i = 0; i < trchar.length; i++) {
+			if (trchar[i] == key)
+				return true;
+		}
+		return false;
+	};
+
+	$.fn.lowerCase = function(settings) {
+		var defaults = {
+			ln : 'en',
+			clear : true
+		}, settings = $.extend( {}, defaults, settings);
+		this.each(function() {
+			var $this = $(this);
+			if ($this.is('textarea') || $this.is('input:text')) {
+				$this.keypress(function(e) {
+					var pressedKey = e.charCode == undefined ? e.keyCode : e.charCode;
+					var str = String.fromCharCode(pressedKey);
+					if (pressedKey < 64 || (pressedKey > 90 && (pressedKey < 128 && pressedKey > 165))) {
+						if (settings.ln == 'en' || !isTRChar(pressedKey))
+							return;
+					}
+					if (settings.ln == 'tr' && pressedKey == 105)
+						str = '\u0130';
+					if (this.createTextRange) {
+						window.event.keyCode = str.toLowerCase().charCodeAt(0);
+						return;
+					} else {
+						var startpos = this.selectionStart;
+						var endpos = this.selectionEnd;
+						this.value = this.value.substr(0, startpos) + str.toLowerCase()
+								+ this.value.substr(endpos);
+						this.setSelectionRange(startpos + 1, startpos + 1);
+						return false;
+					}
+				});
+				if (settings.clear) {
+					$this.blur(function(e) {
+						if (settings.ln == 'tr') {
+							this.value = this.value.replace(/i/g, "\u0130");
+						}
+						this.value = this.value.replace(/^\s+|\s+$/g, "").replace(/\s{2,}/g, " ")
+								.toLowerCase();
+					});
+				}
+			}
+		});
+	};
 })(jQuery);

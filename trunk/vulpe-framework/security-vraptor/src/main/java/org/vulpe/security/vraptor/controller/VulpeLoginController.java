@@ -18,7 +18,7 @@ package org.vulpe.security.vraptor.controller;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.controller.vraptor.AbstractVulpeVRaptorSimpleController;
+import org.vulpe.controller.vraptor.VulpeVRaptorSimpleController;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Resource;
@@ -27,7 +27,7 @@ import br.com.caelum.vraptor.Resource;
 @Path("/authenticator")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.OTHER)
-public class VulpeLoginController extends AbstractVulpeVRaptorSimpleController {
+public class VulpeLoginController extends VulpeVRaptorSimpleController {
 
 	private Integer loginError;
 

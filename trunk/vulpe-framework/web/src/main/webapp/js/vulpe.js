@@ -59,6 +59,7 @@ var vulpe = {
 				validate: {
 					date:'vulpe.error.validate.date',
 					double:'vulpe.error.validate.double',
+					email:'vulpe.error.validate.email',
 					float:'vulpe.error.validate.float',
 					floatRange:'vulpe.error.validate.float.range',
 					integer:'vulpe.error.validate.integer',

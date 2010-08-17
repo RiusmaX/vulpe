@@ -21,13 +21,13 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.controller.struts.AbstractVulpeStrutsSimpleController;
+import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.authenticator")
 @SuppressWarnings("serial")
 @Controller(controllerType = ControllerType.OTHER)
-public class VulpeLoginController extends AbstractVulpeStrutsSimpleController {
+public class VulpeLoginController extends VulpeStrutsSimpleController {
 
 	private Integer loginError;
 

@@ -15,6 +15,8 @@
  */
 package org.vulpe.controller;
 
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+
 /**
  * Controller Interface.
  *
@@ -108,6 +110,12 @@ public interface VulpeController extends VulpeSimpleController {
 
 	void buttonControl(final String button, final boolean show);
 
+	void showButton(final String button);
+
+	void showButtons(final String... buttons);
+
+	void showButtons(final ControllerType controllerType, final String... buttons);
+
 	void hideButton(final String button);
 
 	void hideButtons(final String... buttons);
@@ -140,4 +148,37 @@ public interface VulpeController extends VulpeSimpleController {
 	String tabular();
 
 	String tabularFilter();
+
+	boolean isUploaded();
+
+	void setUploaded(final boolean uploaded);
+
+	String getDownloadKey();
+
+	void setDownloadKey(final String downloadKey);
+
+	String getDownloadContentType();
+
+	void setDownloadContentType(final String downloadContentType);
+
+	String getDownloadContentDisposition();
+
+	void setDownloadContentDisposition(final String downloadContentDisposition);
+
+
+	/**
+	 * Method to download file.
+	 *
+	 * @since 1.0
+	 * @return Navigation.
+	 */
+	String download();
+
+	/**
+	 * Method to upload file.
+	 *
+	 * @since 1.0
+	 * @return Navigation.
+	 */
+	String upload();
 }
