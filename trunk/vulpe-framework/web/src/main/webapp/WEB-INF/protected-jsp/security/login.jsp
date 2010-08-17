@@ -30,17 +30,10 @@
 </form>
 <script type="text/javascript">
 	$(document).ready(function() {
-		<c:choose>
-		<c:when test="${not empty vulpeLogoutExecuted && vulpeLogoutExecuted}">
-		vulpe.config.authenticator.url.redirect = "${fn:replace(SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl, '/ajax', '')}";
-		</c:when>
-		<c:otherwise>
 		vulpe.config.authenticator.url.redirect = "${SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl}";
 		if (vulpe.config.authenticator.url.redirect == "") {
 			vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
 		}
-		</c:otherwise>
-		</c:choose>
 		vulpe.util.get('j_username').focus(function() {
 			$(this).effect("highlight");
 		});

@@ -40,6 +40,14 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 			AuthenticationException authException) throws IOException, ServletException {
 		setLoginFormUrl(URI.AUTHENTICATOR
 				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
+		super.commence(request, response, authException);
+	}
+
+	/**
+	 *
+	 * @param request
+	 */
+	public void changeSavedRequest(final HttpServletRequest request) {
 		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
 				.getAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY);
 		if (savedRequest != null && !savedRequest.getRequestURI().contains(URI.AUTHENTICATOR)) {
@@ -47,11 +55,9 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 			if (!requestURI.endsWith(URI.AJAX)) {
 				requestURI += URI.AJAX;
 			}
-			VulpeReflectUtil.getInstance()
-					.setFieldValue(savedRequest, "requestURI", requestURI);
+			VulpeReflectUtil.getInstance().setFieldValue(savedRequest, "requestURI", requestURI);
 			request.getSession().setAttribute(
 					DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
 		}
-		super.commence(request, response, authException);
 	}
 }
