@@ -3,6 +3,7 @@
 <v:hidden property="id" />
 <c:choose>
 <c:when test="${not empty entity.id}">
+<v:hidden property="username" />
 <v:show property="username" labelKey="label.vulpe.security.User.crud.username" paragraph="true" />
 </c:when>
 <c:otherwise>

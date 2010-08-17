@@ -135,6 +135,12 @@ var vulpe = {
 			return prefix;
 		},
 
+		getDetailByElementId: function(id) {
+			var detail = id.substring(0, id.indexOf(":"));
+			detail = detail.substring(detail.lastIndexOf(".") + 1, detail.length);
+			return detail;
+		},
+
 		getIndexOfElement: function(element) {
 			var id = element.id.substring(0, element.id.lastIndexOf(":"));
 			var index = id.substring(id.lastIndexOf(":") + 1, id.length);
@@ -766,12 +772,19 @@ var vulpe = {
 				parent = "#" + vulpe.util.getLastVulpePopup();
 			}
 			var fields = jQuery("[class*='vulpeRequired']", parent);
+			var invalidCount = 0;
 			if (fields && fields.length > 0) {
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
 					var idField = field.attr("id");
 					if (!vulpe.validate.validateRequired({field: field})) {
+						if (invalidCount == 0 && idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(":") != -1) {
+							var detail = "#vulpeDetail_" + vulpe.util.getDetailByElementId(idField);
+							$("a[href='" + detail + "']").click();
+							vulpe.util.focusFirst(detail);
+						}
 						valid = false;
+						invalidCount++;
 					}
 					if (valid) {
 						if (!vulpe.validate.validateAttribute(field)) {

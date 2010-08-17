@@ -599,7 +599,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					}
 				}
 			}
-			if ((Action.CREATE.equals(method) || Action.PREPARE.equals(method))
+			if ((Action.CREATE.equals(method) || Action.DELETE.equals(method) || Action.PREPARE
+					.equals(method))
 					|| ((Action.CREATE.equals(getOperation()) || Action.CREATE_POST
 							.equals(getOperation())) && Action.ADD_DETAIL.equals(method))) {
 				showButtons(Button.PREPARE, Button.CREATE_POST, Button.CLEAR);
@@ -1044,7 +1045,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		onUpdate();
 		setSelectedTab(0);
 		showButtons(Action.UPDATE);
-
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.TWICE)) {
 			setBodyTwice(ControllerType.CRUD);
@@ -1052,7 +1052,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			controlResultForward();
 		}
-
 		updateAfter();
 		return getResultName();
 	}
@@ -1130,7 +1129,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (onUpdatePost()) {
 			addActionMessage(getText("vulpe.msg.update.post"));
 		}
-
 		setResultName(Forward.SUCCESS);
 		if (getEntity().getClass().isAnnotationPresent(CachedClass.class)) {
 			final String entityName = getEntity().getClass().getSimpleName();
@@ -1177,9 +1175,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected boolean onUpdatePost() {
 		despiseDetails();
-
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
-
 		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
 				.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
 				.getEntityClass() }, new Object[] { entity });
@@ -1221,10 +1217,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (onDelete()) {
 			addActionMessage(getText("vulpe.msg.delete"));
 		}
-
 		setResultName(Forward.SUCCESS);
 		deleteAfter();
-		if (getControllerType().equals(ControllerType.TWICE) && getEntity().getId() != null) {
+		if (getControllerType().equals(ControllerType.CRUD)) {
+			setEntity(null);
+			controlResultForward();
+			return getResultName();
+		} else if (getControllerType().equals(ControllerType.TWICE) && getEntity().getId() != null) {
 			setEntity(null);
 			onRead();
 			controlResultForward();
