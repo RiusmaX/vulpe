@@ -33,6 +33,10 @@ public @interface Cardinality {
 
 	String custom() default "";
 
+	int minimum() default 0;
+
+	int maximum() default 0;
+
 	enum CardinalityType {
 		ZERO, ZERO_OR_MORE, ONE, ONE_OR_MORE;
 		public String getValue() {
