@@ -23,11 +23,10 @@ import javax.persistence.Table;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.Param;
-import org.vulpe.model.annotations.Query;
-import org.vulpe.model.annotations.QueryComplementation;
-import org.vulpe.model.annotations.QueryReplacement;
+import org.vulpe.model.annotations.QueryComplement;
+import org.vulpe.model.annotations.QueryConfiguration;
+import org.vulpe.model.annotations.QueryReplace;
 import org.vulpe.model.annotations.Relationship;
-import org.vulpe.model.annotations.Relationships;
 import org.vulpe.model.annotations.Param.OperatorType;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -38,13 +37,13 @@ import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@Query(
-	complementation = @QueryComplementation(distinct = true),
-	replacement = @QueryReplacement(select = "new Objeto(obj.id, obj.descricao, obj.origem, obj.destino, obj.usuario, obj.data)")
+@QueryConfiguration(
+	complement = @QueryComplement(distinct = true),
+	replace = @QueryReplace(select = "new Objeto(obj.id, obj.descricao, obj.origem, obj.destino, obj.usuario, obj.data)"),
+	relationships = {
+		@Relationship(target = ObjetoItem.class, property = "objetoItens", attributes = { "id", "tipoObjeto", "nomeObjeto", "status" })
+	}
 )
-@Relationships({
-	@Relationship(target = ObjetoItem.class, property = "objetoItens", attributes = { "id", "tipoObjeto", "nomeObjeto", "status" })
-})
 @Entity
 @Table(name = "TRANSFERENCIA_OBJ")
 @SuppressWarnings("serial")

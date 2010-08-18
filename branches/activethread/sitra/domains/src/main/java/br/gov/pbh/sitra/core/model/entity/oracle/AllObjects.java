@@ -7,12 +7,12 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.OrderBy;
-import org.vulpe.model.annotations.Query;
-import org.vulpe.model.annotations.QueryReplacement;
+import org.vulpe.model.annotations.QueryConfiguration;
+import org.vulpe.model.annotations.QueryReplace;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
-@Query(
-	replacement = @QueryReplacement(select = "new AllObjects(obj.name)")
+@QueryConfiguration(
+	replace = @QueryReplace(select = "new AllObjects(obj.name)")
 )
 @Table(name = "ALL_OBJECTS")
 @Entity
