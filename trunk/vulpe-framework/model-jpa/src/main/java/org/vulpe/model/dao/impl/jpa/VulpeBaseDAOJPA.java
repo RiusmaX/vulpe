@@ -46,8 +46,8 @@ import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.Relationship;
-import org.vulpe.model.annotations.Relationships;
 import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.VulpeLogicEntity;
@@ -299,46 +299,47 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
-		final org.vulpe.model.annotations.Query query = entity.getClass().getAnnotation(
-				org.vulpe.model.annotations.Query.class);
-		final boolean complementation = query != null && query.complementation() != null;
-		final boolean replacement = query != null && query.replacement() != null;
+		final QueryConfiguration queryConfiguration = entity.getClass().getAnnotation(
+				QueryConfiguration.class);
+		final boolean complement = queryConfiguration != null
+				&& queryConfiguration.complement() != null;
+		final boolean replace = queryConfiguration != null && queryConfiguration.replace() != null;
 		if (namedQuery == null) {
 			hql.append("select ");
-			if (complementation && query.complementation().distinct()) {
+			if (complement && queryConfiguration.complement().distinct()) {
 				hql.append("distinct ");
 			}
-			if (replacement && StringUtils.isNotEmpty(query.replacement().select())) {
-				hql.append(query.replacement().select());
+			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().select())) {
+				hql.append(queryConfiguration.replace().select());
 			} else {
 				hql.append("obj");
 				if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
 					hql.append(".id, obj.").append(entity.getAutoComplete());
 				}
-				if (complementation && StringUtils.isNotEmpty(query.complementation().select())) {
+				if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
 					hql.append(", ");
-					hql.append(query.complementation().select());
+					hql.append(queryConfiguration.complement().select());
 				}
 			}
 			hql.append(" from ");
-			if (replacement && StringUtils.isNotEmpty(query.replacement().from())) {
-				hql.append(query.replacement().from());
+			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().from())) {
+				hql.append(queryConfiguration.replace().from());
 			} else {
 				hql.append(entity.getClass().getSimpleName());
 				hql.append(" obj ");
 			}
-			if (replacement && StringUtils.isNotEmpty(query.replacement().join())) {
-				hql.append(query.replacement().join());
-			} else if (complementation && StringUtils.isNotEmpty(query.complementation().join())) {
-				hql.append(query.complementation().join());
+			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().join())) {
+				hql.append(queryConfiguration.replace().join());
+			} else if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().join())) {
+				hql.append(queryConfiguration.complement().join());
 			}
 		} else {
 			hql.append(namedQuery.query());
 		}
 
-		if (replacement && StringUtils.isNotEmpty(query.replacement().where())) {
+		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().where())) {
 			hql.append(" where ");
-			hql.append(query.replacement().where());
+			hql.append(queryConfiguration.replace().where());
 		} else {
 			if (!params.isEmpty()) {
 				if (!hql.toString().toLowerCase().contains("where")) {
@@ -392,19 +393,19 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(" obj.status <> :status");
 				params.put("status", Status.D);
 			}
-			if (complementation && StringUtils.isNotEmpty(query.complementation().where())) {
+			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().where())) {
 				if (!hql.toString().toLowerCase().contains("where")) {
 					hql.append(" where ");
 				} else {
 					hql.append(" and ");
 				}
-				hql.append(query.complementation().where());
+				hql.append(queryConfiguration.complement().where());
 			}
 		}
 		// add order by
-		if (replacement && StringUtils.isNotEmpty(query.replacement().orderBy())) {
+		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().orderBy())) {
 			hql.append(" order by");
-			hql.append(query.replacement().orderBy());
+			hql.append(queryConfiguration.replace().orderBy());
 		} else {
 			if (StringUtils.isNotEmpty(entity.getOrderBy())
 					|| StringUtils.isNotEmpty(order.toString())) {
@@ -417,13 +418,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
 						.getOrderBy());
 			}
-			if (complementation && StringUtils.isNotEmpty(query.complementation().orderBy())) {
+			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().orderBy())) {
 				if (!hql.toString().toLowerCase().contains("order by")) {
 					hql.append(" order by ");
 				} else {
 					hql.append(", ");
 				}
-				hql.append(query.complementation().orderBy());
+				hql.append(queryConfiguration.complement().orderBy());
 			}
 		}
 		return hql.toString();
@@ -519,13 +520,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 * @param entityManager
 	 */
 	protected void loadRelationships(final List<ENTITY> entities, final EntityManager entityManager) {
-		final Relationships relationships = getEntityClass().getAnnotation(Relationships.class);
-		if (relationships != null && relationships.value().length > 0) {
+		final QueryConfiguration queryConfiguration = getEntityClass().getAnnotation(
+				QueryConfiguration.class);
+		if (queryConfiguration != null && queryConfiguration.relationships().length > 0) {
 			final List<ID> parentIds = new ArrayList<ID>();
 			for (ENTITY parent : entities) {
 				parentIds.add(parent.getId());
 			}
-			for (Relationship relationship : relationships.value()) {
+			for (Relationship relationship : queryConfiguration.relationships()) {
 				try {
 					final StringBuilder hql = new StringBuilder();
 					final String parentName = VulpeStringUtil.lowerCaseFirst(getEntityClass()

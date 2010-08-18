@@ -21,39 +21,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to query complement.
+ * Annotation to query complementation and replacement.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface QueryReplacement {
+public @interface QueryConfiguration {
 
-	/**
-	 * Replaces select clause.
-	 */
-	String select() default "";
+	QueryComplement complement() default @QueryComplement;
 
-	/**
-	 * Replaces from clause.
-	 */
-	String from() default "";
+	QueryReplace replace() default @QueryReplace;
 
-	/**
-	 * Replaces join clause.
-	 */
-	String join() default "";
-
-	/**
-	 * Replaces filter on where clause.
-	 */
-	String where() default "";
-
-	/**
-	 * Replace order by clause.
-	 *
-	 * @return
-	 */
-	String orderBy() default "";
+	Relationship[] relationships() default {};
 
 }

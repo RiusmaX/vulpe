@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface QueryComplementation {
+public @interface QueryComplement {
 
 	/**
 	 * Add distinct on query.
