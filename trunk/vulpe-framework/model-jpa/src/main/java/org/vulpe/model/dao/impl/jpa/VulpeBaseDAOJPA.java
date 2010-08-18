@@ -18,6 +18,7 @@ package org.vulpe.model.dao.impl.jpa;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.springframework.orm.jpa.JpaCallback;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
@@ -44,6 +46,8 @@ import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.Relationship;
+import org.vulpe.model.annotations.Relationships;
 import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.VulpeLogicEntity;
@@ -223,7 +227,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					setParams(query, params);
 					query.setFirstResult(paging.getFromIndex());
 					query.setMaxResults(pageSize);
-					return query.getResultList();
+					final List<ENTITY> entities = query.getResultList();
+					loadRelationships(entities, entityManager);
+					return entities;
 				}
 			}));
 		}
@@ -232,6 +238,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	}
 
 	/**
+	 * Retrieves HQL select string to current entity.
 	 *
 	 * @param entity
 	 * @param params
@@ -243,8 +250,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		int countParam = 0;
 		if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
 			try {
-				String value = "%" + PropertyUtils.getProperty(entity, entity.getAutoComplete())
-						+ "%";
+				final String value = "%"
+						+ PropertyUtils.getProperty(entity, entity.getAutoComplete()) + "%";
 				params.put(entity.getAutoComplete(), value);
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
@@ -292,83 +299,132 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
+		final org.vulpe.model.annotations.Query query = entity.getClass().getAnnotation(
+				org.vulpe.model.annotations.Query.class);
+		final boolean complementation = query != null && query.complementation() != null;
+		final boolean replacement = query != null && query.replacement() != null;
 		if (namedQuery == null) {
-			hql.append("select obj");
-			if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
-				hql.append(".id, obj.").append(entity.getAutoComplete());
+			hql.append("select ");
+			if (complementation && query.complementation().distinct()) {
+				hql.append("distinct ");
+			}
+			if (replacement && StringUtils.isNotEmpty(query.replacement().select())) {
+				hql.append(query.replacement().select());
+			} else {
+				hql.append("obj");
+				if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
+					hql.append(".id, obj.").append(entity.getAutoComplete());
+				}
+				if (complementation && StringUtils.isNotEmpty(query.complementation().select())) {
+					hql.append(", ");
+					hql.append(query.complementation().select());
+				}
 			}
 			hql.append(" from ");
-			hql.append(entity.getClass().getSimpleName());
-			hql.append(" obj");
+			if (replacement && StringUtils.isNotEmpty(query.replacement().from())) {
+				hql.append(query.replacement().from());
+			} else {
+				hql.append(entity.getClass().getSimpleName());
+				hql.append(" obj ");
+			}
+			if (replacement && StringUtils.isNotEmpty(query.replacement().join())) {
+				hql.append(query.replacement().join());
+			} else if (complementation && StringUtils.isNotEmpty(query.complementation().join())) {
+				hql.append(query.complementation().join());
+			}
 		} else {
 			hql.append(namedQuery.query());
 		}
 
-		if (!params.isEmpty()) {
-			if (!hql.toString().toLowerCase().contains("where")) {
-				hql.append(" where ");
-			}
-
-			int count = 0;
-			for (String name : params.keySet()) {
-				final Object value = params.get(name);
-				count++;
-				final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(
-						Param.class, entity.getClass(), name);
-				if (param == null) {
-					if (value instanceof String) {
+		if (replacement && StringUtils.isNotEmpty(query.replacement().where())) {
+			hql.append(" where ");
+			hql.append(query.replacement().where());
+		} else {
+			if (!params.isEmpty()) {
+				if (!hql.toString().toLowerCase().contains("where")) {
+					hql.append(" where ");
+				}
+				int count = 0;
+				for (String name : params.keySet()) {
+					final Object value = params.get(name);
+					count++;
+					final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(
+							Param.class, entity.getClass(), name);
+					if (param == null) {
+						if (value instanceof String) {
+							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
+									Like.class, entity.getClass(), name);
+							hql.append("upper(obj.").append(name).append(") ").append(
+									like != null ? "like" : "=").append(" upper(:").append(name)
+									.append(")");
+						} else {
+							hql.append("obj.").append(name).append(" = :").append(name);
+						}
+					} else {
+						hql.append(param.alias());
+						hql.append('.');
+						if (param.name().equals("")) {
+							hql.append(name);
+						} else {
+							hql.append(param.name());
+						}
+						hql.append(" ");
 						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
 								Like.class, entity.getClass(), name);
-						hql.append("upper(obj.").append(name).append(") ").append(
-								like != null ? "like" : "=").append(" upper(:").append(name)
-								.append(")");
-					} else {
-						hql.append("obj.").append(name).append(" = :").append(name);
+						if (like != null) {
+							hql.append("like");
+						} else {
+							hql.append(param.operator().getValue());
+						}
+						hql.append(" :").append(name);
 					}
-				} else {
-					hql.append(param.alias());
-					hql.append('.');
-					if (param.name().equals("")) {
-						hql.append(name);
-					} else {
-						hql.append(param.name());
+					if (count < countParam) {
+						hql.append(" and ");
 					}
-					hql.append(" ");
-					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-							Like.class, entity.getClass(), name);
-					if (like != null) {
-						hql.append("like");
-					} else {
-						hql.append(param.operator().getValue());
-					}
-					hql.append(" :").append(name);
 				}
-				if (count < countParam) {
+			}
+			if (entity instanceof VulpeLogicEntity) {
+				if (hql.toString().toLowerCase().contains("where")) {
+					hql.append(" and");
+				} else {
+					hql.append(" where");
+				}
+				hql.append(" obj.status <> :status");
+				params.put("status", Status.D);
+			}
+			if (complementation && StringUtils.isNotEmpty(query.complementation().where())) {
+				if (!hql.toString().toLowerCase().contains("where")) {
+					hql.append(" where ");
+				} else {
 					hql.append(" and ");
 				}
+				hql.append(query.complementation().where());
 			}
 		}
-
-		if (entity instanceof VulpeLogicEntity) {
-			if (hql.toString().toLowerCase().contains("where")) {
-				hql.append(" and");
-			} else {
-				hql.append(" where");
-			}
-			hql.append(" obj.status <> :status");
-			params.put("status", Status.D);
-		}
-
 		// add order by
-		if (StringUtils.isNotEmpty(entity.getOrderBy()) || StringUtils.isNotEmpty(order.toString())) {
-			if (hql.toString().toLowerCase().contains("order by")) {
-				hql.append(",");
-			} else {
-				hql.append(" order by");
+		if (replacement && StringUtils.isNotEmpty(query.replacement().orderBy())) {
+			hql.append(" order by");
+			hql.append(query.replacement().orderBy());
+		} else {
+			if (StringUtils.isNotEmpty(entity.getOrderBy())
+					|| StringUtils.isNotEmpty(order.toString())) {
+				if (hql.toString().toLowerCase().contains("order by")) {
+					hql.append(",");
+				} else {
+					hql.append(" order by");
+				}
+				hql.append(" ");
+				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
+						.getOrderBy());
 			}
-			hql.append(" ");
-			hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
-					.getOrderBy());
+			if (complementation && StringUtils.isNotEmpty(query.complementation().orderBy())) {
+				if (!hql.toString().toLowerCase().contains("order by")) {
+					hql.append(" order by ");
+				} else {
+					hql.append(", ");
+				}
+				hql.append(query.complementation().orderBy());
+			}
 		}
 		return hql.toString();
 	}
@@ -396,6 +452,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	}
 
 	/**
+	 * Checks if value is not empty.
 	 *
 	 * @param value
 	 * @return
@@ -453,6 +510,68 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			return size > 0;
 		}
 		return false;
+	}
+
+	/**
+	 * Load relationships and optimize lazy load.
+	 *
+	 * @param entities
+	 * @param entityManager
+	 */
+	protected void loadRelationships(final List<ENTITY> entities, final EntityManager entityManager) {
+		final Relationships relationships = getEntityClass().getAnnotation(Relationships.class);
+		if (relationships != null && relationships.value().length > 0) {
+			final List<ID> parentIds = new ArrayList<ID>();
+			for (ENTITY parent : entities) {
+				parentIds.add(parent.getId());
+			}
+			for (Relationship relationship : relationships.value()) {
+				try {
+					final StringBuilder lazy = new StringBuilder();
+					final String parentName = VulpeStringUtil.lowerCaseFirst(getEntityClass()
+							.getSimpleName());
+					lazy.append("select new map(obj.id as id");
+					for (String attribute : relationship.attributes()) {
+						if ("id".equals(attribute)) {
+							continue;
+						}
+						lazy.append(", ");
+						lazy.append("obj.").append(attribute).append(" as ").append(attribute);
+					}
+					lazy.append(", obj.").append(parentName).append(".id as ").append(parentName);
+					lazy.append(") from ").append(relationship.target().getSimpleName()).append(
+							" obj");
+					lazy.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+					final Query query = entityManager.createQuery(lazy.toString());
+					query.setParameter("parentIds", parentIds);
+					final List<Map> result = query.getResultList();
+					final List<ENTITY> childs = new ArrayList<ENTITY>();
+					final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
+					for (Map map : result) {
+						final ENTITY child = (ENTITY) relationship.target().newInstance();
+						PropertyUtils.setProperty(child, "id", map.get("id"));
+						relationshipIds.put(child.getId(), (ID) map.get(parentName));
+						for (String attribute : relationship.attributes()) {
+							PropertyUtils.setProperty(child, attribute, map.get(attribute));
+						}
+						childs.add(child);
+					}
+					for (ENTITY parent : entities) {
+						final List<ENTITY> loadedChilds = new ArrayList<ENTITY>();
+						for (ENTITY child : childs) {
+							ID parentId = (ID) relationshipIds.get(child.getId());
+							if (parent.getId().equals(parentId)) {
+								PropertyUtils.setProperty(child, parentName, parent);
+								loadedChilds.add(child);
+							}
+						}
+						PropertyUtils.setProperty(parent, relationship.property(), loadedChilds);
+					}
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
 	}
 
 }

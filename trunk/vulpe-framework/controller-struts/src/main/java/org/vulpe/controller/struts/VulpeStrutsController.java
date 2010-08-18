@@ -494,7 +494,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				try {
 					final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(
 							detailConfig.getPropertyName(), context, this);
-					if (!validateCardinality(beans, detailConfig)) {
+					if (!validateQuantity(beans, detailConfig)) {
 						return false;
 					}
 					if (beans != null && beans.size() > 1

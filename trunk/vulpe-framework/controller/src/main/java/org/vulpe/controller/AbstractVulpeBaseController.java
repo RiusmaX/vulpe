@@ -33,8 +33,8 @@ import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.Error;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
-import org.vulpe.commons.VulpeConstants.Action.Validate.Cardinality;
 import org.vulpe.commons.VulpeConstants.View.Layout;
+import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.ValueBean;
@@ -340,52 +340,64 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	/**
-	 * Method to validate cardinality on details.
+	 * Method to validate quantity of details.
 	 *
 	 * @param beans
 	 * @param detailConfig
 	 * @return
 	 */
-	protected boolean validateCardinality(final Collection<VulpeEntity<?>> beans,
+	protected boolean validateQuantity(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
-		if (detailConfig.getCardinality() != null) {
-			if (StringUtils.isNotEmpty(detailConfig.getCardinality().custom())) {
-				final String[] customCardinality = detailConfig.getCardinality().custom().split(
-						"\\.\\.");
-				if (customCardinality.length == 2) {
-					boolean valid = true;
-					final Integer start = Integer.valueOf(customCardinality[0]);
-					if (start > 0 && beans == null) {
-						valid = false;
-					}
-					final Integer end = Integer.valueOf(customCardinality[1]);
-					if (beans == null || beans.size() > end) {
-						valid = false;
-					}
-					if (!valid) {
+		if (detailConfig.getQuantity() != null) {
+			if (detailConfig.getQuantity().minimum() > 1
+					&& detailConfig.getQuantity().maximum() > 1
+					&& detailConfig.getQuantity().minimum() < detailConfig.getQuantity().maximum()) {
+				if (beans == null || beans.size() < detailConfig.getQuantity().minimum()
+						|| beans.size() > detailConfig.getQuantity().maximum()) {
+					if (detailConfig.getQuantity().minimum() == detailConfig.getQuantity()
+							.maximum()) {
+						addActionError("vulpe.error.details.cardinality.custom.equal",
+								getText(detailConfig.getTitleKey()), detailConfig.getQuantity()
+										.minimum());
+					} else {
 						addActionError("vulpe.error.details.cardinality.custom",
-								getText(detailConfig.getTitleKey()), start, end);
-						return valid;
+								getText(detailConfig.getTitleKey()), detailConfig.getQuantity()
+										.minimum(), detailConfig.getQuantity().maximum());
 					}
+					return false;
 				}
+			} else if (detailConfig.getQuantity().minimum() > 1
+					&& detailConfig.getQuantity().maximum() == 0
+					&& (beans == null || beans.size() < detailConfig.getQuantity().minimum())) {
+				addActionError("vulpe.error.details.cardinality.custom.minimum",
+						getText(detailConfig.getTitleKey()), detailConfig.getQuantity().minimum());
+				return false;
+			} else if (detailConfig.getQuantity().minimum() == 0
+					&& detailConfig.getQuantity().maximum() > 1
+					&& (beans == null || beans.size() > detailConfig.getQuantity().maximum())) {
+				addActionError("vulpe.error.details.cardinality.custom.maximum",
+						getText(detailConfig.getTitleKey()), detailConfig.getQuantity().maximum());
+				return false;
 			} else {
-				if (!Cardinality.ZERO.equals(detailConfig.getCardinality().type().getValue())) {
-					if (Cardinality.ONE.equals(detailConfig.getCardinality().type().getValue())) {
-						if (beans == null || beans.size() == 0) {
-							addActionError("vulpe.error.details.cardinality.one.less",
-									getText(detailConfig.getTitleKey()));
-							return false;
-						} else if (beans.size() > 1) {
-							addActionError("vulpe.error.details.cardinality.one.only",
-									getText(detailConfig.getTitleKey()));
-						}
-					} else if (Cardinality.ONE_OR_MORE.equals(detailConfig.getCardinality().type()
-							.getValue())) {
-						if (beans == null || beans.size() == 0) {
-							addActionError("vulpe.error.details.cardinality.one.more",
-									getText(detailConfig.getTitleKey()));
-							return false;
-						}
+				if (QuantityType.ONE.equals(detailConfig.getQuantity().type())
+						|| (detailConfig.getQuantity().minimum() == 1 && detailConfig.getQuantity()
+								.maximum() == 1)) {
+					boolean valid = true;
+					if (beans == null || beans.size() == 0) {
+						addActionError("vulpe.error.details.cardinality.one.less",
+								getText(detailConfig.getTitleKey()));
+						valid = false;
+					} else if (beans.size() > 1) {
+						addActionError("vulpe.error.details.cardinality.one.only",
+								getText(detailConfig.getTitleKey()));
+						valid = false;
+					}
+					return valid;
+				} else if (QuantityType.ONE_OR_MORE.equals(detailConfig.getQuantity().type())) {
+					if (beans == null || beans.size() == 0) {
+						addActionError("vulpe.error.details.cardinality.one.more",
+								getText(detailConfig.getTitleKey()));
+						return false;
 					}
 				}
 			}

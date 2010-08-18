@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View.Layout;
-import org.vulpe.commons.annotations.Cardinality;
+import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.view.tags.Functions;
 
@@ -36,7 +36,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private int startNewDetails;
 	private String[] despiseFields;
 	private String viewPath;
-	private Cardinality cardinality;
+	private Quantity quantiity;
 	private VulpeBaseDetailConfig parentDetailConfig;
 	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
 
@@ -63,12 +63,12 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public VulpeBaseDetailConfig(final String name, final String propertyName,
 			final int detailNews, final String[] despiseFields,
-			final Cardinality cardinality) {
+			final Quantity quantity) {
 		this.name = name;
 		this.propertyName = propertyName;
 		this.newDetails = detailNews;
 		this.despiseFields = despiseFields.clone();
-		this.cardinality = cardinality;
+		this.quantiity = quantity;
 		setSimpleName();
 	}
 
@@ -144,7 +144,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.setNewDetails(detail.newDetails());
 		}
 
-		this.cardinality = detail.cardinality();
+		this.quantiity = detail.quantity();
 
 		if (!detail.parentDetailName().equals("")) {
 			if (config.getDetail(detail.parentDetailName()) == null) {
@@ -191,12 +191,12 @@ public class VulpeBaseDetailConfig implements Serializable {
 		return newDetails;
 	}
 
-	public void setCardinality(Cardinality cardinality) {
-		this.cardinality = cardinality;
+	public void setQuantity(Quantity quantity) {
+		this.quantiity = quantity;
 	}
 
-	public Cardinality getCardinality() {
-		return cardinality;
+	public Quantity getQuantity() {
+		return quantiity;
 	}
 
 }

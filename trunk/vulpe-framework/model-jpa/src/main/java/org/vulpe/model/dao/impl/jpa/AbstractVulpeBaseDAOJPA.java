@@ -116,6 +116,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		});
 	}
 
+	/**
+	 * Execute HQL query.
+	 *
+	 * @param <T>
+	 * @param hql
+	 * @param params
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
 	protected <T> List<T> execute(final String hql, final Map<String, Object> params)
 			throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {

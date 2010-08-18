@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.annotations;
+package org.vulpe.model.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,52 +21,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Detail configuration
+ * Annotation to optimize lazy load on relationship.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
-public @interface DetailConfig {
-	/**
-	 * Quantity of news details
-	 */
-	int newDetails() default 0;
+@Target(ElementType.TYPE)
+public @interface Relationship {
 
-	/**
-	 * Quantity of news details on start
-	 */
-	int startNewDetails() default 0;
+	Class<?> target();
 
-	/**
-	 * Attributes to despise details
-	 */
-	String[] despiseFields();
+	String property();
 
-	/**
-	 * View Definition interface
-	 */
-	String view() default "";
+	String[] attributes();
 
-	/**
-	 * Detail name
-	 */
-	String name();
-
-	/**
-	 * Detail atribute name
-	 */
-	String propertyName() default "";
-
-	/**
-	 * Parent Detail Name
-	 */
-	String parentDetailName() default "";
-
-	/**
-	 * Quantity of details
-	 *
-	 * @return
-	 */
-	Quantity quantity() default @Quantity;
 }

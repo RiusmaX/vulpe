@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.annotations;
+package org.vulpe.model.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,52 +21,44 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Detail configuration
+ * Annotation to query complement.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
-public @interface DetailConfig {
-	/**
-	 * Quantity of news details
-	 */
-	int newDetails() default 0;
+@Target(ElementType.TYPE)
+public @interface QueryComplementation {
 
 	/**
-	 * Quantity of news details on start
+	 * Add distinct on query.
 	 */
-	int startNewDetails() default 0;
+	boolean distinct() default false;
 
 	/**
-	 * Attributes to despise details
+	 * Append to select clause.
 	 */
-	String[] despiseFields();
+	String select() default "";
 
 	/**
-	 * View Definition interface
+	 * Append to from clause.
 	 */
-	String view() default "";
+	String from() default "";
 
 	/**
-	 * Detail name
+	 * Append to join clause.
 	 */
-	String name();
+	String join() default "";
 
 	/**
-	 * Detail atribute name
+	 * Append filter on where clause.
 	 */
-	String propertyName() default "";
+	String where() default "";
 
 	/**
-	 * Parent Detail Name
-	 */
-	String parentDetailName() default "";
-
-	/**
-	 * Quantity of details
+	 * Append to order by clause.
 	 *
 	 * @return
 	 */
-	Quantity quantity() default @Quantity;
+	String orderBy() default "";
+
 }

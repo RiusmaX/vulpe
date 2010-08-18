@@ -21,36 +21,21 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Cardinality definition.
+ * Quantity definition.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
-public @interface Cardinality {
+public @interface Quantity {
 
-	CardinalityType type() default CardinalityType.ZERO;
-
-	String custom() default "";
+	QuantityType type() default QuantityType.ZERO;
 
 	int minimum() default 0;
 
 	int maximum() default 0;
 
-	enum CardinalityType {
-		ZERO, ZERO_OR_MORE, ONE, ONE_OR_MORE;
-		public String getValue() {
-			switch (this) {
-			case ZERO:
-				return "0";
-			case ZERO_OR_MORE:
-				return "0..1";
-			case ONE:
-				return "1";
-			case ONE_OR_MORE:
-				return "1..*";
-			}
-			return "0";
-		}
+	enum QuantityType {
+		ZERO, ZERO_OR_MORE, ONE, ONE_OR_MORE
 	}
 }
