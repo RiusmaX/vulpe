@@ -527,22 +527,22 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			}
 			for (Relationship relationship : relationships.value()) {
 				try {
-					final StringBuilder lazy = new StringBuilder();
+					final StringBuilder hql = new StringBuilder();
 					final String parentName = VulpeStringUtil.lowerCaseFirst(getEntityClass()
 							.getSimpleName());
-					lazy.append("select new map(obj.id as id");
+					hql.append("select new map(obj.id as id");
 					for (String attribute : relationship.attributes()) {
 						if ("id".equals(attribute)) {
 							continue;
 						}
-						lazy.append(", ");
-						lazy.append("obj.").append(attribute).append(" as ").append(attribute);
+						hql.append(", ");
+						hql.append("obj.").append(attribute).append(" as ").append(attribute);
 					}
-					lazy.append(", obj.").append(parentName).append(".id as ").append(parentName);
-					lazy.append(") from ").append(relationship.target().getSimpleName()).append(
+					hql.append(", obj.").append(parentName).append(".id as ").append(parentName);
+					hql.append(") from ").append(relationship.target().getSimpleName()).append(
 							" obj");
-					lazy.append(" where obj.").append(parentName).append(".id in (:parentIds)");
-					final Query query = entityManager.createQuery(lazy.toString());
+					hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+					final Query query = entityManager.createQuery(hql.toString());
 					query.setParameter("parentIds", parentIds);
 					final List<Map> result = query.getResultList();
 					final List<ENTITY> childs = new ArrayList<ENTITY>();
