@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
+import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 
@@ -42,6 +43,10 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 	@VulpeText(size = 40)
 	@Column(name = "NOME_OBJETO")
 	private String nomeObjeto;
+
+	@VulpeCheckbox(argument = true, fieldValue = "true")
+	@Column(name = "SOMENTE_DESATUALIZADO")
+	private Boolean somenteDesatualizado;
 
 	@VulpeSelect(showBlank = false)
 	@Enumerated(EnumType.STRING)
@@ -119,6 +124,14 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public void setScriptAntetior(Blob scriptAntetior) {
 		this.scriptAntetior = scriptAntetior;
+	}
+
+	public void setSomenteDesatualizado(Boolean somenteDesatualizado) {
+		this.somenteDesatualizado = somenteDesatualizado;
+	}
+
+	public Boolean getSomenteDesatualizado() {
+		return somenteDesatualizado;
 	}
 
 }

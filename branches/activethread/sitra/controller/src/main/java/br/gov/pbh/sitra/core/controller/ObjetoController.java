@@ -16,11 +16,13 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.oracle.AllObjects;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
@@ -96,12 +98,13 @@ public class ObjetoController extends ObjetoBaseController {
 	}
 
 	public String transferir() {
-//		try {
-//			String retorno = getService(CoreService.class).transferir(getEntity());
-//			addActionMessage("Resultado da Soma: " + retorno);
-//		} catch (VulpeApplicationException e) {
-//			LOG.error(e);
-//		}
+		// try {
+		// String retorno =
+		// getService(CoreService.class).transferir(getEntity());
+		// addActionMessage("Resultado da Soma: " + retorno);
+		// } catch (VulpeApplicationException e) {
+		// LOG.error(e);
+		// }
 		addActionMessage("Transferência realizada com sucesso!");
 		getButtons().put("transferir", true);
 		return Forward.SUCCESS;
@@ -146,5 +149,16 @@ public class ObjetoController extends ObjetoBaseController {
 		return super.read();
 	}
 
-
+	public String objetos() {
+		try {
+			AllObjects allObjects = new AllObjects();
+			allObjects.setType(getEntitySelect().getTipoObjeto().name());
+			List<AllObjects> objetosOracle = getService(CoreService.class).readAllObjects(
+					allObjects);
+			now.put("objetos", objetosOracle);
+		} catch (VulpeApplicationException e) {
+			e.printStackTrace();
+		}
+		return Forward.SUCCESS;
+	}
 }

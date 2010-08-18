@@ -23,6 +23,11 @@ import javax.persistence.Table;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.Query;
+import org.vulpe.model.annotations.QueryComplementation;
+import org.vulpe.model.annotations.QueryReplacement;
+import org.vulpe.model.annotations.Relationship;
+import org.vulpe.model.annotations.Relationships;
 import org.vulpe.model.annotations.Param.OperatorType;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -33,6 +38,13 @@ import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
+@Query(
+	complementation = @QueryComplementation(distinct = true),
+	replacement = @QueryReplacement(select = "new Objeto(obj.id, obj.descricao, obj.origem, obj.destino, obj.usuario, obj.data)")
+)
+@Relationships({
+	@Relationship(target = ObjetoItem.class, property = "objetoItens", attributes = { "id", "tipoObjeto", "nomeObjeto", "status" })
+})
 @Entity
 @Table(name = "TRANSFERENCIA_OBJ")
 @SuppressWarnings("serial")
@@ -120,6 +132,30 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@OneToMany(targetEntity = ObjetoItem.class, mappedBy = "objeto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_TRANSFERENCIA_OBJ")
 	private List<ObjetoItem> objetoItens;
+
+	public Objeto() {
+	}
+
+	public Objeto(Long id, String descricao, Ambiente origem, Ambiente destino, String usuario,
+			Date data) {
+		this.id = id;
+		this.descricao = descricao;
+		this.origem = origem;
+		this.destino = destino;
+		this.usuario = usuario;
+		this.data = data;
+	}
+
+	public Objeto(Long id, String descricao, Ambiente origem, Ambiente destino, String usuario,
+			Date data, List<ObjetoItem> objetoItens) {
+		this.id = id;
+		this.descricao = descricao;
+		this.origem = origem;
+		this.destino = destino;
+		this.usuario = usuario;
+		this.data = data;
+		this.objetoItens = objetoItens;
+	}
 
 	public Long getId() {
 		return id;
