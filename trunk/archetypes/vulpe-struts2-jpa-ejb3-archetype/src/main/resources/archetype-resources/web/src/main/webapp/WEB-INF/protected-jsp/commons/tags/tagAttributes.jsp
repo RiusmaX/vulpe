@@ -35,4 +35,5 @@
 <%@ attribute name="onlyToSee" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="required" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="requiredField" required="false" rtexprvalue="true" type="java.lang.String" %>
+<%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
