@@ -4,12 +4,12 @@
 var app = {
 
 	all: {
-		carregarNomesObjetos: function(value, index, formName, uri, id, loading) {
+		carregarNomesObjetos: function(value, index, formName, uri, id) {
 			if (value != "") {
 				uri += "?index=" + index + "&tipo=" + value;
-				vulpe.view.request.submitAjax(formName, uri, id, '', '', loading);
+				vulpe.view.request.submitAjax(formName, uri, id, '', '', true);
 			} else {
-				vulpe.util.get(id).html("Selecione um Tipo Objeto.");
+				vulpe.util.get(id).html("<span id='loading" + index + "'>Selecione um Tipo Objeto.</span>");
 			}
 		},
 
