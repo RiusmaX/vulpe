@@ -23,4 +23,4 @@
 <%@ attribute name="listName" required="false" rtexprvalue="true" %>
 <%@ attribute name="booleanTo" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/column.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/columnTag.jsp" %>

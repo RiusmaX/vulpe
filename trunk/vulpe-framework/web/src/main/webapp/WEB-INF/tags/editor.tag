@@ -17,4 +17,4 @@
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="cssFrame" required="false" rtexprvalue="true" %>
 <%@ attribute name="showAsText" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/editor.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/editorTag.jsp" %>

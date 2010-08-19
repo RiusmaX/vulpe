@@ -19,4 +19,4 @@
 <%@ attribute name="role" required="false" rtexprvalue="true" %>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/columnAction.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/columnActionTag.jsp" %>

@@ -7,4 +7,4 @@
 <%@ attribute name="saveInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/hidden.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/hiddenTag.jsp" %>

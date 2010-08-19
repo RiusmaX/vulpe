@@ -6,4 +6,4 @@
 <%@ attribute name="style" required="false" rtexprvalue="true"%>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="breakLine" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/label.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/labelTag.jsp"%>

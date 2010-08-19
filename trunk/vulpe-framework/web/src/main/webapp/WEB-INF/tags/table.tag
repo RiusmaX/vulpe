@@ -19,4 +19,4 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sortPropertyInfo" required="false" rtexprvalue="true" %>
 <%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/table.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tableTag.jsp" %>

@@ -52,6 +52,7 @@ var vulpe = {
 		logic: {
 			prepareName: ''
 		},
+		masterTabId: "#vulpeCRUDBody",
 		messages: {
 			error: {
 				checkfield: 'vulpe.error.validate.checkfield',
@@ -87,6 +88,7 @@ var vulpe = {
 		order: new Array(),
 		pagingPage: '_paging.page',
 		prefix: {
+			detail: "#vulpeDetail_",
 			popup: "Popup_"
 		},
 		popup: {
@@ -778,10 +780,13 @@ var vulpe = {
 					var field = jQuery(fields[i]);
 					var idField = field.attr("id");
 					if (!vulpe.validate.validateRequired({field: field})) {
-						if (invalidCount == 0 && idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(":") != -1) {
-							var detail = "#vulpeDetail_" + vulpe.util.getDetailByElementId(idField);
-							$("a[href='" + detail + "']").click();
-							vulpe.util.focusFirst(detail);
+						if (invalidCount == 0) {
+							if (idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(":") != -1) {
+								var detail = vulpe.config.prefix.detail + vulpe.util.getDetailByElementId(idField);
+								$("a[href='" + detail + "']").click();
+							} else if ($("a[href='" + vulpe.config.masterTabId + "']").length == 1) {
+								$("a[href='" + vulpe.config.masterTabId + "']").click();
+							}
 						}
 						valid = false;
 						invalidCount++;

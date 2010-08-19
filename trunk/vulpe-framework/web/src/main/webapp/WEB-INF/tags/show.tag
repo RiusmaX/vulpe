@@ -7,4 +7,4 @@
 <%@ attribute name="style" required="false" rtexprvalue="true"%>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="paragraph" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/show.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/showTag.jsp" %>
