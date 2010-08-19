@@ -86,7 +86,7 @@ var vulpe = {
 			iPhone: (BrowserDetect.OS == "iPhone/iPod")
 		},
 		order: new Array(),
-		pagingPage: '_paging.page',
+		pagingPage: "_paging.page",
 		prefix: {
 			detail: "#vulpeDetail_",
 			popup: "Popup_"
@@ -98,9 +98,10 @@ var vulpe = {
 		showLoading: true,
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
-			action: '.action',
-			errorMessage: '_ErrorMessage',
-			selectedTab: '_selectedTab'
+			action: ".action",
+			errorMessage: "_ErrorMessage",
+			loading: "_loading",
+			selectedTab: "_selectedTab"
 		},
 		theme: 'default'
 	},
@@ -1665,9 +1666,13 @@ var vulpe = {
 					var elements = jQuery("select,input,span", "#" + id);
 					for (var i = 0; i < elements.length; i++) {
 						var elementId = elements[i].id;
-						var elementLoading = vulpe.util.get(elementId + "_loading");
-						if (elementLoading) {
+						var elementLoadingId = elementId + vulpe.config.suffix.loading;
+						var elementLoading = vulpe.util.get(elementLoadingId);
+						if (elementLoading.length == 1) {
 							elementLoading.show();
+						} else {
+							vulpe.util.get(elementId).append("&nbsp;<img id='" + elementLoadingId + "' class='vulpeImageFieldLoading' src='" + vulpe.config.contextPath + "/themes/" + vulpe.config.theme + "/images/ajax/field-loader.gif' />");
+							vulpe.util.get(elementLoadingId).show();
 						}
 					}
 				}

@@ -95,8 +95,8 @@ public class VulpeAuthorizationDAOJPA extends VulpeBaseDAOJPA<SecureResource, Lo
 		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
 				.get(SecureResource.class.getSimpleName());
 		if (secureResources != null) {
+			secureObjects.clear();
 			for (SecureResource secureResource : secureResources) {
-				secureObjects.clear();
 				secureObjects.put(secureResource.getResourceName(), secureResource);
 				if (VulpeValidationUtil.isNotEmpty(
 						secureResource.getSecureResourceRoles())) {

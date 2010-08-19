@@ -38,6 +38,8 @@ import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.EverParameter;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.controller.commons.I18NService;
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
@@ -67,12 +69,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/**
 	 * Global attributes map
 	 */
-	public static Map<String, Object> ever = new HashMap<String, Object>();
+	public EverParameter ever = new EverParameter();
 
 	/**
 	 * Temporal attributes map
 	 */
-	public Map<String, Object> now = new HashMap<String, Object>();
+	public VulpeHashMap now = new VulpeHashMap();
 
 	/**
 	 * Calendar
@@ -260,7 +262,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		addActionMessage(getText(key));
 	}
 
-
 	public String getTextArg(final String key, final String arg) {
 		return getText(key, getText(arg));
 	}
@@ -307,7 +308,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 *
 	 */
 	private String onHideMessages;
-
 
 	/*
 	 * (non-Javadoc)
@@ -374,7 +374,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		this.operation = operation;
 	}
 
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -429,7 +428,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	public void setExecuted(final boolean executed) {
 		this.executed = executed;
 	}
-
 
 	/*
 	 * (non-Javadoc)
@@ -679,7 +677,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	public Map<String, Tab> getTabs() {
 		if (now.containsKey("tabs")) {
-			return (Map<String, Tab>) now.get("tabs");
+			return now.getSelf("tabs");
 		}
 		final Map<String, Tab> tabs = new HashMap<String, Tab>();
 		now.put("tabs", tabs);
@@ -722,7 +720,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return key;
 	}
 
-	public static Map<String, Object> getEver() {
+	public EverParameter getEver() {
 		return ever;
 	}
 
@@ -739,12 +737,25 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return urlRedirect;
 	}
 
-	protected String redirectTo(final String url, final boolean ajax) {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#redirectTo(java.lang.String,
+	 * boolean)
+	 */
+	public String redirectTo(final String url, final boolean ajax) {
 		setUrlRedirect(url + (ajax ? "/ajax" : ""));
 		return Forward.REDIRECT;
 	}
 
-	protected String redirectTo(final String url) {
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#redirectTo(java.lang.String)
+	 */
+	public String redirectTo(final String url) {
 		return redirectTo(url, isAjax());
 	}
 
@@ -753,4 +764,23 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return super.clone();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.VulpeSimpleController#returnToPage(java.lang.String)
+	 */
+	public void returnToPage(final String page) {
+		final StringBuilder path = new StringBuilder();
+		if (!page.contains("/") && !page.contains(".")) {
+			path.append(Layout.PROTECTED_JSP);
+			final String directory = getControllerConfig().getModuleName() + "/"
+					+ getControllerConfig().getSimpleControllerName() + "/";
+			path.append(directory);
+			path.append(page).append(Layout.SUFFIX_JSP);
+		} else {
+			path.append(page);
+		}
+		setResultForward(path.toString());
+	}
 }

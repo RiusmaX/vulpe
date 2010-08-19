@@ -501,7 +501,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public Map<String, Object> getButtons() {
 		if (now.containsKey("buttons")) {
-			return (Map<String, Object>) now.get("buttons");
+			return now.getSelf("buttons");
 		}
 		final Map<String, Object> buttons = new HashMap<String, Object>();
 		now.put("buttons", buttons);

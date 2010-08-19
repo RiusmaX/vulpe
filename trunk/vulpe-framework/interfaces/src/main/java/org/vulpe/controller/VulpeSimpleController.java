@@ -132,7 +132,6 @@ public interface VulpeSimpleController extends Serializable {
 	 */
 	String frontend();
 
-
 	boolean isAjax();
 
 	void setAjax(final boolean ajax);
@@ -286,4 +285,28 @@ public interface VulpeSimpleController extends Serializable {
 	String getResultForward();
 
 	void setResultForward(final String resultForward);
+
+	/**
+	 * Mount return to view by simple page name or full path.
+	 *
+	 * @param page
+	 */
+	void returnToPage(final String page);
+
+	/**
+	 * Redirect to URL.
+	 *
+	 * @param url
+	 * @return
+	 */
+	String redirectTo(final String url);
+
+	/**
+	 * Redirect to URL using AJAX.
+	 *
+	 * @param url
+	 * @param ajax
+	 * @return
+	 */
+	String redirectTo(final String url, final boolean ajax);
 }
