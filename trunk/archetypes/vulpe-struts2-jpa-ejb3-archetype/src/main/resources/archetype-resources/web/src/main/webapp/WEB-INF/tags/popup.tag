@@ -20,4 +20,4 @@
 <%@ attribute name="queryString" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="requiredParamProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="requiredParamExpressions" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/popup.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/popupTag.jsp" %>

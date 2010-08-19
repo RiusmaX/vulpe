@@ -24,4 +24,4 @@
 <%@ attribute name="role" required="false" rtexprvalue="true"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true"%>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/action.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/actionTag.jsp"%>

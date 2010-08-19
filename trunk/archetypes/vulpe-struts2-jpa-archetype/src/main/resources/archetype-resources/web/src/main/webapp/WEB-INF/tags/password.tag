@@ -5,4 +5,4 @@
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
 <%@ attribute name="showPassword" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/password.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/passwordTag.jsp" %>

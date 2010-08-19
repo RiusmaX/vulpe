@@ -7,4 +7,4 @@
 <%@ attribute name="beforeJs" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="afterJs" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="showSize" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/paging.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/pagingTag.jsp"%>

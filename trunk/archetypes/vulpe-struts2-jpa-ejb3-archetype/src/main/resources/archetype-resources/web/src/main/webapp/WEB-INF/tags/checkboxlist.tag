@@ -5,4 +5,4 @@
 <%@ attribute name="list" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@ attribute name="listValue" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@ attribute name="listKey" required="false" rtexprvalue="true" type="java.lang.Object" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/checkboxlist.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/checkboxlistTag.jsp" %>

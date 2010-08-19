@@ -4,4 +4,4 @@
 <%@ attribute name="method" required="false" rtexprvalue="true" %>
 <%@ attribute name="enctype" required="false" rtexprvalue="true" %>
 <%@ attribute name="validate" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/form.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/formTag.jsp" %>

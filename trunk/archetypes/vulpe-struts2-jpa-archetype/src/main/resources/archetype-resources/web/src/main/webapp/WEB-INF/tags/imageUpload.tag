@@ -8,4 +8,4 @@
 <%@ attribute name="imageThumbWidth" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="imageThumbHeight" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="showGallery" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/imageUpload.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/imageUploadTag.jsp" %>

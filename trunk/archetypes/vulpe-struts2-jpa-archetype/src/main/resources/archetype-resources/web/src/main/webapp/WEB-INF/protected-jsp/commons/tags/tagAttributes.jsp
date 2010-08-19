@@ -35,12 +35,4 @@
 <%@ attribute name="onlyToSee" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="required" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="requiredField" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="validateType" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="validateMask" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="validateDatePattern" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="validateRange" required="false" rtexprvalue="true" type="java.lang.Integer[]" %>
-<%@ attribute name="validateMin" required="false" rtexprvalue="true" type="java.lang.Integer" %>
-<%@ attribute name="validateMax" required="false" rtexprvalue="true" type="java.lang.Integer" %>
-<%@ attribute name="validateMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
-<%@ attribute name="validateMaxLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
