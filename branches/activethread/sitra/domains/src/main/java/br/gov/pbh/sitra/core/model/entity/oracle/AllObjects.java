@@ -30,6 +30,9 @@ public class AllObjects extends AbstractVulpeBaseEntity<Long> {
 	@Column(name = "OBJECT_TYPE")
 	private String type;
 
+	@Column(name = "OWNER")
+	private String owner;
+
 	public AllObjects() {
 	}
 
@@ -67,5 +70,13 @@ public class AllObjects extends AbstractVulpeBaseEntity<Long> {
 			return this.name;
 		}
 		return super.toString();
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getOwner() {
+		return owner;
 	}
 }

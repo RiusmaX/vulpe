@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.beans.ValueBean;
@@ -151,10 +152,24 @@ public class ObjetoController extends ObjetoBaseController {
 
 	public String objetos() {
 		try {
-			AllObjects allObjects = new AllObjects();
-			allObjects.setType(getEntitySelect().getTipoObjeto().name());
+			setResultForward(Layout.PROTECTED_JSP + "core/Objeto/objetos.jsp");
+			final AllObjects allObjects = new AllObjects();
+			final String index = getRequest().getParameter("index");
+			final String tipo = getRequest().getParameter("tipo");
+			allObjects.setType(tipo);
+			final Objeto objeto = getEntity();
+			if (objeto.getOrigem() == null) {
+				now.put("mensagem", "Por favor, selecione um valor no campo 'Origem' da Aba 'Atualizar de'.");
+				return Forward.SUCCESS;
+			}
+			if (objeto.getOrigem().equals(Ambiente.H)) {
+				allObjects.setOwner(getSistemaSelecionado().getOwnerHomologacao());
+			} else {
+				allObjects.setOwner(getSistemaSelecionado().getOwnerProducao());
+			}
 			List<AllObjects> objetosOracle = getService(CoreService.class).readAllObjects(
 					allObjects);
+			now.put("index", index);
 			now.put("objetos", objetosOracle);
 		} catch (VulpeApplicationException e) {
 			e.printStackTrace();

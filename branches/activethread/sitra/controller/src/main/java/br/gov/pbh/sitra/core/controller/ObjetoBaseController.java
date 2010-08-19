@@ -92,4 +92,8 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 		}
 		return null;
 	}
+
+	public Sistema getSistemaSelecionado() {
+		return getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
+	}
 }

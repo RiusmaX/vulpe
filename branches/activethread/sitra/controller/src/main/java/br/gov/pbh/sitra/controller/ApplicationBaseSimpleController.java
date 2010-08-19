@@ -66,23 +66,26 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 
 	public String selecionarValidate() {
 		if (getEntity().getSistema() != null && getEntity().getSistema().getId() != null) {
-			setSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO, getEntity().getSistema());
-			if (usuariosSistema == null) {
-				try {
-					final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
-					usuariosSistema = getService(CoreService.class).readSistemaUsuario(
-							new SistemaUsuario(sistema));
-					final List<ValueBean> usuarios = new ArrayList<ValueBean>();
-					for (SistemaUsuario sistemaUsuario : usuariosSistema) {
-						final String username = sistemaUsuario.getUsuario().getUsername();
-						usuarios.add(new ValueBean(username, username));
+			for (Sistema sistema : sistemas) {
+				if (sistema.getId().equals(getEntity().getSistema().getId())) {
+					setSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO, sistema);
+					if (usuariosSistema == null) {
+						try {
+							usuariosSistema = getService(CoreService.class).readSistemaUsuario(
+									new SistemaUsuario(sistema));
+							final List<ValueBean> usuarios = new ArrayList<ValueBean>();
+							for (SistemaUsuario sistemaUsuario : usuariosSistema) {
+								final String username = sistemaUsuario.getUsuario().getUsername();
+								usuarios.add(new ValueBean(username, username));
+							}
+							setSessionAttribute("usuarios", usuarios);
+						} catch (VulpeApplicationException e) {
+							LOG.error(e);
+						}
 					}
-					setSessionAttribute("usuarios", usuarios);
-				} catch (VulpeApplicationException e) {
-					LOG.error(e);
+					return redirectTo("/core/Objeto/select", true);
 				}
 			}
-			return redirectTo("/core/Objeto/select", true);
 		}
 		final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
 		String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";

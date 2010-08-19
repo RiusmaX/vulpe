@@ -5,15 +5,13 @@
 <table>
 <tr>
 <td>
-<v:select
-	labelKey="label.sitra.core.Objeto.crud.sistema"
-	property="sistema.id"
-	items="Sistema"
-	itemKey="id"
-	itemLabel="nome"
-	showBlank="true" autoLoad="true"
-	required="true"
+<v:hidden property="sistema.id" value="${sistemaSelecionado.id}"/>
+<p>
+<v:label
+	key="label.sitra.core.Objeto.crud.sistema" breakLine="true"
 />
+${sistemaSelecionado.nome}
+</p>
 </td>
 <td>
 <v:select
