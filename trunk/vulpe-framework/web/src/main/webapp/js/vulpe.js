@@ -1666,6 +1666,9 @@ var vulpe = {
 					var elements = jQuery("select,input,span", "#" + id);
 					for (var i = 0; i < elements.length; i++) {
 						var elementId = elements[i].id;
+						if (vulpe.util.get(elementId).attr("type") != null && vulpe.util.get(elementId).attr("type") == "hidden") {
+							continue;
+						}
 						var elementLoadingId = elementId + vulpe.config.suffix.loading;
 						var elementLoading = vulpe.util.get(elementLoadingId);
 						if (elementLoading.length == 1) {

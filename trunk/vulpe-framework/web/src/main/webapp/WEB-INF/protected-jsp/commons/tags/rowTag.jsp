@@ -96,6 +96,15 @@
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
+			<c:if test="${now['controllerType'] == 'SELECT'}">
+				<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
+					<script type="text/javascript">
+					jQuery(function($){
+						jQuery(document).bind('keydown', 'Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}', function (){vulpe.util.get("${elementId}").click(); return false;});
+					});
+					</script>
+				</c:if>
+			</c:if>
 			</c:if>
 		</c:if>
 	</c:if>
@@ -228,7 +237,16 @@
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<c:if test="${showUpdateButton}">
-					<v:columnAction styleClass="vulpeUpdate" role="${updateRole}" logged="${updateLogged}" icon="row-edit" widthIcon="16" heightIcon="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%" />
+					<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate" role="${updateRole}" logged="${updateLogged}" icon="row-edit" widthIcon="16" heightIcon="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%" />
+					<c:if test="${now['controllerType'] == 'SELECT'}">
+						<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
+							<script type="text/javascript">
+							jQuery(function($){
+								jQuery(document).bind('keydown', 'Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}', function (){vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click(); return false;});
+							});
+							</script>
+						</c:if>
+					</c:if>
 				</c:if>
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
