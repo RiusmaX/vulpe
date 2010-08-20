@@ -29,6 +29,7 @@ vulpe.config.messages = {
 	error: {
 		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>',
 		checkfields: '<fmt:message key="vulpe.error.validate.checkfields"/>',
+		fatal: '<fmt:message key="vulpe.error.fatal"/>',
 		validate: {
 			date:'<fmt:message key="vulpe.error.validate.date"/>',
 			double:'<fmt:message key="vulpe.error.validate.double"/>',

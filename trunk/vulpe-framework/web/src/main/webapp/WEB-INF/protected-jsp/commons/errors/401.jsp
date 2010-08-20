@@ -21,8 +21,11 @@
 <div id="error">
 <h1><fmt:message key="vulpe.error.401.subtitle" /></h1>
 <h2><fmt:message key="vulpe.error.401" /></h2>
-<div id="home"><a href="${pageContext.request.contextPath}"><fmt:message
-	key="label.vulpe.home" /></a></div>
+	<br>
+	<div id="home">
+		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
+	</div>
+	<br>
 </div>
 </body>
 </html>

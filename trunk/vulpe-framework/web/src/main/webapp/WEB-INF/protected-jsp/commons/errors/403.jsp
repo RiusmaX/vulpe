@@ -19,10 +19,13 @@
 <!--IS_EXCEPTION-->
 <div id="messageTitle" style="display: none"><fmt:message key="vulpe.error.403.title" /></div>
 <div id="error">
-<h1><fmt:message key="vulpe.error.403.subtitle" /></h1>
-<h2><fmt:message key="vulpe.error.403" /></h2>
-<div id="home"><a href="${pageContext.request.contextPath}"><fmt:message
-	key="label.vulpe.home" /></a></div>
+	<h1><fmt:message key="vulpe.error.403.subtitle" /></h1>
+	<h2><fmt:message key="vulpe.error.403" /></h2>
+	<br>
+	<div id="home">
+		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
+	</div>
+	<br>
 </div>
 </body>
 </html>
