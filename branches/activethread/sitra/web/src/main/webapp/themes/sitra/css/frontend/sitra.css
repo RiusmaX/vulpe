@@ -450,7 +450,7 @@ html,body {
 	height: 100%;
 }
 
-* html #container {
+* html {
 	height: 100%;
 }
 
@@ -504,7 +504,6 @@ html,body {
 
 #container {
 	margin: 0 auto;
-	height: 100%;
 	width: 100%;
 }
 
@@ -540,7 +539,7 @@ html,body {
 	border-right: #dddddd solid 1px;
 	border-bottom: #dddddd solid 1px;
 	background: #ccc;
-	top: 10px;
+	top: 0px;
 	margin: 0 auto;
 	position: relative;
 	width: 800px;
