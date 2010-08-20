@@ -11,16 +11,16 @@
 		<div id="vulpeCRUDBodyTabs">
 		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
 		<ul title="${tabNavigationTitle}">
-			<c:set var="tabTitle"><fmt:message key="${now['titleKey']}"/></c:set>
-			<c:if test="${not empty tabs || not empty tabs['master']}">
-				<c:set var="tabTitle" value="${tabs['master'].title}"/>
+			<c:set var="tabTitle"><fmt:message key="${now['masterTitleKey']}"/></c:set>
+			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}">
+				<c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/>
 			</c:if>
 			<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody">${tabTitle}</a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
 					<c:set var="tabTitle"><fmt:message key="${detail.titleKey}"/></c:set>
-					<c:if test="${not empty tabs || not empty tabs[detail.name]}">
-						<c:set var="tabTitle" value="${tabs[detail.name].title}"/>
+					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}">
+						<c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/>
 					</c:if>
 					<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail_${detail.baseName}">${tabTitle}</a></li>
 				</c:if>

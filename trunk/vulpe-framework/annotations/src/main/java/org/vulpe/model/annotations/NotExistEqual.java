@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface NotExistEqual {
 
-	Param[] params();
+	QueryParameter[] parameters();
 
 	String message() default "";
 }

@@ -488,6 +488,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @since 1.0
 	 */
 	protected boolean validateDetails() {
+		despiseDetails();
 		final Map context = ActionContext.getContext().getContextMap();
 		for (VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
 			if (detailConfig.getParentDetailConfig() == null) {

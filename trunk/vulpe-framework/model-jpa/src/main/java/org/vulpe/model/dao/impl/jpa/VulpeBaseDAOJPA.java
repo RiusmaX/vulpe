@@ -45,7 +45,7 @@ import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
-import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.Relationship;
 import org.vulpe.model.annotations.Like.LikeType;
@@ -228,7 +228,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					query.setFirstResult(paging.getFromIndex());
 					query.setMaxResults(pageSize);
 					final List<ENTITY> entities = query.getResultList();
-					loadRelationships(entities, entityManager);
+					loadRelationships(entities, entityManager, params);
 					return entities;
 				}
 			}));
@@ -261,7 +261,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
 						|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
 						.getModifiers()))
-						&& !field.isAnnotationPresent(Param.class)) {
+						&& !field.isAnnotationPresent(QueryParameter.class)) {
 					continue;
 				}
 				final OrderBy orderBy = field.getAnnotation(OrderBy.class);
@@ -349,9 +349,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				for (String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
-					final Param param = VulpeReflectUtil.getInstance().getAnnotationInField(
-							Param.class, entity.getClass(), name);
-					if (param == null) {
+					final QueryParameter parameter = VulpeReflectUtil.getInstance()
+							.getAnnotationInField(QueryParameter.class, entity.getClass(), name);
+					if (parameter == null) {
 						if (value instanceof String) {
 							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
 									Like.class, entity.getClass(), name);
@@ -362,12 +362,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append("obj.").append(name).append(" = :").append(name);
 						}
 					} else {
-						hql.append(param.alias());
+						hql.append(parameter.alias());
 						hql.append('.');
-						if (param.name().equals("")) {
+						if (parameter.name().equals("")) {
 							hql.append(name);
 						} else {
-							hql.append(param.name());
+							hql.append(parameter.name());
 						}
 						hql.append(" ");
 						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
@@ -375,7 +375,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (like != null) {
 							hql.append("like");
 						} else {
-							hql.append(param.operator().getValue());
+							hql.append(parameter.operator().getValue());
 						}
 						hql.append(" :").append(name);
 					}
@@ -484,7 +484,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
 		if (notExistEqual != null) {
-			final Param[] params = notExistEqual.params();
+			final QueryParameter[] parameters = notExistEqual.parameters();
 			// getting total records
 			final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
 				public Object doInJpa(final EntityManager entityManager)
@@ -493,12 +493,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append("select count(*) from ");
 					hql.append(entity.getClass().getSimpleName()).append(" obj where ");
 					final Map<String, Object> values = new HashMap<String, Object>();
-					for (Param param : params) {
-						hql.append("obj.").append(param.name()).append(" ").append(
-								param.operator().getValue()).append(" :").append(param.name());
+					for (QueryParameter parameter : parameters) {
+						hql.append("obj.").append(parameter.name()).append(" ").append(
+								parameter.operator().getValue()).append(" :").append(
+								parameter.name());
 						try {
-							values.put(param.name(), PropertyUtils
-									.getProperty(entity, param.name()));
+							values.put(parameter.name(), PropertyUtils.getProperty(entity,
+									parameter.name()));
 						} catch (Exception e) {
 							LOG.error(e);
 						}
@@ -518,8 +519,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 *
 	 * @param entities
 	 * @param entityManager
+	 * @param params
 	 */
-	protected void loadRelationships(final List<ENTITY> entities, final EntityManager entityManager) {
+	protected void loadRelationships(final List<ENTITY> entities,
+			final EntityManager entityManager, final Map<String, Object> params) {
 		final QueryConfiguration queryConfiguration = getEntityClass().getAnnotation(
 				QueryConfiguration.class);
 		if (queryConfiguration != null && queryConfiguration.relationships().length > 0) {
@@ -544,8 +547,33 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append(") from ").append(relationship.target().getSimpleName()).append(
 							" obj");
 					hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+					if (relationship.parameters() != null) {
+						for (QueryParameter parameter : relationship.parameters()) {
+							if (params.containsKey(parameter.name())) {
+								hql.append(" and ");
+								hql.append(
+										StringUtils.isNotEmpty(parameter.alias()) ? parameter
+												.alias() : "obj").append(".");
+								hql.append(parameter.name());
+								final Like like = VulpeReflectUtil.getInstance()
+										.getAnnotationInField(Like.class, relationship.target(),
+												parameter.name());
+								hql.append(" ").append(
+										like != null ? "like" : parameter.operator().getValue())
+										.append(" ");
+								hql.append(":").append(parameter.name());
+							}
+						}
+					}
 					final Query query = entityManager.createQuery(hql.toString());
 					query.setParameter("parentIds", parentIds);
+					if (relationship.parameters() != null) {
+						for (QueryParameter parameter : relationship.parameters()) {
+							if (params.containsKey(parameter.name())) {
+								query.setParameter(parameter.name(), params.get(parameter.name()));
+							}
+						}
+					}
 					final List<Map> result = query.getResultList();
 					final List<ENTITY> childs = new ArrayList<ENTITY>();
 					final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();

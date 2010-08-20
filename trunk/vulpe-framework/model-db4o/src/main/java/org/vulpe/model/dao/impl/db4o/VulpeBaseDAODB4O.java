@@ -38,9 +38,9 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
-import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.OrderBy.OrderType;
-import org.vulpe.model.annotations.Param.OperatorType;
+import org.vulpe.model.annotations.QueryParameter.OperatorType;
 import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeEntity;
@@ -349,7 +349,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 				}
 			}
 			if (value != null) {
-				final Param param = field.getAnnotation(Param.class);
+				final QueryParameter param = field.getAnnotation(QueryParameter.class);
 				if (param != null) {
 					String paramName = param.name();
 					if (StringUtils.isBlank(paramName)) {

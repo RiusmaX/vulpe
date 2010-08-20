@@ -35,12 +35,12 @@
 		<c:choose>
 			<c:when test="${vulpeBodyTwice}">
 				<c:choose>
-				<c:when test="${vulpeBodyTwiceType == 'CRUD'}">
-				<%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %>
-				</c:when>
-				<c:when test="${vulpeBodyTwiceType == 'SELECT'}">
-				<%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %>
-				</c:when>
+					<c:when test="${vulpeBodyTwiceType == 'CRUD'}">
+						<%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %>
+					</c:when>
+					<c:when test="${vulpeBodyTwiceType == 'SELECT'}">
+						<%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %>
+					</c:when>
 				</c:choose>
 			</c:when>
 			<c:when test="${now['controllerType'] == 'CRUD'}">

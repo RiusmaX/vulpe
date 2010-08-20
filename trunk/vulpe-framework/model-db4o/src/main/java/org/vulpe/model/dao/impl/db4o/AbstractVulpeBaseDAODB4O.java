@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.annotations.Param;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.db4o.Identifier;
@@ -142,7 +142,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			try {
 				if ((Modifier.isTransient(field.getModifiers()) || field
 						.isAnnotationPresent(Transient.class))
-						&& !field.isAnnotationPresent(Param.class)) {
+						&& !field.isAnnotationPresent(QueryParameter.class)) {
 					if (!field.getType().isPrimitive()) {
 						PropertyUtils.setProperty(object, field.getName(), null);
 					}

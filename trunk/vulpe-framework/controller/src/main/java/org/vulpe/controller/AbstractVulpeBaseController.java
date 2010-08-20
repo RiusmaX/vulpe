@@ -37,6 +37,7 @@ import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
+import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -349,6 +350,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected boolean validateQuantity(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		if (detailConfig.getQuantity() != null) {
+			final String tabName = getTabs().containsKey(detailConfig.getTitleKey()) ? ((Tab) getTabs()
+					.get(detailConfig.getTitleKey())).getTitle()
+					: getText(detailConfig.getTitleKey());
 			if (detailConfig.getQuantity().minimum() > 1
 					&& detailConfig.getQuantity().maximum() > 1
 					&& detailConfig.getQuantity().minimum() < detailConfig.getQuantity().maximum()) {
@@ -360,23 +364,23 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 								getText(detailConfig.getTitleKey()), detailConfig.getQuantity()
 										.minimum());
 					} else {
-						addActionError("vulpe.error.details.cardinality.custom",
-								getText(detailConfig.getTitleKey()), detailConfig.getQuantity()
-										.minimum(), detailConfig.getQuantity().maximum());
+						addActionError("vulpe.error.details.cardinality.custom", tabName,
+								detailConfig.getQuantity().minimum(), detailConfig.getQuantity()
+										.maximum());
 					}
 					return false;
 				}
 			} else if (detailConfig.getQuantity().minimum() > 1
 					&& detailConfig.getQuantity().maximum() == 0
 					&& (beans == null || beans.size() < detailConfig.getQuantity().minimum())) {
-				addActionError("vulpe.error.details.cardinality.custom.minimum",
-						getText(detailConfig.getTitleKey()), detailConfig.getQuantity().minimum());
+				addActionError("vulpe.error.details.cardinality.custom.minimum", tabName,
+						detailConfig.getQuantity().minimum());
 				return false;
 			} else if (detailConfig.getQuantity().minimum() == 0
 					&& detailConfig.getQuantity().maximum() > 1
 					&& (beans == null || beans.size() > detailConfig.getQuantity().maximum())) {
-				addActionError("vulpe.error.details.cardinality.custom.maximum",
-						getText(detailConfig.getTitleKey()), detailConfig.getQuantity().maximum());
+				addActionError("vulpe.error.details.cardinality.custom.maximum", tabName,
+						detailConfig.getQuantity().maximum());
 				return false;
 			} else {
 				if (QuantityType.ONE.equals(detailConfig.getQuantity().type())
@@ -384,19 +388,16 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 								.maximum() == 1)) {
 					boolean valid = true;
 					if (beans == null || beans.size() == 0) {
-						addActionError("vulpe.error.details.cardinality.one.less",
-								getText(detailConfig.getTitleKey()));
+						addActionError("vulpe.error.details.cardinality.one.less", tabName);
 						valid = false;
 					} else if (beans.size() > 1) {
-						addActionError("vulpe.error.details.cardinality.one.only",
-								getText(detailConfig.getTitleKey()));
+						addActionError("vulpe.error.details.cardinality.one.only", tabName);
 						valid = false;
 					}
 					return valid;
 				} else if (QuantityType.ONE_OR_MORE.equals(detailConfig.getQuantity().type())) {
 					if (beans == null || beans.size() == 0) {
-						addActionError("vulpe.error.details.cardinality.one.more",
-								getText(detailConfig.getTitleKey()));
+						addActionError("vulpe.error.details.cardinality.one.more", tabName);
 						return false;
 					}
 				}
@@ -435,8 +436,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getControllerType().equals(ControllerType.TABULAR)) {
 				addActionError("vulpe.error.tabular.duplicated", lines.toString());
 			} else {
-				addActionError("vulpe.error.details.duplicated",
-						getText(detailConfig.getTitleKey()), lines.toString());
+				final String tabName = getTabs().containsKey(detailConfig.getTitleKey()) ? ((Tab) getTabs()
+						.get(detailConfig.getTitleKey())).getTitle()
+						: getText(detailConfig.getTitleKey());
+				addActionError("vulpe.error.details.duplicated", tabName, lines.toString());
 			}
 			return false;
 		}
@@ -1005,8 +1008,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return Entity created.
 	 */
 	protected ENTITY onCreatePost() {
-		despiseDetails();
-
 		setEntity((ENTITY) invokeServices(Action.CREATE_POST, Action.CREATE
 				.concat(getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { getControllerConfig().getEntityClass() },
@@ -1186,7 +1187,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected boolean onUpdatePost() {
-		despiseDetails();
 		final ENTITY entity = prepareEntity(Action.UPDATE_POST);
 		invokeServices(Action.UPDATE_POST, Action.UPDATE.concat(getControllerConfig()
 				.getEntityClass().getSimpleName()), new Class[] { getControllerConfig()

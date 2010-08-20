@@ -170,7 +170,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			newQuery = newQuery.replace(":".concat(param), "");
 
-			// get parameter type in annotations @Params and @Param
+			// get parameter type in annotations @Params and @QueryParameter
 			String type = getType(param, hints);
 
 			if (type == null) {

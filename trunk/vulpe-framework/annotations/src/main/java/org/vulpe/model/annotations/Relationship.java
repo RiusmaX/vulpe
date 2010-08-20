@@ -35,4 +35,5 @@ public @interface Relationship {
 
 	String[] attributes();
 
+	QueryParameter[] parameters() default {};
 }

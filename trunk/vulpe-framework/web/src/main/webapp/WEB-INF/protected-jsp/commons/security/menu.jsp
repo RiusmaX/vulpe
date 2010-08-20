@@ -1,14 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<li><a href="javascript:void(0);" title="<fmt:message key='label.vulpe.menu.Security'/>"><fmt:message key='label.vulpe.menu.Security'/></a>
-<ul>
-	<li><a href="javascript:void(0);"
-		onclick="javascript:vulpe.view.request.submitMenu('/security/Role/tabular/ajax');"
-		title="<fmt:message key='label.vulpe.menu.Security.Role'/>"><fmt:message key='label.vulpe.menu.Security.Role'/></a></li>
-	<li><a href="javascript:void(0);"
-		onclick="javascript:vulpe.view.request.submitMenu('/security/User/select/ajax');"
-		title="<fmt:message key='label.vulpe.menu.Security.User'/>"><fmt:message key='label.vulpe.menu.Security.User'/></a></li>
-	<li><a href="javascript:void(0);"
-		onclick="javascript:vulpe.view.request.submitMenu('/security/SecureResource/select/ajax');"
-		title="<fmt:message key='label.vulpe.menu.Security.Resource'/>"><fmt:message key='label.vulpe.menu.Security.Resource'/></a></li>
-</ul>
-</li>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
+<v:menu labelKey="label.vulpe.menu.Security">
+	<v:menu labelKey="label.vulpe.menu.Security.Role" action="/security/Role/tabular"/>
+	<v:menu labelKey="label.vulpe.menu.Security.User" action="/security/User/select"/>
+	<v:menu labelKey="label.vulpe.menu.Security.Resource" action="/security/SecureResource/select" />
+</v:menu>
