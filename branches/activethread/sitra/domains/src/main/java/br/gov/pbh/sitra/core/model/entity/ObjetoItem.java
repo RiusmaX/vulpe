@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.vulpe.model.annotations.Like;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -40,6 +41,7 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "TIPO_OBJETO")
 	private TipoObjeto tipoObjeto;
 
+	@Like
 	@VulpeText(size = 40)
 	@Column(name = "NOME_OBJETO")
 	private String nomeObjeto;

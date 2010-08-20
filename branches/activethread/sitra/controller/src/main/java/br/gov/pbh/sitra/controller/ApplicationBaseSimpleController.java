@@ -9,7 +9,8 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 import org.vulpe.exception.VulpeApplicationException;
 
-import br.gov.pbh.sitra.commons.ApplicationConstants;
+import br.gov.pbh.sitra.commons.ApplicationConstants.Now;
+import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Index;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
 import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
@@ -40,15 +41,17 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 						}
 					}
 				} catch (VulpeApplicationException e) {
-					e.printStackTrace();
+					LOG.error(e);
 				}
 			}
 		}
-		now.put("sistemas", sistemasUsuario);
+		now.put(Now.SISTEMAS, sistemasUsuario);
 		if (sistemasUsuario.size() == 1) {
-			setSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO, sistemasUsuario.get(0));
+			final Sistema sistema = sistemasUsuario.get(0);
+			setSessionAttribute(Sessao.SISTEMA_SELECIONADO, sistema);
+			carregarUsuariosSistema(sistema);
 		}
-		final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
+		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
 		if (sistema != null) {
 			entity = new Index();
 			entity.setSistema(sistema);
@@ -68,21 +71,8 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 		if (getEntity().getSistema() != null && getEntity().getSistema().getId() != null) {
 			for (Sistema sistema : sistemas) {
 				if (sistema.getId().equals(getEntity().getSistema().getId())) {
-					setSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO, sistema);
-					if (usuariosSistema == null) {
-						try {
-							usuariosSistema = getService(CoreService.class).readSistemaUsuario(
-									new SistemaUsuario(sistema));
-							final List<ValueBean> usuarios = new ArrayList<ValueBean>();
-							for (SistemaUsuario sistemaUsuario : usuariosSistema) {
-								final String username = sistemaUsuario.getUsuario().getUsername();
-								usuarios.add(new ValueBean(username, username));
-							}
-							setSessionAttribute("usuarios", usuarios);
-						} catch (VulpeApplicationException e) {
-							LOG.error(e);
-						}
-					}
+					setSessionAttribute(Sessao.SISTEMA_SELECIONADO, sistema);
+					carregarUsuariosSistema(sistema);
 					return redirectTo("/core/Objeto/select", true);
 				}
 			}
@@ -90,6 +80,23 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 		final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
 		String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
 		return redirectTo(url, true);
+	}
+
+	private void carregarUsuariosSistema(final Sistema sistema) {
+		if (usuariosSistema == null) {
+			try {
+				usuariosSistema = getService(CoreService.class).readSistemaUsuario(
+						new SistemaUsuario(sistema));
+				final List<ValueBean> usuarios = new ArrayList<ValueBean>();
+				for (SistemaUsuario sistemaUsuario : usuariosSistema) {
+					final String username = sistemaUsuario.getUsuario().getUsername();
+					usuarios.add(new ValueBean(username, username));
+				}
+				setSessionAttribute(Sessao.USUARIOS_SISTEMA_SELECIONADO, usuarios);
+			} catch (VulpeApplicationException e) {
+				LOG.error(e);
+			}
+		}
 	}
 
 }

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.annotations.Quantity;
+import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
@@ -18,10 +20,11 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
 
-import br.gov.pbh.sitra.commons.ApplicationConstants;
+import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.Status;
 import br.gov.pbh.sitra.core.model.entity.oracle.AllObjects;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
@@ -31,25 +34,35 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @Component("core.ObjetoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1) }, select = @Select(pageSize = 5))
+@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5))
 public class ObjetoController extends ObjetoBaseController {
+
+	private static final List<ValueBean> origem = new ArrayList<ValueBean>();
+	private static final List<ValueBean> destino = new ArrayList<ValueBean>();
 
 	@Override
 	public void loadNow() {
 		super.loadNow();
 		final String keyPrefix = Ambiente.class.getName();
-		final List<ValueBean> origem = new ArrayList<ValueBean>();
-		origem.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
-				Ambiente.H.name()))));
-		origem.add(new ValueBean(Ambiente.P.name(), getText(keyPrefix.concat(".").concat(
-				Ambiente.P.name()))));
-		now.put("origem", origem);
-		final List<ValueBean> destino = new ArrayList<ValueBean>();
-		destino.add(new ValueBean(Ambiente.D.name(), getText(keyPrefix.concat(".").concat(
-				Ambiente.D.name()))));
-		destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
-				Ambiente.H.name()))));
+		if (origem.isEmpty()) {
+			origem.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
+					Ambiente.H.name()))));
+			origem.add(new ValueBean(Ambiente.P.name(), getText(keyPrefix.concat(".").concat(
+					Ambiente.P.name()))));
+		}
+		now.put("ORIGEM", origem);
+		if (destino.isEmpty()) {
+			destino.add(new ValueBean(Ambiente.D.name(), getText(keyPrefix.concat(".").concat(
+					Ambiente.D.name()))));
+			destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
+					Ambiente.H.name()))));
+		}
 		now.put("destino", destino);
+		if (getControllerType().equals(ControllerType.CRUD)) {
+			getTabs().put(getControllerConfig().getMasterTitleKey(), new Tab("Atualizar de"));
+			getTabs().put(getControllerConfig().getDetail("objetoItens").getTitleKey(),
+					new Tab("Objetos a serem Transferidos"));
+		}
 	}
 
 	@Override
@@ -57,21 +70,10 @@ public class ObjetoController extends ObjetoBaseController {
 		super.showButtons(method);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			hideButton(Button.CREATE);
-			getTabs().put("master", new Tab("Atualizar de"));
-			getTabs().put("objetoItens", new Tab("Objetos a serem Transferidos"));
+			if (getEntity().getId() != null && getEntity().getStatus().equals(Status.N)) {
+				getButtons().put("transferir", true);
+			}
 		}
-	}
-
-	@Override
-	protected void createPostAfter(Objeto entity) {
-		super.createPostAfter(entity);
-		getButtons().put("transferir", true);
-	}
-
-	@Override
-	protected void updateAfter() {
-		super.updateAfter();
-		getButtons().put("transferir", true);
 	}
 
 	protected void atualizarDadosObjeto() {
@@ -106,7 +108,6 @@ public class ObjetoController extends ObjetoBaseController {
 		// LOG.error(e);
 		// }
 		addActionMessage("Transferência realizada com sucesso!");
-		getButtons().put("transferir", true);
 		return Forward.SUCCESS;
 	}
 
@@ -127,7 +128,7 @@ public class ObjetoController extends ObjetoBaseController {
 			setResultForward(getControllerConfig().getViewItemsPath());
 			return Forward.SUCCESS;
 		}
-		final Sistema sistema = getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
+		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
 		getEntitySelect().setSistema(sistema);
 		Calendar calendar = Calendar.getInstance();
 		if (getEntitySelect().getDataInicial() != null) {

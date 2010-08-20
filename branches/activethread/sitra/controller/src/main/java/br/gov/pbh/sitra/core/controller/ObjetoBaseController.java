@@ -8,7 +8,7 @@ import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
-import br.gov.pbh.sitra.commons.ApplicationConstants;
+import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.controller.ApplicationBaseController;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
@@ -82,7 +82,7 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 	}
 
 	private String validarSistemaSelecionado() {
-		if (getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO) == null) {
+		if (getSessionAttribute(Sessao.SISTEMA_SELECIONADO) == null) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				setAjax(true);
 			}
@@ -94,6 +94,6 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 	}
 
 	public Sistema getSistemaSelecionado() {
-		return getSessionAttribute(ApplicationConstants.SISTEMA_SELECIONADO);
+		return getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
 	}
 }

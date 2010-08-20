@@ -22,12 +22,12 @@ import javax.persistence.Table;
 
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
-import org.vulpe.model.annotations.Param;
 import org.vulpe.model.annotations.QueryComplement;
 import org.vulpe.model.annotations.QueryConfiguration;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.QueryReplace;
 import org.vulpe.model.annotations.Relationship;
-import org.vulpe.model.annotations.Param.OperatorType;
+import org.vulpe.model.annotations.QueryParameter.OperatorType;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeDate;
@@ -41,7 +41,12 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 	complement = @QueryComplement(distinct = true),
 	replace = @QueryReplace(select = "new Objeto(obj.id, obj.descricao, obj.origem, obj.destino, obj.usuario, obj.data)"),
 	relationships = {
-		@Relationship(target = ObjetoItem.class, property = "objetoItens", attributes = { "id", "tipoObjeto", "nomeObjeto", "status" })
+		@Relationship(target = ObjetoItem.class, property = "objetoItens", attributes = { "id", "tipoObjeto", "nomeObjeto", "status" },
+				parameters = {
+					@QueryParameter(name = "tipoObjeto"),
+					@QueryParameter(name = "nomeObjeto")
+				}
+		)
 	}
 )
 @Entity
@@ -67,19 +72,19 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	private Date data = new Date();
 
 	@VulpeSelect(argument = true)
-	@Param(alias = "obj.objetoItens", name = "tipoObjeto")
+	@QueryParameter(alias = "obj.objetoItens", name = "tipoObjeto")
 	private transient TipoObjeto tipoObjeto;
 
 	@VulpeText(argument = true, size = 60)
 	@Like
-	@Param(alias = "obj.objetoItens", name = "nomeObjeto")
+	@QueryParameter(alias = "obj.objetoItens", name = "nomeObjeto")
 	private transient String nomeObjeto;
 
-	@Param(alias = "obj", name = "data", operator = OperatorType.GREATER_OR_EQUAL)
+	@QueryParameter(alias = "obj", name = "data", operator = OperatorType.GREATER_OR_EQUAL)
 	@VulpeDate(argument = true)
 	private transient Date dataInicial;
 
-	@Param(alias = "obj", name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
+	@QueryParameter(alias = "obj", name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
 	@VulpeDate(argument = true)
 	private transient Date dataFinal;
 
