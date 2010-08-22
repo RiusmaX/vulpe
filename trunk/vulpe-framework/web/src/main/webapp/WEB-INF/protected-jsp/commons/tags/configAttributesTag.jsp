@@ -4,7 +4,7 @@
 <c:if test="${empty style}"><c:set var="style" value=""/></c:if>
 <c:set var="styleClass" value="${styleClass} focused"/>
 <c:if test="${required}"><c:set var="styleClass" value="${styleClass} vulpeRequired"/></c:if>
-<c:if test="${not empty vulpeShowAsMobile || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
+<c:if test="${not empty global['showAsMobile'] || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty targetName}">
 	<c:if test="${empty targetConfig}">
 		<c:set var="targetName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/>
