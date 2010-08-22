@@ -6,18 +6,18 @@
 			<v:column>
 			<table width="100%" cellpadding="0" cellspacing="0">
 				<tr>
-					<td class="titulo">
+					<td class="titulo" colspan="2">
 						<fmt:message key="label.gmn.core.Grupo.crud.publicadores.nome" />
 					</td>
-					<td class="titulo" colspan="2">
+					<td class="titulo">
 						<fmt:message key="label.gmn.core.Grupo.crud.publicadores.sexo" />
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td colspan="2">
 						<v:text property="nome" size="50" maxlength="60" required="true" />
 					</td>
-					<td colspan="2">
+					<td>
 						<v:select property="sexo" showBlank="true" autoLoad="false" required="true" />
 					</td>
 				</tr>

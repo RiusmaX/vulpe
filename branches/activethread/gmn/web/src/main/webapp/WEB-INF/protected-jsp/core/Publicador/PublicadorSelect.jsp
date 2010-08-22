@@ -15,14 +15,6 @@
 	itemLabel="nome"
 	showBlank="true" autoLoad="true"
 />
-<v:select
-	labelKey="label.gmn.core.Publicador.select.congregacao"
-	property="congregacao.id"
-	items="Congregacao"
-	itemKey="id"
-	itemLabel="nome"
-	showBlank="true" autoLoad="true"
-/>
 <v:selectPopup
 	labelKey="label.gmn.core.Publicador.select.usuario"
 	property="usuario"

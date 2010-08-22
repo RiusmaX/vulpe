@@ -3,6 +3,7 @@ package br.com.activethread.gmn.ministerio.model.entity;
 import java.util.Date;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
@@ -16,7 +17,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
-@CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
 		ViewType.SELECT, ViewType.CRUD }))
 @SuppressWarnings("serial")
 public class Relatorio extends VulpeBaseDB4OEntity<Long> {

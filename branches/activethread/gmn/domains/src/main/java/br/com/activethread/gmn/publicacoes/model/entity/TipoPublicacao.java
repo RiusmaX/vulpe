@@ -1,6 +1,8 @@
 package br.com.activethread.gmn.publicacoes.model.entity;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
+import org.vulpe.controller.annotations.Tabular;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
@@ -16,7 +18,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @CachedClass
 @CodeGenerator(controller =
 
-@Controller(pageSize = 5, tabularDespiseFields = { "descricao" }, tabularStartNewDetails = 5, tabularNewDetails = 1), view = @View(popupProperties = "id,nome", viewType = { ViewType.TABULAR }), manager = true)
+@Controller(select = @Select(pageSize = 5), tabular = @Tabular(despiseFields = { "descricao" }, startNewRecords = 5, newRecords = 1)), view = @View(popupProperties = "id,nome", viewType = { ViewType.TABULAR }))
 @SuppressWarnings("serial")
 public class TipoPublicacao extends VulpeBaseDB4OEntity<Long> {
 

@@ -3,8 +3,11 @@ package br.com.activethread.gmn.core.model.entity;
 import java.util.List;
 
 import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.annotations.Quantity;
+import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
+import org.vulpe.controller.annotations.Tabular;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
@@ -18,7 +21,7 @@ import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@CodeGenerator(controller = @Controller(pageSize = 5, tabularDespiseFields = "nome", tabularStartNewDetails = 5, tabularNewDetails = 1, detailsConfig = { @DetailConfig(name = "publicadores", propertyName = "entity.publicadores", despiseFields = "nome", startNewDetails = 10, newDetails = 1, cardinalityType = CardinalityType.ONE) }), manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(select =@Select(pageSize = 5), tabular = @Tabular(despiseFields = "nome", startNewRecords = 5, newRecords = 1), detailsConfig = { @DetailConfig(name = "publicadores", propertyName = "entity.publicadores", despiseFields = "nome", startNewDetails = 10, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) }), manager = true, view = @View(viewType = {
 		ViewType.TABULAR, ViewType.CRUD, ViewType.SELECT }))
 @SuppressWarnings("serial")
 public class Grupo extends VulpeBaseDB4OEntity<Long> {

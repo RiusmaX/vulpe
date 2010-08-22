@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.annotations.Quantity;
+import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
@@ -16,7 +18,7 @@ import org.vulpe.view.annotations.logic.crud.Detail;
 
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
-@CodeGenerator(controller = @Controller(pageSize = 5, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", cardinalityType = CardinalityType.ONE_OR_MORE, newDetails = 4) }), manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 4) }), manager = true, view = @View(viewType = {
 		ViewType.SELECT, ViewType.CRUD }))
 @SuppressWarnings("serial")
 public class EscolaMinisterio extends VulpeBaseDB4OEntity<Long> {

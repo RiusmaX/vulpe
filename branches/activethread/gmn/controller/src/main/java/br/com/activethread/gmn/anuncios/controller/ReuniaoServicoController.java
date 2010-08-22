@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.annotations.DetailConfig;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 
 import br.com.activethread.gmn.anuncios.model.entity.ReuniaoServico;
 import br.com.activethread.gmn.anuncios.model.services.AnunciosService;
@@ -19,7 +20,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Component("anuncios.ReuniaoServicoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, pageSize = 5)
+@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, select = @Select(pageSize = 5))
 public class ReuniaoServicoController extends ApplicationBaseController<ReuniaoServico, java.lang.Long> {
 
 }

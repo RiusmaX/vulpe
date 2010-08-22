@@ -3,15 +3,15 @@ package br.com.activethread.gmn.publicacoes.model.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.vulpe.model.annotations.Param;
-import org.vulpe.model.annotations.Param.OperatorType;
+import org.vulpe.model.annotations.QueryParameter;
+import org.vulpe.model.annotations.QueryParameter.OperatorType;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
@@ -28,10 +28,10 @@ public class Pedido extends VulpeBaseDB4OEntity<Long> {
 	@VulpeDate(required = true)
 	private Date data;
 
-	@Param(name = "data", operator = OperatorType.GREATER_OR_EQUAL)
+	@QueryParameter(name = "data", operator = OperatorType.GREATER_OR_EQUAL)
 	private transient Date dataInicio;
 
-	@Param(name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
+	@QueryParameter(name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
 	private transient Date dataFim;
 
 	@VulpeColumn

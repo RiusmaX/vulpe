@@ -7,7 +7,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.commons.annotations.DetailConfig.CardinalityType;
+import org.vulpe.commons.annotations.Quantity;
+import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.struts.VulpeStrutsController;
@@ -19,7 +20,7 @@ import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publicacoes.PedidoController")
 @SuppressWarnings("serial")
-@Controller(serviceClass = PublicacoesService.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, cardinalityType = CardinalityType.ONE) })
+@Controller(serviceClass = PublicacoesService.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) })
 public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 
 	@Override
@@ -63,7 +64,7 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 	}
 
 	private boolean validarEntrega() {
-		if (VulpeValidationUtil.getInstance().isEmpty(getEntity().getPublicacoes())) {
+		if (VulpeValidationUtil.isEmpty(getEntity().getPublicacoes())) {
 			return false;
 		}
 		int contador = 0;
