@@ -38,6 +38,7 @@
 				<s:label theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" cssStyle="${style}" cssClass="vulpeSimpleLabel ${styleClass}" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${util:toString(labelValue)}"/>
 			</c:if>
 		</c:forEach>
+		<v:hidden property="${property}"/>
 	</c:when>
 	<c:otherwise>
 	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}" accesskey="${accesskey}">

@@ -589,6 +589,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		if (securityContext == null) {
 			securityContext = getBean(VulpeSecurityContext.class);
 			setSessionAttribute(VulpeConstants.SECURITY_CONTEXT, securityContext);
+			if (securityContext != null) {
+				securityContext.afterUserAuthenticationCallback();
+			}
 		}
 		return securityContext;
 	}

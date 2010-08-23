@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
-<c:if test="${not empty vulpeShowAsMobile || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
+<c:if test="${not empty global['showAsMobile'] || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty currentItem}">
 	<c:if test="${empty targetName}">
 		<c:if test="${empty targetConfig}">
