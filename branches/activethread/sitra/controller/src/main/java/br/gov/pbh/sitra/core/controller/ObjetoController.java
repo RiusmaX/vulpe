@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -34,7 +33,7 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @Component("core.ObjetoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5))
+@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5, requireOneFilter = true))
 public class ObjetoController extends ObjetoBaseController {
 
 	private static final List<ValueBean> origem = new ArrayList<ValueBean>();
@@ -70,7 +69,7 @@ public class ObjetoController extends ObjetoBaseController {
 		super.showButtons(method);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			hideButton(Button.CREATE);
-			if (getEntity().getId() != null && getEntity().getStatus().equals(Status.N)) {
+			if (getEntity() != null && getEntity().getId() != null && getEntity().getStatus().equals(Status.N)) {
 				getButtons().put("transferir", true);
 			}
 		}
@@ -113,21 +112,21 @@ public class ObjetoController extends ObjetoBaseController {
 
 	@Override
 	public String read() {
-		boolean valido = false;
-		if (getEntitySelect() != null
-				&& (getEntitySelect().getTipoObjeto() != null || StringUtils
-						.isNotEmpty(getEntitySelect().getNomeObjeto()))
-				|| getEntitySelect().getDataInicial() != null
-				|| getEntitySelect().getDataFinal() != null
-				|| StringUtils.isNotEmpty(getEntitySelect().getUsuario())
-				|| getEntitySelect().getDestino() != null) {
-			valido = true;
-		}
-		if (!valido) {
-			addActionError(getText("sitra.msg.erro.pesquisa.sem.filtro"));
-			setResultForward(getControllerConfig().getViewItemsPath());
-			return Forward.SUCCESS;
-		}
+//		boolean valido = false;
+//		if (getEntitySelect() != null
+//				&& (getEntitySelect().getTipoObjeto() != null || StringUtils
+//						.isNotEmpty(getEntitySelect().getNomeObjeto()))
+//				|| getEntitySelect().getDataInicial() != null
+//				|| getEntitySelect().getDataFinal() != null
+//				|| StringUtils.isNotEmpty(getEntitySelect().getUsuario())
+//				|| getEntitySelect().getDestino() != null) {
+//			valido = true;
+//		}
+//		if (!valido) {
+//			addActionError(getText("sitra.msg.erro.pesquisa.sem.filtro"));
+//			setResultForward(getControllerConfig().getViewItemsPath());
+//			return Forward.SUCCESS;
+//		}
 		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
 		getEntitySelect().setSistema(sistema);
 		Calendar calendar = Calendar.getInstance();

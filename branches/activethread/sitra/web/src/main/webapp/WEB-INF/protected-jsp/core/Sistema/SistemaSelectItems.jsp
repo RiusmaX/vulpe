@@ -10,11 +10,11 @@
 		<v:row>
 			<v:column
 				labelKey="label.sitra.core.Sistema.select.nome"
-				property="nome"
+				property="nome" sort="true"
 			/>
 			<v:column
 				labelKey="label.sitra.core.Sistema.select.sigla"
-				property="sigla"
+				property="sigla" sort="true"
 			/>
 			<v:column
 				labelKey="label.sitra.core.Sistema.select.gerencia"
