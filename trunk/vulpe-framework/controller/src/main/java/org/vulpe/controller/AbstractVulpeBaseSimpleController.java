@@ -17,8 +17,6 @@ package org.vulpe.controller;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +72,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/**
 	 * Temporal attributes map
 	 */
-	public VulpeHashMap now = new VulpeHashMap();
+	public VulpeHashMap<String, Object> now = new VulpeHashMap<String, Object>();
 
 	/**
 	 * Calendar
@@ -457,33 +455,16 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return StringUtils.isNotEmpty(getPopupKey());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCachedClass()
-	 */
-	public Map<String, Object> getCachedClass() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance()
-				.get(VulpeConstants.CACHED_CLASS);
+	public VulpeHashMap<String, Object> getCachedClass() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASS);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCachedEnum()
-	 */
-	public Map<String, Object> getCachedEnum() {
-		return (Map<String, Object>) VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
+	public VulpeHashMap<String, Object> getCachedEnum() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getCachedEnumArray()
-	 */
-	public Map<String, String> getCachedEnumArray() {
-		return (Map<String, String>) VulpeCacheHelper.getInstance().get(
-				VulpeConstants.CACHED_ENUM_ARRAY);
+	public VulpeHashMap<String, Object> getCachedEnumArray() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 
 	/*
@@ -678,11 +659,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	public abstract void addActionError(final String message);
 
-	public Map<String, Tab> getTabs() {
+	public VulpeHashMap<String, Tab> getTabs() {
 		if (now.containsKey("tabs")) {
 			return now.getSelf("tabs");
 		}
-		final Map<String, Tab> tabs = new HashMap<String, Tab>();
+		final VulpeHashMap<String, Tab> tabs = new VulpeHashMap<String, Tab>();
 		now.put("tabs", tabs);
 		return tabs;
 	}

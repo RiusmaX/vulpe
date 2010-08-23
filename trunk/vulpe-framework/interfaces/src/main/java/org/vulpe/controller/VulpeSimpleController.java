@@ -16,7 +16,6 @@
 package org.vulpe.controller;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,27 +78,6 @@ public interface VulpeSimpleController extends Serializable {
 	 * @see VulpeService
 	 */
 	VulpeService getService();
-
-	/**
-	 * Retrieves map of cached class
-	 *
-	 * @return Map with cached classes
-	 */
-	Map<String, Object> getCachedClass();
-
-	/**
-	 * Retrieves map of cached enumeration
-	 *
-	 * @return Map with cached enumerations
-	 */
-	Map<String, Object> getCachedEnum();
-
-	/**
-	 * Retrieves map of cached enumeration in array to checkbox list
-	 *
-	 * @return Map with cached enumerations array
-	 */
-	Map<String, String> getCachedEnumArray();
 
 	/**
 	 * Retrieves current security context.

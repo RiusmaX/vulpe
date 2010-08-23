@@ -24,7 +24,7 @@ import java.util.HashMap;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class VulpeHashMap extends HashMap<String, Object> {
+public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends HashMap<KEY, VALUE> {
 
 	/**
 	 * Retrieves the value referenced by key making automatic conversion.
@@ -33,7 +33,7 @@ public class VulpeHashMap extends HashMap<String, Object> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T getSelf(Object key) {
+	public <T> T getSelf(KEY key) {
 		return (T) get(key);
 	}
 
@@ -45,7 +45,7 @@ public class VulpeHashMap extends HashMap<String, Object> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T removeSelf(Object key) {
+	public <T> T removeSelf(KEY key) {
 		return (T) remove(key);
 	}
 
@@ -58,7 +58,7 @@ public class VulpeHashMap extends HashMap<String, Object> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T putSelf(String key, Object value) {
+	public <T> T putSelf(KEY key, VALUE value) {
 		return (T) super.put(key, value);
 	}
 

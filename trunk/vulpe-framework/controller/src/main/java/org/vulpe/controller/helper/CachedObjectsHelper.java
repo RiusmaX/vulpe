@@ -18,9 +18,7 @@ package org.vulpe.controller.helper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
@@ -33,6 +31,7 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.entity.VulpeEntity;
 
@@ -125,7 +124,7 @@ public final class CachedObjectsHelper {
 	 */
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
 		final Set<String> cachedClasses = loadCachedClasses(servletContext);
-		final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
+		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
 		if (cachedClasses != null && !cachedClasses.isEmpty()) {
 			for (String cachedClass : cachedClasses) {
 				try {
@@ -143,8 +142,8 @@ public final class CachedObjectsHelper {
 		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASS, mapCachedClass);
 		final Set<String> cachedEnums = loadCachedEnums(servletContext);
 		if (cachedEnums != null && !cachedEnums.isEmpty()) {
-			final Map<String, Object> mapCachedEnum = new HashMap<String, Object>();
-			final Map<String, String> mapCachedEnumArray = new HashMap<String, String>();
+			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
+			final VulpeHashMap<String, String> mapCachedEnumArray = new VulpeHashMap<String, String>();
 			for (String cachedEnum : cachedEnums) {
 				try {
 					final Class classicClass = Class.forName(cachedEnum);
@@ -197,7 +196,7 @@ public final class CachedObjectsHelper {
 	public static void putObjectsInCache(final ServletContext servletContext) {
 		final Class<? extends VulpeEntity<?>>[] cachedClass = VulpeConfigHelper.get(
 				VulpeDomains.class).cachedClass();
-		final Map<String, Object> mapCachedClass = new HashMap<String, Object>();
+		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
 		if (cachedClass != null) {
 			for (Class<? extends VulpeEntity<?>> clazz : cachedClass) {
 				try {
@@ -212,8 +211,8 @@ public final class CachedObjectsHelper {
 		final Class[] cachedEnum = VulpeConfigHelper.get(VulpeDomains.class).cachedEnum();
 		if (cachedEnum != null) {
 			final String projectName = VulpeConfigHelper.getProjectName();
-			final Map<String, Object> mapCachedEnum = new HashMap<String, Object>();
-			final Map<String, String> mapCachedEnumArray = new HashMap<String, String>();
+			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
+			final VulpeHashMap<String, String> mapCachedEnumArray = new VulpeHashMap<String, String>();
 			for (Class clazz : cachedEnum) {
 				try {
 					final String enumName = clazz.getSimpleName();

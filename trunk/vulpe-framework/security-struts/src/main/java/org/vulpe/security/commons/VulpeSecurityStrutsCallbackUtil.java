@@ -25,7 +25,7 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 
 	/**
 	 * Returns current HTTP Session.
-	 * 
+	 *
 	 * @return Http Session
 	 */
 	public HttpSession getSession() {
@@ -34,7 +34,7 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 
 	/**
 	 * Returns current HTTP Request.
-	 * 
+	 *
 	 * @return Http Servlet Request
 	 */
 	public HttpServletRequest getRequest() {
@@ -43,10 +43,11 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 
 	/**
 	 * Returns current HTTP Response.
-	 * 
+	 *
 	 * @return Http Servlet Reponse
 	 */
 	public HttpServletResponse getResponse() {
 		return ServletActionContext.getResponse();
 	}
+
 }

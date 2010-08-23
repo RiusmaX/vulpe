@@ -26,7 +26,7 @@ import java.util.List;
  * @since 1.0
  */
 @SuppressWarnings("serial")
-public class EverParameter extends VulpeHashMap {
+public class EverParameter extends VulpeHashMap<String, Object> {
 
 	public static final String WEAK_REFERENCE = "WeakReference_";
 

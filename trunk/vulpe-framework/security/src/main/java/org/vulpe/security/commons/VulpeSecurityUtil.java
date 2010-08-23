@@ -17,13 +17,16 @@ package org.vulpe.security.commons;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
+import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.model.services.VulpeService;
 
 /**
  * Vulpe Security Callback utility class.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -33,7 +36,7 @@ public class VulpeSecurityUtil {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 * 
+	 *
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -45,7 +48,7 @@ public class VulpeSecurityUtil {
 
 	/**
 	 * Retrieves a Spring Bean by name.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param beanName
@@ -59,7 +62,7 @@ public class VulpeSecurityUtil {
 
 	/**
 	 * Retrieves a Spring Bean by class.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param clazz
@@ -73,11 +76,23 @@ public class VulpeSecurityUtil {
 
 	/**
 	 * Retrieves Spring Security Authentication.
-	 * 
+	 *
 	 * @return Authentication Interface
 	 * @since 1.0
 	 */
 	public Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
+	}
+
+	public VulpeHashMap<String, Object> getCachedClass() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASS);
+	}
+
+	public VulpeHashMap<String, Object> getCachedEnum() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
+	}
+
+	public VulpeHashMap<String, Object> getCachedEnumArray() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM_ARRAY);
 	}
 }
