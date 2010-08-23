@@ -460,8 +460,12 @@ html,body {
 	width: 96%;
 }
 
-#body td,th {
-	padding: 5px;
+.vulpeTableHeader th, .vulpeColumnHeader th, .vulpeTableFooter th {
+	padding: 3px;
+}
+
+#vulpeCRUDBody td,#vulpeCRUDBody th,#vulpeSelectForm td {
+	padding: 0px;
 }
 
 #container {
@@ -708,5 +712,5 @@ html,body {
 	text-align: right;
 	margin-right: 5px;
 	margin-bottom: 5px;
-	font-size: 9px;
+	font-size: 8px;
 }

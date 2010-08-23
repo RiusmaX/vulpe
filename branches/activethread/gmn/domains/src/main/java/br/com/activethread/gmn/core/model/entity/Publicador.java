@@ -5,12 +5,10 @@ import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
-import org.vulpe.security.model.entity.User;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
-import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
@@ -35,21 +33,17 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 	@VulpeSelect(items = "Grupo", itemKey = "id", itemLabel = "nome", autoLoad = true, argument = true)
 	private Grupo grupo;
 
-	@VulpeColumn(sortable = true, attribute = "name")
-	@VulpeSelectPopup(identifier = "id", description = "name", action = "/security/User/select/prepare", popupWidth = 420, argument = true, autoComplete = true)
-	private User usuario;
+	@VulpeColumn(booleanTo = "{Yes}|{No}")
+	@VulpeCheckbox(argument = true, fieldValue = "true")
+	private Boolean indicador;
 
 	@VulpeColumn(booleanTo = "{Yes}|{No}")
 	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private boolean indicador;
+	private Boolean leitor;
 
 	@VulpeColumn(booleanTo = "{Yes}|{No}")
 	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private boolean leitor;
-
-	@VulpeColumn(booleanTo = "{Yes}|{No}")
-	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private boolean microfone;
+	private Boolean microfone;
 
 	public String getNome() {
 		return nome;
@@ -67,27 +61,19 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 		this.grupo = grupo;
 	}
 
-	public void setUsuario(User usuario) {
-		this.usuario = usuario;
-	}
-
-	public User getUsuario() {
-		return usuario;
-	}
-
-	public void setIndicador(boolean indicador) {
+	public void setIndicador(Boolean indicador) {
 		this.indicador = indicador;
 	}
 
-	public boolean isIndicador() {
+	public Boolean getIndicador() {
 		return indicador;
 	}
 
-	public void setLeitor(boolean leitor) {
+	public void setLeitor(Boolean leitor) {
 		this.leitor = leitor;
 	}
 
-	public boolean isLeitor() {
+	public Boolean getLeitor() {
 		return leitor;
 	}
 
@@ -99,11 +85,11 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 		return sexo;
 	}
 
-	public void setMicrofone(boolean microfone) {
+	public void setMicrofone(Boolean microfone) {
 		this.microfone = microfone;
 	}
 
-	public boolean isMicrofone() {
+	public Boolean getMicrofone() {
 		return microfone;
 	}
 }

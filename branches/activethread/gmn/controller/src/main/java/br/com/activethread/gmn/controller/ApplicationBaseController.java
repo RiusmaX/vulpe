@@ -9,25 +9,14 @@ import org.vulpe.model.entity.VulpeEntity;
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.core.model.entity.Congregacao;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeStrutsController<ENTITY, ID> {
 
 	protected static final Logger LOG = Logger.getLogger(ApplicationBaseController.class);
 
-	private Congregacao congregacao;
-
-	public void setCongregacao(final Congregacao congregacao) {
-		this.congregacao = congregacao;
-	}
-
 	public Congregacao getCongregacao() {
-		return congregacao;
+		return getSessionAttribute(Core.CONGREGACAO_SELECIONADA);
 	}
 
-	@Override
-	protected void onPrepare() {
-		setCongregacao((Congregacao) getSession().getAttribute(Core.CONGREGACAO_USUARIO));
-		super.onPrepare();
-	}
 }

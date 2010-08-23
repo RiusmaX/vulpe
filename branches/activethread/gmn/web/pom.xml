@@ -100,27 +100,27 @@
 										<if>
 											<equals arg1="${deployMode}" arg2="quick" />
 											<then>
-												<copy todir="${tomcat.home}/webapps/${projectName}/" overwrite="true">
+												<copy todir="${tomcat.home}/webapps/gmn/" overwrite="true">
 													<fileset dir="${project.build.directory}/${artifactId}-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${deployMode}" arg2="quick-restart" />
 												<then>
-													<copy todir="${tomcat.home}/webapps/${projectName}/" overwrite="true">
+													<copy todir="${tomcat.home}/webapps/gmn/" overwrite="true">
 														<fileset dir="${project.build.directory}/${artifactId}-${version}/" excludes="**/*.jar" />
 													</copy>
 												</then>
 											</elseif>
 											<else>
-												<delete dir="${tomcat.home}/webapps/${projectName}" />
+												<delete dir="${tomcat.home}/webapps/gmn" />
 												<if>
 													<equals arg1="${deleteWork}" arg2="true" />
 													<then>
-														<delete dir="${tomcat.home}/work/Catalina/localhost/${projectName}" />
+														<delete dir="${tomcat.home}/work/Catalina/localhost/gmn" />
 													</then>
 												</if>
-												<unwar src="${project.build.directory}/${projectName}.war" dest="${tomcat.home}/webapps/${projectName}" />
+												<unwar src="${project.build.directory}/gmn.war" dest="${tomcat.home}/webapps/gmn" />
 											</else>
 										</if>
 									</then>

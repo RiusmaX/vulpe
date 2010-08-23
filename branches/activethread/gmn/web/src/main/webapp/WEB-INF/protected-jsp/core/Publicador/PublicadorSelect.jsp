@@ -15,15 +15,7 @@
 	itemLabel="nome"
 	showBlank="true" autoLoad="true"
 />
-<v:selectPopup
-	labelKey="label.gmn.core.Publicador.select.usuario"
-	property="usuario"
-	identifier="id" description="name"
-	action="/security/User/select/prepare" popupId="usuarioSelectPopup"
-	popupProperties="usuario.id=id,usuario.name=name"
-	size="40" popupWidth="420px"
-	autoComplete="true"
-/>
+<%--
 <v:checkbox
 	labelKey="label.gmn.core.Publicador.select.indicador"
 	property="indicador"
@@ -39,3 +31,4 @@
 	property="microfone"
 	fieldValue="true"
 />
+ --%>

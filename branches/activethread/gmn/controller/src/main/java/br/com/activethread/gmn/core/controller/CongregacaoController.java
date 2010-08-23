@@ -18,7 +18,9 @@ import br.com.activethread.gmn.core.model.services.CoreService;
 @Component("core.CongregacaoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "grupos", propertyName = "entity.grupos", despiseFields = "nome", startNewDetails = 3, newDetails = 1) }, select = @Select(pageSize = 5), tabular = @Tabular(startNewRecords = 1, newRecords = 1))
+@Controller(serviceClass = CoreService.class, detailsConfig = {
+		@DetailConfig(name = "grupos", propertyName = "entity.grupos", despiseFields = "nome", startNewDetails = 3, newDetails = 1),
+		@DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 3, newDetails = 1) }, select = @Select(pageSize = 5), tabular = @Tabular(startNewRecords = 1, newRecords = 1))
 public class CongregacaoController extends ApplicationBaseController<Congregacao, java.lang.Long> {
 
 }
