@@ -17,10 +17,4 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	protected final Logger LOG = Logger.getLogger(IndexController.class);
 
-	@Override
-	protected void frontendBefore() {
-		super.frontendBefore();
-		carregarDados();
-	}
-
 }

@@ -9,55 +9,21 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 import org.vulpe.exception.VulpeApplicationException;
 
-import br.gov.pbh.sitra.commons.ApplicationConstants.Now;
 import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Index;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
 import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings("serial")
 public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController {
 
 	protected static final Logger LOG = Logger.getLogger(ApplicationBaseSimpleController.class);
 
-	protected final List<Sistema> sistemas = (List<Sistema>) getCachedClass().get(
+	protected final List<Sistema> sistemasCached = getCachedClass().getSelf(
 			Sistema.class.getSimpleName());
-	protected final List<Sistema> sistemasUsuario = new ArrayList<Sistema>();
-	private List<SistemaUsuario> usuariosSistema;
 
 	private Index entity;
-
-	public void carregarDados() {
-		for (Sistema sistema : sistemas) {
-			if (sistema.getUsuarios() != null && !sistema.getUsuarios().isEmpty()) {
-				try {
-					final List<SistemaUsuario> sistemaUsuarios = getService(CoreService.class)
-							.readSistemaUsuario(new SistemaUsuario(sistema));
-					for (SistemaUsuario usuario : sistemaUsuarios) {
-						if (usuario.getUsuario().getUsername().equals(getUserAuthenticated())) {
-							sistemasUsuario.add(sistema);
-							break;
-						}
-					}
-				} catch (VulpeApplicationException e) {
-					LOG.error(e);
-				}
-			}
-		}
-		now.put(Now.SISTEMAS, sistemasUsuario);
-		if (sistemasUsuario.size() == 1) {
-			final Sistema sistema = sistemasUsuario.get(0);
-			setSessionAttribute(Sessao.SISTEMA_SELECIONADO, sistema);
-			carregarUsuariosSistema(sistema);
-		}
-		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
-		if (sistema != null) {
-			entity = new Index();
-			entity.setSistema(sistema);
-		}
-
-	}
 
 	public void setEntity(Index entity) {
 		this.entity = entity;
@@ -69,7 +35,7 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 
 	public String selecionarValidate() {
 		if (getEntity().getSistema() != null && getEntity().getSistema().getId() != null) {
-			for (Sistema sistema : sistemas) {
+			for (Sistema sistema : sistemasCached) {
 				if (sistema.getId().equals(getEntity().getSistema().getId())) {
 					setSessionAttribute(Sessao.SISTEMA_SELECIONADO, sistema);
 					carregarUsuariosSistema(sistema);
@@ -83,20 +49,39 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 	}
 
 	private void carregarUsuariosSistema(final Sistema sistema) {
-		if (usuariosSistema == null) {
-			try {
-				usuariosSistema = getService(CoreService.class).readSistemaUsuario(
-						new SistemaUsuario(sistema));
-				final List<ValueBean> usuarios = new ArrayList<ValueBean>();
-				for (SistemaUsuario sistemaUsuario : usuariosSistema) {
-					final String username = sistemaUsuario.getUsuario().getUsername();
-					usuarios.add(new ValueBean(username, username));
-				}
-				setSessionAttribute(Sessao.USUARIOS_SISTEMA_SELECIONADO, usuarios);
-			} catch (VulpeApplicationException e) {
-				LOG.error(e);
+		try {
+			final SistemaUsuario sistemaUsuarioFind = new SistemaUsuario();
+			sistemaUsuarioFind.setSistema(sistema);
+			final List<SistemaUsuario> sistemaUsuarios = getService(CoreService.class)
+					.readSistemaUsuario(sistemaUsuarioFind);
+			final List<ValueBean> usuarios = new ArrayList<ValueBean>();
+			for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
+				final String username = sistemaUsuario.getUsuario().getUsername();
+				usuarios.add(new ValueBean(username, username));
 			}
+			getSession().setAttribute(Sessao.USUARIOS_SISTEMA_SELECIONADO, usuarios);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
 		}
 	}
 
+	@Override
+	public String frontend() {
+		inicializar();
+		return super.frontend();
+	}
+
+	@Override
+	public String backend() {
+		inicializar();
+		return super.backend();
+	}
+
+	private void inicializar() {
+		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
+		if (sistema != null) {
+			entity = new Index();
+			entity.setSistema(sistema);
+		}
+	}
 }

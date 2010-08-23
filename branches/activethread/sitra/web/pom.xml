@@ -100,7 +100,7 @@
 												</then>
 											</elseif>
 											<else>
-												<delete dir="${tomcat.home}/webapps/${projectName}" />
+												<delete dir="${tomcat.home}/webapps/sitra" />
 												<if>
 													<equals arg1="${deleteWork}" arg2="true" />
 													<then>

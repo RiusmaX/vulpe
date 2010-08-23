@@ -5,7 +5,7 @@
 <v:select
 	labelKey="label.sitra.core.Objeto.crud.sistema"
 	property="sistema.id"
-	items="${now['sistemas']}"
+	items="${sistemasUsuario}"
 	itemKey="id"
 	itemLabel="nome"
 	showBlank="true" autoLoad="false"
