@@ -19,6 +19,8 @@ public interface VulpeControllerConfig {
 
 	int getPageSize();
 
+	String[] requireOneFilter();
+
 	int getTabularPageSize();
 
 	boolean isTabularShowFilter();

@@ -47,8 +47,7 @@ import com.db4o.ObjectSet;
 public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAODB4O.class
-			.getName());
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAODB4O.class.getName());
 
 	/*
 	 * (non-Javadoc)
@@ -65,8 +64,8 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			} else {
 				entityReferenced = (VulpeEntity<Long>) entity.getClass().newInstance();
 				entityReferenced.setId(identifier);
-				entityReferenced = (VulpeEntity<Long>) container.queryByExample(
-						entityReferenced).get(0);
+				entityReferenced = (VulpeEntity<Long>) container.queryByExample(entityReferenced)
+						.get(0);
 				container.ext().bind(entity, container.ext().getID(entityReferenced));
 			}
 			repairRelationship(entity, container);
@@ -142,10 +141,9 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			try {
 				if ((Modifier.isTransient(field.getModifiers()) || field
 						.isAnnotationPresent(Transient.class))
-						&& !field.isAnnotationPresent(QueryParameter.class)) {
-					if (!field.getType().isPrimitive()) {
-						PropertyUtils.setProperty(object, field.getName(), null);
-					}
+						&& !field.isAnnotationPresent(QueryParameter.class)
+						&& !field.getType().isPrimitive()) {
+					PropertyUtils.setProperty(object, field.getName(), null);
 				} else {
 					final Object value = PropertyUtils.getProperty(object, field.getName());
 					if (value != null) {
@@ -183,8 +181,8 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 					try {
 						final VulpeEntity<Long> valueEntity = (VulpeEntity) value;
 						if (valueEntity.getId() != null) {
-							final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) field
-									.getType().newInstance();
+							final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) field.getType()
+									.newInstance();
 							newEntity.setId(valueEntity.getId());
 							final ObjectSet objectSet = getObjectContainer().queryByExample(
 									newEntity);

@@ -524,8 +524,23 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return getController().tabular().showFilter();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewBaseName()
+	 */
 	public String getViewBaseName() {
 		this.viewBaseName = getController().viewBaseName();
 		return viewBaseName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#requireOneFilter()
+	 */
+	public String[] requireOneFilter() {
+		return getController().select().requireOneFilter();
 	}
 }

@@ -1423,7 +1423,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setEntitySelect(getEntity());
 			}
 		}
-
+		if (getControllerConfig().requireOneFilter().length > 0 && checkFilters(getEntitySelect())) {
+			addActionError(getText("vulpe.error.validate.required.one.filter"));
+			return;
+		}
 		final ENTITY entity = prepareEntity(Action.READ);
 		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
 				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
@@ -1825,5 +1828,24 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected void downloadBefore() {
 		LOG.debug("downloadBefore");
+	}
+
+	/**
+	 *
+	 * @param entity
+	 */
+	public boolean checkFilters(final ENTITY entity) {
+		boolean empty = true;
+		for (String attribute : getControllerConfig().requireOneFilter()) {
+			try {
+				final Object value = PropertyUtils.getProperty(entity, attribute);
+				if (value != null) {
+					empty = false;
+				}
+			} catch (Exception e) {
+				LOG.debug(e);
+			}
+		}
+		return empty;
 	}
 }

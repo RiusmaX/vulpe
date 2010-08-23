@@ -104,6 +104,7 @@ var vulpe = {
 			loading: "_loading",
 			selectedTab: "_selectedTab"
 		},
+		redirectToLogin: true,
 		theme: 'default'
 	},
 	// vulpe.util
@@ -233,7 +234,7 @@ var vulpe = {
 
 			var list = list.split(delimList);
 			var i = 0;
-			for (i = 0; list && i < list.length; i++) {
+			for (var i = 0; list && i < list.length; i++) {
 				var value = list[i].split(delimValue);
 				var elementId = value[0];
 				var element = vulpe.util.getElement(elementId);
@@ -292,7 +293,7 @@ var vulpe = {
 		},
 
 		getVulpeValidateForms: function(formName) {
-			for (i = 0; i < vulpe.validate.forms.length; i++) {
+			for (var i = 0; i < vulpe.validate.forms.length; i++) {
 				if (vulpe.validate.forms[i].name == formName) {
 					return i;
 				}
@@ -301,7 +302,7 @@ var vulpe = {
 		},
 
 		getVulpePopup: function(popupName) {
-			for (i = 0; i < vulpe.view.popups.length; i++) {
+			for (var i = 0; i < vulpe.view.popups.length; i++) {
 				if (vulpe.view.popups[i] == popupName) {
 					return i;
 				}
@@ -382,7 +383,6 @@ var vulpe = {
 			if (argvalue.charAt(0) == "-") {
 				startFrom = 1;
 			}
-
 			var cont = 0;
 			for (var n = startFrom; n < argvalue.length; n++) {
 				if (validChars.indexOf(argvalue.substring(n, n+1)) == -1) {
@@ -421,7 +421,6 @@ var vulpe = {
 			if (emailStr.length == 0) {
 				return true;
 			}
-
 			var emailPat = /^(.+)@(.+)$/;
 			var specialChars = "\\(\\)<>@,;:\\\\\\\"\\.\\[\\]";
 			var validChars = "\[^\\s" + specialChars + "\]";
@@ -432,17 +431,14 @@ var vulpe = {
 			var userPat = new RegExp("^" + word + "(\\." + word + ")*$");
 			var domainPat = new RegExp("^" + atom + "(\\." + atom + ")*$");
 			var matchArray = emailStr.match(emailPat);
-
 			if (matchArray == null) {
 				return false;
 			}
-
 			var user = matchArray[1];
 			var domain = matchArray[2];
 			if (user.match(userPat) == null) {
 				return false;
 			}
-
 			var IPArray = domain.match(ipDomainPat);
 			if (IPArray != null) {
 				for (var i = 1; i <= 4; i++) {
@@ -452,12 +448,10 @@ var vulpe = {
 				}
 				return true;
 			}
-
 			var domainArray = domain.match(domainPat);
 			if (domainArray == null) {
 				return false;
 			}
-
 			var atomPat = new RegExp(atom, "g");
 			var domArr = domain.match(atomPat);
 			var len = domArr.length;
@@ -760,11 +754,9 @@ var vulpe = {
 			var idField = config.field.attr("id");
 			var typeField = config.field.attr("type");
 			var message = vulpe.config.messages.error.validate.email;
-			if (typeField == 'text' || typeField == 'textarea') {
-				if (!vulpe.validate.checkEmail(config.field.val())) {
-					isValid = false;
-					vulpe.exception.setupError(idField, message);
-				}
+			if ((typeField == 'text' || typeField == 'textarea') && !vulpe.validate.checkEmail(config.field.val())) {
+				isValid = false;
+				vulpe.exception.setupError(idField, message);
 			}
 			return isValid;
 		},
@@ -961,29 +953,17 @@ var vulpe = {
 				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' vulpeOrderDesc')) {
 					order = 'vulpeOrderDesc';
 					if (vulpe.util.trim(columns[i]) == property) {
-						if (value == '') {
-							value = vulpe.util.trim(columns[i]) + ' desc';
-						} else {
-							value = value + ',' + vulpe.util.trim(columns[i]) + ' desc';
-						}
+						value = (value == '') ? vulpe.util.trim(columns[i]) + ' desc' : value + ',' + vulpe.util.trim(columns[i]) + ' desc';
 					} else {
 						oldDesc = true;
 					}
 				} else {
-					if (value == '') {
-						value = vulpe.util.trim(columns[i]);
-					} else {
-						value = value + ',' + vulpe.util.trim(columns[i]);
-					}
+					value = (value == '') ? vulpe.util.trim(columns[i]) : value + ',' + vulpe.util.trim(columns[i]);
 				}
 			}
 			if (order == '') {
 				order = 'vulpeOrderAsc';
-				if (value == '') {
-					value = property;
-				} else {
-					value = value + ', ' + property;
-				}
+				value = (value == '') ? property : value + ', ' + property;
 			} else if (order == 'vulpeOrderDesc' && oldDesc) {
 				order = '';
 			}
@@ -1002,7 +982,7 @@ var vulpe = {
 
 		markUnmarkAll: function(controller, parent) {
 			var selections = jQuery("*[name$='selected']", parent);
-			for (i = 0; i < selections.length; i++) {
+			for (var i = 0; i < selections.length; i++) {
 				selections[i].checked = controller.checked;
 			}
 		},
@@ -1011,14 +991,8 @@ var vulpe = {
 			var sortPropertyInfo = vulpe.util.getElement(sortPropertyInfoName);
 			if (sortPropertyInfo && vulpe.util.isNotEmpty(sortPropertyInfo.value) != '') {
 				var columns = sortPropertyInfo.value.split(',');
-				var i = 0;
-				for(i = 0; i < columns.length; i++) {
-					var order = '';
-					if (vulpe.util.trim(columns[i]).indexOf(' vulpeOrderDesc') >= 0) {
-						order = 'vulpeOrderDesc';
-					} else {
-						order = 'vulpeOrderAsc';
-					}
+				for(var i = 0; i < columns.length; i++) {
+					var order = (vulpe.util.trim(columns[i]).indexOf(' vulpeOrderDesc') >= 0) ? 'vulpeOrderDesc' : 'vulpeOrderAsc';
 					var property = vulpe.util.trim(columns[i]).replace(' vulpeOrderDesc', '');
 					var propertyTh = vulpe.util.getElement(sortPropertyInfoName + '_' + property);
 					if (propertyTh) {
@@ -1047,14 +1021,9 @@ var vulpe = {
 			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
 			var popup = vulpe.util.get(popupName);
 			var popupProperties = popup.attr('popupProperties');
-
 			vulpe.util.loopMap(popupProperties, function(c, v) {
 				var value = vulpe.util.getValueMap(values, v);
-				if (typeof value == "undefined") {
-					value = '';
-				} else {
-					value = webtoolkit.url.decode(value);
-				}
+				value = (typeof value == "undefined") ? '' : webtoolkit.url.decode(value);
 				vulpe.util.get(webtoolkit.url.decode(c)).val(value.replace(/\+/g, " "));
 			});
 
@@ -1062,11 +1031,7 @@ var vulpe = {
 			var layerParent = webtoolkit.url.decode(popup.attr('layerParent'));
 			vulpe.util.loopMap(popupExpressions, function(c, v) {
 				var value = vulpe.util.getValueMap(values, v);
-				if (typeof value == "undefined") {
-					value = '';
-				} else {
-					value = webtoolkit.url.decode(value).replace(/\+/g, " ");
-				}
+				value = (typeof value == "undefined") ? '' : webtoolkit.url.decode(value).replace(/\+/g, " ");
 				if (vulpe.util.isEmpty(layerParent)) {
 					jQuery(webtoolkit.url.decode(c)).val(value);
 				} else {
@@ -1191,9 +1156,7 @@ var vulpe = {
 				if (typeof layerFields == "undefined") {
 					layerFields = '';
 				}
-
 				var newFunction = {key: key, callback: callback, layerFields: layerFields, getKey: function() {return this.key + this.layerFields;}};
-
 				var exists = false;
 				jQuery(array).each(function(i) {
 					exists = this.getKey() == newFunction.getKey();
@@ -1202,7 +1165,6 @@ var vulpe = {
 						return false;
 					}
 				});
-
 				if (!exists) {
 					array[array.length] = newFunction;
 				}
@@ -1223,9 +1185,7 @@ var vulpe = {
 				if (typeof layerFields == "undefined") {
 					layerFields = '';
 				}
-
 				var key = key + layerFields;
-
 				var indexs = new Array();
 				jQuery(array).each(function(i) {
 					if (this.getKey() == key) {
@@ -1233,7 +1193,6 @@ var vulpe = {
 						return false;
 					}
 				});
-
 				jQuery(indexs).each(function(i) {
 					vulpe.util.removeArray(array, this);
 				});
@@ -1248,9 +1207,9 @@ var vulpe = {
 			},
 
 			invokeFunctions: function(array, layerFields) {
-				if (typeof layerFields == "undefined")
+				if (typeof layerFields == "undefined") {
 					layerFields = '';
-
+				}
 				jQuery(array).each(function(i) {
 					if (this.layerFields == layerFields)
 						this.callback();
@@ -1316,8 +1275,10 @@ var vulpe = {
 				var selections = jQuery("*[name$='selected']");
 				var selectedIds = new Array();
 				var count = 0;
-				for (i = 0; i < selections.length; i++) {
-					if (selections[i].checked) count++;
+				for (var i = 0; i < selections.length; i++) {
+					if (selections[i].checked) {
+						count++;
+					}
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
 				if (count > 0) {
@@ -1335,7 +1296,7 @@ var vulpe = {
 						buttons: {
 							Ok: function() {
 								$(this).dialog('close');
-								for (i = 0; i < selectedIds.length; i++) {
+								for (var i = 0; i < selectedIds.length; i++) {
 									if (selectedIds != "") {
 										selections[i].checked;
 										selections[i].value = selectedIds[i];
@@ -1359,7 +1320,7 @@ var vulpe = {
 				var selections = jQuery("*[name$='selected']");
 				var selectedIds = new Array();
 				var count = 0;
-				for (i = 0; i < selections.length; i++) {
+				for (var i = 0; i < selections.length; i++) {
 					if (selections[i].checked) count++;
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
@@ -1378,7 +1339,7 @@ var vulpe = {
 						buttons: {
 							Ok: function() {
 								$(this).dialog('close');
-								for (i = 0; i < selectedIds.length; i++) {
+								for (var i = 0; i < selectedIds.length; i++) {
 									if (selectedIds != "") {
 										selections[i].checked;
 										selections[i].value = selectedIds[i];
@@ -1399,10 +1360,8 @@ var vulpe = {
 			},
 
 			submitFormAction: function(actionURL, formName, layerFields, queryString, layer, validate, beforeJs, afterJs) {
-				if (actionURL.indexOf("Post") != -1 || actionURL.indexOf("read") != -1 || actionURL.indexOf("Validate") != -1) {
-					if (!vulpe.validate.validateAttributes(formName)) {
-						return false;
-					}
+				if ((actionURL.indexOf("Post") != -1 || actionURL.indexOf("read") != -1 || actionURL.indexOf("Validate") != -1) && !vulpe.validate.validateAttributes(formName)) {
+					return false;
 				}
 				var form = vulpe.util.getElement(formName);
 				if (actionURL.indexOf(vulpe.config.contextPath) == -1) {
@@ -1454,7 +1413,6 @@ var vulpe = {
 				} catch(e) {
 					return false;
 				}
-
 				var form = vulpe.util.getElement(formName);
 				if (validate && (typeof isFile == "undefined" || !isFile)) {
 					var nome = formName.substring(0, 1).toUpperCase() + formName.substring(1);
@@ -1466,11 +1424,9 @@ var vulpe = {
 					} catch(e) {
 						// do nothing
 					}
-
 					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(layerFields)).each(function (i) {
 						vulpe.exception.hideError(this);
 					});
-
 					var files = jQuery(':file[value]', vulpe.util.get(layerFields));
 					if (files && files.length && files.length > 0) {
 						vulpe.view.request.uploadAll(files, formName, layerFields, queryString, layer, validate, beforeJs, afterJs);
@@ -1500,6 +1456,7 @@ var vulpe = {
 			submitMenu: function(url, beforeJs, afterJs) {
 				jQuery(vulpe.config.layers.messages).hide();
 				vulpe.config.order = new Array();
+				vulpe.config.redirectToLogin = false;
 				return vulpe.view.request.submitPage(vulpe.config.contextPath + url, '', 'body', beforeJs, afterJs);
 			},
 
@@ -1601,18 +1558,11 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(beforeJs)) {
 					return false;
 				}
-
-				if (vulpe.util.isNotEmpty(queryString)) {
-					queryString = queryString + '&ajax=true';
-				} else {
-					queryString = 'ajax=true';
-				}
-
+				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString : '') + '&ajax=true';
 				var popup = jQuery('[id$=Popup]');
 				if (!popup || popup.length == 0) {
 					hotkeys.triggersMap = {};
 				}
-
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",
@@ -1625,8 +1575,11 @@ var vulpe = {
 						vulpe.config.showLoading = true;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
+						} else if (data.indexOf(vulpe.config.springSecurityCheck) != -1 && vulpe.config.redirectToLogin) {
+							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {
+								vulpe.config.redirectToLogin = true;
 								var authenticator = urlStr.indexOf("/j_spring_security_check") != -1;
 								var loginError = data.indexOf("vulpeLoginForm") == -1;
 								var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
@@ -1670,7 +1623,6 @@ var vulpe = {
 				var form = vulpe.util.getElement(formName);
 				form.action = vulpe.config.contextPath + uri;
 				var layerFields = formName;
-
 				if (individualLoading) {
 					vulpe.config.showLoading = false;
 					var elements = jQuery("select,input,span", "#" + id);
@@ -1778,7 +1730,7 @@ var vulpe = {
 			if (element) {
 				jQuery(element).addClass(vulpe.config.css.fieldError);
 				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
-				if (error) {
+				if (error.length == 1) {
 					error.show();
 				}
 			}
@@ -1788,7 +1740,7 @@ var vulpe = {
 			if (element) {
 				jQuery(element).removeClass(vulpe.config.css.fieldError);
 				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
-				if (error) {
+				if (error.length == 1) {
 					error.hide();
 				}
 			}
@@ -1796,7 +1748,10 @@ var vulpe = {
 
 		hideError: function(element) {
 			jQuery(element).removeClass(vulpe.config.css.fieldError);
-			vulpe.util.get(element.id + vulpe.config.suffix.errorMessage).hide();
+			var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
+			if (error.length == 1) {
+				error.hide();
+			}
 		},
 
 		handlerError: function(data, status, e) {

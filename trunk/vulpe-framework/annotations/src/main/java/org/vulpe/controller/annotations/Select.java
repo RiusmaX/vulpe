@@ -34,6 +34,11 @@ public @interface Select {
 	int pageSize() default 0;
 
 	/**
+	 * Indicates that one of these filters must be filled
+	 */
+	String[] requireOneFilter() default {};
+
+	/**
 	 * Show report button
 	 */
 	boolean showReport() default false;
