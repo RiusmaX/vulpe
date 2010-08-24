@@ -56,10 +56,13 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 					.readSistemaUsuario(sistemaUsuarioFind);
 			final List<ValueBean> usuarios = new ArrayList<ValueBean>();
 			for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
+				if (sistemaUsuario.getUsuario().getUsername().equals(getUserAuthenticated())) {
+					setSessionAttribute(Sessao.SISTEMA_USUARIO_SELECIONADO, sistemaUsuario);
+				}
 				final String username = sistemaUsuario.getUsuario().getUsername();
 				usuarios.add(new ValueBean(username, username));
 			}
-			getSession().setAttribute(Sessao.USUARIOS_SISTEMA_SELECIONADO, usuarios);
+			setSessionAttribute(Sessao.USUARIOS_SISTEMA_SELECIONADO, usuarios);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}

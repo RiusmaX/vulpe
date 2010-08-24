@@ -55,6 +55,9 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 							sistemaUsuarioFind);
 					final List<ValueBean> usuarios = new ArrayList<ValueBean>();
 					for (SistemaUsuario sistemaUsuario : sistemaUsuarios) {
+						if (sistemaUsuario.getUsuario().getId().equals(userId)) {
+							getSession().setAttribute(Sessao.SISTEMA_USUARIO_SELECIONADO, sistemaUsuario);
+						}
 						final String username = sistemaUsuario.getUsuario().getUsername();
 						usuarios.add(new ValueBean(username, username));
 					}

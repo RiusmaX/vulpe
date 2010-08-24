@@ -19,7 +19,7 @@ import br.gov.pbh.sitra.core.model.entity.oracle.AllObjects;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
- * Controller implementation of Objeto
+ * Controller Base implementation of Objeto
  */
 @SuppressWarnings( { "serial", "unchecked" })
 public class ObjetoBaseController extends ApplicationBaseController<Objeto, java.lang.Long> {

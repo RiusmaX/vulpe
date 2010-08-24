@@ -23,6 +23,11 @@
 					fieldValue="true"
 				/>
 			</v:column>
+			<v:column labelKey="label.sitra.core.Sistema.crud.usuarios.administrador">
+				<v:checkbox property="administrador"
+					fieldValue="true"
+				/>
+			</v:column>
 		</v:row>
 	</jsp:attribute>
 </v:table>

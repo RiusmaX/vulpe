@@ -47,6 +47,11 @@ public class SistemaUsuario extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "IND_PUBLICA_PRODUCAO")
 	private Boolean publicaProducao;
 
+	@VulpeColumn(booleanTo = "{Yes}|{No}")
+	@VulpeCheckbox(argument = true, fieldValue = "true")
+	@Column(name = "IND_ADMINISTRADOR")
+	private Boolean administrador;
+
 	public SistemaUsuario() {
 	}
 
@@ -94,6 +99,14 @@ public class SistemaUsuario extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public void setPublicaProducao(Boolean publicaProducao) {
 		this.publicaProducao = publicaProducao;
+	}
+
+	public void setAdministrador(Boolean administrador) {
+		this.administrador = administrador;
+	}
+
+	public Boolean getAdministrador() {
+		return administrador;
 	}
 
 }

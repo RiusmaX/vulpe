@@ -22,6 +22,7 @@ import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.entity.Status;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
@@ -69,7 +70,13 @@ public class ObjetoController extends ObjetoBaseController {
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getEntity() != null && getEntity().getId() != null
 					&& getEntity().getStatus().equals(Status.N)) {
-				getButtons().put("transferir", true);
+				final SistemaUsuario sistemaUsuario = getSessionAttribute(Sessao.SISTEMA_USUARIO_SELECIONADO);
+				if (sistemaUsuario != null && !sistemaUsuario.getAdministrador()
+						&& !getEntity().getUsuario().equals(getUserAuthenticated())) {
+					setOnlyToSee(true);
+				} else {
+					getButtons().put("transferir", true);
+				}
 			}
 		}
 	}
@@ -132,4 +139,9 @@ public class ObjetoController extends ObjetoBaseController {
 		return super.read();
 	}
 
+	@Override
+	protected void createPostAfter(Objeto entity) {
+		super.createPostAfter(entity);
+		getButtons().put("transferir", true);
+	}
 }

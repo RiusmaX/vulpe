@@ -16,9 +16,11 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants.Now;
+import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.SistemaUsuario;
 import br.gov.pbh.sitra.core.model.entity.Status;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
@@ -69,7 +71,19 @@ public class ObjetoPublicacaoController extends ObjetoBaseController {
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getEntity() != null && getEntity().getId() != null
 					&& getEntity().getStatus().equals(Status.N)) {
-				getButtons().put("publicar", true);
+				final SistemaUsuario sistemaUsuario = getSessionAttribute(Sessao.SISTEMA_USUARIO_SELECIONADO);
+				if (sistemaUsuario != null) {
+					if ((sistemaUsuario.getPublicaHomologacao() && getEntity().getDestino().equals(
+							Ambiente.H))
+							|| (sistemaUsuario.getPublicaProducao() && getEntity().getDestino()
+									.equals(Ambiente.P))) {
+						getButtons().put("publicar", true);
+					}
+					if (!sistemaUsuario.getAdministrador()
+							&& !getEntity().getUsuario().equals(getUserAuthenticated())) {
+						setOnlyToSee(true);
+					}
+				}
 			}
 		}
 	}
@@ -92,6 +106,20 @@ public class ObjetoPublicacaoController extends ObjetoBaseController {
 			objeto.setOwnerDestino(objeto.getSistema().getOwnerHomologacao());
 		} else {
 			objeto.setOwnerDestino(objeto.getSistema().getOwnerProducao());
+		}
+	}
+
+	@Override
+	protected void createPostAfter(Objeto entity) {
+		super.createPostAfter(entity);
+		final SistemaUsuario sistemaUsuario = getSessionAttribute(Sessao.SISTEMA_USUARIO_SELECIONADO);
+		if (sistemaUsuario != null) {
+			if ((sistemaUsuario.getPublicaHomologacao() && getEntity().getDestino().equals(
+					Ambiente.H))
+					|| (sistemaUsuario.getPublicaProducao() && getEntity().getDestino().equals(
+							Ambiente.P))) {
+				getButtons().put("publicar", true);
+			}
 		}
 	}
 }
