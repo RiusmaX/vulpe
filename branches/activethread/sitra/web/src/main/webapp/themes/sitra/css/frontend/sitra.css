@@ -391,6 +391,7 @@ input,select,textarea {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	font-size: 1em;
+	font-family: "Arial", "Verdana", "sans-serif";
 }
 
 label {
@@ -744,6 +745,14 @@ html,body {
 	margin: 0px;
 	padding-left: 20px;
 	padding-top: 3px;
+}
+
+#error ul {
+	list-style: circle;
+}
+
+#messages ul {
+	list-style: circle;
 }
 
 #messages #closeMessages {

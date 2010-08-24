@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants.Action.Button;
 import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.Quantity;
@@ -17,14 +16,13 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.exception.VulpeApplicationException;
 
+import br.gov.pbh.sitra.commons.ApplicationConstants.Now;
 import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
 import br.gov.pbh.sitra.core.model.entity.Status;
-import br.gov.pbh.sitra.core.model.entity.oracle.AllObjects;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
@@ -33,7 +31,8 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @Component("core.ObjetoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5, requireOneFilter = true))
+@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5, requireOneOfFilters = {
+		"tipoObjeto", "nomeObjeto", "dataInicial", "dataFinal", "usuario", "destino" }))
 public class ObjetoController extends ObjetoBaseController {
 
 	private static final List<ValueBean> origem = new ArrayList<ValueBean>();
@@ -49,14 +48,14 @@ public class ObjetoController extends ObjetoBaseController {
 			origem.add(new ValueBean(Ambiente.P.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.P.name()))));
 		}
-		now.put("ORIGEM", origem);
+		now.put(Now.ORIGEM, origem);
 		if (destino.isEmpty()) {
 			destino.add(new ValueBean(Ambiente.D.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.D.name()))));
 			destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.H.name()))));
 		}
-		now.put("destino", destino);
+		now.put(Now.DESTINO, destino);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			getTabs().put(getControllerConfig().getMasterTitleKey(), new Tab("Atualizar de"));
 			getTabs().put(getControllerConfig().getDetail("objetoItens").getTitleKey(),
@@ -68,8 +67,8 @@ public class ObjetoController extends ObjetoBaseController {
 	public void showButtons(String method) {
 		super.showButtons(method);
 		if (getControllerType().equals(ControllerType.CRUD)) {
-			hideButton(Button.CREATE);
-			if (getEntity() != null && getEntity().getId() != null && getEntity().getStatus().equals(Status.N)) {
+			if (getEntity() != null && getEntity().getId() != null
+					&& getEntity().getStatus().equals(Status.N)) {
 				getButtons().put("transferir", true);
 			}
 		}
@@ -95,7 +94,6 @@ public class ObjetoController extends ObjetoBaseController {
 		} else {
 			objeto.setOwnerDestino(objeto.getSistema().getOwnerHomologacao());
 		}
-
 	}
 
 	public String transferir() {
@@ -112,21 +110,6 @@ public class ObjetoController extends ObjetoBaseController {
 
 	@Override
 	public String read() {
-//		boolean valido = false;
-//		if (getEntitySelect() != null
-//				&& (getEntitySelect().getTipoObjeto() != null || StringUtils
-//						.isNotEmpty(getEntitySelect().getNomeObjeto()))
-//				|| getEntitySelect().getDataInicial() != null
-//				|| getEntitySelect().getDataFinal() != null
-//				|| StringUtils.isNotEmpty(getEntitySelect().getUsuario())
-//				|| getEntitySelect().getDestino() != null) {
-//			valido = true;
-//		}
-//		if (!valido) {
-//			addActionError(getText("sitra.msg.erro.pesquisa.sem.filtro"));
-//			setResultForward(getControllerConfig().getViewItemsPath());
-//			return Forward.SUCCESS;
-//		}
 		final Sistema sistema = getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
 		getEntitySelect().setSistema(sistema);
 		Calendar calendar = Calendar.getInstance();
@@ -149,31 +132,4 @@ public class ObjetoController extends ObjetoBaseController {
 		return super.read();
 	}
 
-	public String objetos() {
-		try {
-			returnToPage("objetos");
-			final AllObjects allObjects = new AllObjects();
-			final String index = getRequest().getParameter("index");
-			final String tipo = getRequest().getParameter("tipo");
-			allObjects.setType(tipo);
-			final Objeto objeto = getEntity();
-			if (objeto.getOrigem() == null) {
-				now.put("mensagem",
-						"Por favor, selecione um valor no campo 'Origem' da Aba 'Atualizar de'.");
-				return Forward.SUCCESS;
-			}
-			if (objeto.getOrigem().equals(Ambiente.H)) {
-				allObjects.setOwner(getSistemaSelecionado().getOwnerHomologacao());
-			} else {
-				allObjects.setOwner(getSistemaSelecionado().getOwnerProducao());
-			}
-			List<AllObjects> objetosOracle = getService(CoreService.class).readAllObjects(
-					allObjects);
-			now.put("index", index);
-			now.put("objetos", objetosOracle);
-		} catch (VulpeApplicationException e) {
-			e.printStackTrace();
-		}
-		return Forward.SUCCESS;
-	}
 }

@@ -90,7 +90,7 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 
 	@VulpeCheckbox(fieldValue = "true")
 	@Column(name = "IND_COMPILA_INVALIDO")
-	private Boolean compilarInvalidos;
+	private Boolean compilarInvalidos = Boolean.FALSE;
 
 	@IgnoreAutoFilter
 	@Enumerated(EnumType.STRING)

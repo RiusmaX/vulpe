@@ -15,7 +15,11 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
+import br.gov.pbh.sitra.commons.ApplicationConstants.Now;
 import br.gov.pbh.sitra.core.model.entity.Ambiente;
+import br.gov.pbh.sitra.core.model.entity.Objeto;
+import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.Status;
 import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
@@ -44,14 +48,14 @@ public class ObjetoPublicacaoController extends ObjetoBaseController {
 			origem.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.H.name()))));
 		}
-		now.put("ORIGEM", origem);
+		now.put(Now.ORIGEM, origem);
 		if (destino.isEmpty()) {
 			destino.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.H.name()))));
 			destino.add(new ValueBean(Ambiente.P.name(), getText(keyPrefix.concat(".").concat(
 					Ambiente.P.name()))));
 		}
-		now.put("destino", destino);
+		now.put(Now.DESTINO, destino);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			getTabs().put(getControllerConfig().getMasterTitleKey(), new Tab("Publicar em"));
 			getTabs().put(getControllerConfig().getDetail("objetoItens").getTitleKey(),
@@ -59,4 +63,35 @@ public class ObjetoPublicacaoController extends ObjetoBaseController {
 		}
 	}
 
+	@Override
+	public void showButtons(String method) {
+		super.showButtons(method);
+		if (getControllerType().equals(ControllerType.CRUD)) {
+			if (getEntity() != null && getEntity().getId() != null
+					&& getEntity().getStatus().equals(Status.N)) {
+				getButtons().put("publicar", true);
+			}
+		}
+	}
+
+	protected void atualizarDadosObjeto() {
+		super.atualizarDadosObjeto();
+		final Objeto objeto = getEntity();
+		for (Sistema sistema : sistemas) {
+			if (sistema.getId().equals(objeto.getSistema().getId())) {
+				objeto.setSistema(sistema);
+				break;
+			}
+		}
+		if (objeto.getOrigem().equals(Ambiente.H)) {
+			objeto.setOwnerOrigem(objeto.getSistema().getOwnerHomologacao());
+		} else {
+			objeto.setOwnerOrigem("LEGADO");
+		}
+		if (objeto.getDestino().equals(Ambiente.H)) {
+			objeto.setOwnerDestino(objeto.getSistema().getOwnerHomologacao());
+		} else {
+			objeto.setOwnerDestino(objeto.getSistema().getOwnerProducao());
+		}
+	}
 }

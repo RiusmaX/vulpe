@@ -5,13 +5,18 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Action.Button;
+import org.vulpe.commons.VulpeConstants.Action.Forward;
 import org.vulpe.commons.VulpeConstants.Action.URI;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.pbh.sitra.commons.ApplicationConstants.Sessao;
 import br.gov.pbh.sitra.controller.ApplicationBaseController;
+import br.gov.pbh.sitra.core.model.entity.Ambiente;
 import br.gov.pbh.sitra.core.model.entity.Objeto;
 import br.gov.pbh.sitra.core.model.entity.Sistema;
+import br.gov.pbh.sitra.core.model.entity.oracle.AllObjects;
+import br.gov.pbh.sitra.core.model.services.CoreService;
 
 /**
  * Controller implementation of Objeto
@@ -95,5 +100,36 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 
 	public Sistema getSistemaSelecionado() {
 		return getSessionAttribute(Sessao.SISTEMA_SELECIONADO);
+	}
+
+	public String objetos() {
+		try {
+			returnToPage("objetos");
+			final AllObjects allObjects = new AllObjects();
+			final String index = getRequest().getParameter("index");
+			final String tipo = getRequest().getParameter("tipo");
+			allObjects.setType(tipo);
+			final Objeto objeto = getEntity();
+			if (objeto.getOrigem() == null) {
+				StringBuilder mensagem = new StringBuilder(
+						"Por favor, selecione um valor no campo 'Origem' dentro da Aba ");
+				mensagem.append(now.containsKey("publicacao") ? "'Publicar em'."
+						: "'Atualizar de'.");
+				now.put("mensagem", mensagem.toString());
+				return Forward.SUCCESS;
+			}
+			if (objeto.getOrigem().equals(Ambiente.H)) {
+				allObjects.setOwner(getSistemaSelecionado().getOwnerHomologacao());
+			} else {
+				allObjects.setOwner(getSistemaSelecionado().getOwnerProducao());
+			}
+			List<AllObjects> objetosOracle = getService(CoreService.class).readAllObjects(
+					allObjects);
+			now.put("index", index);
+			now.put("objetos", objetosOracle);
+		} catch (VulpeApplicationException e) {
+			e.printStackTrace();
+		}
+		return Forward.SUCCESS;
 	}
 }
