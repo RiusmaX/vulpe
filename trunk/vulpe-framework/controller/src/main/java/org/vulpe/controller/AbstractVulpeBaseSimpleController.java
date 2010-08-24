@@ -93,7 +93,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
-		if (getControllerConfig().requireOneOfFilters().length > 0) {
+		if (getControllerConfig().isRequireOneFilter()) {
 			now.put(Now.REQUIRE_ONE_FILTER, true);
 		}
 		// now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());

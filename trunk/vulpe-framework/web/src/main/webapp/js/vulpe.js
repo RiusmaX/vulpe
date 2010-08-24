@@ -806,6 +806,7 @@ var vulpe = {
 						}
 					}
 					if (empty) {
+						vulpe.util.focusFirst("#" + formName);
 						vulpe.exception.showMessageError(vulpe.config.messages.error.validate.requireOneFilter);
 						return false;
 					}
@@ -1573,17 +1574,17 @@ var vulpe = {
 					success: function (data, status) {
 						vulpe.view.hideLoading();
 						vulpe.config.showLoading = true;
+						var authenticator = urlStr.indexOf("/j_spring_security_check") != -1;
+						var loginError = data.indexOf("vulpeLoginForm") == -1;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						} else if (data.indexOf(vulpe.config.springSecurityCheck) != -1 && vulpe.config.redirectToLogin) {
+						} else if (authenticator && loginError && vulpe.config.redirectToLogin) {
 							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {
 								vulpe.config.redirectToLogin = true;
-								var authenticator = urlStr.indexOf("/j_spring_security_check") != -1;
-								var loginError = data.indexOf("vulpeLoginForm") == -1;
 								var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
-								if (authenticator && loginError &&  validUrlRedirect) {
+								if (authenticator && loginError && validUrlRedirect) {
 									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
 									var html = "";

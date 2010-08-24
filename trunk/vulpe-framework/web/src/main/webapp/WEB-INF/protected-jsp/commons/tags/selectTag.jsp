@@ -35,7 +35,7 @@
 			<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
 			<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
 			<c:if test="${value eq keyValue}">
-				<s:label theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" cssStyle="${style}" cssClass="vulpeSimpleLabel ${styleClass}" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${util:toString(labelValue)}"/>
+				<s:label theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" cssStyle="${style}" cssClass="vulpeSimpleLabel" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${util:toString(labelValue)}"/>
 			</c:if>
 		</c:forEach>
 		<v:hidden property="${property}"/>

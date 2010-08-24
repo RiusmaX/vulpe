@@ -9,7 +9,6 @@ ${paging.size}
 	</c:otherwise>
 </c:choose>
 </c:if>
-
 <c:if test="${not empty list}">
 	<div id="paging" class="vulpePaging"><v:action elementId="vulpeButtonPagingFirstPage"
 		styleClass="${empty list.firstPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true"

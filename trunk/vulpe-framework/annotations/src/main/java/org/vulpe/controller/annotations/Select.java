@@ -34,6 +34,11 @@ public @interface Select {
 	int pageSize() default 0;
 
 	/**
+	 * Indicates that a filter must be filled
+	 */
+	boolean requireOneFilter() default false;
+
+	/**
 	 * Indicates that one of these filters must be filled
 	 */
 	String[] requireOneOfFilters() default {};
