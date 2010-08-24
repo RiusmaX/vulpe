@@ -152,7 +152,7 @@ td .titulo {
 }
 
 .vulpeIconOff {
-	filter: progid :     DXImageTransform.Microsoft.Alpha (     opacity =       40 );
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
 }
