@@ -41,7 +41,8 @@ vulpe.config.messages = {
 			mask:'<fmt:message key="vulpe.error.validate.mask"/>',
 			maxlength:'<fmt:message key="vulpe.error.validate.maxlength"/>',
 			minlength:'<fmt:message key="vulpe.error.validate.minlength"/>',
-			required:'<fmt:message key="vulpe.error.validate.required"/>'
+			required:'<fmt:message key="vulpe.error.validate.required"/>',
+			requireOneFilter: '<fmt:message key="vulpe.error.validate.require.one.filter"/>'
 		}
 	},
 	exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',

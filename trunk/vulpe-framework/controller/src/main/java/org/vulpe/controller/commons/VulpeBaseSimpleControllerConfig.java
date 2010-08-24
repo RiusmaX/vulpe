@@ -175,7 +175,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * ()
 	 */
 	public String getSimpleControllerName() {
-		this.simpleControllerName = "";
+		this.simpleControllerName = StringUtils.isNotEmpty(this.viewBaseName) ? this.viewBaseName : "";
 		if (StringUtils.isBlank(this.simpleControllerName) && controllerName.contains("/")) {
 			final String[] parts = controllerName.split("/");
 			this.simpleControllerName = parts[1];
@@ -538,9 +538,9 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#requireOneFilter()
+	 * org.vulpe.controller.commons.VulpeControllerConfig#requireOneOfFilters()
 	 */
-	public String[] requireOneFilter() {
-		return getController().select().requireOneFilter();
+	public String[] requireOneOfFilters() {
+		return getController().select().requireOneOfFilters();
 	}
 }

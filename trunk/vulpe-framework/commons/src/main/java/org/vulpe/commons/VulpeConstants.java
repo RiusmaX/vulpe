@@ -111,6 +111,7 @@ public class VulpeConstants {
 			public static final String MASTER_TITLE_KEY = "masterTitleKey";
 			public static final String TITLE_KEY = "titleKey";
 			public static final String FORM_NAME = "formName";
+			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
 		}
 	}
 

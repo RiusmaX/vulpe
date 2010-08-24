@@ -36,7 +36,7 @@ public @interface Select {
 	/**
 	 * Indicates that one of these filters must be filled
 	 */
-	String[] requireOneFilter() default {};
+	String[] requireOneOfFilters() default {};
 
 	/**
 	 * Show report button

@@ -19,7 +19,7 @@ public interface VulpeControllerConfig {
 
 	int getPageSize();
 
-	String[] requireOneFilter();
+	String[] requireOneOfFilters();
 
 	int getTabularPageSize();
 

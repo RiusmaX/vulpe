@@ -185,6 +185,9 @@ $(document).ready(function() {
 			}
 		}
 	}
+	<c:if test="${now['requireOneFilter']}">
+	vulpe.config.requireOneFilter = true;
+	</c:if>
 });
 </script>
 </c:if>

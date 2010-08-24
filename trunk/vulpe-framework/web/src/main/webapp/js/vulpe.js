@@ -69,7 +69,8 @@ var vulpe = {
 					mask: "vulpe.error.validate.mask",
 					maxlength: "vulpe.error.validate.maxlength",
 					minlength: "vulpe.error.validate.minlength",
-					required: "vulpe.error.validate.required"
+					required: "vulpe.error.validate.required",
+					requireOneFilter: "vulpe.error.validate.require.one.filter"
 				}
 			},
 			exclusion: "vulpe.msg.confirm.exclusion",
@@ -105,6 +106,7 @@ var vulpe = {
 			selectedTab: "_selectedTab"
 		},
 		redirectToLogin: true,
+		requireOneFilter: false,
 		theme: 'default'
 	},
 	// vulpe.util
@@ -158,7 +160,7 @@ var vulpe = {
 
 		getURLComplete: function(url) {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
-				url = vulpe.config.contextPath + '/' + url;
+				url = vulpe.config.contextPath + (url.startsWith('/') ? '' : '/') + url;
 			}
 			return url;
 		},
@@ -791,6 +793,23 @@ var vulpe = {
 						}
 					}
 				}
+			} else if (vulpe.config.requireOneFilter) {
+				var filters = jQuery("[id*='entitySelect']", parent);
+				if (filters && filters.length > 0) {
+					var empty = true;
+					for (var i = 0; i < filters.length; i++) {
+						var field = jQuery(filters[i]);
+						var idField = field.attr("id");
+						if (field.val() != "") {
+							empty = false;
+							break;
+						}
+					}
+					if (empty) {
+						vulpe.exception.showMessageError(vulpe.config.messages.error.validate.requireOneFilter);
+						return false;
+					}
+				}
 			}
 			var allFields = jQuery("input", parent);
 			var invalidFields = 0;
@@ -803,26 +822,7 @@ var vulpe = {
 			}
 			if (!valid) {
 				vulpe.exception.focusFirstError(formName);
-				var messageLayer = vulpe.config.layers.messages;
-				if (vulpe.util.existsVulpePopups()) {
-					messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
-				}
-				$(messageLayer).removeClass("vulpeMessageError");
-				$(messageLayer).removeClass("vulpeMessageSuccess");
-				$(messageLayer).addClass("vulpeMessageValidation");
-				var manyFields = (invalidFields > 1 || fields.length > 1);
-				var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
-				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + (manyFields ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield) + "</li></ul>" + messagesClose);
-				$(messageLayer).slideDown("slow");
-				jQuery(document).bind("keydown", "Esc", function(evt) {
-					$('#messages').slideUp('slow');
-					return false;
-				});
-				if (eval(vulpe.config.messageSlideUp)) {
-					setTimeout(function() {
-						$(messageLayer).slideUp("slow");
-					}, vulpe.config.messageSlideUpTime);
-				}
+				vulpe.exception.showMessageError((manyFields ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield));
 			}
 			return valid;
 		},
@@ -1751,6 +1751,28 @@ var vulpe = {
 			var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
 			if (error.length == 1) {
 				error.hide();
+			}
+		},
+
+		showMessageError: function(message) {
+			var messageLayer = vulpe.config.layers.messages;
+			if (vulpe.util.existsVulpePopups()) {
+				messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
+			}
+			$(messageLayer).removeClass("vulpeMessageError");
+			$(messageLayer).removeClass("vulpeMessageSuccess");
+			$(messageLayer).addClass("vulpeMessageValidation");
+			var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
+			$(messageLayer).html("<ul><li class='vulpeAlertError'>" + message + "</li></ul>" + messagesClose);
+			$(messageLayer).slideDown("slow");
+			jQuery(document).bind("keydown", "Esc", function(evt) {
+				$('#messages').slideUp('slow');
+				return false;
+			});
+			if (eval(vulpe.config.messageSlideUp)) {
+				setTimeout(function() {
+					$(messageLayer).slideUp("slow");
+				}, vulpe.config.messageSlideUpTime);
 			}
 		},
 

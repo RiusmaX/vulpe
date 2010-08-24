@@ -21,10 +21,10 @@
 	</c:choose>
 	</p>
 	</c:if>
-	<v:text elementId="j_username" name="j_username" targetName="" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" />
-	<v:password elementId="j_password" name="j_password" targetName="" labelKey="label.vulpe.security.login.password" />
+	<v:text elementId="j_username" name="j_username" targetName="" maxlength="20" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" style="width: 150px;" />
+	<v:password elementId="j_password" name="j_password" targetName="" maxlength="20" labelKey="label.vulpe.security.login.password" style="width: 150px;" />
 	<p>
-		<input name="submit" type="submit" id="buttonSubmitLoginForm" value="<fmt:message key='label.vulpe.security.login'/>">&nbsp;<input name="reset"type="reset" value="<fmt:message key='label.vulpe.security.login.clear'/>">
+		<input name="submit" type="submit" id="buttonSubmitLoginForm" value="<fmt:message key='label.vulpe.security.login'/>" class="vulpeButton" style="width: 75px;">&nbsp;<input name="reset"type="reset" value="<fmt:message key='label.vulpe.security.login.clear'/>" class="vulpeButton" style="width: 75px;">
 	</p>
 <script type="text/javascript">
 $(document).ready(function() {

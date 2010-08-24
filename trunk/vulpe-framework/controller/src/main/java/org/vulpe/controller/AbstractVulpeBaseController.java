@@ -1423,8 +1423,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setEntitySelect(getEntity());
 			}
 		}
-		if (getControllerConfig().requireOneFilter().length > 0 && checkFilters(getEntitySelect())) {
-			addActionError(getText("vulpe.error.validate.required.one.filter"));
+		if (getControllerConfig().requireOneOfFilters().length > 0 && isFiltersEmpty(getEntitySelect())) {
+			addActionError(getText("vulpe.error.validate.require.one.filter"));
 			return;
 		}
 		final ENTITY entity = prepareEntity(Action.READ);
@@ -1834,12 +1834,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 *
 	 * @param entity
 	 */
-	public boolean checkFilters(final ENTITY entity) {
+	public boolean isFiltersEmpty(final ENTITY entity) {
 		boolean empty = true;
-		for (String attribute : getControllerConfig().requireOneFilter()) {
+		for (String attribute : getControllerConfig().requireOneOfFilters()) {
 			try {
 				final Object value = PropertyUtils.getProperty(entity, attribute);
-				if (value != null) {
+				if (VulpeValidationUtil.isNotEmpty(value)) {
 					empty = false;
 				}
 			} catch (Exception e) {
