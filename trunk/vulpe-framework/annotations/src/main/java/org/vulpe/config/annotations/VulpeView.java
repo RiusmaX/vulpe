@@ -54,9 +54,16 @@ public @interface VulpeView {
 
 	boolean showPoweredBy() default true;
 
+	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
+
 	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
 
 	public enum PagingStyle {
 		NUMERIC, PAGE_OF
 	}
+
+	public enum PagingButtonStyle {
+		CSS, JQUERY_UI
+	}
+
 }
