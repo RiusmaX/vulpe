@@ -1,0 +1,9 @@
+#Wed Aug 25 09:46:46 BRT 2010
+WARNING=DO NOT MODIFY THIS FILE IF YOU DON'T UNDERSTAND
+defaultDestination=TOMCAT_HOME/webapps/transfere/WEB-INF/classes
+defaultVariables=
+eclipse.preferences.version=1
+includeTeamPrivateFiles=false
+map|0=target/classes|,|,|,|,
+map|1=web/src/main/webapp|TOMCAT_HOME/webapps/transfere|,|,|,
+useCurrentDateForDestinationFiles=false

@@ -1,0 +1,45 @@
+/*
+ * SimpleModal Basic Modal Dialog
+ * http://www.ericmmartin.com/projects/simplemodal/
+ * http://code.google.com/p/simplemodal/
+ *
+ * Copyright (c) 2007 Eric Martin - http://ericmmartin.com
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Revision: $Id: jquery.simplemodal.css.jsp,v 1.2 2008/06/16 13:17:36 p057120 Exp $
+ *
+ */ /* Overlay */
+.modalOverlay {
+	background-color: #ddd!important;
+	cursor: wait;
+}
+
+/* Container */
+.modalContainer {
+	width: 400px;
+	left: 30%;
+	top: 30%;
+	margin: 0 auto;
+}
+
+/* Container Header */
+.modalContainerHeader {
+	width: auto;
+	height: 25px;
+	background-color: #444;
+	border: 1px solid #333;
+  	cursor: move;
+}
+
+.modalContainerHeader a.modalCloseImg {
+	background: url(../../images/frontend/icons/button-popup-close-24x24.png) no-repeat;
+	width: 24px;
+	height: 20px;
+	display: inline;
+	position: absolute;
+	right: 1px;
+	top: 4px;
+	cursor: pointer;
+}

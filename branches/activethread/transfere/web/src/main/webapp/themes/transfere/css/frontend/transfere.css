@@ -1,0 +1,792 @@
+/************************************************************************
+* CSS - Vulpe Framework											*
+************************************************************************/ /* Classes */
+td .titulo {
+	font-weight: bold;
+}
+
+.vulpeActions {
+	width: 100%;
+	text-align: right;
+}
+
+.vulpeAlertError {
+	color: red;
+}
+
+.vulpeAlertMessage {
+
+}
+
+.vulpeOrderAsc {
+	background: #eee url(../../images/frontend/icons/order-asc.gif) right no-repeat;
+}
+
+.vulpeButton {
+	background: url(../../images/frontend/background-button.png) repeat-x;
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+}
+
+.vulpeBlockLabel {
+	display: block;
+	width: auto;
+	float: left;
+}
+
+.vulpeBlockshort {
+	display: block;
+	width: 90px;
+	float: left;
+}
+
+.vulpeOrderDesc {
+	background: #eee url(../../images/frontend/icons/order-desc.gif) right no-repeat;
+}
+
+.vulpeFieldError {
+	background-color: #ffccbc;
+}
+
+.vulpeRequired {
+	border: 1px solid #999;
+}
+
+.vulpeFieldRequired {
+	color: red;
+	display: inline;
+}
+
+.vulpeDrag {
+	cursor: move;
+}
+
+.vulpeEntities {
+	border: 1px solid #eee;
+	margin-top: 10px;
+	margin-bottom: 15px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+.vulpeLineOff {
+	background: #fff;
+	height: 25px;
+}
+
+.vulpeLineOn {
+	background: #eef;
+	height: 25px;
+}
+
+.vulpeMessages {
+	background-color: #fff;
+	border: 1px solid #333;
+	font-weight: normal;
+	overflow: auto;
+	padding: 0px;
+	/*
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	*/
+}
+
+.vulpeMessages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
+}
+
+.vulpeMessages ul {
+	list-style: circle;
+}
+
+.vulpeImageErrorMessage {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImageFieldLoading {
+	border: 0;
+	cursor: pointer;
+	display: none;
+	left: -2px;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeImagePopupButton {
+	cursor: pointer;
+	position: relative;
+	top: 3px;
+}
+
+.vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
+	border: 1px solid;
+	margin: 0px 0px 1px 0px;
+	/*padding: 15px 10px 15px 50px;*/
+	background-repeat: no-repeat;
+	background-position: 10px center;
+}
+
+.vulpeMessageError {
+	color: #D8000C;
+	background-color: #FFBABA;
+	background-image: url('../../images/frontend/icons/message-error.png');
+}
+
+.vulpeMessageInfo {
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image: url('../../images/frontend/icons/message-info.png');
+}
+
+.vulpeMessages h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: default;
+	height: 40px;
+}
+
+.vulpeNoBoarder {
+	border: none;
+}
+
+.vulpeNob {
+	font-weight: normal
+}
+
+.vulpeIconOff {
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
+	-moz-opacity: 0.4;
+	opacity: 0.4;
+}
+
+.vulpePaging {
+	width: auto;
+	margin: 5px auto;
+	text-align: center;
+}
+
+.vulpePaging a {
+	text-decoration: none;
+}
+
+.vulpePopup {
+	background-color: #fff;
+	border: 1px solid #999;
+	padding: 1px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+.vulpePopup h1 {
+	width: auto;
+	margin-top: 0px;
+	cursor: default;
+}
+
+.vulpePopupCaption {
+	background: none;
+	border: 1px solid #999;
+	border-bottom: 1px solid #333;
+	color: #fff;
+	display: block;
+	font-size: 13px;
+	height: 20px;
+	letter-spacing: 0px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 10px;
+	padding-top: 3px;
+	width: auto;
+}
+
+.vulpeSelectedRow {
+	background-color: #ffccbc; /*E8EBE2*/
+	cursor: pointer;
+}
+
+.vulpeSimpleLabel {
+	font-weight: normal;
+}
+
+.vulpeMessageSuccess {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('../../images/frontend/icons/message-success.png');
+}
+
+.vulpeSubmit {
+	background: url(../../images/frontend/background-button.png) repeat-x;
+	border: 1px #CCCCCC solid;
+	font-weight: 700;
+	height: 20px;
+	padding: 0px;
+	width: 90px;
+	cursor: pointer;
+}
+
+.required {
+	border: 1px solid #ffccbc;
+}
+
+.thumb {
+	border: 1px solid #000;
+}
+
+.tooltip {
+	display: none;
+	background: url(../../images/tooltip/black-arrow.png);
+	font-size: 12px;
+	height: 70px;
+	width: 160px;
+	padding: 25px;
+	color: #fff;
+	border: 0px;
+}
+
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+	padding-top: 40px;
+	height: 55px;
+}
+
+.tooltip.bottom {
+	background: url(../../images/tooltip/black-arrow-bottom.png);
+}
+
+/*
+#content {
+	width: auto;
+	position: fixed;
+}
+*/
+#contentTitle {
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	background-color: #eee;
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	height: 18px;
+	margin: 3px;
+	padding: 5px 10px 5px 10px;
+	width: auto;
+}
+
+#userAuthenticated {
+	background-color: #000;
+	display: block;
+	height: 16px;
+	margin: 0;
+	padding-left: 20px;
+	padding-top: 3px;
+	text-align: right;
+	width: auto;
+	font-size: 11px;
+	color: #fff;
+	border-top: 1px solid #cccccc;
+}
+
+#userAuthenticated  a {
+	border-left: 1px solid #eee;
+	color: #fff;
+	padding: 2px;
+	text-decoration: none;
+}
+
+#userAuthenticated  a:hover {
+	text-decoration: underline;
+}
+
+#userAuthenticated  a:visited {
+	color: #fff;
+}
+
+.vulpeMessageValidation {
+	color: #D63301;
+	background-color: #FFCCBA;
+	background-image: url('../../images/frontend/icons/message-validation.png');
+}
+
+.vulpeMessageWarning {
+	color: #9F6000;
+	background-color: #FEEFB3;
+	background-image: url('../../images/frontend/icons/message-warning.png');
+}
+
+/* DOM Objects */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a,a:visited {
+	color: #333;
+}
+
+a:hover {
+	text-decoration: none
+}
+
+body {
+	color: #444444;
+	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
+	font-size: 11px;
+	text-align: left;
+}
+
+body,html {
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+fieldset {
+	margin-left: 0px;
+	border: 1px solid #e1e4d7;
+	padding-bottom: 0px;
+}
+
+h1 {
+	background-color: #eee;
+	border-top: 1px #ddd solid;
+	display: block;
+	height: 20px;
+	letter-spacing: 1px;
+	margin: 0px 0px 0px 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+	width: auto;
+}
+
+h2 {
+	margin-left: 3px;
+}
+
+input,select,textarea {
+	border: 1px solid #999;
+	color: #333;
+	font-family: "Trebuchet MS", "Helvetica", "Arial", "Verdana", "sans-serif";
+	font-size: 1em;
+	padding: 1px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+label {
+	font-weight: bold
+}
+
+legend {
+	font-weight: bold;
+}
+
+ol,ul {
+	font-size: 11px;
+	margin: 10px 60px;
+}
+
+p {
+	font-size: 11px;
+	margin: 5px;
+	margin-left: 10px;
+}
+
+tbody tr {
+	margin: 0px;
+	padding: 0px;
+}
+
+td {
+	color: #333;
+}
+
+td p {
+	margin: 0;
+	margin-bottom: 3px;
+}
+
+tfoot {
+	text-align: center;
+}
+
+th,.vulpeTableHeader {
+	color: #333;
+	font-weight: bold;
+	background-color: #eee;
+}
+
+thead th,.vulpeTableHeader {
+	color: #333;
+	font-weight: bold;
+	background-color: #eee;
+}
+
+thead tr {
+	text-align: center;
+}
+
+html,body {
+	height: 100%;
+}
+
+* html {
+	height: 100%;
+}
+
+/* ID Elements */
+#body {
+	background-color: #fff;
+	padding-bottom: 30px;
+	width: 800px;
+	border: #999999 solid 0px;
+	display: table;
+	padding: 0px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+#body table {
+	margin-left: 10px;
+	width: 97.5%;
+}
+
+#body td, #body th {
+	padding: 3px;
+}
+
+#vulpeCRUDBody td,#vulpeCRUDBody th,#vulpeSelectForm td {
+	padding: 0px;
+}
+
+.vulpeDelete {
+	text-align: center;
+}
+
+.vulpeSelect {
+	text-align: center;
+	padding-left: 2px;
+}
+
+#vulpeDeleteAll {
+	text-align: center;
+}
+
+#vulpeSelectAll {
+	text-align: center;
+}
+
+#container {
+	margin: 0 auto;
+	width: 100%;
+}
+
+#copyright {
+	font-size: 10px;
+}
+
+#copyright a {
+	text-decoration: none;
+}
+
+#copyright a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#errors {
+	width: 400px;
+	margin: 0 auto
+}
+
+#footer {
+	text-align: center;
+}
+
+#legend {
+	margin-bottom: 10px;
+}
+
+#frontend {
+	border-top: #dddddd solid 1px;
+	border-left: #dddddd solid 1px;
+	border-right: #dddddd solid 1px;
+	border-bottom: #dddddd solid 1px;
+	background: #ccc;
+	top: 0px;
+	margin: 0 auto;
+	position: relative;
+	width: 800px;
+	padding: 3px;
+	height: auto;
+	text-align: left;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+#header {
+	width: 800px;
+	height: 75px;
+	top: 0;
+}
+
+#header .title {
+	background: url(../../images/transfere.png) transparent no-repeat;
+	background-color: #333;
+	color: #fff;
+	font-size: 18px;
+	height: 45px;
+	padding: 3px;
+	vertical-align: top;
+	width: 794px;
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+	-moz-border-radius-bottomleft: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+}
+
+#header .title .applicationName {
+	left: 45px;
+	top: 18px;
+	position: relative;
+}
+
+#header .subtitle {
+	background-color: #999;
+	color: #eee;
+	font-size: 16px;
+	height: 17px;
+	padding: 3px;
+	vertical-align: top;
+	width: 794px;
+}
+
+#loading {
+	background: url(../../images/frontend/ajax/loader.gif) center no-repeat;
+	cursor: wait;
+}
+
+#paging {
+
+}
+
+#paging a {
+	text-decoration: underline;
+}
+
+#paging a:hover {
+	text-decoration: underline;
+}
+
+#paging .currentPage {
+	font-weight: bold;
+}
+
+#vulpeButtonPagingFirstPage {
+	background: url(../../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingPreviousPage {
+	background: url(../../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingNextPage {
+	background: url(../../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#vulpeButtonPagingLastPage {
+	background: url(../../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+
+#menu {
+	background-color: #000;
+	width: 800px;
+	height: 23px;
+}
+
+#messages {
+	position: relative;
+	top: 1px;
+	width: 796px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+#paging {
+
+}
+
+#pagingFirstPage {
+	background: url(../../images/icons/button-go-first.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingPreviousPage {
+	background: url(../../images/icons/button-go-previous.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingNextPage {
+	background: url(../../images/icons/button-go-next.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#pagingLastPage {
+	background: url(../../images/icons/button-go-last.png) no-repeat;
+	display: inline-table;
+	height: 16px;
+	width: 16px
+}
+
+#poweredby {
+	font-size: 10px;
+}
+
+#poweredby a {
+	text-decoration: none;
+}
+
+#poweredby a:hover {
+	color: #999;
+	text-decoration: none;
+}
+
+#search {
+	float: right;
+	height: 24px;
+	margin-top: 66px;
+	text-align: right;
+	width: 39px;
+	cursor: pointer;
+	font-size: 11px;
+}
+
+#error {
+	/*background-color: #FFBABA;*/
+	background-color: #fff;
+	height: 100%;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+
+#error #message {
+	padding: 3px 20px 20px;
+}
+
+#error a {
+	font-size: 10px;
+	margin: 0px;
+	margin-left: 20px;
+	padding: 0px;
+}
+
+#error h1 {
+	border: 0 none;
+	color: #fff;
+	background-color: #d00;
+	display: block;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+}
+
+#error h2 {
+	color: #000;
+	display: block;
+	height: auto;
+	margin: 0px;
+	padding-left: 20px;
+	padding-top: 3px;
+}
+
+#error ul {
+	list-style: circle;
+}
+
+#messages ul {
+	list-style: circle;
+}
+
+#messages #closeMessages {
+	text-align: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	font-size: 9px;
+}
+
+#objetos td {
+	padding: 0px;
+}
+
+#itens td {
+	padding: 2px;
+}
