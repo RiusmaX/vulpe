@@ -32,8 +32,7 @@ import br.gov.pbh.sitra.core.model.services.CoreService;
 @Component("core.ObjetoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5, requireOneOfFilters = {
-		"tipoObjeto", "nomeObjeto", "dataInicial", "dataFinal", "usuario", "destino" }))
+@Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "objetoItens", propertyName = "entity.objetoItens", despiseFields = "nomeObjeto", startNewDetails = 5, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) }, select = @Select(pageSize = 5, requireOneFilter = true))
 public class ObjetoController extends ObjetoBaseController {
 
 	private static final List<ValueBean> origem = new ArrayList<ValueBean>();
