@@ -10,9 +10,6 @@
 		vulpe.util.get('${elementId}').lowerCase();
 		</c:if>
 		</c:if>
-		vulpe.util.get('${elementId}').focus(function() {
-			$(this).effect("highlight");
-		});
 		<c:if test="${not empty autoComplete}">
 		var idValue = "${elementId}";
 		var idProperty = idValue.substring(0, idValue.lastIndexOf(".") + 1) + "id";

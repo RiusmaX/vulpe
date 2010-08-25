@@ -49,6 +49,10 @@
 	background-color: #ffccbc;
 }
 
+.vulpeFieldHighlight {
+	background-color: #ffd;
+}
+
 .vulpeFieldRequired {
 	display: none;
 }
@@ -342,6 +346,10 @@ input,select,textarea {
 	border: 1px solid #000;
 	color: #000;
 	padding: 1px;
+}
+
+input:focus,select:focus,textarea:focus {
+	background-color: #ffd;
 }
 
 label {

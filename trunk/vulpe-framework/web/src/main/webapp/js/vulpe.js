@@ -1640,7 +1640,6 @@ var vulpe = {
 			vulpe.util.get(messageSuffix).attr("title", message);
 			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
 			vulpe.util.get(messageSuffix).tooltip({
-				opacity: 0.9,
 				onShow: function() {
 					this.getTip().css("zIndex", "100000");
 					var title = vulpe.util.get(messageSuffix).attr("title");

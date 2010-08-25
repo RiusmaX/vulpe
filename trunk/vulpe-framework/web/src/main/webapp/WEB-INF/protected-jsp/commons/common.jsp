@@ -185,6 +185,18 @@ $(document).ready(function() {
 			}
 		}
 	}
+	/*
+	var fields = jQuery("[class*='focused']");
+	if (fields && fields.length > 0) {
+		for (var i = 0; i < fields.length; i++) {
+			var field = jQuery(fields[i]);
+			var idField = field.attr("id");
+			field.focus(function() {
+				$(this).effect("highlight");
+			});
+		}
+	}
+	*/
 	<c:if test="${now['requireOneFilter']}">
 	vulpe.config.requireOneFilter = true;
 	</c:if>

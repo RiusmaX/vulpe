@@ -32,12 +32,14 @@ $(document).ready(function() {
 	if (vulpe.config.authenticator.url.redirect == "") {
 		vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
 	}
+	/*
 	vulpe.util.get('j_username').focus(function() {
 		$(this).effect("highlight");
 	});
 	vulpe.util.get('j_password').focus(function() {
 		$(this).effect("highlight");
 	});
+	*/
 	var j_username = vulpe.util.getElement('j_username');
 	var j_password = vulpe.util.getElement('j_password');
 	if (j_username.value == '') {

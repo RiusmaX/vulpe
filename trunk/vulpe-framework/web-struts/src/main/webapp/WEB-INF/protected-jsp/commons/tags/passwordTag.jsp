@@ -12,11 +12,4 @@
 	<s:password theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" maxlength="${maxlength}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" id="${elementId}" readonly="${readonly}" cssStyle="${style}" cssClass="${styleClass}" size="${size}" tabindex="${tabindex}" title="${title}" value="${value}" showPassword="${showPassword}"/>
 	<jsp:doBody/>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
-<script type="text/javascript">
-	jQuery(function($){
-		vulpe.util.get('${elementId}').focus(function() {
-			$(this).effect("highlight");
-		});
-	});
-</script>
 </c:if>
