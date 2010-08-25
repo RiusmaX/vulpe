@@ -1423,8 +1423,21 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setEntitySelect(getEntity());
 			}
 		}
-		if (getControllerConfig().requireOneOfFilters().length > 0 && isFiltersEmpty(getEntitySelect())) {
-			addActionError(getText("vulpe.error.validate.require.one.filter"));
+		if (getControllerConfig().requireOneOfFilters().length > 0
+				&& isFiltersEmpty(getEntitySelect())) {
+			final StringBuilder filters = new StringBuilder();
+			final String orLabel = getText("label.vulpe.or");
+			int filterCount = 0;
+			for (String attribute : getControllerConfig().requireOneOfFilters()) {
+				if (filterCount > 0) {
+					filters.append(" ").append(orLabel).append(" ");
+				}
+				final String text = getControllerConfig().getTitleKey() + "." + attribute;
+				filters.append("\"").append(getText(text)).append("\"");
+				++filterCount;
+			}
+			addActionError(getText("vulpe.error.validate.require.one.of.filters", filters
+					.toString()));
 			return;
 		}
 		final ENTITY entity = prepareEntity(Action.READ);

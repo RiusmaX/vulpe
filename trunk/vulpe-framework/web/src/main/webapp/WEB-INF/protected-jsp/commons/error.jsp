@@ -25,6 +25,11 @@
 		<strong><fmt:message key="label.vulpe.message" />:</strong>
 		${pageContext.errorData.throwable}
 	</div>
+	<br>
+	<div id="home">
+		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
+	</div>
+	<br>
 </div>
 </body>
 </html>

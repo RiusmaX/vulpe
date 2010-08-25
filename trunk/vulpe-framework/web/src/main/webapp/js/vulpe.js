@@ -105,7 +105,7 @@ var vulpe = {
 			loading: "_loading",
 			selectedTab: "_selectedTab"
 		},
-		redirectToLogin: true,
+		redirectToIndex: true,
 		requireOneFilter: false,
 		theme: 'default'
 	},
@@ -160,7 +160,7 @@ var vulpe = {
 
 		getURLComplete: function(url) {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
-				url = vulpe.config.contextPath + (url.startsWith('/') ? '' : '/') + url;
+				url = vulpe.config.contextPath + (url.indexOf('/') == 0 ? '' : '/') + url;
 			}
 			return url;
 		},
@@ -776,7 +776,7 @@ var vulpe = {
 					var field = jQuery(fields[i]);
 					var idField = field.attr("id");
 					if (!vulpe.validate.validateRequired({field: field})) {
-						if (invalidCount == 0) {
+						if (invalidCount == 0 && !vulpe.util.existsVulpePopups()) {
 							if (idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(":") != -1) {
 								var detail = vulpe.config.prefix.detail + vulpe.util.getDetailByElementId(idField);
 								$("a[href='" + detail + "']").click();
@@ -823,6 +823,7 @@ var vulpe = {
 			}
 			if (!valid) {
 				vulpe.exception.focusFirstError(formName);
+				var manyFields = (invalidFields > 1 || fields.length > 1);
 				vulpe.exception.showMessageError((manyFields ? vulpe.config.messages.error.checkfields : vulpe.config.messages.error.checkfield));
 			}
 			return valid;
@@ -1063,31 +1064,21 @@ var vulpe = {
 		},
 
 		showMessages: function() {
-			var elementId = vulpe.config.layers.modalMessages.substring(1);
-			vulpe.util.setVulpePopup(elementId);
-			var popup = jQuery(vulpe.config.layers.modalMessages).modal({
-				title: function() {
-					var popupTitle = jQuery("#messageTitle", "#modalMessages");
-					if (popupTitle) {
-						popupTitle.hide();
-						return popupTitle.html();
-					}
-					return "";
-				},
-				closeTitle: vulpe.config.popup.closeTitle,
-				overlayId: 'overlayMessages',
-				containerId: 'containerMessages',
-				onClose: function (dialog) {
-					this.close(true);
-					vulpe.view.hideMessages();
-					eval('window.' + elementId + ' = undefined;');
-					vulpe.util.removeArray(vulpe.view.popups, vulpe.util.getVulpePopup(elementId));
+			$(vulpe.config.layers.modalMessages).attr("title", function() {
+				var popupTitle = jQuery("#messageTitle", "#modalMessages");
+				if (popupTitle) {
+					popupTitle.hide();
+					return popupTitle.html();
 				}
+				return "";
 			});
-			jQuery(document).bind("keydown", "Esc", function(evt) {
-				vulpe.view.hidePopup(elementId);
-				return false;
+			var popup = $(vulpe.config.layers.modalMessages).dialog({
+					autoOpen: true,
+					width: 400,
+					resizable: true,
+					modal: true
 			});
+			$(vulpe.config.layers.modalMessages).css("padding", "0px");
 			return popup;
 		},
 
@@ -1101,38 +1092,26 @@ var vulpe = {
 		},
 
 		showPopup: function(elementId, popupWidth) {
-			var popup = vulpe.util.get(elementId).modal({
-				title: function() {
-					var popupTitle = jQuery("#contentTitle", "#" + elementId);
-					if (popupTitle) {
-						popupTitle.hide();
-						return popupTitle.html();
-					}
-					return "";
-				},
-				closeTitle: vulpe.config.popup.closeTitle,
-				overlayId: 'overlay' + elementId,
-				containerId: 'container' + elementId,
-				iframeCss: {zIndex: 2000},
-				overlayCss: {zIndex: 2001},
-				containerCss: {zIndex: 2002, width: popupWidth},
-				onClose: function (dialog) {
-					this.close(true);
-					eval('window.' + elementId + ' = undefined;');
-					vulpe.util.get(elementId).remove();
-					vulpe.util.removeArray(vulpe.view.popups, vulpe.util.getVulpePopup(elementId));
+			$('#' + elementId).attr("title", function() {
+				var popupTitle = jQuery("#contentTitle", "#" + elementId);
+				if (popupTitle) {
+					popupTitle.hide();
+					return popupTitle.html();
 				}
+				return "";
 			});
-			jQuery(document).bind("keydown", "Esc", function(evt) {
-				vulpe.view.hidePopup(elementId);
-				return false;
+			var popup = $('#' + elementId).dialog({
+					autoOpen: true,
+					width: popupWidth,
+					modal: true
 			});
+			$('#' + elementId).css("padding", "0px");
 			vulpe.util.focusFirst("#" + elementId);
 			return popup;
 		},
 
 		hidePopup: function(elementId) {
-			eval('window.' + elementId + '.close();');
+			$("#" + elementId).dialog("close");
 		},
 
 		request: { // vulpe.view.request
@@ -1286,7 +1265,6 @@ var vulpe = {
 					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
 					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
-						bgiframe: true,
 						resizable: false,
 						height:140,
 						modal: true,
@@ -1329,7 +1307,6 @@ var vulpe = {
 					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
 					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
-						bgiframe: true,
 						resizable: false,
 						height:140,
 						modal: true,
@@ -1457,7 +1434,7 @@ var vulpe = {
 			submitMenu: function(url, beforeJs, afterJs) {
 				jQuery(vulpe.config.layers.messages).hide();
 				vulpe.config.order = new Array();
-				vulpe.config.redirectToLogin = false;
+				vulpe.config.redirectToIndex = false;
 				return vulpe.view.request.submitPage(vulpe.config.contextPath + url, '', 'body', beforeJs, afterJs);
 			},
 
@@ -1545,7 +1522,7 @@ var vulpe = {
 			},
 
 			onShowPopup: function(popupName, afterJs, popupWidth) {
-				eval('window.' + popupName + ' = vulpe.view.showPopup(popupName, popupWidth);');
+				vulpe.view.showPopup(popupName, popupWidth);
 				if (vulpe.util.isNotEmpty(afterJs)) {
 					try {
 						eval(webtoolkit.url.decode(afterJs));
@@ -1576,20 +1553,20 @@ var vulpe = {
 						vulpe.config.showLoading = true;
 						var authenticator = urlStr.indexOf("/j_spring_security_check") != -1;
 						var loginError = data.indexOf("vulpeLoginForm") == -1;
+						var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						} else if (authenticator && loginError && vulpe.config.redirectToLogin) {
+						} else if (authenticator && loginError && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {
-								vulpe.config.redirectToLogin = true;
-								var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
+								vulpe.config.redirectToIndex = true;
 								if (authenticator && loginError && validUrlRedirect) {
 									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
 									var html = "";
 									if (vulpe.util.existsVulpePopups(layer)) {
-										var messagePopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"messages\"></div>";
+										var messagePopup = "<div id=\"messagesPopup_" + layer + "\" style=\"display: none;\" class=\"vulpeMessages\"></div>";
 										html = messagePopup + data;
 									} else {
 										html = data;
@@ -1763,13 +1740,15 @@ var vulpe = {
 			$(messageLayer).removeClass("vulpeMessageError");
 			$(messageLayer).removeClass("vulpeMessageSuccess");
 			$(messageLayer).addClass("vulpeMessageValidation");
-			var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('#messages').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
+			var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('" + messageLayer + "').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
 			$(messageLayer).html("<ul><li class='vulpeAlertError'>" + message + "</li></ul>" + messagesClose);
 			$(messageLayer).slideDown("slow");
-			jQuery(document).bind("keydown", "Esc", function(evt) {
-				$('#messages').slideUp('slow');
-				return false;
-			});
+			if (!vulpe.util.existsVulpePopups()) {
+				jQuery(document).bind("keydown", "Esc", function(evt) {
+					$('#messages').slideUp('slow');
+					return false;
+				});
+			}
 			if (eval(vulpe.config.messageSlideUp)) {
 				setTimeout(function() {
 					$(messageLayer).slideUp("slow");
