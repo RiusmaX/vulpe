@@ -32,4 +32,6 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showLine" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showUpdateButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showDeleteButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="disableDelete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/rowTag.jsp" %>
