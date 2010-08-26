@@ -15,8 +15,8 @@
 		<class>org.vulpe.security.model.entity.UserRole</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
 			<!--
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			 -->

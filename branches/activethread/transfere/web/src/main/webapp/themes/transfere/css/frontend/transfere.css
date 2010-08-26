@@ -618,7 +618,7 @@ html,body {
 }
 
 #paging a {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 #paging a:hover {
@@ -627,6 +627,7 @@ html,body {
 
 #paging .currentPage {
 	font-weight: bold;
+	text-decoration: underline;
 }
 
 #vulpeButtonPagingFirstPage {

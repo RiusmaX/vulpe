@@ -542,7 +542,7 @@ tfoot th, .vulpeTableFooter {
 }
 
 #paging a {
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 #paging a:hover {
@@ -551,6 +551,7 @@ tfoot th, .vulpeTableFooter {
 
 #paging .currentPage {
 	font-weight: bold;
+	text-decoration: underline;
 }
 
 #vulpeButtonPagingFirstPage {
