@@ -31,7 +31,7 @@ import org.vulpe.model.services.GenericService;
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings( { "unchecked" })
 @Service("GenericService")
 @Transactional
 public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable>
@@ -57,9 +57,22 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.services.GenericService#exists(org.vulpe.model.entity
+	 * .VulpeEntity)
+	 */
 	@Override
 	public <T extends VulpeEntity<?>> boolean exists(T entity) {
-		// TODO Auto-generated method stub
+		try {
+			final VulpeBaseDAODB4O<ENTITY, ID> dao = new VulpeBaseDAODB4O<ENTITY, ID>();
+			dao.setEntityClass((Class<ENTITY>) entity.getClass());
+			return dao.exists((ENTITY) entity);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
 		return false;
 	}
 

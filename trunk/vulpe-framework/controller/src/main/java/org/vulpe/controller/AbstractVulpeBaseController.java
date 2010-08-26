@@ -498,6 +498,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 	}
 
+	/**
+	 * Validate if entity already exists
+	 *
+	 * @return
+	 */
 	protected boolean validateExists() {
 		return getService(GenericService.class).exists(getEntity());
 	}

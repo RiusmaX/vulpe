@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.persistence.Transient;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -37,13 +38,14 @@ import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.OrderBy.OrderType;
 import org.vulpe.model.annotations.QueryParameter.OperatorType;
 import org.vulpe.model.entity.Parameter;
-import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 import com.db4o.ObjectContainer;
@@ -437,8 +439,34 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
+	 */
 	@Override
 	public boolean exists(ENTITY entity) throws VulpeApplicationException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Exists object: ".concat(entity.toString()));
+		}
+		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
+		if (notExistEqual != null) {
+			final QueryParameter[] parameters = notExistEqual.parameters();
+			final Query query = getObjectContainer().query();
+			query.constrain(entity.getClass());
+			for (QueryParameter parameter : parameters) {
+				try {
+					query.descend(parameter.name()).constrain(
+							PropertyUtils.getProperty(entity, parameter.name()));
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+			// getting total records
+			final int size = query.execute().size();
+			return size > 0;
+		}
 		return false;
 	}
 }
