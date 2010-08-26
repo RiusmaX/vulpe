@@ -15,6 +15,7 @@
  */
 package org.vulpe.model.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,9 +23,10 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation to indicate Weak Entity
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface WeakEntity {

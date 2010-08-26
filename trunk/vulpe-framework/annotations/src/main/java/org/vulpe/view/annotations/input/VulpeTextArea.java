@@ -15,6 +15,7 @@
  */
 package org.vulpe.view.annotations.input;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,6 +26,7 @@ import java.lang.annotation.Target;
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface VulpeTextArea {

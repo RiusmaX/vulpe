@@ -108,8 +108,12 @@ public final class CachedObjectsHelper {
 			}
 			annotationDB = new AnnotationDB();
 			try {
-				annotationDB.scanArchives(urlWebInfClasses);
-				annotationDB.scanArchives(urlsFrameworkApplication);
+				if (urlWebInfClasses != null) {
+					annotationDB.scanArchives(urlWebInfClasses);
+				}
+				if (urlsFrameworkApplication != null && urlsFrameworkApplication.length > 0) {
+					annotationDB.scanArchives(urlsFrameworkApplication);
+				}
 			} catch (IOException e) {
 				LOG.error(e.getMessage());
 			}

@@ -15,6 +15,7 @@
  */
 package org.vulpe.controller.annotations;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -30,6 +31,7 @@ import org.vulpe.model.services.VulpeService;
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Controller {
@@ -67,12 +69,21 @@ public @interface Controller {
 	String ownerController() default "";
 
 	// SELECT - configurations
+	/**
+	 * Select Logic configurations
+	 */
 	Select select() default @Select;
 
 	// TABULAR - configurations
+	/**
+	 * Tabular Logic configurations
+	 */
 	Tabular tabular() default @Tabular;
 
 	// REPORT - configurations
+	/**
+	 * Report Logic configurations
+	 */
 	Report report() default @Report;
 
 }
