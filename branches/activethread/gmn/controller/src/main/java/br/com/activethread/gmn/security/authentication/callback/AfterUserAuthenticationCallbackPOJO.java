@@ -14,14 +14,14 @@ import org.vulpe.security.model.entity.User;
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.CongregacaoUsuario;
+import br.com.activethread.gmn.core.model.entity.Grupo;
 import br.com.activethread.gmn.core.model.services.CoreService;
 
 @Component("AfterUserAuthenticationCallback")
-public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCallbackUtil
-		implements AfterUserAuthenticationCallback {
+public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCallbackUtil implements
+		AfterUserAuthenticationCallback {
 
-	protected static final Logger LOG = Logger
-			.getLogger(AfterUserAuthenticationCallbackPOJO.class);
+	protected static final Logger LOG = Logger.getLogger(AfterUserAuthenticationCallbackPOJO.class);
 
 	@Override
 	public void execute() {
@@ -38,6 +38,14 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 				final List<Congregacao> congregacoes = new ArrayList<Congregacao>();
 				for (CongregacaoUsuario congregacaoUsuario2 : congregacaoUsuarios) {
 					congregacoes.add(congregacaoUsuario2.getCongregacao());
+				}
+				if (congregacoes.size() == 1) {
+					final Congregacao congregacao = congregacoes.get(0);
+					getSession().setAttribute(Core.CONGREGACAO_SELECIONADA, congregacao);
+					final Grupo grupo = new Grupo();
+					grupo.setCongregacao(congregacao);
+					final List<Grupo> grupos = getService(CoreService.class).readGrupo(grupo);
+					getSession().setAttribute(Core.GRUPOS_CONGREGACAO_SELECIONADA, grupos);
 				}
 				getSession().setAttribute(Core.CONGREGACOES_USUARIO, congregacoes);
 			} catch (VulpeApplicationException e) {

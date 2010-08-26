@@ -3,7 +3,9 @@ package br.com.activethread.gmn.core.model.entity;
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
@@ -14,6 +16,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
 
+@NotExistEqual(parameters = { @QueryParameter(name = "nome") })
 @CodeGenerator(view = @View(popupProperties = "id,nome", viewType = { ViewType.CRUD,
 		ViewType.SELECT }))
 @SuppressWarnings("serial")

@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
-
+<%@taglib tagdir="/WEB-INF/tags" prefix="v" %>
 <v:text
 	labelKey="label.gmn.core.Publicador.select.nome"
 	property="nome"
@@ -10,10 +10,10 @@
 <v:select
 	labelKey="label.gmn.core.Publicador.select.grupo"
 	property="grupo.id"
-	items="Grupo"
+	items="${gruposCongregacaoSelecionada}"
 	itemKey="id"
 	itemLabel="nome"
-	showBlank="true" autoLoad="true"
+	showBlank="true" autoLoad="false"
 />
 <%--
 <v:checkbox

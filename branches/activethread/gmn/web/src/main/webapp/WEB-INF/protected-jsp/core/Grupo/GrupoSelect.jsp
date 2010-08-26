@@ -7,5 +7,5 @@
 	itemKey="id"
 	itemLabel="nome"
 	showBlank="true" autoLoad="true"
-	required="true"
+	required="true" value="${congregacaoSelecionada.id}" showAsText="true"
 />
