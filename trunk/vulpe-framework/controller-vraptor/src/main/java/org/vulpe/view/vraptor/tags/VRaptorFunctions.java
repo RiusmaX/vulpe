@@ -124,7 +124,7 @@ public final class VRaptorFunctions extends Functions {
 			final String contentDisposition) throws JspException {
 		final String link = getRequestInfo().getRequest().getContextPath().concat("/").concat(
 				ControllerUtil.getInstance(getRequestInfo().getRequest())
-						.getCurrentControllerName()).concat("/download.action?downloadKey=")
+						.getCurrentControllerName()).concat("/download?downloadKey=")
 				.concat(urlEncode(key)).concat("&downloadContentType=").concat(contentType).concat(
 						"&downloadContentDisposition=").concat(contentDisposition).concat(
 						"&access=").concat(String.valueOf(System.currentTimeMillis()));

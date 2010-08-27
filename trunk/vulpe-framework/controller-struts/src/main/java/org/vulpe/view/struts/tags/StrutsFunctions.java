@@ -48,7 +48,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -79,7 +79,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -115,7 +115,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -129,7 +129,7 @@ public final class StrutsFunctions extends Functions {
 				.getContextPath()
 				.concat("/")
 				.concat(ControllerUtil.getInstance(ServletActionContext.getRequest())
-						.getCurrentControllerName()).concat("/download.action?downloadKey=")
+						.getCurrentControllerName()).concat("/download?downloadKey=")
 				.concat(urlEncode(key)).concat("&downloadContentType=").concat(contentType)
 				.concat("&downloadContentDisposition=").concat(contentDisposition)
 				.concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
@@ -137,7 +137,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -174,7 +174,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Map getFormParams() {
@@ -189,7 +189,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -215,7 +215,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -232,7 +232,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -261,7 +261,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param pagingName
 	 * @param pageSize
@@ -279,7 +279,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -290,7 +290,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return

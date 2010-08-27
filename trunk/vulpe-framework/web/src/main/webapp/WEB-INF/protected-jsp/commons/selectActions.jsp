@@ -18,6 +18,6 @@
 <v:action labelKey="read" elementId="Read" layer="vulpeSelectTable_${vulpeFormName}" action="read" beforeJs="vulpe.view.prepareRead(%27${vulpeFormName}%27)" helpKey="read" icon="search" iconClass="Read" />
 </c:if>
 <c:if test="${now['buttons']['report'] || now['buttons']['SELECT_report']}">
-<v:action labelKey="report" elementId="Report" layer="vulpeSelectTable_${vulpeFormName}" action="${controllerConfig.reportControllerName}/read/ajax" helpKey="report" icon="report" iconClass="Report" />
+<v:action labelKey="report" elementId="Report" layer="vulpeSelectTable_${vulpeFormName}" action="${controllerConfig.reportControllerName}/report/ajax" helpKey="report" icon="report" iconClass="Report" />
 </c:if>
 </p>

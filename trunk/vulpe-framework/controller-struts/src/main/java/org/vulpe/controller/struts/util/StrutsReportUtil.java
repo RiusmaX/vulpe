@@ -67,7 +67,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 				fullFileName = ControllerUtil.getServletContext().getRealPath(fileName);
 			}
 			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
-			JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
+			final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
 
 			final Map parameters = new HashMap();
 			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(

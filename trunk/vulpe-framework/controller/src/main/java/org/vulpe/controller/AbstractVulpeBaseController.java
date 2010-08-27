@@ -775,7 +775,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntities(list);
 		}
 		final List<ValueBean> values = new ArrayList<ValueBean>();
-		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()
+				&& VulpeValidationUtil.isNotEmpty(getEntities())) {
 			for (ENTITY entity : getEntities()) {
 				String value = "";
 				try {
@@ -1684,23 +1685,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession(before = true)
 	public String report() {
 		changeControllerType(ControllerType.REPORT);
-		prepareBefore();
-		onPrepare();
 		showButtons(Action.PREPARE);
-
-		setResultName(Forward.SUCCESS);
-		if (isBack()) {
-			setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
-			setEntities((List<ENTITY>) getSessionAttribute(getSelectTableKey()));
-			return read();
-		} else {
-			getSession().removeAttribute(getSelectFormKey());
-			getSession().removeAttribute(getSelectTableKey());
-		}
-		controlResultForward();
-
-		prepareAfter();
-		return getResultName();
+		final String read = read();
+		changeControllerType(ControllerType.SELECT);
+		return read;
 	}
 
 	/*
