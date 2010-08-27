@@ -358,7 +358,6 @@ h1 {
 	border-top: 1px #ddd solid;
 	/*border-bottom: 1px #ddd solid;*/
 	display: block;
-	font-size: 11px;
 	height: 20px;
 	letter-spacing: 1px;
 	margin: 0px 0px 0px 0px;
@@ -405,7 +404,6 @@ td {
 
 td p {
 	margin: 0;
-	line-height: 1.7em;
 	margin-bottom: 5px;
 }
 
@@ -433,7 +431,7 @@ html,body {
 	height: 100%;
 }
 
-* html #container {
+* html {
 	height: 100%;
 }
 
@@ -470,7 +468,6 @@ html,body {
 
 #container {
 	margin: 0 auto;
-	height: 100%;
 	width: 100%;
 }
 
@@ -673,7 +670,7 @@ html,body {
 }
 
 #error {
-	background-color: #eee;
+	background-color: #fff;
 	height: 100%;
 }
 
@@ -682,17 +679,15 @@ html,body {
 }
 
 #error a {
-	font-size: 13px;
-	margin: 0px;
-	padding-left: 20px;
+	margin-left: 20px;
+	padding-left: 0px;
 	padding-top: 3px;
 }
 
 #error h1 {
-	color: #d00;
-	background-color: #ddd;
+	color: #fff;
+	background-color: #d00;
 	display: block;
-	font-size: 30px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;
@@ -701,7 +696,6 @@ html,body {
 
 #error h2 {
 	display: block;
-	font-size: 20px;
 	height: auto;
 	margin: 0px;
 	padding-left: 20px;

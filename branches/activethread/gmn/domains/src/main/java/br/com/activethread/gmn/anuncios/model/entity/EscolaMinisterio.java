@@ -23,7 +23,7 @@ import br.com.activethread.gmn.core.model.entity.Publicador;
 @SuppressWarnings("serial")
 public class EscolaMinisterio extends VulpeBaseDB4OEntity<Long> {
 
-	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, required = true, autoComplete = true)
+	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, required = true, autoComplete = true)
 	private Publicador presidente;
 
 	@VulpeDate(required = true)

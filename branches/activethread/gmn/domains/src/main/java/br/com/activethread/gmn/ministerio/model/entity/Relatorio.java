@@ -23,7 +23,7 @@ import br.com.activethread.gmn.core.model.entity.Publicador;
 public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")
-	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, autoComplete = true)
+	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, autoComplete = true)
 	private Publicador pulicador;
 
 	@VulpeColumn(sortable = true)

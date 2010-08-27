@@ -13,7 +13,7 @@ public class EscolaMinisterioDiscurso extends VulpeBaseDB4OEntity<Long> {
 
 	private EscolaMinisterio escolaMinisterio;
 
-	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, required = true, autoComplete = true)
+	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, required = true, autoComplete = true)
 	private Publicador publicador;
 
 	@VulpeText(required = true, size = 40, maxlength = 100)

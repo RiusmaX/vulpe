@@ -1,9 +1,7 @@
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
@@ -16,10 +14,7 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-import org.vulpe.commons.util.VulpeDateUtil;
-import org.vulpe.commons.util.VulpeDateUtil.DaysOfWeek;
-
-@SuppressWarnings( { "unchecked", "unused", "deprecation" })
+@SuppressWarnings( { "unchecked", "unused" })
 public class TesteJasper {
 
 	public void gerar(String layout) throws JRException, SQLException, ClassNotFoundException {
@@ -40,18 +35,19 @@ public class TesteJasper {
 
 		// exibe o resultado
 		JasperViewer viewer = new JasperViewer(impressao, true);
-		viewer.show();
+		viewer.setVisible(true);
 	}
 
 	public static void main(String[] args) {
 		try {
-			// new TesteJasper()
-			// .gerar("/Users/felipe/Desenvolvimento/Workspace/gerenciador-ministerial/web/src/main/resources/reports/pedidos.jrxml");
-			List<Date> dates = VulpeDateUtil.getDatesOnMonth(DaysOfWeek.WEDNESDAY,
-					DaysOfWeek.SATURDAY);
-			for (Date date : dates) {
-				System.out.println(date);
-			}
+			new TesteJasper()
+					.gerar("C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\Pedido.jrxml");
+			// List<Date> dates =
+			// VulpeDateUtil.getDatesOnMonth(DaysOfWeek.WEDNESDAY,
+			// DaysOfWeek.SATURDAY);
+			// for (Date date : dates) {
+			// System.out.println(date);
+			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

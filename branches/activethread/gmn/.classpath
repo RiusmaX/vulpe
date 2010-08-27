@@ -62,7 +62,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-model/1.0/vulpe-model-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-model/1.0/vulpe-model-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.6/commons-digester-1.6.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jasperreports/jasperreports/3.5.3/jasperreports-3.5.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/jasperreports/jasperreports/3.5.3/jasperreports-3.5.3.jar" sourcepath="/M2_REPO/jasperreports/jasperreports/3.5.3/jasperreports-3.5.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/activethread/gmn/gmn-core/1.0/gmn-core-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-model-db4o/1.0/vulpe-model-db4o-1.0.jar"/>

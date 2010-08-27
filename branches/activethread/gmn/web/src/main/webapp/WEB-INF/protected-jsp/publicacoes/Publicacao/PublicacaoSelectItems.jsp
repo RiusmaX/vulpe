@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
-
+<%@taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <v:table>
 	<jsp:attribute name="tableHeader">
 		<th colspan="9"><fmt:message key="label.gmn.publicacoes.Publicacao.select.header"/></th>

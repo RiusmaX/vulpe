@@ -11,6 +11,8 @@ import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Report;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.struts.VulpeStrutsController;
 
 import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
@@ -20,7 +22,7 @@ import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publicacoes.PedidoController")
 @SuppressWarnings("serial")
-@Controller(serviceClass = PublicacoesService.class, detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) })
+@Controller(serviceClass = PublicacoesService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(subReports = "Pedido-publicacoes"), detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
 public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 
 	@Override

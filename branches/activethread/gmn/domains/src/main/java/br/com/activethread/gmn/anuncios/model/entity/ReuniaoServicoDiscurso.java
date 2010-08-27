@@ -11,7 +11,7 @@ public class ReuniaoServicoDiscurso extends VulpeBaseDB4OEntity<Long> {
 
 	private ReuniaoServico reuniaoServico;
 
-	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select/prepare", popupWidth = 420, argument = true, required = true, autoComplete = true)
+	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, required = true, autoComplete = true)
 	private Publicador orador;
 
 	@VulpeText(required = true, size = 40, maxlength = 100)

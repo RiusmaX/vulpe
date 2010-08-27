@@ -17,7 +17,7 @@ public class PedidoPublicacao extends VulpeBaseDB4OEntity<Long> {
 	@VulpeText(mask = "I", size = 5, maxlength = 5, required = true)
 	private Integer quantidade;
 
-	@VulpeSelectPopup(name = "publicacao", identifier = "id", description = "nome", action = "/publicacoes/Publicacao/select/prepare", popupWidth = 420, size = 35, required = true)
+	@VulpeSelectPopup(name = "publicacao", identifier = "id", description = "nome", action = "/publicacoes/Publicacao/select", popupWidth = 420, size = 35, required = true)
 	private Publicacao publicacao;
 
 	@VulpeColumn(align = "center")

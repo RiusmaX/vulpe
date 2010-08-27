@@ -3,22 +3,21 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_0" class="java.lang.String"/>
+	<parameter name="SUBREPORT_0" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\Pedido-publicacoes.jasper"]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
 	<field name="data" class="java.util.Date"/>
 	<field name="entregue" class="java.lang.Boolean"/>
-	<field name="publicador" class="br.com.activethread.gmn.publicacoes.model.entity.Publicador"/>
+	<field name="publicador" class="br.com.activethread.gmn.core.model.entity.Publicador"/>
 	<field name="dataEntrega" class="java.util.Date"/>
 	<field name="publicacoes" class="java.util.List"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="50" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="79"/>
+				<reportElement x="0" y="0" width="555" height="50"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="28" isBold="true" isUnderline="false" pdfFontName="Helvetica"/>
 				</textElement>
@@ -26,68 +25,65 @@
 			</staticText>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="9" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
-		<band height="22" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<staticText>
-				<reportElement x="218" y="2" width="100" height="20"/>
+				<reportElement x="218" y="2" width="100" height="16"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="321" y="2" width="100" height="20"/>
+				<reportElement x="321" y="2" width="100" height="16"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Entregue?]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="4" y="2" width="100" height="20"/>
+				<reportElement x="0" y="2" width="100" height="16"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Publicador]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="2" width="100" height="20"/>
+				<reportElement x="423" y="2" width="100" height="16"/>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Data da Entrega]]></text>
 			</staticText>
-			<line>
-				<reportElement x="0" y="21" width="555" height="1"/>
-			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="27" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="555" height="13" backcolor="#CCCCCC"/>
+			</rectangle>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="218" y="1" width="100" height="20"/>
+				<reportElement x="218" y="1" width="100" height="13"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="321" y="1" width="100" height="20"/>
+				<reportElement x="321" y="1" width="100" height="13"/>
 				<textElement markup="none"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["" + ($F{entregue}.booleanValue() ? "Sim" : "Não")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="4" y="1" width="212" height="20"/>
+				<reportElement x="1" y="1" width="218" height="13"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{publicador}.getNome()]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="423" y="1" width="100" height="20"/>
+				<reportElement x="423" y="1" width="100" height="13"/>
 				<textElement/>
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{dataEntrega}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="64" y="19" width="459" height="11" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="61" y="16" width="491" height="11" isPrintWhenDetailOverflows="true"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{publicacoes})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
 			</subreport>
@@ -110,7 +106,4 @@
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>
