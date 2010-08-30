@@ -21,6 +21,7 @@
 <%@ attribute name="onmouseout" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="onclick" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="listName" required="false" rtexprvalue="true" %>
+<%@ attribute name="enumType" required="false" rtexprvalue="true" %>
 <%@ attribute name="booleanTo" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/columnTag.jsp" %>
