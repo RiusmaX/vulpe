@@ -12,7 +12,8 @@
 		view = @VulpeView(
 				showButtonAsImage = true,
 				showButtonIcon = false,
-				showButtonText = false
+				showButtonText = false,
+				messageSlideUp = false
 		),
 		theme = "gmn",
 		security = true

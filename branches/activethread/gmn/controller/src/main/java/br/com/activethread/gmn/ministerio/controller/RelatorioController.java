@@ -1,5 +1,7 @@
 package br.com.activethread.gmn.ministerio.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -20,4 +22,9 @@ import br.com.activethread.gmn.ministerio.model.services.MinisterioService;
 @Controller(serviceClass = MinisterioService.class, select = @Select(pageSize = 5))
 public class RelatorioController extends ApplicationBaseController<Relatorio, java.lang.Long> {
 
+	@Override
+	protected void createAfter() {
+		super.createAfter();
+		getEntity().setData(new Date());
+	}
 }

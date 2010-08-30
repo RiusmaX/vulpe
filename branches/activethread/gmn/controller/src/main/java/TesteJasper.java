@@ -18,6 +18,8 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 
+import br.com.activethread.gmn.comuns.model.entity.PrivilegioAdicional;
+import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
 
@@ -58,6 +60,38 @@ public class TesteJasper {
 			// for (Date date : dates) {
 			// System.out.println(date);
 			// }
+			consulta();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void consulta() {
+		try {
+			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
+			Query query = db.query();
+			query.constrain(Publicador.class);
+			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.INDICADOR);
+			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.LEITOR);
+			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.MICROFONE_VOLANTE);
+			ObjectSet<Publicador> os = query.execute();
+			for (Publicador publicador : os) {
+				System.out.println(publicador.getNome());
+			}
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void relatorio() {
+		try {
+			// List<Date> dates =
+			// VulpeDateUtil.getDatesOnMonth(DaysOfWeek.WEDNESDAY,
+			// DaysOfWeek.SATURDAY);
+			// for (Date date : dates) {
+			// System.out.println(date);
+			// }
 			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
 			Query query = db.query();
 			query.constrain(PedidoPublicacao.class);
@@ -83,7 +117,9 @@ public class TesteJasper {
 				lista.add(new ValueBean(publicacao.getCodigo().toString(), publicacao.getNome()));
 			}
 			new TesteJasper()
-					.gerar("C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\PedidoSimples.jrxml", lista);
+					.gerar(
+							"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\PedidoSimples.jrxml",
+							lista);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

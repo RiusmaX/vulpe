@@ -18,5 +18,24 @@ var app = {
 			quantidadeEntregue.val("");
 			quantidadeEntregue.removeAttr("readOnly");
 		}
+	},
+
+	privilegios: function(idBatizado, idSexo) {
+		var batizado = vulpe.util.get(idBatizado);
+		var sexo = vulpe.util.get(idSexo);
+		if (eval(batizado.attr("checked"))){
+			$('#tipoMinisterio').show();
+			if (sexo.val() == 'MASCULINO') {
+				$('#privilegio').show();
+				$('#privilegioAdicional').show();
+			} else {
+				$('#privilegio').hide();
+				$('#privilegioAdicional').hide();
+			}
+		} else {
+			$('#tipoMinisterio').hide();
+			$('#privilegio').hide();
+			$('#privilegioAdicional').hide();
+		}
 	}
 }

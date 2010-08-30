@@ -5,6 +5,8 @@ import java.util.Date;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.annotations.QueryParameter;
+import org.vulpe.model.annotations.QueryParameter.OperatorType;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
@@ -29,6 +31,14 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 	@VulpeColumn(sortable = true)
 	@VulpeDate
 	private Date data;
+
+	@QueryParameter(name = "data", operator = OperatorType.GREATER_OR_EQUAL)
+	@VulpeDate(argument = true)
+	private transient Date dataInicial;
+
+	@QueryParameter(name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
+	@VulpeDate(argument = true)
+	private transient Date dataFinal;
 
 	@VulpeText(mask = "I", size = 10)
 	private Integer horas;
@@ -110,6 +120,22 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	public final void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
 		this.tipoMinisterio = tipoMinisterio;
+	}
+
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public Date getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public Date getDataFinal() {
+		return dataFinal;
 	}
 
 }

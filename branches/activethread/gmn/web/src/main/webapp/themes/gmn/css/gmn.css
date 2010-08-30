@@ -249,6 +249,7 @@
 
 #userAuthenticated {
 	background-color: #000;
+	border-top: 1px solid #ccc;
 	display: block;
 	height: 19px;
 	letter-spacing: 1px;
@@ -317,13 +318,11 @@ body,html {
 }
 
 fieldset {
-	margin-left: 28px;
 	border: 1px solid #e1e4d7;
-	padding-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 h1 {
-	background: url(../images/background-all.png) repeat-x;
 	display: block;
 	height: 20px;
 	letter-spacing: 1px;
@@ -403,11 +402,7 @@ tfoot th, .vulpeTableFooter {
 }
 
 #body td, #body th {
-	padding: 3px;
-}
-
-.vulpeTableHeader th, .vulpeColumnHeader th, .vulpeTableFooter th {
-	padding: 3px;
+	padding: 2px;
 }
 
 #vulpeCRUDBody td,#vulpeCRUDBody th,#vulpeSelectForm td {
@@ -596,5 +591,5 @@ tfoot th, .vulpeTableFooter {
 	text-align: right;
 	margin-right: 5px;
 	margin-bottom: 5px;
-	font-size: 8px;
+	font-size: 9px;
 }

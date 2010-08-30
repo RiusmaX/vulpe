@@ -5,7 +5,7 @@
 	labelKey="label.gmn.anuncios.EscolaMinisterio.crud.presidente"
 	property="presidente"
 	identifier="id" description="nome"
-	action="/core/Publicador/select/prepare" popupId="presidenteSelectPopup"
+	action="/core/Publicador/select" popupId="presidenteSelectPopup"
 	popupProperties="presidente.id=id,presidente.nome=nome"
 	size="40" popupWidth="420px"
 	autoComplete="true"

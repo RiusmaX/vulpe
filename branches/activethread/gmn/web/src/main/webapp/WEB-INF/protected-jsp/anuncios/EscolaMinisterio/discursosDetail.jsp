@@ -6,7 +6,7 @@
 			<v:column labelKey="label.gmn.anuncios.EscolaMinisterio.crud.discursos.publicador">
 				<v:selectPopup property="publicador"
 					identifier="id" description="nome"
-					action="/core/Publicador/select/prepare" popupId="publicadorSelectPopup"
+					action="/core/Publicador/select" popupId="publicadorSelectPopup"
 					popupProperties="publicador.id=id,publicador.nome=nome"
 					size="40" popupWidth="420px"
 					autoComplete="true"

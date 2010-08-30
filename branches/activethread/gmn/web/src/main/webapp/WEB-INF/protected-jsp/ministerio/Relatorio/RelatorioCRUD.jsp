@@ -3,11 +3,11 @@
 <v:hidden property="id" />
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
+		<td><v:date labelKey="label.gmn.ministerio.Relatorio.crud.data" property="data" /></td>
 		<td colspan="2"><v:selectPopup labelKey="label.gmn.ministerio.Relatorio.crud.pulicador"
-			property="pulicador" identifier="id" description="nome" action="/core/Publicador/select/prepare"
+			property="pulicador" identifier="id" description="nome" action="/core/Publicador/select"
 			popupId="pulicadorSelectPopup" popupProperties="pulicador.id=id,pulicador.nome=nome" size="40"
 			popupWidth="420px" autoComplete="true" /></td>
-		<td><v:date labelKey="label.gmn.ministerio.Relatorio.crud.data" property="data" /></td>
 	</tr>
 	<tr>
 		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.horas" property="horas" mask="I"

@@ -1,5 +1,7 @@
 package br.com.activethread.gmn.core.model.entity;
 
+import java.util.List;
+
 import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
@@ -14,7 +16,10 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
+import br.com.activethread.gmn.comuns.model.entity.Cargo;
+import br.com.activethread.gmn.comuns.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
+import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 
 @NotExistEqual(parameters = { @QueryParameter(name = "nome") })
 @CodeGenerator(view = @View(popupProperties = "id,nome", viewType = { ViewType.CRUD,
@@ -38,15 +43,15 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(booleanTo = "{Yes}|{No}")
 	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private Boolean indicador;
+	private Boolean batizado;
 
-	@VulpeColumn(booleanTo = "{Yes}|{No}")
-	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private Boolean leitor;
+	@VulpeSelect(required = true)
+	private TipoMinisterio tipoMinisterio;
 
-	@VulpeColumn(booleanTo = "{Yes}|{No}")
-	@VulpeCheckbox(argument = true, fieldValue = "true")
-	private Boolean microfone;
+	@VulpeSelect(required = true)
+	private Cargo cargo;
+
+	private List<PrivilegioAdicional> privilegiosAdicionais;
 
 	public String getNome() {
 		return nome;
@@ -64,22 +69,6 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 		this.grupo = grupo;
 	}
 
-	public void setIndicador(Boolean indicador) {
-		this.indicador = indicador;
-	}
-
-	public Boolean getIndicador() {
-		return indicador;
-	}
-
-	public void setLeitor(Boolean leitor) {
-		this.leitor = leitor;
-	}
-
-	public Boolean getLeitor() {
-		return leitor;
-	}
-
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
@@ -88,11 +77,36 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 		return sexo;
 	}
 
-	public void setMicrofone(Boolean microfone) {
-		this.microfone = microfone;
+	public void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
+		this.tipoMinisterio = tipoMinisterio;
 	}
 
-	public Boolean getMicrofone() {
-		return microfone;
+	public TipoMinisterio getTipoMinisterio() {
+		return tipoMinisterio;
 	}
+
+	public void setBatizado(Boolean batizado) {
+		this.batizado = batizado;
+	}
+
+	public Boolean getBatizado() {
+		return batizado;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setPrivilegiosAdicionais(List<PrivilegioAdicional> privilegiosAdicionais) {
+		this.privilegiosAdicionais = privilegiosAdicionais;
+	}
+
+	public List<PrivilegioAdicional> getPrivilegiosAdicionais() {
+		return privilegiosAdicionais;
+	}
+
 }

@@ -6,7 +6,7 @@
 			<v:column labelKey="label.gmn.anuncios.ReuniaoServico.crud.discursos.orador">
 				<v:selectPopup property="orador"
 					identifier="id" description="nome"
-					action="/core/Publicador/select/prepare" popupId="oradorSelectPopup"
+					action="/core/Publicador/select" popupId="oradorSelectPopup"
 					popupProperties="orador.id=id,orador.nome=nome"
 					size="40" popupWidth="420px"
 					autoComplete="true"

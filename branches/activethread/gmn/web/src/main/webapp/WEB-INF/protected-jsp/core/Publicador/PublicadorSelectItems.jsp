@@ -17,19 +17,21 @@
 				sort="true"
 			/>
 			<v:column
-				labelKey="label.gmn.core.Publicador.select.indicador"
-				property="indicador"
+				labelKey="label.gmn.core.Publicador.select.batizado"
+				property="batizado"
 				booleanTo="{Yes}|{No}"
 			/>
 			<v:column
-				labelKey="label.gmn.core.Publicador.select.leitor"
-				property="leitor"
-				booleanTo="{Yes}|{No}"
+				labelKey="label.gmn.core.Publicador.select.tipoMinisterio"
+				property="tipoMinisterio"
 			/>
 			<v:column
-				labelKey="label.gmn.core.Publicador.select.microfone"
-				property="microfone"
-				booleanTo="{Yes}|{No}"
+				labelKey="label.gmn.core.Publicador.select.cargo"
+				property="cargo"
+			/>
+			<v:column
+				labelKey="label.gmn.core.Publicador.select.privilegiosAdicionais"
+				property="privilegiosAdicionais" enumType="PrivilegioAdicional"
 			/>
 		</v:row>
 	</jsp:attribute>

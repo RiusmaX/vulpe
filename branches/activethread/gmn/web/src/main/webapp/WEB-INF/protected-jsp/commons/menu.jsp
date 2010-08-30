@@ -2,7 +2,7 @@
 <%@taglib tagdir="/WEB-INF/tags" prefix="v" %>
 <v:menu labelKey="label.gmn.menu.Index">
 	<v:menu labelKey="label.gmn.menu.Index.congregacoes" action="/core/Congregacao/select"/>
-	<v:menu labelKey="label.gmn.menu.Index.grupos" action="/core/Grupo/select"/>
+	<%--<v:menu labelKey="label.gmn.menu.Index.grupos" action="/core/Grupo/select"/> --%>
 	<v:menu labelKey="label.gmn.menu.Index.publicadores" action="/core/Publicador/select"/>
 </v:menu>
 <v:menu labelKey="label.gmn.menu.Publicacoes">
