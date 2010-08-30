@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
@@ -201,14 +202,12 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 					for (Object object : details) {
 						if (VulpeEntity.class.isAssignableFrom(object.getClass())) {
 							try {
-								String attributeName = entity.getClass().getSimpleName();
-								attributeName = attributeName.substring(0, 1).toLowerCase()
-										+ attributeName.substring(1);
+								final String attributeName = VulpeStringUtil.lowerCaseFirst(entity.getClass().getSimpleName());
 								final VulpeEntity<Long> detail = (VulpeEntity<Long>) object;
 								repair(detail, container);
+								PropertyUtils.setProperty(detail, attributeName, entity);
 								if (detail.getId() == null) {
 									detail.setId(getId(detail));
-									PropertyUtils.setProperty(detail, attributeName, entity);
 								} else {
 									final VulpeEntity<Long> valueEntity = (VulpeEntity) entity;
 									final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) entity

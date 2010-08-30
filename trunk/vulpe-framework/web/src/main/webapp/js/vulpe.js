@@ -800,7 +800,13 @@ var vulpe = {
 					for (var i = 0; i < filters.length; i++) {
 						var field = jQuery(filters[i]);
 						var idField = field.attr("id");
-						if (field.val() != "") {
+						var typeField = field.attr("type");
+						if (typeField == "checkbox") {
+							if (eval(field.attr("checked"))) {
+								empty = false;
+								break;
+							}
+						} else if (field.val() != "") {
 							empty = false;
 							break;
 						}

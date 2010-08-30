@@ -385,36 +385,15 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 						final List values = (List) value;
 						if (!values.isEmpty()) {
 							final Query subqy = query.descend(field.getName());
-							if (values.size() > 1) {
-								for (Object object : values) {
-									if (object instanceof Enum) {
-										subqy.descend(field.getName()).constrain(object.toString());
-									} else {
-										subqy.constrain(object);
-									}
-								}
-							} else {
-								final Object object = values.get(0);
-								if (object instanceof Enum) {
-									subqy.constrain(object.toString());
-								} else {
-									subqy.constrain(object);
-								}
+							for (Object object : values) {
+								subqy.constrain(object);
 							}
 						}
 					} else if (Object[].class.isAssignableFrom(field.getType())) {
 						final Query subqy = query.descend(field.getName());
 						final Object[] values = (Object[]) value;
-						if (values.length > 1) {
-							for (Object object : values) {
-								if (object instanceof Enum) {
-									subqy.constrain(object.toString());
-								} else {
-									subqy.constrain(object);
-								}
-							}
-						} else {
-							subqy.constrain(values[0].toString());
+						for (Object object : values) {
+							subqy.constrain(object);
 						}
 					} else if (!field.isAnnotationPresent(Transient.class)
 							&& !field.getName().equals(DB4O.SELECTED)) {

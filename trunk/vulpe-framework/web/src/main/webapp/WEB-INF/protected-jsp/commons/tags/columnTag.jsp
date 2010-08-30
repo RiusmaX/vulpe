@@ -113,10 +113,32 @@
 				<c:when test="${!isImage}">
 					<c:choose>
 					<c:when test="${not empty booleanTo}">
-					${util:booleanTo(value, booleanTo)}
+						${util:booleanTo(value, booleanTo)}
+					</c:when>
+					<c:when test="${not empty enumType}">
+						<c:set var="enumerationEL" value="${'${'}cachedEnumArray['${enumType}']${'}'}"/>
+						<c:set var="enumeration" value="${util:eval(pageContext, enumerationEL)}"/>
+						<c:set var="items" value="${fn:replace(enumeration, '#{', '')}"/>
+						<c:set var="items" value="${fn:replace(items, '}', '')}"/>
+						<c:set var="items" value="${fn:replace(items, '\\'', '')}"/>
+						<c:set var="items" value="${fn:replace(items, ' ', '')}"/>
+						<c:set var="enumeration" value=""/>
+						<c:forEach var="v" items="${value}" varStatus="status">
+							<c:if test="${status.index > 0}">
+								<c:set var="enumeration" value="${enumeration}, "/>
+							</c:if>
+							<c:forEach var="item" items="${fn:split(items, ',')}">
+								<c:set var="itemValue" value="${fn:split(item, ':')}"/>
+								<c:if test="${v == itemValue[0]}">
+								<c:set var="description"><fmt:message key="${itemValue[1]}"/></c:set>
+								<c:set var="enumeration" value="${enumeration}${description}"/>
+								</c:if>
+							</c:forEach>
+						</c:forEach>
+						${enumeration}
 					</c:when>
 					<c:otherwise>
-					${util:toString(value)}
+						${util:toString(value)}
 					</c:otherwise>
 					</c:choose>
 				</c:when>
