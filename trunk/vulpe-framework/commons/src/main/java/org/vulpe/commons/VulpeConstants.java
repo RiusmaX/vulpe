@@ -154,6 +154,10 @@ public class VulpeConstants {
 		public static final String SELECT_TABLE = "_selectTable";
 		public static final String SELECT_PAGING = "_selectPaging";
 
+		public static final String REPORT_COLLECTION = "reportCollection";
+		public static final String REPORT_PARAMETERS = "reportParameters";
+		public static final String TABS = "tabs";
+
 		public class Button {
 			public static final String CREATE = "create";
 			public static final String CREATE_POST = "createPost";

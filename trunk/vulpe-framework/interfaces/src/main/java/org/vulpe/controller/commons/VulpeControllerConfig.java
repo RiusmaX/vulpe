@@ -45,7 +45,7 @@ public interface VulpeControllerConfig {
 
 	String getReportFormat();
 
-	String getReportDataSource();
+	String getReportDataSourceName();
 
 	String getReportName();
 

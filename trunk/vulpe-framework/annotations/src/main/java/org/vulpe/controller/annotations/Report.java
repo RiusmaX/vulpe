@@ -34,28 +34,38 @@ public @interface Report {
 	/**
 	 * Template file of report
 	 */
-	String reportFile() default "";
-
-	/**
-	 * Format of report
-	 */
-	String reportFormat() default "PDF";
+	String file() default "";
 
 	/**
 	 * Format to export report
 	 */
-	String reportDataSource() default "entities";
+	ReportFormat format() default ReportFormat.PDF;
+
+	/**
+	 * Data Source name
+	 */
+	String dataSourceName() default "entities";
 
 	/**
 	 * Name of report
 	 */
-	String reportName() default "";
+	String name() default "";
 
 	/**
-	 * Download report
+	 * Force report download
 	 */
-	boolean reportDownload() default false;
+	boolean forceDownload() default false;
 
+	/**
+	 * SubReports
+	 */
 	String[] subReports() default {};
 
+	enum ReportFormat {
+		PDF, HTML, XLS, XML, RTF;
+
+		public String getValue() {
+			return this.name();
+		}
+	}
 }

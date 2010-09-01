@@ -241,12 +241,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		}
 	}
 
-	/**
-	 * Extension point to read report.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @since 1.0
+	 * @see org.vulpe.controller.AbstractVulpeBaseController#doReportLoad()
 	 */
-	protected DownloadInfo doReadReportLoad() {
+	protected DownloadInfo doReportLoad() {
 		try {
 			// List<VulpeEntity<?>> list = (List<VulpeEntity<?>>)
 			// PropertyUtils.getProperty(

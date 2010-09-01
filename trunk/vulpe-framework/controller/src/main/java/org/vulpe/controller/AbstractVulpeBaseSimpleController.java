@@ -663,11 +663,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	public abstract void addActionError(final String message);
 
 	public VulpeHashMap<String, Tab> getTabs() {
-		if (now.containsKey("tabs")) {
-			return now.getSelf("tabs");
+		if (now.containsKey(Action.TABS)) {
+			return now.getSelf(Action.TABS);
 		}
 		final VulpeHashMap<String, Tab> tabs = new VulpeHashMap<String, Tab>();
-		now.put("tabs", tabs);
+		now.put(Action.TABS, tabs);
 		return tabs;
 	}
 

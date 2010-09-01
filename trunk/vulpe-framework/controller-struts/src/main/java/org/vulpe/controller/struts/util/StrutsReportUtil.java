@@ -17,8 +17,6 @@ package org.vulpe.controller.struts.util;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -37,12 +35,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.views.jasperreports.JasperReportConstants;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.model.entity.VulpeEntity;
 
-@SuppressWarnings("unchecked")
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
 	 * Returns StrutsReportUtil instance
@@ -60,7 +57,8 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 	}
 
 	public byte[] getJasperReport(final String fileName, final String[] subReports,
-			final Collection<VulpeEntity<?>> collection, final String format) {
+			final Collection<?> collection, final VulpeHashMap<String, Object> parameters,
+			final String format) {
 		try {
 			String fullFileName = fileName;
 			if (ControllerUtil.getServletContext() != null) {
@@ -69,7 +67,6 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
 			final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
 
-			final Map parameters = new HashMap();
 			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(
 					fileName, "/", File.separator), ""));
 			if (subReports != null && subReports.length > 0) {
@@ -110,8 +107,9 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		}
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<VulpeEntity<?>> collection,
-			final String fileName, final String[] subReports, final String format) {
+	public DownloadInfo getDownloadInfo(final Collection<?> collection,
+			final VulpeHashMap<String, Object> parameters, final String fileName,
+			final String[] subReports, final String format) {
 		String contentType = null;
 		if (format.equals(StrutsReportUtil.FORMAT_CSV)) {
 			contentType = "text/plain";
@@ -126,16 +124,16 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		} else {
 			contentType = "application/pdf";
 		}
-
-		final byte data[] = getJasperReport(fileName, subReports, collection, format);
-
+		final byte data[] = getJasperReport(fileName, subReports, collection, parameters, format);
 		return data == null ? null : new DownloadInfo(data, contentType);
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<VulpeEntity<?>> collection,
-			final String fileName, final String[] subReports, final String format,
-			final String reportName, final boolean reportDownload) {
-		DownloadInfo downloadInfo = getDownloadInfo(collection, fileName, subReports, format);
+	public DownloadInfo getDownloadInfo(final Collection<?> collection,
+			final VulpeHashMap<String, Object> parameters, final String fileName,
+			final String[] subReports, final String format, final String reportName,
+			final boolean reportDownload) {
+		final DownloadInfo downloadInfo = getDownloadInfo(collection, parameters, fileName,
+				subReports, format);
 		downloadInfo.setName(reportName.concat(".").concat(format.toLowerCase()));
 		String contentDisposition = reportDownload ? "attachment; " : "inline; ";
 		downloadInfo.setContentDisposition(contentDisposition.concat("filename=\"").concat(

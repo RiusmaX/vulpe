@@ -247,19 +247,24 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.vulpe.controller.AbstractVulpeBaseController#doReadReportLoad()
+	 * @see org.vulpe.controller.AbstractVulpeBaseController#doReportLoad()
 	 */
-	protected DownloadInfo doReadReportLoad() {
+	protected DownloadInfo doReportLoad() {
 		try {
-			List<VulpeEntity<?>> list = (List<VulpeEntity<?>>) PropertyUtils.getProperty(this,
-					getControllerConfig().getReportDataSource());
+			Collection<?> collection = getReportCollection();
+			if (collection == null) {
+				collection = (Collection<?>) PropertyUtils.getProperty(this, getControllerConfig()
+						.getReportDataSourceName());
+			}
 			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+					.getInstance().getDownloadInfo(collection, getReportParameters(),
+							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
 							getControllerConfig().getReportFormat(),
 							getControllerConfig().getReportName(),
 							getControllerConfig().isReportDownload()) : StrutsReportUtil
-					.getInstance().getDownloadInfo(list, getControllerConfig().getReportFile(),
+					.getInstance().getDownloadInfo(collection, getReportParameters(),
+							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
 							getControllerConfig().getReportFormat());
 		} catch (Exception e) {

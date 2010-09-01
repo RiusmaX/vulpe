@@ -252,17 +252,18 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFormat()
 	 */
 	public String getReportFormat() {
-		return this.controller.report().reportFormat();
+		return this.controller.report().format().getValue();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSource()
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSourceName
+	 * ()
 	 */
-	public String getReportDataSource() {
-		return this.controller.report().reportDataSource();
+	public String getReportDataSourceName() {
+		return this.controller.report().dataSourceName();
 	}
 
 	/*
@@ -271,7 +272,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportName()
 	 */
 	public String getReportName() {
-		return this.controller.report().reportName();
+		return this.controller.report().name();
 	}
 
 	/*
@@ -281,7 +282,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
 	 */
 	public boolean isReportDownload() {
-		return this.controller.report().reportDownload();
+		return this.controller.report().forceDownload();
 	}
 
 	/*
@@ -291,7 +292,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	 */
 	public String getReportFile() {
 		if (StringUtils.isBlank(this.reportFile)) {
-			this.reportFile = this.controller.report().reportFile();
+			this.reportFile = this.controller.report().file();
 			if ("".equals(this.reportFile)) {
 				this.reportFile = Report.PATH.concat(this.controllerName).concat("/").concat(
 						this.simpleControllerName).concat(Report.JASPER);

@@ -40,6 +40,7 @@ import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.controller.annotations.ResetSession;
@@ -330,11 +331,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	/**
-	 * Extension point to read report.
+	 * Extension point to report load.
 	 *
 	 * @since 1.0
 	 */
-	protected abstract DownloadInfo doReadReportLoad();
+	protected abstract DownloadInfo doReportLoad();
 
 	public void addActionError(final String key, final Object... args) {
 		addActionError(getText(key, args));
@@ -1447,7 +1448,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			return;
 		}
 		final ENTITY entity = prepareEntity(Action.READ);
-		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
+		if (((getControllerType().equals(ControllerType.SELECT)
+				|| getControllerType().equals(ControllerType.REPORT) || getControllerType().equals(
 				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
 				|| (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig()
 						.getTabularPageSize() > 0)) {
@@ -1476,21 +1478,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
 							.clone() });
 			setEntities(list);
-
-			if (getControllerType().equals(ControllerType.TABULAR)) {
-				if (list == null || list.isEmpty()) {
-					setDetail(Action.ENTITIES);
-					onAddDetail(true);
-				}
-			}
-			if (getControllerType().equals(ControllerType.REPORT)) {
-				final DownloadInfo downloadInfo = doReadReportLoad();
-				setDownloadInfo(downloadInfo);
-			}
 		}
-		setSessionAttribute(getSelectFormKey(), entity.clone());
-		if (getEntities() != null && !getEntities().isEmpty()) {
-			setSessionAttribute(getSelectTableKey(), getEntities());
+		if (getControllerType().equals(ControllerType.REPORT)) {
+			final DownloadInfo downloadInfo = doReportLoad();
+			setDownloadInfo(downloadInfo);
+		} else {
+			setSessionAttribute(getSelectFormKey(), entity.clone());
+			if (getEntities() != null && !getEntities().isEmpty()) {
+				setSessionAttribute(getSelectTableKey(), getEntities());
+			}
 		}
 		setExecuted(true);
 	}
@@ -1854,4 +1850,40 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		return empty;
 	}
+
+	/**
+	 * Retrieves Report Parameters.
+	 *
+	 * @return
+	 */
+	public VulpeHashMap<String, Object> getReportParameters() {
+		if (now.containsKey(Action.REPORT_PARAMETERS)) {
+			return now.getSelf(Action.REPORT_PARAMETERS);
+		}
+		final VulpeHashMap<String, Object> reportParameters = new VulpeHashMap<String, Object>();
+		now.put(Action.REPORT_PARAMETERS, reportParameters);
+		return reportParameters;
+	}
+
+	/**
+	 * Retrieves Report Collection Data Source.
+	 *
+	 * @return
+	 */
+	public Collection<?> getReportCollection() {
+		if (now.containsKey(Action.REPORT_COLLECTION)) {
+			return now.getSelf(Action.REPORT_COLLECTION);
+		}
+		return null;
+	}
+
+	/**
+	 * Sets Report Collection Data Source.
+	 *
+	 * @return
+	 */
+	public void setReportCollection(Collection<?> collection) {
+		now.put(Action.REPORT_COLLECTION, collection);
+	}
+
 }
