@@ -9,4 +9,10 @@
 		<td><v:checkbox labelKey="label.gmn.publicacoes.Pedido.select.entregue" property="entregue"
 			fieldValue="true" /></td>
 	</tr>
+	<tr>
+		<td colspan="5">
+<p><v:label key="label.gmn.publicacoes.Pedido.select.periodo" /><br>
+<v:date property="dataInicial" paragraph="false" />até<v:date property="dataFinal"
+	paragraph="false" /></p></td>
+	</tr>
 </table>

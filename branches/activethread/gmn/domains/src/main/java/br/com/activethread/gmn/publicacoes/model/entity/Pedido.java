@@ -29,10 +29,10 @@ public class Pedido extends VulpeBaseDB4OEntity<Long> {
 	private Date data;
 
 	@QueryParameter(name = "data", operator = OperatorType.GREATER_OR_EQUAL)
-	private transient Date dataInicio;
+	private transient Date dataInicial;
 
 	@QueryParameter(name = "data", operator = OperatorType.SMALLER_OR_EQUAL)
-	private transient Date dataFim;
+	private transient Date dataFinal;
 
 	@VulpeColumn
 	private Date dataValidade;
@@ -92,20 +92,20 @@ public class Pedido extends VulpeBaseDB4OEntity<Long> {
 		return dataValidade;
 	}
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
+	public void setDataInicial(Date dataInicial) {
+		this.dataInicial = dataInicial;
 	}
 
-	public Date getDataInicio() {
-		return dataInicio;
+	public Date getDataInicial() {
+		return dataInicial;
 	}
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+	public void setDataFinal(Date dataFinal) {
+		this.dataFinal = dataFinal;
 	}
 
-	public Date getDataFim() {
-		return dataFim;
+	public Date getDataFinal() {
+		return dataFinal;
 	}
 
 }

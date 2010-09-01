@@ -22,6 +22,7 @@ import br.com.activethread.gmn.comuns.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
+import br.com.activethread.gmn.relatorio.model.entity.PedidoSimples;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -35,16 +36,28 @@ public class TesteJasper {
 		// gerando o jasper design
 		JasperDesign desenho = JRXmlLoader.load(layout);
 
-		final InputStream urlRelatorio = Thread.currentThread().getContextClassLoader()
-				.getResourceAsStream("pedidos.jasper");
+		// final InputStream urlRelatorio =
+		// Thread.currentThread().getContextClassLoader()
+		// .getResourceAsStream("pedidos.jasper");
 
 		// compila o relatório
 		JasperReport relatorio = JasperCompileManager.compileReport(desenho);
 
 		// executa o relatório
 		Map parametros = new HashMap();
-		JRBeanCollectionDataSource dsRelatorio = new JRBeanCollectionDataSource(dataSource);
-		parametros.put("nota", new Double(10));
+		List<PedidoSimples> lista = new ArrayList<PedidoSimples>();
+		lista.add(new PedidoSimples());
+		JRBeanCollectionDataSource dsRelatorio = new JRBeanCollectionDataSource(lista);
+		parametros.put("periodo", "01/09/2010 - 30/09/2010");
+		parametros
+				.put(
+						"SUBREPORT_0",
+						"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\Publicacoes.jasper");
+		for (PedidoSimples pedidoSimples : (List<PedidoSimples>) dataSource) {
+
+		}
+		parametros.put("publicacoesNormal", dataSource);
+		parametros.put("publicacoesIPE", dataSource);
 		JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, dsRelatorio);
 
 		// exibe o resultado
@@ -60,7 +73,8 @@ public class TesteJasper {
 			// for (Date date : dates) {
 			// System.out.println(date);
 			// }
-			consulta();
+			// consulta();
+			relatorio();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,7 +111,7 @@ public class TesteJasper {
 			query.constrain(PedidoPublicacao.class);
 			query.descend("publicacao").descend("codigo").orderAscending();
 			ObjectSet<PedidoPublicacao> os = query.execute();
-			Map<Publicacao, Integer> map = new HashMap<Publicacao, Integer>();
+			List<PedidoSimples> lista = new ArrayList<PedidoSimples>();
 			for (PedidoPublicacao pedidoPublicacao : os) {
 				int count = 0;
 				for (PedidoPublicacao pedidoPublicacao2 : os) {
@@ -106,19 +120,17 @@ public class TesteJasper {
 						++count;
 					}
 				}
-				map.put(pedidoPublicacao.getPublicacao(), count);
+				lista.add(new PedidoSimples(pedidoPublicacao.getPublicacao(), count));
 			}
 			db.close();
 			VulpeDB4OUtil.getInstance().close();
-			List<ValueBean> lista = new ArrayList<ValueBean>();
-			for (Publicacao publicacao : map.keySet()) {
-				System.out.println(publicacao.getCodigo() + " - " + publicacao.getNome() + " = "
-						+ map.get(publicacao));
-				lista.add(new ValueBean(publicacao.getCodigo().toString(), publicacao.getNome()));
-			}
+			// new TesteJasper()
+			// .gerar(
+			// "C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\PedidoSimples.jrxml",
+			// lista);
 			new TesteJasper()
 					.gerar(
-							"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\PedidoSimples.jrxml",
+							"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\Pedidos.jrxml",
 							lista);
 		} catch (Exception e) {
 			e.printStackTrace();

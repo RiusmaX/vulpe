@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pedidos" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pedido" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_0" class="java.lang.String">
+	<parameter name="SUBREPORT_0" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Pedido\\Pedido-publicacoes.jasper"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="periodo" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -15,16 +16,40 @@
 	<field name="dataEntrega" class="java.util.Date"/>
 	<field name="publicacoes" class="java.util.List"/>
 	<title>
-		<band height="50" splitType="Stretch">
+		<band height="55" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="50"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="50"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="28" isBold="true" isUnderline="false" pdfFontName="Helvetica"/>
+					<font size="20" isBold="false" isUnderline="false" pdfFontName="Helvetica"/>
 				</textElement>
 				<text><![CDATA[Pedidos]]></text>
 			</staticText>
 		</band>
 	</title>
+	<pageHeader>
+		<band height="23">
+			<printWhenExpression><![CDATA[$P{periodo} != null]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="552" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Período: " + $P{periodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<staticText>
@@ -58,9 +83,12 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="1" width="555" height="13" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
 			</rectangle>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="218" y="1" width="100" height="13"/>
@@ -73,7 +101,7 @@
 				<textFieldExpression class="java.lang.String"><![CDATA["" + ($F{entregue}.booleanValue() ? "Sim" : "Não")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="1" y="1" width="218" height="13"/>
+				<reportElement x="2" y="1" width="218" height="13"/>
 				<textElement/>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{publicador}.getNome()]]></textFieldExpression>
 			</textField>
@@ -83,15 +111,12 @@
 				<textFieldExpression class="java.util.Date"><![CDATA[$F{dataEntrega}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="61" y="16" width="491" height="11" isPrintWhenDetailOverflows="true"/>
+				<reportElement x="45" y="16" width="510" height="11" isPrintWhenDetailOverflows="true"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{publicacoes})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="2" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="21" splitType="Stretch">
 			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="false">
@@ -104,6 +129,9 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression class="java.lang.String"><![CDATA["Página " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1"/>
+			</line>
 		</band>
 	</pageFooter>
 </jasperReport>
