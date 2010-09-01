@@ -61,7 +61,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.6/commons-digester-1.6.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jasperreports/jasperreports/3.5.3/jasperreports-3.5.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/3.7.4/jasperreports-3.7.4.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/3.7.4/jasperreports-3.7.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/${packageInPathFormat}/${artifactId}-core/${version}/${artifactId}-core-${version}.jar" sourcepath="M2_REPO/${packageInPathFormat}/${artifactId}-core/${version}/${artifactId}-core-${version}-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/${packageInPathFormat}/${artifactId}-domains/${version}/${artifactId}-domains-${version}.jar" sourcepath="M2_REPO/${packageInPathFormat}/${artifactId}-domains/${version}/${artifactId}-domains-${version}-sources.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
