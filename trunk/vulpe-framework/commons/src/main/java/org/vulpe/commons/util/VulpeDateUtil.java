@@ -595,8 +595,8 @@ public final class VulpeDateUtil {
 			calendarEnd2.add(Calendar.DAY_OF_YEAR, 1);
 
 			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd, calendarBegin1.getTime(), end)
-					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin,
-							calendarEnd2.getTime());
+					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2
+							.getTime());
 		}
 
 		int returnedTime = 0;
@@ -632,9 +632,9 @@ public final class VulpeDateUtil {
 			// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
-			returnedTime = Math.max(
-					Math.min(getMinutesDifference(periodBegin.getTime(), dateTimeEnd), period), 0); // d,
-																									// e
+			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
+					dateTimeEnd), period), 0); // d,
+			// e
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
 			returnedTime = activityTime; // f
 		} else {
@@ -912,5 +912,35 @@ public final class VulpeDateUtil {
 			}
 			return dayOfWeek;
 		}
+	}
+
+	/**
+	 * Retrieves the first date of the month.
+	 *
+	 * @return
+	 */
+	public static Date getFirstDateOfTheMonth() {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+
+	/**
+	 * Retrieves the last date of the month.
+	 *
+	 * @return
+	 */
+	public static Date getLastDateOfTheMonth() {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
 	}
 }

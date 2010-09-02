@@ -1448,8 +1448,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			return;
 		}
 		final ENTITY entity = prepareEntity(Action.READ);
-		if (((getControllerType().equals(ControllerType.SELECT)
-				|| getControllerType().equals(ControllerType.REPORT) || getControllerType().equals(
+		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
 				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
 				|| (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig()
 						.getTabularPageSize() > 0)) {
@@ -1656,7 +1655,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession(before = true)
 	public String select() {
 		changeControllerType(ControllerType.SELECT);
-		prepareBefore();
+		selectBefore();
 		onPrepare();
 		showButtons(Action.PREPARE);
 
@@ -1674,18 +1673,49 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		controlResultForward();
 
-		prepareAfter();
+		selectAfter();
 		return getResultName();
+	}
+
+	/**
+	 * Extension point to code before select.
+	 */
+	protected void selectBefore() {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code after select.
+	 */
+	protected void selectAfter() {
+		// extension point
 	}
 
 	@ResetSession(before = true)
 	public String report() {
 		changeControllerType(ControllerType.REPORT);
+		reportBefore();
 		showButtons(Action.PREPARE);
 		final String read = read();
+		reportAfter();
 		changeControllerType(ControllerType.SELECT);
 		return read;
 	}
+
+	/**
+	 * Extension point to code before report.
+	 */
+	protected void reportBefore() {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code after report.
+	 */
+	protected void reportAfter() {
+		// extension point
+	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -1702,11 +1732,25 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				LOG.error(e);
 			}
 		}
-		prepareBefore();
+		tabularBefore();
 		onPrepare();
 		showButtons(Action.TABULAR);
-		prepareAfter();
+		tabularAfter();
 		return read();
+	}
+
+	/**
+	 * Extension point to code before tabular.
+	 */
+	protected void tabularBefore() {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code after tabular.
+	 */
+	protected void tabularAfter() {
+		// extension point
 	}
 
 	/**

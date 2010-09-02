@@ -1562,7 +1562,7 @@ var vulpe = {
 						var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						} else if (authenticator && loginError && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
+						} else if (!authenticator && !loginError && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {

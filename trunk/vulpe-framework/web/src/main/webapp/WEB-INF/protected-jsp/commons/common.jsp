@@ -197,9 +197,10 @@ $(document).ready(function() {
 		}
 	}
 	*/
-	<c:if test="${now['requireOneFilter']}">
-	vulpe.config.requireOneFilter = true;
-	</c:if>
+	<c:choose>
+	<c:when test="${now['requireOneFilter']}">vulpe.config.requireOneFilter = true;</c:when>
+	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
+	</c:choose>
 });
 </script>
 </c:if>

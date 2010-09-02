@@ -1,5 +1,4 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-
 <div id="vulpeReport">
 	<div id="vulpeReportActions" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/reportActions.jsp" %>
