@@ -9,18 +9,18 @@ import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 
-import br.com.activethread.gmn.anuncios.model.entity.EscolaMinisterio;
+import br.com.activethread.gmn.anuncios.model.entity.Reuniao;
 import br.com.activethread.gmn.anuncios.model.services.AnunciosService;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 
 
 /**
- * Controller implementation of EscolaMinisterio
+ * Controller implementation of Reuniao
  */
-@Component("anuncios.EscolaMinisterioController")
+@Component("anuncios.ReuniaoServicoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 4) }, select = @Select(pageSize = 5))
-public class EscolaMinisterioController extends ApplicationBaseController<EscolaMinisterio, java.lang.Long> {
+@Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, select = @Select(pageSize = 5))
+public class ReuniaoController extends ApplicationBaseController<Reuniao, java.lang.Long> {
 
 }
