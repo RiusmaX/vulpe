@@ -18,7 +18,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 
-import br.com.activethread.gmn.comuns.model.entity.PrivilegioAdicional;
+import br.com.activethread.gmn.core.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;

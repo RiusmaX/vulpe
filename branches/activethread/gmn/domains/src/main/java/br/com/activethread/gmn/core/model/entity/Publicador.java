@@ -16,8 +16,6 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import br.com.activethread.gmn.comuns.model.entity.Cargo;
-import br.com.activethread.gmn.comuns.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 

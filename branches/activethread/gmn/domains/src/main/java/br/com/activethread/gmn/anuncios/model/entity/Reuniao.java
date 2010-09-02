@@ -13,6 +13,7 @@ import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeDate;
+import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
@@ -31,6 +32,13 @@ public class Reuniao extends VulpeBaseDB4OEntity<Long> {
 	@VulpeColumn
 	@VulpeDate(required = true)
 	private Date data;
+
+	@VulpeSelect
+	private TipoReuniao tipo;
+
+	private Integer canticoInicial;
+
+	private Integer canticoFinal;
 
 	@Detail(clazz = Discurso.class)
 	private List<Discurso> discursos;
@@ -57,6 +65,30 @@ public class Reuniao extends VulpeBaseDB4OEntity<Long> {
 
 	public List<Discurso> getDiscursos() {
 		return discursos;
+	}
+
+	public void setTipo(TipoReuniao tipo) {
+		this.tipo = tipo;
+	}
+
+	public TipoReuniao getTipo() {
+		return tipo;
+	}
+
+	public void setCanticoInicial(Integer canticoInicial) {
+		this.canticoInicial = canticoInicial;
+	}
+
+	public Integer getCanticoInicial() {
+		return canticoInicial;
+	}
+
+	public void setCanticoFinal(Integer canticoFinal) {
+		this.canticoFinal = canticoFinal;
+	}
+
+	public Integer getCanticoFinal() {
+		return canticoFinal;
 	}
 
 }

@@ -1,4 +1,4 @@
-package br.com.activethread.gmn.comuns.model.entity;
+package br.com.activethread.gmn.publicacoes.model.entity;
 
 import org.vulpe.model.annotations.CachedEnum;
 

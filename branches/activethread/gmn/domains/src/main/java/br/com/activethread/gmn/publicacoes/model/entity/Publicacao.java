@@ -12,7 +12,6 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import br.com.activethread.gmn.comuns.model.entity.ClassificacaoPublicacao;
 
 @CodeGenerator(view = @View(popupProperties = "id,codigo,nome", viewType = { ViewType.CRUD,
 		ViewType.SELECT }))

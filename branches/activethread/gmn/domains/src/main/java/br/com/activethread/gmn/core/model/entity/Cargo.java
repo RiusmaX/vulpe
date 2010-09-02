@@ -1,4 +1,4 @@
-package br.com.activethread.gmn.comuns.model.entity;
+package br.com.activethread.gmn.core.model.entity;
 
 public enum Cargo {
 

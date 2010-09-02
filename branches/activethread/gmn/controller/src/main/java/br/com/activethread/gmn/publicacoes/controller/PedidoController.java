@@ -19,7 +19,7 @@ import org.vulpe.controller.annotations.Report;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.struts.VulpeStrutsController;
 
-import br.com.activethread.gmn.comuns.model.entity.ClassificacaoPublicacao;
+import br.com.activethread.gmn.publicacoes.model.entity.ClassificacaoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
