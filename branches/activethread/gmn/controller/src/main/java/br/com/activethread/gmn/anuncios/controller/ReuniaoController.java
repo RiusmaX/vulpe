@@ -17,7 +17,7 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 /**
  * Controller implementation of Reuniao
  */
-@Component("anuncios.ReuniaoServicoController")
+@Component("anuncios.ReuniaoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, select = @Select(pageSize = 5))

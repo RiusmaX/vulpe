@@ -14,8 +14,8 @@
 	<v:menu labelKey="label.gmn.menu.Ministerio.relatorio" action="/ministerio/Relatorio/select"/>
 </v:menu>
 <v:menu labelKey="label.gmn.menu.Anuncios">
-	<v:menu labelKey="label.gmn.menu.Anuncios.escolaMinisterio" action="/anuncios/EscolaMinisterio/select"/>
-	<v:menu labelKey="label.gmn.menu.Anuncios.reuniaoServico" action="/anuncios/ReuniaoServico/select"/>
+	<v:menu labelKey="label.gmn.menu.Anuncios.escolaMinisterio" action="/anuncios/Reuniao/select"/>
+	<v:menu labelKey="label.gmn.menu.Anuncios.reuniaoServico" action="/anuncios/Reuniao/select"/>
 </v:menu>
 <sec:authorize ifAllGranted="ROLE_ADMINISTRADOR">
 </sec:authorize>
