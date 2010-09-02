@@ -26,7 +26,7 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, autoComplete = true)
-	private Publicador pulicador;
+	private Publicador publicador;
 
 	@VulpeColumn(sortable = true)
 	@VulpeDate
@@ -41,10 +41,13 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 	private transient Date dataFinal;
 
 	@VulpeText(mask = "I", size = 10)
-	private Integer horas;
+	private Integer livros;
 
 	@VulpeText(mask = "I", size = 10)
-	private Integer livros;
+	private Integer brochuras;
+
+	@VulpeText(mask = "I", size = 10)
+	private Integer horas;
 
 	@VulpeText(mask = "I", size = 10)
 	private Integer revistas;
@@ -57,14 +60,6 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeSelect
 	private TipoMinisterio tipoMinisterio;
-
-	public final Publicador getPulicador() {
-		return pulicador;
-	}
-
-	public final void setPulicador(Publicador pulicador) {
-		this.pulicador = pulicador;
-	}
 
 	public final Date getData() {
 		return data;
@@ -136,6 +131,22 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	public Date getDataFinal() {
 		return dataFinal;
+	}
+
+	public Publicador getPublicador() {
+		return publicador;
+	}
+
+	public void setPublicador(Publicador publicador) {
+		this.publicador = publicador;
+	}
+
+	public void setBrochuras(Integer brochuras) {
+		this.brochuras = brochuras;
+	}
+
+	public Integer getBrochuras() {
+		return brochuras;
 	}
 
 }

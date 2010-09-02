@@ -7,9 +7,9 @@ import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
-public class ReuniaoServicoDiscurso extends VulpeBaseDB4OEntity<Long> {
+public class Discurso extends VulpeBaseDB4OEntity<Long> {
 
-	private ReuniaoServico reuniaoServico;
+	private Reuniao reuniaoServico;
 
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, required = true, autoComplete = true)
 	private Publicador orador;
@@ -44,11 +44,11 @@ public class ReuniaoServicoDiscurso extends VulpeBaseDB4OEntity<Long> {
 		this.tempo = tempo;
 	}
 
-	public void setReuniaoServico(ReuniaoServico reuniaoServico) {
+	public void setReuniaoServico(Reuniao reuniaoServico) {
 		this.reuniaoServico = reuniaoServico;
 	}
 
-	public ReuniaoServico getReuniaoServico() {
+	public Reuniao getReuniaoServico() {
 		return reuniaoServico;
 	}
 

@@ -17,13 +17,13 @@
 				sort="true"
 			/>
 			<v:column
-				labelKey="label.gmn.publicacoes.Publicacao.select.tipoPublicacao"
-				property="tipoPublicacao.descricao"
+				labelKey="label.gmn.publicacoes.Publicacao.select.tipo"
+				property="tipo.descricao"
 				sort="true"
 			/>
 			<v:column
-				labelKey="label.gmn.publicacoes.Publicacao.select.classificacaoPublicacao"
-				property="classificacaoPublicacao"
+				labelKey="label.gmn.publicacoes.Publicacao.select.classificacao"
+				property="classificacao"
 				sort="true"
 			/>
 		</v:row>

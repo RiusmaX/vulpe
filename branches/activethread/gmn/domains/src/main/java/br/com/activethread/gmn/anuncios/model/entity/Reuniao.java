@@ -22,7 +22,7 @@ import br.com.activethread.gmn.core.model.entity.Publicador;
 @CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 3) }), manager = true, view = @View(viewType = {
 		ViewType.SELECT, ViewType.CRUD }))
 @SuppressWarnings("serial")
-public class ReuniaoServico extends VulpeBaseDB4OEntity<Long> {
+public class Reuniao extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Publicador/select", popupWidth = 420, argument = true, required = true, autoComplete = true)
@@ -32,8 +32,8 @@ public class ReuniaoServico extends VulpeBaseDB4OEntity<Long> {
 	@VulpeDate(required = true)
 	private Date data;
 
-	@Detail(clazz = ReuniaoServicoDiscurso.class)
-	private List<ReuniaoServicoDiscurso> discursos;
+	@Detail(clazz = Discurso.class)
+	private List<Discurso> discursos;
 
 	public Publicador getPresidente() {
 		return presidente;
@@ -51,11 +51,11 @@ public class ReuniaoServico extends VulpeBaseDB4OEntity<Long> {
 		this.data = data;
 	}
 
-	public void setDiscursos(List<ReuniaoServicoDiscurso> discursos) {
+	public void setDiscursos(List<Discurso> discursos) {
 		this.discursos = discursos;
 	}
 
-	public List<ReuniaoServicoDiscurso> getDiscursos() {
+	public List<Discurso> getDiscursos() {
 		return discursos;
 	}
 

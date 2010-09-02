@@ -14,8 +14,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 
 import br.com.activethread.gmn.comuns.model.entity.ClassificacaoPublicacao;
 
-@CodeGenerator(view = @View(popupProperties = "id,codigo,nome", viewType = {
-		ViewType.CRUD, ViewType.SELECT }))
+@CodeGenerator(view = @View(popupProperties = "id,codigo,nome", viewType = { ViewType.CRUD,
+		ViewType.SELECT }))
 @CachedClass
 @SuppressWarnings("serial")
 public class Publicacao extends VulpeBaseDB4OEntity<Long> {
@@ -33,11 +33,11 @@ public class Publicacao extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "descricao")
 	@VulpeSelect(items = "TipoPublicacao", itemKey = "id", itemLabel = "descricao", required = true, autoLoad = true)
-	private TipoPublicacao tipoPublicacao;
+	private TipoPublicacao tipo;
 
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(required = true)
-	private ClassificacaoPublicacao classificacaoPublicacao;
+	private ClassificacaoPublicacao classificacao;
 
 	public String getNome() {
 		return nome;
@@ -55,21 +55,20 @@ public class Publicacao extends VulpeBaseDB4OEntity<Long> {
 		this.codigo = codigo;
 	}
 
-	public TipoPublicacao getTipoPublicacao() {
-		return tipoPublicacao;
+	public void setClassificacao(ClassificacaoPublicacao classificacao) {
+		this.classificacao = classificacao;
 	}
 
-	public void setTipoPublicacao(TipoPublicacao tipoPublicacao) {
-		this.tipoPublicacao = tipoPublicacao;
+	public ClassificacaoPublicacao getClassificacao() {
+		return classificacao;
 	}
 
-	public ClassificacaoPublicacao getClassificacaoPublicacao() {
-		return classificacaoPublicacao;
+	public void setTipo(TipoPublicacao tipo) {
+		this.tipo = tipo;
 	}
 
-	public void setClassificacaoPublicacao(
-			ClassificacaoPublicacao classificacaoPublicacao) {
-		this.classificacaoPublicacao = classificacaoPublicacao;
+	public TipoPublicacao getTipo() {
+		return tipo;
 	}
 
 }

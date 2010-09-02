@@ -1,11 +1,11 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <v:selectPopup
-	labelKey="label.gmn.ministerio.Relatorio.select.pulicador"
-	property="pulicador"
+	labelKey="label.gmn.ministerio.Relatorio.select.publicador"
+	property="publicador"
 	identifier="id" description="nome"
-	action="/core/Publicador/select" popupId="pulicadorSelectPopup"
-	popupProperties="pulicador.id=id,pulicador.nome=nome"
+	action="/core/Publicador/select" popupId="publicadorSelectPopup"
+	popupProperties="publicador.id=id,publicador.nome=nome"
 	size="40" popupWidth="420px"
 	autoComplete="true"
 />

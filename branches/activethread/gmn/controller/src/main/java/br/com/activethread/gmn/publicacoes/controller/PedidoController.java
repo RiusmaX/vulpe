@@ -94,19 +94,19 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 		final StringBuilder periodo = new StringBuilder();
 		if (getEntitySelect().getDataInicial() != null && getEntitySelect().getDataFinal() != null) {
 			final String dataInicial = VulpeDateUtil.getDate(getEntitySelect().getDataInicial(),
-					"dd/MM/yyyy");
+					"dd 'de' MMMM 'de' yyyy");
 			final String dataFinal = VulpeDateUtil.getDate(getEntitySelect().getDataFinal(),
-					"dd/MM/yyyy");
+					"dd 'de' MMMM 'de' yyyy");
 			periodo.append(dataInicial).append(" a ").append(dataFinal);
 			getReportParameters().put("periodo", periodo.toString());
 		} else if (getEntitySelect().getDataInicial() != null) {
 			final String dataInicial = VulpeDateUtil.getDate(getEntitySelect().getDataInicial(),
-					"dd/MM/yyyy");
+					"dd 'de' MMMM 'de' yyyy");
 			periodo.append("A partir de ").append(dataInicial);
 			getReportParameters().put("periodo", periodo.toString());
 		} else if (getEntitySelect().getDataFinal() != null) {
 			final String dataFinal = VulpeDateUtil.getDate(getEntitySelect().getDataFinal(),
-					"dd/MM/yyyy");
+					"dd 'de' MMMM 'de' yyyy");
 			periodo.append("Antes de ").append(dataFinal);
 		} else {
 			periodo.append("Total");
@@ -118,7 +118,7 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 		}
 		final List<PedidoSimples> normal = new ArrayList<PedidoSimples>();
 		for (PedidoPublicacao pedidoPublicacao : publicacoes) {
-			if (pedidoPublicacao.getPublicacao().getClassificacaoPublicacao().equals(
+			if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
 					ClassificacaoPublicacao.NORMAL)) {
 				int count = 0;
 				for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {
@@ -141,7 +141,7 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 		}
 		final List<PedidoSimples> ipe = new ArrayList<PedidoSimples>();
 		for (PedidoPublicacao pedidoPublicacao : publicacoes) {
-			if (pedidoPublicacao.getPublicacao().getClassificacaoPublicacao().equals(
+			if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
 					ClassificacaoPublicacao.IPE)) {
 				int count = 0;
 				for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {

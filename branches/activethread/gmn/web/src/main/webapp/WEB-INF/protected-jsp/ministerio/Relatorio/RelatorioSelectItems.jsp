@@ -12,8 +12,8 @@
 				sort="true"
 			/>
 			<v:column
-				labelKey="label.gmn.ministerio.Relatorio.select.pulicador"
-				property="pulicador.nome"
+				labelKey="label.gmn.ministerio.Relatorio.select.publicador"
+				property="publicador.nome"
 				sort="true"
 			/>
 			<v:column

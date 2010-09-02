@@ -36,7 +36,7 @@
 		<band height="23">
 			<printWhenExpression><![CDATA[$P{periodo} != null]]></printWhenExpression>
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC"/>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#EEEEEE"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
@@ -85,7 +85,7 @@
 	<detail>
 		<band height="30" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="1" width="555" height="13" backcolor="#CCCCCC"/>
+				<reportElement x="0" y="1" width="555" height="13" backcolor="#EEEEEE"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
