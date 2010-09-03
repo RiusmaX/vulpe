@@ -202,7 +202,8 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 					for (Object object : details) {
 						if (VulpeEntity.class.isAssignableFrom(object.getClass())) {
 							try {
-								final String attributeName = VulpeStringUtil.lowerCaseFirst(entity.getClass().getSimpleName());
+								final String attributeName = VulpeStringUtil.lowerCaseFirst(entity
+										.getClass().getSimpleName());
 								final VulpeEntity<Long> detail = (VulpeEntity<Long>) object;
 								repair(detail, container);
 								PropertyUtils.setProperty(detail, attributeName, entity);
@@ -242,16 +243,16 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 * Repair entity.
 	 *
 	 * @param <T>
-	 * @param detail
+	 * @param entity
 	 * @param container
 	 * @throws Exception
 	 */
-	public <T> void repair(final T detail, final ObjectContainer container)
+	public <T> void repair(final T entity, final ObjectContainer container)
 			throws VulpeSystemException {
-		for (Field field : VulpeReflectUtil.getInstance().getFields(detail.getClass())) {
+		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
 			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
 				final VulpeEntity<Long> value = VulpeReflectUtil.getInstance().getFieldValue(
-						detail, field.getName());
+						entity, field.getName());
 				if (value != null) {
 					try {
 						if (value.getId() != null) {
@@ -263,10 +264,10 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 							if (objectSet.hasNext()) {
 								final VulpeEntity<Long> objectPersisted = (VulpeEntity<Long>) objectSet
 										.get(0);
-								PropertyUtils.setProperty(detail, field.getName(), objectPersisted);
+								PropertyUtils.setProperty(entity, field.getName(), objectPersisted);
 							}
 						} else {
-							PropertyUtils.setProperty(detail, field.getName(), null);
+							PropertyUtils.setProperty(entity, field.getName(), null);
 						}
 					} catch (Exception e) {
 						throw new VulpeSystemException(e);
@@ -275,7 +276,26 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 				}
 			}
 		}
+	}
 
+	public <T> boolean unrepair(final T entity)
+			throws VulpeSystemException {
+		boolean updated = false;
+		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
+			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+				final VulpeEntity<Long> value = VulpeReflectUtil.getInstance().getFieldValue(
+						entity, field.getName());
+				if (value != null) {
+					try {
+						PropertyUtils.setProperty(entity, field.getName(), null);
+						updated = true;
+					} catch (Exception e) {
+						throw new VulpeSystemException(e);
+					}
+				}
+			}
+		}
+		return updated;
 	}
 
 	/**

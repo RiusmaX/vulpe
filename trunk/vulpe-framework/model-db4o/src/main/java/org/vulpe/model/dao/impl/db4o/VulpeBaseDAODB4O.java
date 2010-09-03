@@ -94,16 +94,19 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		}
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		// persistent entity
-		final ENTITY deletedEntity = find(entity.getId());
+		ENTITY deletedEntity = find(entity.getId());
 		try {
-			final ObjectContainer container = getObjectContainer();
 			if (deletedEntity instanceof VulpeLogicEntity) {
 				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) deletedEntity;
 				logicEntity.setStatus(Status.D);
 				// make merge of entity
 				merge(deletedEntity);
 			} else {
-				container.delete(deletedEntity);
+				if (unrepair(deletedEntity)) {
+					merge(deletedEntity);
+					deletedEntity = find(entity.getId());
+				}
+				getObjectContainer().delete(deletedEntity);
 			}
 		} finally {
 			commit();

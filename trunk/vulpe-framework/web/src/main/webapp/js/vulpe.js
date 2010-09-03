@@ -1080,7 +1080,7 @@ var vulpe = {
 			});
 			var popup = $(vulpe.config.layers.modalMessages).dialog({
 					autoOpen: true,
-					width: 400,
+					width: 500,
 					resizable: true,
 					modal: true
 			});
@@ -1542,7 +1542,7 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(beforeJs)) {
 					return false;
 				}
-				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString : '') + '&ajax=true';
+				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString + '&' : '') + 'ajax=true';
 				var popup = jQuery('[id$=Popup]');
 				if (!popup || popup.length == 0) {
 					hotkeys.triggersMap = {};
