@@ -7,7 +7,7 @@
 	action="/core/Publicador/select" popupId="publicadorSelectPopup"
 	popupProperties="publicador.id=id,publicador.nome=nome"
 	size="40" popupWidth="420px"
-	autoComplete="true"
+	autoComplete="true" autoCompleteMinLength="1"
 />
 <p><v:label key="label.gmn.ministerio.Relatorio.select.periodo" /><br>
 <v:date property="dataInicial" paragraph="false" />até<v:date property="dataFinal"

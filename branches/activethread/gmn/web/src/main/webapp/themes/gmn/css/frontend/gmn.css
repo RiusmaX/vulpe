@@ -676,10 +676,11 @@ html,body {
 
 #error #message {
 	padding: 3px 20px 20px;
+	color: #000;
 }
 
 #error a {
-	margin-left: 20px;
+	margin-left: 0px;
 	padding-left: 0px;
 	padding-top: 3px;
 }
