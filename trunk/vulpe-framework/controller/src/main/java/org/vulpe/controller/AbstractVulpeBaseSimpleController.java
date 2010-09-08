@@ -476,7 +476,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSession()
 	 */
 	public HttpSession getSession() {
-		return getRequest().getSession();
+		return  vulpeContext.getSession();
 	}
 
 	/*

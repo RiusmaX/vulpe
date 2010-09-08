@@ -767,38 +767,51 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public String autocomplete() {
-		if (getEntities() == null || getEntities().isEmpty()) {
-			final ENTITY entity = prepareEntity(Action.READ);
-			final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ, Action.READ
-					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
-							.clone() });
-			setEntities(list);
-		}
-		final List<ValueBean> values = new ArrayList<ValueBean>();
-		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()
-				&& VulpeValidationUtil.isNotEmpty(getEntities())) {
-			for (ENTITY entity : getEntities()) {
-				String value = "";
-				try {
-					value = (String) PropertyUtils.getProperty(entity, getEntitySelect()
-							.getAutoComplete());
-				} catch (Exception e) {
-					LOG.error(e);
+		List<ValueBean> values = autocompleteValueList();
+		if (VulpeValidationUtil.isEmpty(values)) {
+			List<ENTITY> autocompleteList = autocompleteList();
+			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
+				if (getEntities() == null || getEntities().isEmpty()) {
+					final ENTITY entity = prepareEntity(Action.READ);
+					final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ,
+							Action.READ.concat(getControllerConfig().getEntityClass()
+									.getSimpleName()), new Class[] { getControllerConfig()
+									.getEntityClass() }, new Object[] { entity.clone() });
+					setEntities(list);
 				}
-				values.add(new ValueBean(entity.getId().toString(), value));
 			}
-		} else {
-			if (VulpeValidationUtil.isNotEmpty(getEntities())) {
-				for (Iterator iterator = getEntities().iterator(); iterator.hasNext();) {
-					Object[] type = (Object[]) iterator.next();
-					values.add(new ValueBean(type[0].toString(), type[1].toString()));
+			values = new ArrayList<ValueBean>();
+			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
+				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
+					for (ENTITY entity : autocompleteList) {
+						String value = "";
+						try {
+							value = (String) PropertyUtils.getProperty(entity, getEntitySelect()
+									.getAutoComplete());
+						} catch (Exception e) {
+							LOG.error(e);
+						}
+						values.add(new ValueBean(entity.getId().toString(), value));
+					}
+				} else {
+					for (Iterator iterator = autocompleteList.iterator(); iterator.hasNext();) {
+						Object[] type = (Object[]) iterator.next();
+						values.add(new ValueBean(type[0].toString(), type[1].toString()));
+					}
 				}
 			}
 		}
 		final JSONArray jsonArray = new JSONArray(values);
 		now.put("JSON", jsonArray.toString());
 		return Forward.JSON;
+	}
+
+	protected List<ENTITY> autocompleteList() {
+		return null;
+	}
+
+	protected List<ValueBean> autocompleteValueList() {
+		return null;
 	}
 
 	/**
@@ -1715,7 +1728,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void reportAfter() {
 		// extension point
 	}
-
 
 	/*
 	 * (non-Javadoc)
