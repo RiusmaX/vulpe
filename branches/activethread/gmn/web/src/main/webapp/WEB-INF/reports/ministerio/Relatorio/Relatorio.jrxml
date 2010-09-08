@@ -33,45 +33,41 @@
 	</parameter>
 	<parameter name="pioneirosRegulares" class="java.util.List"/>
 	<parameter name="periodo" class="java.lang.String"/>
-	<parameter name="pioneirosEspeciais" class="java.util.List"/>
+	<parameter name="publicadoresPendentes" class="java.util.List"/>
 	<parameter name="pioneirosAuxiliares" class="java.util.List"/>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
+	<parameter name="SUBREPORT_1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\gmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\ministerio\\Relatorio\\RelatoriosPendentes.jasper"]]></defaultValueExpression>
+	</parameter>
 	<title>
-		<band height="55" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="50"/>
-				<graphicElement>
-					<pen lineStyle="Dashed"/>
-				</graphicElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="50"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="20" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Relatórios]]></text>
-			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="23">
-			<rectangle>
-				<reportElement x="0" y="0" width="555" height="20" backcolor="#EEEEEE"/>
+				<reportElement x="0" y="30" width="555" height="20" backcolor="#EEEEEE"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="0" width="552" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<reportElement x="0" y="30" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Período: " + $P{periodo}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{periodo}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="25"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Relatórios]]></text>
+			</staticText>
 		</band>
-	</pageHeader>
+	</title>
 	<detail>
 		<band height="38" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{publicadores} != null]]></printWhenExpression>
@@ -137,7 +133,7 @@
 			</subreport>
 		</band>
 		<band height="37">
-			<printWhenExpression><![CDATA[$P{pioneirosEspeciais} != null]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$P{publicadoresPendentes} != null]]></printWhenExpression>
 			<rectangle>
 				<reportElement x="0" y="2" width="555" height="18"/>
 				<graphicElement>
@@ -146,15 +142,15 @@
 			</rectangle>
 			<subreport>
 				<reportElement x="0" y="22" width="555" height="15"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{pioneirosEspeciais})]]></dataSourceExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{publicadoresPendentes})]]></dataSourceExpression>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_1}]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="2" y="2" width="173" height="20"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pioneiros Especiais]]></text>
+				<text><![CDATA[Pendentes]]></text>
 			</staticText>
 		</band>
 	</detail>

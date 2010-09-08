@@ -35,12 +35,12 @@
 	</category>
 
 	<category name="br.com.activethread">
-		<priority value="DEBUG" />
+		<priority value="INFO" />
 		<appender-ref ref="file" />
 	</category>
 
 	<root>
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</root>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
 import org.vulpe.security.commons.VulpeSecurityStrutsCallbackUtil;
@@ -15,6 +16,7 @@ import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.CongregacaoUsuario;
 import br.com.activethread.gmn.core.model.entity.Grupo;
+import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.core.model.services.CoreService;
 
 @Component("AfterUserAuthenticationCallback")
@@ -45,6 +47,18 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 					final Grupo grupo = new Grupo();
 					grupo.setCongregacao(congregacao);
 					final List<Grupo> grupos = getService(CoreService.class).readGrupo(grupo);
+					final List<Publicador> publicadores = new ArrayList<Publicador>();
+					for (Grupo grupo2 : grupos) {
+						final Publicador publicador = new Publicador();
+						publicador.setGrupo(grupo2);
+						final List<Publicador> publicadoresPorGrupo = getService(CoreService.class)
+								.readPublicador(publicador);
+						if (VulpeValidationUtil.isNotEmpty(publicadoresPorGrupo)) {
+							publicadores.addAll(publicadoresPorGrupo);
+						}
+					}
+					getSession().setAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA,
+							publicadores);
 					getSession().setAttribute(Core.GRUPOS_CONGREGACAO_SELECIONADA, grupos);
 				}
 				getSession().setAttribute(Core.CONGREGACOES_USUARIO, congregacoes);

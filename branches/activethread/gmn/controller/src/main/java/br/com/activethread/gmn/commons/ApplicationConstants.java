@@ -6,5 +6,6 @@ public class ApplicationConstants {
 		public static final String CONGREGACOES_USUARIO = "congregacoesUsuario";
 		public static final String CONGREGACAO_SELECIONADA = "congregacaoSelecionada";
 		public static final String GRUPOS_CONGREGACAO_SELECIONADA = "gruposCongregacaoSelecionada";
+		public static final String PUBLICADORES_CONGREGACAO_SELECIONADA = "publicadoresCongregacaoSelecionada";
 	}
 }

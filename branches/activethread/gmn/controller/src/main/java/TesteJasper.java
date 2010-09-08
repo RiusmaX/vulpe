@@ -20,6 +20,8 @@ import org.vulpe.commons.util.VulpeDB4OUtil;
 
 import br.com.activethread.gmn.core.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.core.model.entity.Publicador;
+import br.com.activethread.gmn.ministerio.model.entity.Mes;
+import br.com.activethread.gmn.ministerio.model.entity.Relatorio;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
 import br.com.activethread.gmn.relatorio.model.entity.PedidoSimples;
@@ -73,8 +75,8 @@ public class TesteJasper {
 			// for (Date date : dates) {
 			// System.out.println(date);
 			// }
-			// consulta();
-			relatorio();
+			consulta();
+			//relatorio();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,13 +86,11 @@ public class TesteJasper {
 		try {
 			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
 			Query query = db.query();
-			query.constrain(Publicador.class);
-			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.INDICADOR);
-			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.LEITOR);
-			query.descend("privilegiosAdicionais").constrain(PrivilegioAdicional.MICROFONE_VOLANTE);
-			ObjectSet<Publicador> os = query.execute();
-			for (Publicador publicador : os) {
-				System.out.println(publicador.getNome());
+			query.constrain(Relatorio.class);
+			query.descend("mes").constrain(Mes.SETEMBRO);
+			ObjectSet<Relatorio> os = query.execute();
+			for (Relatorio relatorio : os) {
+				System.out.println(relatorio.getPublicador().getNome());
 			}
 			db.close();
 		} catch (Exception e) {

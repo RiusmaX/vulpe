@@ -1,5 +1,9 @@
 package br.com.activethread.gmn.core.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -7,6 +11,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
+import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 import br.com.activethread.gmn.core.model.entity.Publicador;
@@ -25,9 +30,44 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 	}
 
 	@Override
+	protected void createPostAfter(Publicador entity) {
+		super.createPostAfter(entity);
+		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		publicadores.add(entity);
+		setSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA, publicadores);
+	}
+
+	@Override
 	protected void updatePostBefore() {
 		super.updatePostBefore();
 		limparPrivilegios();
+	}
+
+	@Override
+	protected void updatePostAfter() {
+		super.updatePostAfter();
+		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		for (Publicador publicador : publicadores) {
+			if (publicador.getId().equals(getEntity().getId())) {
+				publicador = getEntity();
+				break;
+			}
+		}
+		setSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA, publicadores);
+	}
+
+	@Override
+	protected void deleteAfter() {
+		super.deleteAfter();
+		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		for (Iterator<Publicador> iterator = publicadores.iterator(); iterator.hasNext();) {
+			final Publicador publicador = iterator.next();
+			if (publicador.getId().equals(getEntity().getId())) {
+				iterator.remove();
+				break;
+			}
+		}
+		setSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA, publicadores);
 	}
 
 	private void limparPrivilegios() {
@@ -35,15 +75,22 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 			getEntity().setTipoMinisterio(null);
 			getEntity().setCargo(null);
 			getEntity().setPrivilegiosAdicionais(null);
-//			getEntity().setIndicador(false);
-//			getEntity().setLeitor(false);
-//			getEntity().setMicrofone(false);
 		} else if (getEntity().getSexo().equals(Sexo.FEMININO)) {
 			getEntity().setCargo(null);
 			getEntity().setPrivilegiosAdicionais(null);
-//			getEntity().setIndicador(false);
-//			getEntity().setLeitor(false);
-//			getEntity().setMicrofone(false);
 		}
+	}
+
+	@Override
+	public List<Publicador> autocompleteList() {
+		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		final List<Publicador> publicadoresFiltrados = new ArrayList<Publicador>();
+		for (Publicador publicador : publicadores) {
+			if (publicador.getNome().toLowerCase().contains(
+					getEntitySelect().getNome().toLowerCase())) {
+				publicadoresFiltrados.add(publicador);
+			}
+		}
+		return publicadoresFiltrados;
 	}
 }

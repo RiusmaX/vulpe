@@ -7,8 +7,8 @@
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<v:column
-				labelKey="label.gmn.ministerio.Relatorio.select.data"
-				property="data"
+				labelKey="label.gmn.ministerio.Relatorio.select.mes"
+				property="mes"
 				sort="true"
 			/>
 			<v:column

@@ -5,5 +5,5 @@ import org.vulpe.model.annotations.CachedEnum;
 @CachedEnum
 public enum TipoMinisterio {
 
-	NORMAL, PIONEIRO_AUXILIAR, PIONEIRO_REGULAR, PIONEIRO_ESPECIAL
+	NORMAL, PIONEIRO_AUXILIAR, PIONEIRO_REGULAR, PIONEIRO_ESPECIAL, AUSENTE
 }

@@ -8,6 +8,7 @@ import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.QueryParameter;
+import org.vulpe.model.entity.VulpeSimpleEntity;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
@@ -107,4 +108,9 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 		return privilegiosAdicionais;
 	}
 
+	@Override
+	public int compareTo(VulpeSimpleEntity entity) {
+		final Publicador publicador = (Publicador) entity;
+		return nome.compareTo(publicador.getNome());
+	}
 }

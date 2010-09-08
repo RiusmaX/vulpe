@@ -32,6 +32,9 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 	@VulpeDate
 	private Date data;
 
+	@VulpeSelect
+	private Mes mes;
+
 	@QueryParameter(name = "data", operator = OperatorType.GREATER_OR_EQUAL)
 	@VulpeDate(argument = true)
 	private transient Date dataInicial;
@@ -147,6 +150,14 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 
 	public Integer getBrochuras() {
 		return brochuras;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
+	}
+
+	public Mes getMes() {
+		return mes;
 	}
 
 }
