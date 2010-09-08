@@ -4,7 +4,7 @@
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.crud.codigo" property="codigo"
-			mask="I" size="10" maxlength="10" /></td>
+			mask="I" size="10" maxlength="10" required="true" /></td>
 		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.crud.nome" property="nome" size="40"
 			maxlength="40" required="true" /></td>
 	</tr>
