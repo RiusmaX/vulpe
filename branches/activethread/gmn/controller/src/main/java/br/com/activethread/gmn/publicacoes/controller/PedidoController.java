@@ -165,8 +165,8 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 		final List<String> collection = new ArrayList<String>();
 		collection.add("report");
 		setReportCollection(collection);
-		getReportParameters().put("publicacoesNormal", normal);
-		getReportParameters().put("publicacoesIPE", ipe);
+		getReportParameters().put("publicacoesNormal", normal.isEmpty() ? null : normal);
+		getReportParameters().put("publicacoesIPE", ipe.isEmpty() ? null : ipe);
 		return super.doReportLoad();
 	}
 }
