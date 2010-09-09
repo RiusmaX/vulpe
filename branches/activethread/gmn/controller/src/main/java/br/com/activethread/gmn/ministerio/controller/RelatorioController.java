@@ -36,7 +36,8 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 
 	@Override
 	protected void selectAfter() {
-		getEntitySelect().setMes(Mes.getMesPorValor(Calendar.getInstance().get(Calendar.MONTH)));
+		int mes = Calendar.getInstance().get(Calendar.MONTH);
+		getEntitySelect().setMes(Mes.getMesPorValor(mes == 0 ? 11 : mes - 1));
 		super.selectAfter();
 	}
 
@@ -44,7 +45,8 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 	protected void createAfter() {
 		super.createAfter();
 		getEntity().setData(new Date());
-		getEntity().setMes(Mes.getMesPorValor(Calendar.getInstance().get(Calendar.MONTH)));
+		int mes = Calendar.getInstance().get(Calendar.MONTH);
+		getEntity().setMes(Mes.getMesPorValor(mes == 0 ? 11 : mes - 1));
 	}
 
 	@Override

@@ -92,7 +92,7 @@
 				<textElement textAlignment="Right">
 					<font size="11" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[Revistas]]></text>
+				<text><![CDATA[Revisitas]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="180" y="4" width="62" height="14"/>

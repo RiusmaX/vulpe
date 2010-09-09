@@ -5,8 +5,8 @@
 	<tr>
 		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.crud.codigo" property="codigo"
 			mask="I" size="10" maxlength="10" required="true" /></td>
-		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.crud.nome" property="nome" size="40"
-			maxlength="40" required="true" /></td>
+		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.crud.nome" property="nome" size="60"
+			maxlength="100" required="true" /></td>
 	</tr>
 	<tr>
 		<td><v:select labelKey="label.gmn.publicacoes.Publicacao.crud.tipo"

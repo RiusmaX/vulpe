@@ -6,7 +6,7 @@
 		<td><v:selectPopup labelKey="label.gmn.publicacoes.Pedido.crud.publicador"
 			property="publicador" identifier="id" description="nome" action="/core/Publicador/select"
 			popupId="publicadorSelectPopup" popupProperties="publicador.id=id,publicador.nome=nome" size="40"
-			popupWidth="420px" required="true" autoComplete="true" /></td>
+			popupWidth="420px" required="true" autocomplete="true" autocompleteMinLength="1" /></td>
 		<td><v:date labelKey="label.gmn.publicacoes.Pedido.crud.data" property="data" required="true" />
 		</td>
 		<td><v:checkbox labelKey="label.gmn.publicacoes.Pedido.crud.entregue"

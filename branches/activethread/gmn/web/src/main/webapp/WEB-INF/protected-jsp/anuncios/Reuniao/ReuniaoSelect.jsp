@@ -7,6 +7,6 @@
 	action="/core/Publicador/select" popupId="presidenteSelectPopup"
 	popupProperties="presidente.id=id,presidente.nome=nome"
 	size="40" popupWidth="420px"
-	autoComplete="true"
+	autocomplete="true"
 	required="true"
 />

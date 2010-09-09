@@ -4,7 +4,14 @@
 	<tr>
 		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.select.codigo" property="codigo"
 			mask="I" size="10" maxlength="10" /></td>
-		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.select.nome" property="nome" size="40"
-			maxlength="40" required="true" /></td>
+		<td><v:text labelKey="label.gmn.publicacoes.Publicacao.select.nome" property="nome" size="60"
+			maxlength="100" /></td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<v:select
+			labelKey="label.gmn.publicacoes.Publicacao.select.classificacao"
+			property="classificacao" showBlank="true" autoLoad="false" />
+		</td>
 	</tr>
 </table>

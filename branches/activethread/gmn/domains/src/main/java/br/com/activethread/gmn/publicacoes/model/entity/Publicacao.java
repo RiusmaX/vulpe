@@ -4,7 +4,9 @@ import org.vulpe.model.annotations.AutoComplete;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
@@ -12,10 +14,10 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-
 @CodeGenerator(view = @View(popupProperties = "id,codigo,nome", viewType = { ViewType.CRUD,
 		ViewType.SELECT }))
 @CachedClass
+@NotExistEqual(parameters = @QueryParameter(name = "nome"))
 @SuppressWarnings("serial")
 public class Publicacao extends VulpeBaseDB4OEntity<Long> {
 

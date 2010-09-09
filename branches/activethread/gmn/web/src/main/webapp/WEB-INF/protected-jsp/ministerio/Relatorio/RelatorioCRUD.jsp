@@ -7,10 +7,10 @@
 		<td><v:select labelKey="label.gmn.ministerio.Relatorio.crud.mes" property="mes"
 			showBlank="true" autoLoad="false" required="true" /></td>
 		<td colspan="2"><v:selectPopup labelKey="label.gmn.ministerio.Relatorio.crud.publicador"
-			autoCompleteMinLength="1" property="publicador" identifier="id" description="nome"
+			autocompleteMinLength="1" property="publicador" identifier="id" description="nome"
 			action="/core/Publicador/select" popupId="publicadorSelectPopup"
 			popupProperties="publicador.id=id,publicador.nome=nome" size="40" popupWidth="420px"
-			autoComplete="true" required="true" /></td>
+			autocomplete="true" required="true" /></td>
 	</tr>
 	<tr>
 		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.livros" property="livros" mask="I"

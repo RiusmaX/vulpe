@@ -3,6 +3,6 @@
 <v:selectPopup labelKey="label.gmn.ministerio.Relatorio.select.publicador" property="publicador"
 	identifier="id" description="nome" action="/core/Publicador/select" popupId="publicadorSelectPopup"
 	popupProperties="publicador.id=id,publicador.nome=nome" size="40" popupWidth="420px"
-	autoComplete="true" autoCompleteMinLength="1" />
+	autocomplete="true" autocompleteMinLength="1" />
 <v:select labelKey="label.gmn.ministerio.Relatorio.select.mes" property="mes" showBlank="true"
 	autoLoad="false" required="true" />

@@ -5,7 +5,7 @@
 		<td><v:selectPopup labelKey="label.gmn.publicacoes.Pedido.select.publicador"
 			property="publicador" identifier="id" description="nome" action="/core/Publicador/select"
 			popupId="publicadorSelectPopup" popupProperties="publicador.id=id,publicador.nome=nome" size="40"
-			popupWidth="420px" autoComplete="true" /></td>
+			popupWidth="420px" autocomplete="true" autocompleteMinLength="1" /></td>
 		<td><v:checkbox labelKey="label.gmn.publicacoes.Pedido.select.entregue" property="entregue"
 			fieldValue="true" /></td>
 	</tr>

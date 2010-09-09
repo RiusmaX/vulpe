@@ -6,7 +6,7 @@
 	identifier="id" description="nome"
 	action="/core/Publicador/select" popupId="publicadorSelectPopup"
 	popupProperties="publicador.id=id,publicador.nome=nome"
-	size="40" popupWidth="420px" autoComplete="true"
+	size="40" popupWidth="420px" autocomplete="true"
 />
 <v:checkbox
 	labelKey="label.gmn.publicacoes.Pedido.select.entregue"

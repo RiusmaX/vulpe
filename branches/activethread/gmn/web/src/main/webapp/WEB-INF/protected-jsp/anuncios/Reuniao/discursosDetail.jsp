@@ -9,7 +9,7 @@
 					action="/core/Publicador/select" popupId="oradorSelectPopup"
 					popupProperties="orador.id=id,orador.nome=nome"
 					size="40" popupWidth="420px"
-					autoComplete="true"
+					autocomplete="true"
 					required="true"
 				/>
 			</v:column>

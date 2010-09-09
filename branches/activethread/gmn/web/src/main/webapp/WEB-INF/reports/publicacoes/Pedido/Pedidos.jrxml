@@ -37,41 +37,37 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="55" splitType="Stretch">
+		<band height="53" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="50"/>
+				<reportElement x="0" y="0" width="555" height="25"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="50"/>
+				<reportElement x="0" y="0" width="555" height="25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="20" isBold="false"/>
+					<font size="18" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Pedidos]]></text>
 			</staticText>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="23">
 			<rectangle>
-				<reportElement x="0" y="0" width="555" height="20" backcolor="#EEEEEE"/>
+				<reportElement x="0" y="30" width="555" height="20" backcolor="#EEEEEE"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="0" width="552" height="20"/>
+				<reportElement x="0" y="30" width="552" height="20"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA["Período: " + $P{periodo}]]></textFieldExpression>
 			</textField>
 		</band>
-	</pageHeader>
+	</title>
 	<detail>
-		<band height="38" splitType="Stretch">
+		<band height="37" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{publicacoesNormal} != null]]></printWhenExpression>
 			<rectangle>
 				<reportElement x="0" y="2" width="555" height="18"/>
@@ -87,12 +83,12 @@
 				<text><![CDATA[Normal]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="0" y="18" width="555" height="15"/>
+				<reportElement x="0" y="22" width="555" height="15"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{publicacoesNormal})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="33">
+		<band height="37">
 			<printWhenExpression><![CDATA[$P{publicacoesIPE} != null]]></printWhenExpression>
 			<rectangle>
 				<reportElement x="0" y="2" width="555" height="18"/>
@@ -101,7 +97,7 @@
 				</graphicElement>
 			</rectangle>
 			<subreport>
-				<reportElement x="0" y="18" width="555" height="15"/>
+				<reportElement x="0" y="22" width="555" height="15"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{publicacoesIPE})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
 			</subreport>

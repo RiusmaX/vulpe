@@ -19,11 +19,11 @@
 							identifier="id" description="nome"
 							action="/publicacoes/Publicacao/select" popupId="publicacaoSelectPopup"
 							popupProperties="publicacao.id=id,publicacao.nome=nome"
-							size="30" popupWidth="420px" autoComplete="true" required="true"
+							size="30" popupWidth="420px" autocomplete="true" autocompleteMinLength="1"
 						/>
 					</td>
 					<td>
-						<v:text property="quantidade" required="true"
+						<v:text property="quantidade"
 							mask="I"
 							size="5"
 							maxlength="5"
