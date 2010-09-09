@@ -10,7 +10,7 @@
 					action="/security/User/select" popupId="usuarioSelectPopup"
 					popupProperties="usuario.id=id,usuario.name=name"
 					size="40" popupWidth="420px"
-					autoComplete="true"
+					autocomplete="true"
 				/>
 			</v:column>
 			<v:column labelKey="label.transfere.core.Sistema.crud.usuarios.publicaHomologacao">

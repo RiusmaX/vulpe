@@ -24,6 +24,6 @@
 <%@ attribute name="requiredParamProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="requiredParamExpressions" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="popupWidth" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="autoComplete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="autoCompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@ attribute name="autocomplete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="autocompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/selectPopupTag.jsp" %>
