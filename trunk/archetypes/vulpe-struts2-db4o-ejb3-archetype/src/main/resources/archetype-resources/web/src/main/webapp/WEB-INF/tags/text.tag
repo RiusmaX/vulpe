@@ -7,10 +7,10 @@
 <%@ attribute name="readonly" required="false" rtexprvalue="true" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
-<%@ attribute name="autoComplete" required="false" rtexprvalue="true" %>
-<%@ attribute name="autoCompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
-<%@ attribute name="autoCompleteURL" required="false" rtexprvalue="true" %>
-<%@ attribute name="autoCompleteSelect" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="autocomplete" required="false" rtexprvalue="true" %>
+<%@ attribute name="autocompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@ attribute name="autocompleteURL" required="false" rtexprvalue="true" %>
+<%@ attribute name="autocompleteSelect" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="validateType" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="validateMask" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="validateDatePattern" required="false" rtexprvalue="true" type="java.lang.String" %>

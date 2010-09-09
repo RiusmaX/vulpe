@@ -99,6 +99,7 @@
 				<fileSet filtered="true" encoding="UTF-8">
 					<directory>src/main/webapp</directory>
 					<includes>
+						<include>**/*.tag</include>
 						<include>**/*.jsp</include>
 						<include>**/*.xml</include>
 					</includes>
