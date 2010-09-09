@@ -10,30 +10,21 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/selectActions.jsp" %>
 	</div>
 	<div id="vulpeSelectForm">
-		<p class="vulpeSelectForm">
-			<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectPath : controllerConfig.viewPath}" />
-		</p>
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectPath : controllerConfig.viewPath}" />
 	</div>
-
 	<div id="vulpeSelectTable_${vulpeFormName}">
-		<p class="vulpeSelectTable">
-			<c:remove var="vulpeBodySelect" scope="request"/>
-			<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectItemsPath : controllerConfig.viewItemsPath}" />
-			<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">
-				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
-				<script type="text/javascript">
-					$(document).ready(function() {
-						vulpe.view.request.submitReport('${util:linkKey('downloadInfo', '', '')}', 800, 600);
-					});
-				</script>
-			</c:if>
-		</p>
+		<c:remove var="vulpeBodySelect" scope="request"/>
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectItemsPath : controllerConfig.viewItemsPath}" />
+		<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">
+			<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					vulpe.view.request.submitReport('${util:linkKey('downloadInfo', '', '')}', 800, 600);
+				});
+			</script>
+		</c:if>
 	</div>
-
-	<div id="vulpeSelectFooter">
-		<p class="vulpeSelectFooter">
-		</p>
-	</div>
+	<div id="vulpeSelectFooter"></div>
 </div>
 <c:if test="${vulpeBodyTwice}">
 </fieldset>

@@ -520,7 +520,17 @@ var vulpe = {
 					}
 					return isValid;
 				} else {
-					value = config.field.val();
+					var idParent = idField.substring(0, idField.lastIndexOf("."));
+					var idSelectPopup = idParent + "_selectPopup";
+					var selectPopup = vulpe.util.get(idSelectPopup);
+					if (selectPopup != null && selectPopup.length == 1) {
+						value = vulpe.util.get(idParent + ".id").val();
+						if (vulpe.util.trim(value).length == 0) {
+							vulpe.util.get(idField).val("");
+						}
+					} else {
+						value = config.field.val();
+					}
 				}
 
 				if (vulpe.util.trim(value).length == 0) {
@@ -806,21 +816,36 @@ var vulpe = {
 					}
 				}
 			} else if (vulpe.config.requireOneFilter) {
-				var filters = jQuery("[id*='entitySelect']", parent);
+				var filters = jQuery("input[id*='entitySelect']", parent);
 				if (filters && filters.length > 0) {
 					var empty = true;
 					for (var i = 0; i < filters.length; i++) {
 						var field = jQuery(filters[i]);
 						var idField = field.attr("id");
 						var typeField = field.attr("type");
-						if (typeField == "checkbox") {
+						if (typeField == "hidden") {
+							continue;
+						} else if (typeField == "checkbox") {
 							if (eval(field.attr("checked"))) {
 								empty = false;
 								break;
 							}
-						} else if (field.val() != "") {
-							empty = false;
-							break;
+						} else {
+							var idParent = idField.substring(0, idField.lastIndexOf("."));
+							var idSelectPopup = idParent + "_selectPopup";
+							var selectPopup = vulpe.util.get(idSelectPopup);
+							if (selectPopup != null && selectPopup.length == 1) {
+								value = vulpe.util.get(idParent + ".id").val();
+								if (vulpe.util.trim(value).length == 0) {
+									vulpe.util.get(idField).val("");
+								}
+							} else {
+								value = field.val();
+							}
+							if (vulpe.util.trim(value).length > 0) {
+								empty = false;
+								break;
+							}
 						}
 					}
 					if (empty) {

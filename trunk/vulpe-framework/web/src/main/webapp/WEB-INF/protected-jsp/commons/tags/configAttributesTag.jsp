@@ -38,20 +38,6 @@
 	<c:set var="valueEL" value="${'${'}targetValue.${property}${'}'}"/>
 	<c:set var="value" value="${util:eval(pageContext, valueEL)}"/>
 </c:if>
-<c:if test="${paragraph}"><p></c:if>
-<c:if test="${not empty labelKey}">
-	<fmt:message key="${labelKey}" var="label"/>
-	<c:if test="${empty titleKey}">
-		<c:set var="title" value="${label}"/>
-	</c:if>
-	<c:if test="${empty labelClass}">
-		<c:set var="labelClass" value="vulpeBlockLabel"/>
-	</c:if>
-	<label id="${elementId}_label" for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}</label>
-	<c:if test="${breakLabel}">
-		<br/>
-	</c:if>
-</c:if>
 <c:if test="${saveInSession}"><c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/></c:if>
 <c:if test="${not empty value}"><c:set var="value" value="${util:toString(value)}"/></c:if>
 <c:if test="${onlyToSee}">	<c:set var="showAsText" value="${true}"/></c:if>

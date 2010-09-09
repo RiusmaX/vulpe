@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/configAttributesTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
 	<c:if test="${empty styleClass}"><c:set var="styleClass" value="rte-zone"/></c:if>
 	<c:choose>
 		<c:when test="${showAsText}">
