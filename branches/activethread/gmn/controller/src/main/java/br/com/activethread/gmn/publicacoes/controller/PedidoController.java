@@ -28,7 +28,7 @@ import br.com.activethread.gmn.relatorio.model.entity.PedidoSimples;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publicacoes.PedidoController")
 @SuppressWarnings("serial")
-@Controller(serviceClass = PublicacoesService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(file = "/WEB-INF/reports/publicacoes/Pedido/Pedidos.jasper", name = "Pedidos", subReports = "Publicacoes"), detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
+@Controller(serviceClass = PublicacoesService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(file = "/WEB-INF/reports/publicacoes/Pedido/Pedidos.jasper", name = "Pedidos", subReports = "Publicacoes"), detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
 public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 
 	@Override

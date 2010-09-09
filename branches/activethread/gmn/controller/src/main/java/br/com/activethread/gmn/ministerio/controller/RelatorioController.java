@@ -54,7 +54,7 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 		final Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		if (getEntitySelect().getMes() != null) {
-			calendar.set(Calendar.MONTH, getEntitySelect().getMes().getValor());
+			calendar.set(Calendar.MONTH, getEntitySelect().getMes().ordinal());
 		}
 		final String periodo = VulpeDateUtil.getDate(calendar.getTime(), "MMMM 'de' yyyy");
 		getReportParameters().put("periodo", periodo);

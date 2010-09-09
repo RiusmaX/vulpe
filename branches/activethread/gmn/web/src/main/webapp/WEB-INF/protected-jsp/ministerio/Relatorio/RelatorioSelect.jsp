@@ -5,4 +5,4 @@
 	popupProperties="publicador.id=id,publicador.nome=nome" size="40" popupWidth="420px"
 	autocomplete="true" autocompleteMinLength="1" />
 <v:select labelKey="label.gmn.ministerio.Relatorio.select.mes" property="mes" showBlank="true"
-	autoLoad="false" required="true" />
+	autoLoad="false" />
