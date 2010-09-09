@@ -771,14 +771,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (VulpeValidationUtil.isEmpty(values)) {
 			List<ENTITY> autocompleteList = autocompleteList();
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
-				if (getEntities() == null || getEntities().isEmpty()) {
-					final ENTITY entity = prepareEntity(Action.READ);
-					final List<ENTITY> list = (List<ENTITY>) invokeServices(Action.READ,
-							Action.READ.concat(getControllerConfig().getEntityClass()
-									.getSimpleName()), new Class[] { getControllerConfig()
-									.getEntityClass() }, new Object[] { entity.clone() });
-					setEntities(list);
-				}
+				autocompleteList = (List<ENTITY>) invokeServices(Action.READ, Action.READ
+						.concat(getControllerConfig().getEntityClass().getSimpleName()),
+						new Class[] { getControllerConfig().getEntityClass() },
+						new Object[] { prepareEntity(Action.READ).clone() });
 			}
 			values = new ArrayList<ValueBean>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
@@ -787,7 +783,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						String value = "";
 						try {
 							value = (String) PropertyUtils.getProperty(entity, getEntitySelect()
-									.getAutoComplete());
+									.getAutocomplete());
 						} catch (Exception e) {
 							LOG.error(e);
 						}

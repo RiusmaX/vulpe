@@ -11,7 +11,7 @@
 		<c:if test="${global['showAsMobile']}">
 		<meta name="viewport" content="width=${global['viewportWidth']}, height=${global['viewportHeight']}, user-scalable=${global['viewportUserScalable']}, initial-scale=${global['viewportInitialScale']}, maximum-scale=${global['viewportMaximumScale']}, minimum-scale=${global['viewportMinimumScale']}" />
 		</c:if>
-		<title><fmt:message key="vulpe.title.application"/></title>
+		<title><fmt:message key="vulpe.security.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['theme']}/images/icon.png" rel="shortcut icon"/>
 		<c:if test="${empty vulpeCurrentLayout}">
 			<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>

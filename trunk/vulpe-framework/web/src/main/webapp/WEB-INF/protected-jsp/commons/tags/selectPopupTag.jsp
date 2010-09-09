@@ -3,11 +3,11 @@
 <c:if test="${empty readonly}"><c:set var="readonly" value="${true}"/></c:if>
 <c:if test="${show eq true}">
 	<v:hidden property="${property}.${identifier}"/>
-	<c:if test="${autoComplete && empty autoCompleteMinLength}">
-		<c:set var="autoCompleteMinLength" value="3"/>
+	<c:if test="${autocomplete && empty autocompleteMinLength}">
+		<c:set var="autocompleteMinLength" value="3"/>
 	</c:if>
-	<c:set var="autoCompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
-	<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${autoComplete ? false : true}" elementId="${elementId}" size="${size}" showAsText="${showAsText}" autoComplete="${description}" autoCompleteURL="${autoCompleteAction}" autoCompleteSelect="true" autoCompleteMinLength="${autoCompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}">
+	<c:set var="autocompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
+	<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${autocomplete ? false : true}" elementId="${elementId}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}">
 		<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="label.vulpe.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
 	</v:text>
 </c:if>

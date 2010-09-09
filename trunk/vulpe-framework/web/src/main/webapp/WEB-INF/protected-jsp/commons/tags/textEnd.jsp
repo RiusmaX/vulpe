@@ -10,7 +10,7 @@
 		vulpe.util.get('${elementId}').lowerCase();
 		</c:if>
 		</c:if>
-		<c:if test="${not empty autoComplete}">
+		<c:if test="${not empty autocomplete}">
 		var idValue = "${elementId}";
 		var idProperty = idValue.substring(0, idValue.lastIndexOf(".") + 1) + "id";
 		var cache = {};
@@ -25,8 +25,8 @@
 	    				return matcher.test(value.value)
 					}));
 				}
-				var urlAutoComplete = vulpe.util.getURLComplete("${autoCompleteURL}");
-				var queryString = "entitySelect.autoComplete=${autoComplete}&entitySelect.${autoComplete}=" + request.term;
+				var urlAutoComplete = vulpe.util.getURLComplete("${autocompleteURL}");
+				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.${autocomplete}=" + request.term;
 				$.ajax({
 					type: "POST",
 					url: urlAutoComplete,
@@ -44,12 +44,12 @@
 				var elementWidth = vulpe.util.get("${elementId}").css("width");
 				$(".ui-autocomplete").css("width", elementWidth);
 			},
-			<c:if test="${autoCompleteSelect}">
+			<c:if test="${autocompleteSelect}">
 			select: function(event, ui) {
 				vulpe.util.get(idProperty).val(ui.item.id);
 			},
 			</c:if>
-			minLength: ${autoCompleteMinLength}
+			minLength: ${autocompleteMinLength}
 		});
 		</c:if>
 	});

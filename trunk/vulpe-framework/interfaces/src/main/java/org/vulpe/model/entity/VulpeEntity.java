@@ -45,9 +45,9 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 
 	String toXMLAudit();
 
-	String getAutoComplete();
+	String getAutocomplete();
 
-	void setAutoComplete(final String autoComplete);
+	void setAutocomplete(final String autoComplete);
 
 	VulpeEntity<ID> clone();
 }

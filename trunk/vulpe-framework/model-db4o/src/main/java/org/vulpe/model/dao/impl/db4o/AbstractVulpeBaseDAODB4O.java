@@ -58,18 +58,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	public <T> T merge(final T entity) {
 		final ObjectContainer container = getObjectContainer();
 		try {
-			final Long identifier = ((VulpeEntity<Long>) entity).getId();
-			VulpeEntity<Long> entityReferenced = null;
-			if (VulpeEntity.class.isAssignableFrom(entity.getClass()) && identifier == null) {
-				((VulpeEntity<Long>) entity).setId(getId(entity));
-			} else {
-				entityReferenced = (VulpeEntity<Long>) entity.getClass().newInstance();
-				entityReferenced.setId(identifier);
-				entityReferenced = (VulpeEntity<Long>) container.queryByExample(entityReferenced)
-						.get(0);
-				container.ext().bind(entity, container.ext().getID(entityReferenced));
-			}
-			repairRelationship(entity, container);
+			repairRelationship(load(container, entity), container);
 			container.store(entity);
 		} catch (Exception e) {
 			rollback();
@@ -98,6 +87,34 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 		}
 		getObjectContainer().store(identifier);
 		return identifier.getSequence();
+	}
+
+	/**
+	 * Load object by reference. Ignore cache.
+	 *
+	 * @param <T>
+	 * @param container
+	 * @param entity
+	 * @return
+	 */
+	public <T> T load(final ObjectContainer container, final T entity) {
+		try {
+			final Long identifier = ((VulpeEntity<Long>) entity).getId();
+			VulpeEntity<Long> entityReferenced = null;
+			if (VulpeEntity.class.isAssignableFrom(entity.getClass()) && identifier == null) {
+				((VulpeEntity<Long>) entity).setId(getId(entity));
+			} else {
+				entityReferenced = (VulpeEntity<Long>) entity.getClass().newInstance();
+				entityReferenced.setId(identifier);
+				entityReferenced = (VulpeEntity<Long>) container.queryByExample(entityReferenced)
+						.get(0);
+				container.ext().bind(entity, container.ext().getID(entityReferenced));
+			}
+		} catch (Exception e) {
+			rollback();
+			LOG.error(e);
+		}
+		return entity;
 	}
 
 	/**
@@ -278,8 +295,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 		}
 	}
 
-	public <T> boolean unrepair(final T entity)
-			throws VulpeSystemException {
+	public <T> boolean unrepair(final T entity) throws VulpeSystemException {
 		boolean updated = false;
 		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
 			if (VulpeEntity.class.isAssignableFrom(field.getType())) {

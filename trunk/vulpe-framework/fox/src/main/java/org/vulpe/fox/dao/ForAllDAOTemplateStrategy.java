@@ -40,8 +40,11 @@ import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.SODAQueries;
 import org.vulpe.model.annotations.db4o.SODAQuery;
 import org.vulpe.model.annotations.db4o.SODAQueryAttribute;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAAuditEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
@@ -79,9 +82,15 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
 					&& (!getClassName(clazz.getSuperclass()).equals(
 							AbstractVulpeBaseEntity.class.getName())
+							&& (!getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseAuditEntity.class.getName()))
 							&& !getClassName(clazz.getSuperclass()).equals(
-									AbstractVulpeBaseJPAEntity.class.getName()) && !getClassName(
-							clazz.getSuperclass()).equals(VulpeBaseDB4OEntity.class.getName()))) {
+									AbstractVulpeBaseJPAEntity.class.getName())
+							&& !getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseJPAAuditEntity.class.getName())
+							&& !getClassName(clazz.getSuperclass()).equals(
+									VulpeBaseDB4OEntity.class.getName()) && !getClassName(
+							clazz.getSuperclass()).equals(VulpeBaseDB4OAuditEntity.class.getName()))) {
 				dao.setSuperclassName(getClassName(clazz.getSuperclass()));
 				dao.setDaoSuperclassName(StringUtils.replace(dao.getSuperclassName(), ".entity",
 						".dao")

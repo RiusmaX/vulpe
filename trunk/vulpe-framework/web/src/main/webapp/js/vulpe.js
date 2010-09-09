@@ -169,12 +169,24 @@ var vulpe = {
 			var token = "[class*=focused]";
 			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
 			if (fields && fields.length > 0) {
+				var focused = false;
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
 					var type = field.attr("type");
 					if ((type == "text" || type == "password" || type == "select-one") && field.val() == "") {
 						field.focus();
+						focused = true;
 						break;
+					}
+				}
+				if (!focused) {
+					for (var i = 0; i < fields.length; i++) {
+						var field = jQuery(fields[i]);
+						var type = field.attr("type");
+						if ((type == "text" || type == "password" || type == "select-one")) {
+							field.focus();
+							break;
+						}
 					}
 				}
 			}
@@ -1080,7 +1092,7 @@ var vulpe = {
 			});
 			var popup = $(vulpe.config.layers.modalMessages).dialog({
 					autoOpen: true,
-					width: 500,
+					width: 480,
 					resizable: true,
 					modal: true
 			});

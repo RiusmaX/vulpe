@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.MappedSuperclass;
 
-import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 
 @MappedSuperclass
@@ -22,14 +21,6 @@ public abstract class AbstractVulpeBaseAuditEntity<ID extends Serializable & Com
 
 	public AbstractVulpeBaseAuditEntity() {
 		super();
-	}
-
-	@Override
-	public String getOrderBy() {
-		if (StringUtils.isBlank(super.getOrderBy())) {
-			super.setOrderBy("obj.id");
-		}
-		return super.getOrderBy();
 	}
 
 	public void setDateOfLastUpdate(Date dateOfLastUpdate) {

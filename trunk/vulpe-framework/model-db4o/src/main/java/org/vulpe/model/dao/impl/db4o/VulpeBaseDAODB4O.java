@@ -94,20 +94,19 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		}
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		// persistent entity
-		ENTITY deletedEntity = find(entity.getId());
 		try {
-			if (deletedEntity instanceof VulpeLogicEntity) {
-				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) deletedEntity;
+			if (entity instanceof VulpeLogicEntity) {
+				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
 				logicEntity.setStatus(Status.D);
 				// make merge of entity
-				merge(deletedEntity);
+				merge(entity);
 			} else {
-				if (unrepair(deletedEntity)) {
-					merge(deletedEntity);
-					deletedEntity = find(entity.getId());
-				}
-				getObjectContainer().delete(deletedEntity);
+				final ObjectContainer container = getObjectContainer();
+				container.delete(load(container, entity));
 			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+			throw new VulpeApplicationException(e.getMessage());
 		} finally {
 			commit();
 		}
@@ -166,6 +165,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			}
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
+			throw new VulpeApplicationException(e.getMessage());
 		} finally {
 			rollback();
 			close();
@@ -332,7 +332,6 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 					}
 				}
 			}
-
 		}
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getInstance().getFields(getEntityClass())) {

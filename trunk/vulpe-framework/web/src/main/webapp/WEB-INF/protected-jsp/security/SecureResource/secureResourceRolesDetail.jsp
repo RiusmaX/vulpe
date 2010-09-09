@@ -10,7 +10,7 @@
 					property="role" identifier="id" description="description" readonly="true"
 					action="/security/Role/select" popupId="roleSelectPopup"
 					popupProperties="role.description=description,role.name=name,role.id=id" size="60"
-					popupWidth="600px" autoComplete="true" required="true" />
+					popupWidth="600px" autocomplete="true" required="true" />
 			</v:column>
 		</v:row>
 	</jsp:attribute>

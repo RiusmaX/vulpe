@@ -40,8 +40,8 @@
 	</c:otherwise>
 </c:choose>
 </c:if>
-<c:if test="${empty autoCompleteMinLength}">
-	<c:set var="autoCompleteMinLength" value="3"/>
+<c:if test="${empty autocompleteMinLength}">
+	<c:set var="autocompleteMinLength" value="3"/>
 </c:if>
 <c:if test="${empty size && not empty maxlength}">
 	<c:set var="size" value="${maxlength}"/>

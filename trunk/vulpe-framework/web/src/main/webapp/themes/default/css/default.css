@@ -273,6 +273,7 @@
 #container {
 	margin: 0 auto;
 	width: 100%;
+	text-align: left;
 }
 
 #copyright {
@@ -289,20 +290,24 @@
 }
 
 #error {
-	background-color: #eee;
+	background-color: #fff;
 	height: 100%;
 }
 
+#error #message {
+	padding: 3px 20px 20px;
+	color: #000;
+}
+
 #error a {
-	font-size: 13px;
-	margin: 0px;
-	padding-left: 20px;
+	margin-left: 00px;
+	padding-left: 0px;
 	padding-top: 3px;
 }
 
 #error h1 {
-	color: #d00;
-	background-color: #ddd;
+	color: #fff;
+	background-color: #d00;
 	display: block;
 	height: auto;
 	margin: 0px;

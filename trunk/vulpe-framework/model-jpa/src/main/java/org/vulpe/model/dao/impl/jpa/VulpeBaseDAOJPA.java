@@ -248,11 +248,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		final StringBuilder order = new StringBuilder();
 		int countParam = 0;
-		if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
+		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 			try {
 				final String value = "%"
-						+ PropertyUtils.getProperty(entity, entity.getAutoComplete()) + "%";
-				params.put(entity.getAutoComplete(), value);
+						+ PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
+				params.put(entity.getAutocomplete(), value);
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
@@ -313,8 +313,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(queryConfiguration.replace().select());
 			} else {
 				hql.append("obj");
-				if (StringUtils.isNotEmpty(entity.getAutoComplete())) {
-					hql.append(".id, obj.").append(entity.getAutoComplete());
+				if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
+					hql.append(".id, obj.").append(entity.getAutocomplete());
 				}
 				if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
 					hql.append(", ");
