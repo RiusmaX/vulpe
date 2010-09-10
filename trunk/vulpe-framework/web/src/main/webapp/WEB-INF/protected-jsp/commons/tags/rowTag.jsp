@@ -105,8 +105,11 @@
 			<c:if test="${now['controllerType'] == 'SELECT'}">
 				<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 					<script type="text/javascript">
-					jQuery(function($){
-						jQuery(document).bind('keydown', 'Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}', function (){vulpe.util.get("${elementId}").click(); return false;});
+					$(document).ready(function() {
+						vulpe.util.addHotKey("Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}", function (){
+							vulpe.util.get("${elementId}").click();
+							return false;
+						});
 					});
 					</script>
 				</c:if>
@@ -150,10 +153,10 @@
 	</c:if>
 	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
 		<c:if test="${empty onmouseover}">
-			<c:set var="onmouseover" value="vulpe.view.onmouseoverRow(this);"/>
+			<c:set var="onmouseover"> onmouseover="${onmouseover}"</c:set>
 		</c:if>
 		<c:if test="${empty onmouseout}">
-			<c:set var="onmouseout" value="vulpe.view.onmouseoutRow(this);"/>
+			<c:set var="onmouseout"> onmouseout="${onmouseout}"</c:set>
 		</c:if>
 	</c:if>
 	<c:if test="${popup && !isHeaderTableTag && isSelectTableTag && not empty popupProperties}">
@@ -190,7 +193,19 @@
 			</c:otherwise>
 		</c:choose>
 	</c:if>
-	<tr id="${elementId}" onclick="${onclick}" onmouseover="${onmouseover}" onmouseout="${onmouseout}" class="${styleClass}" style="${style}" rowspan="${rowspan}">
+	<c:if test="${not empty onclick}">
+		<c:set var="onclick"> onclick="${onclick}"</c:set>
+	</c:if>
+	<c:if test="${not empty style}">
+		<c:set var="style"> style="${style}"</c:set>
+	</c:if>
+	<c:if test="${not empty styleClass}">
+		<c:set var="styleClass"> class="${styleClass}"</c:set>
+	</c:if>
+	<c:if test="${not empty rowspan}">
+		<c:set var="rowspan"> rowspan="${rowspan}"</c:set>
+	</c:if>
+	<tr id="${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
 		<c:if test="${showLine}">
 			<v:column labelKey="label.vulpe.line" width="1%" styleClass="vulpeLine">
 				<c:if test="${!isHeaderTableTag}">
@@ -235,8 +250,11 @@
 				<c:if test="${now['controllerType'] == 'SELECT'}">
 					<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 						<script type="text/javascript">
-						jQuery(function($){
-							jQuery(document).bind('keydown', 'Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}', function (){vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click(); return false;});
+						$(document).ready(function() {
+							vulpe.util.addHotKey("Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}", function (){
+								vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click();
+								return false;
+							});
 						});
 						</script>
 					</c:if>
@@ -276,4 +294,13 @@
 			</c:if>
 		</c:if>
 	</tr>
+	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
+	<script type="text/javascript">
+	jQuery(function($){
+		$("#${elementId}").bind("mouseenter mouseleave", function(event){
+			$(this).toggleClass("vulpeSelectedRow");
+		});
+	});
+	</script>
+	</c:if>
 </c:if>

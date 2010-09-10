@@ -116,10 +116,11 @@
 	</c:choose>
 	<c:if test="${not empty hotKey}">
 	<script type="text/javascript">
-	jQuery(document).bind('keydown', '${hotKey}', function (evt){
-		if (vulpe.util.get("${elementId}").css("style") !== "none") {
-			vulpe.util.get("${elementId}").click(); return false;
-		}
+	$(document).ready(function() {
+		vulpe.util.addHotKey("${hotKey}", function (evt){
+			vulpe.util.get("${elementId}").click();
+			return false;
+		});
 	});
 	</script>
 	</c:if>

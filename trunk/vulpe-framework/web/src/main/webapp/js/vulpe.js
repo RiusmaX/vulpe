@@ -131,6 +131,43 @@ var vulpe = {
 			}
 		},
 
+		checkHotKeyExists: function(hotKey) {
+			var elemData = jQuery.data(document);
+			if (elemData.events) {
+				var keydown = elemData.events['keydown'];
+				for (var i = 0; i < keydown.length; i++) {
+					if (keydown[i].data == hotKey) {
+						return i;
+					}
+				}
+			}
+			return -1;
+		},
+
+		addHotKey: function(hotKey, command, override, putSameOnReturnKey) {
+			var position = vulpe.util.checkHotKeyExists(hotKey);
+			if (position > 0 && override){
+				var elemData = jQuery.data(document);
+				if (elemData.events && elemData.events['keydown']) {
+					var keydown = elemData.events['keydown'];
+					vulpe.util.removeArray(keydown, position);
+				}
+			}
+			if (position == -1 || (position > 0 && override)) {
+				jQuery(document).bind("keydown", hotKey, command);
+				if (putSameOnReturnKey) {
+					jQuery(document).bind("keydown", "return", command);
+				}
+				var elements = jQuery("input[type!=hidden],select,textarea");
+				for (var i = 0; i < elements.length; i++) {
+					jQuery(jQuery(elements[i])).bind("keydown", hotKey, command);
+					if (putSameOnReturnKey) {
+						jQuery(jQuery(elements[i])).bind("keydown", "return", command);
+					}
+				}
+			}
+		},
+
 		getPrefixId: function(formName) {
 			var prefix = formName + "_" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + ".");
 			return prefix
@@ -166,28 +203,20 @@ var vulpe = {
 		},
 
 		focusFirst: function(layer) {
-			var token = "[class*=focused]";
+			var token = "input.focused,select.focused,textarea.focused";
 			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
 			if (fields && fields.length > 0) {
 				var focused = false;
 				for (var i = 0; i < fields.length; i++) {
 					var field = jQuery(fields[i]);
-					var type = field.attr("type");
-					if ((type == "text" || type == "password" || type == "select-one") && field.val() == "") {
+					if (field.val() == "") {
 						field.focus();
 						focused = true;
 						break;
 					}
 				}
 				if (!focused) {
-					for (var i = 0; i < fields.length; i++) {
-						var field = jQuery(fields[i]);
-						var type = field.attr("type");
-						if ((type == "text" || type == "password" || type == "select-one")) {
-							field.focus();
-							break;
-						}
-					}
+					fields[0].focus();
 				}
 			}
 		},
@@ -816,7 +845,7 @@ var vulpe = {
 					}
 				}
 			} else if (vulpe.config.requireOneFilter) {
-				var filters = jQuery("input[id*='entitySelect']", parent);
+				var filters = jQuery('input[id*=entitySelect],select[id*=entitySelect],textarea[id*=entitySelect]', parent);
 				if (filters && filters.length > 0) {
 					var empty = true;
 					for (var i = 0; i < filters.length; i++) {
@@ -1090,7 +1119,8 @@ var vulpe = {
 		loading: null,
 
 		showLoading: function() {
-			if (vulpe.config.showLoading) {
+			var visible = vulpe.util.get('loading').css("display") != "none";
+			if (vulpe.config.showLoading && !visible) {
 				vulpe.view.loading = jQuery('#loading').modal({
 					overlayId: 'overlayLoading',
 					containerId: 'containerLoading',
@@ -1581,9 +1611,6 @@ var vulpe = {
 				}
 				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString + '&' : '') + 'ajax=true';
 				var popup = jQuery('[id$=Popup]');
-				if (!popup || popup.length == 0) {
-					hotkeys.triggersMap = {};
-				}
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",

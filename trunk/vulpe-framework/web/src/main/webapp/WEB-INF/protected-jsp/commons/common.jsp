@@ -22,34 +22,50 @@ $(document).ready(function() {
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
+		var bindType = "*";
 	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
 		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonCreate.click(); return false;});
+			vulpe.util.addHotKey("Ctrl+f8", function (){
+				buttonCreate.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['createPost'] || now['buttons']['SELECT_createPost'] || now['buttons']['CRUD_createPost']}">
 		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost_${vulpeFormName}");
 		if (buttonCreatePost.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonCreatePost.click();});
+			vulpe.util.addHotKey("Ctrl+f10", function (){
+				buttonCreatePost.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['updatePost'] || now['buttons']['SELECT_updatePost'] || now['buttons']['CRUD_updatePost']}">
 		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost_${vulpeFormName}");
 		if (buttonUpdatePost.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonUpdatePost.click();});
+			vulpe.util.addHotKey("Ctrl+f10", function (){
+				buttonUpdatePost.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularPost']}">
 		var buttonTabularPost = vulpe.util.get("vulpeButtonTabularPost_${vulpeFormName}");
 		if (buttonTabularPost.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f10', function (){buttonTabularPost.click();});
+			vulpe.util.addHotKey("Ctrl+f10", function (){
+				buttonTabularPost.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['delete'] || now['buttons']['SELECT_delete'] || now['buttons']['CRUD_delete']}">
 		var buttonDelete = vulpe.util.get("vulpeButtonDelete_${vulpeFormName}");
 		if (buttonDelete.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+del', function (){buttonDelete.click();});
+			vulpe.util.addHotKey("Ctrl+del", function (){
+				buttonDelete.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['prepare'] || now['buttons']['SELECT_prepare'] || now['buttons']['CRUD_prepare']}">
@@ -61,33 +77,55 @@ $(document).ready(function() {
 			<c:if test="${now['controllerType'] == 'SELECT'}">
 			<c:set var="prepare" value="Alt+Shift+del"/>
 			</c:if>
-			jQuery(document).bind('keydown', '${prepare}', function (){buttonPrepare.click();});
+			vulpe.util.addHotKey("${prepare}", function (){
+				buttonPrepare.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularFilter']}">
 		var buttonTabularFilter = vulpe.util.get("vulpeButtonTabularFilter_${vulpeFormName}");
 		if (buttonTabularFilter.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f7', function (){buttonTabularFilter.click();});
-			jQuery(document).bind('keydown', 'return', function (){buttonTabularFilter.click(); return false;});
+			vulpe.util.addHotKey("Ctrl+f7", function (){
+				buttonTabularFilter.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularReload']}">
 		var buttonTabularReload = vulpe.util.get("vulpeButtonTabularReload_${vulpeFormName}");
 		if (buttonTabularReload.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonTabularReload.click();});
+			vulpe.util.addHotKey("Ctrl+f9", function (){
+				buttonTabularReload.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['read'] || now['buttons']['SELECT_read'] || now['buttons']['CRUD_read']}">
 		var buttonRead = vulpe.util.get("vulpeButtonRead_${vulpeFormName}");
 		if (buttonRead.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f9', function (){buttonRead.click();});
-			jQuery(document).bind('keydown', 'return', function (){buttonRead.click(); return false;});
+			vulpe.util.addHotKey("Ctrl+f9", function (){
+				buttonRead.click();
+				return false;
+			}, true, true);
+		}
+	</c:if>
+	<c:if test="${now['buttons']['report'] || now['buttons']['SELECT_report'] || now['buttons']['CRUD_report']}">
+		var buttonReport = vulpe.util.get("vulpeButtonReport_${vulpeFormName}");
+		if (buttonReport.attr("onclick")) {
+			vulpe.util.addHotKey("Ctrl+f12", function (){
+				buttonReport.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${now['buttons']['clear'] || now['buttons']['SELECT_clear'] || now['buttons']['CRUD_clear']}">
 		var buttonClear = vulpe.util.get("vulpeButtonClear_${vulpeFormName}");
 		if (buttonClear.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Alt+Shift+del', function (){buttonClear.click();});
+			vulpe.util.addHotKey("Alt+Shift+del", function (){
+				buttonClear.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:set var="buttonCreate_tabular_EL" value="${'${'}now['buttons']['addDetai${targetConfig.name}']${'}'}"/>
@@ -95,7 +133,10 @@ $(document).ready(function() {
 	<c:if test="${buttonCreate_tabular}">
 		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_entities");
 		if (buttonAddDetail_entities.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Ctrl+f8', function (){buttonAddDetail_entities.click();});
+			vulpe.util.addHotKey("Ctrl+f8", function (){
+				buttonAddDetail_entities.click();
+				return false;
+			}, true);
 		}
 	</c:if>
 	<c:if test="${!controllerConfig.simple}">
@@ -105,7 +146,10 @@ $(document).ready(function() {
 		<c:if test="${buttonDetail}">
 		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
 		if (buttonAddDetail_${detail.baseName}.attr("onclick")) {
-			jQuery(document).bind('keydown', 'Alt+f8', function (){buttonAddDetail_${detail.baseName}.click();});
+			vulpe.util.addHotKey("Alt+f8", function (){
+				buttonAddDetail_${detail.baseName}.click();
+				return false;
+			}, true);
 		}
 		</c:if>
 	</c:forEach>
@@ -185,18 +229,6 @@ $(document).ready(function() {
 			}
 		}
 	}
-	/*
-	var fields = jQuery("[class*='focused']");
-	if (fields && fields.length > 0) {
-		for (var i = 0; i < fields.length; i++) {
-			var field = jQuery(fields[i]);
-			var idField = field.attr("id");
-			field.focus(function() {
-				$(this).effect("highlight");
-			});
-		}
-	}
-	*/
 	<c:choose>
 	<c:when test="${now['requireOneFilter']}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
