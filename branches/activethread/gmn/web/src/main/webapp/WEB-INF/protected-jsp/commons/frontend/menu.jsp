@@ -11,7 +11,7 @@
 	<v:menu labelKey="label.gmn.menu.Publicacoes.pedidos" action="/publicacoes/Pedido/select"/>
 </v:menu>
 <v:menu labelKey="label.gmn.menu.Ministerio">
-	<v:menu labelKey="label.gmn.menu.Ministerio.relatorio" action="/ministerio/Relatorio/select"/>
+	<v:menu labelKey="label.gmn.menu.Ministerio.relatorio" action="/ministerio/Relatorio/select" hotKey="Alt+Ctrl+R"/>
 </v:menu>
 <v:menu labelKey="label.gmn.menu.Anuncios">
 	<v:menu labelKey="label.gmn.menu.Anuncios.escolaMinisterio" action="/anuncios/Reuniao/select"/>

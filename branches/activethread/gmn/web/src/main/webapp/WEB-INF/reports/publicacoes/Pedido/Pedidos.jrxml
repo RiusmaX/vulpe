@@ -76,11 +76,11 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="2" y="2" width="100" height="20"/>
+				<reportElement x="2" y="2" width="553" height="20"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Normal]]></text>
+				<text><![CDATA[Publicações para Estoque]]></text>
 			</staticText>
 			<subreport>
 				<reportElement x="0" y="22" width="555" height="15"/>
@@ -102,11 +102,11 @@
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="2" y="2" width="100" height="20"/>
+				<reportElement x="2" y="2" width="553" height="20"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IPE]]></text>
+				<text><![CDATA[Itens de Pedido Especial (IPE)]]></text>
 			</staticText>
 		</band>
 	</detail>

@@ -160,4 +160,8 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 		return mes;
 	}
 
+	@Override
+	public String getOrderBy() {
+		return "publicador.nome";
+	}
 }

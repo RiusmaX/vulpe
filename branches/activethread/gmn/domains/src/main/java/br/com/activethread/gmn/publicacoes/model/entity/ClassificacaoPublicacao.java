@@ -5,5 +5,5 @@ import org.vulpe.model.annotations.CachedEnum;
 @CachedEnum
 public enum ClassificacaoPublicacao {
 
-	IPE, NORMAL
+	IPE, ESTOQUE
 }

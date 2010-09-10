@@ -7,5 +7,7 @@ public enum PrivilegioAdicional {
 
 	INDICADOR,
 	LEITOR,
-	MICROFONE_VOLANTE
+	MICROFONE_VOLANTE,
+	PRESIDENTE
+
 }

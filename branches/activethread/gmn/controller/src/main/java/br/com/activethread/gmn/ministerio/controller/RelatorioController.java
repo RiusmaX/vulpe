@@ -30,7 +30,7 @@ import br.com.activethread.gmn.ministerio.model.services.MinisterioService;
 @Component("ministerio.RelatorioController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = MinisterioService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(subReports = {
+@Controller(serviceClass = MinisterioService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(subReports = {
 		"Relatorios", "RelatoriosPendentes" }))
 public class RelatorioController extends ApplicationBaseController<Relatorio, java.lang.Long> {
 
@@ -66,7 +66,7 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 		final List<Publicador> publicadoresCongregacao = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
 		if (VulpeValidationUtil.isNotEmpty(getEntities())) {
 			for (Relatorio relatorio : getEntities()) {
-				if (relatorio.getTipoMinisterio().equals(TipoMinisterio.NORMAL)) {
+				if (relatorio.getTipoMinisterio().equals(TipoMinisterio.PUBLICADOR)) {
 					publicadores.add(relatorio);
 				}
 			}

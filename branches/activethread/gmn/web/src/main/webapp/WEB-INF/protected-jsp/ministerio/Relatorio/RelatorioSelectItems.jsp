@@ -12,6 +12,11 @@
 				sort="true"
 			/>
 			<v:column
+				labelKey="label.gmn.ministerio.Relatorio.select.tipoMinisterio"
+				property="tipoMinisterio"
+				sort="true"
+			/>
+			<v:column
 				labelKey="label.gmn.ministerio.Relatorio.select.publicador"
 				property="publicador.nome"
 				sort="true"

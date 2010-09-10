@@ -18,10 +18,12 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 
+import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 import br.com.activethread.gmn.core.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.ministerio.model.entity.Mes;
 import br.com.activethread.gmn.ministerio.model.entity.Relatorio;
+import br.com.activethread.gmn.publicacoes.model.entity.ClassificacaoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
@@ -87,16 +89,12 @@ public class TesteJasper {
 		try {
 			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
 			Query query = db.query();
-			query.constrain(Pedido.class);
-			query.descend("id").constrain(new Long(1));
-			ObjectSet<Pedido> os = query.execute();
-			for (Pedido pedido : os) {
-				System.out.println(pedido.getId());
+			query.constrain(Relatorio.class);
+			query.descend("publicador").descend("nome").orderAscending();
+			ObjectSet<Relatorio> os = query.execute();
+			for (Relatorio relatorio : os) {
+				System.out.println(relatorio.getMes());
 			}
-			if (os != null) {
-				db.delete(os.get(0));
-			}
-			db.commit();
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();

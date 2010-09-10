@@ -32,6 +32,13 @@ import br.com.activethread.gmn.relatorio.model.entity.PedidoSimples;
 public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 
 	@Override
+	protected void selectAfter() {
+		getEntitySelect().setDataInicial(VulpeDateUtil.getFirstDateOfTheMonth());
+		getEntitySelect().setDataFinal(VulpeDateUtil.getLastDateOfTheMonth());
+		super.selectAfter();
+	}
+
+	@Override
 	protected void onCreate() {
 		super.onCreate();
 		getEntity().setData(new Date());
@@ -113,60 +120,64 @@ public class PedidoController extends VulpeStrutsController<Pedido, Long> {
 		}
 		getReportParameters().put("periodo", periodo.toString());
 		List<PedidoPublicacao> publicacoes = new ArrayList<PedidoPublicacao>();
-		for (Pedido pedido : getEntities()) {
-			publicacoes.addAll(pedido.getPublicacoes());
-		}
-		final List<PedidoSimples> normal = new ArrayList<PedidoSimples>();
-		for (PedidoPublicacao pedidoPublicacao : publicacoes) {
-			if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
-					ClassificacaoPublicacao.NORMAL)) {
-				int count = 0;
-				for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {
-					if (pedidoPublicacao.getPublicacao().getId().equals(
-							pedidoPublicacao2.getPublicacao().getId())) {
-						count = count + pedidoPublicacao2.getQuantidade();
+		if (getEntities() != null) {
+			for (Pedido pedido : getEntities()) {
+				publicacoes.addAll(pedido.getPublicacoes());
+			}
+			final List<PedidoSimples> normal = new ArrayList<PedidoSimples>();
+			for (PedidoPublicacao pedidoPublicacao : publicacoes) {
+				if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
+						ClassificacaoPublicacao.ESTOQUE)) {
+					int count = 0;
+					for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {
+						if (pedidoPublicacao.getPublicacao().getId().equals(
+								pedidoPublicacao2.getPublicacao().getId())) {
+							count = count + pedidoPublicacao2.getQuantidade();
+						}
 					}
-				}
-				boolean existe = false;
-				for (PedidoSimples pedidoSimples : normal) {
-					if (pedidoSimples.getPublicacao().getId().equals(pedidoPublicacao.getPublicacao().getId())) {
-						pedidoSimples.setQuantidade(count);
-						existe = true;
+					boolean existe = false;
+					for (PedidoSimples pedidoSimples : normal) {
+						if (pedidoSimples.getPublicacao().getId().equals(
+								pedidoPublicacao.getPublicacao().getId())) {
+							pedidoSimples.setQuantidade(count);
+							existe = true;
+						}
 					}
-				}
-				if (!existe) {
-					normal.add(new PedidoSimples(pedidoPublicacao.getPublicacao(), count));
+					if (!existe) {
+						normal.add(new PedidoSimples(pedidoPublicacao.getPublicacao(), count));
+					}
 				}
 			}
-		}
-		final List<PedidoSimples> ipe = new ArrayList<PedidoSimples>();
-		for (PedidoPublicacao pedidoPublicacao : publicacoes) {
-			if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
-					ClassificacaoPublicacao.IPE)) {
-				int count = 0;
-				for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {
-					if (pedidoPublicacao.getPublicacao().getId().equals(
-							pedidoPublicacao2.getPublicacao().getId())) {
-						count = count + pedidoPublicacao2.getQuantidade();
+			final List<PedidoSimples> ipe = new ArrayList<PedidoSimples>();
+			for (PedidoPublicacao pedidoPublicacao : publicacoes) {
+				if (pedidoPublicacao.getPublicacao().getClassificacao().equals(
+						ClassificacaoPublicacao.IPE)) {
+					int count = 0;
+					for (PedidoPublicacao pedidoPublicacao2 : publicacoes) {
+						if (pedidoPublicacao.getPublicacao().getId().equals(
+								pedidoPublicacao2.getPublicacao().getId())) {
+							count = count + pedidoPublicacao2.getQuantidade();
+						}
 					}
-				}
-				boolean existe = false;
-				for (PedidoSimples pedidoSimples : ipe) {
-					if (pedidoSimples.getPublicacao().getId().equals(pedidoPublicacao.getPublicacao().getId())) {
-						pedidoSimples.setQuantidade(count);
-						existe = true;
+					boolean existe = false;
+					for (PedidoSimples pedidoSimples : ipe) {
+						if (pedidoSimples.getPublicacao().getId().equals(
+								pedidoPublicacao.getPublicacao().getId())) {
+							pedidoSimples.setQuantidade(count);
+							existe = true;
+						}
 					}
-				}
-				if (!existe) {
-					ipe.add(new PedidoSimples(pedidoPublicacao.getPublicacao(), count));
+					if (!existe) {
+						ipe.add(new PedidoSimples(pedidoPublicacao.getPublicacao(), count));
+					}
 				}
 			}
+			getReportParameters().put("publicacoesNormal", normal.isEmpty() ? null : normal);
+			getReportParameters().put("publicacoesIPE", ipe.isEmpty() ? null : ipe);
 		}
 		final List<String> collection = new ArrayList<String>();
 		collection.add("report");
 		setReportCollection(collection);
-		getReportParameters().put("publicacoesNormal", normal.isEmpty() ? null : normal);
-		getReportParameters().put("publicacoesIPE", ipe.isEmpty() ? null : ipe);
 		return super.doReportLoad();
 	}
 }
