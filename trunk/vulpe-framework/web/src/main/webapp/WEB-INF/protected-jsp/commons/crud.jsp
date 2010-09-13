@@ -88,19 +88,11 @@
 					jQuery("#vulpeCRUDBodyTabs" + tabIndex).click();
 					vulpe.util.focusFirst(parent);
 				}
-                jQuery(document).bind('keydown', {combi: 'left', disableInInput: true}, function (evt){
+				vulpe.util.addHotKey("Alt+Ctrl+left", function (evt){
                     tabControl(-1);
                     return false;
                 });
-				jQuery(document).bind('keydown', 'Alt+Ctrl+left', function (evt){
-                    tabControl(-1);
-                    return false;
-                });
-                jQuery(document).bind('keydown', {combi: 'right', disableInInput: true}, function (evt){
-                    tabControl(1);
-                    return false;
-                });
-				jQuery(document).bind('keydown', 'Alt+Ctrl+right', function (evt){
+				vulpe.util.addHotKey("Alt+Ctrl+right", function (evt){
                     tabControl(1);
                     return false;
                 });

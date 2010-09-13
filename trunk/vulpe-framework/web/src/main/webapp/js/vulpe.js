@@ -136,7 +136,7 @@ var vulpe = {
 			if (elemData.events) {
 				var keydown = elemData.events['keydown'];
 				for (var i = 0; i < keydown.length; i++) {
-					if (keydown[i].data == hotKey) {
+					if (keydown[i].data.combi == hotKey) {
 						return i;
 					}
 				}
@@ -158,6 +158,7 @@ var vulpe = {
 				if (putSameOnReturnKey) {
 					jQuery(document).bind("keydown", "return", command);
 				}
+				/*
 				var elements = jQuery("input[type!=hidden],select,textarea");
 				for (var i = 0; i < elements.length; i++) {
 					jQuery(jQuery(elements[i])).bind("keydown", hotKey, command);
@@ -165,6 +166,7 @@ var vulpe = {
 						jQuery(jQuery(elements[i])).bind("keydown", "return", command);
 					}
 				}
+				*/
 			}
 		},
 
@@ -1610,7 +1612,9 @@ var vulpe = {
 					return false;
 				}
 				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString + '&' : '') + 'ajax=true';
-				var popup = jQuery('[id$=Popup]');
+				if (!vulpe.util.existsVulpePopups()) {
+					hotkeys.triggersMap = {};
+				}
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",
