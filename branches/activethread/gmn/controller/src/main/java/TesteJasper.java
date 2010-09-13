@@ -89,11 +89,14 @@ public class TesteJasper {
 		try {
 			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
 			Query query = db.query();
-			query.constrain(Relatorio.class);
-			query.descend("publicador").descend("nome").orderAscending();
-			ObjectSet<Relatorio> os = query.execute();
-			for (Relatorio relatorio : os) {
-				System.out.println(relatorio.getMes());
+			query.constrain(Publicador.class);
+			query.descend("tipoMinisterio").constrain(TipoMinisterio.PIONEIRO_AUXILIAR).not();
+			query.descend("tipoMinisterio").constrain(TipoMinisterio.PIONEIRO_REGULAR).not();
+			ObjectSet<Publicador> os = query.execute();
+			for (Publicador publicador : os) {
+				System.out.println(publicador.getNome());
+				publicador.setTipoMinisterio(TipoMinisterio.PUBLICADOR);
+				db.store(publicador);
 			}
 			db.close();
 		} catch (Exception e) {
