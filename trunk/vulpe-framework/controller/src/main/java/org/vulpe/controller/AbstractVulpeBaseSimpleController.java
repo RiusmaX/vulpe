@@ -87,8 +87,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		now.put(Now.CURRENT_YEAR, calendar.get(Calendar.YEAR));
 	}
 
+	/**
+	 * Used to set and/or initialize variables in the controller. On this point
+	 * the components controlled by Spring are now available.
+	 */
 	@PostConstruct
-	protected void loadNow() {
+	protected void postConstruct() {
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
@@ -476,7 +480,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSession()
 	 */
 	public HttpSession getSession() {
-		return  vulpeContext.getSession();
+		return vulpeContext.getSession();
 	}
 
 	/*
@@ -713,7 +717,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	protected void changeControllerType(final ControllerType controllerType) {
 		getControllerConfig().setControllerType(controllerType);
-		loadNow();
+		postConstruct();
 	}
 
 	public void setUrlRedirect(String urlRedirect) {

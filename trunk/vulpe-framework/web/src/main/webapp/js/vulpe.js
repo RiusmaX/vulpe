@@ -176,7 +176,7 @@ var vulpe = {
 		},
 
 		getPrefixIdByElement: function(element) {
-			var id = element.id;
+			var id = element.id ? element.id : jQuery(element).attr("id");
 			var prefix = id.indexOf(":") != -1 ? id.substring(0, id.lastIndexOf(":") + 1) : id.substring(0, id.lastIndexOf(".") + 1);
 			return prefix;
 		},

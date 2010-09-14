@@ -1,6 +1,5 @@
 <c:if test="${show eq true}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
-
 	<c:if test="${not empty enumeration}">
 		<c:set var="enumerationEL" value="${'${'}cachedEnumArray['${enumeration}']${'}'}"/>
 		<c:set var="enumeration" value="${util:eval(pageContext, enumerationEL)}"/>
@@ -19,29 +18,23 @@
 		</c:forEach>
 		<c:set var="enumeration" value="${enumeration}}"/>
 	</c:if>
-
 	<c:if test="${empty styleClass}">
 		<c:set var="styleClass" value=".vulpeNoBoarder"/>
 	</c:if>
-
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
 		<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
 	</c:if>
-
 	<c:if test="${saveInSession}">
 		<c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/>
 	</c:if>
-
 	<c:if test="${not empty property && empty value}">
 		<c:set var="valueEL" value="${'${'}targetValue.${property}${'}'}"/>
 		<c:set var="value" value="${util:eval(pageContext, valueEL)}"/>
 	</c:if>
-
 	<c:if test="${not empty list}">
 		<c:set var="listValueCheckEL" value="${'${'}${list}${'}'}"/>
 		<c:set var="listValueCheck" value="${util:eval(pageContext, listValueCheckEL)}"/>
 	</c:if>
-
 	<span id="${elementId}">
 	<c:choose>
 		<c:when test="${not empty enumeration || not empty listValueCheck}">
