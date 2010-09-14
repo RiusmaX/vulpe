@@ -47,6 +47,8 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 	@VulpeSelect(required = true)
 	private TipoMinisterio tipoMinisterio;
 
+	private transient TipoMinisterio tipoMinisterioSimples;
+
 	@VulpeSelect(required = true)
 	private Cargo cargo;
 
@@ -78,6 +80,9 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	public void setTipoMinisterio(TipoMinisterio tipoMinisterio) {
 		this.tipoMinisterio = tipoMinisterio;
+		if (this.tipoMinisterioSimples != null) {
+			this.tipoMinisterio = this.tipoMinisterioSimples;
+		}
 	}
 
 	public TipoMinisterio getTipoMinisterio() {
@@ -112,5 +117,13 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 	public int compareTo(VulpeSimpleEntity entity) {
 		final Publicador publicador = (Publicador) entity;
 		return nome.compareTo(publicador.getNome());
+	}
+
+	public void setTipoMinisterioSimples(TipoMinisterio tipoMinisterioSimples) {
+		this.tipoMinisterioSimples = tipoMinisterioSimples;
+	}
+
+	public TipoMinisterio getTipoMinisterioSimples() {
+		return tipoMinisterioSimples;
 	}
 }

@@ -7,12 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
+import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.core.model.services.CoreService;
@@ -22,6 +24,36 @@ import br.com.activethread.gmn.core.model.services.CoreService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(controllerType = ControllerType.CRUD, serviceClass = CoreService.class, select = @Select(pageSize = 5, requireOneFilter = true))
 public class PublicadorController extends ApplicationBaseController<Publicador, Long> {
+
+	public List<ValueBean> listaTipoMinisterio = new ArrayList<ValueBean>();
+	public List<ValueBean> listaTipoMinisterioSimples = new ArrayList<ValueBean>();
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.controller.AbstractVulpeBaseSimpleController#postConstruct()
+	 */
+	protected void postConstruct() {
+		super.postConstruct();
+		final String className = TipoMinisterio.class.getName();
+		if (listaTipoMinisterio.isEmpty()) {
+			listaTipoMinisterio.add(new ValueBean(TipoMinisterio.PUBLICADOR.toString(),
+					getText(className + "." + TipoMinisterio.PUBLICADOR.toString())));
+			listaTipoMinisterio.add(new ValueBean(TipoMinisterio.PIONEIRO_AUXILIAR.toString(),
+					getText(className + "." + TipoMinisterio.PIONEIRO_AUXILIAR.toString())));
+			listaTipoMinisterio.add(new ValueBean(TipoMinisterio.PIONEIRO_REGULAR.toString(),
+					getText(className + "." + TipoMinisterio.PIONEIRO_REGULAR.toString())));
+			listaTipoMinisterio.add(new ValueBean(TipoMinisterio.AUSENTE.toString(),
+					getText(className + "." + TipoMinisterio.AUSENTE.toString())));
+		}
+		if (listaTipoMinisterioSimples.isEmpty()) {
+			listaTipoMinisterioSimples.add(new ValueBean(TipoMinisterio.PUBLICADOR.toString(),
+					getText(className + "." + TipoMinisterio.PUBLICADOR.toString())));
+			listaTipoMinisterioSimples.add(new ValueBean(TipoMinisterio.AUSENTE.toString(),
+					getText(className + "." + TipoMinisterio.AUSENTE.toString())));
+		}
+	}
 
 	@Override
 	protected void createPostBefore() {
@@ -93,4 +125,5 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 		}
 		return publicadoresFiltrados;
 	}
+
 }

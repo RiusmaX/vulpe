@@ -15,19 +15,23 @@
 			autocomplete="true" required="true" /></td>
 	</tr>
 	<tr>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.livros" property="livros" mask="I"
-			size="10" maxlength="10" /></td>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.brochuras" property="brochuras"
-			mask="I" size="10" maxlength="10" /></td>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.horas" property="horas" mask="I"
-			size="10" maxlength="10" style="background-color: #FFFFDD" /></td>
-	</tr>
-	<tr>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.revistas" property="revistas"
-			mask="I" size="10" maxlength="10" /></td>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.revisitas" property="revisitas"
-			mask="I" size="10" maxlength="10" /></td>
-		<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.estudos" property="estudos"
-			mask="I" size="10" maxlength="10" /></td>
+		<td colspan="3">
+		<table width="100%" cellpadding="0" cellspacing="0" style="margin-left: 0px;">
+			<tr>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.livros" property="livros"
+					mask="I" size="8" maxlength="8" /></td>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.brochuras" property="brochuras"
+					mask="I" size="8" maxlength="8" /></td>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.horas" property="horas" mask="I"
+					size="8" maxlength="10" style="background-color: #FFFFDD" /></td>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.revistas" property="revistas"
+					mask="I" size="8" maxlength="8" /></td>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.revisitas" property="revisitas"
+					mask="I" size="8" maxlength="8" /></td>
+				<td><v:text labelKey="label.gmn.ministerio.Relatorio.crud.estudos" property="estudos"
+					mask="I" size="8" maxlength="8" /></td>
+			</tr>
+		</table>
+		</td>
 	</tr>
 </table>
