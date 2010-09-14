@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="v" %>
 <v:menu labelKey="label.gmn.menu.Index">
+	<v:menu labelKey="label.gmn.menu.Index.mudarCongregacao" action="/backend/Index"/>
 	<v:menu labelKey="label.gmn.menu.Index.congregacoes" action="/core/Congregacao/select"/>
 	<%--<v:menu labelKey="label.gmn.menu.Index.grupos" action="/core/Grupo/select"/> --%>
 	<v:menu labelKey="label.gmn.menu.Index.publicadores" action="/core/Publicador/select"/>

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
-import org.vulpe.controller.struts.VulpeStrutsController;
 
+import br.com.activethread.gmn.controller.ApplicationBaseController;
 import br.com.activethread.gmn.publicacoes.model.entity.Publicacao;
 import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
 
@@ -17,7 +17,7 @@ import br.com.activethread.gmn.publicacoes.model.services.PublicacoesService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publicacoes.PublicacaoController")
 @Controller(serviceClass = PublicacoesService.class, select = @Select(pageSize = 5, requireOneFilter = true))
-public class PublicacaoController extends VulpeStrutsController<Publicacao, Long> {
+public class PublicacaoController extends ApplicationBaseController<Publicacao, Long> {
 
 	@Override
 	protected List<Publicacao> autocompleteList() {

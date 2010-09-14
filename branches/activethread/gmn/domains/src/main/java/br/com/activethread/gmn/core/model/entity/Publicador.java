@@ -54,6 +54,9 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	private List<PrivilegioAdicional> privilegiosAdicionais;
 
+	@QueryParameter(name = "grupo.congregacao")
+	private transient Congregacao congregacao;
+
 	public String getNome() {
 		return nome;
 	}
@@ -125,5 +128,13 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	public TipoMinisterio getTipoMinisterioSimples() {
 		return tipoMinisterioSimples;
+	}
+
+	public void setCongregacao(Congregacao congregacao) {
+		this.congregacao = congregacao;
+	}
+
+	public Congregacao getCongregacao() {
+		return congregacao;
 	}
 }

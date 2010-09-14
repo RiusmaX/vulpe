@@ -126,4 +126,9 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 		return publicadoresFiltrados;
 	}
 
+	@Override
+	protected void readBefore() {
+		getEntitySelect().setCongregacao(getCongregacao());
+		super.readBefore();
+	}
 }

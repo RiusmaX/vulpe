@@ -17,8 +17,8 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Report;
 import org.vulpe.controller.annotations.Select;
-import org.vulpe.controller.struts.VulpeStrutsController;
 
+import br.com.activethread.gmn.controller.ApplicationBaseController;
 import br.com.activethread.gmn.publicacoes.model.entity.ClassificacaoPublicacao;
 import br.com.activethread.gmn.publicacoes.model.entity.Pedido;
 import br.com.activethread.gmn.publicacoes.model.entity.PedidoPublicacao;
@@ -29,7 +29,7 @@ import br.com.activethread.gmn.relatorio.model.entity.PedidoSimples;
 @Component("publicacoes.PedidoController")
 @SuppressWarnings("serial")
 @Controller(serviceClass = PublicacoesService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(file = "/WEB-INF/reports/publicacoes/Pedido/Pedidos.jasper", name = "Pedidos", subReports = "Publicacoes"), detailsConfig = { @DetailConfig(name = "publicacoes", propertyName = "entity.publicacoes", despiseFields = "publicacao", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
-public class PedidoController extends VulpeStrutsController<Pedido, Long> {
+public class PedidoController extends ApplicationBaseController<Pedido, Long> {
 
 	@Override
 	protected void selectAfter() {

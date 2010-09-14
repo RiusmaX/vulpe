@@ -45,7 +45,7 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 						LOG.error(e);
 					}
 
-					return redirectTo("/core/Grupo/select", true);
+					return redirectTo("/core/Publicador/select", true);
 				}
 			}
 		}

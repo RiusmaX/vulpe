@@ -19,6 +19,7 @@ import org.vulpe.controller.annotations.Select;
 import br.com.activethread.gmn.commons.ApplicationConstants.Core;
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
+import br.com.activethread.gmn.core.model.commons.PublicadorGrupoComparator;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.ministerio.model.entity.Mes;
 import br.com.activethread.gmn.ministerio.model.entity.Relatorio;
@@ -102,6 +103,7 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 			publicadoresPendentes.addAll(publicadoresCongregacao);
 		}
 		Collections.sort(publicadoresPendentes);
+		Collections.sort(publicadoresPendentes, new PublicadorGrupoComparator());
 		getReportParameters().put("publicadoresPendentes",
 				publicadoresPendentes.isEmpty() ? null : publicadoresPendentes);
 		return super.doReportLoad();

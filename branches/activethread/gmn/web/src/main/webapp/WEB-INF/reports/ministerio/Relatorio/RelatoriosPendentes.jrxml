@@ -4,12 +4,27 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="nome" class="java.lang.String"/>
+	<field name="grupo" class="br.com.activethread.gmn.core.model.entity.Grupo"/>
 	<variable name="totalPublicador" class="java.lang.Integer" resetType="Column" calculation="Count">
 		<variableExpression><![CDATA[$F{nome}]]></variableExpression>
 	</variable>
 	<variable name="totalPublicadores" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{nome}]]></variableExpression>
 	</variable>
+	<group name="Grupo">
+		<groupExpression><![CDATA[$F{grupo}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField>
+					<reportElement x="0" y="0" width="555" height="16"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Grupo [" + $F{grupo}.getNome() + "]"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<columnHeader>
 		<band height="18">
 			<rectangle>
