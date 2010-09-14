@@ -39,8 +39,8 @@ public class ObjetoController extends ObjetoBaseController {
 	private static final List<ValueBean> destino = new ArrayList<ValueBean>();
 
 	@Override
-	public void loadNow() {
-		super.loadNow();
+	public void postConstruct() {
+		super.postConstruct();
 		final String keyPrefix = Ambiente.class.getName();
 		if (origem.isEmpty()) {
 			origem.add(new ValueBean(Ambiente.H.name(), getText(keyPrefix.concat(".").concat(
