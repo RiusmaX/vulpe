@@ -299,36 +299,18 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 					order = order.replaceAll(" asc", "");
 				}
 				final String[] orderParts = order.split("\\.");
-				for (String string : orderParts) {
-					orderMap.put(string, string);
-				}
-				if (orderParts.length == 4) {
-					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
-								.descend(orderParts[3]).orderDescending();
+				Query subQuery = query;
+				int count = 1;
+				for (String orderPart : orderParts) {
+					orderMap.put(orderPart, orderPart);
+					if (count == orderParts.length) {
+						if (descending) {
+							subQuery.descend(orderPart).orderDescending();
+						} else {
+							subQuery.descend(orderPart).orderAscending();
+						}
 					} else {
-						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
-								.descend(orderParts[3]).orderAscending();
-					}
-				} else if (orderParts.length == 3) {
-					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
-								.orderDescending();
-					} else {
-						query.descend(orderParts[0]).descend(orderParts[1]).descend(orderParts[2])
-								.orderAscending();
-					}
-				} else if (orderParts.length == 2) {
-					if (descending) {
-						query.descend(orderParts[0]).descend(orderParts[1]).orderDescending();
-					} else {
-						query.descend(orderParts[0]).descend(orderParts[1]).orderAscending();
-					}
-				} else {
-					if (descending) {
-						query.descend(orderParts[0]).orderDescending();
-					} else {
-						query.descend(orderParts[0]).orderAscending();
+						subQuery = subQuery.descend(orderPart);
 					}
 				}
 			}
@@ -359,47 +341,62 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 					if (StringUtils.isBlank(paramName)) {
 						paramName = field.getName();
 					}
-					if (OperatorType.EQUAL.equals(param.operator())) {
-						query.descend(paramName).constrain(value).equal();
-					} else if (OperatorType.SMALLER.equals(param.operator())) {
-						query.descend(paramName).constrain(value).smaller();
-					} else if (OperatorType.GREATER.equals(param.operator().getValue())) {
-						query.descend(paramName).constrain(value).greater();
-					} else if (OperatorType.SMALLER_OR_EQUAL.equals(param.operator())) {
-						query.descend(paramName).constrain(value).smaller().equal();
-					} else if (OperatorType.GREATER_OR_EQUAL.equals(param.operator())) {
-						query.descend(paramName).constrain(value).greater().equal();
+					final String[] relations = paramName.split("\\.");
+					if (relations != null && relations.length > 1) {
+						int count = 1;
+						Query subQuery = query;
+						for (String relation : relations) {
+							if (count == relations.length) {
+								subQuery.descend(relation).constrain(value).equal();
+							} else {
+								subQuery = subQuery.descend(relation);
+							}
+							++count;
+						}
+					} else {
+						if (OperatorType.EQUAL.equals(param.operator())) {
+							query.descend(paramName).constrain(value).equal();
+						} else if (OperatorType.SMALLER.equals(param.operator())) {
+							query.descend(paramName).constrain(value).smaller();
+						} else if (OperatorType.GREATER.equals(param.operator().getValue())) {
+							query.descend(paramName).constrain(value).greater();
+						} else if (OperatorType.SMALLER_OR_EQUAL.equals(param.operator())) {
+							query.descend(paramName).constrain(value).smaller().equal();
+						} else if (OperatorType.GREATER_OR_EQUAL.equals(param.operator())) {
+							query.descend(paramName).constrain(value).greater().equal();
+						}
 					}
-				}
-				if (!Modifier.isTransient(field.getModifiers())) {
-					if (String.class.isAssignableFrom(field.getType())) {
-						final Like like = field.getAnnotation(Like.class);
-						if (like == null) {
-							query.descend(field.getName()).constrain(value);
-						} else {
-							query.descend(field.getName()).constrain(value).like();
-						}
-					} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {
-						if (isNotEmpty(value)) {
-							query.descend(field.getName()).constrain(value);
-						}
-					} else if (List.class.isAssignableFrom(field.getType())) {
-						final List values = (List) value;
-						if (!values.isEmpty()) {
+				} else {
+					if (!Modifier.isTransient(field.getModifiers())) {
+						if (String.class.isAssignableFrom(field.getType())) {
+							final Like like = field.getAnnotation(Like.class);
+							if (like == null) {
+								query.descend(field.getName()).constrain(value);
+							} else {
+								query.descend(field.getName()).constrain(value).like();
+							}
+						} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+							if (isNotEmpty(value)) {
+								query.descend(field.getName()).constrain(value);
+							}
+						} else if (List.class.isAssignableFrom(field.getType())) {
+							final List values = (List) value;
+							if (!values.isEmpty()) {
+								final Query subqy = query.descend(field.getName());
+								for (Object object : values) {
+									subqy.constrain(object);
+								}
+							}
+						} else if (Object[].class.isAssignableFrom(field.getType())) {
 							final Query subqy = query.descend(field.getName());
+							final Object[] values = (Object[]) value;
 							for (Object object : values) {
 								subqy.constrain(object);
 							}
+						} else if (!field.isAnnotationPresent(Transient.class)
+								&& !field.getName().equals(DB4O.SELECTED)) {
+							query.descend(field.getName()).constrain(value);
 						}
-					} else if (Object[].class.isAssignableFrom(field.getType())) {
-						final Query subqy = query.descend(field.getName());
-						final Object[] values = (Object[]) value;
-						for (Object object : values) {
-							subqy.constrain(object);
-						}
-					} else if (!field.isAnnotationPresent(Transient.class)
-							&& !field.getName().equals(DB4O.SELECTED)) {
-						query.descend(field.getName()).constrain(value);
 					}
 				}
 			}
