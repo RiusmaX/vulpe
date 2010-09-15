@@ -37,8 +37,10 @@
 		</td>
 	</tr>
 </table>
+<c:if test="${empty entity.cargo}">
 <script type="text/javascript">
 jQuery(function(){
 	app.core.mostrarOcultarPrivilegiosAdicionais(4, false);
 });
 </script>
+</c:if>

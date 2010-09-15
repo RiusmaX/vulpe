@@ -43,6 +43,13 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 	}
 
 	@Override
+	protected Relatorio prepareEntity(String method) {
+		Relatorio relatorio = super.prepareEntity(method);
+		relatorio.setCongregacao(getCongregacao());
+		return relatorio;
+	}
+
+	@Override
 	protected void createAfter() {
 		super.createAfter();
 		getEntity().setData(new Date());
@@ -108,4 +115,5 @@ public class RelatorioController extends ApplicationBaseController<Relatorio, ja
 				publicadoresPendentes.isEmpty() ? null : publicadoresPendentes);
 		return super.doReportLoad();
 	}
+
 }

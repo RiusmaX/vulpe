@@ -12,6 +12,7 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
+import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @SuppressWarnings("serial")
@@ -43,6 +44,8 @@ public class Pedido extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn
 	private Date dataEntrega;
+
+	private Congregacao congregacao;
 
 	public void setPublicador(Publicador publicador) {
 		this.publicador = publicador;
@@ -106,6 +109,14 @@ public class Pedido extends VulpeBaseDB4OEntity<Long> {
 
 	public Date getDataFinal() {
 		return dataFinal;
+	}
+
+	public void setCongregacao(Congregacao congregacao) {
+		this.congregacao = congregacao;
+	}
+
+	public Congregacao getCongregacao() {
+		return congregacao;
 	}
 
 }

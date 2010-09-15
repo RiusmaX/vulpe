@@ -19,6 +19,7 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
+import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.PrivilegioAdicional;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 import br.com.activethread.gmn.ministerio.model.entity.Mes;
@@ -89,14 +90,16 @@ public class TesteJasper {
 		try {
 			ObjectContainer db = VulpeDB4OUtil.getInstance().getObjectContainer();
 			Query query = db.query();
-			query.constrain(Publicador.class);
-			query.descend("tipoMinisterio").constrain(TipoMinisterio.PIONEIRO_AUXILIAR).not();
-			query.descend("tipoMinisterio").constrain(TipoMinisterio.PIONEIRO_REGULAR).not();
-			ObjectSet<Publicador> os = query.execute();
-			for (Publicador publicador : os) {
-				System.out.println(publicador.getNome());
-				publicador.setTipoMinisterio(TipoMinisterio.PUBLICADOR);
-				db.store(publicador);
+			query.constrain(Congregacao.class);
+			ObjectSet<Congregacao> osCongregacao = query.execute();
+			Congregacao congregacao = osCongregacao.get(0);
+			query = db.query();
+			query.constrain(Relatorio.class);
+			ObjectSet<Relatorio> os = query.execute();
+			for (Relatorio objeto : os) {
+				System.out.println(objeto);
+				//objeto.setCongregacao(congregacao);
+				//db.store(objeto);
 			}
 			db.close();
 		} catch (Exception e) {

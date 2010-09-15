@@ -64,7 +64,10 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 	@Override
 	protected void createPostAfter(Publicador entity) {
 		super.createPostAfter(entity);
-		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		if (publicadores == null) {
+			publicadores = new ArrayList<Publicador>();
+		}
 		publicadores.add(entity);
 		setSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA, publicadores);
 	}
@@ -78,11 +81,16 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		final List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
-		for (Publicador publicador : publicadores) {
-			if (publicador.getId().equals(getEntity().getId())) {
-				publicador = getEntity();
-				break;
+		List<Publicador> publicadores = getSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA);
+		if (publicadores == null) {
+			publicadores = new ArrayList<Publicador>();
+			publicadores.add(getEntity());
+		} else {
+			for (Publicador publicador : publicadores) {
+				if (publicador.getId().equals(getEntity().getId())) {
+					publicador = getEntity();
+					break;
+				}
 			}
 		}
 		setSessionAttribute(Core.PUBLICADORES_CONGREGACAO_SELECIONADA, publicadores);
@@ -127,8 +135,9 @@ public class PublicadorController extends ApplicationBaseController<Publicador, 
 	}
 
 	@Override
-	protected void readBefore() {
-		getEntitySelect().setCongregacao(getCongregacao());
-		super.readBefore();
+	protected Publicador prepareEntity(String method) {
+		final Publicador publicador = super.prepareEntity(method);
+		publicador.setCongregacao(getCongregacao());
+		return publicador;
 	}
 }

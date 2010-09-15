@@ -17,6 +17,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
+import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
@@ -43,26 +44,28 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 	@VulpeDate(argument = true)
 	private transient Date dataFinal;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer livros;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer brochuras;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer horas;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer revistas;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer revisitas;
 
-	@VulpeText(mask = "I", size = 10)
+	@VulpeText(mask = "I", size = 8)
 	private Integer estudos;
 
 	@VulpeSelect
 	private TipoMinisterio tipoMinisterio;
+
+	private Congregacao congregacao;
 
 	public final Date getData() {
 		return data;
@@ -163,5 +166,13 @@ public class Relatorio extends VulpeBaseDB4OEntity<Long> {
 	@Override
 	public String getOrderBy() {
 		return "publicador.nome";
+	}
+
+	public void setCongregacao(Congregacao congregacao) {
+		this.congregacao = congregacao;
+	}
+
+	public Congregacao getCongregacao() {
+		return congregacao;
 	}
 }

@@ -18,6 +18,7 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.crud.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
+import br.com.activethread.gmn.core.model.entity.Congregacao;
 import br.com.activethread.gmn.core.model.entity.Publicador;
 
 @CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 3) }), manager = true, view = @View(viewType = {
@@ -42,6 +43,8 @@ public class Reuniao extends VulpeBaseDB4OEntity<Long> {
 
 	@Detail(clazz = Discurso.class)
 	private List<Discurso> discursos;
+
+	private Congregacao congregacao;
 
 	public Publicador getPresidente() {
 		return presidente;
@@ -89,6 +92,14 @@ public class Reuniao extends VulpeBaseDB4OEntity<Long> {
 
 	public Integer getCanticoFinal() {
 		return canticoFinal;
+	}
+
+	public void setCongregacao(Congregacao congregacao) {
+		this.congregacao = congregacao;
+	}
+
+	public Congregacao getCongregacao() {
+		return congregacao;
 	}
 
 }

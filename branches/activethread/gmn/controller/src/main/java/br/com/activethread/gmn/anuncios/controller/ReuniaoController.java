@@ -13,7 +13,6 @@ import br.com.activethread.gmn.anuncios.model.entity.Reuniao;
 import br.com.activethread.gmn.anuncios.model.services.AnunciosService;
 import br.com.activethread.gmn.controller.ApplicationBaseController;
 
-
 /**
  * Controller implementation of Reuniao
  */
@@ -22,5 +21,11 @@ import br.com.activethread.gmn.controller.ApplicationBaseController;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = AnunciosService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, select = @Select(pageSize = 5))
 public class ReuniaoController extends ApplicationBaseController<Reuniao, java.lang.Long> {
+
+	@Override
+	protected void readBefore() {
+		getEntitySelect().setCongregacao(getCongregacao());
+		super.readBefore();
+	}
 
 }

@@ -180,4 +180,11 @@ public class PedidoController extends ApplicationBaseController<Pedido, Long> {
 		setReportCollection(collection);
 		return super.doReportLoad();
 	}
+
+	@Override
+	protected void readBefore() {
+		getEntitySelect().setCongregacao(getCongregacao());
+		super.readBefore();
+	}
+
 }

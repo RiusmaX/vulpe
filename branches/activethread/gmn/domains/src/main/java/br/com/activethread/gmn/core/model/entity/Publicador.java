@@ -18,6 +18,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 import br.com.activethread.gmn.comuns.model.entity.Sexo;
+import br.com.activethread.gmn.comuns.model.entity.StatusMinisterio;
 import br.com.activethread.gmn.comuns.model.entity.TipoMinisterio;
 
 @NotExistEqual(parameters = { @QueryParameter(name = "nome") })
@@ -54,8 +55,9 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	private List<PrivilegioAdicional> privilegiosAdicionais;
 
-	@QueryParameter(name = "grupo.congregacao")
-	private transient Congregacao congregacao;
+	private Congregacao congregacao;
+
+	private StatusMinisterio statusMinisterio;
 
 	public String getNome() {
 		return nome;
@@ -136,5 +138,13 @@ public class Publicador extends VulpeBaseDB4OEntity<Long> {
 
 	public Congregacao getCongregacao() {
 		return congregacao;
+	}
+
+	public void setStatusMinisterio(StatusMinisterio statusMinisterio) {
+		this.statusMinisterio = statusMinisterio;
+	}
+
+	public StatusMinisterio getStatusMinisterio() {
+		return statusMinisterio;
 	}
 }
