@@ -117,9 +117,12 @@
 	<c:if test="${not empty hotKey}">
 	<script type="text/javascript">
 	$(document).ready(function() {
-		vulpe.util.addHotKey("${hotKey}", function (evt){
-			vulpe.util.get("${elementId}").click();
-			return false;
+		vulpe.util.addHotKey({
+			hotKey: "${hotKey}",
+			command: function (evt){
+				vulpe.util.get("${elementId}").click();
+				return false;
+			}
 		});
 	});
 	</script>

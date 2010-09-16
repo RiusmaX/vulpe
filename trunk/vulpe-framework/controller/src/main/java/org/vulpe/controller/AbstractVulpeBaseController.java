@@ -105,9 +105,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private boolean onlyToSee = false;
 
 	/**
-	 * Selected tab index
+	 * Selected tab name
 	 */
-	private int selectedTab;
+	private String selectedTab;
 
 	/**
 	 * Tabular size to paging
@@ -190,11 +190,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		this.onlyToSee = onlyToSee;
 	}
 
-	public void setSelectedTab(final int selectedTab) {
+	public void setSelectedTab(final String selectedTab) {
 		this.selectedTab = selectedTab;
 	}
 
-	public int getSelectedTab() {
+	public String getSelectedTab() {
 		return selectedTab;
 	}
 
@@ -917,7 +917,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setOperation(Action.CREATE);
 		createBefore();
 		onCreate();
-		setSelectedTab(0);
+		setSelectedTab(null);
 		showButtons(Action.CREATE);
 
 		setResultName(Forward.SUCCESS);
@@ -1072,7 +1072,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setOperation(Action.UPDATE);
 		updateBefore();
 		onUpdate();
-		setSelectedTab(0);
+		setSelectedTab(null);
 		showButtons(Action.UPDATE);
 		setResultName(Forward.SUCCESS);
 		if (getControllerType().equals(ControllerType.TWICE)) {

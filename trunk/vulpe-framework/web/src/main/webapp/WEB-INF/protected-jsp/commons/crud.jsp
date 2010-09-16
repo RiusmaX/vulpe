@@ -59,17 +59,18 @@
 				var tabsName = '#vulpeCRUDBodyTabs';
 				$(tabsName).tabs({
 				    show: function(event, ui) {
-				    	var selected = $(tabsName).tabs('option', 'selected');
+				    	var selected = ui.panel.id;
 				        vulpe.util.selectTab("${vulpeFormName}", selected);
 				        return true;
 			    	}
 				});
 				var selectedTab = "${selectedTab}";
-				if (selectedTab && selectedTab > 0) {
-					$(tabsName).tabs('option', 'selected', selectedTab);
+				if (selectedTab && selectedTab != "") {
+					$(tabsName).tabs("select", "#" + selectedTab);
 				}
 				var tabs = "${fn:length(controllerConfig.details)}";
 				var tabIndex = 0;
+				var count = 0;
 				var tabControl = function(index) {
 					if (index == -1) {
 						if (tabIndex == 0) {
@@ -87,14 +88,37 @@
 					var parent = jQuery("#vulpeCRUDBodyTabs" + tabIndex).attr("href");
 					jQuery("#vulpeCRUDBodyTabs" + tabIndex).click();
 					vulpe.util.focusFirst(parent);
+					count = 1;
 				}
-				vulpe.util.addHotKey("Alt+Ctrl+left", function (evt){
-                    tabControl(-1);
-                    return false;
+				vulpe.util.addHotKey({
+					hotKey: "left",
+					command: function () {
+						tabControl(-1);
+    	                return false;
+					},
+					dontFireInText: true
                 });
-				vulpe.util.addHotKey("Alt+Ctrl+right", function (evt){
-                    tabControl(1);
-                    return false;
+				vulpe.util.addHotKey({
+					hotKey: "Alt+Ctrl+left",
+					command: function () {
+						tabControl(-1);
+    	                return false;
+					}
+                });
+				vulpe.util.addHotKey({
+					hotKey: "right",
+					command: function () {
+						tabControl(1);
+    	                return false;
+					},
+					dontFireInText: true
+                });
+				vulpe.util.addHotKey({
+					hotKey: "Alt+Ctrl+right",
+					command: function () {
+                    	tabControl(1);
+                    	return false;
+					}
                 });
 			});
 		</script>

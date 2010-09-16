@@ -136,7 +136,7 @@ var vulpe = {
 			if (elemData.events) {
 				var keydown = elemData.events['keydown'];
 				for (var i = 0; i < keydown.length; i++) {
-					if (keydown[i].data.combi == hotKey) {
+					if (keydown[i].data == hotKey) {
 						return i;
 					}
 				}
@@ -144,19 +144,28 @@ var vulpe = {
 			return -1;
 		},
 
-		addHotKey: function(hotKey, command, override, putSameOnReturnKey) {
-			var position = vulpe.util.checkHotKeyExists(hotKey);
-			if (position > 0 && override){
+		addHotKey: function(options) {
+			//hotKey, command, override, putSameOnReturnKey
+			var position = vulpe.util.checkHotKeyExists(options.hotKey);
+			if (position > 0 && options.override){
 				var elemData = jQuery.data(document);
 				if (elemData.events && elemData.events['keydown']) {
 					var keydown = elemData.events['keydown'];
 					vulpe.util.removeArray(keydown, position);
 				}
 			}
-			if (position == -1 || (position > 0 && override)) {
-				jQuery(document).bind("keydown", hotKey, command);
-				if (putSameOnReturnKey) {
-					jQuery(document).bind("keydown", "return", command);
+			if (position == -1 || (position > 0 && options.override)) {
+				jQuery(document).bind("keydown", options.hotKey, options.command);
+				if (options.putSameOnReturnKey) {
+					jQuery(document).bind("keydown", "return", options.command);
+				}
+				if (options.dontFireInText) {
+					var dontFireInText = jQuery(document).attr("dontFireInText");
+					if (!dontFireInText) {
+						dontFireInText = new Array();
+					}
+					dontFireInText[options.hotKey] = true;
+					jQuery(document).attr("dontFireInText", dontFireInText);
 				}
 				/*
 				var elements = jQuery("input[type!=hidden],select,textarea");
@@ -165,9 +174,17 @@ var vulpe = {
 					if (putSameOnReturnKey) {
 						jQuery(jQuery(elements[i])).bind("keydown", "return", command);
 					}
-				}
-				*/
+				}*/
 			}
+			/*
+			if (options.dontFireInText) {
+				jQuery(document).bind("keydown", {combi: options.hotKey, dontFireInText: true} , options.command);
+			} else {
+				jQuery(document).bind("keydown", options.hotKey, options.command);
+				if (options.putSameOnReturnKey) {
+					jQuery(document).bind("keydown", "return", options.command);
+				}
+			}*/
 		},
 
 		getPrefixId: function(formName) {
@@ -236,9 +253,9 @@ var vulpe = {
 			}
 		},
 
-		selectTab: function(formName, index) {
+		selectTab: function(formName, name) {
 			var selectedTab = vulpe.util.get(formName + vulpe.config.suffix.selectedTab);
-			selectedTab.val(index);
+			selectedTab.val(name);
 		},
 
 		decode: function(string) {
@@ -1613,7 +1630,7 @@ var vulpe = {
 				}
 				queryString = (vulpe.util.isNotEmpty(queryString) ? queryString + '&' : '') + 'ajax=true';
 				if (!vulpe.util.existsVulpePopups()) {
-					hotkeys.triggersMap = {};
+					//hotkeys.triggersMap = {};
 				}
 				vulpe.view.showLoading();
 				jQuery.ajax({

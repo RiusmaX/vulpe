@@ -106,9 +106,12 @@
 				<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 					<script type="text/javascript">
 					$(document).ready(function() {
-						vulpe.util.addHotKey("Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}", function (){
-							vulpe.util.get("${elementId}").click();
-							return false;
+						vulpe.util.addHotKey({
+								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
+								command: function (){
+									vulpe.util.get("${elementId}").click();
+									return false;
+								}
 						});
 					});
 					</script>
@@ -251,9 +254,12 @@
 					<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 						<script type="text/javascript">
 						$(document).ready(function() {
-							vulpe.util.addHotKey("Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}", function (){
-								vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click();
-								return false;
+							vulpe.util.addHotKey({
+								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
+								command: function (){
+									vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click();
+									return false;
+								}
 							});
 						});
 						</script>
