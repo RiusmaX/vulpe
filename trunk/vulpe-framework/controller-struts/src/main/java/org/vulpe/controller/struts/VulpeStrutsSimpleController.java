@@ -36,7 +36,7 @@ import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.ValidationAwareSupport;
 
 /**
- * Action base for Struts2
+ * Controller base for Struts2
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0

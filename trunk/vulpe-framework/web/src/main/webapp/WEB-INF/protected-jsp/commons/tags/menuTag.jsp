@@ -21,8 +21,9 @@
 	<c:if test="${!fn:contains(action, '/ajax')}">
 		<c:set var="action" value="${action}/ajax"/>
 	</c:if>
-	<c:set var="onclick"> onclick="vulpe.view.request.submitMenu('${action}');"</c:set>
+	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
 </c:if>
+<c:if test="${show}">
 <li>
 	<a id="${labelKey}" href="javascript:void(0);" class="current"${onclick}${accesskey} title="${helpKey}"><span><fmt:message key="${labelKey}" /></span></a>
 	<ul>
@@ -42,3 +43,4 @@
 	</script>
 	</c:if>
 </li>
+</c:if>

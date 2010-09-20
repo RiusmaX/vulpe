@@ -34,7 +34,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.util.VulpeFileUtil;
@@ -57,7 +56,7 @@ import com.opensymphony.xwork2.util.OgnlContextState;
 import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
- * Vulpe Base Action to Struts2
+ * Vulpe Base Controller to Struts2
  *
  * @param <ENTITY>
  *            Entity
@@ -134,7 +133,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @return number of items affected
 	 */
 	protected int onDeleteDetail() {
-		final ENTITY entity = prepareEntity(Action.DELETE);
+		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
 			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(getDetail(),
@@ -171,21 +170,21 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			}
 			if (save) {
 				if (getControllerType().equals(ControllerType.TABULAR)) {
-					invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
-							.getEntityClass().getSimpleName()), new Class[] { List.class },
-							new Object[] { removedDetails });
+					invokeServices(Operation.DELETE.getValue().concat(
+							getControllerConfig().getEntityClass().getSimpleName()),
+							new Class[] { List.class }, new Object[] { removedDetails });
 					if (getControllerConfig().getTabularPageSize() > 0) {
 						setTabularSize(getTabularSize() - removedDetails.size());
 					}
 				} else {
 					if (entity.getId() != null && size > details.size()) {
-						invokeServices(Action.UPDATE_POST, Action.UPDATE
-								.concat(getControllerConfig().getEntityClass().getSimpleName()),
+						invokeServices(Operation.UPDATE.getValue().concat(
+								getControllerConfig().getEntityClass().getSimpleName()),
 								new Class[] { getControllerConfig().getEntityClass() },
 								new Object[] { entity });
-						invokeServices(Action.DELETE, Action.DELETE.concat(getControllerConfig()
-								.getEntityClass().getSimpleName()), new Class[] { List.class },
-								new Object[] { removedDetails });
+						invokeServices(Operation.DELETE.getValue().concat(
+								getControllerConfig().getEntityClass().getSimpleName()),
+								new Class[] { List.class }, new Object[] { removedDetails });
 					}
 				}
 			}

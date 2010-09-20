@@ -108,4 +108,12 @@ public class Role extends AbstractVulpeBaseEntity<Long> {
 		}
 		return super.getOrderBy();
 	}
+
+	@Override
+	public String toString() {
+		if (StringUtils.isNotEmpty(getName())) {
+			return getName();
+		}
+		return super.toString();
+	}
 }

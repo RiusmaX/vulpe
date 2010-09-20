@@ -23,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.QueryParameter;
@@ -112,5 +113,13 @@ public class User extends BasicUser {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		if (StringUtils.isNotEmpty(getUsername())) {
+			return getUsername();
+		}
+		return super.toString();
 	}
 }

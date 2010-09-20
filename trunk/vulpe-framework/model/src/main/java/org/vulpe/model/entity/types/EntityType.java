@@ -28,9 +28,9 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.controller.VulpeSimpleController.Operation;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.services.VulpeService;
@@ -151,8 +151,8 @@ public class EntityType implements UserType, ParameterizedType {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		this.idClass = (Class<? extends Serializable>) VulpeReflectUtil.getInstance().getFieldClass(
-				this.returnedClass, "id");
+		this.idClass = (Class<? extends Serializable>) VulpeReflectUtil.getInstance()
+				.getFieldClass(this.returnedClass, "id");
 
 		final String type = (String) props.get("type");
 		if (StringUtils.isNotEmpty(type)) {
@@ -166,9 +166,11 @@ public class EntityType implements UserType, ParameterizedType {
 
 	protected VulpeEntity<?> invokeFind(final Object identifier) {
 		try {
-			final VulpeService services = VulpeServiceLocator.getInstance().lookup(this.serviceClass);
+			final VulpeService services = VulpeServiceLocator.getInstance().lookup(
+					this.serviceClass);
 			final Method method = services.getClass().getMethod(
-					VulpeConstants.Action.FIND.concat(this.returnedClass.getSimpleName()), this.idClass);
+					Operation.FIND.getValue().concat(this.returnedClass.getSimpleName()),
+					this.idClass);
 			return (VulpeEntity<?>) method.invoke(services, identifier);
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);

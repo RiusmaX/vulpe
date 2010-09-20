@@ -26,15 +26,17 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallback;
+import org.vulpe.security.commons.VulpeSecurityUtil;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context;
 import org.vulpe.security.commons.VulpeSecurityConstants.Context.ContextDefaults;
-import org.vulpe.security.commons.VulpeSecurityUtil;
 import org.vulpe.security.context.VulpeSecurityContext;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
@@ -54,6 +56,8 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 	private static final Logger LOG = Logger.getLogger(VulpeBaseSecurityContext.class);
 
 	private Map<String, Object> securityMap = new HashMap<String, Object>();
+
+	private List<String> userRoles;
 
 	/*
 	 * (non-Javadoc)
@@ -146,10 +150,10 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 
 	@Override
 	public boolean isAuthenticated() {
-		if (!VulpeConfigHelper.isSecurityEnabled()) {
+		final Authentication authentication = getAuthentication();
+		if (!VulpeConfigHelper.isSecurityEnabled() || authentication == null) {
 			return false;
 		}
-		final Authentication authentication = getAuthentication();
 		final boolean autenticated = authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken);
 		return autenticated;
@@ -199,4 +203,16 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 		return user;
 	}
 
+	@Override
+	public List<String> getUserRoles() {
+		if (VulpeValidationUtil.isEmpty(userRoles)) {
+			userRoles = new ArrayList<String>();
+			if (isAuthenticated()) {
+				for (GrantedAuthority grantedAuthority : getAuthentication().getAuthorities()) {
+					userRoles.add(grantedAuthority.getAuthority());
+				}
+			}
+		}
+		return userRoles;
+	}
 }

@@ -36,6 +36,8 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 
 	private String password;
 
+	private transient String currentPassword;
+
 	private transient String passwordConfirm;
 
 	private boolean active = true;
@@ -101,6 +103,16 @@ public abstract class BasicUser extends AbstractVulpeBaseEntity<Long> {
 			super.setOrderBy("obj.id");
 		}
 		return super.getOrderBy();
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		if (StringUtils.isNotEmpty(currentPassword)) {
+			this.currentPassword = VulpeDigestUtil.encrypt(currentPassword, "md5");
+		}
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
 	}
 
 }

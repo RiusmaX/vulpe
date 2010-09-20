@@ -39,12 +39,12 @@ public class VulpeLoginController extends VulpeStrutsSimpleController {
 	 */
 	public String define() {
 		if (accessDenied) {
-			return VulpeConstants.Action.Forward.ACCESS_DENIED;
+			return VulpeConstants.Controller.Forward.ACCESS_DENIED;
 		}
 		if (loginError != null && loginError == 1) {
-			return VulpeConstants.Action.Forward.ERRORS;
+			return VulpeConstants.Controller.Forward.ERRORS;
 		}
-		return VulpeConstants.Action.Forward.SUCCESS;
+		return VulpeConstants.Controller.Forward.SUCCESS;
 	}
 
 	public Integer getLoginError() {

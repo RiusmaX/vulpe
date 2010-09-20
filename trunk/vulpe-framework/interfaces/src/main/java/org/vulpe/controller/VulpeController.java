@@ -112,6 +112,8 @@ public interface VulpeController extends VulpeSimpleController {
 
 	void showButton(final String button);
 
+	void showButtons(final Operation operation);
+
 	void showButtons(final String... buttons);
 
 	void showButtons(final ControllerType controllerType, final String... buttons);
@@ -136,13 +138,6 @@ public interface VulpeController extends VulpeSimpleController {
 
 	boolean isAddDetailShow();
 
-	/**
-	 * Method to show buttons and configure forward.
-	 *
-	 * @since 1.0
-	 */
-	void showButtons(final String method);
-
 	String select();
 
 	String tabular();
@@ -165,7 +160,6 @@ public interface VulpeController extends VulpeSimpleController {
 
 	void setDownloadContentDisposition(final String downloadContentDisposition);
 
-
 	/**
 	 * Method to download file.
 	 *
@@ -181,4 +175,5 @@ public interface VulpeController extends VulpeSimpleController {
 	 * @return Navigation.
 	 */
 	String upload();
+
 }

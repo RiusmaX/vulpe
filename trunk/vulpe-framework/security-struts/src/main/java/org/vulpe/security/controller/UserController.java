@@ -34,6 +34,8 @@ import org.vulpe.security.model.services.SecurityService;
 @SuppressWarnings("serial")
 public class UserController extends VulpeStrutsController<User, Long> {
 
+	public static final String PASSWORD = "vulpeUserPassword";
+
 	@Override
 	public String createPost() {
 		setPassword(getEntity().getPassword());
@@ -44,13 +46,13 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	public boolean validateEntity() {
 		boolean valid = super.validateEntity();
 		if (StringUtils.isBlank(getEntity().getPassword())) {
-			addActionError(getText("vulpe.security.user.empty.password"));
+			addActionError(getText("vulpe.security.user.error.empty.password"));
 			return false;
 		}
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 				.isNotBlank(getEntity().getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			addActionError(getText("vulpe.security.user.password.not.match"));
+			addActionError(getText("vulpe.security.user.error.password.not.match"));
 			valid = false;
 		}
 		return valid;
@@ -64,30 +66,20 @@ public class UserController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	protected boolean onUpdatePost() {
-		if (StringUtils.isBlank(getEntity().getPassword())) {
-			addActionError(getText("vulpe.security.user.empty.password"));
-			return false;
-		}
 		if (StringUtils.isBlank(getEntity().getPassword())
 				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
 			getEntity().setPasswordEncrypted(getPassword());
 		} else {
 			setPassword(getEntity().getPassword());
 		}
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			addActionError(getText("vulpe.security.user.password.not.match"));
-			return false;
-		}
 		return super.onUpdatePost();
 	}
 
 	public String getPassword() {
-		return (String) getSessionAttribute("vulpeUserPassword");
+		return (String) getSessionAttribute(PASSWORD);
 	}
 
 	public void setPassword(final String password) {
-		setSessionAttribute("vulpeUserPassword", password);
+		setSessionAttribute(PASSWORD, password);
 	}
 }

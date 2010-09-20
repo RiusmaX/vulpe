@@ -16,6 +16,7 @@
 package org.vulpe.security.context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.vulpe.model.entity.VulpeEntity;
 
@@ -39,5 +40,7 @@ public interface VulpeSecurityContext extends Serializable {
 	<T extends VulpeEntity<Long>> T getUser();
 
 	String getUsername();
+
+	List<String> getUserRoles();
 
 }

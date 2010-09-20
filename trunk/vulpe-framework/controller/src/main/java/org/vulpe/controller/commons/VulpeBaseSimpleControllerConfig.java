@@ -18,7 +18,6 @@ package org.vulpe.controller.commons;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
@@ -28,6 +27,7 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
+import org.vulpe.controller.VulpeSimpleController.Operation;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.services.VulpeService;
@@ -418,7 +418,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 				|| getControllerType().equals(ControllerType.FRONTEND)) {
 			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/");
 			final String method = getControllerUtil().getCurrentMethod();
-			if (!Action.FRONTEND.equals(method) && !Action.BACKEND.equals(method)) {
+			if (!Operation.FRONTEND.getValue().equals(method)
+					&& !Operation.BACKEND.getValue().equals(method)) {
 				this.viewPath += method;
 			} else {
 				this.viewPath += viewBaseName;

@@ -64,7 +64,7 @@ public @interface Controller {
 
 	// SELECT and CRUD - control configurations
 	/**
-	 * Action to redirect after selection
+	 * Controller to redirect after selection
 	 */
 	String ownerController() default "";
 

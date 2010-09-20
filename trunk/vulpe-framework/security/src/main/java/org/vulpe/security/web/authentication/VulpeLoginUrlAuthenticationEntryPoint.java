@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
-import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 
 /**

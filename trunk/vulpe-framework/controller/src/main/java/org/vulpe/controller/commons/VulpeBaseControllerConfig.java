@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.VulpeConstants.Action;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.entity.VulpeEntity;
@@ -79,7 +79,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			final int newDetails = getController().tabular().newRecords();
 			final int startNewDetails = getController().tabular().startNewRecords();
 			final String[] despiseFields = getController().tabular().despiseFields();
-			String name = Action.ENTITIES;
+			String name = VulpeConstants.Controller.ENTITIES;
 			String propertyName = name;
 			if (StringUtils.isNotBlank(getController().tabular().name())) {
 				name = getController().tabular().name();
@@ -90,7 +90,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails,
 					newDetails, despiseFields));
 		}
-		return getDetail(Action.ENTITIES);
+		return getDetail(VulpeConstants.Controller.ENTITIES);
 	}
 
 	/**

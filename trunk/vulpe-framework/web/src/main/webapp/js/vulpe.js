@@ -1523,7 +1523,7 @@ var vulpe = {
 				});
 			},
 
-			submitMenu: function(url, beforeJs, afterJs) {
+			submitLink: function(url, beforeJs, afterJs) {
 				jQuery(vulpe.config.layers.messages).hide();
 				vulpe.config.order = new Array();
 				vulpe.config.redirectToIndex = false;

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
@@ -36,6 +35,7 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeSimpleController;
+import org.vulpe.controller.VulpeSimpleController.Operation;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
@@ -224,12 +224,12 @@ public class ControllerUtil {
 			final String[] parts = base.split("/");
 			if (parts.length == 2) {
 				if (base.contains(Logic.BACKEND)) {
-					method = Action.BACKEND;
+					method = Operation.BACKEND.getValue();
 				} else if (base.contains(Logic.FRONTEND)) {
-					method = Action.FRONTEND;
+					method = Operation.FRONTEND.getValue();
 				}
 			} else if (base.equals(View.AUTHENTICATOR)) {
-				method = Action.DEFINE;
+				method = Operation.DEFINE.getValue();
 			} else {
 				method = parts[parts.length - 1];
 			}

@@ -22,8 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.vulpe.commons.VulpeConstants.Action;
 import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.VulpeSimpleController.Operation;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;
@@ -32,12 +32,12 @@ import com.opensymphony.xwork2.util.CompoundRoot;
 import com.opensymphony.xwork2.util.OgnlUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeChainingInterceptor extends ChainingInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ChainingInterceptor#intercept(com
 	 * .opensymphony.xwork2.ActionInvocation)
@@ -46,7 +46,7 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
 		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeController) {
-			if (Action.READ.equals(invocation.getProxy().getMethod())) {
+			if (Operation.READ.getValue().equals(invocation.getProxy().getMethod())) {
 				if (invocation.getAction() instanceof ValidationAware) {
 					final ValueStack stack = invocation.getStack();
 					final CompoundRoot root = stack.getRoot();
@@ -59,11 +59,7 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 						while (iterator.hasNext()) {
 							final Object obj = iterator.next();
 							if (obj instanceof ValidationAware) {
-								new OgnlUtil().copy(
-										obj,
-										invocation.getAction(),
-										ctxMap,
-										null,
+								new OgnlUtil().copy(obj, invocation.getAction(), ctxMap, null,
 										Arrays.asList(new String[] { "actionErrors",
 												"actionMessages", "fieldErrors" }));
 							}

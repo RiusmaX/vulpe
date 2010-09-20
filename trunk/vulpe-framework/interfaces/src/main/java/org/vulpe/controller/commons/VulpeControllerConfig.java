@@ -3,7 +3,7 @@ package org.vulpe.controller.commons;
 import org.vulpe.model.services.VulpeService;
 
 /**
- * Vulpe Action Config Interface.
+ * Vulpe Controller Config Interface.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0

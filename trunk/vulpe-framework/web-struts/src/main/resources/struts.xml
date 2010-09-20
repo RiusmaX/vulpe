@@ -173,6 +173,7 @@
 
 		<global-results>
 			<result name="index">/index.jsp</result>
+			<result name="success">${resultForward}</result>
 			<result name="redirect" type="redirect">${urlRedirect}</result>
 			<result name="upload">/WEB-INF/protected-jsp/commons/upload.jsp</result>
 			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp</result>
@@ -183,14 +184,12 @@
 				<param name="contentDisposition">${downloadInfo.contentDisposition}</param>
 				<param name="inputName">downloadInfo.inputStream</param>
 			</result>
-			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp
-			</result>
-			<result name="errors">layout.vulpe.errors</result>
+			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/commons/errors.jsp</result>
 		</global-results>
 
 		<!-- Back-End -->
 		<action name="backend/*" class="backend.{1}Controller" method="backend">
-			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -200,7 +199,6 @@
 		</action>
 
 		<action name="backend/*/ajax" class="backend.{1}Controller" method="backend">
-			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -210,7 +208,6 @@
 		</action>
 
 		<action name="backend/*/*" class="backend.{1}Controller" method="{2}">
-			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -220,7 +217,6 @@
 		</action>
 
 		<action name="backend/*/*/ajax" class="backend.{1}Controller" method="{2}">
-			<result name="success">${resultForward}</result>
 			<result name="backend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -231,7 +227,6 @@
 
 		<!-- Front-End -->
 		<action name="frontend/*" class="frontend.{1}Controller" method="frontend">
-			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -241,7 +236,6 @@
 		</action>
 
 		<action name="frontend/*/ajax" class="frontend.{1}Controller" method="frontend">
-			<result name="success">${resultForward}</result>
 			<result name="frontend" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -251,7 +245,6 @@
 		</action>
 
 		<action name="frontend/*/*" class="frontend.{1}Controller" method="{2}">
-			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="sendParams">true</param>
@@ -260,7 +253,6 @@
 		</action>
 
 		<action name="frontend/*/*/ajax" class="frontend.{1}Controller" method="{2}">
-			<result name="success">${resultForward}</result>
 			<result name="read" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="sendParams">true</param>
@@ -269,7 +261,6 @@
 		</action>
 
 		<action name="*/*/*" class="{1}.{2}Controller" method="{3}">
-			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>
@@ -284,7 +275,6 @@
 		</action>
 
 		<action name="*/*/*/ajax" class="{1}.{2}Controller" method="{3}">
-			<result name="success">${resultForward}</result>
 			<result name="create" type="chain">
 				<param name="actionName">${resultForward}</param>
 				<param name="saveParams">true</param>

@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
-import org.vulpe.commons.VulpeConstants.Action;
-import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.Controller;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.Tab;
@@ -179,14 +179,21 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		LOG.debug("frontendAfter");
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Method to invoke services.
 	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#invokeServices(java.lang
-	 * .String, java.lang.String, java.lang.Class<?>[], java.lang.Object[])
+	 * @param serviceName
+	 *            Name of service
+	 * @param argsType
+	 *            Types of arguments
+	 * @param argsValues
+	 *            Arguments values
+	 *
+	 * @since 1.0
+	 * @return Object
 	 */
-	public Object invokeServices(final String eventName, final String serviceName,
-			final Class<?>[] argsType, final Object[] argsValues) {
+	public Object invokeServices(final String serviceName, final Class<?>[] argsType,
+			final Object[] argsValues) {
 		final VulpeService service = getService();
 		try {
 			final Method method = service.getClass().getMethod(serviceName, argsType);
@@ -297,11 +304,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/**
 	 * Result Name.
 	 */
-	private String resultName;
+	private String resultName = Forward.SUCCESS;
 	/**
 	 * Operation
 	 */
-	private String operation;
+	private Operation operation;
 	private boolean ajax = false;
 	private boolean back = false;
 	private boolean executed = false;
@@ -360,22 +367,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		this.resultName = resultName;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#getOperation()
-	 */
-	public String getOperation() {
+	public Operation getOperation() {
 		return operation;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.vulpe.controller.VulpeSimpleController#setOperation(java.lang
-	 * .String)
-	 */
-	public void setOperation(final String operation) {
+	public void setOperation(final Operation operation) {
 		this.operation = operation;
 	}
 
@@ -667,11 +663,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	public abstract void addActionError(final String message);
 
 	public VulpeHashMap<String, Tab> getTabs() {
-		if (now.containsKey(Action.TABS)) {
-			return now.getSelf(Action.TABS);
+		if (now.containsKey(Controller.TABS)) {
+			return now.getSelf(Controller.TABS);
 		}
 		final VulpeHashMap<String, Tab> tabs = new VulpeHashMap<String, Tab>();
-		now.put(Action.TABS, tabs);
+		now.put(Controller.TABS, tabs);
 		return tabs;
 	}
 
@@ -681,7 +677,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectFormKey()
 	 */
 	public String getSelectFormKey() {
-		return getControllerKey() + Action.SELECT_FORM;
+		return getControllerKey() + Controller.SELECT_FORM;
 	}
 
 	/*
@@ -690,7 +686,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectTableKey()
 	 */
 	public String getSelectTableKey() {
-		return getControllerKey() + Action.SELECT_TABLE;
+		return getControllerKey() + Controller.SELECT_TABLE;
 	}
 
 	/*
@@ -699,7 +695,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getSelectPagingKey()
 	 */
 	public String getSelectPagingKey() {
-		return getControllerKey() + Action.SELECT_PAGING;
+		return getControllerKey() + Controller.SELECT_PAGING;
 	}
 
 	private String getControllerKey() {
@@ -737,7 +733,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	public String redirectTo(final String url, final boolean ajax) {
 		setUrlRedirect(url + (ajax ? "/ajax" : ""));
-		return Forward.REDIRECT;
+		setResultName(Forward.REDIRECT);
+		return getResultName();
 	}
 
 	/*

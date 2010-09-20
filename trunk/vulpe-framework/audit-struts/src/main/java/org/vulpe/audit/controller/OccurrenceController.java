@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.audit.model.services.AuditService;
-import org.vulpe.commons.VulpeConstants.Action.Button;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.struts.VulpeStrutsController;

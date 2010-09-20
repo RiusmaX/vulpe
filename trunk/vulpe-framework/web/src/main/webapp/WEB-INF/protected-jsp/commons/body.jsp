@@ -26,7 +26,7 @@
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}_popupKey"/>
 	</c:if>
 	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">
-	<div id="userAuthenticated"><fmt:message key="label.vulpe.security.logged.welcome"><fmt:param value="${securityContext.user.name}"/></fmt:message>&nbsp;<a href="${pageContext.request.contextPath}/j_spring_security_logout"><fmt:message key="label.vulpe.security.logoff"/></a></div>
+	<%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %>
 	</c:if>
 	<c:if test="${now['showContentTitle'] && empty vulpeBodyTwice}">
 	<div id="contentTitle"><fmt:message>${now['titleKey']}${onlyToSee ? '.view' : ''}</fmt:message></div>

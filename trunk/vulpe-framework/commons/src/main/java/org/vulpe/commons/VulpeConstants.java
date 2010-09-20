@@ -128,27 +128,7 @@ public class VulpeConstants {
 		}
 	}
 
-	public class Action {
-		public static final String CREATE = "create";
-		public static final String CREATE_POST = "createPost";
-		public static final String UPDATE = "update";
-		public static final String VIEW = "view";
-		public static final String UPDATE_POST = "updatePost";
-		public static final String DELETE = "delete";
-		public static final String READ = "read";
-		public static final String PAGING = "paging";
-		public static final String PREPARE = "prepare";
-		public static final String TABULAR = "tabular";
-		public static final String TWICE = "twice";
-		public static final String ADD_DETAIL = "addDetail";
-		public static final String TABULAR_POST = "tabularPost";
-		public static final String FIND = "find";
-		public static final String PERSIST = "persist";
-		public static final String UPLOAD = "upload";
-		public static final String DOWNLOAD = "download";
-		public static final String FRONTEND = "frontend";
-		public static final String BACKEND = "backend";
-		public static final String DEFINE = "define";
+	public class Controller {
 		public static final String ENTITIES = "entities";
 		public static final String SELECT_FORM = "_selectForm";
 		public static final String SELECT_TABLE = "_selectTable";

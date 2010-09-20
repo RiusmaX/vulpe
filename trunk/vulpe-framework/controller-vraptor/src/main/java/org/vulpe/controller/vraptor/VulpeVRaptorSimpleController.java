@@ -28,7 +28,7 @@ import br.com.caelum.vraptor.Validator;
 import br.com.caelum.vraptor.core.RequestInfo;
 
 /**
- * Action base for VRaptor
+ * Controller base for VRaptor
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0

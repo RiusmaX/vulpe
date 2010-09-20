@@ -27,6 +27,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
@@ -175,5 +176,13 @@ public class SecureResource extends AbstractVulpeBaseEntity<Long> {
 			super.setOrderBy("obj.id");
 		}
 		return super.getOrderBy();
+	}
+
+	@Override
+	public String toString() {
+		if (StringUtils.isNotEmpty(getResourceName())) {
+			return getResourceName();
+		}
+		return super.toString();
 	}
 }

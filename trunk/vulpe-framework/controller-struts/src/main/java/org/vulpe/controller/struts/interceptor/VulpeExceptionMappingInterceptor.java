@@ -117,10 +117,10 @@ public class VulpeExceptionMappingInterceptor extends
 			}
 		}
 		if (action.isAjax()) {
-			return VulpeConstants.Action.Forward.MESSAGES;
+			return VulpeConstants.Controller.Forward.MESSAGES;
 		} else {
 			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
-			return VulpeConstants.Action.Forward.ERRORS;
+			return VulpeConstants.Controller.Forward.ERRORS;
 		}
 	}
 

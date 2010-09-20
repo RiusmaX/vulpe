@@ -35,24 +35,6 @@ import org.vulpe.security.context.VulpeSecurityContext;
 public interface VulpeSimpleController extends Serializable {
 
 	/**
-	 * Method to invoke services.
-	 *
-	 * @param eventName
-	 *            Name of event
-	 * @param serviceName
-	 *            Name of service
-	 * @param argsType
-	 *            Types of arguments
-	 * @param argsValues
-	 *            Arguments values
-	 *
-	 * @since 1.0
-	 * @return Object
-	 */
-	Object invokeServices(final String eventName, final String serviceName,
-			final Class<?>[] argsType, final Object[] argsValues);
-
-	/**
 	 * Return current action configuration.
 	 *
 	 * @since 1.0
@@ -114,9 +96,9 @@ public interface VulpeSimpleController extends Serializable {
 
 	void setAjax(final boolean ajax);
 
-	String getOperation();
+	Operation getOperation();
 
-	void setOperation(final String operation);
+	void setOperation(final Operation operation);
 
 	String getOnHideMessages();
 
@@ -287,4 +269,25 @@ public interface VulpeSimpleController extends Serializable {
 	 * @return
 	 */
 	String redirectTo(final String url, final boolean ajax);
+
+	public enum Operation {
+
+		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), DELETE("delete"), DELETE_DETAIL(
+				"deleteDetail"), UPDATE("update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR(
+				"tabular"), TABULAR_POST("tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT(
+				"select"), REPORT("report"), VIEW("view"), READ("read"), FIND("find"), PAGING(
+				"paging"), BACKEND("backend"), FRONTEND("frontend"), DEFINE("define"), DOWNLOAD(
+				"download"), UPLOAD("upload");
+		private String value;
+
+		private Operation(final String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+	}
+
 }
