@@ -62,25 +62,11 @@
 			<div id="frontend">
 			</c:if>
 			<div id="header">
-				<c:choose>
-					<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
-						<%@include file="/WEB-INF/protected-jsp/commons/frontend/header.jsp" %>
-					</c:when>
-					<c:otherwise>
-						<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
-					</c:otherwise>
-				</c:choose>
+				<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 			</div>
 			<div id="menu">
 				<ul id="nav">
-					<c:choose>
-						<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
-							<%@include file="/WEB-INF/protected-jsp/commons/frontend/menu.jsp" %>
-						</c:when>
-						<c:otherwise>
-							<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
-						</c:otherwise>
-					</c:choose>
+					<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
 					<c:if test="${vulpeCurrentLayout == 'BACKEND'}">
 						<c:if test="${global['auditEnabled']}">
 							<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
@@ -99,14 +85,7 @@
 			</div>
 			</c:if>
 			<div id="footer">
-				<c:choose>
-					<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
-						<%@include file="/WEB-INF/protected-jsp/commons/frontend/footer.jsp" %>
-					</c:when>
-					<c:otherwise>
-						<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
-					</c:otherwise>
-				</c:choose>
+				<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
 			</div>
 		</div>
 	</body>
