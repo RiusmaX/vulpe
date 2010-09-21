@@ -24,9 +24,7 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
 
@@ -57,8 +55,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 * @return list of bundles in application
 	 */
 	protected List<ResourceBundle> getBundles() {
-		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
-				VulpeConstants.CONTEXT);
+		final VulpeContext vulpeContext = VulpeContext.getInstance();
 		VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
 		final String modules[] = project.i18n();
 		List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);

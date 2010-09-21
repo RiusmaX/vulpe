@@ -175,7 +175,11 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		view.setArguments(arguments);
 		view.setItems(items);
 		view.setLabels(labels);
-		view.setColumnSpan(items.size() + 5);
+		if (view.getTypes().size() == 1 && view.getTypes().get(0).equals("TABULAR")){
+			view.setColumnSpan(fields.size() + 3);
+		} else {
+			view.setColumnSpan(items.size() + 5);
+		}
 	}
 
 	private DecoratedViewField generateViewField(FieldDeclaration fDeclaration, Field field) {

@@ -958,8 +958,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				|| getControllerType().equals(ControllerType.TWICE)) {
 			try {
 				setEntity(getControllerConfig().getEntityClass().newInstance());
-				if (getControllerConfig().getDetails() != null
-						&& !getControllerConfig().getDetails().isEmpty()) {
+				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
 					createDetails(getControllerConfig().getDetails(), false);
 					setDetail("");
 				}
@@ -1422,6 +1421,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setResultForward(getControllerConfig().getViewSelectPath());
 			}
 		} else {
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())
+						&& VulpeValidationUtil.isEmpty(getEntities())) {
+					createDetails(getControllerConfig().getDetails(), false);
+				}
+			}
 			controlResultForward();
 		}
 		readAfter();

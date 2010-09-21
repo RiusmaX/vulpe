@@ -27,7 +27,7 @@ import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;
 
 /**
- * Annotation to indicate code creation of from entity.
+ * Tells Vulpe to create code from entity.
  *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */

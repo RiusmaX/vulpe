@@ -28,9 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.util.ControllerUtil;
@@ -50,8 +48,7 @@ public class VulpeFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
-				VulpeConstants.CONTEXT);
+		final VulpeContext vulpeContext = VulpeContext.getInstance();
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 			vulpeContext.setRequest((HttpServletRequest) request);

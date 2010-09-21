@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.PACKAGE)
 public @interface VulpeView {
 
-	boolean messageSlideUp() default true;
+	boolean messageSlideUp() default false;
 
 	int messageSlideUpTime() default 10000;
 

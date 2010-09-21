@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to indicate if method of Manager will be concatenated with name of entity.
+ * Indicates if method of Manager will be concatenated with name of entity.
  *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */

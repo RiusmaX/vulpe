@@ -31,6 +31,7 @@ import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.annotations.CreateIfNotExist;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
 import org.vulpe.model.entity.VulpeEntity;
@@ -58,8 +59,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	public <T> T merge(final T entity) {
 		final ObjectContainer container = getObjectContainer();
 		try {
-			repairRelationship(load(container, entity), container);
-			container.store(entity);
+			simpleMerge(container, entity);
 		} catch (Exception e) {
 			rollback();
 			LOG.error(e);
@@ -67,6 +67,18 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			close();
 		}
 		return entity;
+	}
+
+	/**
+	 * Merge objects without close transaction.
+	 *
+	 * @param <T>
+	 * @param container
+	 * @param entity
+	 */
+	private <T> void simpleMerge(final ObjectContainer container, final T entity) {
+		repairRelationship(load(container, entity), container);
+		container.store(entity);
 	}
 
 	/**
@@ -78,11 +90,11 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 */
 	public <T extends VulpeEntity<Long>> Long getId(final Object entity) {
 		final String entityName = entity.getClass().getSimpleName();
-		final List<Identifier> retorno = getObjectContainer().queryByExample(
+		final List<Identifier> identifiers = getObjectContainer().queryByExample(
 				new Identifier(entityName));
 		Identifier identifier = new Identifier(entityName, Long.valueOf(1));
-		if (retorno != null && !retorno.isEmpty()) {
-			identifier = retorno.get(0);
+		if (identifiers != null && !identifiers.isEmpty()) {
+			identifier = identifiers.get(0);
 			identifier.setSequence(identifier.getSequence() + 1L);
 		}
 		getObjectContainer().store(identifier);
@@ -170,7 +182,8 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 									|| "null".equals(value) || "%".equals(value)) {
 								PropertyUtils.setProperty(object, field.getName(), null);
 							}
-						} else if (VulpeEntity.class.isAssignableFrom(value.getClass())) {
+						} else if (VulpeEntity.class.isAssignableFrom(value.getClass())
+								&& !value.getClass().isAnnotationPresent(CreateIfNotExist.class)) {
 							emptyToNull(value);
 						}
 					}
@@ -209,7 +222,11 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 										.setProperty(entity, field.getName(), objectSet.next());
 							}
 						} else {
-							PropertyUtils.setProperty(entity, field.getName(), null);
+							if (value.getClass().isAnnotationPresent(CreateIfNotExist.class)) {
+								simpleMerge(container, value);
+							} else {
+								PropertyUtils.setProperty(entity, field.getName(), null);
+							}
 						}
 					} catch (Exception e) {
 						LOG.error(e);
@@ -284,7 +301,11 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 								PropertyUtils.setProperty(entity, field.getName(), objectPersisted);
 							}
 						} else {
-							PropertyUtils.setProperty(entity, field.getName(), null);
+							if (value.getClass().isAnnotationPresent(CreateIfNotExist.class)) {
+								simpleMerge(container, value);
+							} else {
+								PropertyUtils.setProperty(entity, field.getName(), null);
+							}
 						}
 					} catch (Exception e) {
 						throw new VulpeSystemException(e);
