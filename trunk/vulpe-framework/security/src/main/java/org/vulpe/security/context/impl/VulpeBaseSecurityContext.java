@@ -138,7 +138,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 				if (users == null || users.isEmpty()) {
 					final UserRole userRole = new UserRole();
 					userRole.setRole(administratorRoles.get(0));
-					List<UserRole> userRoles = new ArrayList<UserRole>();
+					final List<UserRole> userRoles = new ArrayList<UserRole>();
 					userRoles.add(userRole);
 					securityServices.createUser(new User(user, password, name, email, userRoles));
 				}
@@ -161,7 +161,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 
 	public void afterUserAuthenticationCallback() {
 		if (isAuthenticated()) {
-			AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
+			final AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
 			if (afterUserAuthentication != null) {
 				afterUserAuthentication.execute();
 			}

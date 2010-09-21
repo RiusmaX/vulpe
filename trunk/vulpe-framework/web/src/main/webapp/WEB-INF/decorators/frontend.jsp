@@ -45,11 +45,11 @@
 			</div>
 			<div id="frontend">
 				<div id="header">
-					<%@include file="/WEB-INF/protected-jsp/commons/frontend/header.jsp" %>
+					<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 				</div>
 				<div id="menu">
 					<ul id="nav">
-						<%@include file="/WEB-INF/protected-jsp/commons/frontend/menu.jsp" %>
+						<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
 					</ul>
 				</div>
 				<div id="messages" style="display: none;" class="vulpeMessages"></div>
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div id="footer">
-				<%@include file="/WEB-INF/protected-jsp/commons/frontend/footer.jsp" %>
+				<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
 			</div>
 		</div>
 	</body>

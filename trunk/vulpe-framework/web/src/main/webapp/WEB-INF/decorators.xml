@@ -7,10 +7,10 @@
 		<pattern>*/j_spring_security_check*</pattern>
 		<pattern>*/authenticator?loginError=*</pattern>
 	</excludes>
-	<decorator name="default" page="site.jsp">
+	<decorator name="default" page="backend.jsp">
 		<pattern>/*</pattern>
 	</decorator>
-	<decorator name="frontend" page="frontend/site.jsp">
+	<decorator name="frontend" page="frontend.jsp">
 		<pattern>*/frontend*</pattern>
 	</decorator>
 	<decorator name="authenticator" page="authenticator.jsp">

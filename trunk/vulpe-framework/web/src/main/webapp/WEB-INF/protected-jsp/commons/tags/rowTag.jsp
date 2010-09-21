@@ -238,7 +238,7 @@
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
-				<v:column role="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%" styleClass="vulpeSelect">
+				<v:column roles="${deleteRole}" logged="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%" styleClass="vulpeSelect">
 					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${!disableDelete ? deleteName : 'unselected'}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}"/>
 				</v:column>
 			</c:if>
@@ -246,10 +246,10 @@
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showUpdateButton}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
-				<v:column elementId="vulpeUpdate" role="${updateRole}" logged="${updateLogged}" width="1%" showBodyInHeader="true" style="text-align: center">&nbsp;</v:column>
+				<v:column elementId="vulpeUpdate" roles="${updateRole}" logged="${updateLogged}" width="1%" showBodyInHeader="true" style="text-align: center">&nbsp;</v:column>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
-				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate" role="${updateRole}" logged="${updateLogged}" icon="row-edit" widthIcon="16" heightIcon="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%" />
+				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate" roles="${updateRole}" logged="${updateLogged}" icon="row-edit" widthIcon="16" heightIcon="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate('${elementId}', '${updateActionName}/ajax', '${updateFormName}', '${updateLayerFields}', '${updateLayer}', '${updateBeforeJs}', '${updateAfterJs}')" width="1%" />
 				<c:if test="${now['controllerType'] == 'SELECT'}">
 					<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 						<script type="text/javascript">
@@ -269,7 +269,7 @@
 		</c:if>
 		<c:if test="${!onlyToSee && showDeleteButton && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
-				<v:column elementId="vulpeDeleteAll" role="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true" style="text-align: center">
+				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true" style="text-align: center">
 					<c:choose>
 						<c:when test="${deleteType eq 'detail'}">
 							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16"/>
@@ -287,14 +287,14 @@
 						<c:if test="${disableDelete}">
 							<c:set var="javascript" value="return false;"/>
 						</c:if>
-						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" role="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%" />
+						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%" />
 					</c:when>
 					<c:otherwise>
 						<c:set var="javascript">vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});</c:set>
 						<c:if test="${disableDelete}">
 							<c:set var="javascript" value="return false;"/>
 						</c:if>
-						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" role="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%"/>
+						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%"/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>

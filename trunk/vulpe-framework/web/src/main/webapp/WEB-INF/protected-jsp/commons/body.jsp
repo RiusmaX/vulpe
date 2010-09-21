@@ -11,7 +11,6 @@
 	</c:choose>
 </c:if>
 <v:form id="${vulpeFormName}" name="${vulpeFormName}" theme="simple" validate="true" enctype="multipart/form-data" method="post">
-	<c:if test="${!onlyToSee}">
 	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}_operation"/>
 	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}_paging.page"/>
 	<c:if test="${now['controllerType'] == 'TABULAR'}">
@@ -24,7 +23,6 @@
 	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${vulpeFormName}_entity.orderBy"/>
 	</c:if>
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}_popupKey"/>
-	</c:if>
 	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">
 	<%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %>
 	</c:if>

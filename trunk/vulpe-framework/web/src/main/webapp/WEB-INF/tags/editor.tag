@@ -11,7 +11,7 @@
 <%@ attribute name="elementId" required="false" rtexprvalue="true" %>
 <%@ attribute name="targetName" required="false" rtexprvalue="true" %>
 <%@ attribute name="targetValue" required="false" rtexprvalue="true" type="java.lang.Object" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="saveInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

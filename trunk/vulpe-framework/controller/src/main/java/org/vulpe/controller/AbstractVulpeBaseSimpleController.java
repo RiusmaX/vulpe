@@ -30,6 +30,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.View.Layout;
@@ -588,6 +589,16 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	@Override
 	public String getUserAuthenticated() {
 		return getSecurityContext().getUsername();
+	}
+
+	public boolean hasRole(final String role) {
+		final StringBuilder roleName = new StringBuilder();
+		if (!role.startsWith(Security.ROLE_PREFIX)) {
+			roleName.append(Security.ROLE_PREFIX);
+		}
+		roleName.append(role);
+		return getSecurityContext() == null ? false : getSecurityContext().getUserRoles().contains(
+				roleName.toString());
 	}
 
 	/*

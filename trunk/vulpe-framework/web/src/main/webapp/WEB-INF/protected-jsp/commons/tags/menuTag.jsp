@@ -24,7 +24,7 @@
 	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
 </c:if>
 <c:if test="${show}">
-<li>
+<li id="vulpeMenu_${labelKey}">
 	<a id="${labelKey}" href="javascript:void(0);" class="current"${onclick}${accesskey} title="${helpKey}"><span><fmt:message key="${labelKey}" /></span></a>
 	<ul>
 		<jsp:doBody/>

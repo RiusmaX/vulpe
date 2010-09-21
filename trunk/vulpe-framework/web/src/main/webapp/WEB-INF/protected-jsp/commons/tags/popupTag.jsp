@@ -201,5 +201,5 @@
 	<c:if test="${icon eq 'false'}">
 		<c:set var="icon" value=""/>
 	</c:if>
-	<v:action logged="${logged}" role="${role}" elementId="${elementId}" icon="${icon}" labelKey="${labelKey}" javascript="vulpe.view.request.submitPopup('${action}/ajax', '${queryString}', '${popupId}', '${popupLayerParent}', '${paramLayerParent}', '${popupPropertiesAux}', '${popupExpressions}', '${paramPropertiesAux}', '${paramExpressions}', '${requiredParamPropertiesAux}', '${requiredParamExpressions}', '${styleClass}', '${util:urlEncode(beforeJs)}', '${util:urlEncode(afterJs)}', '${popupWidth}');" widthIcon="16" heightIcon="16"/>
+	<v:action logged="${logged}" roles="${roles}" elementId="${elementId}" icon="${icon}" labelKey="${labelKey}" javascript="vulpe.view.request.submitPopup('${action}/ajax', '${queryString}', '${popupId}', '${popupLayerParent}', '${paramLayerParent}', '${popupPropertiesAux}', '${popupExpressions}', '${paramPropertiesAux}', '${paramExpressions}', '${requiredParamPropertiesAux}', '${requiredParamExpressions}', '${styleClass}', '${util:urlEncode(beforeJs)}', '${util:urlEncode(afterJs)}', '${popupWidth}');" widthIcon="16" heightIcon="16"/>
 </c:if>

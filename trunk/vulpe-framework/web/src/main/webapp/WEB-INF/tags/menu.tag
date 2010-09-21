@@ -5,6 +5,6 @@
 <%@ attribute name="accesskey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/menuTag.jsp"%>
