@@ -21,7 +21,7 @@
 <%@ attribute name="layerFields" required="false" rtexprvalue="true"%>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true"%>
 <%@ attribute name="iconClass" required="false" rtexprvalue="true"%>
-<%@ attribute name="role" required="false" rtexprvalue="true"%>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true"%>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/actionTag.jsp"%>

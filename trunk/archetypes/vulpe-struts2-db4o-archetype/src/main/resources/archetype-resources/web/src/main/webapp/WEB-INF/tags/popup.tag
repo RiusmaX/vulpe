@@ -11,7 +11,7 @@
 <%@ attribute name="paramExpressions" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="paramLayerParent" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="popupLayerParent" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="paramTargetName" required="false" rtexprvalue="true" type="java.lang.String" %>

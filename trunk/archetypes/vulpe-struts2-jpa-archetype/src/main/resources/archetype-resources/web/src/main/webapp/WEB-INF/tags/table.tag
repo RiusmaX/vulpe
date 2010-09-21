@@ -15,7 +15,7 @@
 <%@ attribute name="border" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="emptyKey" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sortPropertyInfo" required="false" rtexprvalue="true" %>
 <%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

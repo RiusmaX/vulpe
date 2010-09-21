@@ -16,7 +16,7 @@
 <%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="iconClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="noSubmitForm" required="false" rtexprvalue="true" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/columnActionTag.jsp" %>
