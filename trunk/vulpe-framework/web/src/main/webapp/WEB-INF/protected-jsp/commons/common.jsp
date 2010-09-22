@@ -22,6 +22,9 @@ $(document).ready(function() {
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
+<c:if test="${now['controllerType'] == 'CRUD'}">
+	vulpe.util.removeHotKey("return");
+</c:if>
 	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
 		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {
@@ -114,7 +117,8 @@ $(document).ready(function() {
 					buttonTabularFilter.click();
 					return false;
 				},
-				putSameOnReturnKey: true
+				putSameOnReturnKey: true,
+				override: true
 			});
 		}
 	</c:if>

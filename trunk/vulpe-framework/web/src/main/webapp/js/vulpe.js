@@ -145,7 +145,6 @@ var vulpe = {
 		},
 
 		addHotKey: function(options) {
-			//hotKey, command, override, putSameOnReturnKey
 			var position = vulpe.util.checkHotKeyExists(options.hotKey);
 			if (position > 0 && options.override){
 				var elemData = jQuery.data(document);
@@ -156,7 +155,7 @@ var vulpe = {
 			}
 			if (position == -1 || (position > 0 && options.override)) {
 				jQuery(document).bind("keydown", options.hotKey, options.command);
-				if (options.putSameOnReturnKey) {
+				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
 					jQuery(document).bind("keydown", "return", options.command);
 				}
 				if (options.dontFireInText) {
@@ -167,24 +166,19 @@ var vulpe = {
 					dontFireInText[options.hotKey] = true;
 					jQuery(document).attr("dontFireInText", dontFireInText);
 				}
-				/*
-				var elements = jQuery("input[type!=hidden],select,textarea");
-				for (var i = 0; i < elements.length; i++) {
-					jQuery(jQuery(elements[i])).bind("keydown", hotKey, command);
-					if (putSameOnReturnKey) {
-						jQuery(jQuery(elements[i])).bind("keydown", "return", command);
-					}
-				}*/
 			}
-			/*
-			if (options.dontFireInText) {
-				jQuery(document).bind("keydown", {combi: options.hotKey, dontFireInText: true} , options.command);
-			} else {
-				jQuery(document).bind("keydown", options.hotKey, options.command);
-				if (options.putSameOnReturnKey) {
-					jQuery(document).bind("keydown", "return", options.command);
+		},
+
+		removeHotKey: function(hotKey) {
+			var position = vulpe.util.checkHotKeyExists(hotKey);
+			if (position > 0){
+				var elemData = jQuery.data(document);
+				if (elemData.events && elemData.events['keydown']) {
+					var keydown = elemData.events['keydown'];
+					vulpe.util.removeArray(keydown, position);
 				}
-			}*/
+			}
+			return position;
 		},
 
 		getPrefixId: function(formName) {
@@ -1028,12 +1022,20 @@ var vulpe = {
 			return true;
 		},
 
-		showHideElement: function(elementId) {
+		showHideElement: function(elementId, fade) {
 			var element = jQuery("#" + elementId);
 			if (element.css("display") == 'none') {
-				element.slideDown("slow");
+				if (fade) {
+					element.fadeIn();
+				} else {
+					element.slideDown("slow");
+				}
 			} else {
-				element.slideUp("slow");
+				if (fade) {
+					element.fadeOut();
+				} else {
+					element.slideUp("slow");
+				}
 			}
 		},
 

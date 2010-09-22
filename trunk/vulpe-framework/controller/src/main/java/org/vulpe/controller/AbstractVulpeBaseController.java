@@ -1080,6 +1080,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		setOperation(Operation.UPDATE);
 		updateBefore();
+		if (getEntity() == null) {
+			return create();
+		}
 		onUpdate();
 		setSelectedTab(null);
 		showButtons(Operation.UPDATE);

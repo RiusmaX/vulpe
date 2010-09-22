@@ -205,66 +205,68 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	protected <T> void repairRelationship(final T entity, final ObjectContainer container) {
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
-					field.getName());
-			if (value != null) {
-				if (VulpeEntity.class.isAssignableFrom(field.getType())) {
-					try {
-						final VulpeEntity<Long> valueEntity = (VulpeEntity) value;
-						if (valueEntity.getId() != null) {
-							final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) field.getType()
-									.newInstance();
-							newEntity.setId(valueEntity.getId());
-							final ObjectSet objectSet = getObjectContainer().queryByExample(
-									newEntity);
-							if (objectSet.hasNext()) {
-								PropertyUtils
-										.setProperty(entity, field.getName(), objectSet.next());
-							}
-						} else {
-							if (value.getClass().isAnnotationPresent(CreateIfNotExist.class)) {
-								simpleMerge(container, value);
-							} else {
-								PropertyUtils.setProperty(entity, field.getName(), null);
-							}
-						}
-					} catch (Exception e) {
-						LOG.error(e);
-					}
-				} else if (Collection.class.isAssignableFrom(field.getType())) {
-					final Collection details = (Collection) value;
-					for (Object object : details) {
-						if (VulpeEntity.class.isAssignableFrom(object.getClass())) {
-							try {
-								final String attributeName = VulpeStringUtil.lowerCaseFirst(entity
-										.getClass().getSimpleName());
-								final VulpeEntity<Long> detail = (VulpeEntity<Long>) object;
-								repair(detail, container);
-								PropertyUtils.setProperty(detail, attributeName, entity);
-								if (detail.getId() == null) {
-									detail.setId(getId(detail));
-								} else {
-									final VulpeEntity<Long> valueEntity = (VulpeEntity) entity;
-									final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) entity
-											.getClass().newInstance();
-									newEntity.setId(valueEntity.getId());
-									final VulpeEntity<Long> newDetailEntity = (VulpeEntity<Long>) object
-											.getClass().newInstance();
-									newDetailEntity.setId(detail.getId());
-									PropertyUtils.setProperty(newDetailEntity, attributeName,
-											newEntity);
-									final ObjectSet objectSet = getObjectContainer()
-											.queryByExample(newDetailEntity);
-									if (objectSet.hasNext()) {
-										final VulpeEntity<Long> persitedDetail = (VulpeEntity<Long>) objectSet
-												.get(0);
-										container.ext().bind(detail,
-												container.ext().getID(persitedDetail));
-										container.store(detail);
-									}
+			if (!Modifier.isTransient(field.getModifiers())) {
+				final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
+						field.getName());
+				if (value != null) {
+					if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+						try {
+							final VulpeEntity<Long> valueEntity = (VulpeEntity) value;
+							if (valueEntity.getId() != null) {
+								final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) field
+										.getType().newInstance();
+								newEntity.setId(valueEntity.getId());
+								final ObjectSet objectSet = getObjectContainer().queryByExample(
+										newEntity);
+								if (objectSet.hasNext()) {
+									PropertyUtils.setProperty(entity, field.getName(), objectSet
+											.next());
 								}
-							} catch (Exception e) {
-								LOG.error(e);
+							} else {
+								if (value.getClass().isAnnotationPresent(CreateIfNotExist.class)) {
+									simpleMerge(container, value);
+								} else {
+									PropertyUtils.setProperty(entity, field.getName(), null);
+								}
+							}
+						} catch (Exception e) {
+							LOG.error(e);
+						}
+					} else if (Collection.class.isAssignableFrom(field.getType())) {
+						final Collection details = (Collection) value;
+						for (Object object : details) {
+							if (VulpeEntity.class.isAssignableFrom(object.getClass())) {
+								try {
+									final String attributeName = VulpeStringUtil
+											.lowerCaseFirst(entity.getClass().getSimpleName());
+									final VulpeEntity<Long> detail = (VulpeEntity<Long>) object;
+									repair(detail, container);
+									PropertyUtils.setProperty(detail, attributeName, entity);
+									if (detail.getId() == null) {
+										detail.setId(getId(detail));
+									} else {
+										final VulpeEntity<Long> valueEntity = (VulpeEntity) entity;
+										final VulpeEntity<Long> newEntity = (VulpeEntity<Long>) entity
+												.getClass().newInstance();
+										newEntity.setId(valueEntity.getId());
+										final VulpeEntity<Long> newDetailEntity = (VulpeEntity<Long>) object
+												.getClass().newInstance();
+										newDetailEntity.setId(detail.getId());
+										PropertyUtils.setProperty(newDetailEntity, attributeName,
+												newEntity);
+										final ObjectSet objectSet = getObjectContainer()
+												.queryByExample(newDetailEntity);
+										if (objectSet.hasNext()) {
+											final VulpeEntity<Long> persitedDetail = (VulpeEntity<Long>) objectSet
+													.get(0);
+											container.ext().bind(detail,
+													container.ext().getID(persitedDetail));
+											container.store(detail);
+										}
+									}
+								} catch (Exception e) {
+									LOG.error(e);
+								}
 							}
 						}
 					}
@@ -314,25 +316,6 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 				}
 			}
 		}
-	}
-
-	public <T> boolean unrepair(final T entity) throws VulpeSystemException {
-		boolean updated = false;
-		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
-			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
-				final VulpeEntity<Long> value = VulpeReflectUtil.getInstance().getFieldValue(
-						entity, field.getName());
-				if (value != null) {
-					try {
-						PropertyUtils.setProperty(entity, field.getName(), null);
-						updated = true;
-					} catch (Exception e) {
-						throw new VulpeSystemException(e);
-					}
-				}
-			}
-		}
-		return updated;
 	}
 
 	/**
