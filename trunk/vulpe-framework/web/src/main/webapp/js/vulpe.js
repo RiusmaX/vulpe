@@ -146,14 +146,14 @@ var vulpe = {
 
 		addHotKey: function(options) {
 			var position = vulpe.util.checkHotKeyExists(options.hotKey);
-			if (position > 0 && options.override){
+			if (position != -1 && options.override){
 				var elemData = jQuery.data(document);
 				if (elemData.events && elemData.events['keydown']) {
 					var keydown = elemData.events['keydown'];
 					vulpe.util.removeArray(keydown, position);
 				}
 			}
-			if (position == -1 || (position > 0 && options.override)) {
+			if (position == -1 || (position != -1 && options.override)) {
 				jQuery(document).bind("keydown", options.hotKey, options.command);
 				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
 					jQuery(document).bind("keydown", "return", options.command);
@@ -171,7 +171,7 @@ var vulpe = {
 
 		removeHotKey: function(hotKey) {
 			var position = vulpe.util.checkHotKeyExists(hotKey);
-			if (position > 0){
+			if (position != -1){
 				var elemData = jQuery.data(document);
 				if (elemData.events && elemData.events['keydown']) {
 					var keydown = elemData.events['keydown'];
@@ -179,6 +179,12 @@ var vulpe = {
 				}
 			}
 			return position;
+		},
+
+		removeHotKeys: function(hotKeys) {
+			for (var i = 0; i < hotKeys.length; i++) {
+				vulpe.util.removeHotKey(hotKeys[i]);
+			}
 		},
 
 		getPrefixId: function(formName) {

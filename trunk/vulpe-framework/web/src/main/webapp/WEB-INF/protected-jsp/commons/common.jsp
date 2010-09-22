@@ -22,9 +22,7 @@ $(document).ready(function() {
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
-<c:if test="${now['controllerType'] == 'CRUD'}">
-	vulpe.util.removeHotKey("return");
-</c:if>
+		vulpe.util.removeHotKeys(["return", "Ctrl+f7", "Ctrl+f8", "Ctrl+f9", "Ctrl+f10", "Ctrl+f12", "Ctrl+del", "Alt+f8", "Alt+Shift+del"]);
 	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
 		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {

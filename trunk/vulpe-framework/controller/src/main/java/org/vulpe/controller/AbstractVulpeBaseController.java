@@ -733,7 +733,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @see org.vulpe.controller.VulpeSimpleController#validateEntity()
 	 */
 	public boolean validateEntity() {
-		if (validateExists()) {
+		if (getOperation().equals(Operation.CREATE_POST) && validateExists()) {
 			final NotExistEqual notExistEqual = getEntity().getClass().getAnnotation(
 					NotExistEqual.class);
 			String message = "vulpe.error.entity.exists";
@@ -741,7 +741,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				message = notExistEqual.message();
 			}
 			addActionError(getText(message));
-
 			return false;
 		}
 		return EntityValidator.validate(getEntity());
