@@ -77,9 +77,41 @@ public class ControllerUtil {
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
-			if (VulpeValidationUtil.isEmpty(value)) {
-				return true;
+			final String[] fieldParts = fieldName.split("\\.");
+			if (fieldParts != null && fieldParts.length > 1) {
+				int count = 1;
+				Object partBean = null;
+				for (String part : fieldParts) {
+					if (count == fieldParts.length) {
+						if (partBean instanceof Collection) {
+							final Collection<Object> objects = (Collection<Object>) partBean;
+							boolean empty = true;
+							for (Object object : objects) {
+								final Object value = VulpeReflectUtil.getInstance().getFieldValue(
+										object, part);
+								if (VulpeValidationUtil.isNotEmpty(value)) {
+									empty = false;
+								}
+							}
+							return empty;
+						} else {
+							final Object value = VulpeReflectUtil.getInstance().getFieldValue(
+									partBean, part);
+							if (VulpeValidationUtil.isEmpty(value)) {
+								return true;
+							}
+						}
+					} else {
+						partBean = VulpeReflectUtil.getInstance().getFieldValue(
+								partBean == null ? bean : partBean, part);
+					}
+					++count;
+				}
+			} else {
+				final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+				if (VulpeValidationUtil.isEmpty(value)) {
+					return true;
+				}
 			}
 		}
 		return false;

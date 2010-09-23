@@ -29,6 +29,7 @@ public class DecoratedManager implements Serializable {
 	private String packageName;
 	private String daoPackageName;
 	private String managerPackageName;
+	private boolean inheritance;
 
 	private List<DecoratedManagerMethod> methods;
 
@@ -97,6 +98,14 @@ public class DecoratedManager implements Serializable {
 
 	public String getDaoPackageName() {
 		return daoPackageName;
+	}
+
+	public void setInheritance(boolean inheritance) {
+		this.inheritance = inheritance;
+	}
+
+	public boolean isInheritance() {
+		return inheritance;
 	}
 
 }

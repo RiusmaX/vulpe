@@ -14,7 +14,7 @@
 <v:action
 	layerFields="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}"
 	validate="false" labelKey="addDetail"
-	elementId="vulpeButtonAddDetail_${vulpeFormName}_${targetConfig.baseName}"
+	elementId="AddDetail_${targetConfig.baseName}"
 	action="addDetail"
 	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
 	layer="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}" />

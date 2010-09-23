@@ -107,8 +107,10 @@ var vulpe = {
 		},
 		redirectToIndex: true,
 		requireOneFilter: false,
-		theme: 'default'
+		theme: 'default',
+		accentMap: {}
 	},
+
 	// vulpe.util
 	util: {
 		get: function(id, parent) {
@@ -129,6 +131,14 @@ var vulpe = {
 			} else {
 				return null;
 			}
+		},
+
+		normalize: function(term) {
+			var ret = "";
+			for (var i = 0; i < term.length; i++) {
+				ret += vulpe.config.accentMap[term.charAt(i)] || term.charAt(i);
+			}
+			return ret;
 		},
 
 		checkHotKeyExists: function(hotKey) {

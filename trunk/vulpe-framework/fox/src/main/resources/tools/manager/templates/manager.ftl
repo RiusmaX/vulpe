@@ -14,9 +14,12 @@ import org.vulpe.model.services.manager.impl.VulpeBaseManager;
  * Manager implementation of ${manager.entityName}
  */
 @Service
+<#if manager.inheritance>
+public class ${manager.name} extends VulpeBaseManager<${manager.entityName}, ${manager.idType}, ${manager.entityName}DAO<${manager.entityName}>> {
+<#else>
 public class ${manager.name} extends VulpeBaseManager<${manager.entityName}, ${manager.idType}, ${manager.entityName}DAO> {
+</#if>
 
 }
-
 </@javaSource>
 </@forAllValidManager>

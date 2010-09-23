@@ -88,7 +88,7 @@ public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, 
 	}
 
 	@SuppressWarnings("unchecked")
-	private void reloadAuthorizationInfo() {
+	private synchronized void reloadAuthorizationInfo() {
 		// List<SecureResource> secureResources = getList(new SecureResource());
 		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
 				VulpeConstants.CACHED_CLASS);

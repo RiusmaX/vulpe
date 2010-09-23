@@ -63,4 +63,12 @@ vulpe.config.messageSlideUpTime = '${global['messageSlideUpTime']}';
 vulpe.config.popup.mobile = true;
 </c:if>
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
+vulpe.config.accentMap = {
+	"á": "a", "â": "a", "ã": "a", "à": "a",	"ä": "a",
+	"é": "e", "ê": "e",	"è": "e", "ë": "e",
+	"í": "i", "î": "i", "ì": "i", "ï": "i",
+	"ó": "o", "ö": "o", "ô": "o", "õ": "o", "ò": "o",
+	"ú": "u", "ü": "u", "û": "u", "ù": "u",
+	"ç": "c"
+}
 </script>

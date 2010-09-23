@@ -67,9 +67,9 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 	@Override
 	public void initialize() {
 		try {
-			final SecurityService securityServices = getService(SecurityService.class);
+			final SecurityService securityService = getService(SecurityService.class);
 			final ResourceBundle securityProperties = ResourceBundle.getBundle("security");
-			final List<Role> roles = securityServices.readRole(new Role());
+			final List<Role> roles = securityService.readRole(new Role());
 			String anonymousRole = ContextDefaults.ANONYMOUS_ROLE;
 			String anonymousRoleDescription = ContextDefaults.ANONYMOUS_ROLE_DESCRIPTION;
 			String administratorRole = ContextDefaults.ADMINISTRATOR_ROLE;
@@ -113,14 +113,14 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 				}
 			}
 			if (roles == null || roles.isEmpty()) {
-				securityServices.createRole(new Role(anonymousRole, anonymousRoleDescription));
-				securityServices.createRole(new Role(administratorRole,
+				securityService.createRole(new Role(anonymousRole, anonymousRoleDescription));
+				securityService.createRole(new Role(administratorRole,
 						administratorRoleDescription));
 			}
-			final List<Role> administratorRoles = securityServices.readRole(new Role(
+			final List<Role> administratorRoles = securityService.readRole(new Role(
 					administratorRole));
 			if (administratorRoles != null && !administratorRoles.isEmpty()) {
-				final List<SecureResource> secureResources = securityServices
+				final List<SecureResource> secureResources = securityService
 						.readSecureResource(new SecureResource());
 				if (secureResources == null || secureResources.isEmpty()) {
 					String[] paths = secureResourcesPath.split(",");
@@ -131,16 +131,16 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 						secureResourceRoles.add(secureResourceRole);
 						final SecureResource secureResource = new SecureResource(path,
 								secureResourceRoles);
-						securityServices.createSecureResource(secureResource);
+						securityService.createSecureResource(secureResource);
 					}
 				}
-				final List<User> users = securityServices.readUser(new User());
+				final List<User> users = securityService.readUser(new User());
 				if (users == null || users.isEmpty()) {
 					final UserRole userRole = new UserRole();
 					userRole.setRole(administratorRoles.get(0));
 					final List<UserRole> userRoles = new ArrayList<UserRole>();
 					userRoles.add(userRole);
-					securityServices.createUser(new User(user, password, name, email, userRoles));
+					securityService.createUser(new User(user, password, name, email, userRoles));
 				}
 			}
 		} catch (VulpeApplicationException e) {

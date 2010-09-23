@@ -177,6 +177,6 @@ public class VulpeForAllTemplateStrategy extends TemplateBlockStrategy<TemplateB
 			return StringUtils.substring(clazz.toString(), StringUtils.indexOf(clazz.toString(),
 					"<") + 1, StringUtils.indexOf(clazz.toString(), ">"));
 		}
-		return null;
+		return "java.lang.Long";
 	}
 }

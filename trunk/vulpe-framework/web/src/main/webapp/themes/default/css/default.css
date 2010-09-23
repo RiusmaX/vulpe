@@ -103,17 +103,8 @@
 }
 
 .vulpeMessages {
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
-	-moz-border-radius-topleft: 0px;
-	-moz-border-radius-topright: 0px;
-	-webkit-border-top-left-radius: 0px;
-	-webkit-border-top-right-radius: 0px;
-	-webkit-border-bottom-right-radius: 7px;
-	-webkit-border-bottom-left-radius: 7px;
 	background-color: #fff;
 	border: 1px solid #333;
-	/*font-weight: bold;*/
 	overflow: auto;
 	padding: 1px;
 }
@@ -154,42 +145,8 @@
 	text-decoration: none;
 }
 
-.vulpePopup {
-	background-color: #fff;
-	border: 1px solid #333;
-	border-top: 1px solid #F9F9F9;
-	font-weight: bold;
-	padding: 1px;
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
-	-moz-border-radius-topleft: 0px;
-	-moz-border-radius-topright: 0px;
-	-webkit-border-top-left-radius: 0px;
-	-webkit-border-top-right-radius: 0px;
-	-webkit-border-bottom-right-radius: 7px;
-	-webkit-border-bottom-left-radius: 7px;
-}
-
-.vulpePopup h1 {
-	width: auto;
-	margin-top: 0px;
-	cursor: default;
-}
-
-.vulpePopupCaption {
-	background: none;
-	display: block;
-	font-size: 12px;
-	height: 20px;
-	letter-spacing: 1px;
-	margin: 0px 0px 0px 0px;
-	padding-left: 20px;
-	padding-top: 3px;
-	width: auto;
-}
-
 .vulpeSelectedRow {
-	background-color: #ffccbc; /*E8EBE2*/
+	background-color: #ffccbc;
 	cursor: pointer;
 }
 

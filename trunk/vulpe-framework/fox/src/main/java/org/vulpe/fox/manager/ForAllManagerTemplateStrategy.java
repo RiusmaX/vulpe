@@ -47,6 +47,10 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 				return false;
 			}
 			final DecoratedManager manager = new DecoratedManager();
+			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
+					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
+				manager.setInheritance(true);
+			}
 			manager.setName(clazz.getSimpleName().concat("Manager"));
 			manager.setEntityName(clazz.getSimpleName());
 			manager.setPackageName(clazz.getPackage().toString());

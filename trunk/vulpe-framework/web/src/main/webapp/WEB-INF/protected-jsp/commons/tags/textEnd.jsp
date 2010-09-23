@@ -22,9 +22,11 @@
 				if (new RegExp(cache.term).test(request.term) && cache.content && cache.content.length < 13) {
 					var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
 					response($.grep(cache.content, function(value) {
-	    				return matcher.test(value.value)
+	    				return matcher.test(vulpe.util.normalize(value.value))
 					}));
 				}
+				<c:choose>
+				<c:when test="${empty autocompleteList}">
 				var urlAutoComplete = vulpe.util.getURLComplete("${autocompleteURL}");
 				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.${autocomplete}=" + request.term;
 				$.ajax({
@@ -39,6 +41,17 @@
 						response(data);
 					}
 				});
+				</c:when>
+				<c:otherwise>
+				var data = ${autocompleteList};
+				var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
+				response($.grep(data, function(value) {
+					value = value.label || value.value || value;
+					//return matcher.test( value ) || matcher.test( vulpe.util.normalize( value ) );
+					return matcher.test(vulpe.util.normalize(value));
+				}));
+				</c:otherwise>
+				</c:choose>
 			},
 			open: function(event, ui) {
 				var elementWidth = vulpe.util.get("${elementId}").css("width");

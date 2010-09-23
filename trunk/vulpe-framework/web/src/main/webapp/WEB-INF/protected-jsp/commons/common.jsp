@@ -28,7 +28,7 @@ $(document).ready(function() {
 		if (buttonCreate.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f8",
-				command: function (){
+				command: function() {
 					buttonCreate.click();
 					return false;
 				},
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		if (buttonCreatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
-				command: function (){
+				command: function() {
 					buttonCreatePost.click();
 					return false;
 				},
@@ -54,7 +54,7 @@ $(document).ready(function() {
 		if (buttonUpdatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
-				command: function (){
+				command: function() {
 					buttonUpdatePost.click();
 					return false;
 				},
@@ -67,7 +67,7 @@ $(document).ready(function() {
 		if (buttonTabularPost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
-				command: function (){
+				command: function() {
 					buttonTabularPost.click();
 					return false;
 				},
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		if (buttonDelete.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+del",
-				command: function (){
+				command: function() {
 					buttonDelete.click();
 					return false;
 				}
@@ -98,7 +98,7 @@ $(document).ready(function() {
 			</c:if>
 			vulpe.util.addHotKey({
 				hotKey: "${prepare}",
-				command: function (){
+				command: function() {
 					buttonPrepare.click();
 					return false;
 				},
@@ -111,7 +111,7 @@ $(document).ready(function() {
 		if (buttonTabularFilter.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f7",
-				command: function (){
+				command: function() {
 					buttonTabularFilter.click();
 					return false;
 				},
@@ -125,7 +125,7 @@ $(document).ready(function() {
 		if (buttonTabularReload.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f9",
-				command: function (){
+				command: function() {
 					buttonTabularReload.click();
 					return false;
 				},
@@ -138,7 +138,7 @@ $(document).ready(function() {
 		if (buttonRead.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f9",
-				command: function (){
+				command: function() {
 					buttonRead.click();
 					return false;
 				},
@@ -152,7 +152,7 @@ $(document).ready(function() {
 		if (buttonReport.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f12",
-				command: function (){
+				command: function() {
 					buttonReport.click();
 					return false;
 				}
@@ -164,21 +164,21 @@ $(document).ready(function() {
 		if (buttonClear.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Alt+Shift+del",
-				command: function (){
+				command: function() {
 					buttonClear.click();
 					return false;
 				}
 			});
 		}
 	</c:if>
-	<c:set var="buttonCreate_tabular_EL" value="${'${'}now['buttons']['addDetai${targetConfig.name}']${'}'}"/>
+	<c:set var="buttonCreate_tabular_EL" value="${'${'}now['buttons']['addDetail${targetConfig.name}']${'}'}"/>
 	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
 	<c:if test="${buttonCreate_tabular}">
-		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_entities");
+		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_entities_${vulpeFormName}");
 		if (buttonAddDetail_entities.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f8",
-				command: function (){
+				command: function() {
 					buttonAddDetail_entities.click();
 					return false;
 				},
@@ -191,11 +191,11 @@ $(document).ready(function() {
 		<c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${detail.baseName}']${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
-		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${vulpeFormName}_${detail.baseName}");
+		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${detail.baseName}_${vulpeFormName}");
 		if (buttonAddDetail_${detail.baseName}.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Alt+f8",
-				command: function (){
+				command: function() {
 					buttonAddDetail_${detail.baseName}.click();
 					return false;
 				}
