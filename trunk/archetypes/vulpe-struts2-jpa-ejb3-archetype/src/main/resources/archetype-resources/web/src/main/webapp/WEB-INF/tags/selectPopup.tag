@@ -26,4 +26,5 @@
 <%@ attribute name="popupWidth" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="autocomplete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="autocompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@ attribute name="autocompleteList" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/selectPopupTag.jsp" %>

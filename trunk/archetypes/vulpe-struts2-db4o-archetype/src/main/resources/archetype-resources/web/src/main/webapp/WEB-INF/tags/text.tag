@@ -11,6 +11,7 @@
 <%@ attribute name="autocompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="autocompleteURL" required="false" rtexprvalue="true" %>
 <%@ attribute name="autocompleteSelect" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="autocompleteList" required="false" rtexprvalue="true" type="java.lang.Object" %>
 <%@ attribute name="validateType" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="validateMask" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="validateDatePattern" required="false" rtexprvalue="true" type="java.lang.String" %>
