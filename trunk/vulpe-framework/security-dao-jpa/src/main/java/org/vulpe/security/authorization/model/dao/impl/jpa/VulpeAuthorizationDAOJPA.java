@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -32,7 +31,7 @@ import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
 import org.vulpe.security.model.entity.SecureResourceRole;
 
-@Repository("VulpeAuthorizationDAO")
+//@Repository("VulpeAuthorizationDAO")
 @Transactional
 public class VulpeAuthorizationDAOJPA extends VulpeBaseDAOJPA<SecureResource, Long> implements
 		VulpeAuthorizationDAO {

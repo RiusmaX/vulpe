@@ -17,15 +17,88 @@ package org.vulpe.commons.util;
 
 /**
  * Vulpe String Utility class.
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
  */
 public class VulpeStringUtil {
 
+	private static VulpeHashMap<Character, String> accentMap = new VulpeHashMap<Character, String>();
+
+	static {
+		accentMap.put("á".charAt(0), "a");
+		accentMap.put("à".charAt(0), "a");
+		accentMap.put("ä".charAt(0), "a");
+		accentMap.put("â".charAt(0), "a");
+		accentMap.put("ã".charAt(0), "a");
+
+		accentMap.put("Á".charAt(0), "A");
+		accentMap.put("À".charAt(0), "A");
+		accentMap.put("Ä".charAt(0), "A");
+		accentMap.put("Â".charAt(0), "A");
+		accentMap.put("Ã".charAt(0), "A");
+
+		accentMap.put("é".charAt(0), "e");
+		accentMap.put("è".charAt(0), "e");
+		accentMap.put("ë".charAt(0), "e");
+		accentMap.put("ê".charAt(0), "e");
+
+		accentMap.put("É".charAt(0), "E");
+		accentMap.put("È".charAt(0), "E");
+		accentMap.put("Ë".charAt(0), "E");
+		accentMap.put("Ê".charAt(0), "E");
+
+		accentMap.put("í".charAt(0), "i");
+		accentMap.put("ì".charAt(0), "i");
+		accentMap.put("ï".charAt(0), "i");
+		accentMap.put("î".charAt(0), "i");
+
+		accentMap.put("Í".charAt(0), "I");
+		accentMap.put("Ì".charAt(0), "I");
+		accentMap.put("Ï".charAt(0), "I");
+		accentMap.put("Î".charAt(0), "I");
+
+		accentMap.put("ó".charAt(0), "o");
+		accentMap.put("ò".charAt(0), "o");
+		accentMap.put("ö".charAt(0), "o");
+		accentMap.put("ô".charAt(0), "o");
+		accentMap.put("õ".charAt(0), "o");
+
+		accentMap.put("Ó".charAt(0), "O");
+		accentMap.put("Ò".charAt(0), "O");
+		accentMap.put("Ö".charAt(0), "O");
+		accentMap.put("Ô".charAt(0), "O");
+		accentMap.put("Õ".charAt(0), "O");
+
+		accentMap.put("ú".charAt(0), "u");
+		accentMap.put("ù".charAt(0), "u");
+		accentMap.put("ü".charAt(0), "u");
+		accentMap.put("û".charAt(0), "u");
+
+		accentMap.put("Ú".charAt(0), "U");
+		accentMap.put("Ù".charAt(0), "U");
+		accentMap.put("Ü".charAt(0), "U");
+		accentMap.put("Û".charAt(0), "U");
+	}
+
 	/**
-	 * 
+	 * String accent normalize
+	 *
+	 * @param term
+	 * @return
+	 */
+	public static String normalize(final String term) {
+		final StringBuilder normalized = new StringBuilder();
+		for (int i = 0; i < term.length(); i++) {
+			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i))
+					: term.charAt(i));
+		}
+		return normalized.toString();
+	}
+
+	/**
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -49,7 +122,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in upper case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -59,7 +132,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in lower case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */

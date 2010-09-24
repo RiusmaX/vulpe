@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.security.authorization.model.dao.impl.db4o;
+package org.vulpe.security.authorization.model.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,22 +21,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
-import org.vulpe.model.dao.impl.db4o.VulpeBaseDAODB4O;
 import org.vulpe.security.authorization.model.dao.VulpeAuthorizationDAO;
 import org.vulpe.security.model.entity.Role;
 import org.vulpe.security.model.entity.SecureResource;
 import org.vulpe.security.model.entity.SecureResourceRole;
 
-//@Repository("VulpeAuthorizationDAO")
+@Repository("VulpeAuthorizationDAO")
 @Transactional
-public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, Long> implements
-		VulpeAuthorizationDAO {
-
-	private transient final Map<String, SecureResource> secureObjects = new HashMap<String, SecureResource>();
+public class VulpeBaseAuthorizationDAO implements VulpeAuthorizationDAO {
 
 	private transient final Map<SecureResource, List<Role>> secureObjectToRoles = new HashMap<SecureResource, List<Role>>();
 
@@ -46,8 +43,26 @@ public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, 
 	 * @seeorg.vulpe.security.authorization.model.dao.
 	 * VulpeAuthorizationDAO#getSecureObject(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	public SecureResource getSecureObject(final String securityObjectName) {
-		reloadAuthorizationInfo();
+		final Map<String, SecureResource> secureObjects = new HashMap<String, SecureResource>();
+		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
+				VulpeConstants.CACHED_CLASS);
+		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
+				.get(SecureResource.class.getSimpleName());
+		if (secureResources != null) {
+			for (SecureResource secureResource : secureResources) {
+				secureObjects.put(secureResource.getResourceName(), secureResource);
+				if (VulpeValidationUtil.isNotEmpty(secureResource.getSecureResourceRoles())) {
+					final List<Role> roles = new ArrayList<Role>();
+					for (SecureResourceRole secureResourceRole : secureResource
+							.getSecureResourceRoles()) {
+						roles.add(secureResourceRole.getRole());
+					}
+					secureObjectToRoles.put(secureResource, roles);
+				}
+			}
+		}
 		final SecureResource secureResource = secureObjects.get(securityObjectName);
 		if (secureResource == null) {
 			for (SecureResource secureResource2 : secureObjects.values()) {
@@ -86,27 +101,4 @@ public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, 
 		return secureObjectToRoles.get(secureObject);
 	}
 
-	@SuppressWarnings("unchecked")
-	private synchronized void reloadAuthorizationInfo() {
-		// List<SecureResource> secureResources = getList(new SecureResource());
-		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
-				VulpeConstants.CACHED_CLASS);
-		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
-				.get(SecureResource.class.getSimpleName());
-		if (secureResources != null) {
-			secureObjects.clear();
-			for (SecureResource secureResource : secureResources) {
-				secureObjects.put(secureResource.getResourceName(), secureResource);
-				if (VulpeValidationUtil.isNotEmpty(
-						secureResource.getSecureResourceRoles())) {
-					final List<Role> roles = new ArrayList<Role>();
-					for (SecureResourceRole secureResourceRole : secureResource
-							.getSecureResourceRoles()) {
-						roles.add(secureResourceRole.getRole());
-					}
-					secureObjectToRoles.put(secureResource, roles);
-				}
-			}
-		}
-	}
 }
