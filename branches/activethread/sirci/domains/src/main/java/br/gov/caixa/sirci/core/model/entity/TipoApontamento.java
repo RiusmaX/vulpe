@@ -10,6 +10,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.View;
@@ -33,6 +34,7 @@ public class TipoApontamento extends AbstractVulpeBaseJPAEntity<Long> {
 	@VulpeColumn(sortable = true)
 	@VulpeText(required = true, argument = true, size = 50, maxlength = 50)
 	@Column(length = 50)
+	@Like
 	@OrderBy
 	private String descricao;
 

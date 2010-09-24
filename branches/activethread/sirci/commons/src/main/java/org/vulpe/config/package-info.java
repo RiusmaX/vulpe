@@ -2,8 +2,9 @@
 		name = "sirci",
 		projectPackage = "br.gov.caixa.sirci",
 		view = @VulpeView(
-				breakLabel = true,
-				messageSlideUp = false,
+				showButtonAsImage = true,
+				showButtonIcon = false,
+				showButtonText = false,
 				showPoweredBy = false
 		),
 		theme = "caixa"

@@ -547,28 +547,28 @@ html,body {
 	font-weight: bold;
 }
 
-#pagingFirstPage {
+#vulpeButtonPagingFirstPage {
 	background: url(../images/icons/button-go-first.png) no-repeat;
 	display: inline-table;
 	height: 16px;
 	width: 16px
 }
 
-#pagingPreviousPage {
+#vulpeButtonPagingPreviousPage {
 	background: url(../images/icons/button-go-previous.png) no-repeat;
 	display: inline-table;
 	height: 16px;
 	width: 16px
 }
 
-#pagingNextPage {
+#vulpeButtonPagingNextPage {
 	background: url(../images/icons/button-go-next.png) no-repeat;
 	display: inline-table;
 	height: 16px;
 	width: 16px
 }
 
-#pagingLastPage {
+#vulpeButtonPagingLastPage {
 	background: url(../images/icons/button-go-last.png) no-repeat;
 	display: inline-table;
 	height: 16px;
