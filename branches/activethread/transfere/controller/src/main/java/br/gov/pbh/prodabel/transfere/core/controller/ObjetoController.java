@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
@@ -64,8 +64,8 @@ public class ObjetoController extends ObjetoBaseController {
 	}
 
 	@Override
-	public void showButtons(String method) {
-		super.showButtons(method);
+	public void showButtons(Operation operation) {
+		super.showButtons(operation);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getEntity() != null && getEntity().getId() != null
 					&& getEntity().getStatus().equals(Status.N)) {

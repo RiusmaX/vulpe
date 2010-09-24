@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View;
-import org.vulpe.commons.VulpeConstants.Action.Button;
-import org.vulpe.commons.VulpeConstants.Action.Forward;
-import org.vulpe.commons.VulpeConstants.Action.URI;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
 
@@ -28,8 +28,8 @@ public class ObjetoBaseController extends ApplicationBaseController<Objeto, java
 			Sistema.class.getSimpleName());
 
 	@Override
-	public void showButtons(String method) {
-		super.showButtons(method);
+	public void showButtons(Operation operation) {
+		super.showButtons(operation);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			hideButton(Button.CREATE);
 		}

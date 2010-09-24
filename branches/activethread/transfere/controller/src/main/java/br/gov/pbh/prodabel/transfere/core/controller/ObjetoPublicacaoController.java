@@ -66,8 +66,8 @@ public class ObjetoPublicacaoController extends ObjetoBaseController {
 	}
 
 	@Override
-	public void showButtons(String method) {
-		super.showButtons(method);
+	public void showButtons(Operation operation) {
+		super.showButtons(operation);
 		if (getControllerType().equals(ControllerType.CRUD)) {
 			if (getEntity() != null && getEntity().getId() != null
 					&& getEntity().getStatus().equals(Status.N)) {
