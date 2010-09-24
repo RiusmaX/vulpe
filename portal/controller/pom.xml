@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+    <artifactId>portal</artifactId>
+    <groupId>org.vulpe</groupId>
+    <version>1.0</version>
+  </parent>
+
+	<groupId>org.vulpe.portal</groupId>
+	<artifactId>portal-controller</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>portal - Controller</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+</project>
