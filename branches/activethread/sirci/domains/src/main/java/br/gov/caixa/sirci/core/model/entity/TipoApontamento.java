@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.OrderBy;
@@ -19,7 +20,7 @@ import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateScope;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 @CachedClass
-@CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = { ViewType.ALL }))
+@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), manager = true, view = @View(viewType = { ViewType.ALL }))
 @Entity
 @SuppressWarnings("serial")
 public class TipoApontamento extends AbstractVulpeBaseJPAEntity<Long> {

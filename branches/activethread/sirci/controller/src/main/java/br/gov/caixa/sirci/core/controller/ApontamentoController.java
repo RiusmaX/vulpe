@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants.Action.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
+import org.vulpe.controller.annotations.Tabular;
 import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.caixa.sirci.controller.ApplicationBaseController;
@@ -21,7 +23,7 @@ import br.gov.caixa.sirci.core.model.services.CoreService;
 @Component("core.ApontamentoController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, pageSize = 5, tabularStartNewDetails = 1, tabularNewDetails = 1)
+@Controller(serviceClass = CoreService.class, select =@Select(pageSize = 5), tabular = @Tabular(startNewRecords = 1, newRecords = 1))
 public class ApontamentoController extends ApplicationBaseController<Apontamento, java.lang.Long> {
 
 	private static final String LISTA_DOCUMENTO_ORIGEM = "listaDocumentoOrigem";

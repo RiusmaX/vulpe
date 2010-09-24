@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.View;
@@ -20,7 +21,7 @@ import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@CodeGenerator(controller = @Controller(pageSize = 5), manager = true, view = @View(viewType = {
+@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), manager = true, view = @View(viewType = {
 		ViewType.SELECT, ViewType.CRUD }))
 @Entity
 @SuppressWarnings("serial")
