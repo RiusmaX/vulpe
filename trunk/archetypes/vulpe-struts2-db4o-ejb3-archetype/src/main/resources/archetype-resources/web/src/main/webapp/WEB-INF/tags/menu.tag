@@ -1,5 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<%@ attribute name="labelKey" required="true" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="elementId" required="true" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="label" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="labelKey" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="help" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="action" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="accesskey" required="false" rtexprvalue="true" type="java.lang.String"%>
