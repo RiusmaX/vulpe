@@ -67,7 +67,7 @@
 						<param>serviceLookup=spring</param>
 						<param>applicationServer=${deployServer}</param>
 					</options>
-					<outputDirectory>${symbol_dollar}{basedir}/generated/main/java</outputDirectory>
+					<sourceOutputDirectory>${symbol_dollar}{basedir}/generated/main/java</sourceOutputDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>
