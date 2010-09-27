@@ -18,13 +18,13 @@ import ${manager.packageName}.${manager.entityName};
 @Service
 <#if manager.managerSuperclassName??>
 <#if manager.inheritance>
-public class ${manager.name}<ENTITY_CLASS extends ${manager.entityName}> extends ${manager.managerSuperclassName}<ENTITY_CLASS> {
+public class ${manager.name} extends ${manager.managerSuperclassName}<${manager.entityName}, ${manager.entityName}DAO<${manager.entityName}>> {
 <#else>
 public class ${manager.name} extends ${manager.managerSuperclassName}<${manager.entityName}> {
 </#if>
 <#else>
 <#if manager.inheritance>
-public class ${manager.name}<ENTITY_CLASS extends ${manager.entityName}> extends VulpeBaseManager<ENTITY_CLASS, ${manager.idType}, ${manager.entityName}DAO<ENTITY_CLASS>> {
+public class ${manager.name}<ENTITY_CLASS extends ${manager.entityName}, ENTITY_DAO extends ${manager.entityName}DAO<ENTITY_CLASS>> extends VulpeBaseManager<ENTITY_CLASS, ${manager.idType}, ENTITY_DAO> {
 <#else>
 public class ${manager.name} extends VulpeBaseManager<${manager.entityName}, ${manager.idType}, ${manager.entityName}DAO> {
 </#if>
