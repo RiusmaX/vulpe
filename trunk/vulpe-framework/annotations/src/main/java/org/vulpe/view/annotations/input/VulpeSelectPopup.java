@@ -37,7 +37,7 @@ public @interface VulpeSelectPopup {
 
 	boolean argument() default false;
 
-	boolean autoComplete() default false;
+	boolean autocomplete() default false;
 
 	String label() default "";
 

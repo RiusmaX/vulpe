@@ -56,7 +56,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 	action="${field.action}" popupId="${field.name}SelectPopup"
 	popupProperties="${field.name}.${field.identifier}=${field.identifier},${field.name}.${field.description}=${field.description}"
 	size="${field.size}" popupWidth="${field.popupWidth}px"
-	autoComplete="${field.autoComplete}"
+	autocomplete="${field.autocomplete}"
 </#if>
 <#if field.type == 'radio'>
 	<#if field.list?has_content>
@@ -212,7 +212,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	action="${field.action}" popupId="${field.name}SelectPopup"
 	popupProperties="${field.name}.${field.identifier}=${field.identifier},${field.name}.${field.description}=${field.description}"
 	size="${field.size}" popupWidth="${field.popupWidth}px"
-	autoComplete="${field.autoComplete}"
+	autocomplete="${field.autocomplete}"
 </#if>
 <#if field.type == 'radio'>
 	<#if field.list?has_content>
@@ -300,7 +300,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 					action="${detailField.action}" popupId="${detailField.name}SelectPopup"
 					popupProperties="${detailField.name}.${detailField.identifier}=${detailField.identifier},${detailField.name}.${detailField.description}=${detailField.description}"
 					size="${detailField.size}" popupWidth="${detailField.popupWidth}px"
-					autoComplete="${detailField.autoComplete}"
+					autocomplete="${detailField.autocomplete}"
 				</#if>
 				<#if detailField.type == 'text' || detailField.type == 'textarea' || detailField.type == 'password' || detailField.type == 'date'>
 					<#if detailField.mask?has_content>

@@ -11,6 +11,7 @@
 	</c:choose>
 </c:if>
 <v:form id="${vulpeFormName}" name="${vulpeFormName}" theme="simple" validate="true" enctype="multipart/form-data" method="post">
+	<input type="hidden" name="controllerType" value="${controllerType}" id="${vulpeFormName}_controllerType"/>
 	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}_operation"/>
 	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}_paging.page"/>
 	<c:if test="${now['controllerType'] == 'TABULAR'}">

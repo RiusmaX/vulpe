@@ -34,8 +34,8 @@ import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends VulpeBaseSimpleEntity implements
-		VulpeEntity<ID> {
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends
+		VulpeBaseSimpleEntity implements VulpeEntity<ID> {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -47,9 +47,6 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@IgnoreAudit
 	private transient String autocomplete;
-
-	@IgnoreAudit
-	private transient String value;
 
 	public AbstractVulpeBaseEntity() {
 	}
@@ -161,14 +158,6 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	public String getAutocomplete() {
 		return autocomplete;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public String getValue() {
-		return value;
 	}
 
 }

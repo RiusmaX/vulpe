@@ -41,6 +41,7 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
@@ -315,6 +316,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append("obj");
 				if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 					hql.append(".id, obj.").append(entity.getAutocomplete());
+					final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
+							.getFieldsWithAnnotation(entity.getClass(), Autocomplete.class);
+					for (Field field : autocompleteFields) {
+						if (!field.getName().equals(entity.getAutocomplete())) {
+							hql.append(",obj.").append(field.getName());
+						}
+					}
 				}
 				if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
 					hql.append(", ");

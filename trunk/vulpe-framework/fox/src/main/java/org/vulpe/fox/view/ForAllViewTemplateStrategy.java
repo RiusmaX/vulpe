@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
-import org.vulpe.model.annotations.AutoComplete;
+import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.view.annotations.View.ViewType;
@@ -314,13 +314,13 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setAction(selectPopup.action());
 			decoratedViewField.setSize(selectPopup.size());
 			decoratedViewField.setPopupWidth(selectPopup.popupWidth());
-			decoratedViewField.setAutoComplete(selectPopup.autoComplete());
+			decoratedViewField.setAutocomplete(selectPopup.autocomplete());
 			decoratedViewField.setType("selectPopup");
 		}
-		final AutoComplete autoComplete = fDeclaration == null ? field
-				.getAnnotation(AutoComplete.class) : fDeclaration.getAnnotation(AutoComplete.class);
+		final Autocomplete autoComplete = fDeclaration == null ? field
+				.getAnnotation(Autocomplete.class) : fDeclaration.getAnnotation(Autocomplete.class);
 		if (autoComplete != null) {
-			decoratedViewField.setAutoComplete(true);
+			decoratedViewField.setAutocomplete(true);
 		}
 		final VulpeValidate validate = fDeclaration == null ? field
 				.getAnnotation(VulpeValidate.class) : fDeclaration

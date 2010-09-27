@@ -16,6 +16,7 @@
 package org.vulpe.controller;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -38,9 +39,9 @@ import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.Tab;
-import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.controller.annotations.ResetSession;
@@ -50,6 +51,7 @@ import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.entity.VulpeEntity;
@@ -787,7 +789,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public String autocomplete() {
-		List<ValueBean> values = autocompleteValueList();
+		List<VulpeHashMap<String, Object>> values = autocompleteValueList();
 		if (VulpeValidationUtil.isEmpty(values)) {
 			List<ENTITY> autocompleteList = autocompleteList();
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
@@ -796,29 +798,51 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						new Class[] { getControllerConfig().getEntityClass() },
 						new Object[] { prepareEntity(Operation.READ).clone() });
 			}
-			values = new ArrayList<ValueBean>();
+			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
+				final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
+						.getFieldsWithAnnotation(getEntity().getClass(), Autocomplete.class);
+				final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 					for (ENTITY entity : autocompleteList) {
-						String value = "";
 						try {
-							value = (String) PropertyUtils.getProperty(entity, getEntitySelect()
-									.getAutocomplete());
+							map.put("id", entity.getId());
+							map.put("value", PropertyUtils.getProperty(entity, getEntitySelect()
+									.getAutocomplete()));
+							if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
+								for (Field field : autocompleteFields) {
+									if (!field.getName()
+											.equals(getEntitySelect().getAutocomplete())) {
+										map.put(field.getName(), PropertyUtils.getProperty(entity,
+												field.getName()));
+									}
+								}
+							}
 						} catch (Exception e) {
 							LOG.error(e);
 						}
-						values.add(new ValueBean(entity.getId().toString(), value));
+						values.add(map);
 					}
 				} else {
 					for (Iterator iterator = autocompleteList.iterator(); iterator.hasNext();) {
-						Object[] type = (Object[]) iterator.next();
-						values.add(new ValueBean(type[0].toString(), type[1].toString()));
+						final Object[] type = (Object[]) iterator.next();
+						map.put("id", type[0]);
+						map.put("value", type[1]);
+						int count = 2;
+						if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
+							for (Field field : autocompleteFields) {
+								if (!field.getName().equals(getEntitySelect().getAutocomplete())) {
+									map.put(field.getName(), type[count]);
+									++count;
+								}
+							}
+						}
+						values.add(map);
 					}
 				}
 			}
 		}
-		final JSONArray jsonArray = new JSONArray(values);
-		now.put("JSON", jsonArray.toString());
+		now.put("JSON", new JSONArray(values));
 		return Forward.JSON;
 	}
 
@@ -826,7 +850,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return null;
 	}
 
-	protected List<ValueBean> autocompleteValueList() {
+	protected List<VulpeHashMap<String, Object>> autocompleteValueList() {
 		return null;
 	}
 
@@ -1253,6 +1277,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		showButtons(Operation.DELETE);
 		if (onDelete()) {
 			addActionMessage(getDefaultMessage());
+			setSelectedTab(null);
 		}
 		deleteAfter();
 		if (getControllerType().equals(ControllerType.CRUD)) {

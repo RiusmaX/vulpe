@@ -269,7 +269,7 @@ public class DecoratedViewField implements Serializable {
 		return argument;
 	}
 
-	public void setAutoComplete(boolean autoComplete) {
+	public void setAutocomplete(boolean autoComplete) {
 		this.autoComplete = autoComplete;
 	}
 

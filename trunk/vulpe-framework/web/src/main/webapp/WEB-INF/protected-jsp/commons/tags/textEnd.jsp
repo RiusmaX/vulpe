@@ -11,8 +11,6 @@
 		</c:if>
 		</c:if>
 		<c:if test="${not empty autocomplete}">
-		var idValue = "${elementId}";
-		var idProperty = idValue.substring(0, idValue.lastIndexOf(".") + 1) + "id";
 		var cache = {};
 		vulpe.util.get("${elementId}").autocomplete({
 			source: function(request, response) {
@@ -22,11 +20,11 @@
 				if (new RegExp(cache.term).test(request.term) && cache.content && cache.content.length < 13) {
 					var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
 					response($.grep(cache.content, function(value) {
-	    				return matcher.test(vulpe.util.normalize(value.value))
+	    				return matcher.test(vulpe.util.normalize(value.${autocomplete}))
 					}));
 				}
 				<c:choose>
-				<c:when test="${empty autocompleteList}">
+				<c:when test="${empty autocompleteValueList}">
 				var urlAutoComplete = vulpe.util.getURLComplete("${autocompleteURL}");
 				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.${autocomplete}=" + request.term;
 				$.ajax({
@@ -43,7 +41,7 @@
 				});
 				</c:when>
 				<c:otherwise>
-				var data = ${autocompleteList};
+				var data = ${autocompleteValueList};
 				var matcher = new RegExp( $.ui.autocomplete.escapeRegex( request.term ), "i" );
 				response($.grep(data, function(value) {
 					value = value.label || value.value || value;
@@ -59,7 +57,15 @@
 			},
 			<c:if test="${autocompleteSelect}">
 			select: function(event, ui) {
+				var idPrefix = vulpe.util.getPrefixIdByElement(vulpe.util.get("${elementId}"));
+				var idProperty =  idPrefix + "id";
 				vulpe.util.get(idProperty).val(ui.item.id);
+				<c:if test="${not empty autocompleteProperties}">
+				var autocompleteProperties = "${autocompleteProperties}".split(",");
+				for (var i = 0; i < autocompleteProperties.length; i++) {
+					vulpe.util.get("${elementId}".replace("${property}", "") + autocompleteProperties[i]).val(eval("ui.item." + autocompleteProperties[i]));
+				}
+				</c:if>
 			},
 			</c:if>
 			minLength: ${autocompleteMinLength}

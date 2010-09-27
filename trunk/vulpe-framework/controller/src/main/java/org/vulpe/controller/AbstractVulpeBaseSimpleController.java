@@ -31,8 +31,8 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Security;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
@@ -527,6 +527,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return getControllerConfig().getControllerType();
 	}
 
+	public void setControllerType(ControllerType controllerType) {
+		getControllerConfig().setControllerType(controllerType);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -782,4 +786,5 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		}
 		setResultForward(path.toString());
 	}
+
 }
