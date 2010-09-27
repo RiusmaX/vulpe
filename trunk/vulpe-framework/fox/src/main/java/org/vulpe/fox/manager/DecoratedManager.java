@@ -23,12 +23,16 @@ import java.util.List;
 public class DecoratedManager implements Serializable {
 
 	private String name;
+	private String managerName;
 	private String entityName;
+	private String superclassName;
+	private String managerSuperclassName;
 	private String idType;
 	private String moduleName;
 	private String packageName;
 	private String daoPackageName;
 	private String managerPackageName;
+	private String managerSuperclassPackageName;
 	private boolean inheritance;
 
 	private List<DecoratedManagerMethod> methods;
@@ -106,6 +110,38 @@ public class DecoratedManager implements Serializable {
 
 	public boolean isInheritance() {
 		return inheritance;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerSuperclassPackageName(String managerSuperclassPackageName) {
+		this.managerSuperclassPackageName = managerSuperclassPackageName;
+	}
+
+	public String getManagerSuperclassPackageName() {
+		return managerSuperclassPackageName;
+	}
+
+	public void setManagerSuperclassName(String managerSuperclassName) {
+		this.managerSuperclassName = managerSuperclassName;
+	}
+
+	public String getManagerSuperclassName() {
+		return managerSuperclassName;
+	}
+
+	public void setSuperclassName(String superclassName) {
+		this.superclassName = superclassName;
+	}
+
+	public String getSuperclassName() {
+		return superclassName;
 	}
 
 }

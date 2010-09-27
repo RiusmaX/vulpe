@@ -26,6 +26,12 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAAuditEntity;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
+import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
 import com.sun.mirror.declaration.FieldDeclaration;
@@ -47,10 +53,6 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 				return false;
 			}
 			final DecoratedManager manager = new DecoratedManager();
-			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
-					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
-				manager.setInheritance(true);
-			}
 			manager.setName(clazz.getSimpleName().concat("Manager"));
 			manager.setEntityName(clazz.getSimpleName());
 			manager.setPackageName(clazz.getPackage().toString());
@@ -59,6 +61,31 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 			manager.setManagerPackageName(StringUtils.replace(clazz.getPackage().toString(),
 					".model.entity", ".model.manager"));
 			manager.setModuleName(getModuleName(clazz));
+			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
+					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
+				manager.setInheritance(true);
+				manager.setManagerSuperclassPackageName(StringUtils.replace(clazz.getSuperclass()
+						.getDeclaration().getPackage().toString(), ".entity", ".manager"));
+			}
+			// if super class isn't Object
+			if (clazz.getSuperclass() != null
+					&& !getClassName(clazz.getSuperclass()).equals(Object.class.getName())
+					&& (!getClassName(clazz.getSuperclass()).equals(
+							AbstractVulpeBaseEntity.class.getName())
+							&& (!getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseAuditEntity.class.getName()))
+							&& !getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseJPAEntity.class.getName())
+							&& !getClassName(clazz.getSuperclass()).equals(
+									AbstractVulpeBaseJPAAuditEntity.class.getName())
+							&& !getClassName(clazz.getSuperclass()).equals(
+									VulpeBaseDB4OEntity.class.getName()) && !getClassName(
+							clazz.getSuperclass()).equals(VulpeBaseDB4OAuditEntity.class.getName()))) {
+				manager.setSuperclassName(getClassName(clazz.getSuperclass()));
+				manager.setManagerSuperclassName(StringUtils.replace(manager.getSuperclassName(), ".model.entity",
+						".model.manager")
+						+ "Manager");
+			}
 
 			manager.setIdType(getIDType(clazz.getSuperclass()));
 			if (manager.getIdType() == null) {

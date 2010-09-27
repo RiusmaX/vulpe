@@ -70,7 +70,6 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			dao.setPackageName(clazz.getPackage().toString());
 			dao.setDaoPackageName(StringUtils.replace(clazz.getPackage().toString(), ".entity",
 					".dao"));
-
 			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
 					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
 				dao.setInheritance(true);

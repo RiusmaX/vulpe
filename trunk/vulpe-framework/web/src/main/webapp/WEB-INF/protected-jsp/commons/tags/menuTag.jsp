@@ -1,15 +1,32 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
-<c:if test="${empty helpKey}">
-	<c:set var="helpKey" value="${labelKey}"/>
-	<c:set var="helpKey"><fmt:message key="${labelKey}"/></c:set>
-	<c:choose>
-	<c:when test="${not empty hotKey}">
-		<c:set var="helpKey" value="${helpKey} [${hotKey}]" />
+<c:if test="${empty label}">
+	<fmt:message key="${labelKey}" var="label"/>
+</c:if>
+<c:if test="${empty help}">
+<c:choose>
+	<c:when test="${empty helpKey}">
+		<c:choose>
+			<c:when test="${not empty labelKey}">
+				<c:set var="helpKey" value="${labelKey}"/>
+				<fmt:message key="${helpKey}" var="help"/>
+			</c:when>
+			<c:otherwise>
+				<c:set var="help" value="${label}"/>
+			</c:otherwise>
+		</c:choose>
+		<c:choose>
+			<c:when test="${not empty hotKey}">
+				<c:set var="help" value="${help} [${hotKey}]" />
+			</c:when>
+			<c:when test="${not empty accesskey}">
+				<c:set var="help" value="${help} [Alt+Shift+${accesskey}]" />
+			</c:when>
+		</c:choose>
 	</c:when>
-	<c:when test="${not empty accesskey}">
-		<c:set var="helpKey" value="${helpKey} [Alt+Shift+${accesskey}]" />
-	</c:when>
-	</c:choose>
+	<c:otherwise>
+		<fmt:message key="${helpKey}" var="help"/>
+	</c:otherwise>
+</c:choose>
 </c:if>
 <c:if test="${not empty accesskey}">
 	<c:set var="accesskey"> accesskey="${accesskey}"</c:set>
@@ -24,8 +41,8 @@
 	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
 </c:if>
 <c:if test="${show}">
-<li id="vulpeMenu_${labelKey}">
-	<a id="${labelKey}" href="javascript:void(0);" class="current"${onclick}${accesskey} title="${helpKey}"><span><fmt:message key="${labelKey}" /></span></a>
+<li id="vulpeMenu_${elementId}">
+	<a id="${elementId}" href="javascript:void(0);" class="current"${onclick}${accesskey} title="${help}"><span>${label}</span></a>
 	<ul>
 		<jsp:doBody/>
 	</ul>
@@ -35,7 +52,7 @@
 		vulpe.util.addHotKey({
 			hotKey: "${hotKey}",
 			command: function (evt) {
-				vulpe.util.get("${labelKey}").click();
+				vulpe.util.get("${elementId}").click();
 				return false;
 			}
 		});
