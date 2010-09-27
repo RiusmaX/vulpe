@@ -6,8 +6,8 @@ package ${manager.managerPackageName};
 
 import org.springframework.stereotype.Service;
 
-<#if !manager.managerSuperclassName??>
 import ${manager.daoPackageName}.${manager.entityName}DAO;
+<#if !manager.managerSuperclassName??>
 import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 </#if>
 import ${manager.packageName}.${manager.entityName};
