@@ -48,5 +48,4 @@
 	labelKey="label.portal.core.Content.crud.escapeXml"
 	property="escapeXml"
 	fieldValue="true"
-	required="true"
 />

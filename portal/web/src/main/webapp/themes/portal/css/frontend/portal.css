@@ -520,7 +520,7 @@ html,body {
 	#frontend {
 		position: relative;
 		height: auto;
-		color: #E0E0E0;
+		color: #000;
 		width: 800px;
 		top: -2px;
 		background: #ddd;

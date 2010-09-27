@@ -3,6 +3,7 @@ package org.vulpe.portal.core.model.entity;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.BasePortal;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
@@ -44,6 +45,7 @@ public class Content extends BasePortal {
 	@VulpeColumn
 	private Long viewCount;
 
+	@IgnoreAutoFilter
 	@VulpeCheckbox(fieldValue = "true", required = true)
 	private boolean escapeXml;
 
