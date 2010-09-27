@@ -1,11 +1,12 @@
 package org.vulpe.portal.core.model.entity;
 
 import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Inheritance;
-import org.vulpe.portal.commons.model.entity.BasePortal;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeText;
 
+@CodeGenerator
 //@CodeGenerator(controller = @Controller(tabular = @Tabular(despiseFields = "name", startNewRecords = 5, newRecords = 1)), view = @View(viewType = ViewType.TABULAR))
 @CachedClass
 @Inheritance

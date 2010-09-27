@@ -5,7 +5,6 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
-import org.vulpe.portal.commons.model.entity.BasePortal;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.View;
 import org.vulpe.view.annotations.View.ViewType;

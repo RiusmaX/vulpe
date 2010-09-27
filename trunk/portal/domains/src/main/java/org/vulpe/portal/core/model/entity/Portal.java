@@ -1,15 +1,16 @@
 package org.vulpe.portal.core.model.entity;
 
 import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
-import org.vulpe.portal.commons.model.entity.BasePortal;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
+@CodeGenerator
 @CachedClass
 @Inheritance
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 1)), view = @View(viewType = {

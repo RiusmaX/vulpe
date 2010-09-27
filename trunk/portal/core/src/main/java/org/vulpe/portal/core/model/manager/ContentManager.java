@@ -2,14 +2,12 @@ package org.vulpe.portal.core.model.manager;
 
 import org.springframework.stereotype.Service;
 
-import org.vulpe.portal.core.model.dao.ContentDAO;
 import org.vulpe.portal.core.model.entity.Content;
-import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 
 /**
  * Manager implementation of Content
  */
 @Service
-public class ContentManager extends VulpeBaseManager<Content, java.lang.Long, ContentDAO<Content>> {
+public class ContentManager<ENTITY_CLASS extends Content> extends org.vulpe.portal.core.model.manager.BasePortalManager<ENTITY_CLASS> {
 
 }

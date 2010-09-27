@@ -1,10 +1,11 @@
-package org.vulpe.portal.commons.model.entity;
+package org.vulpe.portal.core.model.entity;
 
 import java.util.Date;
 
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.output.VulpeColumn;

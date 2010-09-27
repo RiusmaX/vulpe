@@ -62,7 +62,7 @@
 					<options>
 						<param>template=${env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/manager/templates/plugin.ftl</param>
 					</options>
-					<outputDirectory>${basedir}/../</outputDirectory>
+					<sourceOutputDirectory>${basedir}/../</sourceOutputDirectory>
 				</configuration>
 				<dependencies>
 					<dependency>
