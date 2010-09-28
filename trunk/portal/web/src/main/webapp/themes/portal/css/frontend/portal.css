@@ -272,7 +272,6 @@ fieldset {
 
 h1 {
 	color: #143D55;
-	font-size: 30px;
 	margin: 0;
 	padding: 0;
 	line-height: 1.3em;
@@ -496,7 +495,6 @@ html,body {
 	color: #d00;
 	background-color: #ddd;
 	display: block;
-	font-size: 30px;
 	height: auto;
 	margin: 0px;
 	padding-left: 8px;
