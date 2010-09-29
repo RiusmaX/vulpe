@@ -19,6 +19,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>${package}</groupId>
 			<artifactId>${rootArtifactId}-core</artifactId>
 			<version>1.0</version>
 		</dependency>
