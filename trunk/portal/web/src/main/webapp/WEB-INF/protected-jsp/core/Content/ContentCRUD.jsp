@@ -41,7 +41,7 @@
 <v:textTranslate
 	labelKey="label.portal.core.Content.crud.fullText"
 	property="fullText"
-	cols="80" rows="5"
+	cols="80" rows="10"
 	required="true"
 />
 <v:checkbox

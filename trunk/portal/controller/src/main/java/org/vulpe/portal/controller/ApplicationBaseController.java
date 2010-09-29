@@ -13,6 +13,7 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.controller.PortalController;
@@ -29,7 +30,11 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		super.postConstruct();
 		final List<Portal> portalList = getCachedClass().getSelf(Portal.class.getSimpleName());
 		if (portalList != null) {
-			setSessionAttribute(Core.VULPE_PORTAL, portalList.get(0));
+			for (Portal portal : portalList) {
+				if (portal.getStatus().equals(Status.ACTIVE)) {
+					setSessionAttribute(Core.VULPE_PORTAL, portal);
+				}
+			}
 		}
 	}
 

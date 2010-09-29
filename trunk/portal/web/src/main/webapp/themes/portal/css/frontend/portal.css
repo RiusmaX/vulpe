@@ -252,10 +252,13 @@
 	color: #fff;
 }
 
-
 #content {
 	width: auto;
-	padding: 6px;
+}
+
+#contentPortal {
+	width: 97%;
+	display: table;
 	text-align: justify;
 }
 

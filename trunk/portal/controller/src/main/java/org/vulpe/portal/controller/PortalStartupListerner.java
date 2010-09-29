@@ -30,6 +30,7 @@ public class PortalStartupListerner extends VulpeStartupListener {
 			final Language language = new Language();
 			final List<Language> languageList = coreService.readLanguage(language);
 			if (VulpeValidationUtil.isEmpty(languageList)) {
+				language.setDate(new Date());
 				language.setLocaleCode(PortalInit.LANGUAGE_CODE);
 				language.setName(PortalInit.LANGUAGE_NAME);
 				language.setDefaultLanguage(true);

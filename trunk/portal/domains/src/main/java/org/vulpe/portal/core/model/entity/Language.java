@@ -9,7 +9,9 @@ import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeText;
 
 @Inheritance
-//@CodeGenerator(controller = @Controller(tabular = @Tabular(despiseFields = "localeCode", newRecords = 1, startNewRecords = 3)), view = @View(viewType = { ViewType.TABULAR }))
+// @CodeGenerator(controller = @Controller(tabular = @Tabular(despiseFields =
+// "localeCode", newRecords = 1, startNewRecords = 3)), view = @View(viewType =
+// { ViewType.TABULAR }))
 @CachedClass
 @SuppressWarnings("serial")
 public class Language extends BasePortal {

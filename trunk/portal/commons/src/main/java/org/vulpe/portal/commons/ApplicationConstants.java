@@ -14,5 +14,7 @@ public class ApplicationConstants {
 
 	public class Core {
 		public static final String VULPE_PORTAL = "vulpePortal";
+		public static final String VULPE_PORTAL_MENUS = "vulpePortalMenus";
+		public static final String VULPE_PORTAL_DOWNLOADS = "vulpePortalDownloads";
 	}
 }

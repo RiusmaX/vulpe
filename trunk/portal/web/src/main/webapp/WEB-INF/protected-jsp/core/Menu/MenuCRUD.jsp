@@ -26,5 +26,4 @@
 	labelKey="label.portal.core.Menu.crud.url"
 	property="url"
 	size="100"
-	required="true"
 />

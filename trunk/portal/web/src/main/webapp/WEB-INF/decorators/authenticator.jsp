@@ -11,7 +11,7 @@
 		<c:if test="${global['showAsMobile']}">
 		<meta name="viewport" content="width=${global['viewportWidth']}, height=${global['viewportHeight']}, user-scalable=${global['viewportUserScalable']}, initial-scale=${global['viewportInitialScale']}, maximum-scale=${global['viewportMaximumScale']}, minimum-scale=${global['viewportMinimumScale']}" />
 		</c:if>
-		<title><fmt:message key="vulpe.title.application.authenticator"/></title>
+		<title><fmt:message key="vulpe.security.title.application"/></title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['theme']}/images/icon.png" rel="shortcut icon"/>
 		<c:if test="${empty vulpeCurrentLayout}">
 			<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>
@@ -67,6 +67,14 @@
 			<div id="menu">
 				<ul id="nav">
 					<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
+					<c:if test="${vulpeCurrentLayout == 'BACKEND'}">
+						<c:if test="${global['auditEnabled']}">
+							<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
+						</c:if>
+						<c:if test="${global['securityEnabled']}">
+							<%@include file="/WEB-INF/protected-jsp/commons/security/menu.jsp" %>
+						</c:if>
+					</c:if>
 				</ul>
 			</div>
 			<div id="messages" style="display: none;" class="vulpeMessages"></div>

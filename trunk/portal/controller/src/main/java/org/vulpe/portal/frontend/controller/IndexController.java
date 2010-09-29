@@ -13,6 +13,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.portal.controller.ApplicationBaseSimpleController;
 import org.vulpe.portal.core.model.entity.Content;
+import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.entity.Section;
 import org.vulpe.portal.core.model.services.CoreService;
 
@@ -26,6 +27,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	private Long sectionId;
 	private Long contentId;
+	private Long downloadId;
 
 	public String section() {
 		try {
@@ -47,6 +49,12 @@ public class IndexController extends ApplicationBaseSimpleController {
 	public String content() {
 		try {
 			final Content content = getService(CoreService.class).findContent(contentId);
+			if (content.getViewCount() == null) {
+				content.setViewCount(1L);
+			} else {
+				content.setViewCount(content.getViewCount() + 1);
+			}
+			getService(CoreService.class).updateContent(content);
 			now.put(Now.CONTENT_TITLE, content.getTitle());
 			now.put(Now.SHOW_CONTENT_SUBTITLE, true);
 			now.put(Now.CONTENT_SUBTITLE, content.getSubtitle());
@@ -56,6 +64,22 @@ public class IndexController extends ApplicationBaseSimpleController {
 		}
 		controlResultForward();
 		return Forward.SUCCESS;
+	}
+
+	public String download() {
+		try {
+			final Download download = getService(CoreService.class).findDownload(getDownloadId());
+			if (download.getDownloadCount() == null) {
+				download.setDownloadCount(1L);
+			} else {
+				download.setDownloadCount(download.getDownloadCount() + 1);
+			}
+			getService(CoreService.class).updateDownload(download);
+			return redirectTo(download.getUrl(), false);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return null;
 	}
 
 	public void setSectionId(Long sectionId) {
@@ -72,5 +96,13 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public Long getContentId() {
 		return contentId;
+	}
+
+	public void setDownloadId(Long downloadId) {
+		this.downloadId = downloadId;
+	}
+
+	public Long getDownloadId() {
+		return downloadId;
 	}
 }
