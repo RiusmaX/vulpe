@@ -21,6 +21,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
 			<artifactId>portal-core</artifactId>
 			<version>1.0</version>
 		</dependency>

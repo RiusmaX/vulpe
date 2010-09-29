@@ -195,7 +195,32 @@
 }
 
 #userAuthenticated {
+	background-color: #000;
+	border-top: 1px solid #ccc;
+	display: block;
+	height: 16px;
+	margin: 0;
+	padding-left: 20px;
+	padding-top: 3px;
 	text-align: right;
+	width: auto;
+	font-size: 11px;
+	color: #fff;
+}
+
+#userAuthenticated  a {
+	border-left: 1px solid #eee;
+	color: #fff;
+	padding: 2px;
+	text-decoration: none;
+}
+
+#userAuthenticated  a:hover {
+	text-decoration: underline;
+}
+
+#userAuthenticated  a:visited {
+	color: #fff;
 }
 
 .vulpeMessageValidation {

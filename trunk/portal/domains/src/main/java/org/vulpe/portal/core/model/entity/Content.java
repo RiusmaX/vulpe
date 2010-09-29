@@ -1,21 +1,16 @@
 package org.vulpe.portal.core.model.entity;
 
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Select;
-import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
-import org.vulpe.view.annotations.View;
-import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5, requireOneFilter = true)), view = @View(viewType = {
-		ViewType.CRUD, ViewType.SELECT }))
+//@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5, requireOneFilter = true)), view = @View(viewType = {
+//		ViewType.CRUD, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
 public class Content extends BasePortal {
@@ -118,5 +113,10 @@ public class Content extends BasePortal {
 			return getTitle().toString();
 		}
 		return super.toString();
+	}
+
+	@Override
+	public String getOrderBy() {
+		return "date desc";
 	}
 }

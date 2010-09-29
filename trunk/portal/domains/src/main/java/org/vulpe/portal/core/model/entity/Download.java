@@ -1,10 +1,8 @@
 package org.vulpe.portal.core.model.entity;
 
-import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 
-@CodeGenerator
 @Inheritance
 @SuppressWarnings("serial")
 public class Download extends BasePortal {

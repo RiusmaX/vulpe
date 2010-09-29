@@ -5,9 +5,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.portal.core.model.entity.Content;
+import org.vulpe.portal.core.model.entity.Menu;
 import org.vulpe.portal.core.model.entity.Portal;
-import org.vulpe.portal.core.model.entity.Section;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings("serial")
@@ -23,10 +22,8 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 			setSessionAttribute("vulpePortal", portalList.get(0));
 		}
 		try {
-			final List<Section> sections = getService(CoreService.class).readSection(new Section());
-			setSessionAttribute("sections", sections);
-			final List<Content> contents = getService(CoreService.class).readContent(new Content());
-			setSessionAttribute("contents", contents);
+			final List<Menu> menus = getService(CoreService.class).readMenu(new Menu());
+			setSessionAttribute("menus", menus);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}

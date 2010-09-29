@@ -1,5 +1,6 @@
 package org.vulpe.portal.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContextEvent;
@@ -11,7 +12,9 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.VulpeStartupListener;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.services.VulpeService;
+import org.vulpe.portal.commons.ApplicationConstants.PortalInit;
 import org.vulpe.portal.commons.model.entity.Status;
+import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.core.model.entity.Language;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.services.CoreService;
@@ -27,8 +30,8 @@ public class PortalStartupListerner extends VulpeStartupListener {
 			final Language language = new Language();
 			final List<Language> languageList = coreService.readLanguage(language);
 			if (VulpeValidationUtil.isEmpty(languageList)) {
-				language.setLocaleCode("en_US");
-				language.setName("English");
+				language.setLocaleCode(PortalInit.LANGUAGE_CODE);
+				language.setName(PortalInit.LANGUAGE_NAME);
 				language.setDefaultLanguage(true);
 				language.setStatus(Status.ACTIVE);
 				coreService.createLanguage(language);
@@ -36,6 +39,18 @@ public class PortalStartupListerner extends VulpeStartupListener {
 			final Portal portal = new Portal();
 			final List<Portal> portalList = coreService.readPortal(portal);
 			if (VulpeValidationUtil.isEmpty(portalList)) {
+				portal.setDate(new Date());
+				TextTranslate name = new TextTranslate(language, PortalInit.NAME);
+				portal.setName(name);
+				TextTranslate title = new TextTranslate(language, PortalInit.TITLE);
+				portal.setTitle(title);
+				TextTranslate description = new TextTranslate(language, PortalInit.DESCRIPTION);
+				portal.setDescription(description);
+				TextTranslate copyright = new TextTranslate(language, PortalInit.COPYRIGHT);
+				portal.setCopyright(copyright);
+				TextTranslate offlineMessage = new TextTranslate(language,
+						PortalInit.OFFLINE_MESSAGE);
+				portal.setOfflineMessage(offlineMessage);
 				portal.setStatus(Status.ACTIVE);
 				coreService.createPortal(portal);
 			} else {

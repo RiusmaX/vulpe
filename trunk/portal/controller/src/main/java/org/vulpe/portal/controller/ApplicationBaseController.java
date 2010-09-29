@@ -7,13 +7,15 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
+import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
+import org.vulpe.portal.core.controller.PortalController;
 import org.vulpe.portal.core.model.entity.Portal;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -27,7 +29,7 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		super.postConstruct();
 		final List<Portal> portalList = getCachedClass().getSelf(Portal.class.getSimpleName());
 		if (portalList != null) {
-			setSessionAttribute("vulpePortal", portalList.get(0));
+			setSessionAttribute(Core.VULPE_PORTAL, portalList.get(0));
 		}
 	}
 
@@ -39,7 +41,8 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 			if (field.getType().getName().equals(TextTranslate.class.getName())) {
 				final TextTranslate textTranslate = VulpeReflectUtil.getInstance().getFieldValue(
 						entity, field.getName());
-				if (textTranslate != null && VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
+				if (textTranslate != null
+						&& VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
 					for (final Iterator<TextTranslateLanguage> iterator = textTranslate
 							.getLanguages().iterator(); iterator.hasNext();) {
 						final TextTranslateLanguage textTranslateLanguage = iterator.next();
@@ -51,5 +54,43 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 			}
 		}
 		return entity;
+	}
+
+	@Override
+	public String select() {
+		final String redirecionar = validarCongregacaoSelecionada();
+		if (StringUtils.isNotEmpty(redirecionar)) {
+			return redirecionar;
+		}
+		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.select();
+	}
+
+	@Override
+	public String create() {
+		final String redirecionar = validarCongregacaoSelecionada();
+		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.create();
+	}
+
+	@Override
+	public String update() {
+		final String redirecionar = validarCongregacaoSelecionada();
+		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.update();
+	}
+
+	@Override
+	public String tabular() {
+		final String redirecionar = validarCongregacaoSelecionada();
+		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.tabular();
+	}
+
+	private String validarCongregacaoSelecionada() {
+		if (getSessionAttribute(Core.VULPE_PORTAL) == null
+				&& !this.getClass().getName().equals(PortalController.class.getName())) {
+			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
+				setAjax(true);
+			}
+			return redirectTo("/core/Portal/select", isAjax());
+		}
+		return null;
 	}
 }

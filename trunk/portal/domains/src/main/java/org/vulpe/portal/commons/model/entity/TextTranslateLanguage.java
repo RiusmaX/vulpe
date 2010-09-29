@@ -13,6 +13,14 @@ public class TextTranslateLanguage extends VulpeBaseDB4OAuditEntity<Long> {
 
 	private String text;
 
+	public TextTranslateLanguage() {
+	}
+
+	public TextTranslateLanguage(final Language language, final String text) {
+		this.language = language;
+		this.text = text;
+	}
+
 	public void setLanguage(Language language) {
 		this.language = language;
 	}

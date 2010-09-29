@@ -1,5 +1,6 @@
 package org.vulpe.portal.commons.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,6 +8,7 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.model.annotations.CreateIfNotExist;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
+import org.vulpe.portal.core.model.entity.Language;
 
 @CreateIfNotExist
 @SuppressWarnings("serial")
@@ -17,6 +19,14 @@ public class TextTranslate extends VulpeBaseDB4OAuditEntity<Long> {
 	private transient String text;
 
 	private List<TextTranslateLanguage> languages;
+
+	public TextTranslate() {
+	}
+
+	public TextTranslate(final Language language, final String text) {
+		languages = new ArrayList<TextTranslateLanguage>();
+		languages.add(new TextTranslateLanguage(language, text));
+	}
 
 	public void setLanguages(List<TextTranslateLanguage> languages) {
 		this.languages = languages;

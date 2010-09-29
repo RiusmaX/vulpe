@@ -2,7 +2,6 @@ package org.vulpe.portal.core.model.entity;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.db4o.Inheritance;
@@ -10,9 +9,8 @@ import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeText;
 
 @Inheritance
-@CachedClass
 //@CodeGenerator(controller = @Controller(tabular = @Tabular(despiseFields = "localeCode", newRecords = 1, startNewRecords = 3)), view = @View(viewType = { ViewType.TABULAR }))
-@CodeGenerator
+@CachedClass
 @SuppressWarnings("serial")
 public class Language extends BasePortal {
 
