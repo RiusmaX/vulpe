@@ -801,7 +801,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
 				final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
-						.getFieldsWithAnnotation(getControllerConfig().getEntityClass(), Autocomplete.class);
+						.getFieldsWithAnnotation(getControllerConfig().getEntityClass(),
+								Autocomplete.class);
 				final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 					for (ENTITY entity : autocompleteList) {
@@ -1103,7 +1104,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		setOperation(Operation.UPDATE);
 		updateBefore();
-		if (getEntity() == null) {
+		if (getEntity() == null && getId() == null) {
 			return create();
 		}
 		onUpdate();
@@ -1141,11 +1142,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onUpdate() {
 		if (getControllerType().equals(ControllerType.CRUD)
 				|| getControllerType().equals(ControllerType.TWICE)) {
-			final ENTITY entity = prepareEntity(Operation.UPDATE);
+			// final ENTITY entity = prepareEntity(Operation.UPDATE);
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Operation.FIND.getValue()
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getIdClass() }, new Object[] { entity
-							.getId() });
+					new Class[] { getId().getClass() }, new Object[] { getId() });
 			setEntity(persistentEntity);
 			setExecuted(false);
 		}
@@ -1701,7 +1701,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
 			setEntities((List<ENTITY>) getSessionAttribute(getSelectTableKey()));
 			setPaging((Paging<ENTITY>) getSessionAttribute(getSelectPagingKey()));
-			getPaging().setList(getEntities());
+			if (getPaging() != null) {
+				getPaging().setList(getEntities());
+			}
 			return read();
 		} else {
 			getSession().removeAttribute(getSelectFormKey());
