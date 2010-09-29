@@ -5,6 +5,7 @@
 <%@ attribute name="help" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="action" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="url" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="accesskey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

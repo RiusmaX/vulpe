@@ -31,7 +31,11 @@
 <c:if test="${not empty accesskey}">
 	<c:set var="accesskey"> accesskey="${accesskey}"</c:set>
 </c:if>
-<c:if test="${not empty action}">
+<c:if test="${current}">
+	<c:set var="currentClass" value="vulpeCurrentMenu"/>
+</c:if>
+<c:choose>
+<c:when test="${not empty action}">
 	<c:if test="${!fn:startsWith(action, '/')}">
 		<c:set var="action" value="/${action}"/>
 	</c:if>
@@ -39,25 +43,33 @@
 		<c:set var="action" value="${action}/ajax"/>
 	</c:if>
 	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
-</c:if>
+</c:when>
+<c:otherwise>
+<c:set var="onclick"> onclick="$(window.location).attr('href', '${url}');"</c:set>
+</c:otherwise>
+</c:choose>
 <c:if test="${show}">
 <li id="vulpeMenu_${elementId}">
-	<a id="${elementId}" href="javascript:void(0);" class="current"${onclick}${accesskey} title="${help}"><span>${label}</span></a>
+	<a id="vulpeMenuLink_${elementId}" href="javascript:void(0);"${currentClass}${onclick}${accesskey} title="${help}"><span>${label}</span></a>
 	<ul>
 		<jsp:doBody/>
 	</ul>
-	<c:if test="${not empty hotKey}">
 	<script type="text/javascript">
 	$(document).ready(function() {
+		vulpe.util.get("vulpeMenuLink_${elementId}").bind("click", function() {
+			jQuery(".vulpeCurrentMenu").removeClass("vulpeCurrentMenu")
+			$(this).addClass("vulpeCurrentMenu");
+		});
+	<c:if test="${not empty hotKey}">
 		vulpe.util.addHotKey({
 			hotKey: "${hotKey}",
 			command: function (evt) {
-				vulpe.util.get("${elementId}").click();
+				vulpe.util.get("vulpeMenuLink_${elementId}").click();
 				return false;
 			}
 		});
+	</c:if>
 	});
 	</script>
-	</c:if>
 </li>
 </c:if>

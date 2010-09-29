@@ -801,7 +801,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
 				final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
-						.getFieldsWithAnnotation(getEntity().getClass(), Autocomplete.class);
+						.getFieldsWithAnnotation(getControllerConfig().getEntityClass(), Autocomplete.class);
 				final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 					for (ENTITY entity : autocompleteList) {

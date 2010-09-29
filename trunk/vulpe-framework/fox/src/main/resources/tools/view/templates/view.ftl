@@ -5,7 +5,7 @@
 ################################################################################
 # View Select: ${view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.select=Select of ${view.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.select=Selection of ${view.name?capitalize}
 label.${view.projectName}.${view.moduleName}.${view.name}.select.header=List of ${view.name?capitalize}
 <#list view.labels as label>
 label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${label?capitalize}
@@ -161,7 +161,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 ################################################################################
 # View CRUD: ${view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.crud=CRUD of ${view.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.crud=Management of ${view.name?capitalize}
 <#list view.fields as field>
 label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${field.name?capitalize}
 </#list>
@@ -403,7 +403,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 ################################################################################
 # View Tabular: ${view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.tabular=${view.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.tabular=Management of ${view.name?capitalize}
 label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header=${view.name?capitalize}
 <#list view.fields as field>
 label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=${field.name?capitalize}

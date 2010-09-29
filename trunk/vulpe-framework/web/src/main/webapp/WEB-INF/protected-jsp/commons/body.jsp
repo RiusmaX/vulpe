@@ -28,7 +28,16 @@
 	<%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %>
 	</c:if>
 	<c:if test="${now['showContentTitle'] && empty vulpeBodyTwice}">
-	<div id="contentTitle"><fmt:message>${now['titleKey']}${onlyToSee ? '.view' : ''}</fmt:message></div>
+	<c:if test="${not empty now['titleKey']}">
+	<fmt:message var="contentTitle">${now['titleKey']}${onlyToSee ? '.view' : ''}</fmt:message>
+	</c:if>
+	<div id="contentTitle">${not empty now['contentTitle'] ? now['contentTitle'] : contentTitle}</div>
+	</c:if>
+	<c:if test="${now['showContentSubtitle'] && empty vulpeBodyTwice}">
+	<c:if test="${not empty now['subtitleKey']}">
+	<fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message>
+	</c:if>
+	<div id="contentSubtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
 	</c:if>
 	<div id="content">
 		<c:choose>

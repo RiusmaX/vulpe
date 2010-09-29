@@ -208,7 +208,7 @@
 	<c:if test="${not empty rowspan}">
 		<c:set var="rowspan"> rowspan="${rowspan}"</c:set>
 	</c:if>
-	<tr id="${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
+	<tr id="row_${elementId}_${vulpeFormName}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
 		<c:if test="${showLine}">
 			<v:column labelKey="label.vulpe.line" width="1%" styleClass="vulpeLine">
 				<c:if test="${!isHeaderTableTag}">
@@ -303,7 +303,7 @@
 	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
 	<script type="text/javascript">
 	jQuery(function($){
-		$("#${elementId}").bind("mouseenter mouseleave", function(event){
+		$("#row_${elementId}_${vulpeFormName}").bind("mouseenter mouseleave", function(event){
 			$(this).toggleClass("vulpeSelectedRow");
 		});
 	});
