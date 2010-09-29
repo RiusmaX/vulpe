@@ -52,6 +52,7 @@
 											dest="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
+								<delete dir="${symbol_dollar}{basedir}/../web/target" />
 							</tasks>
 						</configuration>
 					</execution>
