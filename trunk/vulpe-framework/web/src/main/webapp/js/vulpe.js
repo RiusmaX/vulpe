@@ -108,6 +108,9 @@ var vulpe = {
 		redirectToIndex: true,
 		requireOneFilter: false,
 		theme: 'default',
+		token: {
+			fieldIndex: "_vfindex_"
+		},
 		accentMap: {}
 	},
 
@@ -198,26 +201,31 @@ var vulpe = {
 		},
 
 		getPrefixId: function(formName) {
-			var prefix = formName + "_" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + ".");
+			var prefix = formName + "_" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + "_dot_");
 			return prefix
 		},
 
 		getPrefixIdByElement: function(element) {
 			var id = element.id ? element.id : jQuery(element).attr("id");
-			var prefix = id.indexOf(":") != -1 ? id.substring(0, id.lastIndexOf(":") + 1) : id.substring(0, id.lastIndexOf(".") + 1);
+			var prefix = id.indexOf(vulpe.config.token.fieldIndex) != -1 ? id.substring(0, id.lastIndexOf(vulpe.config.token.fieldIndex) + vulpe.config.token.fieldIndex.length -1) : id.substring(0, id.lastIndexOf("_dot_") + 1);
 			return prefix;
 		},
 
 		getDetailByElementId: function(id) {
-			var detail = id.substring(0, id.indexOf(":"));
-			detail = detail.substring(detail.lastIndexOf(".") + 1, detail.length);
+			var detail = id.substring(0, id.indexOf(vulpe.config.token.fieldIndex));
+			detail = detail.substring(detail.lastIndexOf("_dot_") + 1, detail.length);
 			return detail;
 		},
 
 		getIndexOfElement: function(element) {
-			var id = element.id.substring(0, element.id.lastIndexOf(":"));
-			var index = id.substring(id.lastIndexOf(":") + 1, id.length);
+			var id = element.id.substring(0, element.id.lastIndexOf(vulpe.config.token.fieldIndex));
+			var index = id.substring(id.lastIndexOf(vulpe.config.token.fieldIndex) + 1, id.length);
 			return index;
+		},
+
+		getElementField: function(element, name) {
+			var prefix = typeof element == "string" ? element : vulpe.util.getPrefixIdByElement(element);
+			return vulpe.util.get(prefix + "_dot_" + name);
 		},
 
 		getElementConfig: function(id) {
@@ -578,7 +586,7 @@ var vulpe = {
 					}
 					return isValid;
 				} else {
-					var idParent = idField.substring(0, idField.lastIndexOf("."));
+					var idParent = idField.substring(0, idField.lastIndexOf("_dot_"));
 					var idSelectPopup = idParent + "_selectPopup";
 					var selectPopup = vulpe.util.get(idSelectPopup);
 					if (selectPopup != null && selectPopup.length == 1) {
@@ -857,7 +865,7 @@ var vulpe = {
 					var idField = field.attr("id");
 					if (!vulpe.validate.validateRequired({field: field})) {
 						if (invalidCount == 0 && !vulpe.util.existsVulpePopups()) {
-							if (idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(":") != -1) {
+							if (idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(vulpe.config.token.fieldIndex) != -1) {
 								var detail = vulpe.config.prefix.detail + vulpe.util.getDetailByElementId(idField);
 								$("a[href='" + detail + "']").click();
 							} else if ($("a[href='" + vulpe.config.masterTabId + "']").length == 1) {
@@ -889,7 +897,7 @@ var vulpe = {
 								break;
 							}
 						} else {
-							var idParent = idField.substring(0, idField.lastIndexOf("."));
+							var idParent = idField.substring(0, idField.lastIndexOf("_dot_"));
 							var idSelectPopup = idParent + "_selectPopup";
 							var selectPopup = vulpe.util.get(idSelectPopup);
 							if (selectPopup != null && selectPopup.length == 1) {
