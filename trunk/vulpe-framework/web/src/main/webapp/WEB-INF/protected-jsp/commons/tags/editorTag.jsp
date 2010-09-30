@@ -7,7 +7,7 @@
 			<br/><c:out value="${value}" escapeXml="false"/>
 		</c:when>
 		<c:otherwise>
-			<textarea name="${name}" id="${elementId}" class="${styleClass}" style="${style}">${value}</textarea>
+			<textarea name="${name}" id="${elementId}" class="${styleClass}" style="${style}" cols="${cols}" rows="${rows}">${value}</textarea>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
 					vulpe.util.get('${elementId}').rte({
