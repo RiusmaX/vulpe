@@ -282,7 +282,7 @@
 }
 
 a, a:visited {
-	color: #ccc;
+	color: #143D55;
 }
 
 a:hover {
@@ -749,4 +749,9 @@ html,body {
 ol, ul {
 	font-size: 13px;
 	margin: 0px 40px;
+}
+
+#date_show {
+	color: #ddd;
+	font-size: 9px;
 }

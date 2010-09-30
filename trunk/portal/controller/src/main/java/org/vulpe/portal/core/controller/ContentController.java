@@ -17,4 +17,9 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5))
 public class ContentController extends BasePortalController<Content> {
 
+	@Override
+	protected void createAfter() {
+		super.createAfter();
+		getEntity().setViewCount(0L);
+	}
 }

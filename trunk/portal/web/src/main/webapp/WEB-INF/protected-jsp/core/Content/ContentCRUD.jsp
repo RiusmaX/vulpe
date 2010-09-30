@@ -36,16 +36,21 @@
 	labelKey="label.portal.core.Content.crud.miniText"
 	property="miniText"
 	size="100"
-	required="true"
 />
 <v:textTranslate
 	labelKey="label.portal.core.Content.crud.fullText"
 	property="fullText"
-	cols="80" rows="10"
+	cols="120" rows="15"
 	required="true"
+	editor="true"
 />
 <v:checkbox
 	labelKey="label.portal.core.Content.crud.escapeXml"
 	property="escapeXml"
 	fieldValue="true"
+/>
+<v:select
+	labelKey="label.portal.core.Content.crud.status"
+	property="status"
+	required="true"
 />

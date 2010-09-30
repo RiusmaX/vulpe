@@ -19,3 +19,8 @@
 	property="url"
 	size="100" required="true"
 />
+<v:select
+	labelKey="label.portal.core.Download.crud.status"
+	property="status"
+	required="true"
+/>

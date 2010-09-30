@@ -5,19 +5,32 @@
 		<c:set var="textTranslateIndex" value="0"/>
 	</c:if>
 	<script type="text/javascript">
-		var change${property}${currentStatus.count} = function(value) {
+		var ${elementId}_editor = false;
+		var ${elementId}_change = function(value) {
 			var id = "${elementId}";
-			var text = vulpe.util.get(id + ".text");
-			text.val("");
-			text.focus();
+			var text = vulpe.util.getElementField(id, "text");
+			if (${elementId}_editor) {
+				var htmlbox = vulpe.util.get(id + "_dot_text");
+				htmlbox.contents().find('body').html("");
+				htmlbox.focus();
+			} else {
+				text.val("");
+				text.focus();
+			}
 			var fields = jQuery("input[id*='" + id + "']");
 			for (var i = 0; i < fields.length; i++) {
 				var field = jQuery(fields[i]);
 				var fieldType = field.attr("type");
 				var fieldId = field.attr("id");
-				if (fieldType == "hidden" && fieldId.indexOf("language.id") != -1 && field.val() == value) {
-					var textId = vulpe.util.getPrefixIdByElement(field) + "text";
-					text.val(vulpe.util.get(textId).val());
+				if (fieldType == "hidden" && fieldId.indexOf("language_dot_id") != -1 && field.val() == value) {
+					var fieldText = vulpe.util.getElementField(field, "text");
+					if (${elementId}_editor) {
+						var htmlbox = vulpe.util.get(id + "_dot_text");
+						htmlbox.contents().find('body').html(fieldText.val());
+					} else {
+						text.val(fieldText.val());
+					}
+					<c:if test="${empty editor}">
 					var otherLanguages = vulpe.util.get("${property}_otherLanguages");
 					if (otherLanguages.css("display") != "none") {
 						otherLanguages.hide();
@@ -26,39 +39,55 @@
 						var src = showOtherLanguages.attr("src");
 						showOtherLanguages.attr("src", src.replace("up.png", "down.png"));
 					}
+					</c:if>
 					break;
 				}
 			}
 		}
-		var textUpdate${property}${currentStatus.count} = function(textValue) {
+		var ${elementId}_textUpdate = function(textValue) {
 			var id = "${elementId}";
-			var value = vulpe.util.get("${property}_languageId_flag${currentStatus.count}").val();
+			var value = vulpe.util.get("${elementId}_languageId_flag").val();
 			var fields = jQuery("input[id*='" + id + "']");
 			for (var i = 0; i < fields.length; i++) {
 				var field = jQuery(fields[i]);
 				var fieldType = field.attr("type");
 				var fieldId = field.attr("id");
-				if (fieldType == "hidden" && fieldId.indexOf("language.id") != -1 && (field.val() == value || field.val() == "")) {
+				if (fieldType == "hidden" && fieldId.indexOf("language_dot_id") != -1 && (field.val() == value || field.val() == "")) {
 					field.val(value);
-					var textId = vulpe.util.getPrefixIdByElement(field) + "text";
-					vulpe.util.get(textId).val(textValue);
+					var fieldText = vulpe.util.getElementField(field, "text");
+					fieldText.val(textValue);
 					break;
 				}
 			}
 		}
 		$(document).ready(function(){
-			var id = "${elementId}";
-			var languageIdFlag = vulpe.util.get("${property}_languageId_flag${currentStatus.count}");
-			languageIdFlag.bind('change', function(){
-				change${property}${currentStatus.count}(languageIdFlag.val());
+			var ${elementId}_id = "${elementId}";
+			var ${elementId}_languageId_flag = vulpe.util.get("${elementId}_languageId_flag");
+			${elementId}_languageId_flag.bind('change', function(){
+				${elementId}_change(${elementId}_languageId_flag.val());
 			});
-			languageIdFlag.msDropDown();
-			var text = vulpe.util.get(id + ".text");
+			${elementId}_languageId_flag.msDropDown();
+			<c:choose>
+			<c:when test="${not empty editor && editor}">
+			vulpe.util.get(${elementId}_id + "_dot_text").rte({
+				//css: ['default.css'],
+				controls_rte: rte_toolbar,
+				controls_html: html_toolbar
+			});
+			${elementId}_editor = true;
+			var text = vulpe.util.getElementField(${elementId}_id, "text");
+			var htmlbox = text.contents();
+			htmlbox.bind('keyup', function(){
+				${elementId}_textUpdate(htmlbox.find('body').html());
+			});
+			</c:when>
+			<c:otherwise>
+			var text = vulpe.util.getElementField(${elementId}_id, "text");
 			text.bind('blur keyup', function(){
-				textUpdate${property}${currentStatus.count}(text.val());
+				${elementId}_textUpdate(text.val());
 			});
 			vulpe.util.get("${property}_showOtherLanguages").bind("click", function(){
-				var value = languageIdFlag.val();
+				var value = ${elementId}_languageId_flag.val();
 				$("span", "#${property}_otherLanguages").show();
 				vulpe.util.get("${property}_otherLanguages" + value).hide();
 				vulpe.view.showHideElement("${property}_otherLanguages", true);
@@ -67,6 +96,8 @@
 				var othersLanguages = vulpe.util.get("${property}_otherLanguages").css("display") != "none";
 				showOtherLanguages.attr("src", src.indexOf("down.png") != -1 ? src.replace("down.png", "up.png") : src.replace("up.png", "down.png"));
 			});
+			</c:otherwise>
+			</c:choose>
 		});
 	</script>
 	<c:forEach var="language" items="${cachedClass['Language']}" varStatus="status">
@@ -76,7 +107,7 @@
 	<c:set var="languageIdValueEL" value="${'${'}${name}.languageId${'}'}"/>
 	<c:set var="languageIdValue" value="${util:eval(pageContext, languageIdValueEL)}"/>
 	<!--
-	<select id="${property}_languageId_flag${currentStatus.count}" style="width: 45px;" name="${name}.languageId">
+	<select id="${elementId}_languageId_flag" style="width: 45px;" name="${name}.languageId">
 		<option value="af" title="${pageContext.request.contextPath}/images/flags/af.png">Afrikaans</option>
 		<option value="sq" title="${pageContext.request.contextPath}/images/flags/sq.png">Albanian</option>
 		<option value="ar" title="${pageContext.request.contextPath}/images/flags/ar.png">Arabic</option>
@@ -136,7 +167,7 @@
 		<option value="yi" title="${pageContext.request.contextPath}/images/flags/yi.png">Yiddish</option>
 	</select>
 	 -->
-	<select id="${property}_languageId_flag${currentStatus.count}" style="width: 45px;" name="${name}.languageId">
+	<select id="${elementId}_languageId_flag" style="width: 45px;" name="${name}.languageId">
 	<c:forEach var="language" items="${cachedClass['Language']}" varStatus="status">
 		<c:set var="selected" value=""/>
 		<c:if test="${language.id == languageIdValue}"><c:set var="selected"> selected="selected"</c:set></c:if>
@@ -151,6 +182,7 @@
 			<v:textarea property="${property}.text" paragraph="false" required="${required}" rows="${rows}" cols="${cols}" />
 		</c:otherwise>
 	</c:choose>
+	<c:if test="${empty editor}">
 	<img src="${pageContext.request.contextPath}/images/icons/bullet_arrow_up.png" style="cursor: pointer" id="${property}_showOtherLanguages">
 	<c:set var="textLanguagesEL" value="${'${'}${name}.languages${'}'}"/>
 	<c:set var="textLanguages" value="${util:eval(pageContext, textLanguagesEL)}"/>
@@ -159,5 +191,6 @@
 			<span id="${property}_otherLanguages${textLanguage.language.id}"><br><img src="${pageContext.request.contextPath}/images/flags/${textLanguage.language.localeCode}.png">&nbsp;${textLanguage.text}</span>
 		</c:forEach>
 	</span>
+	</c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp"%>
 </c:if>

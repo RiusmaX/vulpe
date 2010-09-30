@@ -40,6 +40,12 @@
 .vulpeEntities {
 	border: 1px solid #eee;
 	margin-bottom: 15px;
+	margin-left: 27px;
+	width: 96%;
+}
+
+.vulpeEntities td, .vulpeEntities th{
+	padding: 5px;
 }
 
 .vulpeMessageError {
@@ -241,15 +247,6 @@
 	padding-bottom: 17px;
 	width: 100%;
 	text-align: left;
-}
-
-#body table {
-	margin-left: 27px;
-	width: 95%;
-}
-
-#body td,th {
-	padding: 5px;
 }
 
 #container {

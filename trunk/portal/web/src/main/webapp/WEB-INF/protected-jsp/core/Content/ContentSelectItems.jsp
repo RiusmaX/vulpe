@@ -23,6 +23,10 @@
 				labelKey="label.portal.core.Content.select.viewCount"
 				property="viewCount"
 			/>
+			<v:column
+				labelKey="label.portal.core.Content.select.status"
+				property="status"
+			/>
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">

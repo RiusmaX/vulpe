@@ -8,7 +8,6 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.services.CoreService;
 
-
 /**
  * Controller implementation of Download
  */
@@ -18,4 +17,9 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5))
 public class DownloadController extends BasePortalController<Download> {
 
+	@Override
+	protected void createAfter() {
+		super.createAfter();
+		getEntity().setDownloadCount(0L);
+	}
 }

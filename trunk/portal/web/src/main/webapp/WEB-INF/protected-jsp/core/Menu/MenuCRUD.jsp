@@ -27,3 +27,7 @@
 	property="url"
 	size="100"
 />
+<v:select
+	labelKey="label.portal.core.Menu.crud.status"
+	property="status" required="true"
+/>

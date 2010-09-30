@@ -11,6 +11,7 @@ import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.controller.ApplicationBaseSimpleController;
 import org.vulpe.portal.core.model.entity.Content;
 import org.vulpe.portal.core.model.entity.Download;
@@ -37,6 +38,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 			now.put(Now.CONTENT_SUBTITLE, section.getDescription());
 			final Content content = new Content();
 			content.setSection(section);
+			content.setStatus(Status.ACTIVE);
 			final List<Content> contents = getService(CoreService.class).readContent(content);
 			now.put("contents", contents);
 		} catch (VulpeApplicationException e) {

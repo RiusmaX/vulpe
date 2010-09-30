@@ -3,6 +3,7 @@
 <%@ attribute name="mask" required="false" rtexprvalue="true" %>
 <%@ attribute name="lowerCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="upperCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="editor" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
 <%@ attribute name="readonly" required="false" rtexprvalue="true" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
