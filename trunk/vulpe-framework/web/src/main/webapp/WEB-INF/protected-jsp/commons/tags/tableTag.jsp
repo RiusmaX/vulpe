@@ -33,7 +33,6 @@
 			</c:if>
 		</c:if>
 	</c:if>
-
 	<c:set var="isSelectTableTag" value="${false}" scope="request"/>
 	<c:set var="selectCheckOn" scope="request" value=""/>
 	<c:set var="selectCheckOff" scope="request" value=""/>
@@ -43,7 +42,6 @@
 		<c:set var="selectCheckOff" scope="request" value="vulpe.view.setSelectCheckbox(false);"/>
 		<c:set var="sortPropertyInfoTableTag" value="${sortPropertyInfo}" scope="request"/>
 	</c:if>
-
 	<c:if test="${not empty detailConfig}">
 		<c:set var="name" value="${targetConfigPropertyName}"/>
 		<c:set var="itemName" value="${detailConfig.baseName}_item"/>
@@ -61,15 +59,12 @@
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 		</c:if>
 	</c:if>
-
 	<c:if test="${not empty name && empty elementId}">
 		<c:set var="elementId" value="${name}"/>
 	</c:if>
-
 	<c:if test="${not empty elementId && empty name}">
 		<c:set var="name" value="${elementId}"/>
 	</c:if>
-
 	<c:if test="${empty itemName}">
 		<c:choose>
 			<c:when test="${not empty name}">
@@ -86,7 +81,6 @@
 			</c:otherwise>
 		</c:choose>
 	</c:if>
-
 	<c:if test="${not empty pagingList}">
 		<c:set var="items" value="${pagingList.list}"/>
 		<c:if test="${empty pagingActionName}">
@@ -99,14 +93,10 @@
 			<c:set var="pagingLayerFields" value="${pagingFormName}"/>
 		</c:if>
 		<c:if test="${empty pagingLayer}">
-			<c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable_'}${pagingFormName}"/>
+			<c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${pagingFormName}"/>
 		</c:if>
 	</c:if>
-
-	<c:if test="${empty items || fn:length(items) eq 0}">
-		<p><fmt:message key="${emptyKey}"/></p>
-	</c:if>
-
+	<c:if test="${empty items || fn:length(items) eq 0}"><p><fmt:message key="${emptyKey}"/></p></c:if>
 	<c:if test="${not empty items && fn:length(items) > 0}">
 		<c:if test="${empty width}">
 			<c:set var="width" value="100%"/>
@@ -117,7 +107,6 @@
 		<c:if test="${empty cellspacing}">
 			<c:set var="cellspacing" value="1"/>
 		</c:if>
-
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
@@ -132,9 +121,7 @@
 			<c:if test="${not empty detailConfig && renderId}">
 				<v:hidden property="id"/>
 			</c:if>
-
 			<jsp:invoke fragment="tableBody"/>
-
 			<c:if test="${not empty detailConfig && not empty detailConfig.subDetails && fn:length(detailConfig.subDetails) > 0}">
 				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
