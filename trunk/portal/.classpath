@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="commons/src/main/java"/>
+	<classpathentry kind="src" path="core/generated/main/java"/>
 	<classpathentry kind="src" path="controller/src/main/java"/>
 	<classpathentry kind="src" path="core/src/main/java"/>
 	<classpathentry kind="src" path="domains/src/main/resources"/>
@@ -55,6 +56,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-controller-struts/1.0/vulpe-controller-struts-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-controller-struts/1.0/vulpe-controller-struts-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-interfaces/1.0/vulpe-interfaces-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-interfaces/1.0/vulpe-interfaces-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-model/1.0/vulpe-model-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-model/1.0/vulpe-model-1.0-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-model-db4o/1.0/vulpe-model-db4o-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-model-db4o/1.0/vulpe-model-db4o-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-security/1.0/vulpe-security-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0.jar" sourcepath="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.6/commons-digester-1.6.jar"/>

@@ -51,11 +51,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 	public String content() {
 		try {
 			final Content content = getService(CoreService.class).findContent(contentId);
-			if (content.getViewCount() == null) {
-				content.setViewCount(1L);
-			} else {
-				content.setViewCount(content.getViewCount() + 1);
-			}
+			content.increaseView();
 			getService(CoreService.class).updateContent(content);
 			now.put(Now.CONTENT_TITLE, content.getTitle());
 			now.put(Now.SHOW_CONTENT_SUBTITLE, true);
@@ -71,11 +67,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 	public String download() {
 		try {
 			final Download download = getService(CoreService.class).findDownload(getDownloadId());
-			if (download.getDownloadCount() == null) {
-				download.setDownloadCount(1L);
-			} else {
-				download.setDownloadCount(download.getDownloadCount() + 1);
-			}
+			download.increaseDownload();
 			getService(CoreService.class).updateDownload(download);
 			return redirectTo(download.getUrl(), false);
 		} catch (VulpeApplicationException e) {

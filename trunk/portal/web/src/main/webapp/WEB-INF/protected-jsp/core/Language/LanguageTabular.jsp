@@ -22,7 +22,7 @@
 			<v:column labelKey="label.portal.core.Language.tabular.defaultLanguage">
 				<v:checkbox
 					property="defaultLanguage"
-					fieldValue="true"
+					fieldValue="true" onclick="vulpe.view.markOnlyOne(this, 'defaultLanguage');"
 				/>
 			</v:column>
 			<v:column labelKey="label.portal.core.Language.tabular.status">

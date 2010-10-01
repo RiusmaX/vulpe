@@ -20,6 +20,6 @@ public class ContentController extends BasePortalController<Content> {
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		getEntity().setViewCount(0L);
+		getEntity().setViews(0L);
 	}
 }

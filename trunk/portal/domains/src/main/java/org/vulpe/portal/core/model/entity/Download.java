@@ -1,20 +1,24 @@
 package org.vulpe.portal.core.model.entity;
 
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Select;
-import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
-import org.vulpe.view.annotations.View;
-import org.vulpe.view.annotations.View.ViewType;
+import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
-		ViewType.CRUD, ViewType.SELECT }))
+//@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
+//		ViewType.CRUD, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
 public class Download extends BasePortal {
+
+	@VulpeColumn(attribute = "name")
+	@VulpeSelect(argument = true, autoLoad = true, items = "Section", itemKey = "id", itemLabel = "name", showBlank = true, required = true)
+	private Section section;
+
+	@VulpeColumn(attribute = "name")
+	@VulpeSelect(autoLoad = true, items = "Category", itemKey = "id", itemLabel = "name", showBlank = true, required = true)
+	private Category category;
 
 	@VulpeColumn
 	@VulpeText(size = 60, argument = true, required = true)
@@ -27,7 +31,7 @@ public class Download extends BasePortal {
 	@VulpeText(size = 100)
 	private String url;
 
-	private Long downloadCount;
+	private Long downloads;
 
 	public void setName(TextTranslate name) {
 		this.name = name;
@@ -53,20 +57,44 @@ public class Download extends BasePortal {
 		return url;
 	}
 
-	public void setDownloadCount(Long downloadCount) {
-		this.downloadCount = downloadCount;
-	}
-
-	public Long getDownloadCount() {
-		return downloadCount;
-	}
-
 	@Override
 	public String toString() {
 		if (getName() != null) {
 			return getName().toString();
 		}
 		return super.toString();
+	}
+
+	public void setDownloads(Long downloads) {
+		this.downloads = downloads;
+	}
+
+	public Long getDownloads() {
+		return downloads;
+	}
+
+	public void increaseDownload() {
+		if (downloads == null) {
+			downloads = 1L;
+		} else {
+			++downloads;
+		}
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
+
+	public Section getSection() {
+		return section;
 	}
 
 }

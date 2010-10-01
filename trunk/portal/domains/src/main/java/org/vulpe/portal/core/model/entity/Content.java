@@ -37,11 +37,13 @@ public class Content extends BasePortal {
 	private TextTranslate fullText;
 
 	@VulpeColumn
-	private Long viewCount;
+	private Long views;
 
 	@IgnoreAutoFilter
 	@VulpeCheckbox(fieldValue = "true", required = true)
 	private boolean escapeXml;
+
+	private Boolean showComplete;
 
 	public TextTranslate getTitle() {
 		return title;
@@ -73,14 +75,6 @@ public class Content extends BasePortal {
 
 	public void setFullText(TextTranslate fullText) {
 		this.fullText = fullText;
-	}
-
-	public Long getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Long viewCount) {
-		this.viewCount = viewCount;
 	}
 
 	public boolean isEscapeXml() {
@@ -119,4 +113,29 @@ public class Content extends BasePortal {
 	public String getOrderBy() {
 		return "date desc";
 	}
+
+	public void setViews(Long views) {
+		this.views = views;
+	}
+
+	public Long getViews() {
+		return views;
+	}
+
+	public void increaseView() {
+		if (views == null) {
+			views = 1L;
+		} else {
+			++views;
+		}
+	}
+
+	public void setShowComplete(Boolean showComplete) {
+		this.showComplete = showComplete;
+	}
+
+	public Boolean getShowComplete() {
+		return showComplete;
+	}
+
 }

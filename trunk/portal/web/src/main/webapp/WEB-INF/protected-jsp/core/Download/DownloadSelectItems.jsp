@@ -9,7 +9,7 @@
 		<v:row>
 			<v:column labelKey="label.portal.core.Download.select.name" property="name" />
 			<v:column labelKey="label.portal.core.Download.select.url" property="url" />
-			<v:column labelKey="label.portal.core.Download.select.downloadCount" property="downloadCount" />
+			<v:column labelKey="label.portal.core.Download.select.downloads" property="downloads" />
 			<v:column labelKey="label.portal.core.Download.select.status" property="status" />
 		</v:row>
 	</jsp:attribute>
