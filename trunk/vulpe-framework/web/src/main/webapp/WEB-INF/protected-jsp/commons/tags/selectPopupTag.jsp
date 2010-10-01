@@ -3,7 +3,7 @@
 <c:if test="${empty readonly}"><c:set var="readonly" value="${true}"/></c:if>
 <c:if test="${show eq true}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/configAttributesTag.jsp" %>
-	<div id="${elementId}_selectPopup">
+	<div id="${elementId}-selectPopup">
 	<c:remove var="elementId"/>
 	<v:hidden property="${property}.${identifier}"/>
 	<c:if test="${autocomplete && empty autocompleteMinLength}">

@@ -49,14 +49,14 @@
 </c:otherwise>
 </c:choose>
 <c:if test="${show}">
-<li id="vulpeMenu_${elementId}">
-	<a id="vulpeMenuLink_${elementId}" href="javascript:void(0);"${currentClass}${onclick}${accesskey} title="${help}"><span>${label}</span></a>
+<li id="vulpeMenu-${elementId}">
+	<a id="vulpeMenuLink-${elementId}" href="javascript:void(0);"${currentClass}${onclick}${accesskey} title="${help}"><span>${label}</span></a>
 	<ul>
 		<jsp:doBody/>
 	</ul>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		vulpe.util.get("vulpeMenuLink_${elementId}").bind("click", function() {
+		vulpe.util.get("vulpeMenuLink-${elementId}").bind("click", function() {
 			jQuery(".vulpeCurrentMenu").removeClass("vulpeCurrentMenu")
 			$(this).addClass("vulpeCurrentMenu");
 		});
@@ -64,7 +64,7 @@
 		vulpe.util.addHotKey({
 			hotKey: "${hotKey}",
 			command: function (evt) {
-				vulpe.util.get("vulpeMenuLink_${elementId}").click();
+				vulpe.util.get("vulpeMenuLink-${elementId}").click();
 				return false;
 			}
 		});

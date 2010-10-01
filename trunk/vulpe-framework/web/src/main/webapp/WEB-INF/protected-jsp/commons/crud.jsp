@@ -22,7 +22,7 @@
 					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}">
 						<c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/>
 					</c:if>
-					<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail_${detail.baseName}">${tabTitle}</a></li>
+					<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail-${detail.baseName}">${tabTitle}</a></li>
 				</c:if>
 			</c:forEach>
 			<c:if test="${not empty vulpeCRUDFooter}">

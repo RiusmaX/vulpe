@@ -10,6 +10,17 @@
 	</c:when>
 	</c:choose>
 </c:if>
+<c:if test="${empty targetName}">
+	<c:if test="${empty targetConfig}">
+		<c:set var="prepareName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/>
+	</c:if>
+	<c:if test="${not empty targetConfig}">
+		<c:set var="prepareName" value="${targetConfigPropertyName}[${currentStatus.index}]"/>
+	</c:if>
+	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}"/>
+	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
+	<c:set var="prepareName" value="${fn:replace(prepareName, '.', '_')}"/>
+</c:if>
 <c:if test="${empty vulpeShowActions || !vulpeShowActions || vulpeBodySelect}">
 <c:set var="vulpeShowActions" value="true" scope="request"/>
 <script type="text/javascript" charset="utf-8">
@@ -22,9 +33,11 @@ $(document).ready(function() {
 	$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);
 </c:if>
 	if (document.forms['${vulpeFormName}']) {
-		vulpe.util.removeHotKeys(["return", "Ctrl+f7", "Ctrl+f8", "Ctrl+f9", "Ctrl+f10", "Ctrl+f12", "Ctrl+del", "Alt+f8", "Alt+Shift+del"]);
+	vulpe.config.formName = "${vulpeFormName}";
+	vulpe.config.logic.prepareName = "${prepareName}";
+	vulpe.util.removeHotKeys(["return", "Ctrl+f7", "Ctrl+f8", "Ctrl+f9", "Ctrl+f10", "Ctrl+f12", "Ctrl+del", "Alt+f8", "Alt+Shift+del"]);
 	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
-		var buttonCreate = vulpe.util.get("vulpeButtonCreate_${vulpeFormName}");
+		var buttonCreate = vulpe.util.get("vulpeButtonCreate-${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f8",
@@ -37,7 +50,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['createPost'] || now['buttons']['SELECT_createPost'] || now['buttons']['CRUD_createPost']}">
-		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost_${vulpeFormName}");
+		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost-${vulpeFormName}");
 		if (buttonCreatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
@@ -50,7 +63,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['updatePost'] || now['buttons']['SELECT_updatePost'] || now['buttons']['CRUD_updatePost']}">
-		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost_${vulpeFormName}");
+		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost-${vulpeFormName}");
 		if (buttonUpdatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
@@ -63,7 +76,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularPost']}">
-		var buttonTabularPost = vulpe.util.get("vulpeButtonTabularPost_${vulpeFormName}");
+		var buttonTabularPost = vulpe.util.get("vulpeButtonTabularPost-${vulpeFormName}");
 		if (buttonTabularPost.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f10",
@@ -76,7 +89,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['delete'] || now['buttons']['SELECT_delete'] || now['buttons']['CRUD_delete']}">
-		var buttonDelete = vulpe.util.get("vulpeButtonDelete_${vulpeFormName}");
+		var buttonDelete = vulpe.util.get("vulpeButtonDelete-${vulpeFormName}");
 		if (buttonDelete.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+del",
@@ -88,7 +101,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['prepare'] || now['buttons']['SELECT_prepare'] || now['buttons']['CRUD_prepare']}">
-		var buttonPrepare = vulpe.util.get("vulpeButtonPrepare_${vulpeFormName}");
+		var buttonPrepare = vulpe.util.get("vulpeButtonPrepare-${vulpeFormName}");
 		if (buttonPrepare.attr("onclick")) {
 			<c:if test="${now['controllerType'] == 'CRUD'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
@@ -107,7 +120,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularFilter']}">
-		var buttonTabularFilter = vulpe.util.get("vulpeButtonTabularFilter_${vulpeFormName}");
+		var buttonTabularFilter = vulpe.util.get("vulpeButtonTabularFilter-${vulpeFormName}");
 		if (buttonTabularFilter.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f7",
@@ -121,7 +134,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['tabularReload']}">
-		var buttonTabularReload = vulpe.util.get("vulpeButtonTabularReload_${vulpeFormName}");
+		var buttonTabularReload = vulpe.util.get("vulpeButtonTabularReload-${vulpeFormName}");
 		if (buttonTabularReload.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f9",
@@ -134,7 +147,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['read'] || now['buttons']['SELECT_read'] || now['buttons']['CRUD_read']}">
-		var buttonRead = vulpe.util.get("vulpeButtonRead_${vulpeFormName}");
+		var buttonRead = vulpe.util.get("vulpeButtonRead-${vulpeFormName}");
 		if (buttonRead.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f9",
@@ -148,7 +161,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['report'] || now['buttons']['SELECT_report'] || now['buttons']['CRUD_report']}">
-		var buttonReport = vulpe.util.get("vulpeButtonReport_${vulpeFormName}");
+		var buttonReport = vulpe.util.get("vulpeButtonReport-${vulpeFormName}");
 		if (buttonReport.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f12",
@@ -160,7 +173,7 @@ $(document).ready(function() {
 		}
 	</c:if>
 	<c:if test="${now['buttons']['clear'] || now['buttons']['SELECT_clear'] || now['buttons']['CRUD_clear']}">
-		var buttonClear = vulpe.util.get("vulpeButtonClear_${vulpeFormName}");
+		var buttonClear = vulpe.util.get("vulpeButtonClear-${vulpeFormName}");
 		if (buttonClear.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Alt+Shift+del",
@@ -171,15 +184,15 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:set var="buttonCreate_tabular_EL" value="${'${'}now['buttons']['addDetail${targetConfig.name}']${'}'}"/>
-	<c:set var="buttonCreate_tabular" value="${util:eval(pageContext, buttonCreate_tabular_EL)}"/>
-	<c:if test="${buttonCreate_tabular}">
-		var buttonAddDetail_entities = vulpe.util.get("vulpeButtonAddDetail_entities_${vulpeFormName}");
-		if (buttonAddDetail_entities.attr("onclick")) {
+	<c:set var="buttonCreateTabularEL" value="${'${'}now['buttons']['addDetail${targetConfig.name}']${'}'}"/>
+	<c:set var="buttonCreateTabular" value="${util:eval(pageContext, buttonCreateTabularEL)}"/>
+	<c:if test="${buttonCreateTabular}">
+		var buttonAddTabularLine = vulpe.util.get("vulpeButtonAddDetail-entities-${vulpeFormName}");
+		if (buttonAddTabularLine.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Ctrl+f8",
 				command: function() {
-					buttonAddDetail_entities.click();
+					buttonAddTabularLine.click();
 					return false;
 				},
 				override: true
@@ -191,7 +204,7 @@ $(document).ready(function() {
 		<c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${detail.baseName}']${'}'}"/>
 		<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}"/>
 		<c:if test="${buttonDetail}">
-		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail_${detail.baseName}_${vulpeFormName}");
+		var buttonAddDetail_${detail.baseName} = vulpe.util.get("vulpeButtonAddDetail-${detail.baseName}-${vulpeFormName}");
 		if (buttonAddDetail_${detail.baseName}.attr("onclick")) {
 			vulpe.util.addHotKey({
 				hotKey: "Alt+f8",
@@ -204,24 +217,24 @@ $(document).ready(function() {
 		</c:if>
 	</c:forEach>
 	</c:if>
-		vulpe.util.get('${vulpeFormName}_operation').each(function(){
+		vulpe.util.get('${vulpeFormName}-operation').each(function(){
 			$(this).val('${operation}');
 			$(this).attr('defaultValue', $(this).val());
 		});
-		vulpe.util.get('${vulpeFormName}_paging.page').each(function(){
+		vulpe.util.get('${vulpeFormName}-paging.page').each(function(){
 			$(this).val('${paging.page}');
 			$(this).attr('defaultValue', $(this).val());
 		});
-		vulpe.util.get('${vulpeFormName}_id').each(function(){
+		vulpe.util.get('${vulpeFormName}-id').each(function(){
 			$(this).val('${id}');
 			$(this).attr('defaultValue', $(this).val());
 		});
-		vulpe.util.get('${vulpeFormName}_executed').each(function(){
+		vulpe.util.get('${vulpeFormName}-executed').each(function(){
 			$(this).val('${executed}');
 			$(this).attr('defaultValue', $(this).val());
 		});
 		<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
-		vulpe.util.get('${vulpeFormName}_entity.orderBy').each(function(){
+		vulpe.util.get('${vulpeFormName}-entity_orderBy').each(function(){
 			$(this).val('${entity.orderBy}');
 			$(this).attr('defaultValue', $(this).val());
 		});
@@ -275,7 +288,7 @@ $(document).ready(function() {
 			var idField = field.attr("id");
 			var idRequiredField = idField + "FieldRequired";
 			if (vulpe.util.get(idRequiredField).length == 0) {
-				vulpe.util.get(idField + "_ErrorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
+				vulpe.util.get(idField + "-errorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
 			}
 		}
 	}

@@ -10,7 +10,7 @@
 	<c:if test="${empty labelClass}">
 		<c:set var="labelClass" value="vulpeBlockLabel"/>
 	</c:if>
-	<label id="${elementId}_label" for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}</label>
+	<label id="${elementId}-label" for="${elementId}" style="${labelStyle}" class="${labelClass}">${label}</label>
 	<c:if test="${breakLabel}">
 		<br/>
 	</c:if>

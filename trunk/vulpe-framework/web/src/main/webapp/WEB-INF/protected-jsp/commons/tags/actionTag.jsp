@@ -40,7 +40,7 @@
 			<c:set var="elementId" value="${labelKey}" />
 		</c:when>
 		<c:when test="${!fn:contains(elementId, 'vulpeButton')}">
-			<c:set var="elementId" value="${buttonPrefix}${elementId}_${vulpeFormName}" />
+			<c:set var="elementId" value="${buttonPrefix}${elementId}-${vulpeFormName}" />
 		</c:when>
 	</c:choose>
 	<c:if test="${not empty action && !fn:contains(action, '/')}">

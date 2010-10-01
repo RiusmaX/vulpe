@@ -109,7 +109,7 @@
 						vulpe.util.addHotKey({
 								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
 								command: function (){
-									vulpe.util.get("${elementId}").click();
+									vulpe.util.get("${vulpeFormName}-row-${elementId}").click();
 									return false;
 								}
 						});
@@ -141,12 +141,12 @@
 							<c:set var="deleteLayer" value="body"/>
 						</c:when>
 						<c:otherwise>
-							<c:set var="deleteLayer" value="vulpeDetailBody_${targetConfig.baseName}${currentDetailIndex}"/>
+							<c:set var="deleteLayer" value="vulpeDetailBody-${targetConfig.baseName}${currentDetailIndex}"/>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable_'}${deleteFormName}"/>
+					<c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${deleteFormName}"/>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
@@ -208,11 +208,11 @@
 	<c:if test="${not empty rowspan}">
 		<c:set var="rowspan"> rowspan="${rowspan}"</c:set>
 	</c:if>
-	<tr id="row_${elementId}_${vulpeFormName}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
+	<tr id="${vulpeFormName}-row-${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
 		<c:if test="${showLine}">
 			<v:column labelKey="label.vulpe.line" width="1%" styleClass="vulpeLine">
 				<c:if test="${!isHeaderTableTag}">
-					${currentStatus.index + 1}.
+					${currentStatus.count}.
 				</c:if>
 			</v:column>
 		</c:if>
@@ -226,7 +226,7 @@
 			</c:when>
 			<c:otherwise>
 				<th id="vulpeSelectAll" width="10px">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:otherwise>
 		</c:choose>
@@ -234,7 +234,7 @@
 		<c:if test="${!onlyToSee && showDeleteButton && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th id="vulpeSelectAll" width="10px" style="text-align: center">
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
@@ -257,7 +257,7 @@
 							vulpe.util.addHotKey({
 								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
 								command: function (){
-									vulpe.util.get("vulpeButtonUpdate${currentStatus.count}_${vulpeFormName}").click();
+									vulpe.util.get("vulpeButtonUpdate${currentStatus.count}-${vulpeFormName}").click();
 									return false;
 								}
 							});
@@ -272,10 +272,10 @@
 				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" logged="${deleteLogged}" width="1%" showBodyInHeader="true" style="text-align: center">
 					<c:choose>
 						<c:when test="${deleteType eq 'detail'}">
-							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16"/>
+							<v:action javascript="vulpe.view.request.submitDeleteDetailSelected('${targetConfigPropertyName}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16" elementId="DeleteAll"/>
 						</c:when>
 						<c:otherwise>
-							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16"/>
+							<v:action javascript="vulpe.view.request.submitDeleteSelected('${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}')" labelKey="label.vulpe.delete.selected" icon="delete-all" widthIcon="16" heightIcon="16" elementId="DeleteAll"/>
 						</c:otherwise>
 					</c:choose>
 				</v:column>
@@ -287,14 +287,14 @@
 						<c:if test="${disableDelete}">
 							<c:set var="javascript" value="return false;"/>
 						</c:if>
-						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%" />
+						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%" elementId="Delete${currentStatus.count}" />
 					</c:when>
 					<c:otherwise>
 						<c:set var="javascript">vulpe.view.confirmExclusion(function() {vulpe.view.request.submitDelete('${util:urlEncode(util:evalString(pageContext, deleteValue))}', '${deleteActionName}/ajax', '${deleteFormName}', '${deleteLayerFields}', '${deleteLayer}', '${deleteBeforeJs}', '${deleteAfterJs}');});</c:set>
 						<c:if test="${disableDelete}">
 							<c:set var="javascript" value="return false;"/>
 						</c:if>
-						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%"/>
+						<v:columnAction styleClass="vulpeDelete ${disableDelete ? 'vulpeIconOff' : ''}" roles="${deleteRole}" logged="${deleteLogged}" icon="row-delete" widthIcon="16" heightIcon="16" labelKey="${deleteLabelKey}" javascript="${javascript}" width="1%" elementId="Delete${currentStatus.count}"/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -303,7 +303,7 @@
 	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
 	<script type="text/javascript">
 	jQuery(function($){
-		$("#row_${elementId}_${vulpeFormName}").bind("mouseenter mouseleave", function(event){
+		$("#${vulpeFormName}-row-${elementId}").bind("mouseenter mouseleave", function(event){
 			$(this).toggleClass("vulpeSelectedRow");
 		});
 	});

@@ -11,19 +11,19 @@
 	</c:choose>
 </c:if>
 <v:form id="${vulpeFormName}" name="${vulpeFormName}" theme="simple" validate="true" enctype="multipart/form-data" method="post">
-	<input type="hidden" name="controllerType" value="${controllerType}" id="${vulpeFormName}_controllerType"/>
-	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}_operation"/>
-	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}_paging.page"/>
+	<input type="hidden" name="controllerType" value="${controllerType}" id="${vulpeFormName}-controllerType"/>
+	<input type="hidden" name="operation" value="${operation}" id="${vulpeFormName}-operation"/>
+	<input type="hidden" name="paging.page" value="${paging.page}" id="${vulpeFormName}-paging.page"/>
 	<c:if test="${now['controllerType'] == 'TABULAR'}">
-	<input type="hidden" name="tabularSize" value="${tabularSize}" id="${vulpeFormName}_tabularSize"/>
+	<input type="hidden" name="tabularSize" value="${tabularSize}" id="${vulpeFormName}-tabularSize"/>
 	</c:if>
-	<input type="hidden" name="id" value="${id}" id="${vulpeFormName}_id"/>
-	<input type="hidden" name="selectedTab" value="${selectedTab}" id="${vulpeFormName}_selectedTab"/>
-	<input type="hidden" name="executed" value="${executed}" id="${vulpeFormName}_executed"/>
+	<input type="hidden" name="id" value="${id}" id="${vulpeFormName}-id"/>
+	<input type="hidden" name="selectedTab" value="${selectedTab}" id="${vulpeFormName}-selectedTab"/>
+	<input type="hidden" name="executed" value="${executed}" id="${vulpeFormName}-executed"/>
 	<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
-	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${vulpeFormName}_entity.orderBy"/>
+	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${vulpeFormName}-entity_orderBy"/>
 	</c:if>
-	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}_popupKey"/>
+	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}-popupKey"/>
 	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">
 	<%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %>
 	</c:if>

@@ -9,7 +9,7 @@
 		<jsp:include page="${controllerConfig.viewPath}" />
 	</div>
 
-	<c:if test="${not empty backend_footer}">
+	<c:if test="${not empty backendFooter}">
 	<div id="vulpeBackendFooter">
 	</div>
 	</c:if>

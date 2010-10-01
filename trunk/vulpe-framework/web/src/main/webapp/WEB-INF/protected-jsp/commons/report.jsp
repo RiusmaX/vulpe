@@ -8,7 +8,7 @@
 			<jsp:include page="${controllerConfig.viewPath}" />
 		</p>
 	</div>
-	<div id="vulpeReportTable_${vulpeFormName}">
+	<div id="vulpeReportTable-${vulpeFormName}">
 		<p class="vulpeReportTable">
 			<jsp:include page="${controllerConfig.viewItemsPath}" />
 			<c:if test="${not empty downloadInfo}">

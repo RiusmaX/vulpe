@@ -34,7 +34,7 @@
 </c:if>
 <c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
 <c:if test="${not empty style}"><c:set var="style"> style="${style}"</c:set></c:if>
-<span id="${property}${not empty currentStatus ? currentStatus.count : ''}_show" ${styleClass}${style}>
+<span id="${property}${not empty currentStatus ? currentStatus.count : ''}-show" ${styleClass}${style}>
 <c:choose>
 	<c:when test="${not empty type}">
 		<c:choose>

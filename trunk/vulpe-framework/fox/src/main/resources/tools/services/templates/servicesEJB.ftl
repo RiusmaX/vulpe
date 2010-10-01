@@ -51,9 +51,7 @@ public class ${baseClassName}ServiceEJB implements ${baseClassName}Service {
 			milliseconds = System.currentTimeMillis();
 			LOG.debug("Method ${methodName} - Start");
 		}
-
 		<#if method.returnType != 'void'>final ${resolveType(method.returnType)} result = </#if>${type.simpleName?uncap_first}.${method.simpleName}(<#list method.parameters as p><#if p_index &gt; 0>, </#if>${p.simpleName}</#list>);
-
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method ${methodName} - End");
 			LOG.debug("Operation executed in "  + (System.currentTimeMillis() - milliseconds) + "ms");

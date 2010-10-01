@@ -51,9 +51,9 @@
 			</c:choose>
 			<jsp:doBody/>
 			<c:if test="${!onlyToSee}">
-			<a id="${elementId}_Error" style="display: none;" href="javascript:;" onclick="vulpe.util.get('${elementId}').focus();" onmouseover="vulpe.view.openTooltip('${elementId}_ErrorMsg');" onmouseout="vulpe.view.closeTooltip('${elementId}_ErrorMsg');">
+			<a id="${elementId}-Error" style="display: none;" href="javascript:;" onclick="vulpe.util.get('${elementId}').focus();" onmouseover="vulpe.view.openTooltip('${elementId}-ErrorMsg');" onmouseout="vulpe.view.closeTooltip('${elementId}-ErrorMsg');">
 				<img src="${pageContext.request.contextPath}/themes/${global['theme']}/images/stop.png" border="0" />
-				<div id="${elementId}_ErrorMsg" class="tooltip"><em></em></div>
+				<div id="${elementId}-ErrorMsg" class="tooltip"><em></em></div>
 			</a>
 			</c:if>
 		</c:when>

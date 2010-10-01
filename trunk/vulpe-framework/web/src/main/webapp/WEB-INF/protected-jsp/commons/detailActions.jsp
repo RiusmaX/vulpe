@@ -12,11 +12,11 @@
 <c:set var="style" value="display: none;" />
 <c:if test="${buttonDetail}">
 <v:action
-	layerFields="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}"
+	layerFields="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}"
 	validate="false" labelKey="addDetail"
-	elementId="AddDetail_${targetConfig.baseName}"
+	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"
 	queryString="detail=${targetConfigPropertyName}" showButtonAsImage="false"
-	layer="vulpeDetailBody_${targetConfigLocal.baseName}${currentDetailIndex}" />
+	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" />
 </c:if>
 </p>

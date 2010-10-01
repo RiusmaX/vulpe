@@ -40,12 +40,12 @@
 			</c:if>
 			<c:choose>
 			<c:when test="${global['useDB4O']}">
-				<c:set var="elementId">id="${sortPropertyInfoTableTag}_${property}" </c:set>
-				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${property}');">${label}</a></c:set>
+				<c:set var="elementId">id="${sortPropertyInfoTableTag}-${property}" </c:set>
+				<c:set var="label"><a href="javascript:void(0);" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${property}');">${label}</a></c:set>
 			</c:when>
 			<c:otherwise>
-				<c:set var="elementId">id="${sortPropertyInfoTableTag}_${alias}.${property}" </c:set>
-				<c:set var="label"><a href="javascript:;" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${property}');">${label}</a></c:set>
+				<c:set var="elementId">id="${sortPropertyInfoTableTag}-${alias}-${property}" </c:set>
+				<c:set var="label"><a href="javascript:void(0);" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${property}');">${label}</a></c:set>
 			</c:otherwise>
 			</c:choose>
 		</c:if>

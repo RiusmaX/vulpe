@@ -32,7 +32,8 @@ var vulpe = {
 			fieldError: "vulpeFieldError"
 		},
 		elements: new Array(),
-		entity: "_entity.",
+		entity: "-entity.",
+		formName: "",
 		iPhone: {
 			popupTop: 0
 		},
@@ -87,29 +88,28 @@ var vulpe = {
 			iPhone: (BrowserDetect.OS == "iPhone/iPod")
 		},
 		order: new Array(),
-		pagingPage: "_paging.page",
+		pagingPage: "-paging.page",
 		prefix: {
-			detail: "#vulpeDetail_",
-			popup: "Popup_"
+			detail: "#vulpeDetail-",
+			popup: "Popup-"
 		},
 		popup: {
-			closeTitle: "Close (Shortcut: Esc)",
 			mobile: false
 		},
 		showLoading: true,
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
-			action: ".action",
-			errorMessage: "_ErrorMessage",
-			identifier: "_id",
-			loading: "_loading",
-			selectedTab: "_selectedTab"
+			errorMessage: "-errorMessage",
+			identifier: "-id",
+			loading: "-loading",
+			selectedTab: "-selectedTab"
 		},
 		redirectToIndex: true,
 		requireOneFilter: false,
 		theme: 'default',
 		token: {
-			fieldIndex: "_vfindex_"
+			fieldIndex: "__",
+			dot: "_"
 		},
 		accentMap: {}
 	},
@@ -201,19 +201,31 @@ var vulpe = {
 		},
 
 		getPrefixId: function(formName) {
-			var prefix = formName + "_" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + "_dot_");
-			return prefix
+			if (formName) {
+				vulpe.config.formName = formName;
+			}
+			return vulpe.config.formName + "-" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + vulpe.config.token.dot);
+		},
+
+		getElementId: function(element) {
+			var id = "";
+			if (typeof element == "string") {
+				id = element;
+			} else {
+				id = element.id ? element.id : jQuery(element).attr("id")
+			}
+			return id;
 		},
 
 		getPrefixIdByElement: function(element) {
-			var id = element.id ? element.id : jQuery(element).attr("id");
-			var prefix = id.indexOf(vulpe.config.token.fieldIndex) != -1 ? id.substring(0, id.lastIndexOf(vulpe.config.token.fieldIndex) + vulpe.config.token.fieldIndex.length -1) : id.substring(0, id.lastIndexOf("_dot_") + 1);
-			return prefix;
+			var id = vulpe.util.getElementId(element);
+			var prefix = id.indexOf(vulpe.config.token.fieldIndex) != -1 ? id.substring(0, id.lastIndexOf(vulpe.config.token.fieldIndex) + vulpe.config.token.fieldIndex.length -1) : id.substring(0, id.lastIndexOf(vulpe.config.token.dot));
+			return prefix + vulpe.config.token.dot;
 		},
 
 		getDetailByElementId: function(id) {
 			var detail = id.substring(0, id.indexOf(vulpe.config.token.fieldIndex));
-			detail = detail.substring(detail.lastIndexOf("_dot_") + 1, detail.length);
+			detail = detail.substring(detail.lastIndexOf(vulpe.config.token.dot) + 1, detail.length);
 			return detail;
 		},
 
@@ -223,9 +235,18 @@ var vulpe = {
 			return index;
 		},
 
-		getElementField: function(element, name) {
-			var prefix = typeof element == "string" ? element : vulpe.util.getPrefixIdByElement(element);
-			return vulpe.util.get(prefix + "_dot_" + name);
+		getElementField: function(name, element) {
+			var prefix = element ? vulpe.util.getPrefixIdByElement(element) : vulpe.util.getPrefixId();
+			var field = vulpe.util.get(name.indexOf(prefix) != -1 ? name : prefix + name);
+			if (field.length == 0){
+				prefix = vulpe.util.getElementId(element) + vulpe.config.token.dot;
+				field = vulpe.util.get(prefix + name);
+				if (field.length == 0) {
+					prefix = vulpe.util.getElementId(element) + "-";
+					field = vulpe.util.get(prefix + name);
+				}
+			}
+			return field;
 		},
 
 		getElementConfig: function(id) {
@@ -586,8 +607,8 @@ var vulpe = {
 					}
 					return isValid;
 				} else {
-					var idParent = idField.substring(0, idField.lastIndexOf("_dot_"));
-					var idSelectPopup = idParent + "_selectPopup";
+					var idParent = idField.substring(0, idField.lastIndexOf(vulpe.config.token.dot));
+					var idSelectPopup = idParent + "-selectPopup";
 					var selectPopup = vulpe.util.get(idSelectPopup);
 					if (selectPopup != null && selectPopup.length == 1) {
 						value = vulpe.util.get(idParent + ".id").val();
@@ -897,8 +918,8 @@ var vulpe = {
 								break;
 							}
 						} else {
-							var idParent = idField.substring(0, idField.lastIndexOf("_dot_"));
-							var idSelectPopup = idParent + "_selectPopup";
+							var idParent = idField.substring(0, idField.lastIndexOf(vulpe.config.token.dot));
+							var idSelectPopup = idParent + "-selectPopup";
 							var selectPopup = vulpe.util.get(idSelectPopup);
 							if (selectPopup != null && selectPopup.length == 1) {
 								value = vulpe.util.get(idParent + ".id").val();
@@ -1099,11 +1120,25 @@ var vulpe = {
 			vulpe.view.isSelection = select;
 		},
 
-		markUnmarkAll: function(controller, parent) {
-			var selections = jQuery("*[name$='selected']", parent);
+		markUnmarkAll: function(controller, name, parent) {
+			if (!parent) {
+				parent = "#body";
+			}
+			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
 			for (var i = 0; i < selections.length; i++) {
 				selections[i].checked = controller.checked;
 			}
+		},
+
+		markOnlyOne: function(controller, name, parent) {
+			if (!parent) {
+				parent = "#body";
+			}
+			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
+			for (var i = 0; i < selections.length; i++) {
+				selections[i].checked = false;
+			}
+			controller.checked = true;
 		},
 
 		setupSortTable: function(sortPropertyInfoName) {

@@ -15,21 +15,21 @@
 	<c:if test="${empty popupId}">
 		<c:choose>
 			<c:when test="${fn:contains(action, '?')}">
-				<c:set var="popupId" value="${util:clearChars(fn:substring(fn:trim(action), 0, fn:indexOf(fn:trim(action), '?')), '/.')}_popup"/>
+				<c:set var="popupId" value="${util:clearChars(fn:substring(fn:trim(action), 0, fn:indexOf(fn:trim(action), '?')), '/.')}-popup"/>
 			</c:when>
 			<c:otherwise>
-				<c:set var="popupId" value="${util:clearChars(fn:trim(action), '/.')}_popup"/>
+				<c:set var="popupId" value="${util:clearChars(fn:trim(action), '/.')}-popup"/>
 			</c:otherwise>
 		</c:choose>
 	</c:if>
 
 	<c:if test="${empty popupTargetName}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="popupTargetName" value="${vulpeFormName}_entity."/>
+			<c:set var="popupTargetName" value="${vulpeFormName}-entity."/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="popupTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="popupTargetName" value="${vulpeFormName}_${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
+			<c:set var="popupTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
 		</c:if>
 	</c:if>
 	<c:choose>
@@ -43,11 +43,11 @@
 
 	<c:if test="${empty paramTargetName}">
 		<c:if test="${empty targetConfig}">
-			<c:set var="paramTargetName" value="${vulpeFormName}_entity"/>
+			<c:set var="paramTargetName" value="${vulpeFormName}-entity"/>
 		</c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="paramTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="paramTargetName" value="${vulpeFormName}_${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
+			<c:set var="paramTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
 		</c:if>
 	</c:if>
 	<c:choose>
@@ -66,10 +66,10 @@
 		<c:if test="${not empty targetConfig}">
 			<c:set var="index" value=""/>
 			<c:if test="${not empty targetConfig.parentDetailConfig}">
-				<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
-				<c:set var="index" value="_${util:eval(pageContext, indexEL)}_"/>
+				<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}-status.index${'}'}"/>
+				<c:set var="index" value="__${util:eval(pageContext, indexEL)}__"/>
 			</c:if>
-			<c:set var="popupLayerParent" value="${vulpeFormName}_${targetConfig.baseName}${index}"/>
+			<c:set var="popupLayerParent" value="${vulpeFormName}-${targetConfig.baseName}${index}"/>
 		</c:if>
 	</c:if>
 	<c:if test="${popupLayerParent eq 'false'}">
@@ -84,9 +84,9 @@
 			<c:set var="index" value=""/>
 			<c:if test="${not empty targetConfig.parentDetailConfig}">
 				<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
-				<c:set var="index" value="_${util:eval(pageContext, indexEL)}_"/>
+				<c:set var="index" value="__${util:eval(pageContext, indexEL)}__"/>
 			</c:if>
-			<c:set var="paramLayerParent" value="${vulpeFormName}_${targetConfig.baseName}${index}"/>
+			<c:set var="paramLayerParent" value="${vulpeFormName}-${targetConfig.baseName}${index}"/>
 		</c:if>
 	</c:if>
 	<c:if test="${paramLayerParent eq 'false'}">

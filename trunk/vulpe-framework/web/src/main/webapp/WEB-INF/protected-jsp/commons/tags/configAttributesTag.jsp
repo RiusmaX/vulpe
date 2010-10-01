@@ -30,11 +30,11 @@
 </c:if>
 <c:if test="${not empty property && empty name}"><c:set var="name" value="${targetName}.${property}"/></c:if>
 <c:if test="${empty elementId}">
-	<c:set var="prepareName" value="${fn:replace(name, '[', '_vfindex_')}"/>
-	<c:set var="prepareName" value="${fn:replace(prepareName, ']', '_vfindex')}"/>
-	<c:set var="elementId" value="${vulpeFormName}_${prepareName}"/>
+	<c:set var="prepareName" value="${fn:replace(name, '[', '__')}"/>
+	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
+	<c:set var="elementId" value="${vulpeFormName}-${prepareName}"/>
 </c:if>
-<c:set var="elementId" value="${fn:replace(elementId, '.', '_dot_')}"/>
+<c:set var="elementId" value="${fn:replace(elementId, '.', '_')}"/>
 <c:if test="${not empty property && empty value}">
 	<c:set var="valueEL" value="${'${'}targetValue.${property}${'}'}"/>
 	<c:set var="value" value="${util:eval(pageContext, valueEL)}"/>

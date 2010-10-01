@@ -3,7 +3,7 @@
 <c:set var="scope" scope="request" value="${scope}"/>
 <c:if test="${show eq true}">
 	<c:if test="${empty sortPropertyInfo}">
-		<c:set var="sortPropertyInfo" value="${vulpeFormName}_entity.orderBy"/>
+		<c:set var="sortPropertyInfo" value="${vulpeFormName}-entity_orderBy"/>
 	</c:if>
 	<c:if test="${empty renderId}">
 		<c:set var="renderId" value="${true}"/>
