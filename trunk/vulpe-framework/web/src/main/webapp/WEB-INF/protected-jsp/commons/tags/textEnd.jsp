@@ -58,12 +58,12 @@
 			<c:if test="${autocompleteSelect}">
 			select: function(event, ui) {
 				var idValue = "${elementId}";
-				var idProperty = idValue.substring(0, idValue.lastIndexOf(".") + 1) + "id";
+				var idProperty = idValue.substring(0, idValue.lastIndexOf("_") + 1) + "id";
 				vulpe.util.get(idProperty).val(ui.item.id);
 				<c:if test="${not empty autocompleteProperties}">
 				var autocompleteProperties = "${autocompleteProperties}".split(",");
 				for (var i = 0; i < autocompleteProperties.length; i++) {
-					vulpe.util.get("${elementId}".replace("${property}", "") + autocompleteProperties[i]).val(eval("ui.item." + autocompleteProperties[i]));
+					vulpe.util.get("${elementId}".replace("${fn:replace(property, '.', '_')}", "") + autocompleteProperties[i]).val(eval("ui.item." + autocompleteProperties[i]));
 				}
 				</c:if>
 				vulpe.util.get("${elementId}").blur();

@@ -611,7 +611,7 @@ var vulpe = {
 					var idSelectPopup = idParent + "-selectPopup";
 					var selectPopup = vulpe.util.get(idSelectPopup);
 					if (selectPopup != null && selectPopup.length == 1) {
-						value = vulpe.util.get(idParent + ".id").val();
+						value = vulpe.util.get(idParent + "_id").val();
 						if (vulpe.util.trim(value).length == 0) {
 							vulpe.util.get(idField).val("");
 						}
@@ -922,7 +922,7 @@ var vulpe = {
 							var idSelectPopup = idParent + "-selectPopup";
 							var selectPopup = vulpe.util.get(idSelectPopup);
 							if (selectPopup != null && selectPopup.length == 1) {
-								value = vulpe.util.get(idParent + ".id").val();
+								value = vulpe.util.get(idParent + "_id").val();
 								if (vulpe.util.trim(value).length == 0) {
 									vulpe.util.get(idField).val("");
 								}
