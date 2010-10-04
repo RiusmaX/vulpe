@@ -28,7 +28,7 @@
 <%@ attribute name="updateRole" required="false" rtexprvalue="true" %>
 <%@ attribute name="updateLogged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="popupProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showLine" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showUpdateButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

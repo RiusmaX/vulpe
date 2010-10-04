@@ -16,6 +16,7 @@ import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+import org.vulpe.exception.VulpeApplicationException;
 
 import br.gov.pbh.prodabel.transfere.commons.ApplicationConstants.Now;
 import br.gov.pbh.prodabel.transfere.commons.ApplicationConstants.Sessao;
@@ -103,13 +104,12 @@ public class ObjetoController extends ObjetoBaseController {
 	}
 
 	public String transferir() {
-		// try {
-		// String retorno =
-		// getService(CoreService.class).transferir(getEntity());
-		// addActionMessage("Resultado da Soma: " + retorno);
-		// } catch (VulpeApplicationException e) {
-		// LOG.error(e);
-		// }
+		try {
+			String retorno = getService(CoreService.class).transferir(getEntity());
+			addActionMessage("Resultado da Soma: " + retorno);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
 		addActionMessage("Transferência realizada com sucesso!");
 		return Forward.SUCCESS;
 	}

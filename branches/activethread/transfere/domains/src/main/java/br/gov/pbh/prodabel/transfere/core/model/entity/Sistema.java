@@ -74,6 +74,15 @@ public class Sistema extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "DBLINK_HOMOLOGACAO")
 	private String dblinkHomologacao;
 
+	@Column(name = "USUARIO_HOMOLOGACAO")
+	private String usuarioHomologacao;
+
+	@Column(name = "SENHA_HOMOLOGACAO")
+	private String senhaHomologacao;
+
+	@Column(name = "CONEXAO_HOMOLOGACAO")
+	private String conexaoHomologacao;
+
 	@VulpeText(required = true, size = 20, maxlength = 20)
 	@Column(name = "OWNER_PRODUCAO")
 	private String ownerProducao;
@@ -82,9 +91,27 @@ public class Sistema extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "DBLINK_PRODUCAO")
 	private String dblinkProducao;
 
+	@Column(name = "USUARIO_PRODUCAO")
+	private String usuarioProducao;
+
+	@Column(name = "SENHA_PRODUCAO")
+	private String senhaProducao;
+
+	@Column(name = "CONEXAO_PRODUCAO")
+	private String conexaoProducao;
+
 	@VulpeText(required = true, size = 50, maxlength = 100)
 	@Column(name = "DBLINK_DESENVOLVIMENTO")
 	private String dblinkDesenvolvimento;
+
+	@Column(name = "USUARIO_DESENVOLVIMENTO")
+	private String usuarioDesenvolvimento;
+
+	@Column(name = "SENHA_DESENVOLVIMENTO")
+	private String senhaDesenvolvimento;
+
+	@Column(name = "CONEXAO_DESENVOLVIMENTO")
+	private String conexaoDesenvolvimento;
 
 	@Detail(clazz = SistemaUsuario.class)
 	@OneToMany(targetEntity = SistemaUsuario.class, mappedBy = "sistema", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -187,6 +214,78 @@ public class Sistema extends AbstractVulpeBaseJPAEntity<Long> {
 
 	public List<SistemaUsuario> getUsuarios() {
 		return usuarios;
+	}
+
+	public String getUsuarioHomologacao() {
+		return usuarioHomologacao;
+	}
+
+	public void setUsuarioHomologacao(String usuarioHomologacao) {
+		this.usuarioHomologacao = usuarioHomologacao;
+	}
+
+	public String getSenhaHomologacao() {
+		return senhaHomologacao;
+	}
+
+	public void setSenhaHomologacao(String senhaHomologacao) {
+		this.senhaHomologacao = senhaHomologacao;
+	}
+
+	public String getConexaoHomologacao() {
+		return conexaoHomologacao;
+	}
+
+	public void setConexaoHomologacao(String conexaoHomologacao) {
+		this.conexaoHomologacao = conexaoHomologacao;
+	}
+
+	public String getUsuarioProducao() {
+		return usuarioProducao;
+	}
+
+	public void setUsuarioProducao(String usuarioProducao) {
+		this.usuarioProducao = usuarioProducao;
+	}
+
+	public String getSenhaProducao() {
+		return senhaProducao;
+	}
+
+	public void setSenhaProducao(String senhaProducao) {
+		this.senhaProducao = senhaProducao;
+	}
+
+	public String getConexaoProducao() {
+		return conexaoProducao;
+	}
+
+	public void setConexaoProducao(String conexaoProducao) {
+		this.conexaoProducao = conexaoProducao;
+	}
+
+	public String getUsuarioDesenvolvimento() {
+		return usuarioDesenvolvimento;
+	}
+
+	public void setUsuarioDesenvolvimento(String usuarioDesenvolvimento) {
+		this.usuarioDesenvolvimento = usuarioDesenvolvimento;
+	}
+
+	public String getSenhaDesenvolvimento() {
+		return senhaDesenvolvimento;
+	}
+
+	public void setSenhaDesenvolvimento(String senhaDesenvolvimento) {
+		this.senhaDesenvolvimento = senhaDesenvolvimento;
+	}
+
+	public String getConexaoDesenvolvimento() {
+		return conexaoDesenvolvimento;
+	}
+
+	public void setConexaoDesenvolvimento(String conexaoDesenvolvimento) {
+		this.conexaoDesenvolvimento = conexaoDesenvolvimento;
 	}
 
 }

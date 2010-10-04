@@ -8,7 +8,7 @@
 <%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="labelStyle" required="false" rtexprvalue="true" %>
 <%@ attribute name="width" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="role" required="false" rtexprvalue="true" %>
+<%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sort" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="alias" required="false" rtexprvalue="true" %>

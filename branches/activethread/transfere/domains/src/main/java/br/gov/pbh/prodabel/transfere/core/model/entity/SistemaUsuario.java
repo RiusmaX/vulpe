@@ -34,7 +34,7 @@ public class SistemaUsuario extends AbstractVulpeBaseJPAEntity<Long> {
 	@JoinColumn(name = "ID_TRANSFERENCIA_SISTEMA")
 	private Sistema sistema;
 
-	@VulpeSelectPopup(identifier = "id", description = "name", action = "/security/User/select/prepare", popupWidth = 420, argument = true, autocomplete = true)
+	@VulpeSelectPopup(identifier = "id", description = "name", action = "/security/User/select", popupWidth = 420, argument = true, autocomplete = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_TRANSFERENCIA_USUARIO", referencedColumnName = "ID")
 	private User usuario;

@@ -420,7 +420,7 @@ ol,ul {
 p {
 	font-size: 11px;
 	margin: 5px;
-	margin-left: 10px;
+	margin-left: 28px;
 }
 
 tbody tr {
@@ -441,20 +441,19 @@ tfoot {
 	text-align: center;
 }
 
-th,.vulpeTableHeader {
+thead th,th,.vulpeTableHeader {
 	color: #333;
+	font-size: 12px;
 	font-weight: bold;
-	background-color: #eee;
+	background: #fff url(../../images/shadow-bottom.png) bottom repeat-x;
 }
 
 thead th,.vulpeTableHeader {
-	color: #333;
-	font-weight: bold;
-	background-color: #eee;
+	background: #fff url(../../images/shadow-top.png) top repeat-x;
 }
 
 thead tr {
-	text-align: center;
+	text-align: left;
 }
 
 html,body {
@@ -469,23 +468,16 @@ html,body {
 #body {
 	background-color: #fff;
 	padding-bottom: 30px;
-	width: 800px;
+	width: 100%;
 	border: #999999 solid 0px;
 	display: table;
 	padding: 0px;
-	-moz-border-radius-topleft: 0px;
-	-moz-border-radius-topright: 0px;
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
-	-webkit-border-top-left-radius: 0px;
-	-webkit-border-top-right-radius: 0px;
-	-webkit-border-bottom-right-radius: 7px;
-	-webkit-border-bottom-left-radius: 7px;
+	text-align: left;
 }
 
 #body table {
-	margin-left: 10px;
-	width: 97.5%;
+	margin-left: 28px;
+	width: 95.5%;
 }
 
 #body td, #body th {
@@ -537,7 +529,14 @@ html,body {
 }
 
 #footer {
-	text-align: center;
+	background: url(../../images/background-all.png) repeat-x;
+	font-size: 10px;
+	height: 30px;
+	width: 100%;
+	max-width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 0px;
 }
 
 #legend {
@@ -545,30 +544,18 @@ html,body {
 }
 
 #frontend {
-	border-top: #dddddd solid 1px;
-	border-left: #dddddd solid 1px;
-	border-right: #dddddd solid 1px;
-	border-bottom: #dddddd solid 1px;
 	background: #ccc;
 	top: 0px;
 	margin: 0 auto;
 	position: relative;
-	width: 800px;
-	padding: 3px;
+	width: 100%;
+	padding: 0px;
 	height: auto;
 	text-align: left;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
-	-webkit-border-bottom-left-radius: 7px;
 }
 
 #header {
-	width: 800px;
+	width: 100%;
 	height: 75px;
 	top: 0;
 }
@@ -581,15 +568,7 @@ html,body {
 	height: 45px;
 	padding: 3px;
 	vertical-align: top;
-	width: 794px;
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
-	-moz-border-radius-bottomleft: 0px;
-	-moz-border-radius-bottomright: 0px;
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
-	-webkit-border-bottom-right-radius: 0px;
-	-webkit-border-bottom-left-radius: 0px;
+	width: auto;
 }
 
 #header .title .applicationName {
@@ -605,7 +584,7 @@ html,body {
 	height: 17px;
 	padding: 3px;
 	vertical-align: top;
-	width: 794px;
+	width: auto;
 }
 
 #loading {
@@ -661,14 +640,14 @@ html,body {
 
 #menu {
 	background-color: #000;
-	width: 800px;
+	width: 100%;
 	height: 23px;
 }
 
 #messages {
 	position: relative;
 	top: 1px;
-	width: 796px;
+	width: auto;
 	margin-left: 0px;
 	margin-right: 0px;
 }

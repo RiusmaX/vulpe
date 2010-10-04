@@ -61,5 +61,6 @@
 	<classpathentry kind="var" path="M2_REPO/br/gov/pbh/prodabel/transfere/transfere-core/1.0/transfere-core-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/gov/pbh/prodabel/transfere/transfere-domains/1.0/transfere-domains-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security-struts/1.0/vulpe-security-struts-1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Active Thread/Vulpe Framework/1.0/Servers/tomcat/lib/ojdbc14.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
