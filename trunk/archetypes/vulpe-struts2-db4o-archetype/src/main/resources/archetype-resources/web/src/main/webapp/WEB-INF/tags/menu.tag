@@ -11,4 +11,5 @@
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
+<%@ attribute name="current" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/menuTag.jsp"%>
