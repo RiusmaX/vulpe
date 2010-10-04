@@ -34,7 +34,6 @@
 	labelKey="label.portal.core.Link.crud.url"
 	property="url"
 	size="100"
-	required="true"
 />
 <v:select
 	labelKey="label.portal.core.Link.crud.target"

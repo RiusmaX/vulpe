@@ -31,8 +31,10 @@ public class Link extends BasePortal {
 	@VulpeText(size = 100, required = true)
 	private TextTranslate description;
 
+	private Content content;
+
 	@VulpeColumn
-	@VulpeText(size = 100, required = true)
+	@VulpeText(size = 100)
 	private String url;
 
 	@VulpeColumn
@@ -121,5 +123,13 @@ public class Link extends BasePortal {
 
 	public List<Position> getPositions() {
 		return positions;
+	}
+
+	public void setContent(Content content) {
+		this.content = content;
+	}
+
+	public Content getContent() {
+		return content;
 	}
 }

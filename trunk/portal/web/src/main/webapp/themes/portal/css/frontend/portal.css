@@ -23,7 +23,7 @@
 
 .vulpeBlockLabel {
 	display: block;
-	width: 135px;
+	width: auto;
 	float: left;
 }
 
@@ -489,12 +489,15 @@ html,body {
 	color: #999;
 }
 
-#poweredby a {
+#poweredby a:hover {
 	text-decoration: none;
 }
 
+#poweredby a, #poweredby a:visited {
+	color: #ccc;
+}
+
 #poweredby a:hover {
-	color: #999;
 	text-decoration: none;
 }
 
@@ -751,7 +754,7 @@ ol, ul {
 	margin: 0px 40px;
 }
 
-#date_show {
+#date-show {
 	color: #ddd;
 	font-size: 9px;
 }

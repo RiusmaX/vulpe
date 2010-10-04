@@ -22,4 +22,10 @@ import org.vulpe.portal.controller.ApplicationBaseController;
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5))
 public class LinkController extends ApplicationBaseController<Link, java.lang.Long> {
 
+	@Override
+	protected void createAfter() {
+		super.createAfter();
+		getEntity().setClicks(0L);
+	}
+
 }

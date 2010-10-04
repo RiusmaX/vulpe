@@ -23,7 +23,7 @@
 
 .vulpeBlockLabel {
 	display: block;
-	width: 135px;
+	width: auto;
 	float: left;
 }
 

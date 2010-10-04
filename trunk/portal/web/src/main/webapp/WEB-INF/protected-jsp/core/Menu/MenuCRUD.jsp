@@ -27,6 +27,11 @@
 	property="url"
 	size="100"
 />
+<v:checkbox
+	labelKey="label.portal.core.Menu.crud.selectOnLoad"
+	property="selectOnLoad"
+	fieldValue="true"
+/>
 <v:select
 	labelKey="label.portal.core.Menu.crud.status"
 	property="status" required="true"

@@ -2,6 +2,7 @@ package org.vulpe.portal.core.model.entity;
 
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
+import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
@@ -26,6 +27,9 @@ public class Menu extends BasePortal {
 	@VulpeColumn
 	@VulpeText(size = 100)
 	private String url;
+
+	@VulpeCheckbox(fieldValue = "true")
+	private Boolean selectOnLoad;
 
 	public void setName(TextTranslate name) {
 		this.name = name;
@@ -65,6 +69,14 @@ public class Menu extends BasePortal {
 
 	public Section getNavigateToSection() {
 		return navigateToSection;
+	}
+
+	public void setSelectOnLoad(Boolean selectOnLoad) {
+		this.selectOnLoad = selectOnLoad;
+	}
+
+	public Boolean getSelectOnLoad() {
+		return selectOnLoad;
 	}
 
 }

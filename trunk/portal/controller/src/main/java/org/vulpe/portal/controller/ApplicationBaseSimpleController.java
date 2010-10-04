@@ -7,9 +7,12 @@ import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.Status;
+import org.vulpe.portal.core.model.entity.Community;
 import org.vulpe.portal.core.model.entity.Download;
+import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Menu;
 import org.vulpe.portal.core.model.entity.Portal;
+import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings("serial")
@@ -34,6 +37,13 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 			final List<Download> downloads = getService(CoreService.class).readDownload(
 					new Download());
 			setSessionAttribute(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+			final List<Link> links = getService(CoreService.class).readLink(new Link());
+			setSessionAttribute(Core.VULPE_PORTAL_LINKS, links);
+			final List<Social> social = getService(CoreService.class).readSocial(new Social());
+			setSessionAttribute(Core.VULPE_PORTAL_SOCIAL, social);
+			final List<Community> communities = getService(CoreService.class).readCommunity(
+					new Community());
+			setSessionAttribute(Core.VULPE_PORTAL_COMMUNITIES, communities);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}

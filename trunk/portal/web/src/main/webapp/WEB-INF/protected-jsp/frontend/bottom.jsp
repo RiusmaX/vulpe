@@ -2,26 +2,35 @@
 <div id="bottom">
 <ul>
 	<li>
-	<h1><fmt:message key='label.portal.Learn' /></h1>
+	<h1><fmt:message key='label.portal.Links' /></h1>
 	</li>
-	<li><a href="javascript:void(0);"
-		onclick="vulpe.view.request.submitMenu('/frontend/Learn/ajax');"><fmt:message key='label.portal.bottom.first.steps'/></a></li>
-	<li>Tutorial</li>
+	<c:forEach var="link" items="${vulpePortalLinks}">
+	<c:forEach var="position" items="${link.positions}">
+	<c:if test="${position == 'FOOTER'}">
+	<li><a href="${pageContext.request.contextPath}/frontend/Index/link?linkId=${link.id}" target="${link.target.value}">${link.name}</a></li>
+	</c:if>
+	</c:forEach>
+	</c:forEach>
+</ul>
+<ul>
+	<li>
+	<h1><fmt:message key='label.portal.Social' /></h1>
+	</li>
+	<c:forEach var="social" items="${vulpePortalSocial}">
+	<c:choose>
+	<c:when test="${social.network == 'TWITTER'}">
+		<li><a href="http://twitter.com/${social.name}" target="${social.target.value}">@${social.name}</a></li>
+	</c:when>
+	</c:choose>
+	</c:forEach>
 </ul>
 <ul>
 	<li>
 	<h1><fmt:message key='label.portal.Community' /></h1>
 	</li>
-	<li><a href="http://twitter.com/vulpeframework" target="_blank">@vulpeframework</a></li>
-	<li><a href="http://groups.google.com/group/vulpe-framework"
-		target="_blank">vulpe @ Google group</a></li>
-</ul>
-<ul>
-	<li>
-	<h1><fmt:message key='label.portal.Code' /></h1>
-	</li>
-	<li><a href="http://code.google.com/p/vulpe" target="_blank">vulpe
-	@ Google code</a></li>
+	<c:forEach var="community" items="${vulpePortalCommunities}">
+	<li><a href="${community.url}" target="${community.target.value}">${community.name}</a></li>
+	</c:forEach>
 </ul>
 <ul class="last">
 	<li>
