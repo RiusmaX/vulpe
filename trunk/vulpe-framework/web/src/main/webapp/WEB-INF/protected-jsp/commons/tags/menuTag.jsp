@@ -32,7 +32,7 @@
 	<c:set var="accesskey"> accesskey="${accesskey}"</c:set>
 </c:if>
 <c:if test="${current}">
-	<c:set var="currentClass" value="vulpeCurrentMenu"/>
+	<c:set var="currentClass"> class="vulpeCurrentMenu"</c:set>
 </c:if>
 <c:choose>
 <c:when test="${not empty action}">
