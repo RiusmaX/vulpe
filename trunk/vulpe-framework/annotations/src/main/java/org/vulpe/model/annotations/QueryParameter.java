@@ -38,7 +38,14 @@ public @interface QueryParameter {
 	 *
 	 * @return
 	 */
-	String name() default "";
+	String name();
+
+	/**
+	 * Attribute value.
+	 *
+	 * @return
+	 */
+	String value() default "";
 
 	/**
 	 * Only use with JPA.

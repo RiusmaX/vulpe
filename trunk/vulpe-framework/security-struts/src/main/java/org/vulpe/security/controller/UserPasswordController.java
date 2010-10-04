@@ -34,10 +34,15 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	public static final String PASSWORD = "vulpeUserPassword";
 
 	@Override
-	protected void updateAfter() {
-		super.updateAfter();
+	public String update() {
 		setEntity((User) getSecurityContext().getUser().clone());
 		getEntity().setPassword(null);
+		return super.update();
+	}
+
+	@Override
+	protected void onUpdate() {
+
 	}
 
 	@Override

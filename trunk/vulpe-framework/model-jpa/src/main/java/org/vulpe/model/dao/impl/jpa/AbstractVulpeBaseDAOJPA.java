@@ -143,8 +143,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.model.dao.VulpeDAOJPA#executeCallableStatement(java.lang.String
-	 * , java.util.List)
+	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String ,
+	 * java.util.List)
 	 */
 	public CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
 			throws VulpeApplicationException {
@@ -173,6 +173,78 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			if (parameters != null) {
 				cstmt = connection.prepareCall(call.toString());
 				count = 0;
+				for (Parameter parameter : parameters) {
+					count++;
+					if (parameter.getType() == Types.ARRAY) {
+						// Connection nativeConnection =
+						// cstmt.getConnection().getMetaData().getConnection();
+						// ArrayDescriptor objectArrayDescriptor =
+						// ArrayDescriptor.createDescriptor(
+						// parameter.getArrayType(), nativeConnection);
+						// Array array = new ARRAY(objectArrayDescriptor,
+						// nativeConnection, parameter
+						// .getArrayValues());
+						// cstmt.setArray(count, array);
+					} else {
+						cstmt.setObject(count, parameter.getValue(), parameter.getType());
+					}
+					if (parameter.isOut()) {
+						if (parameter.getType() == Types.ARRAY) {
+							cstmt
+									.registerOutParameter(count, Types.ARRAY, parameter
+											.getArrayType());
+						} else {
+							cstmt.registerOutParameter(count, parameter.getType());
+						}
+					}
+				}
+			}
+			cstmt.execute();
+		} catch (SQLException e) {
+			throw new VulpeApplicationException(e.getMessage());
+		}
+		return cstmt;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
+	 * java.util.List)
+	 */
+	@Override
+	public CallableStatement executeFunction(String name, int returnType, List<Parameter> parameters)
+			throws VulpeApplicationException {
+		CallableStatement cstmt = null;
+		try {
+			final EntityManager entityManager = getJpaTemplate().getEntityManagerFactory()
+					.createEntityManager();
+			final Connection connection = ((HibernateEntityManager) entityManager).getSession()
+					.connection();
+			final StringBuilder call = new StringBuilder();
+			call.append("{? = call ");
+			call.append(name);
+			int count = 0;
+			if (parameters != null) {
+				call.append("(");
+				do {
+					if (count > 0) {
+						call.append(",");
+					}
+					call.append("?");
+					count++;
+				} while (count < parameters.size());
+				call.append(")");
+			}
+			call.append("}");
+			if (parameters != null) {
+				cstmt = connection.prepareCall(call.toString());
+				if (returnType != 0) {
+					cstmt.registerOutParameter(1, returnType);
+					count = 1;
+				} else {
+					count = 0;
+				}
 				for (Parameter parameter : parameters) {
 					count++;
 					if (parameter.getType() == Types.ARRAY) {

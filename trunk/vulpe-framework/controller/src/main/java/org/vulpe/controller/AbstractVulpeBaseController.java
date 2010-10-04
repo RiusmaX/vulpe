@@ -651,8 +651,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (Operation.UPDATE.equals(operation)
 					|| ((Operation.UPDATE.equals(getOperation()) || Operation.UPDATE_POST
 							.equals(getOperation())) && Operation.ADD_DETAIL.equals(operation))) {
-				showButtons(Button.PREPARE, Button.CREATE, Button.UPDATE_POST, Button.DELETE,
-						Button.CLEAR);
+				showButtons(Button.PREPARE, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
 			} else if (Operation.VIEW.equals(operation)) {
 				showButtons();
 			}
@@ -1142,7 +1141,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onUpdate() {
 		if (getControllerType().equals(ControllerType.CRUD)
 				|| getControllerType().equals(ControllerType.TWICE)) {
-			// final ENTITY entity = prepareEntity(Operation.UPDATE);
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Operation.FIND.getValue()
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
 					new Class[] { getId().getClass() }, new Object[] { getId() });

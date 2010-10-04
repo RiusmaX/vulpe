@@ -55,7 +55,7 @@ vulpe.config.messages = {
 }
 vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
-	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>',
+	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>'
 }
 vulpe.config.messageSlideUp = '${global['messageSlideUp']}';
 vulpe.config.messageSlideUpTime = '${global['messageSlideUpTime']}';

@@ -109,8 +109,22 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
-			throws VulpeApplicationException;
+	CallableStatement executeCallableStatement(final String name, List<Parameter> parameters) throws VulpeApplicationException;
+
+	/**
+	 * Execute function.
+	 *
+	 * @param name
+	 *            Full name of procedure
+	 * @param returnType
+	 *            Return Type
+	 * @param parameters
+	 *            List of parameters
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
+	CallableStatement executeFunction(final String name, final int returType,
+			List<Parameter> parameters) throws VulpeApplicationException;
 
 	boolean exists(ENTITY entity) throws VulpeApplicationException;
 }

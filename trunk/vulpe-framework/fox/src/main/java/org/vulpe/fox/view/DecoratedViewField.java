@@ -48,7 +48,7 @@ public class DecoratedViewField implements Serializable {
 	private boolean showBlank;
 	private boolean autoLoad;
 	private boolean argument;
-	private boolean autoComplete = false;
+	private boolean autocomplete = false;
 	private boolean required = false;
 	private String validateType;
 	private String validateScope;
@@ -270,11 +270,11 @@ public class DecoratedViewField implements Serializable {
 	}
 
 	public void setAutocomplete(boolean autoComplete) {
-		this.autoComplete = autoComplete;
+		this.autocomplete = autoComplete;
 	}
 
-	public boolean isAutoComplete() {
-		return autoComplete;
+	public boolean isAutocomplete() {
+		return autocomplete;
 	}
 
 	public void setRequired(boolean required) {

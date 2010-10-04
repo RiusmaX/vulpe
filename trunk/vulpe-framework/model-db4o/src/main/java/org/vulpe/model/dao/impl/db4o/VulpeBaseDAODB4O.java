@@ -447,4 +447,16 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		}
 		return false;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
+	 * java.util.List)
+	 */
+	@Override
+	public CallableStatement executeFunction(String name, int returType, List<Parameter> parameters)
+			throws VulpeApplicationException {
+		return null;
+	}
 }
