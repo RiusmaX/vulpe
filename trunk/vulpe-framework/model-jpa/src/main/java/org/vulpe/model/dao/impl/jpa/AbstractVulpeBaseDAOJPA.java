@@ -142,11 +142,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String ,
+	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
-	public CallableStatement executeCallableStatement(final String name, List<Parameter> parameters)
+	public CallableStatement executeProcedure(final String name, final List<Parameter> parameters)
 			throws VulpeApplicationException {
 		CallableStatement cstmt = null;
 		try {
@@ -213,8 +212,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * java.util.List)
 	 */
 	@Override
-	public CallableStatement executeFunction(String name, int returnType, List<Parameter> parameters)
-			throws VulpeApplicationException {
+	public CallableStatement executeFunction(final String name, final int returnType,
+			final List<Parameter> parameters) throws VulpeApplicationException {
 		CallableStatement cstmt = null;
 		try {
 			final EntityManager entityManager = getJpaTemplate().getEntityManagerFactory()

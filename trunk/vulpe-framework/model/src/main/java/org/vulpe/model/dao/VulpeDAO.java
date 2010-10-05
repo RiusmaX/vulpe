@@ -100,7 +100,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	ENTITY find(ID id) throws VulpeApplicationException;
 
 	/**
-	 * Execute callable statement.
+	 * Execute procedure.
 	 *
 	 * @param name
 	 *            Full name of procedure
@@ -109,7 +109,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	CallableStatement executeCallableStatement(final String name, List<Parameter> parameters) throws VulpeApplicationException;
+	CallableStatement executeProcedure(final String name, List<Parameter> parameters) throws VulpeApplicationException;
 
 	/**
 	 * Execute function.

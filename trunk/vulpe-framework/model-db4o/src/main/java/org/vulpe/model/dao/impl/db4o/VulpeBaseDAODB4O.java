@@ -408,11 +408,11 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
+	 * org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
 	@Override
-	public CallableStatement executeCallableStatement(String name, List<Parameter> parameters)
+	public CallableStatement executeProcedure(String name, List<Parameter> parameters)
 			throws VulpeApplicationException {
 		return null;
 	}
