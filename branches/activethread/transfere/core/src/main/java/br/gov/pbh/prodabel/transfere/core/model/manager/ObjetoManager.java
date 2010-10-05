@@ -1,7 +1,6 @@
 package br.gov.pbh.prodabel.transfere.core.model.manager;
 
 import java.sql.CallableStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -13,9 +12,8 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 
-import br.gov.pbh.prodabel.transfere.core.model.entity.Objeto;
 import br.gov.pbh.prodabel.transfere.core.model.dao.ObjetoDAO;
-import br.gov.pbh.prodabel.transfere.core.model.manager.ObjetoManager;
+import br.gov.pbh.prodabel.transfere.core.model.entity.Objeto;
 
 /**
  * Manager implementation of Objeto
@@ -43,23 +41,14 @@ public class ObjetoManager extends VulpeBaseManager<Objeto, java.lang.Long, Obje
 	public String agendarPublicacao(final Objeto objeto) throws VulpeApplicationException {
 		String retorno = "";
 		final List<Parameter> parameters = new ArrayList<Parameter>();
-		parameters.add(new Parameter(Types.INTEGER, 3));
-		parameters.add(new Parameter(Types.INTEGER, 3));
-		final CallableStatement cstmt = getDAO().executeCallableStatement("soma", parameters);
+		parameters.add(new Parameter(Types.NUMERIC, objeto.getId()));
+		final CallableStatement cstmt = getDAO().executeFunction(
+				"pk_transfere_objeto.Gera_Transferencia", Types.VARCHAR, parameters);
 		try {
-			final ResultSet resultSet = cstmt.getResultSet();
-			if (resultSet.next()) {
-				retorno = resultSet.getString(1);
-			}
-			resultSet.close();
+			retorno = cstmt.getString(1);
+			cstmt.close();
 		} catch (SQLException e) {
 			LOG.error(e);
-		} finally {
-			try {
-				cstmt.close();
-			} catch (SQLException e) {
-				LOG.error(e);
-			}
 		}
 		return retorno;
 	}
