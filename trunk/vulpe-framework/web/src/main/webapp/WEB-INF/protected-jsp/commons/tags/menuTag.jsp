@@ -44,9 +44,9 @@
 	</c:if>
 	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
 </c:when>
-<c:otherwise>
+<c:when test="${not empty url}">
 <c:set var="onclick"> onclick="$(window.location).attr('href', '${url}');"</c:set>
-</c:otherwise>
+</c:when>
 </c:choose>
 <c:if test="${show}">
 <li id="vulpeMenu-${elementId}">

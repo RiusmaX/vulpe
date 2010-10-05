@@ -15,6 +15,14 @@
  */
 package org.vulpe.commons.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+
+import javax.sql.rowset.serial.SerialBlob;
+
+import org.apache.log4j.Logger;
+
 /**
  * Vulpe String Utility class.
  *
@@ -25,6 +33,8 @@ package org.vulpe.commons.util;
 public class VulpeStringUtil {
 
 	private static VulpeHashMap<Character, String> accentMap = new VulpeHashMap<Character, String>();
+
+	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
 
 	static {
 		accentMap.put("á".charAt(0), "a");
@@ -138,5 +148,46 @@ public class VulpeStringUtil {
 	 */
 	public static String lowerCaseFirst(final String value) {
 		return value.substring(0, 1).toLowerCase() + value.substring(1);
+	}
+
+	/**
+	 * Convert SQL Blob to String.
+	 *
+	 * @param blob
+	 * @return
+	 */
+	public static String blobToString(final Blob blob) {
+		String blobString = null;
+		try {
+			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			final byte[] buffer = new byte[1024];
+			final InputStream inputStream = blob.getBinaryStream();
+			int count = 0;
+			while ((count = inputStream.read(buffer)) >= 0) {
+				baos.write(buffer, 0, count);
+			}
+			inputStream.close();
+			final byte[] bytes = baos.toByteArray();
+			blobString = new String(bytes);
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return blobString;
+	}
+
+	/**
+	 * Convert SQL Blob to String.
+	 *
+	 * @param blob
+	 * @return
+	 */
+	public static Blob stringToBlob(final String string) {
+		Blob blob = null;
+		try {
+			blob = new SerialBlob(string.getBytes());
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return blob;
 	}
 }

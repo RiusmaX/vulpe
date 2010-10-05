@@ -253,6 +253,10 @@ var vulpe = {
 			return vulpe.config.elements[id];
 		},
 
+		getButton: function(name) {
+			return vulpe.util.get("vulpeButton" + name + "-" + vulpe.config.formName);
+		},
+
 		getURLComplete: function(url) {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
 				url = vulpe.config.contextPath + (url.indexOf('/') == 0 ? '' : '/') + url;
