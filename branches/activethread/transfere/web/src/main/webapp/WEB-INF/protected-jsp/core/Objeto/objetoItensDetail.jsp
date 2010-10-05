@@ -35,6 +35,14 @@
 				<v:hidden property="status" />
 				<v:show type="enum" property="status"/>
 			</v:column>
+			<v:column labelKey="label.transfere.core.Objeto.crud.objetoItens.acoes">
+				<div id="logProcessamento${currentStatus.count}" style="display:none" title="Log de Processamento"><c:out value="${currentItem.textoLogProcessamento}" escapeXml="false"/></div>
+				<div id="script${currentStatus.count}" style="display:none" title="Script"><c:out value="${currentItem.textoScript}" escapeXml="false"/></div>
+				<div id="scriptAnterior${currentStatus.count}" style="display:none" title="Script Anterior"><c:out value="${currentItem.textoScriptAnterior}" escapeXml="false"/></div>
+				<v:action elementId="LogProcessamento${currentStatus.count}" labelKey="label.transfere.core.Objeto.crud.objetoItens.logProcessamento" javascript="$('#logProcessamento${currentStatus.count}').dialog({width:680,height:300,modal:true})" showButtonAsImage="false" show="${not empty currentItem.textoLogProcessamento}"/>
+				<v:action elementId="Script${currentStatus.count}" labelKey="label.transfere.core.Objeto.crud.objetoItens.script" javascript="$('#script${currentStatus.count}').dialog({width:680,height:300,modal:true})" showButtonAsImage="false" show="${not empty currentItem.textoScript}"/>
+				<v:action elementId="ScriptAnterior${currentStatus.count}" labelKey="label.transfere.core.Objeto.crud.objetoItens.scriptAnterior" javascript="$('#scriptAnterior${currentStatus.count}').dialog({width:680,height:300,modal:true})" showButtonAsImage="false" show="${not empty currentItem.textoScriptAnterior}"/>
+			</v:column>
 		</v:row>
 	</jsp:attribute>
 </v:table>

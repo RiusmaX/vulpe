@@ -1,9 +1,12 @@
 package br.gov.pbh.prodabel.transfere.core.model.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,14 +46,16 @@ public class Agenda extends AbstractVulpeBaseJPAEntity<Long> {
 	private Date dataAgendamento;
 
 	@VulpeSelect(argument = true)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "DESTINO")
-	private DestinoAgenda destino;
+	private AmbienteAgenda destino;
 
 	@VulpeTextArea(cols = 80, rows = 3)
 	@Column(name = "TAREFA")
 	private String tarefa;
 
 	@VulpeSelect(argument = true)
+	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS")
 	private StatusAgenda status;
 
@@ -134,12 +139,21 @@ public class Agenda extends AbstractVulpeBaseJPAEntity<Long> {
 		return status;
 	}
 
-	public void setDestino(DestinoAgenda destino) {
+	public void setDestino(AmbienteAgenda destino) {
 		this.destino = destino;
 	}
 
-	public DestinoAgenda getDestino() {
+	public AmbienteAgenda getDestino() {
 		return destino;
 	}
 
+	public String getDataHoraAgendamento() {
+		return dataAgendamento == null ? "" : new SimpleDateFormat("dd/MM/yyyy hh:mm")
+				.format(dataAgendamento);
+	}
+
+	public String getDataHoraTermino() {
+		return dataTermino == null ? "" : new SimpleDateFormat("dd/MM/yyyy hh:mm")
+				.format(dataTermino);
+	}
 }

@@ -94,6 +94,7 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@VulpeDate(argument = true)
 	private transient Date dataFinal;
 
+	@IgnoreAutoFilter
 	@VulpeCheckbox(fieldValue = "true")
 	@Column(name = "IND_COMPILA_INVALIDO")
 	private Boolean compilarInvalidos = Boolean.FALSE;

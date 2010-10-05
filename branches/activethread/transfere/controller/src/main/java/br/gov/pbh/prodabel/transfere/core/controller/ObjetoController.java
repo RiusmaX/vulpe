@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -105,12 +106,15 @@ public class ObjetoController extends ObjetoBaseController {
 
 	public String transferir() {
 		try {
-			String retorno = getService(CoreService.class).transferir(getEntity());
-			addActionMessage("Resultado da Soma: " + retorno);
+			final String retorno = getService(CoreService.class).transferir(getEntity());
+			if (StringUtils.isNotEmpty(retorno) && "OK".equals(retorno.toUpperCase())) {
+				setId(getEntity().getId());
+				super.update();
+				addActionMessage("Transferência realizada com sucesso!");
+			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		addActionMessage("Transferência realizada com sucesso!");
 		return Forward.SUCCESS;
 	}
 

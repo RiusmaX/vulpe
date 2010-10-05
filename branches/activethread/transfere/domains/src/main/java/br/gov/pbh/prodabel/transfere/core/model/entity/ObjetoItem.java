@@ -15,15 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseJPAEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
-
-import br.gov.pbh.prodabel.transfere.core.model.entity.Objeto;
-import br.gov.pbh.prodabel.transfere.core.model.entity.Status;
-import br.gov.pbh.prodabel.transfere.core.model.entity.TipoObjeto;
 
 @Entity
 @Table(name = "TRANSFERENCIA_OBJ_ITEM")
@@ -66,7 +63,7 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 	private Blob script;
 
 	@Column(name = "TXT_SCRIPT_ANTERIOR")
-	private Blob scriptAntetior;
+	private Blob scriptAnterior;
 
 	public Long getId() {
 		return id;
@@ -124,20 +121,42 @@ public class ObjetoItem extends AbstractVulpeBaseJPAEntity<Long> {
 		this.script = script;
 	}
 
-	public Blob getScriptAntetior() {
-		return scriptAntetior;
-	}
-
-	public void setScriptAntetior(Blob scriptAntetior) {
-		this.scriptAntetior = scriptAntetior;
-	}
-
 	public void setSomenteDesatualizado(Boolean somenteDesatualizado) {
 		this.somenteDesatualizado = somenteDesatualizado;
 	}
 
 	public Boolean getSomenteDesatualizado() {
 		return somenteDesatualizado;
+	}
+
+	public void setScriptAnterior(Blob scriptAnterior) {
+		this.scriptAnterior = scriptAnterior;
+	}
+
+	public Blob getScriptAnterior() {
+		return scriptAnterior;
+	}
+
+	public String getTextoScript() {
+		String textoScript = script == null ? "" : VulpeStringUtil.blobToString(script);
+		textoScript = textoScript.replaceAll("\\n", "<br>").replaceAll("\\r", "<br>").replaceAll(
+				"\\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+		return textoScript;
+	}
+
+	public String getTextoScriptAnterior() {
+		String textoScriptAnterior = scriptAnterior == null ? "" : VulpeStringUtil
+				.blobToString(scriptAnterior);
+		textoScriptAnterior = textoScriptAnterior.replaceAll("\\n", "<br>").replaceAll("\\r",
+				"<br>").replaceAll("\\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+		return textoScriptAnterior;
+	}
+
+	public String getTextoLogProcessamento() {
+		String log = logProcessamento == null ? "" : VulpeStringUtil.blobToString(logProcessamento);
+		log = log.replaceAll("\\n", "<br>").replaceAll("\\r", "<br>").replaceAll("\\t",
+				"&nbsp;&nbsp;&nbsp;&nbsp;");
+		return log;
 	}
 
 }
