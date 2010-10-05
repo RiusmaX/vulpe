@@ -95,8 +95,8 @@
 		<c:if test="${not empty onmouseout}">
 			<c:set var="onmouseout">onmouseout="${onmouseout}" </c:set>
 		</c:if>
-		<c:if test="${not empty selectCheckOff}">
-			<c:set var="onclick">onclick="${selectCheckOff}${onclick}" </c:set>
+		<c:if test="${not empty selectCheckOff && empty onclick}">
+			<c:set var="onclick">onclick="${selectCheckOff}" </c:set>
 		</c:if>
 		<c:if test="${not empty colspan}">
 			<c:set var="colspan">colspan="${colspan}" </c:set>
