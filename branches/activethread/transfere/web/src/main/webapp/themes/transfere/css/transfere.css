@@ -414,6 +414,14 @@ tfoot th, .vulpeTableFooter {
 	font-size: 12px;
 }
 
+.vulpeTableHeader{
+	text-align: center;
+}
+
+.vulpeTableFooter {
+	text-align: center;
+}
+
 /* ID Elements */
 #body {
 	background-color: #fff;

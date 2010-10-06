@@ -13,6 +13,24 @@ var app = {
 			}
 		},
 
+		autorizarAgendamento: function(id) {
+			vulpe.util.setId(id);
+			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
+			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/autorizar/ajax", layer, '', '');
+		},
+
+		cancelarAgendamento: function(id) {
+			vulpe.util.setId(id);
+			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
+			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/cancelar/ajax", layer, '', '');
+		},
+
+		reiniciarAgendamento: function(id) {
+			vulpe.util.setId(id);
+			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
+			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/reiniciar/ajax", layer, '', '');
+		},
+
 		showExecute: function(value, index) {
 			var id = "#tipoObjetoExecute" + index;
 			if (value == "") {
@@ -26,4 +44,5 @@ var app = {
 	frontend: {
 
 	}
+
 }

@@ -437,7 +437,11 @@ td p {
 	margin-bottom: 3px;
 }
 
-tfoot {
+.vulpeTableHeader{
+	text-align: center;
+}
+
+.vulpeTableFooter {
 	text-align: center;
 }
 

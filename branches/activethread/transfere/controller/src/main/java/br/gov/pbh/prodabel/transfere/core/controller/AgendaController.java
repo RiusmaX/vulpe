@@ -4,7 +4,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.exception.VulpeApplicationException;
@@ -30,6 +29,7 @@ public class AgendaController extends ApplicationBaseController<Agenda, java.lan
 
 	public String cancelar() {
 		try {
+			setEntity(getService(CoreService.class).findAgenda(getId()));
 			final Integer retorno = getService(CoreService.class).cancelar(getEntity());
 			if (retorno != null && retorno == 0) {
 				addActionMessage("Cancelamento realizado com sucesso!");
@@ -37,11 +37,12 @@ public class AgendaController extends ApplicationBaseController<Agenda, java.lan
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		return Forward.SUCCESS;
+		return read();
 	}
 
 	public String autorizar() {
 		try {
+			setEntity(getService(CoreService.class).findAgenda(getId()));
 			final Integer retorno = getService(CoreService.class).autorizar(getEntity());
 			if (retorno != null && retorno == 0) {
 				addActionMessage("Autorização realizada com sucesso!");
@@ -49,11 +50,12 @@ public class AgendaController extends ApplicationBaseController<Agenda, java.lan
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		return Forward.SUCCESS;
+		return read();
 	}
 
 	public String reiniciar() {
 		try {
+			setEntity(getService(CoreService.class).findAgenda(getId()));
 			final Integer retorno = getService(CoreService.class).reiniciar(getEntity());
 			if (retorno != null && retorno == 0) {
 				addActionMessage("Reinicialização realizada com sucesso!");
@@ -61,7 +63,7 @@ public class AgendaController extends ApplicationBaseController<Agenda, java.lan
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		return Forward.SUCCESS;
+		return read();
 	}
 
 }

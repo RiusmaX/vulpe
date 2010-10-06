@@ -9,17 +9,17 @@
 <v:select
 	labelKey="label.transfere.core.Agenda.crud.destino"
 	property="destino"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" showAsText="true"
 />
 <v:textarea
 	labelKey="label.transfere.core.Agenda.crud.tarefa"
 	property="tarefa"
-	cols="80" rows="3"
+	cols="80" rows="3" showAsText="true"
 />
 <v:select
 	labelKey="label.transfere.core.Agenda.crud.status"
 	property="status"
-	showBlank="true" autoLoad="false"
+	showBlank="true" autoLoad="false" showAsText="true"
 />
 <v:selectPopup
 	labelKey="label.transfere.core.Agenda.crud.usuario"
@@ -28,7 +28,7 @@
 	action="/security/User/select" popupId="usuarioSelectPopup"
 	popupProperties="usuario.id=id,usuario.name=name"
 	size="40" popupWidth="420px"
-	autocomplete="true"
+	autocomplete="true" showAsText="true"
 />
 <v:selectPopup
 	labelKey="label.transfere.core.Agenda.crud.objeto"
@@ -37,5 +37,5 @@
 	action="/core/Objeto/select" popupId="objetoSelectPopup"
 	popupProperties="objeto.id=id,objeto.descricao=descricao"
 	size="40" popupWidth="420px"
-	autocomplete="true"
+	autocomplete="true" showAsText="true"
 />
