@@ -11,6 +11,7 @@
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="logged" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sort" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="sortProperty" required="false" rtexprvalue="true" %>
 <%@ attribute name="alias" required="false" rtexprvalue="true" %>
 <%@ attribute name="colspan" required="false" rtexprvalue="true" %>
 <%@ attribute name="showBodyInHeader" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
