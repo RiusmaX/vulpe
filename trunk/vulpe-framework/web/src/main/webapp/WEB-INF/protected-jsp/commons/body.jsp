@@ -21,7 +21,7 @@
 	<input type="hidden" name="selectedTab" value="${selectedTab}" id="${vulpeFormName}-selectedTab"/>
 	<input type="hidden" name="executed" value="${executed}" id="${vulpeFormName}-executed"/>
 	<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
-	<input type="hidden" name="entity.orderBy" value="${entity.orderBy}" id="${vulpeFormName}-entity_orderBy"/>
+	<input type="hidden" name="entitySelect.orderBy" value="${entity.orderBy}" id="${vulpeFormName}-entitySelect_orderBy"/>
 	</c:if>
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}-popupKey"/>
 	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}">

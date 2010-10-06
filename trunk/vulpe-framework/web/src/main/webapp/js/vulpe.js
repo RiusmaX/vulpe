@@ -90,8 +90,11 @@ var vulpe = {
 		order: new Array(),
 		pagingPage: "-paging.page",
 		prefix: {
+			button: "vulpeButton",
 			detail: "#vulpeDetail-",
-			popup: "Popup-"
+			popup: "Popup-",
+			selectForm: "vulpeSelectForm-",
+			selectTable: "vulpeSelectTable-"
 		},
 		popup: {
 			mobile: false
@@ -257,7 +260,19 @@ var vulpe = {
 			return vulpe.util.get("vulpeButton" + name + "-" + vulpe.config.formName);
 		},
 
-		getURLComplete: function(url) {
+		getForm: function() {
+			return vulpe.util.get(vulpe.config.formName);
+		},
+
+		getId: function() {
+			return vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.identifier).val();
+		},
+
+		setId: function(id) {
+			vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.identifier).val(id);
+		},
+
+		completeURL: function(url) {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
 				url = vulpe.config.contextPath + (url.indexOf('/') == 0 ? '' : '/') + url;
 			}
@@ -1089,34 +1104,48 @@ var vulpe = {
 		},
 
 		sortTable: function(formName, sortPropertyInfo, property) {
-			var columns = vulpe.util.getElement(sortPropertyInfo).value.split(',');
-			var oldDesc = false;
-			var order = '';
-			var value = '';
-			for (var i = 0; i < columns.length; i++) {
-				if (vulpe.util.trim(columns[i]) == property || vulpe.util.trim(columns[i]) == (property + ' vulpeOrderDesc')) {
-					order = 'vulpeOrderDesc';
-					if (vulpe.util.trim(columns[i]) == property) {
-						value = (value == '') ? vulpe.util.trim(columns[i]) + ' desc' : value + ',' + vulpe.util.trim(columns[i]) + ' desc';
-					} else {
-						oldDesc = true;
-					}
+			var value = vulpe.util.get(sortPropertyInfo).val();
+			if (value == "obj.id") {
+				value = "";
+			}
+			var order = "";
+			if (value.indexOf(property + " desc") != -1) {
+				order = "";
+				var position = value.indexOf(property + " desc")
+				if (position == 0) {
+					value = value.replace(property + " desc,", "");
 				} else {
-					value = (value == '') ? vulpe.util.trim(columns[i]) : value + ',' + vulpe.util.trim(columns[i]);
+					value = value.replace("," + property + " desc", "");
 				}
+				value = value.replace(property + " desc", "");
+			} else if (value.indexOf(property) != -1) {
+				order = "vulpeOrderDesc";
+				value = value.replace(property, property + " desc");
+			} else {
+				order = "vulpeOrderAsc";
+				value = (value == "") ? property : value + "," + property;
 			}
-			if (order == '') {
-				order = 'vulpeOrderAsc';
-				value = (value == '') ? property : value + ', ' + property;
-			} else if (order == 'vulpeOrderDesc' && oldDesc) {
-				order = '';
-			}
-			vulpe.util.getElement(sortPropertyInfo).value = value;
-			vulpe.util.getElement(sortPropertyInfo + '_' + property).className = order;
-			vulpe.config.order[sortPropertyInfo + '_' + property] = {property: sortPropertyInfo, value: value, css: order};
-			var buttonRead = $("#vulpeButtonRead_" + formName);
+			vulpe.util.get(sortPropertyInfo).val(value);
+			var propertyId = sortPropertyInfo + '-' + property.replace(".", "_");
+			vulpe.util.get(propertyId).addClass(order);
+			vulpe.config.order[propertyId] = {property: sortPropertyInfo, value: value, css: order};
+			var buttonRead = vulpe.util.getButton("Read");
 			if (buttonRead) {
 				buttonRead.click();
+			}
+			if (value == "") {
+				value = "obj.id";
+			}
+		},
+
+		setupSortTable: function(sortPropertyInfoName) {
+			var columns = jQuery("th[id!='']", "#entities");
+			for (var i = 0; i < columns.length; i++) {
+				var column = columns[i];
+				var order = vulpe.config.order[column.id];
+				if (order) {
+					column.className = order.css;
+				}
 			}
 		},
 
@@ -1124,15 +1153,6 @@ var vulpe = {
 			vulpe.view.isSelection = select;
 		},
 
-		markUnmarkAll: function(controller, name, parent) {
-			if (!parent) {
-				parent = "#body";
-			}
-			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
-			for (var i = 0; i < selections.length; i++) {
-				selections[i].checked = controller.checked;
-			}
-		},
 
 		markOnlyOne: function(controller, name, parent) {
 			if (!parent) {
@@ -1145,18 +1165,13 @@ var vulpe = {
 			controller.checked = true;
 		},
 
-		setupSortTable: function(sortPropertyInfoName) {
-			var sortPropertyInfo = vulpe.util.getElement(sortPropertyInfoName);
-			if (sortPropertyInfo && vulpe.util.isNotEmpty(sortPropertyInfo.value) != '') {
-				var columns = sortPropertyInfo.value.split(',');
-				for(var i = 0; i < columns.length; i++) {
-					var order = (vulpe.util.trim(columns[i]).indexOf(' vulpeOrderDesc') >= 0) ? 'vulpeOrderDesc' : 'vulpeOrderAsc';
-					var property = vulpe.util.trim(columns[i]).replace(' vulpeOrderDesc', '');
-					var propertyTh = vulpe.util.getElement(sortPropertyInfoName + '_' + property);
-					if (propertyTh) {
-						propertyTh.className = order;
-					}
-				}
+		markUnmarkAll: function(controller, name, parent) {
+			if (!parent) {
+				parent = "#body";
+			}
+			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
+			for (var i = 0; i < selections.length; i++) {
+				selections[i].checked = controller.checked;
 			}
 		},
 
@@ -1702,7 +1717,7 @@ var vulpe = {
 					type: "POST",
 					dataType: 'html',
 					contentType: "application/x-www-form-urlencoded; charset=utf-8",
-					url: vulpe.util.getURLComplete(urlStr),
+					url: vulpe.util.completeURL(urlStr),
 					data: queryString,
 					success: function (data, status) {
 						vulpe.view.hideLoading();

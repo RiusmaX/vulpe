@@ -272,15 +272,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	var columns = jQuery("th[id!='']", "#entities");
-	for (var i = 0; i < columns.length; i++) {
-		var column = columns[i];
-		var order = vulpe.config.order[column.id];
-		if (order) {
-			vulpe.util.get(order.property).val(order.value);
-			column.className = order.css;
-		}
-	}
 	var fields = jQuery("[class*='vulpeRequired']");
 	if (fields && fields.length > 0) {
 		for (var i = 0; i < fields.length; i++) {
