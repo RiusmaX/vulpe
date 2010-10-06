@@ -139,7 +139,7 @@ public class Objeto extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "DEMANDAS")
 	private String demandas;
 
-	@Detail(clazz = ObjetoItem.class)
+	@Detail(target = ObjetoItem.class)
 	@OneToMany(targetEntity = ObjetoItem.class, mappedBy = "objeto", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_TRANSFERENCIA_OBJ")
 	private List<ObjetoItem> objetoItens;

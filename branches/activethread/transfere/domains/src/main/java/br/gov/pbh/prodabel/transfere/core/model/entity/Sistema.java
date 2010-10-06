@@ -113,7 +113,7 @@ public class Sistema extends AbstractVulpeBaseJPAEntity<Long> {
 	@Column(name = "CONEXAO_DESENVOLVIMENTO")
 	private String conexaoDesenvolvimento;
 
-	@Detail(clazz = SistemaUsuario.class)
+	@Detail(target = SistemaUsuario.class)
 	@OneToMany(targetEntity = SistemaUsuario.class, mappedBy = "sistema", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_TRANSFERENCIA_SISTEMA")
 	private List<SistemaUsuario> usuarios;
