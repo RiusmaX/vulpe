@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Detail {
 
-	Class<?> clazz();
+	Class<?> target();
 
 	DetailRelationship relationship() default @DetailRelationship(name = "", description = "", identifier = "", action = "");
 

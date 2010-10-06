@@ -126,7 +126,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					decoratedViewDetail.setFields(detailFields);
 				} else {
 					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(
-							detail.clazz());
+							detail.target());
 					for (Field detailField : listDetailField) {
 						if (detailField.getName().toString().equals(
 								clazz.getSimpleName().toLowerCase())) {

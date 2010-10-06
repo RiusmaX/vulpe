@@ -25,7 +25,7 @@
 				}
 				<c:choose>
 				<c:when test="${empty autocompleteValueList}">
-				var urlAutoComplete = vulpe.util.getURLComplete("${autocompleteURL}");
+				var urlAutoComplete = vulpe.util.completeURL("${autocompleteURL}");
 				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.${autocomplete}=" + request.term;
 				$.ajax({
 					type: "POST",
