@@ -298,6 +298,7 @@ public class VulpeConstants {
 		public static final String USER_AUTHENTICATED = "vulpeUserAuthenticated";
 		public static final String LOGOUT_EXECUTED = "vulpeLogoutExecuted";
 		public static final String ROLE_PREFIX = "ROLE_";
+		public static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
 	}
 
 	public class Model {

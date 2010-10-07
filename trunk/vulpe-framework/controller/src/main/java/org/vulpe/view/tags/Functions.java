@@ -24,10 +24,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.swing.ImageIcon;
@@ -36,6 +36,14 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.beans.ValueBean;
+import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeHashMap;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 
@@ -43,11 +51,11 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- * 
+ *
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings( { "unchecked" })
 public class Functions {
 
 	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
@@ -57,7 +65,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -67,7 +75,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -84,7 +92,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @return
 	 */
@@ -104,7 +112,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param url
 	 * @return
 	 * @throws JspException
@@ -122,7 +130,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param chars
 	 * @return
@@ -136,7 +144,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param value
@@ -150,7 +158,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param begin
 	 * @param end
@@ -170,7 +178,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @return
@@ -184,12 +192,10 @@ public class Functions {
 		if (detailConfig != null) {
 			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("_item");
 		}
-		return eval(
-				pageContext,
-				"${".concat(
-						(property.contains("entity.") || property.contains("entities")
-								|| property.contains("].") ? property : baseName.concat(property)))
-						.concat("}"));
+		return eval(pageContext, "${".concat(
+				(property.contains("entity.") || property.contains("entities")
+						|| property.contains("].") ? property : baseName.concat(property))).concat(
+				"}"));
 	}
 
 	/**
@@ -197,7 +203,7 @@ public class Functions {
 	 * JPG, PNG and possibly other formats) and resizes it to have a width no
 	 * greater than the pMaxWidth parameter in pixels. It converts the image to
 	 * a standard quality JPG and returns the byte array of that JPG image.
-	 * 
+	 *
 	 * @param imageData
 	 *            the image data.
 	 * @param maxWidth
@@ -246,20 +252,53 @@ public class Functions {
 	}
 
 	/**
-	 * 
-	 * @param role
+	 *
+	 * @param requestedRoles
 	 * @return
 	 */
-	public static Boolean isRole(final PageContext pageContext, final String role) {
-		return ((HttpServletRequest) pageContext.getRequest()).isUserInRole(role);
+	public static Boolean hasRole(final String requestedRoles) {
+		final VulpeContext vulpeContext = VulpeContext.getInstance();
+		final Object springSecurity = vulpeContext.getSession().getAttribute(
+				Security.SPRING_SECURITY_CONTEXT);
+		final Object springSecurityAutentication = VulpeReflectUtil.getInstance().getFieldValue(
+				springSecurity, "authentication");
+		final Collection<?> authorities = VulpeReflectUtil.getInstance().getFieldValue(
+				springSecurityAutentication, "authorities");
+		final String[] roles = requestedRoles.split(",");
+		boolean has = false;
+		for (final String role : roles) {
+			final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role
+					: Security.ROLE_PREFIX + requestedRoles;
+			if (VulpeValidationUtil.isNotEmpty(authorities)) {
+				for (Object grantedAuthority : authorities) {
+					final String authority = VulpeReflectUtil.getInstance().getFieldValue(
+							grantedAuthority, "authority");
+					if (authority.equals(fullRole)) {
+						has = true;
+						break;
+					}
+				}
+			}
+		}
+		return has;
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
-	public static Boolean isLogged(final PageContext pageContext) {
-		return ((HttpServletRequest) pageContext.getRequest()).getUserPrincipal() != null;
+	public static Boolean isAuthenticated() {
+		final VulpeContext vulpeContext = VulpeContext.getInstance();
+		final Object springSecurity = vulpeContext.getSession().getAttribute(
+				Security.SPRING_SECURITY_CONTEXT);
+		final Object springSecurityAutentication = VulpeReflectUtil.getInstance().getFieldValue(
+				springSecurity, "authentication");
+		final Boolean authenticated = VulpeReflectUtil.getInstance().getFieldValue(
+				springSecurityAutentication, "authenticated");
+		if (authenticated != null && authenticated.booleanValue()) {
+			return true;
+		}
+		return vulpeContext.getRequest().getUserPrincipal() != null;
 	}
 
 	protected static String findText(final String key) {
@@ -267,7 +306,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @param toValue
 	 * @return
@@ -291,5 +330,110 @@ public class Functions {
 			return valueTrue;
 		}
 		return valueFalse;
+	}
+
+	/**
+	 *
+	 * @param bean
+	 * @param field
+	 * @return
+	 * @throws JspException
+	 */
+	public static List listInField(final Object bean, final String field) throws JspException {
+		try {
+			if (bean == null) {
+				return null;
+			}
+			final List list = new ArrayList();
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
+					bean.getClass(), field.replace(".id", ""));
+			if (fieldClass.isEnum()) {
+				String key = null;
+				String value = null;
+				for (final Object item : fieldClass.getEnumConstants()) {
+					key = fieldClass.getName().concat(".").concat(item.toString());
+					value = findText(key);
+					list.add(new ValueBean(item.toString(), value));
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	/**
+	 *
+	 * @param bean
+	 * @param field
+	 * @param fieldValue
+	 * @return
+	 * @throws JspException
+	 */
+	public static Object enumInField(final Object bean, final String field, final Object fieldValue)
+			throws JspException {
+		try {
+			if (bean == null) {
+				return null;
+			}
+			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
+					bean.getClass(), field.replace(".id", ""));
+			if (fieldClass == null) {
+				return null;
+			}
+			if (fieldClass.isEnum()) {
+				String key = null;
+				String value = null;
+				for (final Object item : fieldClass.getEnumConstants()) {
+					if (item.equals(fieldValue)) {
+						key = fieldClass.getName().concat(".").concat(item.toString());
+						value = findText(key);
+						return value;
+					}
+				}
+			}
+			return null;
+		} catch (Exception e) {
+			throw new JspException(e);
+		}
+	}
+
+	/**
+	 *
+	 * @param type
+	 * @param fieldValue
+	 * @return
+	 * @throws JspException
+	 */
+	public static String enumListInField(final String type, final Object fieldValue)
+			throws JspException {
+		try {
+			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(
+					VulpeConstants.CACHED_ENUM);
+			final List<ValueBean> enumeration = map.getSelf(type);
+			final StringBuilder list = new StringBuilder();
+			if (fieldValue instanceof Collection<?>) {
+				final Collection<?> collection = (Collection<?>) fieldValue;
+				for (final Object object : collection) {
+					for (final ValueBean value : enumeration) {
+						if (value.getId().equals(object.toString())) {
+							if (StringUtils.isNotBlank(list.toString())) {
+								list.append(", ");
+							}
+							list.append(findText(value.getValue()));
+						}
+					}
+				}
+			} else {
+				for (final ValueBean value : enumeration) {
+					if (value.getId().equals(fieldValue.toString())) {
+						list.append(findText(value.getValue()));
+					}
+				}
+			}
+			return list.toString();
+		} catch (Exception e) {
+			throw new JspException(e);
+		}
 	}
 }

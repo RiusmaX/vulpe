@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty itemLabel}"><c:set var="itemLabel" value="value"/></c:if>
 	<c:if test="${empty itemKey}"><c:set var="itemKey" value="id"/></c:if>
 	<c:set var="itemKeyEL" value="${'${'}item.${itemKey}${'}'}"/>
@@ -25,5 +25,5 @@
 		</c:choose>
 	</c:forEach>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 </c:if>

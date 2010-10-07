@@ -19,14 +19,20 @@
 
 	<function>
 		<name>listInField</name>
-		<function-class>org.vulpe.view.struts.tags.StrutsFunctions</function-class>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.util.List listInField(java.lang.Object, java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<name>enumInField</name>
-		<function-class>org.vulpe.view.struts.tags.StrutsFunctions</function-class>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.Object enumInField(java.lang.Object, java.lang.String, java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>enumListInField</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object enumListInField(java.lang.String, java.lang.Object)</function-signature>
 	</function>
 
 	<function>
@@ -90,15 +96,15 @@
 	</function>
 
 	<function>
-		<name>isRole</name>
+		<name>hasRole</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isRole(javax.servlet.jsp.PageContext, java.lang.String)</function-signature>
+		<function-signature>java.lang.Boolean hasRole(java.lang.String)</function-signature>
 	</function>
 
 	<function>
-		<name>isLogged</name>
+		<name>isAuthenticated</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isLogged(javax.servlet.jsp.PageContext)</function-signature>
+		<function-signature>java.lang.Boolean isAuthenticated()</function-signature>
 	</function>
 
 	<function>

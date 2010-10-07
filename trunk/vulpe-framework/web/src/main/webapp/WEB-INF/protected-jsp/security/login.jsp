@@ -40,7 +40,12 @@ $(document).ready(function() {
 		j_password.focus();
 	}
 	vulpe.util.get('buttonSubmitLoginForm').bind('click', function() {
-		vulpe.view.request.submitLoginForm('vulpeLoginForm', 'vulpeLoginForm', '', 'body', false, '', '');
+		vulpe.view.request.submitLoginForm({
+			formName: 'vulpeLoginForm',
+			layerFields: 'vulpeLoginForm',
+			layer: 'body',
+			validate: false
+		});
 		return false;
 	});
 });

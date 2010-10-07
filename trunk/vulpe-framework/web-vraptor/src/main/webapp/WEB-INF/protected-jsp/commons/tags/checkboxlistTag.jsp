@@ -1,5 +1,5 @@
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 
 	<c:if test="${not empty enumeration}">
 		<c:set var="enumerationEL" value="${'${'}cachedEnumArray['${enumeration}']${'}'}"/>
@@ -55,5 +55,5 @@
 		</c:otherwise>
 	</c:choose>
 	</span>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 </c:if>

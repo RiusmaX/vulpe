@@ -7,27 +7,21 @@
 	<div id="vulpeCRUDActions" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/crudActions.jsp" %>
 	</div>
-	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
+	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeCRUDBodyTabs">
 		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
 		<ul title="${tabNavigationTitle}">
 			<c:set var="tabTitle"><fmt:message key="${now['masterTitleKey']}"/></c:set>
-			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}">
-				<c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/>
-			</c:if>
+			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}"><c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/></c:if>
 			<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody">${tabTitle}</a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
 					<c:set var="tabTitle"><fmt:message key="${detail.titleKey}"/></c:set>
-					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}">
-						<c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/>
-					</c:if>
+					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}"><c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/></c:if>
 					<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail-${detail.baseName}">${tabTitle}</a></li>
 				</c:if>
 			</c:forEach>
-			<c:if test="${not empty vulpeCRUDFooter}">
-				<li><a href="#vulpeCRUDFooter"><fmt:message key="label.vulpe.completion"/></a></li>
-			</c:if>
+			<c:if test="${not empty vulpeCRUDFooter}"><li><a href="#vulpeCRUDFooter"><fmt:message key="label.vulpe.completion"/></a></li></c:if>
 		</ul>
 	</c:if>
 	<div id="vulpeCRUDBody">
@@ -40,19 +34,16 @@
 			<c:if test="${empty detail.parentDetailConfig}">
 				<c:set var="targetConfig" value="${detail}" scope="request"/>
 				<c:set var="targetConfigPropertyName" value="${detail.propertyName}" scope="request"/>
-
 				<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 					<jsp:param name="detailViewPath" value="${detail.viewPath}"/>
 				</jsp:include>
-
 				<c:remove var="targetConfig" scope="request"/>
 				<c:remove var="targetConfigPropertyName" scope="request"/>
 			</c:if>
 		</c:forEach>
 	</c:if>
-	<div id="vulpeCRUDFooter">
-	</div>
-	<c:if test="${controllerConfig.detailsInTabs eq true && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
+	<div id="vulpeCRUDFooter"></div>
+	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function() {

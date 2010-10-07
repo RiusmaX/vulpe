@@ -231,7 +231,8 @@ public class ControllerUtil {
 	public String getCurrentControllerName() {
 		String base = getRequest().getRequestURI();
 		if (StringUtils.isEmpty(base)) {
-			return "";
+			return StringUtils.isEmpty(getCurrentController().get()) ? "" : getCurrentController()
+					.get();
 		}
 		if (base.endsWith(Layout.SUFFIX_JSP)) {
 			return getCurrentController().get();

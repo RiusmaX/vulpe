@@ -16,7 +16,6 @@
 package org.vulpe.view.struts.tags;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,6 @@ import javax.servlet.jsp.PageContext;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.beans.ValueBean;
-import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.util.ControllerUtil;
@@ -38,80 +35,13 @@ import org.vulpe.view.tags.Functions;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.util.XWorkConverter;
 
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings( { "unchecked" })
 public final class StrutsFunctions extends Functions {
 
 	private static final Logger LOG = Logger.getLogger(StrutsFunctions.class.getName());
 
 	private StrutsFunctions() {
 		// default constructor
-	}
-
-	/**
-	 *
-	 * @param bean
-	 * @param field
-	 * @return
-	 * @throws JspException
-	 */
-	public static List listInField(final Object bean, final String field) throws JspException {
-		try {
-			if (bean == null) {
-				return null;
-			}
-
-			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
-					bean.getClass(), field.replace(".id", ""));
-			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
-				for (Object item : fieldClass.getEnumConstants()) {
-					key = fieldClass.getName().concat(".").concat(item.toString());
-					value = findText(key);
-					list.add(new ValueBean(item.toString(), value));
-				}
-			}
-			return list;
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
-	}
-
-	/**
-	 *
-	 * @param bean
-	 * @param field
-	 * @return
-	 * @throws JspException
-	 */
-	public static Object enumInField(final Object bean, final String field, final Object fieldValue)
-			throws JspException {
-		try {
-			if (bean == null) {
-				return null;
-			}
-
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
-					bean.getClass(), field.replace(".id", ""));
-			if (fieldClass == null) {
-				return null;
-			}
-			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
-				for (Object item : fieldClass.getEnumConstants()) {
-					if (item.equals(fieldValue)) {
-						key = fieldClass.getName().concat(".").concat(item.toString());
-						value = findText(key);
-						return value;
-					}
-				}
-			}
-			return null;
-		} catch (Exception e) {
-			throw new JspException(e);
-		}
 	}
 
 	/**
@@ -124,15 +54,12 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static String linkKey(final String key, final String contentType,
 			final String contentDisposition) throws JspException {
-		final String link = ServletActionContext
-				.getRequest()
-				.getContextPath()
-				.concat("/")
-				.concat(ControllerUtil.getInstance(ServletActionContext.getRequest())
-						.getCurrentControllerName()).concat("/download?downloadKey=")
-				.concat(urlEncode(key)).concat("&downloadContentType=").concat(contentType)
-				.concat("&downloadContentDisposition=").concat(contentDisposition)
-				.concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
+		final String link = ServletActionContext.getRequest().getContextPath().concat("/").concat(
+				ControllerUtil.getInstance(ServletActionContext.getRequest())
+						.getCurrentControllerName()).concat("/download?downloadKey=").concat(
+				urlEncode(key)).concat("&downloadContentType=").concat(contentType).concat(
+				"&downloadContentDisposition=").concat(contentDisposition).concat("&access=")
+				.concat(String.valueOf(System.currentTimeMillis()));
 		return link;
 	}
 

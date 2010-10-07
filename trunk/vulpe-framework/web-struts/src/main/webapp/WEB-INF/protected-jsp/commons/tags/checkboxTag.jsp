@@ -1,5 +1,5 @@
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty styleClass}">
 		<c:set var="styleClass" value=".vulpeNoBoarder"/>
 	</c:if>
@@ -14,5 +14,5 @@
 	</c:if>
 	<s:checkbox theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" value="${value}" fieldValue="${fieldValue}" />
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 </c:if>

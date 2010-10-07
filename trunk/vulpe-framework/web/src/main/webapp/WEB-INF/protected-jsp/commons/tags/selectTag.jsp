@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty autoLoad}">
 		<c:set var="autoLoad" value="${false}"/>
 	</c:if>
@@ -63,5 +63,5 @@
 	</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 </c:if>

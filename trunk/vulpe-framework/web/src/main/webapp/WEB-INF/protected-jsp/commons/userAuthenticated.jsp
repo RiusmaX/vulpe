@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <div id="userAuthenticated">
-	<fmt:message key="label.vulpe.security.logged.welcome">
+	<fmt:message key="label.vulpe.security.authenticated.welcome">
 		<fmt:param value="${securityContext.user.name}" />
 	</fmt:message>
 	<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/security/UserPassword/update/ajax');">

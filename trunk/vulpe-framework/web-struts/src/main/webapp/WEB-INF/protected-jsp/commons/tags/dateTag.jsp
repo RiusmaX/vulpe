@@ -1,5 +1,5 @@
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty size && not empty maxlength}">
 		<c:set var="size" value="${maxlength}"/>
 	</c:if>
@@ -28,7 +28,7 @@
 		</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 	<c:if test="${!showAsText}">
 	<script type="text/javascript">
 		jQuery(function($){

@@ -1,5 +1,5 @@
 <jsp:doBody/>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 <script type="text/javascript">
 	jQuery(function($){
 		<c:if test="${empty mask}">

@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${not empty global['showAsMobile'] || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty currentItem}">
 	<c:if test="${empty targetName}">

@@ -29,48 +29,24 @@
 	</c:if>
 	<c:choose>
 		<c:when test="${IS_EXCEPTION}">
-			<c:if test="${empty fieldErrors}">
-				<div id="messageTitle" style="display: none"><fmt:message key="vulpe.error.alert" /></div>
-			</c:if>
+			<c:if test="${empty fieldErrors}"><div id="messageTitle" style="display: none"><fmt:message key="vulpe.error.alert" /></div></c:if>
 			<!--IS_EXCEPTION-->
 			<c:choose>
 				<c:when test="${ajax}">
 					<!--SUBMIT_AJAX-->
 					<ul>
-						<c:if test="${not empty fieldErrors}">
-							<li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li>
-						</c:if>
-						<c:if test="${not empty actionErrors}">
-							<c:forEach items="${actionErrors}" var="msg">
-								<li class="vulpeAlertError">${msg}</li>
-							</c:forEach>
-						</c:if>
-						<c:if test="${not empty actionMessages}">
-							<c:forEach items="${actionMessages}" var="msg">
-								<li class="vulpeAlertMessage">${msg}</li>
-							</c:forEach>
-						</c:if>
+						<c:if test="${not empty fieldErrors}"><li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li></c:if>
+						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>
+						<c:if test="${not empty actionMessages}"><c:forEach items="${actionMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
 					</ul>
-					<script charset="utf-8">
-						vulpe.view.onhidemessages = '${util:urlEncode(onHideMessages)}';
-					</script>
+					<script charset="utf-8" type="text/javascript">vulpe.view.onhidemessages = '${util:urlEncode(onHideMessages)}';</script>
 				</c:when>
 				<c:otherwise>
 					<div id="errors" class="vulpeMessages">
 					<ul>
-						<c:if test="${not empty fieldErrors}">
-							<li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li>
-						</c:if>
-						<c:if test="${not empty actionErrors}">
-							<c:forEach items="${actionErrors}" var="msg">
-								<li class="vulpeAlertError">${msg}</li>
-							</c:forEach>
-						</c:if>
-						<c:if test="${not empty actionMessages}">
-							<c:forEach items="${actionMessages}" var="msg">
-								<li class="vulpeAlertMessage">${msg}</li>
-							</c:forEach>
-						</c:if>
+						<c:if test="${not empty fieldErrors}"><li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li></c:if>
+						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>
+						<c:if test="${not empty actionMessages}"><c:forEach items="${actionMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
 					</ul>
 					</div>
 				</c:otherwise>

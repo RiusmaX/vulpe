@@ -1,8 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${empty readonly}"><c:set var="readonly" value="${true}"/></c:if>
-<c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/configAttributesTag.jsp" %>
+<c:if test="${show}">
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributesConfig.jsp" %>
 	<div id="${elementId}-selectPopup">
 	<c:remove var="elementId"/>
 	<v:hidden property="${property}.${identifier}"/>

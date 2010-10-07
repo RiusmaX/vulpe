@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:set var="scope" scope="request" value="${scope}"/>
-<c:if test="${show eq true}">
+<c:if test="${show}">
 	<c:if test="${empty sortPropertyInfo}">
 		<c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/>
 	</c:if>

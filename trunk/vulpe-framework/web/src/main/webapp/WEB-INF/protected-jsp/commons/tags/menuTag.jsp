@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/tags/headerTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${empty label}">
 	<fmt:message key="${labelKey}" var="label"/>
 </c:if>

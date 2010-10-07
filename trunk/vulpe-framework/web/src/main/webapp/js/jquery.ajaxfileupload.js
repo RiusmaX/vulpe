@@ -68,7 +68,16 @@ jQuery.extend({
 					jQuery("#messages").html(_vulpeMessageUpload);
 					vulpe.view.showMessages();
 				}else{
-					vulpe.view.request.submitForm(formName, layerFields, queryString, layer, validate, beforeJs, afterJs, true);
+					vulpe.view.request.submitForm({
+						formName: formName,
+						layerFields: layerFields,
+						queryString: queryString,
+						layer: layer,
+						validate: validate,
+						beforeJs: beforeJs,
+						afterJs: afterJs,
+						isFile: true
+					});
 				}
 			}catch(e){
 				jQuery("#messages").html(_vulpeMessageUpload);
@@ -102,7 +111,7 @@ jQuery.extend({
 		}
 		vulpe.view.showLoading();
 	},
-	
+
 	getUploadURL: function(formName) {
 		var formAction = vulpe.util.getElement(formName).action;
 		formAction = formAction.replace('.action', '');

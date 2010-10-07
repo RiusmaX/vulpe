@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 <c:if test="${not empty property && empty name}">
 	<c:set var="name" value="${targetName}.${property}"/>
 </c:if>
