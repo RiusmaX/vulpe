@@ -4,5 +4,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <v:menu labelKey="label.${rootArtifactId}.menu.Index">
-	<v:menu labelKey="label.${rootArtifactId}.menu.Index.start" action="/backend/Index" accesskey="I"/>
+	<v:menu labelKey="label.${rootArtifactId}.menu.Index.start" action="/${vulpeCurrentLayout == 'FRONTEND' ? 'frontend' : 'backend'}/Index" accesskey="I"/>
 </v:menu>
