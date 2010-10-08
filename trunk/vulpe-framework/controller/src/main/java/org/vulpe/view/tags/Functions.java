@@ -260,22 +260,24 @@ public class Functions {
 		final VulpeContext vulpeContext = VulpeContext.getInstance();
 		final Object springSecurity = vulpeContext.getSession().getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
-		final Object springSecurityAutentication = VulpeReflectUtil.getInstance().getFieldValue(
-				springSecurity, "authentication");
-		final Collection<?> authorities = VulpeReflectUtil.getInstance().getFieldValue(
-				springSecurityAutentication, "authorities");
-		final String[] roles = requestedRoles.split(",");
 		boolean has = false;
-		for (final String role : roles) {
-			final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role
-					: Security.ROLE_PREFIX + requestedRoles;
-			if (VulpeValidationUtil.isNotEmpty(authorities)) {
-				for (Object grantedAuthority : authorities) {
-					final String authority = VulpeReflectUtil.getInstance().getFieldValue(
-							grantedAuthority, "authority");
-					if (authority.equals(fullRole)) {
-						has = true;
-						break;
+		if (springSecurity != null) {
+			final Object springSecurityAutentication = VulpeReflectUtil.getInstance()
+					.getFieldValue(springSecurity, "authentication");
+			final Collection<?> authorities = VulpeReflectUtil.getInstance().getFieldValue(
+					springSecurityAutentication, "authorities");
+			final String[] roles = requestedRoles.split(",");
+			for (final String role : roles) {
+				final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role
+						: Security.ROLE_PREFIX + requestedRoles;
+				if (VulpeValidationUtil.isNotEmpty(authorities)) {
+					for (Object grantedAuthority : authorities) {
+						final String authority = VulpeReflectUtil.getInstance().getFieldValue(
+								grantedAuthority, "authority");
+						if (authority.equals(fullRole)) {
+							has = true;
+							break;
+						}
 					}
 				}
 			}
