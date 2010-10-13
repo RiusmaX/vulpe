@@ -190,4 +190,13 @@ public class VulpeStringUtil {
 		}
 		return blob;
 	}
+
+	public static boolean isInteger(final String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
