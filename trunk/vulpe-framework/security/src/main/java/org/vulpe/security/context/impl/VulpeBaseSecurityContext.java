@@ -30,6 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
@@ -50,7 +51,7 @@ import org.vulpe.security.model.services.SecurityService;
  */
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Component("VulpeSecurityContext")
+@Component(VulpeConstants.SECURITY_CONTEXT)
 public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements VulpeSecurityContext {
 
 	private static final Logger LOG = Logger.getLogger(VulpeBaseSecurityContext.class);
@@ -114,8 +115,8 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 			}
 			if (roles == null || roles.isEmpty()) {
 				securityService.createRole(new Role(anonymousRole, anonymousRoleDescription));
-				securityService.createRole(new Role(administratorRole,
-						administratorRoleDescription));
+				securityService
+						.createRole(new Role(administratorRole, administratorRoleDescription));
 			}
 			final List<Role> administratorRoles = securityService.readRole(new Role(
 					administratorRole));

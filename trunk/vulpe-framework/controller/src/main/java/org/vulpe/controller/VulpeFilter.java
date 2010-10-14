@@ -17,37 +17,23 @@ package org.vulpe.controller;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
-import org.vulpe.controller.util.ControllerUtil;
 
-public class VulpeFilter implements Filter {
-
-	private static final Logger LOG = Logger.getLogger(VulpeFilter.class);
-
-	private ServletContext servletContext;
+public class VulpeFilter extends CharacterEncodingFilter {
 
 	@Override
-	public void destroy() {
-		LOG.debug("destroy filter");
-		servletContext = null;
-	}
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
 		final VulpeContext vulpeContext = VulpeContext.getInstance();
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
@@ -55,17 +41,15 @@ public class VulpeFilter implements Filter {
 			vulpeContext.setResponse((HttpServletResponse) response);
 			vulpeContext.setSession(vulpeContext.getRequest().getSession());
 		}
-		ControllerUtil.setServletContext(servletContext);
-		final String characterEncoding = VulpeConfigHelper.get(VulpeProject.class)
-				.characterEncoding();
-		request.setCharacterEncoding(characterEncoding);
-		response.setCharacterEncoding(characterEncoding);
-		chain.doFilter(request, response);
+		setEncoding(VulpeConfigHelper.get(VulpeProject.class).characterEncoding());
+		setForceEncoding(true);
+		super.doFilterInternal(request, response, filterChain);
 	}
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.servletContext = filterConfig.getServletContext();
+	protected void initFilterBean() throws ServletException {
+		VulpeCacheHelper.getInstance().put(VulpeConstants.CURRENT_SERVLET_CONTEXT,
+				getFilterConfig().getServletContext());
+		super.initFilterBean();
 	}
-
 }

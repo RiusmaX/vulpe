@@ -19,10 +19,6 @@
 		<param-name>project.bundle.modules</param-name>
 		<param-value>VulpeResources,VulpeSecurityResources,ApplicationResources,@project.modules.bundles@</param-value>
 	</context-param>
-	<context-param>
-		<param-name>project.package</param-name>
-		<param-value>@project.package@</param-value>
-	</context-param>
 
 	<!-- Spring Configuration Parameters -->
 	<context-param>
@@ -61,7 +57,7 @@
 	<!-- Sitemesh Filter -->
 	<filter>
 		<filter-name>sitemesh</filter-name>
-		<filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
 	</filter>
 
 	<!-- Spring Security Filter -->
@@ -79,7 +75,7 @@
 	<!-- Struts2 Filter -->
 	<filter>
 		<filter-name>struts2</filter-name>
-		<filter-class>org.vulpe.controller.struts.dispatcher.VulpeFilterDispatcher</filter-class>
+		<filter-class>org.vulpe.controller.VulpeFilterDispatcher</filter-class>
 		<!-- struts.configuration.files -->
 	</filter>
 

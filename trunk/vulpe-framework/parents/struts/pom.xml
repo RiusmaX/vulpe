@@ -33,7 +33,6 @@
 			<artifactId>struts2-core</artifactId>
 			<version>${struts.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-jasperreports-plugin</artifactId>

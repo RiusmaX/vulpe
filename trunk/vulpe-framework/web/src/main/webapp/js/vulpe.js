@@ -1280,13 +1280,7 @@ var vulpe = {
 			return popup;
 		},
 
-		onhidemessages: null,
-
 		hideMessages: function() {
-			if (vulpe.util.isNotEmpty(vulpe.view.onhidemessages)) {
-				eval(webtoolkit.url.decode(vulpe.view.onhidemessages));
-				vulpe.view.onhidemessages = null;
-			}
 		},
 
 		/**

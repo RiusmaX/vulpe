@@ -37,9 +37,7 @@ public class VulpeConstants {
 	public static final String LITERAL_SIMPLE_SPACE = " ";
 	public static final String SELECT_OPTION_BLANK = "";
 	public static final String IS_EXCEPTION = "IS_EXCEPTION";
-	public static final String JS_REDIRECT_LOGIN = "vulpe.view.redirectLogin()";
 	public static final String AJAX = "ajax";
-	public static final String ON_HIDE_MESSAGES = "onHideMessages";
 	public static final String VULPE_SHOW_ACTIONS = "vulpeShowActions";
 	public static final String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
 	public static final String ERROR_GERAL = "vulpe.error.general";
@@ -53,7 +51,9 @@ public class VulpeConstants {
 	public static final String VULPE_SECURITY = "vulpe-security";
 	public static final String DOMAINS = "domains";
 	public static final String CONTEXT = "vulpeContext";
-	public static final String SECURITY_CONTEXT = "vulpeSecurityContext";
+	public static final String SECURITY_CONTEXT = "VulpeSecurityContext";
+	public static final String CURRENT_SERVLET_CONTEXT = "currentServletContext";
+	public static final String FILTER_DISPATCHER = "vulpeFilterDispatcher";
 
 	public class Context {
 		public static final String APPLICATION_SCOPE = "APPLICATION_SCOPE";
@@ -61,7 +61,6 @@ public class VulpeConstants {
 		public static final String REQUEST_SCOPE = "REQUEST_SCOPE";
 		public static final String SESSION_SCOPE = "SESSION_SCOPE";
 		public static final String GLOBAL = "global";
-
 	}
 
 	public class Configuration {

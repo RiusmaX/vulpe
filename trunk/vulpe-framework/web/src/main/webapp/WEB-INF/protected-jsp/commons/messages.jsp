@@ -39,7 +39,6 @@
 						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>
 						<c:if test="${not empty actionMessages}"><c:forEach items="${actionMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
 					</ul>
-					<script charset="utf-8" type="text/javascript">vulpe.view.onhidemessages = '${util:urlEncode(onHideMessages)}';</script>
 				</c:when>
 				<c:otherwise>
 					<div id="errors" class="vulpeMessages">

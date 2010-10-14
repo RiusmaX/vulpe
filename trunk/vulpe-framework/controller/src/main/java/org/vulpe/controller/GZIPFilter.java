@@ -22,11 +22,11 @@ public class GZIPFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
-			HttpServletRequest httpRequest = (HttpServletRequest) request;
-			HttpServletResponse httpResponse = (HttpServletResponse) response;
-			String acceptEncoding = httpRequest.getHeader("accept-encoding");
+			final HttpServletRequest httpRequest = (HttpServletRequest) request;
+			final HttpServletResponse httpResponse = (HttpServletResponse) response;
+			final String acceptEncoding = httpRequest.getHeader("accept-encoding");
 			if (acceptEncoding != null && acceptEncoding.indexOf("gzip") != -1) {
-				GZIPResponseWrapper wrappedResponse = new GZIPResponseWrapper(httpResponse);
+				final GZIPResponseWrapper wrappedResponse = new GZIPResponseWrapper(httpResponse);
 				chain.doFilter(httpRequest, wrappedResponse);
 				wrappedResponse.finishResponse();
 				return;

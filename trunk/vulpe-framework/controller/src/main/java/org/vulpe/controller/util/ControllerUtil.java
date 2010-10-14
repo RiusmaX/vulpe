@@ -24,7 +24,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
@@ -264,7 +266,11 @@ public class ControllerUtil {
 			} else if (base.equals(View.AUTHENTICATOR)) {
 				method = Operation.DEFINE.getValue();
 			} else {
-				method = parts[parts.length - 1];
+				int last = parts.length - 1;
+				if (NumberUtils.isNumber(parts[last])) {
+					--last;
+				}
+				method = parts[last];
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -326,23 +332,10 @@ public class ControllerUtil {
 
 	/**
 	 *
-	 */
-	private transient static final ThreadLocal<ServletContext> CURRENT_SERVLET_CONTEXT = new ThreadLocal<ServletContext>();
-
-	/**
-	 *
 	 * @return
 	 */
 	public static ServletContext getServletContext() {
-		return CURRENT_SERVLET_CONTEXT.get();
-	}
-
-	/**
-	 *
-	 * @param servletContext
-	 */
-	public static void setServletContext(final ServletContext servletContext) {
-		CURRENT_SERVLET_CONTEXT.set(servletContext);
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CURRENT_SERVLET_CONTEXT);
 	}
 
 	public void setRequest(HttpServletRequest request) {

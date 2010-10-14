@@ -82,7 +82,6 @@ public class VulpeExceptionMappingInterceptor extends
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {
 			action.addActionMessageKey(newException.getMessage());
-			request.setAttribute(VulpeConstants.ON_HIDE_MESSAGES, VulpeConstants.JS_REDIRECT_LOGIN);
 		} else if (newException instanceof VulpeAuthorizationException) {
 			action.addActionMessageKey(newException.getMessage());
 		} else if (newException instanceof VulpeSystemException) {

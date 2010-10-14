@@ -28,6 +28,8 @@ import ognl.OgnlRuntime;
 
 import org.apache.struts2.dispatcher.FilterDispatcher;
 import org.springframework.security.web.FilterInvocation;
+import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.controller.struts.util.GenericsNullHandler;
 import org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer;
@@ -39,15 +41,17 @@ import com.opensymphony.xwork2.util.ObjectTypeDeterminerFactory;
 /**
  * Implementation of struts2 filter to inject utility classes of generic types
  * and converters.
- * 
+ *
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
+@Component(VulpeConstants.FILTER_DISPATCHER)
 @SuppressWarnings("unchecked")
-public class VulpeFilterDispatcher extends FilterDispatcher {
+public class VulpeStrutsFilterDispatcher extends FilterDispatcher {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seeorg.apache.struts2.dispatcher.FilterDispatcher#init(javax.servlet.
 	 * FilterConfig)
 	 */
@@ -56,28 +60,34 @@ public class VulpeFilterDispatcher extends FilterDispatcher {
 		super.init(filterConfig);
 		// sets ObjectTypeDeterminer to control generic types
 		ObjectTypeDeterminerFactory.setInstance(new GenericsObjectTypeDeterminer());
-
 		// sets access to properties with generics
 		OgnlRuntime.setPropertyAccessor(Object.class, new GenericsPropertyAccessor());
-
 		// sets manager of generic types to struts2
 		OgnlRuntime.setNullHandler(Object.class, new GenericsNullHandler());
-
 		// sets PropertyAccessor to HashSet
 		OgnlRuntime.setPropertyAccessor(Set.class, new XWorkSetPropertyAccessor());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.apache.struts2.dispatcher.FilterDispatcher#doFilter(javax.servlet
+	 * .ServletRequest, javax.servlet.ServletResponse,
+	 * javax.servlet.FilterChain)
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
+		final FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);
 		final String url = filterInvocation.getRequestUrl();
 		if (url.contains(Layout.JS_CONTEXT) || url.contains(Layout.THEMES_CONTEXT)
 				|| url.contains(Layout.CSS_CONTEXT) || url.contains(Layout.IMAGES_CONTEXT)
-				|| url.endsWith(Layout.SUFFIX_JSP)) {
+				|| url.contains(Layout.SUFFIX_JSP)) {
 			chain.doFilter(request, response);
 			return;
 		}
 		super.doFilter(request, response, chain);
 	}
+
 }
