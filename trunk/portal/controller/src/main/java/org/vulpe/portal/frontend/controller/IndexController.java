@@ -26,13 +26,11 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	protected final Logger LOG = Logger.getLogger(IndexController.class);
 
-	private Long sectionId;
-	private Long contentId;
-	private Long downloadId;
+	private Long id;
 
 	public String section() {
 		try {
-			final Section section = getService(CoreService.class).findSection(sectionId);
+			final Section section = getService(CoreService.class).findSection(getId());
 			now.put(Now.CONTENT_TITLE, section.getName());
 			now.put(Now.SHOW_CONTENT_TITLE, true);
 			now.put(Now.CONTENT_SUBTITLE, section.getDescription());
@@ -50,7 +48,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public String content() {
 		try {
-			final Content content = getService(CoreService.class).findContent(contentId);
+			final Content content = getService(CoreService.class).findContent(getId());
 			content.increaseView();
 			getService(CoreService.class).updateContent(content);
 			now.put(Now.CONTENT_TITLE, content.getTitle());
@@ -66,7 +64,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public String download() {
 		try {
-			final Download download = getService(CoreService.class).findDownload(getDownloadId());
+			final Download download = getService(CoreService.class).findDownload(getId());
 			download.increaseDownload();
 			getService(CoreService.class).updateDownload(download);
 			return redirectTo(download.getUrl(), false);
@@ -76,27 +74,11 @@ public class IndexController extends ApplicationBaseSimpleController {
 		return null;
 	}
 
-	public void setSectionId(Long sectionId) {
-		this.sectionId = sectionId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public Long getSectionId() {
-		return sectionId;
-	}
-
-	public void setContentId(Long contentId) {
-		this.contentId = contentId;
-	}
-
-	public Long getContentId() {
-		return contentId;
-	}
-
-	public void setDownloadId(Long downloadId) {
-		this.downloadId = downloadId;
-	}
-
-	public Long getDownloadId() {
-		return downloadId;
+	public Long getId() {
+		return id;
 	}
 }

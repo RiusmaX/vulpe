@@ -5,7 +5,7 @@
 	<div id="content${content.id}">
 		<c:choose>
 		<c:when test="${not empty content.miniText.text}">
-		<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/content/ajax?contentId=${content.id}');"><strong>${content.title}</strong></a> - <v:show property="date" targetValue="${content}" type="DATE" pattern="dd/MM/yyyy hh:mm"/><br>
+		<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/content/ajax/${content.id}');"><strong>${content.title}</strong></a> - <v:show property="date" targetValue="${content}" type="DATE" pattern="dd/MM/yyyy hh:mm"/><br>
 		${content.miniText}
 		</c:when>
 		<c:otherwise>

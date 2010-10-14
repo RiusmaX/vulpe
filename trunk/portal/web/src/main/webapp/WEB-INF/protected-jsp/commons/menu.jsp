@@ -6,7 +6,7 @@
 			<c:choose>
 				<c:when test="${not empty menu.navigateToSection}">
 					<v:menu elementId="${menu.id}" label="${menu.name}"
-						action="/frontend/Index/section/ajax?sectionId=${menu.navigateToSection.id}"
+						action="/frontend/Index/section/ajax/${menu.navigateToSection.id}"
 						current="${not empty menu.selectOnLoad && menu.selectOnLoad}" />
 				</c:when>
 				<c:otherwise>
@@ -19,7 +19,7 @@
 					$(document).ready(function() {
 						var menu = vulpe.util.get("vulpeMenuLink-${menu.id}");
 						if (menu.length == 1) {
-							menu.click();
+							//menu.click();
 						}
 					});
 				</script>

@@ -1,6 +1,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:if test="${show eq true}">
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/beginTag.jsp"%>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp"%>
 	<c:if test="${empty textTranslateIndex}">
 		<c:set var="textTranslateIndex" value="0" />
 	</c:if>
@@ -46,5 +46,5 @@
 				src="${pageContext.request.contextPath}/images/flags/${textLanguage.language.localeCode}.png">&nbsp;${textLanguage.text}</span>
 		</c:forEach> </span>
 	</c:if>
-	<%@include file="/WEB-INF/protected-jsp/commons/tags/endTag.jsp"%>
+	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp"%>
 </c:if>
