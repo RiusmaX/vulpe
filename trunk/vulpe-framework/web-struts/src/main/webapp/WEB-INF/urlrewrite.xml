@@ -10,4 +10,20 @@
 		<from>^/([a-z]+)/([a-z]+)/update/ajax/([0-9]+)</from>
 		<to>/$1/$2/update/ajax?id=$3</to>
 	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/view/([0-9]+)</from>
+		<to>/$1/$2/view?id=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/view/ajax/([0-9]+)</from>
+		<to>/$1/$2/view/ajax?id=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/([0-9]+)</from>
+		<to>/$1/$2/update?id=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/ajax/([0-9]+)</from>
+		<to>/$1/$2/update/ajax?id=$3</to>
+	</rule>
 </urlrewrite>
