@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
 	<description>transfere - Gerenciador de Transferências</description>
-	<!-- APP General Configuration -->
-	<context-param>
-		<param-name>project.package</param-name>
-		<param-value>br.gov.pbh.prodabel.transfere</param-value>
-	</context-param>
+
 	<!-- Spring Configuration Parameters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -20,50 +17,63 @@
 		<param-name>parentContextKey</param-name>
 		<param-value>mainApplicationContext</param-value>
 	</context-param>
+
+	<!-- APP Initialization Listener -->
+	<listener>
+		<listener-class>org.vulpe.controller.struts.VulpeStrutsStartupListener</listener-class>
+	</listener>
+
+	<!-- Spring Initialization Listener -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+
 	<filter>
 		<filter-name>gzip</filter-name>
 		<filter-class>org.vulpe.controller.GZIPFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>gzip</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+
 	<!-- Spring Filter to control EntityManager -->
 	<filter>
 		<filter-name>JpaFilter</filter-name>
 		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
 	</filter>
+
 	<!-- Spring Security Filter -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
+
 	<!-- Struts2 Filter -->
 	<filter>
-		<filter-name>struts2</filter-name>
-		<filter-class>org.vulpe.controller.struts.dispatcher.VulpeFilterDispatcher</filter-class>
-		<!-- struts.configuration.files -->
+		<filter-name>struts-cleanup</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
 	</filter>
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.vulpe.controller.VulpeFilterDispatcher</filter-class>
+		<!-- struts.configuration.files -->
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>WARN</param-value>
+		</init-param>
+	</filter>
+
 	<!-- Sitemesh Filter -->
 	<filter>
 		<filter-name>sitemesh</filter-name>
 		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>sitemesh</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 
 	<filter>
 		<filter-name>vulpe</filter-name>
 		<filter-class>org.vulpe.controller.VulpeFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>vulpe</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
 
 	<!-- Spring Security Filter Mapping -->
 	<filter-mapping>
@@ -72,31 +82,54 @@
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+
 	<!-- Spring Filter Mapping to control EntityManager  -->
 	<filter-mapping>
 		<filter-name>JpaFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>vulpe</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>struts-cleanup</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
 	<!-- Struts2 Filter Mapping -->
 	<filter-mapping>
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
-	<!-- APP Initialization Listener -->
-	<listener>
-		<listener-class>org.vulpe.controller.struts.VulpeStrutsStartupListener</listener-class>
-	</listener>
-	<!-- Spring Initialization Listener -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<listener>
-		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-	</listener>
+
+	<filter-mapping>
+		<filter-name>gzip</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<!-- Session Timeout : 30 minutes -->
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+
 	<!-- APP Welcome Page -->
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
