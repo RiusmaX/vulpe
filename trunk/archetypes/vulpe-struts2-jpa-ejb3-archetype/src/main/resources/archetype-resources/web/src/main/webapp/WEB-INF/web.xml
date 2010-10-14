@@ -65,7 +65,7 @@
 	</filter>
 	<filter>
 		<filter-name>struts2</filter-name>
-		<filter-class>org.vulpe.controller.struts.dispatcher.VulpeFilterDispatcher</filter-class>
+		<filter-class>org.vulpe.controller.VulpeFilterDispatcher</filter-class>
 		<!-- struts.configuration.files -->
 		<init-param>
 			<param-name>logLevel</param-name>
