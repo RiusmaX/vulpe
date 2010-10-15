@@ -6,7 +6,7 @@
 		<v:row>
 			<v:column labelKey="label.transfere.core.Objeto.crud.objetoItens.tipoObjeto">
 				<v:select property="tipoObjeto" headerKey="${empty now['publicacao'] ? 'label.transfere.todos' : ''}"
-					showBlank="true" autoLoad="false" onchange="app.all.showExecute(this.value, '${currentStatus.index}');app.all.carregarNomesObjetos(this.value, '${currentStatus.index}', '${vulpeFormName}', '/core/Objeto${empty now['publicacao'] ? '' : 'Publicacao'}/objetos/ajax', 'objetos${currentStatus.index}', true)" style="width: 120px;">
+					showBlank="true" autoLoad="false" onchange="app.all.showExecute(this.value, '${currentStatus.index}');app.all.carregarNomesObjetos(this.value, '${currentStatus.index}', '/core/Objeto${empty now['publicacao'] ? '' : 'Publicacao'}/objetos/ajax', 'objetos${currentStatus.index}', true)" style="width: 120px;">
 					<c:if test="${!onlyToSee}">
 					<img id="tipoObjetoExecute${currentStatus.index}" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/button-execute-16x16.png" style="cursor: pointer; ${not empty currentItem.tipoObjeto ? 'display:inline' : 'display:none'}" onclick="$('[id$=objetoItens__${currentStatus.index}__tipoObjeto]').change()" title="Executar novamente"/>
 					</c:if>

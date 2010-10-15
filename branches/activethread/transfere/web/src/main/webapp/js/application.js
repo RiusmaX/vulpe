@@ -4,31 +4,28 @@
 var app = {
 
 	all: {
-		carregarNomesObjetos: function(value, index, formName, uri, id) {
+		carregarNomesObjetos: function(value, index, uri, layer) {
 			if (value != "") {
 				uri += "?index=" + index + "&tipo=" + value;
-				vulpe.view.request.submitAjax(formName, uri, id, '', '', true);
+				vulpe.view.request.submitAjax({url: uri, layer: layer, individualLoading: true});
 			} else {
-				vulpe.util.get(id).html("<span id='loading" + index + "'>Selecione um Tipo Objeto.</span>");
+				vulpe.util.get(layer).html("<span id='loading" + index + "'>Selecione um Tipo Objeto.</span>");
 			}
 		},
 
 		autorizarAgendamento: function(id) {
-			vulpe.util.setId(id);
 			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
-			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/autorizar/ajax", layer, '', '');
+			vulpe.view.request.submitAjax({url: "/core/Agenda/autorizar/ajax/" + id, layer: layer});
 		},
 
 		cancelarAgendamento: function(id) {
-			vulpe.util.setId(id);
 			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
-			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/cancelar/ajax", layer, '', '');
+			vulpe.view.request.submitAjax({url: "/core/Agenda/cancelar/ajax/" + id, layer: layer});
 		},
 
 		reiniciarAgendamento: function(id) {
-			vulpe.util.setId(id);
 			var layer = 'vulpeSelectTable-' + vulpe.config.formName;
-			vulpe.view.request.submitAjax(vulpe.config.formName, "/core/Agenda/reiniciar/ajax", layer, '', '');
+			vulpe.view.request.submitAjax({url: "/core/Agenda/reiniciar/ajax/" + id, layer: layer});
 		},
 
 		showExecute: function(value, index) {
