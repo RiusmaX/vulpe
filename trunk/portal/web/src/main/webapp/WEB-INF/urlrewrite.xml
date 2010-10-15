@@ -11,6 +11,14 @@
 		<to>/$1/$2/$3/ajax?id=$4</to>
 	</rule>
 	<rule>
+		<from>^/([a-z]+)/([a-z]+)/delete/([0-9]+)</from>
+		<to>/$1/$2/delete?id=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/delete/ajax/([0-9]+)</from>
+		<to>/$1/$2/delete/ajax?id=$3</to>
+	</rule>
+	<rule>
 		<from>^/([a-z]+)/([a-z]+)/update/([0-9]+)</from>
 		<to>/$1/$2/update?id=$3</to>
 	</rule>
@@ -33,5 +41,13 @@
 	<rule>
 		<from>^/([a-z]+)/([a-z]+)/ajax/([0-9]+)</from>
 		<to>/$1/$2/update/ajax?id=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/read/page/([0-9]+)</from>
+		<to>/$1/$2/read?paging.page=$3</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/read/page/ajax/([0-9]+)</from>
+		<to>/$1/$2/read/ajax?paging.page=$3</to>
 	</rule>
 </urlrewrite>
