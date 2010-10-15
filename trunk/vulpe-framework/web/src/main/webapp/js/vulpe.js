@@ -1758,7 +1758,7 @@ var vulpe = {
 
 			/**
 			 *
-			 * @param options {url, uri, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
+			 * @param options {url, uri, formName, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
 			 */
 			submitAjax: function(options) {
 				if (options.uri) {
@@ -1766,6 +1766,9 @@ var vulpe = {
 				}
 				if (!options.layer) {
 					options.layer = "body";
+				}
+				if (!options.layerFields && vulpe.config.formName) {
+					options.layerFields = vulpe.config.formName;
 				}
 				if (options.individualLoading) {
 					vulpe.config.showLoading = false;
@@ -1833,8 +1836,9 @@ var vulpe = {
 					var input = jQuery(this);
 					input.attr('defaultValue', input.val());
 				});
-
-				options.url = vulpe.util.getForm(options.formName).attr("action");
+				if (!options.url) {
+					options.url = vulpe.util.getForm(options.formName).attr("action");
+				}
 				options.afterCallback = function() {
 					vulpe.view.request.invokeGlobalsAfterJs(options.layerFields);
 				}

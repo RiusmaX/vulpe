@@ -171,6 +171,16 @@
 		</c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showUpdateButton}">
+			<c:choose>
+				<c:when test="${not empty updateLayer && updateLayer != 'body'}"><c:set var="updateLayer" value=", layer: '${updateLayer}'"/></c:when>
+				<c:otherwise><c:set var="updateLayer" value=""/></c:otherwise>
+			</c:choose>
+			<c:choose>
+				<c:when test="${not empty updateFormName && updateFormName != updateLayerFields}"><c:set var="updateFormName" value=", formName: '${updateFormName}'"/></c:when>
+				<c:otherwise><c:set var="updateFormName" value=""/></c:otherwise>
+			</c:choose>
+			<c:if test="${not empty updateBeforeJs}"><c:set var="updateBeforeJs" value=", beforeJs: '${updateBeforeJs}'"/></c:if>
+			<c:if test="${not empty updateAfterJs}"><c:set var="updateAfterJs" value=", afterJs: '${updateAfterJs}'"/></c:if>
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}"><v:column elementId="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" width="1%" showBodyInHeader="true" style="text-align: center">&nbsp;</v:column></c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" widthIcon="16" heightIcon="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}})" width="1%" />
