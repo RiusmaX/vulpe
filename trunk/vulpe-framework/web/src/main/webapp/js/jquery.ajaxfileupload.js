@@ -68,7 +68,7 @@ jQuery.extend({
 					jQuery("#messages").html(_vulpeMessageUpload);
 					vulpe.view.showMessages();
 				}else{
-					vulpe.view.request.submitForm({
+					vulpe.view.request.submitAjax({
 						formName: formName,
 						layerFields: layerFields,
 						queryString: queryString,

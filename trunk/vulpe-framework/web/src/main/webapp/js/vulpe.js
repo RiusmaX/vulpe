@@ -215,13 +215,7 @@ var vulpe = {
 		},
 
 		getElementId: function(element) {
-			var id = "";
-			if (typeof element == "string") {
-				id = element;
-			} else {
-				id = element.id ? element.id : jQuery(element).attr("id")
-			}
-			return id;
+			return (typeof element == "string") ? element : (element.id ? element.id : jQuery(element).attr("id"));
 		},
 
 		getPrefixIdByElement: function(element) {
@@ -269,34 +263,6 @@ var vulpe = {
 				vulpe.config.formName = formName;
 			}
 			return vulpe.util.get(vulpe.config.formName);
-		},
-
-		getId: function(formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
-			}
-			return vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.identifier).val();
-		},
-
-		setId: function(id, formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
-			}
-			vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.identifier).val(id);
-		},
-
-		getPagingPage: function(formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
-			}
-			return vulpe.util.get(vulpe.config.formName + vulpe.config.pagingPage).val();
-		},
-
-		setPagingPage: function(page, formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
-			}
-			vulpe.util.get(vulpe.config.formName + vulpe.config.pagingPage).val(page);
 		},
 
 		completeURL: function(url) {
@@ -1405,9 +1371,8 @@ var vulpe = {
 			 * @param options {page, url, formName, layerFields, layer, beforeJs, afterJs}
 			 */
 			submitPaging: function(options) {
-				vulpe.util.setPagingPage(options.page, options.formName);
 				options.validate = false;
-				vulpe.view.request.submitFormAction(options);
+				vulpe.view.request.submitAjaxAction(options);
 			},
 
 			/**
@@ -1418,13 +1383,8 @@ var vulpe = {
 				if (vulpe.view.isSelection) {
 					return false;
 				}
-				vulpe.util.setId(options.id, options.formName);
-				paging = vulpe.util.getPagingPage(options.formName);
-				if (paging) {
-					vulpe.util.setPagingPage(0, options.formName)
-				}
 				options.validate = false;
-				vulpe.view.request.submitFormAction(options);
+				vulpe.view.request.submitAjaxAction(options);
 			},
 
 			/**
@@ -1435,9 +1395,8 @@ var vulpe = {
 				if (options.verify && vulpe.view.isSelection) {
 					return false;
 				}
-				vulpe.util.setId(options.id, options.formName);
 				options.validate = false;
-				vulpe.view.request.submitFormAction(options);
+				vulpe.view.request.submitAjaxAction(options);
 			},
 
 			/**
@@ -1445,9 +1404,8 @@ var vulpe = {
 			 * @param options {id, url, formName, layerFields, layer, beforeJs, afterJs}
 			 */
 			submitDelete: function(options) {
-				vulpe.util.setId(options.id, options.formName);
 				options.validate = false;
-				vulpe.view.request.submitFormAction(options);
+				vulpe.view.request.submitAjaxAction(options);
 			},
 
 			/**
@@ -1457,7 +1415,7 @@ var vulpe = {
 			submitDeleteDetail: function(options) {
 				options.queryString = 'detail=' + (detail == 'entities' ? detail : 'entity.' + detail) + '&detailIndex=' + detailIndex;
 				options.validate = false;
-				vulpe.view.request.submitFormAction(options);
+				vulpe.view.request.submitAjaxAction(options);
 			},
 
 			/**
@@ -1496,7 +1454,7 @@ var vulpe = {
 								}
 								options.queryString = "detail=" + (detail == "entities" || detail.indexOf("entity.") != -1 ? detail : "entity." + detail);
 								options.validate = false;
-								vulpe.view.request.submitFormAction(options);
+								vulpe.view.request.submitAjaxAction(options);
 							},
 							Cancel: function() {
 								$(this).dialog('close');
@@ -1543,7 +1501,7 @@ var vulpe = {
 									}
 								}
 								options.validate = false;
-								vulpe.view.request.submitFormAction(options);
+								vulpe.view.request.submitAjaxAction(options);
 							},
 							Cancel: function() {
 								$(this).dialog('close');
@@ -1561,8 +1519,11 @@ var vulpe = {
 			 *
 			 * @param options {url, formName, layerFields, queryString, layer, validate, beforeJs, afterJs}
 			 */
-			submitFormAction: function(options) {
-				if ((options.url.indexOf("Post") != -1 || options.url.indexOf("read") != -1 || options.url.indexOf("Validate") != -1) && !vulpe.validate.validateAttributes(options.formName)) {
+			submitAjaxAction: function(options) {
+				if (!options.formName && options.layerFields) {
+					options.formName = options.layerFields;
+				}
+				if (options.validate && !vulpe.validate.validateAttributes(options.formName)) {
 					return false;
 				}
 				if (options.url.indexOf(vulpe.config.contextPath) == -1) {
@@ -1570,7 +1531,7 @@ var vulpe = {
 				}
 				vulpe.util.getForm(options.formName).attr("action", options.url);
 				options.isFile = false;
-				vulpe.view.request.submitForm(options);
+				vulpe.view.request.submitAjax(options);
 			},
 
 			/**
@@ -1584,7 +1545,7 @@ var vulpe = {
 					}
 					vulpe.util.getForm(options.formName).attr("action", vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck);
 					options.isFile = false;
-					vulpe.view.request.submitForm(options);
+					vulpe.view.request.submitAjax(options);
 				}
 			},
 
@@ -1605,64 +1566,6 @@ var vulpe = {
 					}
 				}
 				return true;
-			},
-
-			/**
-			 *
-			 * @param options {formName, layerFields, queryString, layer, validate, beforeJs, afterJs, isFile}
-			 */
-			submitForm: function(options) {
-				jQuery(vulpe.config.layers.messages).hide();
-				// verifier if exists validations before submit
-				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
-					return false;
-				}
-				options.beforeJs = ''; // set empty do not validate on submitPage
-				try {
-					vulpe.view.request.invokeGlobalsBeforeJs(options.layerFields);
-				} catch(e) {
-					return false;
-				}
-				if (options.validate && (typeof options.isFile == "undefined" || !options.isFile)) {
-					var name = options.formName.substring(0, 1).toUpperCase() + options.formName.substring(1);
-					try {
-						var isValid = eval('validate' + name + '()');
-						if (!isValid) {
-							return false;
-						}
-					} catch(e) {
-						// do nothing
-					}
-					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(options.layerFields)).each(function (i) {
-						vulpe.exception.hideError(this);
-					});
-					var files = jQuery(':file[value]', vulpe.util.get(options.layerFields));
-					if (files && files.length && files.length > 0) {
-						options.files = files;
-						jQuery.uploadFiles(options);
-						return;
-					}
-				}
-
-				// serialize form
-				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.formName)).fieldSerialize();
-				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
-					options.queryString = options.queryString + '&' + queryStringForm;
-				} else if (vulpe.util.isNotEmpty(queryStringForm)) {
-					options.queryString = queryStringForm;
-				}
-
-				// sets values
-				jQuery(":input[type!='file']", vulpe.util.get(options.formName)).each(function(i) {
-					var input = jQuery(this);
-					input.attr('defaultValue', input.val());
-				});
-
-				options.url = vulpe.util.getForm(options.formName).attr("action");
-				options.afterCallback = function() {
-					vulpe.view.request.invokeGlobalsAfterJs(options.layerFields);
-				}
-				return vulpe.view.request.submitPage(options);
 			},
 
 			submitLink: function(url, beforeJs, afterJs) {
@@ -1855,11 +1758,15 @@ var vulpe = {
 
 			/**
 			 *
-			 * @param options {formName, uri, layer, beforeJs, afterJs, individualLoading}
+			 * @param options {url, uri, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
 			 */
 			submitAjax: function(options) {
-				vulpe.util.getForm(options.formName).attr("action", vulpe.config.contextPath + options.uri);
-				var layerFields = options.formName;
+				if (options.uri) {
+					options.url = (options.uri.indexOf(vulpe.config.contextPath) == -1 ? vulpe.config.contextPath : '') + options.uri;
+				}
+				if (!options.layer) {
+					options.layer = "body";
+				}
 				if (options.individualLoading) {
 					vulpe.config.showLoading = false;
 					var elements = jQuery("select,input,span", "#" + options.layer);
@@ -1878,9 +1785,60 @@ var vulpe = {
 						}
 					}
 				}
-				options.validate = true;
-				options.isFile = false;
-				vulpe.view.request.submitForm(options);
+				jQuery(vulpe.config.layers.messages).hide();
+				// verifier if exists validations before submit
+				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
+					return false;
+				}
+				options.beforeJs = ''; // set empty do not validate on submitPage
+				try {
+					vulpe.view.request.invokeGlobalsBeforeJs(options.layerFields);
+				} catch(e) {
+					return false;
+				}
+				if (!options.formName && options.layerFields) {
+					options.formName = 	options.layerFields;
+				}
+				if (options.validate && (typeof options.isFile == "undefined" || !options.isFile)) {
+					var name = options.formName.substring(0, 1).toUpperCase() + options.formName.substring(1);
+					try {
+						var isValid = eval('validate' + name + '()');
+						if (!isValid) {
+							return false;
+						}
+					} catch(e) {
+						// do nothing
+					}
+					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(options.layerFields)).each(function (i) {
+						vulpe.exception.hideError(this);
+					});
+					var files = jQuery(':file[value]', vulpe.util.get(options.layerFields));
+					if (files && files.length && files.length > 0) {
+						options.files = files;
+						jQuery.uploadFiles(options);
+						return;
+					}
+				}
+
+				// serialize form
+				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.formName)).fieldSerialize();
+				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
+					options.queryString = options.queryString + '&' + queryStringForm;
+				} else if (vulpe.util.isNotEmpty(queryStringForm)) {
+					options.queryString = queryStringForm;
+				}
+
+				// sets values
+				jQuery(":input[type!='file']", vulpe.util.get(options.formName)).each(function(i) {
+					var input = jQuery(this);
+					input.attr('defaultValue', input.val());
+				});
+
+				options.url = vulpe.util.getForm(options.formName).attr("action");
+				options.afterCallback = function() {
+					vulpe.view.request.invokeGlobalsAfterJs(options.layerFields);
+				}
+				return vulpe.view.request.submitPage(options);
 			}
 		}
 	},

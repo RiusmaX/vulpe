@@ -2,35 +2,22 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:set var="scope" scope="request" value="${scope}"/>
 <c:if test="${show}">
-	<c:if test="${empty sortPropertyInfo}">
-		<c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/>
-	</c:if>
-	<c:if test="${empty renderId}">
-		<c:set var="renderId" value="${true}"/>
-	</c:if>
-	<!-- tag begin -->
-	<c:if test="${empty emptyKey}">
-		<c:set var="emptyKey" value="vulpe.msg.empty.list"/>
-	</c:if>
+	<c:if test="${empty sortPropertyInfo}"><c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/></c:if>
+	<c:if test="${empty renderId}"><c:set var="renderId" value="${true}"/></c:if>
+	<c:if test="${empty emptyKey}"><c:set var="emptyKey" value="vulpe.msg.empty.list"/></c:if>
 	<c:set var="name" value=""/>
 	<c:set var="baseName" value=""/>
 	<c:set var="itemName" value=""/>
 	<c:if test="${empty pagingList && (empty detailConfig || now['controllerType'] == 'TABULAR') && empty items}">
 		<c:set var="pagingList" value="${(not empty paging && paging.list ne null ? paging : null)}" />
-		<c:if test="${empty pagingList}">
-			<c:set var="detailConfig" value="${targetConfig}"/>
-		</c:if>
+		<c:if test="${empty pagingList}"><c:set var="detailConfig" value="${targetConfig}"/></c:if>
 		<c:if test="${not empty pagingList}">
 			<c:set var="name" value="entities"/>
-			<c:if test="${now['controllerType'] == 'TABULAR'}">
-				<c:set var="detailConfig" value="${targetConfig}"/>
-			</c:if>
+			<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="detailConfig" value="${targetConfig}"/></c:if>
 		</c:if>
 		<c:if test="${empty detailConfig}">
 			<c:set var="items" value="${entities}"/>
-			<c:if test="${not empty items}">
-				<c:set var="name" value="entities"/>
-			</c:if>
+			<c:if test="${not empty items}"><c:set var="name" value="entities"/></c:if>
 		</c:if>
 	</c:if>
 	<c:set var="isSelectTableTag" value="${false}" scope="request"/>
@@ -59,19 +46,13 @@
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 		</c:if>
 	</c:if>
-	<c:if test="${not empty name && empty elementId}">
-		<c:set var="elementId" value="${name}"/>
-	</c:if>
-	<c:if test="${not empty elementId && empty name}">
-		<c:set var="name" value="${elementId}"/>
-	</c:if>
+	<c:if test="${not empty name && empty elementId}"><c:set var="elementId" value="${name}"/></c:if>
+	<c:if test="${not empty elementId && empty name}"><c:set var="name" value="${elementId}"/></c:if>
 	<c:if test="${empty itemName}">
 		<c:choose>
 			<c:when test="${not empty name}">
 				<c:set var="itemName" value="${util:clearChars(name, '[].0123456789-,')}_item"/>
-				<c:if test="${empty baseName}">
-					<c:set var="baseName" value="${util:clearChars(name, '[].0123456789-,')}"/>
-				</c:if>
+				<c:if test="${empty baseName}"><c:set var="baseName" value="${util:clearChars(name, '[].0123456789-,')}"/></c:if>
 			</c:when>
 			<c:otherwise>
 				<c:set var="elementId" value="items"/>
@@ -83,30 +64,16 @@
 	</c:if>
 	<c:if test="${not empty pagingList}">
 		<c:set var="items" value="${pagingList.list}"/>
-		<c:if test="${empty pagingActionName}">
-			<c:set var="pagingActionName" value="${controllerConfig.controllerName}/read"/>
-		</c:if>
-		<c:if test="${empty pagingFormName}">
-			<c:set var="pagingFormName" value="${vulpeFormName}"/>
-		</c:if>
-		<c:if test="${empty pagingLayerFields}">
-			<c:set var="pagingLayerFields" value="${pagingFormName}"/>
-		</c:if>
-		<c:if test="${empty pagingLayer}">
-			<c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${pagingFormName}"/>
-		</c:if>
+		<c:if test="${empty pagingActionName}"><c:set var="pagingActionName" value="${controllerConfig.ownerController}/read/page"/></c:if>
+		<c:if test="${empty pagingFormName}"><c:set var="pagingFormName" value="${vulpeFormName}"/></c:if>
+		<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="${pagingFormName}"/></c:if>
+		<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${pagingFormName}"/></c:if>
 	</c:if>
 	<c:if test="${empty items || fn:length(items) eq 0}"><p><fmt:message key="${emptyKey}"/></p></c:if>
 	<c:if test="${not empty items && fn:length(items) > 0}">
-		<c:if test="${empty width}">
-			<c:set var="width" value="100%"/>
-		</c:if>
-		<c:if test="${empty border}">
-			<c:set var="border" value="0"/>
-		</c:if>
-		<c:if test="${empty cellspacing}">
-			<c:set var="cellspacing" value="1"/>
-		</c:if>
+		<c:if test="${empty width}"><c:set var="width" value="100%"/></c:if>
+		<c:if test="${empty border}"><c:set var="border" value="0"/></c:if>
+		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="1"/></c:if>
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
@@ -118,14 +85,12 @@
 			<c:set var="itemTableTag" value="${itemName}" scope="request"/>
 			<c:set var="v_item" value="${util:put(pageContext, itemTableTag, item, applicationScope['REQUEST_SCOPE'])}"/>
 			<c:set var="currentItem" value="${item}" scope="request"/>
-			<c:if test="${not empty detailConfig && renderId}">
-				<v:hidden property="id"/>
-			</c:if>
+			<c:if test="${not empty detailConfig && renderId}"><v:hidden property="id"/></c:if>
 			<jsp:invoke fragment="tableBody"/>
 			<c:if test="${not empty detailConfig && not empty detailConfig.subDetails && fn:length(detailConfig.subDetails) > 0}">
 				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
-					<!-- sub-detalhe: ${targetConfigPropertyName} - ${targetConfig} -->
+					<!-- sub-detail: ${targetConfigPropertyName} - ${targetConfig} -->
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>
 					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
@@ -136,26 +101,20 @@
 				<c:set var="targetConfig" value="${detailConfig}" scope="request"/>
 				<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 			</c:if>
-			<c:set var="statusTableTag" value="${null}" scope="request"/>
-			<c:set var="itemTableTag" value="${null}" scope="request"/>
+			<c:remove var="statusTableTag" scope="request"/>
+			<c:remove var="itemTableTag" scope="request"/>
 		</c:forEach>
 		</tbody>
 		<thead>
 			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
-			<c:if test="${not empty tableHeader}">
-				<tr class="vulpeTableHeader">
-					${tableHeader}
-				</tr>
-			</c:if>
+			<c:if test="${not empty tableHeader}"><tr class="vulpeTableHeader">${tableHeader}</tr></c:if>
 			<tr>
 				<jsp:invoke fragment="tableBody"/>
 			</tr>
 		</thead>
 		<c:if test="${not empty tableFooter}">
 			<tfoot>
-				<tr class="vulpeTableFooter">
-					${tableFooter}
-				</tr>
+				<tr class="vulpeTableFooter">${tableFooter}</tr>
 			</tfoot>
 		</c:if>
 		</table>
@@ -168,9 +127,8 @@
 			});
 		</script>
 	</c:if>
-	<c:set var="targetConfig" value="${null}" scope="request"/>
-	<c:set var="targetConfigPropertyName" value="${null}" scope="request"/>
-	<c:set var="sortPropertyInfoTableTag" value="${null}" scope="request"/>
-	<c:set var="isHeaderTableTag" value="${null}" scope="request"/>
-	<!-- tag end -->
+	<c:remove var="targetConfig" scope="request"/>
+	<c:remove var="targetConfigPropertyName" scope="request"/>
+	<c:remove var="sortPropertyInfoTableTag" scope="request"/>
+	<c:remove var="isHeaderTableTag" scope="request"/>
 </c:if>

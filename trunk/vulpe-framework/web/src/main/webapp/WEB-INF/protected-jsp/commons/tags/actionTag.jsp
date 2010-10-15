@@ -21,12 +21,16 @@
 		<c:when test="${empty elementId}"><c:set var="elementId" value="${labelKey}" /></c:when>
 		<c:when test="${!fn:contains(elementId, 'vulpeButton')}"><c:set var="elementId" value="${buttonPrefix}${elementId}-${vulpeFormName}" /></c:when>
 	</c:choose>
+	<c:if test="${not empty queryString}"><c:set var="queryString" value=", queryString: '${queryString}'"/></c:if>
+	<c:if test="${not empty validate}"><c:set var="validate" value=", validate: ${validate}"/></c:if>
+	<c:if test="${not empty afterJs}"><c:set var="afterJs" value=", afterJs: '${fn:escapeXml(afterJs)}'"/></c:if>
+	<c:if test="${not empty beforeJs}"><c:set var="beforeJs" value=", beforeJs: '${fn:escapeXml(beforeJs)}'"/></c:if>
 	<c:if test="${not empty action && !fn:contains(action, '/')}"><c:set var="action" value="${controllerConfig.controllerName}/${action}/ajax"/></c:if>
 	<c:if test="${empty javascript}">
 		<c:choose>
-			<c:when test="${empty action}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitForm({formName: '${vulpeFormName}', layerFields: '${layerFields}', queryString: '${queryString}', layer: '${layer}', validate: ${validate}, beforeJs: '${fn:escapeXml(beforeJs)}', afterJs: '${fn:escapeXml(afterJs)}', isFile: false});${showDeleteConfirmation ? '})': ''}" /></c:when>
-			<c:when test="${!noSubmitForm}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitFormAction({url:'${action}', formName: '${vulpeFormName}', layerFields: '${layerFields}', queryString: '${queryString}', layer: '${layer}', validate: ${validate}, beforeJs: '${fn:escapeXml(beforeJs)}', afterJs: '${fn:escapeXml(afterJs)}'});${showDeleteConfirmation ? '})': ''}" /></c:when>
-			<c:otherwise><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitPage({url: '${action}', queryString: '${queryString}', layer: '${layer}', beforeJs: '${fn:escapeXml(beforeJs)}', afterJs: '${fn:escapeXml(afterJs)}'});${showDeleteConfirmation ? '})': ''}" /></c:otherwise>
+			<c:when test="${empty action}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showDeleteConfirmation ? '})': ''}" /></c:when>
+			<c:when test="${!noSubmitForm}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showDeleteConfirmation ? '})': ''}" /></c:when>
+			<c:otherwise><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitPage({url: '${action}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showDeleteConfirmation ? '})': ''}" /></c:otherwise>
 		</c:choose>
 	</c:if>
 	<c:choose>

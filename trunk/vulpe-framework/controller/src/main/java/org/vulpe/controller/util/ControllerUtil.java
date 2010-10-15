@@ -242,9 +242,15 @@ public class ControllerUtil {
 		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");
 		base = base.replace(Logic.AJAX, "");
 		getCurrentControllerURI().set(base);
-		base = (base.contains(Logic.BACKEND) || base.contains(Logic.FRONTEND) || base
-				.contains(View.AUTHENTICATOR)) ? base : base.substring(0, StringUtils.lastIndexOf(
-				base, '/'));
+		final String last = base.substring(StringUtils.lastIndexOf(base, '/') + 1);
+		if (NumberUtils.isNumber(last)) {
+			base = base.substring(0, StringUtils.lastIndexOf(base, '/'));
+		}
+		if (!base.contains(Logic.BACKEND) && !base.contains(Logic.FRONTEND)
+				&& !base.contains(View.AUTHENTICATOR)) {
+			String[] parts = base.split("/");
+			base = parts[0] + "/" + parts[1];
+		}
 		getCurrentController().set(base);
 		return base;
 	}
