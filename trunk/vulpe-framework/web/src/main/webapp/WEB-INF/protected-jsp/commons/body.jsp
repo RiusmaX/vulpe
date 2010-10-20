@@ -22,23 +22,8 @@
 	<div id="contentTitle">${not empty now['contentTitle'] ? now['contentTitle'] : contentTitle}</div>
 	</c:if>
 	<c:if test="${now['showContentSubtitle'] && empty vulpeBodyTwice}">
-	<c:if test="${not empty now['subtitleKey']}"><fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message></c:if>
-	<div id="contentSubtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
+		<c:if test="${not empty now['subtitleKey']}"><fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message></c:if>
+		<div id="contentSubtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
 	</c:if>
-	<div id="content">
-		<c:choose>
-			<c:when test="${vulpeBodyTwice}">
-				<c:choose>
-					<c:when test="${vulpeBodyTwiceType == 'CRUD'}"><%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %></c:when>
-					<c:when test="${vulpeBodyTwiceType == 'SELECT'}"><%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %></c:when>
-				</c:choose>
-			</c:when>
-			<c:when test="${now['controllerType'] == 'CRUD'}"><%@include file="/WEB-INF/protected-jsp/commons/crud.jsp" %></c:when>
-			<c:when test="${now['controllerType'] == 'SELECT'}"><%@include file="/WEB-INF/protected-jsp/commons/select.jsp" %></c:when>
-			<c:when test="${now['controllerType'] == 'TABULAR'}"><%@include file="/WEB-INF/protected-jsp/commons/tabular.jsp" %></c:when>
-			<c:when test="${now['controllerType'] == 'REPORT'}"><%@include file="/WEB-INF/protected-jsp/commons/report.jsp" %></c:when>
-			<c:when test="${now['controllerType'] == 'FRONTEND'}"><%@include file="/WEB-INF/protected-jsp/commons/frontend.jsp" %></c:when>
-			<c:when test="${now['controllerType'] == 'BACKEND'}"><%@include file="/WEB-INF/protected-jsp/commons/backend.jsp" %></c:when>
-		</c:choose>
-	</div>
+	<%@include file="/WEB-INF/protected-jsp/commons/content.jsp" %>
 </v:form>

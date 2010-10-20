@@ -1,4 +1,4 @@
-package org.vulpe.commons.model.entity;
+package org.vulpe.resources.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
