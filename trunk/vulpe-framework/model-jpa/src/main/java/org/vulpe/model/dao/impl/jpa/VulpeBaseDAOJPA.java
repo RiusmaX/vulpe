@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
@@ -68,7 +69,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -87,7 +88,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -130,7 +131,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -148,7 +149,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -169,7 +170,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -185,7 +186,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -240,7 +241,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 *
+	 * 
 	 * @param entity
 	 * @param params
 	 * @return
@@ -462,7 +463,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -481,7 +482,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -524,7 +525,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Load relationships and optimize lazy load.
-	 *
+	 * 
 	 * @param entities
 	 * @param entityManager
 	 * @param params
@@ -535,7 +536,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				QueryConfiguration.class);
 		if (queryConfiguration != null && queryConfiguration.relationships().length > 0) {
 			final List<ID> parentIds = new ArrayList<ID>();
-			for (ENTITY parent : entities) {
+			for (final ENTITY parent : entities) {
 				parentIds.add(parent.getId());
 			}
 			for (Relationship relationship : queryConfiguration.relationships()) {
@@ -551,10 +552,20 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						hql.append(", ");
 						hql.append("obj.").append(attribute).append(" as ").append(attribute);
 					}
-					hql.append(", obj.").append(parentName).append(".id as ").append(parentName);
+					final Class propertyType = PropertyUtils.getPropertyType(getEntityClass()
+							.newInstance(), relationship.property());
+					boolean oneToMany = propertyType.getClass().isAssignableFrom(Collection.class);
+					if (oneToMany) {
+						hql.append(", obj.").append(parentName).append(".id as ")
+								.append(parentName);
+					}
 					hql.append(") from ").append(relationship.target().getSimpleName()).append(
 							" obj");
-					hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+					if (oneToMany) {
+						hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+					} else {
+						hql.append(" where obj.id in (:ids)");
+					}
 					if (relationship.parameters() != null) {
 						for (QueryParameter parameter : relationship.parameters()) {
 							if (params.containsKey(parameter.name())) {
@@ -574,7 +585,17 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						}
 					}
 					final Query query = entityManager.createQuery(hql.toString());
-					query.setParameter("parentIds", parentIds);
+					if (oneToMany) {
+						query.setParameter("parentIds", parentIds);
+					} else {
+						final List<ID> ids = new ArrayList<ID>();
+						for (ENTITY entity : entities) {
+							final VulpeEntity<ID> propertyEntity = (VulpeEntity<ID>) PropertyUtils
+									.getProperty(entity, relationship.property());
+							ids.add(propertyEntity.getId());
+						}
+						query.setParameter("ids", parentIds);
+					}
 					if (relationship.parameters() != null) {
 						for (QueryParameter parameter : relationship.parameters()) {
 							if (params.containsKey(parameter.name())) {
@@ -585,25 +606,27 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					final List<Map> result = query.getResultList();
 					final List<ENTITY> childs = new ArrayList<ENTITY>();
 					final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
-					for (Map map : result) {
+					for (final Map map : result) {
 						final ENTITY child = (ENTITY) relationship.target().newInstance();
 						PropertyUtils.setProperty(child, "id", map.get("id"));
 						relationshipIds.put(child.getId(), (ID) map.get(parentName));
-						for (String attribute : relationship.attributes()) {
+						for (final String attribute : relationship.attributes()) {
 							PropertyUtils.setProperty(child, attribute, map.get(attribute));
 						}
 						childs.add(child);
 					}
-					for (ENTITY parent : entities) {
+					for (final ENTITY parent : entities) {
 						final List<ENTITY> loadedChilds = new ArrayList<ENTITY>();
-						for (ENTITY child : childs) {
-							ID parentId = (ID) relationshipIds.get(child.getId());
-							if (parent.getId().equals(parentId)) {
-								PropertyUtils.setProperty(child, parentName, parent);
-								loadedChilds.add(child);
+						for (final ENTITY child : childs) {
+							if (oneToMany) {
+								final ID parentId = (ID) relationshipIds.get(child.getId());
+								if (parent.getId().equals(parentId)) {
+									PropertyUtils.setProperty(child, parentName, parent);
+									loadedChilds.add(child);
+								}
 							}
+							PropertyUtils.setProperty(parent, relationship.property(), oneToMany ? loadedChilds : child);
 						}
-						PropertyUtils.setProperty(parent, relationship.property(), loadedChilds);
 					}
 				} catch (Exception e) {
 					LOG.error(e);
