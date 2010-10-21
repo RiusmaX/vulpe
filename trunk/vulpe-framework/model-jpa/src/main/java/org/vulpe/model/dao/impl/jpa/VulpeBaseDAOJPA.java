@@ -18,8 +18,6 @@ package org.vulpe.model.dao.impl.jpa;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +35,6 @@ import org.springframework.orm.jpa.JpaCallback;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
-import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
@@ -49,7 +46,6 @@ import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryParameter;
-import org.vulpe.model.annotations.Relationship;
 import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.VulpeLogicEntity;
@@ -82,6 +78,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.C);
 		}
 		final ENTITY newEntity = merge(entity);
+		loadEntityRelationships(newEntity);
 		audit(newEntity, AuditOccurrenceType.INSERT, null);
 		return newEntity;
 	}
@@ -145,6 +142,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.U);
 		}
 		merge(entity);
+		loadEntityRelationships(entity);
 	}
 
 	/*
@@ -165,6 +163,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				return null;
 			}
 		}
+		loadEntityRelationships(entity);
 		return entity;
 	}
 
@@ -230,7 +229,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					query.setFirstResult(paging.getFromIndex());
 					query.setMaxResults(pageSize);
 					final List<ENTITY> entities = query.getResultList();
-					loadRelationships(entities, entityManager, params);
+					loadRelationships(entities, params);
 					return entities;
 				}
 			}));
@@ -521,118 +520,6 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			return size > 0;
 		}
 		return false;
-	}
-
-	/**
-	 * Load relationships and optimize lazy load.
-	 * 
-	 * @param entities
-	 * @param entityManager
-	 * @param params
-	 */
-	protected void loadRelationships(final List<ENTITY> entities,
-			final EntityManager entityManager, final Map<String, Object> params) {
-		final QueryConfiguration queryConfiguration = getEntityClass().getAnnotation(
-				QueryConfiguration.class);
-		if (queryConfiguration != null && queryConfiguration.relationships().length > 0) {
-			final List<ID> parentIds = new ArrayList<ID>();
-			for (final ENTITY parent : entities) {
-				parentIds.add(parent.getId());
-			}
-			for (Relationship relationship : queryConfiguration.relationships()) {
-				try {
-					final StringBuilder hql = new StringBuilder();
-					final String parentName = VulpeStringUtil.lowerCaseFirst(getEntityClass()
-							.getSimpleName());
-					hql.append("select new map(obj.id as id");
-					for (String attribute : relationship.attributes()) {
-						if ("id".equals(attribute)) {
-							continue;
-						}
-						hql.append(", ");
-						hql.append("obj.").append(attribute).append(" as ").append(attribute);
-					}
-					final Class propertyType = PropertyUtils.getPropertyType(getEntityClass()
-							.newInstance(), relationship.property());
-					boolean oneToMany = propertyType.getClass().isAssignableFrom(Collection.class);
-					if (oneToMany) {
-						hql.append(", obj.").append(parentName).append(".id as ")
-								.append(parentName);
-					}
-					hql.append(") from ").append(relationship.target().getSimpleName()).append(
-							" obj");
-					if (oneToMany) {
-						hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
-					} else {
-						hql.append(" where obj.id in (:ids)");
-					}
-					if (relationship.parameters() != null) {
-						for (QueryParameter parameter : relationship.parameters()) {
-							if (params.containsKey(parameter.name())) {
-								hql.append(" and ");
-								hql.append(
-										StringUtils.isNotEmpty(parameter.alias()) ? parameter
-												.alias() : "obj").append(".");
-								hql.append(parameter.name());
-								final Like like = VulpeReflectUtil.getInstance()
-										.getAnnotationInField(Like.class, relationship.target(),
-												parameter.name());
-								hql.append(" ").append(
-										like != null ? "like" : parameter.operator().getValue())
-										.append(" ");
-								hql.append(":").append(parameter.name());
-							}
-						}
-					}
-					final Query query = entityManager.createQuery(hql.toString());
-					if (oneToMany) {
-						query.setParameter("parentIds", parentIds);
-					} else {
-						final List<ID> ids = new ArrayList<ID>();
-						for (ENTITY entity : entities) {
-							final VulpeEntity<ID> propertyEntity = (VulpeEntity<ID>) PropertyUtils
-									.getProperty(entity, relationship.property());
-							ids.add(propertyEntity.getId());
-						}
-						query.setParameter("ids", parentIds);
-					}
-					if (relationship.parameters() != null) {
-						for (QueryParameter parameter : relationship.parameters()) {
-							if (params.containsKey(parameter.name())) {
-								query.setParameter(parameter.name(), params.get(parameter.name()));
-							}
-						}
-					}
-					final List<Map> result = query.getResultList();
-					final List<ENTITY> childs = new ArrayList<ENTITY>();
-					final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
-					for (final Map map : result) {
-						final ENTITY child = (ENTITY) relationship.target().newInstance();
-						PropertyUtils.setProperty(child, "id", map.get("id"));
-						relationshipIds.put(child.getId(), (ID) map.get(parentName));
-						for (final String attribute : relationship.attributes()) {
-							PropertyUtils.setProperty(child, attribute, map.get(attribute));
-						}
-						childs.add(child);
-					}
-					for (final ENTITY parent : entities) {
-						final List<ENTITY> loadedChilds = new ArrayList<ENTITY>();
-						for (final ENTITY child : childs) {
-							if (oneToMany) {
-								final ID parentId = (ID) relationshipIds.get(child.getId());
-								if (parent.getId().equals(parentId)) {
-									PropertyUtils.setProperty(child, parentName, parent);
-									loadedChilds.add(child);
-								}
-							}
-							PropertyUtils.setProperty(parent, relationship.property(), oneToMany ? loadedChilds : child);
-						}
-					}
-				} catch (Exception e) {
-					LOG.error(e);
-				}
-			}
-		}
 	}
 
 }

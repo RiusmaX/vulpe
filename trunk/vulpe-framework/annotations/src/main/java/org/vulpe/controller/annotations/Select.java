@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Select view configurations.
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  */
 @Documented
@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Select {
 	/**
-	 * Page size of selection
+	 * Paging size of selection
 	 */
 	int pageSize() default 0;
 
@@ -50,4 +50,8 @@ public @interface Select {
 	 */
 	boolean showReport() default false;
 
+	/**
+	 * Indicates that the 'read' query should run on show page
+	 */
+	boolean readOnShow() default false;
 }

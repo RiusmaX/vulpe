@@ -1722,6 +1722,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		controlResultForward();
 		selectAfter();
+		if (getControllerConfig().getController().select().readOnShow()) {
+			onRead();
+		}
 		return getResultName();
 	}
 
