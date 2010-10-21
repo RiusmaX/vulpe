@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /**
  * Vulpe Constants
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
  * @version 1.0
  * @since 1.0
@@ -115,6 +115,12 @@ public class VulpeConstants {
 			public static final String TITLE_KEY = "titleKey";
 			public static final String FORM_NAME = "formName";
 			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
+		}
+
+		public class Ever {
+			public static final String CURRENT_CONTROLLER_KEY = "currentControllerKey";
+			public static final String CURRENT_PAGE = "currentPage";
+			public static final String TABULAR_SIZE = "tabularSize";
 		}
 	}
 

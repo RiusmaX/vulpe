@@ -568,9 +568,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
-			if (collection != null && getControllerType().equals(ControllerType.TABULAR)) {
-				setTabularSize(collection.size());
-			}
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}

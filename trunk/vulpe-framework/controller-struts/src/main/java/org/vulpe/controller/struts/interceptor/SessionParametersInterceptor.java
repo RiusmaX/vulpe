@@ -21,8 +21,10 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
@@ -41,43 +43,51 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	private ActionInvocation invocation;
 
 	@Override
-	protected void setParameters(final Object action, final ValueStack stack,
-			final Map parameters) {
+	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
 		if (invocation.getAction() instanceof VulpeController) {
-			final Map<String, String> mapControllerMethods = VulpeCacheHelper
-					.getInstance().get(VulpeConstants.CONTROLLER_METHODS);
-			if (!mapControllerMethods.containsKey(invocation.getProxy()
-					.getMethod())) {
-				final VulpeController controller = (VulpeController) invocation
-						.getAction();
+			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
+					VulpeConstants.CONTROLLER_METHODS);
+			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
+				final VulpeController controller = (VulpeController) invocation.getAction();
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
 					controller.showButtons(controller.getOperation());
 				}
 			}
+			final AbstractVulpeBaseSimpleController simpleController = (AbstractVulpeBaseSimpleController) invocation
+					.getAction();
+			if (simpleController.ever != null) {
+				final String currentControllerKey = simpleController.ever
+						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+				final String controllerKey = simpleController.getControllerUtil()
+						.getCurrentControllerKey();
+				if (StringUtils.isEmpty(currentControllerKey)) {
+					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+				} else if (!currentControllerKey.equals(controllerKey)) {
+					simpleController.ever.removeWeakRef();
+					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+				}
+			}
+			ServletActionContext.getRequest().getSession().setAttribute(
+					VulpeConstants.Configuration.Ever.class.getName(), simpleController.ever);
 		}
-		final String key = ControllerUtil.getInstance(
-				ServletActionContext.getRequest()).getCurrentControllerKey()
-				.concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
+				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
-			final Map params = (Map) ActionContext.getContext().getSession()
-					.get(key);
+			final Map params = (Map) ActionContext.getContext().getSession().get(key);
 			if (params != null) {
-				final boolean createNullObjects = OgnlContextState
-						.isCreatingNullObjects(stack.getContext());
+				final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(stack
+						.getContext());
 				try {
-					for (final Iterator iterator = params.keySet().iterator(); iterator
-							.hasNext();) {
+					for (final Iterator iterator = params.keySet().iterator(); iterator.hasNext();) {
 						final String name = (String) iterator.next();
 						final Object[] value = (Object[]) params.get(name);
-						OgnlContextState.setCreatingNullObjects(stack
-								.getContext(), false);
+						OgnlContextState.setCreatingNullObjects(stack.getContext(), false);
 						if (VulpeValidationUtil.isEmpty(stack.findValue(name))) {
-							OgnlContextState.setCreatingNullObjects(stack
-									.getContext(), true);
+							OgnlContextState.setCreatingNullObjects(stack.getContext(), true);
 							stack.setValue(name, value[1]);
 						}
 						if (Boolean.TRUE.equals(value[0])) {
@@ -85,8 +95,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 						}
 					}
 				} finally {
-					OgnlContextState.setCreatingNullObjects(stack.getContext(),
-							createNullObjects);
+					OgnlContextState.setCreatingNullObjects(stack.getContext(), createNullObjects);
 				}
 			}
 		}
@@ -99,7 +108,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -107,12 +116,9 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 		try {
 			boolean reset = false;
 			if (invocation.getAction() instanceof ValidationAware) {
-				final ValidationAware validationAware = (ValidationAware) invocation
-						.getAction();
-				reset = (validationAware.hasActionErrors()
-						|| validationAware.hasFieldErrors() ? false
-						: validationAware.getClass().getMethod(
-								invocation.getProxy().getMethod())
+				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
+				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
 								.isAnnotationPresent(ResetSession.class));
 			}
 			return reset;

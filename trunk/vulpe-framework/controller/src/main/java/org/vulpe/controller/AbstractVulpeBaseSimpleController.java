@@ -31,6 +31,7 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.View.Layout;
@@ -68,7 +69,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/**
 	 * Global attributes map
 	 */
-	public EverParameter ever = new EverParameter();
+	public EverParameter ever = null;
 
 	/**
 	 * Temporal attributes map
@@ -94,6 +95,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	@PostConstruct
 	protected void postConstruct() {
+		ever = getSessionAttribute(Ever.class.getName());
+		if (ever == null) {
+			ever = new EverParameter();
+		}
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
@@ -720,10 +725,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 					+ getControllerConfig().getViewBaseName();
 		}
 		return key;
-	}
-
-	public EverParameter getEver() {
-		return ever;
 	}
 
 	protected void changeControllerType(final ControllerType controllerType) {
