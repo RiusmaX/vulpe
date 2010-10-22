@@ -71,7 +71,8 @@ var vulpe = {
 					maxlength: "vulpe.error.validate.maxlength",
 					minlength: "vulpe.error.validate.minlength",
 					required: "vulpe.error.validate.required",
-					requireOneFilter: "vulpe.error.validate.require.one.filter"
+					requireOneFilter: "vulpe.error.validate.require.one.filter",
+					repeatedCharacters: "vulpe.error.validate.repeated.characters"
 				}
 			},
 			exclusion: "vulpe.msg.confirm.exclusion",
@@ -1005,6 +1006,20 @@ var vulpe = {
 						field: field
 					});
 				} else if (config.type == "STRING") {
+					var value = field.val();
+					var firstChar = value.charAt(0);
+					var equalChars = true;
+					for (var i = 0; i < value.length; i++) {
+						var char = value.charAt(i);
+						if (char != firstChar) {
+							equalChars = false;
+						}
+					}
+					if (equalChars) {
+						var message = vulpe.config.messages.error.validate.repeatedCharacters;
+						vulpe.exception.setupError(field.attr("id"), message);
+						return false;
+					}
 					if (valid && config.minlength) {
 						valid = vulpe.validate.validateMinLength({
 							field: field,
