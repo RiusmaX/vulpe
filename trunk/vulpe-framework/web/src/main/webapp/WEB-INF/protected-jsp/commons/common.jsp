@@ -46,6 +46,7 @@ $(document).ready(function() {
 					buttonCreatePost.click();
 					return false;
 				},
+				putSameOnReturnKey: true,
 				override: true
 			});
 		}
@@ -59,6 +60,7 @@ $(document).ready(function() {
 					buttonUpdatePost.click();
 					return false;
 				},
+				putSameOnReturnKey: true,
 				override: true
 			});
 		}

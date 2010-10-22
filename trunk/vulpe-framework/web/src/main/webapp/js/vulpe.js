@@ -147,6 +147,18 @@ var vulpe = {
 			}
 			return ret;
 		},
+		
+		checkRepeatedCharacters: function(value) {
+			var firstChar = value.charAt(0);
+			var equalChars = true;
+			for (var i = 0; i < value.length; i++) {
+				var char = value.charAt(i);
+				if (char != firstChar) {
+					equalChars = false;
+				}
+			}
+			return equalChars;
+		},
 
 		checkHotKeyExists: function(hotKey) {
 			var elemData = jQuery.data(document);
@@ -1008,15 +1020,7 @@ var vulpe = {
 				} else if (config.type == "STRING") {
 					var value = field.val();
 					if (value.length > 1) {
-						var firstChar = value.charAt(0);
-						var equalChars = true;
-						for (var i = 0; i < value.length; i++) {
-							var char = value.charAt(i);
-							if (char != firstChar) {
-								equalChars = false;
-							}
-						}
-						if (equalChars) {
+						if (vulpe.util.checkRepeatedCharacters(value)) {
 							var message = vulpe.config.messages.error.validate.repeatedCharacters;
 							vulpe.exception.setupError(field.attr("id"), message);
 							return false;
@@ -1907,31 +1911,42 @@ var vulpe = {
 					if (required && length == 0) {
 						vulpe.exception.showFieldError(this);
 					} else {
-						if (config.min) {
-							if (field.val() >= config.min) {
-								vulpe.exception.hideFieldError(this);
-							} else {
-								vulpe.exception.showFieldError(this);
+						if (config.type == "STRING") {
+							var value = field.val();
+							if (value.length > 1) {
+								if (vulpe.util.checkRepeatedCharacters(value)) {
+									vulpe.exception.showFieldError(this);
+								} else {
+									vulpe.exception.hideFieldError(this);	
+								}
 							}
-						}
-						if (config.max) {
-							if (field.val() <= config.max) {
-								vulpe.exception.hideFieldError(this);
-							} else {
-								vulpe.exception.showFieldError(this);
+						} else {
+							if (config.min) {
+								if (field.val() >= config.min) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									vulpe.exception.showFieldError(this);
+								}
 							}
-						}
-						if (config.minlength) {
-							if (vulpe.util.trim(field.val()).length >= config.minlength || length == 0) {
-								vulpe.exception.hideFieldError(this);
-							} else {
-								vulpe.exception.showFieldError(this);
+							if (config.max) {
+								if (field.val() <= config.max) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									vulpe.exception.showFieldError(this);
+								}
 							}
-						} else if (config.maxlength) {
-							if (vulpe.util.trim(field.val()).length <= config.maxlength || length == 0) {
-								vulpe.exception.hideFieldError(this);
-							} else {
-								vulpe.exception.showFieldError(this);
+							if (config.minlength) {
+								if (vulpe.util.trim(field.val()).length >= config.minlength || length == 0) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									vulpe.exception.showFieldError(this);
+								}
+							} else if (config.maxlength) {
+								if (vulpe.util.trim(field.val()).length <= config.maxlength || length == 0) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									vulpe.exception.showFieldError(this);
+								}
 							}
 						}
 					}
