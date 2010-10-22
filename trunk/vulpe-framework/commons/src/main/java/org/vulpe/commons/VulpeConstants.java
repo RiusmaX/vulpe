@@ -129,7 +129,7 @@ public class VulpeConstants {
 	}
 
 	public class Upload {
-		public static final String FILES = "org.vulpe.controller.struts.interceptor.UploadInterceptor.files";
+		public static final String FILES = "org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor.files";
 
 		public class Image {
 			public static final String THUMB = "_thumb";

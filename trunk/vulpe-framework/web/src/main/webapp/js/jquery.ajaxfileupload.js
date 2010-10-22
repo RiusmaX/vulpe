@@ -65,7 +65,7 @@ jQuery.extend({
 				}
 
 				if (vulpe.util.trim(response) != 'true'){
-					jQuery("#messages").html(_vulpeMessageUpload);
+					jQuery("#messages").html(vulpe.config.messages.upload);
 					vulpe.view.showMessages();
 				}else{
 					vulpe.view.request.submitAjax({
@@ -80,7 +80,7 @@ jQuery.extend({
 					});
 				}
 			}catch(e){
-				jQuery("#messages").html(_vulpeMessageUpload);
+				jQuery("#messages").html(vulpe.config.messages.upload);
 				vulpe.view.showMessages();
 			}
 			form.remove();
@@ -105,7 +105,7 @@ jQuery.extend({
 			}
 			jQuery(form).submit();
 		} catch(e) {
-			jQuery("#messages").html(_vulpeMessageUpload);
+			jQuery("#messages").html(vulpe.config.messages.upload);
 			vulpe.view.showMessages();
 			return;
 		}
