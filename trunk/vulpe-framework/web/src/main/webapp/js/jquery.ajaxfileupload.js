@@ -114,8 +114,8 @@ jQuery.extend({
 
 	getUploadURL: function(formName) {
 		var formAction = vulpe.util.getElement(formName).action;
-		formAction = formAction.replace('.action', '');
+		formAction = formAction.replace('/ajax', '');
 		formAction = formAction.substring(0, formAction.lastIndexOf('/'));
-		return formAction + '/upload.action?ajax=true';
+		return formAction + '/upload/ajax';
 	}
 });
