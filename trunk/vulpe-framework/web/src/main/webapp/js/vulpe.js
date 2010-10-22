@@ -1007,18 +1007,20 @@ var vulpe = {
 					});
 				} else if (config.type == "STRING") {
 					var value = field.val();
-					var firstChar = value.charAt(0);
-					var equalChars = true;
-					for (var i = 0; i < value.length; i++) {
-						var char = value.charAt(i);
-						if (char != firstChar) {
-							equalChars = false;
+					if (value.length > 1) {
+						var firstChar = value.charAt(0);
+						var equalChars = true;
+						for (var i = 0; i < value.length; i++) {
+							var char = value.charAt(i);
+							if (char != firstChar) {
+								equalChars = false;
+							}
 						}
-					}
-					if (equalChars) {
-						var message = vulpe.config.messages.error.validate.repeatedCharacters;
-						vulpe.exception.setupError(field.attr("id"), message);
-						return false;
+						if (equalChars) {
+							var message = vulpe.config.messages.error.validate.repeatedCharacters;
+							vulpe.exception.setupError(field.attr("id"), message);
+							return false;
+						}
 					}
 					if (valid && config.minlength) {
 						valid = vulpe.validate.validateMinLength({
