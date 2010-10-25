@@ -31,6 +31,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.apache.struts2.interceptor.FileUploadInterceptor;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -39,9 +40,9 @@ import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
 @SuppressWarnings( { "unchecked", "serial" })
 public class VulpeUploadInterceptor extends FileUploadInterceptor {
@@ -50,7 +51,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.apache.struts2.interceptor.FileUploadInterceptor#intercept(com.
 	 * opensymphony.xwork2.ActionInvocation)
 	 */
@@ -59,7 +60,6 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		final ActionContext actionContext = invocation.getInvocationContext();
 		final HttpServletRequest request = (HttpServletRequest) actionContext
 				.get(ServletActionContext.HTTP_REQUEST);
-
 		// sets the files in the session to parameters.
 		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(
 				VulpeConstants.Upload.FILES);
@@ -75,11 +75,12 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			fileList.clear();
 		}
 
-		// if request not AJAX call super
-		if (!Boolean.TRUE.toString().equals(request.getParameter("ajax"))) {
-			return super.intercept(invocation);
+		if (invocation.getAction() instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) invocation.getAction();
+			if (!"upload".equals(controller.getControllerConfig().getMethod())) {
+				return super.intercept(invocation);
+			}
 		}
-
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
@@ -128,7 +129,6 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 						if (fileList == null) {
 							fileList = new ArrayList();
 						}
-
 						byte[][] bytes = new byte[files.length][];
 						for (int index = 0; index < files.length; index++) {
 							if (acceptFile(files[index], contentType[index], inputName, validation,
@@ -136,7 +136,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 								bytes[index] = FileUtils.readFileToByteArray(files[index]);
 							}
 						}
-						fileList.add(new Object[] { inputName, bytes, contentType, fileName });
+						fileList.add(new Object[] { inputName,
+								(files.length == 1 ? bytes[0] : bytes), contentType, fileName });
 					}
 				} else {
 					LOG.error(getTextMessage("struts.messages.invalid.file",
@@ -174,7 +175,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param objArray
 	 * @return
 	 */
@@ -191,7 +192,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	protected static final String DEFAULT_MESSAGE = "no.message.found";
 
 	/**
-	 *
+	 * 
 	 * @param messageKey
 	 * @param args
 	 * @param locale
