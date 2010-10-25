@@ -5,6 +5,9 @@
 	<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'DROPPY')}">
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.droppy.css";
 	</c:if>
+	<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'SUPERFISH') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'SUPERFISH')}">
+	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.superfish.css";
+	</c:if>
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.growl.css";
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.lightbox.css";
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.simplemodal.css";

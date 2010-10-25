@@ -50,11 +50,11 @@ public @interface VulpeProject {
 
 	boolean security() default true;
 
-	MenuType frontendMenuType() default MenuType.DROPPY;
+	MenuType frontendMenuType() default MenuType.SUPERFISH;
 
-	MenuType backendMenuType() default MenuType.DROPPY;
+	MenuType backendMenuType() default MenuType.SUPERFISH;
 
 	enum MenuType {
-		DROPPY, NONE
+		DROPPY, SUPERFISH, NONE
 	}
 }

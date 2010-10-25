@@ -73,7 +73,7 @@
 	<c:if test="${not empty items && fn:length(items) > 0}">
 		<c:if test="${empty width}"><c:set var="width" value="100%"/></c:if>
 		<c:if test="${empty border}"><c:set var="border" value="0"/></c:if>
-		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="1"/></c:if>
+		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="0"/></c:if>
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">

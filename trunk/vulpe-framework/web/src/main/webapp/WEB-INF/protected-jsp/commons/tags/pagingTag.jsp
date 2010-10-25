@@ -25,11 +25,11 @@
 	</c:when>
 	<c:otherwise>
 	<v:action elementId="vulpeButtonPagingFirstPage"
-		styleClass="${empty list.firstPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true"
+		styleClass="${empty list.firstPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true" showButtonText="false"
 		labelKey="label.vulpe.first"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.firstPage ? 0 : list.firstPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.firstPage ? beforeJs : 'false'}'${afterJs}});" />
 	<v:action elementId="vulpeButtonPagingPreviousPage"
-		styleClass="${empty list.previousPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true"
+		styleClass="${empty list.previousPage ? 'vulpeIconOff' : ''}" showButtonAsImage="true" showButtonText="false"
 		labelKey="label.vulpe.previous"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.previousPage ? 0 : list.previousPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.previousPage ? beforeJs : 'false'}'${afterJs}});" />
 	&nbsp;
@@ -75,10 +75,10 @@
 	<c:otherwise>
 	&nbsp;
 	<v:action elementId="vulpeButtonPagingNextPage" styleClass="${empty list.nextPage ? 'vulpeIconOff' : ''}"
-		showButtonAsImage="true" labelKey="label.vulpe.next"
+		showButtonAsImage="true" showButtonText="false" labelKey="label.vulpe.next"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.nextPage ? 0 : list.nextPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.nextPage ? beforeJs : 'false'}'${afterJs}});" />
 	<v:action elementId="vulpeButtonPagingLastPage" styleClass="${empty list.lastPage ? 'vulpeIconOff' : ''}"
-		showButtonAsImage="true" labelKey="label.vulpe.last"
+		showButtonAsImage="true" showButtonText="false" labelKey="label.vulpe.last"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.lastPage ? 0 : list.lastPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.lastPage ? beforeJs : 'false'}'${afterJs}});" />
 	</c:otherwise>
 	</c:choose>

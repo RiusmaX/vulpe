@@ -65,7 +65,7 @@
 				<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 			</div>
 			<div id="menu">
-				<ul id="nav">
+				<ul id="nav" class="${global['frontendMenuType'] == 'SUPERFISH' || global['backendMenuType'] == 'SUPERFISH'?'sf-menu':''}">
 					<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
 					<c:if test="${vulpeCurrentLayout == 'BACKEND'}">
 						<c:if test="${global['auditEnabled']}">

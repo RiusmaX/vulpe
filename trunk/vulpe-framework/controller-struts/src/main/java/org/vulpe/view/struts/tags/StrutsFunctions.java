@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
@@ -45,7 +46,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -54,17 +55,23 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static String linkKey(final String key, final String contentType,
 			final String contentDisposition) throws JspException {
-		final String link = ServletActionContext.getRequest().getContextPath().concat("/").concat(
+		final StringBuilder link = new StringBuilder();
+		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
 				ControllerUtil.getInstance(ServletActionContext.getRequest())
-						.getCurrentControllerName()).concat("/download?downloadKey=").concat(
-				urlEncode(key)).concat("&downloadContentType=").concat(contentType).concat(
-				"&downloadContentDisposition=").concat(contentDisposition).concat("&access=")
-				.concat(String.valueOf(System.currentTimeMillis()));
-		return link;
+						.getCurrentControllerName()).append("/download?downloadKey=").append(
+				urlEncode(key));
+		if (StringUtils.isNotEmpty(contentType)) {
+			link.append("&downloadContentType=").append(contentType);
+		}
+		if (StringUtils.isNotEmpty(contentDisposition)) {
+			link.append("&downloadContentDisposition=").append(contentDisposition);
+		}
+		link.append("&access=").append(System.currentTimeMillis());
+		return link.toString();
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -101,7 +108,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Map getFormParams() {
@@ -116,7 +123,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -142,7 +149,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -159,7 +166,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -188,7 +195,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param pagingName
 	 * @param pageSize
@@ -206,7 +213,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -217,7 +224,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param expression
 	 * @return

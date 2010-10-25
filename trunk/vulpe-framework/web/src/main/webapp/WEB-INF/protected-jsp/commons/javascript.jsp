@@ -1,7 +1,13 @@
 <script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
+<!--[if IE]><script src="${pageContext.request.contextPath}/js/jquery.bgiframe.js" type="text/javascript" charset="utf-8"></script><![endif]-->
 <c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
+<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'SUPERFISH') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'SUPERFISH')}">
+<script src="${pageContext.request.contextPath}/js/jquery.hover.intent.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.superfish.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.supersubs.js" type="text/javascript" charset="utf-8"></script>
+</c:if>
 <script src="${pageContext.request.contextPath}/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.growl.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.hotkeys.js" type="text/javascript" charset="utf-8"></script>
