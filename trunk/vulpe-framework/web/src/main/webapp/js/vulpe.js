@@ -1986,7 +1986,7 @@ var vulpe = {
 			}
 		},
 
-		showMessageError: function(message) {
+		showMessageError: function(message, complete) {
 			var messageLayer = vulpe.config.layers.messages;
 			if (vulpe.util.existsVulpePopups()) {
 				messageLayer += vulpe.config.prefix.popup + vulpe.util.getLastVulpePopup();
@@ -1995,7 +1995,11 @@ var vulpe = {
 			$(messageLayer).removeClass("vulpeMessageSuccess");
 			$(messageLayer).addClass("vulpeMessageValidation");
 			var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('" + messageLayer + "').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
-			$(messageLayer).html("<ul><li class='vulpeAlertError'>" + message + "</li></ul>" + messagesClose);
+			if (!complete) {
+				$(messageLayer).html("<ul><li class='vulpeAlertError'>" + message + "</li></ul>" + messagesClose);
+			} else {
+				$(messageLayer).html(message + messagesClose);
+			}
 			$(messageLayer).slideDown("slow");
 			if (!vulpe.util.existsVulpePopups()) {
 				jQuery(document).bind("keydown", "Esc", function(evt) {
@@ -2016,7 +2020,7 @@ var vulpe = {
 					data = data.responseText;
 				}
 				if (data.indexOf("\"vulpeAlertError\"") != -1) {
-					jQuery(vulpe.config.layers.messages).html(data);
+					vulpe.exception.showMessageError(data, true);
 				} else {
 					jQuery(vulpe.config.layers.modalMessages).html(data);
 				}

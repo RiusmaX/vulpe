@@ -1323,7 +1323,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getControllerConfig().getTabularPageSize() > 0) {
 				setTabularSize(getTabularSize() - (getEntities().size() - getSelected().size()));
 			}
-		} else {
+		} else if (getControllerType().equals(ControllerType.TABULAR)){
 			setTabularSize(getTabularSize() - 1);
 		}
 		invokeServices(Operation.DELETE.getValue().concat(

@@ -89,9 +89,16 @@ public class VulpeExceptionMappingInterceptor extends
 			if (sException.getArgs() != null && sException.getArgs().length > 0) {
 				action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
 			} else {
-				action.addActionMessage(newException.getMessage(), (sException.getCause() == null
-						|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
-						: sException.getCause().getMessage()));
+				final String key = newException.getMessage();
+				if (key.startsWith("vulpe.error")) {
+					action.addActionError(key, (sException.getCause() == null
+							|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
+							: sException.getCause().getMessage()));
+				} else {
+					action.addActionMessage(key, (sException.getCause() == null
+							|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
+							: sException.getCause().getMessage()));
+				}
 			}
 		} else if (newException instanceof VulpeApplicationException) {
 			final VulpeApplicationException sException = (VulpeApplicationException) newException;
