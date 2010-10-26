@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- *
+ * 
  * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
@@ -44,7 +44,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -67,7 +67,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -90,7 +90,7 @@ public class VulpeExceptionMappingInterceptor extends
 				action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
 			} else {
 				action.addActionMessage(newException.getMessage(), (sException.getCause() == null
-						|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "desconhecido"
+						|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
 						: sException.getCause().getMessage()));
 			}
 		} else if (newException instanceof VulpeApplicationException) {
@@ -107,7 +107,7 @@ public class VulpeExceptionMappingInterceptor extends
 				msg = msgFormat.format(null);
 				value = action.getText(msg);
 				if (StringUtils.isBlank(value) || value.equals(msg)) {
-					action.addActionMessage(VulpeConstants.ERROR_GERAL, msg);
+					action.addActionMessage(VulpeConstants.GENERAL_ERROR, msg);
 				} else {
 					action.addActionMessage(value);
 				}
@@ -124,7 +124,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 *
+	 * 
 	 * @param exception
 	 * @return
 	 */
@@ -136,7 +136,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return

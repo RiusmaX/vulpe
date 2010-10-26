@@ -14,8 +14,10 @@
 		<c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/>
 	</c:if>
 	<jsp:doBody/>
+	<%--
 	<c:if test="${not empty util:getProperty(pageContext, name)}">
 		<img border="0" src="${util:linkProperty(pageContext, name, 'image/jpeg', '')}"/>
 	</c:if>
+	 --%>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
 </c:if>

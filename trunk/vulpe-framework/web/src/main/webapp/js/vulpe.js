@@ -1434,7 +1434,7 @@ var vulpe = {
 			 * @param options {detail, detailIndex, url, formName, layerFields, layer, beforeJs, afterJs}
 			 */
 			submitDeleteDetail: function(options) {
-				options.queryString = 'detail=' + (detail == 'entities' ? detail : 'entity.' + detail) + '&detailIndex=' + detailIndex;
+				options.queryString = 'detail=' + (options.detail == 'entities' ? options.detail : 'entity.' + options.detail) + '&detailIndex=' + options.detailIndex;
 				options.validate = false;
 				vulpe.view.request.submitAjaxAction(options);
 			},
@@ -1473,7 +1473,7 @@ var vulpe = {
 										selections[i].value = selectedIds[i];
 									}
 								}
-								options.queryString = "detail=" + (detail == "entities" || detail.indexOf("entity.") != -1 ? detail : "entity." + detail);
+								options.queryString = "detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail);
 								options.validate = false;
 								vulpe.view.request.submitAjaxAction(options);
 							},

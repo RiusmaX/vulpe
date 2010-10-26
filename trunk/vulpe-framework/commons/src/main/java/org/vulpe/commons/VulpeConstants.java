@@ -40,7 +40,7 @@ public class VulpeConstants {
 	public static final String AJAX = "ajax";
 	public static final String VULPE_SHOW_ACTIONS = "vulpeShowActions";
 	public static final String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
-	public static final String ERROR_GERAL = "vulpe.error.general";
+	public static final String GENERAL_ERROR = "vulpe.error.general";
 	public static final String CLEAR_PARAMS = "vulpe.clearParams";
 	public static final String PARAMS_SESSION_KEY = "_params";
 	public static final String CACHED_CLASS = "vulpeCachedClass";
