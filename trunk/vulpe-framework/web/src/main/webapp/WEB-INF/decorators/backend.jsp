@@ -43,6 +43,7 @@
 					<span id="successMessage"></span>
 				</p>
 			</div>
+			<c:if test="${global['useBackendLayer']}"><div id="backend"></c:if>
 			<div id="header">
 				<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 			</div>
@@ -61,6 +62,7 @@
 			<div id="body">
 				<decorator:body/>
 			</div>
+			<c:if test="${global['useBackendLayer']}"></div></c:if>
 			<div id="footer">
 				<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
 			</div>

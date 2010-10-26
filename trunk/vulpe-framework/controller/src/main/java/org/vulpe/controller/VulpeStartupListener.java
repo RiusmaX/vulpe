@@ -126,6 +126,8 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
 			global.put(Global.PAGING_STYLE, vulpeProject.view().pagingStyle());
 			global.put(Global.PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
+			global.put(Global.USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
+			global.put(Global.USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
 		}
 		global.put(Global.SHOW_AS_MOBILE, vulpeProject.mobileEnabled());
 		if (vulpeProject.mobileEnabled()) {

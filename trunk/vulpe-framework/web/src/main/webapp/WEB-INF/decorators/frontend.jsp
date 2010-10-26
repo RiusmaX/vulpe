@@ -43,7 +43,7 @@
 					<span id="successMessage"></span>
 				</p>
 			</div>
-			<div id="frontend">
+			<c:if test="${global['useFrontendLayer']}"><div id="frontend"></c:if>
 				<div id="header">
 					<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 				</div>
@@ -56,7 +56,7 @@
 				<div id="body">
 					<decorator:body/>
 				</div>
-			</div>
+			<c:if test="${global['useFrontendLayer']}"></div></c:if>
 			<div id="footer">
 				<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
 			</div>

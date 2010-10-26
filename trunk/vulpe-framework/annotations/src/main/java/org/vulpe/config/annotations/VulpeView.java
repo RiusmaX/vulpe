@@ -53,6 +53,10 @@ public @interface VulpeView {
 	boolean showCopyright() default true;
 
 	boolean showPoweredBy() default true;
+	
+	boolean useFrontendLayer() default true;
+	
+	boolean useBackendLayer() default false;
 
 	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
 
