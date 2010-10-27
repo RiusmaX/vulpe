@@ -28,7 +28,7 @@
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
 	</bean>
 
-	<bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+	<bean id="jtaTransactionManager" class="org.vulpe.model.transaction.VulpeJPATransactionManager">
 		<property name="userTransactionName" value="UserTransaction" />
 		<property name="transactionManagerName" value="java:/TransactionManager" />
 	</bean>
