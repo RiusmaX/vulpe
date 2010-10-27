@@ -78,7 +78,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.C);
 		}
 		final ENTITY newEntity = merge(entity);
-		loadEntityRelationships(newEntity);
+		loadEntityRelationships(newEntity, true);
 		audit(newEntity, AuditOccurrenceType.INSERT, null);
 		return newEntity;
 	}
@@ -142,7 +142,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.U);
 		}
 		merge(entity);
-		loadEntityRelationships(entity);
+		//loadEntityRelationships(entity, true);
 	}
 
 	/*
@@ -163,7 +163,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				return null;
 			}
 		}
-		loadEntityRelationships(entity);
+		loadEntityRelationships(entity, true);
 		return entity;
 	}
 
@@ -229,7 +229,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					query.setFirstResult(paging.getFromIndex());
 					query.setMaxResults(pageSize);
 					final List<ENTITY> entities = query.getResultList();
-					loadRelationships(entities, params);
+					loadRelationships(entities, params, false);
 					return entities;
 				}
 			}));

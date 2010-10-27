@@ -51,9 +51,9 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
- *
+ * 
  */
 @SuppressWarnings( { "unchecked" })
 public class Functions {
@@ -65,7 +65,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @return
@@ -75,7 +75,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -92,7 +92,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param url
 	 * @return
 	 * @throws JspException
@@ -130,7 +130,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param string
 	 * @param chars
 	 * @return
@@ -144,7 +144,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param value
@@ -158,7 +158,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param string
 	 * @param begin
 	 * @param end
@@ -178,7 +178,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param property
 	 * @return
@@ -203,7 +203,7 @@ public class Functions {
 	 * JPG, PNG and possibly other formats) and resizes it to have a width no
 	 * greater than the pMaxWidth parameter in pixels. It converts the image to
 	 * a standard quality JPG and returns the byte array of that JPG image.
-	 *
+	 * 
 	 * @param imageData
 	 *            the image data.
 	 * @param maxWidth
@@ -252,7 +252,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param requestedRoles
 	 * @return
 	 */
@@ -286,7 +286,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static Boolean isAuthenticated() {
@@ -308,7 +308,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @param toValue
 	 * @return
@@ -335,7 +335,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @return
@@ -347,8 +347,17 @@ public class Functions {
 				return null;
 			}
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
-					bean.getClass(), field.replace(".id", ""));
+			String[] fieldParts = field.replace(".id", "").split("\\.");
+			Class<?> fieldClass = null;
+			if (fieldParts.length == 2) {
+				Class<?> parentClass = VulpeReflectUtil.getInstance().getFieldClass(
+						bean.getClass(), fieldParts[0]);
+				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(parentClass,
+						fieldParts[1]);
+			} else {
+				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+						fieldParts[0]);
+			}
 			if (fieldClass.isEnum()) {
 				String key = null;
 				String value = null;
@@ -365,7 +374,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @param fieldValue
@@ -378,8 +387,17 @@ public class Functions {
 			if (bean == null) {
 				return null;
 			}
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(
-					bean.getClass(), field.replace(".id", ""));
+			String[] fieldParts = field.replace(".id", "").split("\\.");
+			Class<?> fieldClass = null;
+			if (fieldParts.length == 2) {
+				Class<?> parentClass = VulpeReflectUtil.getInstance().getFieldClass(
+						bean.getClass(), fieldParts[0]);
+				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(parentClass,
+						fieldParts[1]);
+			} else {
+				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+						fieldParts[0]);
+			}
 			if (fieldClass == null) {
 				return null;
 			}
@@ -401,7 +419,7 @@ public class Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param type
 	 * @param fieldValue
 	 * @return
