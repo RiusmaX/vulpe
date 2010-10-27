@@ -160,18 +160,25 @@ $symbol_escape = '\' )
 												</then>
 											</elseif>
 											<else>
-												<delete
-													dir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{projectName}" />
 												<if>
-													<equals arg1="${symbol_dollar}{deleteWork}" arg2="true" />
+													<equals arg1="${unpack}" arg2="true" />
 													<then>
-														<delete
-															dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${rootArtifactId}" />
+														<delete dir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
+														<if>
+															<equals arg1="${symbol_dollar}{deleteWork}" arg2="true" />
+															<then>
+																<delete dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${rootArtifactId}" />
+															</then>
+														</if>
+														<unwar src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" dest="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
 													</then>
+													<else>
+														<delete file="${tomcat.home}/webapps/${rootArtifactId}.war" />
+														<copy todir="${tomcat.home}/webapps/">
+															<fileset dir="${project.build.directory}" includes="${rootArtifactId}.war" />
+														</copy>
+													</else>
 												</if>
-												<unwar
-													src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war"
-													dest="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}" />
 											</else>
 										</if>
 									</then>
