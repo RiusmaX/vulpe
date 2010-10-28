@@ -42,8 +42,8 @@ import com.opensymphony.xwork2.util.ObjectTypeDeterminerFactory;
  * Implementation of struts2 filter to inject utility classes of generic types
  * and converters.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Component(VulpeConstants.FILTER_DISPATCHER)
 @SuppressWarnings("unchecked")

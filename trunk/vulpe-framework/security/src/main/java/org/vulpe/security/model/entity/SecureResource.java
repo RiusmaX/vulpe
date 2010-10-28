@@ -41,7 +41,7 @@ import org.vulpe.security.commons.VulpeSecurityConstants;
  * Contains the information of a secured resource. They can be of two types. One
  * for filter invocation and another for method invocation.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  *

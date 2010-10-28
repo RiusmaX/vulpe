@@ -22,7 +22,7 @@ import org.vulpe.model.entity.impl.AbstractVulpeBaseEntityDelegate;
 /**
  * 
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings({ "unchecked" })
 public class BeanWSConvert<ENTITY extends VulpeEntity, VODELEGATE extends AbstractVulpeBaseEntityDelegate>

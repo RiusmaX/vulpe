@@ -26,7 +26,7 @@ import org.vulpe.model.entity.VulpeEntity;
 /**
  * Default Manager interface to CRUD's
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public interface VulpeManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeDAO<ENTITY_CLASS, ENTITY_ID>> {

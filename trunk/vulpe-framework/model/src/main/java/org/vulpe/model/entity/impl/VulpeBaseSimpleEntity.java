@@ -20,7 +20,7 @@ import org.vulpe.model.entity.VulpeSimpleEntity;
 
 /**
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
 @SuppressWarnings("serial")

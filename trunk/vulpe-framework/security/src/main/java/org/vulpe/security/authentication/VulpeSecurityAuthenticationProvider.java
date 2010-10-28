@@ -26,7 +26,7 @@ import org.vulpe.security.model.entity.UserRole;
  * data based authentication. Here authentication is externalized and is
  * performed by a common authentication service.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  * @see {@link org.springframework.security.providers.AuthenticationProvider}

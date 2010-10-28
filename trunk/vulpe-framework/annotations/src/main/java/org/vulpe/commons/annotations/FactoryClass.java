@@ -26,7 +26,7 @@ import org.vulpe.commons.factory.Factory;
 /**
  * Annotation to register factory of interface.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

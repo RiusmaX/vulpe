@@ -29,7 +29,7 @@ import org.vulpe.view.annotations.View.ViewType;
 /**
  * Tells Vulpe to create code from entity.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

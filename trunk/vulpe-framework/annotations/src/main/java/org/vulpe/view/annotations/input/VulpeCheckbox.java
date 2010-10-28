@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to represent checkbox input on view.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

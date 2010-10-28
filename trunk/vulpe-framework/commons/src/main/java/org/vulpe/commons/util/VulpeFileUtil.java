@@ -29,7 +29,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * Utility class to manipulate files.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public class VulpeFileUtil {
 

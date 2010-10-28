@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Detail configuration
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

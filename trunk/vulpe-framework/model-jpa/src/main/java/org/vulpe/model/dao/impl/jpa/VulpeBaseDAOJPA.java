@@ -22,16 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.springframework.orm.jpa.JpaCallback;
+import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -53,11 +51,11 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ *
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
+@Repository
 public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPA<ENTITY, ID> {
 
@@ -65,7 +63,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -78,14 +76,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.C);
 		}
 		final ENTITY newEntity = merge(entity);
-		loadEntityRelationships(newEntity, true);
+		loadEntityRelationships(newEntity);
 		audit(newEntity, AuditOccurrenceType.INSERT, null);
 		return newEntity;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -94,7 +92,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			LOG.debug("Deleting object: ".concat(entity.toString()));
 		}
 		// persistent entity
-		final ENTITY entityDeleted = (ENTITY) getJpaTemplate().getReference(entity.getClass(),
+		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
 				entity.getId());
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		if (entity instanceof VulpeLogicEntity) {
@@ -103,7 +101,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			// make merge of entity
 			merge(entityDeleted);
 		} else {
-			getJpaTemplate().remove(entityDeleted);
+			getEntityManager().remove(entityDeleted);
 		}
 	}
 
@@ -113,22 +111,22 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				LOG.debug("Deleting object: ".concat(entity.toString()));
 			}
 			// persistent entity
-			final ENTITY entityDeleted = (ENTITY) getJpaTemplate().getReference(entity.getClass(),
-					entity.getId());
+			final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(
+					entity.getClass(), entity.getId());
 			if (entity instanceof VulpeLogicEntity) {
 				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
 				logicEntity.setStatus(Status.D);
 				// make merge of entity
 				merge(entityDeleted);
 			} else {
-				getJpaTemplate().remove(entityDeleted);
+				getEntityManager().remove(entityDeleted);
 			}
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -142,12 +140,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			logicEntity.setStatus(Status.U);
 		}
 		merge(entity);
-		//loadEntityRelationships(entity, true);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -156,20 +153,20 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			LOG.debug("Retriving id: ".concat(identifier.toString()));
 		}
 
-		final ENTITY entity = getJpaTemplate().find(getEntityClass(), identifier);
+		final ENTITY entity = getEntityManager().find(getEntityClass(), identifier);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
 			if (Status.D.equals(logicEntity.getStatus())) {
 				return null;
 			}
 		}
-		loadEntityRelationships(entity, true);
+		loadEntityRelationships(entity);
 		return entity;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -185,7 +182,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -199,40 +196,31 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final String hql = getHQL(entity, params);
 
 		// getting total records
-		final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
-			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
-				StringBuilder hqlCount = new StringBuilder();
-				hqlCount.append("select count(*) from ");
-				hqlCount.append(entity.getClass().getSimpleName()).append(
-						" objc where objc.id in (");
-				hqlCount.append("select distinct obj.id ");
-				String hqlString = hql.substring(hql.toLowerCase().indexOf("from"));
-				if (hqlString.contains("order by")) {
-					hqlString = hqlString.substring(0, hqlString.toLowerCase().indexOf("order by"));
-				}
-				hqlCount.append(hqlString);
-				hqlCount.append(")");
-				final Query query = entityManager.createQuery(hqlCount.toString());
-				setParams(query, params);
-				return query.getSingleResult();
-			}
-		});
+
+		StringBuilder hqlCount = new StringBuilder();
+		hqlCount.append("select count(*) from ");
+		hqlCount.append(entity.getClass().getSimpleName()).append(" objc where objc.id in (");
+		hqlCount.append("select distinct obj.id ");
+		String hqlString = hql.substring(hql.toLowerCase().indexOf("from"));
+		if (hqlString.contains("order by")) {
+			hqlString = hqlString.substring(0, hqlString.toLowerCase().indexOf("order by"));
+		}
+		hqlCount.append(hqlString);
+		hqlCount.append(")");
+		Query query = getEntityManager().createQuery(hqlCount.toString());
+		setParams(query, params);
+		final Long size = (Long) query.getSingleResult();
 
 		final Paging paging = new Paging<ENTITY>(size.intValue(), pageSize, page);
 		if (size.longValue() > 0) {
 			// getting list by size of page
-			paging.setList((List<ENTITY>) getJpaTemplate().execute(new JpaCallback() {
-				public Object doInJpa(final EntityManager entityManager)
-						throws PersistenceException {
-					final Query query = entityManager.createQuery(hql);
-					setParams(query, params);
-					query.setFirstResult(paging.getFromIndex());
-					query.setMaxResults(pageSize);
-					final List<ENTITY> entities = query.getResultList();
-					loadRelationships(entities, params, false);
-					return entities;
-				}
-			}));
+			query = getEntityManager().createQuery(hql);
+			setParams(query, params);
+			query.setFirstResult(paging.getFromIndex());
+			query.setMaxResults(pageSize);
+			final List<ENTITY> entities = query.getResultList();
+			loadRelationships(entities, params);
+			paging.setList(entities);
 		}
 
 		return paging;
@@ -240,7 +228,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 * 
+	 *
 	 * @param entity
 	 * @param params
 	 * @return
@@ -462,7 +450,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -481,7 +469,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -494,29 +482,24 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (notExistEqual != null) {
 			final QueryParameter[] parameters = notExistEqual.parameters();
 			// getting total records
-			final Long size = (Long) getJpaTemplate().execute(new JpaCallback() {
-				public Object doInJpa(final EntityManager entityManager)
-						throws PersistenceException {
-					final StringBuilder hql = new StringBuilder();
-					hql.append("select count(*) from ");
-					hql.append(entity.getClass().getSimpleName()).append(" obj where ");
-					final Map<String, Object> values = new HashMap<String, Object>();
-					for (QueryParameter parameter : parameters) {
-						hql.append("obj.").append(parameter.name()).append(" ").append(
-								parameter.operator().getValue()).append(" :").append(
-								parameter.name());
-						try {
-							values.put(parameter.name(), PropertyUtils.getProperty(entity,
-									parameter.name()));
-						} catch (Exception e) {
-							LOG.error(e);
-						}
-					}
-					final Query query = entityManager.createQuery(hql.toString());
-					setParams(query, values);
-					return query.getSingleResult();
+
+			final StringBuilder hql = new StringBuilder();
+			hql.append("select count(*) from ");
+			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
+			final Map<String, Object> values = new HashMap<String, Object>();
+			for (QueryParameter parameter : parameters) {
+				hql.append("obj.").append(parameter.name()).append(" ").append(
+						parameter.operator().getValue()).append(" :").append(parameter.name());
+				try {
+					values.put(parameter.name(), PropertyUtils
+							.getProperty(entity, parameter.name()));
+				} catch (Exception e) {
+					LOG.error(e);
 				}
-			});
+			}
+			final Query query = getEntityManager().createQuery(hql.toString());
+			setParams(query, values);
+			final Long size = (Long) query.getSingleResult();
 			return size > 0;
 		}
 		return false;

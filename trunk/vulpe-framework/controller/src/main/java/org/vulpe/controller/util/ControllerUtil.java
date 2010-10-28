@@ -48,7 +48,7 @@ import org.vulpe.model.entity.VulpeEntity;
 /**
  * Utility class to controller
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
 @SuppressWarnings("unchecked")

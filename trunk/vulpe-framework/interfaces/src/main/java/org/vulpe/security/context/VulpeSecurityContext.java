@@ -21,7 +21,7 @@ import java.util.List;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 public interface VulpeSecurityContext extends Serializable {
 

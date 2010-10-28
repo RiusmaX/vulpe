@@ -23,7 +23,7 @@ import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 
 /**
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
 public class SpringBeanFactory extends AbstractVulpeBeanFactory {

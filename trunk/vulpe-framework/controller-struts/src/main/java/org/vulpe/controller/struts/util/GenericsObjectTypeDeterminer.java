@@ -28,7 +28,7 @@ import com.opensymphony.xwork2.util.DefaultObjectTypeDeterminer;
  * Classe utilizada para corrigir problemas ao determinar a classe de tipos
  * genericos.
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsObjectTypeDeterminer extends DefaultObjectTypeDeterminer {

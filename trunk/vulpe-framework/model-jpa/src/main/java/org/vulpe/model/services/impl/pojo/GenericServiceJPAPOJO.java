@@ -18,13 +18,13 @@ package org.vulpe.model.services.impl.pojo;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManagerFactory;
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
-import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 import org.vulpe.model.entity.VulpeEntity;
@@ -33,7 +33,7 @@ import org.vulpe.model.services.GenericService;
 
 /**
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 @Service("GenericService")
@@ -42,9 +42,16 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 		implements GenericService {
 
 	private static final Logger LOG = Logger.getLogger(GenericServiceJPAPOJO.class);
-	final VulpeBaseDAOJPA<ENTITY, ID> dao = new VulpeBaseDAOJPA<ENTITY, ID>();
-	final EntityManagerFactory entityManagerFactory = AbstractVulpeBeanFactory.getInstance()
-			.getBean("entityManagerFactory");
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	private VulpeBaseDAOJPA<ENTITY, ID> dao = new VulpeBaseDAOJPA<ENTITY, ID>();
+
+	@PostConstruct
+	public void postConstruct() {
+		dao.setEntityManager(entityManager);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -55,8 +62,6 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 	public <T extends VulpeEntity<?>> List<T> getList(final T entity) {
 		List<T> list = null;
 		try {
-			dao.setJpaTemplate(new JpaTemplate(entityManagerFactory));
-			dao.setEntityManagerFactory(entityManagerFactory);
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			list = (List<T>) dao.read((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
@@ -68,14 +73,20 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 	@Override
 	public <T extends VulpeEntity<?>> boolean exists(T entity) {
 		try {
-			dao.setJpaTemplate(new JpaTemplate(entityManagerFactory));
-			dao.setEntityManagerFactory(entityManagerFactory);
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			return dao.exists((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
 		return false;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 }

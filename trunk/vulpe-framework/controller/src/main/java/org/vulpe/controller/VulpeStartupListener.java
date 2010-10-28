@@ -40,7 +40,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 /**
  * Class to manager startup of application.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
 

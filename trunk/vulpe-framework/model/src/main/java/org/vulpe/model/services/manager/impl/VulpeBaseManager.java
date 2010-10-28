@@ -35,7 +35,7 @@ import org.vulpe.model.services.manager.VulpeManager;
 /**
  * Default implementation to Manager for CRUD's.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @TransactionType
 @SuppressWarnings( { "unchecked" })

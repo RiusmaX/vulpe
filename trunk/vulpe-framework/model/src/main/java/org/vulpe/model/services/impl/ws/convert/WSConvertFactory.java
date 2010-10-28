@@ -24,7 +24,7 @@ import org.vulpe.model.services.impl.ws.XMLType;
 
 /**
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public class WSConvertFactory {
 

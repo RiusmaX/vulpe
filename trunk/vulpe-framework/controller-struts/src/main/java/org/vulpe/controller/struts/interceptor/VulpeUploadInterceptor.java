@@ -41,7 +41,7 @@ import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * 
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * 
  */
 @SuppressWarnings( { "unchecked", "serial" })

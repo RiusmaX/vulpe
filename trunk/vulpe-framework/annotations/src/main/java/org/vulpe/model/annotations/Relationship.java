@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Tells Vulpe to optimize lazy load on relationship.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -38,4 +38,10 @@ public @interface Relationship {
 	String[] attributes();
 
 	QueryParameter[] parameters() default {};
+
+	RelationshipScope scope() default RelationshipScope.ALL;
+
+	public enum RelationshipScope {
+		ALL, SELECT, CRUD
+	}
 }

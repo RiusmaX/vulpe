@@ -32,7 +32,7 @@ import org.vulpe.commons.enumeration.DaysOfWeek;
 /**
  * Utility class to date format.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public final class VulpeDateUtil {
 

@@ -33,7 +33,7 @@ import org.vulpe.model.services.VulpeService;
 /**
  * Class to lookup VulpeService
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class VulpeServiceLocator {

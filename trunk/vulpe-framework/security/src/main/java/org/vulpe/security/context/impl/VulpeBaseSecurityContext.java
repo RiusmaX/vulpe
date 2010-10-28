@@ -47,7 +47,7 @@ import org.vulpe.security.model.entity.UserRole;
 import org.vulpe.security.model.services.SecurityService;
 
 /**
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)

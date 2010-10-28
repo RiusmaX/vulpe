@@ -43,7 +43,7 @@ import com.db4o.ObjectSet;
 /**
  * Default implementation of DAO for CRUD's with DB4O.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>

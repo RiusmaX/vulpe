@@ -15,9 +15,9 @@
  */
 package org.vulpe.audit.model.dao.impl.jpa;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,16 +28,14 @@ import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 
 @Repository("AuditOccurrenceDAO")
 @Transactional
-public class AuditOccurrenceDAOJPA extends VulpeBaseDAOJPA<AuditOccurrence, Long>
-		implements AuditOccurrenceDAO {
+public class AuditOccurrenceDAOJPA extends VulpeBaseDAOJPA<AuditOccurrence, Long> implements
+		AuditOccurrenceDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<AuditOccurrence> findByParent(final AuditOccurrence auditOccurrence)
 			throws VulpeApplicationException {
-		final Map<String, Object> map = new HashMap<String, Object>();
-		map.put("parent", auditOccurrence.getParent());
-		return (List<AuditOccurrence>) getJpaTemplate().findByNamedQueryAndNamedParams(
-				"AuditOccurrence.findByParent", map);
+		final Query query = getEntityManager().createNamedQuery("AuditOccurrence.findByParent");
+		query.setParameter("parent", auditOccurrence.getParent());
+		return (List<AuditOccurrence>) query.getResultList();
 	}
-
 }

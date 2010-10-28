@@ -36,7 +36,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 /**
  * Interceptor class to control exceptions.
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeExceptionMappingInterceptor extends

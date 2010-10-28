@@ -55,7 +55,7 @@ import com.db4o.query.Query;
 /**
  * Default implementation of DAO for CRUD's with DB4O.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>

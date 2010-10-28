@@ -36,7 +36,7 @@ import com.opensymphony.xwork2.util.OgnlValueStack.ObjectAccessor;
 /**
  * Utility class to solve problems on set generic types.
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsPropertyAccessor extends ObjectAccessor {

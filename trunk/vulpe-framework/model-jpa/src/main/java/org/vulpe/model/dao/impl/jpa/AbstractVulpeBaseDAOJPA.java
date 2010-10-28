@@ -28,23 +28,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PersistenceException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.ejb.HibernateEntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaCallback;
-import org.springframework.orm.jpa.JpaTemplate;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -53,14 +46,15 @@ import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Relationship;
+import org.vulpe.model.annotations.Relationship.RelationshipScope;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
 import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default implementation of DAO with JPA
- * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ *
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "unchecked" })
 public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
@@ -68,37 +62,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAOJPA.class.getName());
 
-	private EntityManagerFactory entityManagerFactory;
-
-	private JpaTemplate jpaTemplate;
-
-	@Autowired
-	private TransactionTemplate transactionTemplate;
-
-	public final void setEntityManagerFactory(final EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-		this.jpaTemplate = new JpaTemplate(this.entityManagerFactory);
-	}
-
-	public TransactionTemplate getTransactionTemplate() {
-		return transactionTemplate;
-	}
-
-	public void setTransactionTemplate(final TransactionTemplate transactionTemplate) {
-		this.transactionTemplate = transactionTemplate;
-	}
-
-	public JpaTemplate getJpaTemplate() {
-		return jpaTemplate;
-	}
-
-	public void setJpaTemplate(final JpaTemplate jpaTemplate) {
-		this.jpaTemplate = jpaTemplate;
-	}
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
 	 */
 	public <T> T merge(final T entity) {
@@ -119,18 +88,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 			}
 		}
-		return (T) getTransactionTemplate().execute(new TransactionCallback() {
-			public Object doInTransaction(final TransactionStatus status) {
-				final T merged = getJpaTemplate().merge(entity);
-				getJpaTemplate().flush();
-				return merged;
-			}
-		});
+		final T merged = entityManager.merge(entity);
+		entityManager.flush();
+		loadEntityRelationships((ENTITY) merged);
+		return merged;
 	}
 
 	/**
 	 * Execute HQL query.
-	 * 
+	 *
 	 * @param <T>
 	 * @param hql
 	 * @param params
@@ -142,18 +108,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Reading object: ".concat(hql));
 		}
-		return (List<T>) getJpaTemplate().execute(new JpaCallback() {
-			public Object doInJpa(final EntityManager entityManager) throws PersistenceException {
-				final Query query = entityManager.createQuery(hql);
-				setParams(query, params);
-				return query.getResultList();
-			}
-		});
+		final Query query = entityManager.createQuery(hql);
+		setParams(query, params);
+		return query.getResultList();
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
@@ -161,8 +123,6 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			throws VulpeApplicationException {
 		CallableStatement cstmt = null;
 		try {
-			final EntityManager entityManager = getJpaTemplate().getEntityManagerFactory()
-					.createEntityManager();
 			final Connection connection = ((HibernateEntityManager) entityManager).getSession()
 					.connection();
 			final StringBuilder call = new StringBuilder();
@@ -219,7 +179,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
 	 * java.util.List)
 	 */
@@ -228,8 +188,6 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final List<Parameter> parameters) throws VulpeApplicationException {
 		CallableStatement cstmt = null;
 		try {
-			final EntityManager entityManager = getJpaTemplate().getEntityManagerFactory()
-					.createEntityManager();
 			final Connection connection = ((HibernateEntityManager) entityManager).getSession()
 					.connection();
 			final StringBuilder call = new StringBuilder();
@@ -321,28 +279,23 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return null;
 	}
 
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
-	}
-
 	/**
-	 * 
+	 *
 	 * @param entity
 	 */
-	protected void loadEntityRelationships(final ENTITY entity, final boolean load) {
+	protected void loadEntityRelationships(final ENTITY entity) {
 		final List<ENTITY> entities = new ArrayList<ENTITY>();
 		entities.add(entity);
-		loadRelationships(entities, null, load);
+		loadRelationships(entities, null);
 	}
 
 	/**
 	 * Load relationships and optimize lazy load.
-	 * 
+	 *
 	 * @param entities
 	 * @param params
 	 */
-	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params,
-			final boolean load) {
+	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method loadRelationships - Start");
 		}
@@ -355,6 +308,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				parentIds.add(parent.getId());
 			}
 			for (final Relationship relationship : queryConfiguration.relationships()) {
+				final boolean loadAll = relationship.attributes().length == 1
+						&& "*".equals(relationship.attributes()[0]);
+				if (relationship.scope().equals(RelationshipScope.SELECT) && loadAll) {
+					continue;
+				} else if (relationship.scope().equals(RelationshipScope.CRUD) && !loadAll) {
+
+				}
 				try {
 					final StringBuilder hql = new StringBuilder();
 					final String parentName = VulpeStringUtil.lowerCaseFirst(entityClass
@@ -362,7 +322,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					final Class propertyType = PropertyUtils.getPropertyType(entityClass
 							.newInstance(), relationship.property());
 					final boolean oneToMany = Collection.class.isAssignableFrom(propertyType);
-					if (oneToMany && load) {
+					if (oneToMany && loadAll) {
 						hql.append("select obj ");
 					} else {
 						hql.append("select new map(obj.id as id");
@@ -416,8 +376,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							}
 						}
 					}
-					final Query query = getJpaTemplate().getEntityManager().createQuery(
-							hql.toString());
+					final Query query = entityManager.createQuery(hql.toString());
 					if (oneToMany) {
 						query.setParameter("parentIds", parentIds);
 					} else {
@@ -438,7 +397,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					}
 					final List<ENTITY> childs = new ArrayList<ENTITY>();
 					final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
-					if (oneToMany && load) {
+					if (oneToMany && loadAll) {
 						final List<ENTITY> result = query.getResultList();
 						for (final ENTITY child : result) {
 							final VulpeEntity<ID> parent = (VulpeEntity<ID>) PropertyUtils
@@ -501,5 +460,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				LOG.debug("Method loadRelationships - End");
 			}
 		}
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 }

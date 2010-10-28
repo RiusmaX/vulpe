@@ -5,7 +5,7 @@ import org.vulpe.model.services.VulpeService;
 /**
  * Vulpe Controller Config Interface.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
@@ -92,7 +92,7 @@ public interface VulpeControllerConfig {
 	/**
 	 * Controllers type
 	 *
-	 * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+	 * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
 	 */
 	public enum ControllerType {
 		CRUD, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE

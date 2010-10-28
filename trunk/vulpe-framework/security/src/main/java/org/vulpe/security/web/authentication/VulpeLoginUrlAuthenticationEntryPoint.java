@@ -29,7 +29,7 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 
 /**
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */

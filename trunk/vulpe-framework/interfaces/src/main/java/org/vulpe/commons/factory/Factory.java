@@ -18,7 +18,7 @@ package org.vulpe.commons.factory;
 /**
  * dEFAULT Interface Factory
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @param <T>
  * 
  */

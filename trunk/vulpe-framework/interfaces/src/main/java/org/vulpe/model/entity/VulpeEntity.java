@@ -22,8 +22,8 @@ import java.io.Serializable;
  *
  * @param <ID>
  *            Type of entity identifier
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
 public interface VulpeEntity<ID extends Serializable & Comparable> extends VulpeSimpleEntity {

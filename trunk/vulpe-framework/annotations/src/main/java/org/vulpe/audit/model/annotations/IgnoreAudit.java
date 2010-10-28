@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 /**
  * Disabled audit on entity or attribute of entity
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Target( { FIELD, TYPE })

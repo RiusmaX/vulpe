@@ -38,7 +38,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * Classe utilizada para corrigir problemas ao instanciar tipos genericos e
  * Set's.
  *
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>

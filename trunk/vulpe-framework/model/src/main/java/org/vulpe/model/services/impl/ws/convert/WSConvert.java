@@ -17,7 +17,7 @@ package org.vulpe.model.services.impl.ws.convert;
 
 /**
  * 
- * @author <a href="mailto:fabio.viana@activethread.com.br">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public interface WSConvert<BEAN, WSBEAN> {
 

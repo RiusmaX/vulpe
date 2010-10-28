@@ -48,7 +48,7 @@ import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
  *
  * Add configurations of URL Rewrite Filter.
  *
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
 public class VulpeFilterDispatcher implements Filter {

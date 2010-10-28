@@ -21,7 +21,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationProvid
 
 /**
  * 
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * 
  */
 public class VulpeAnonymousAuthenticationProvider extends AnonymousAuthenticationProvider {

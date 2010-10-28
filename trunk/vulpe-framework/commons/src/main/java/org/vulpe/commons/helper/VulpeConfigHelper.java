@@ -23,7 +23,7 @@ import org.vulpe.config.annotations.VulpeProject;
 /**
  * Framework configuration helper.
  * 
- * @author <a href="mailto:felipe.matos@activethread.com.br">Felipe Matos</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @since 1.0
  */
 @SuppressWarnings({ "unchecked" })
