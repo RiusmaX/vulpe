@@ -67,8 +67,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	Paging<ENTITY> paging(ENTITY entity, Integer pageSize, Integer page)
-			throws VulpeApplicationException;
+	Paging<ENTITY> paging(ENTITY entity, Integer pageSize, Integer page) throws VulpeApplicationException;
 
 	/**
 	 * Updates ENTITY.
@@ -115,7 +114,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * Execute function.
 	 *
 	 * @param name
-	 *            Full name of procedure
+	 *            Full name of function
 	 * @param returnType
 	 *            Return Type
 	 * @param parameters
@@ -123,8 +122,23 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	CallableStatement executeFunction(final String name, final int returType,
-			List<Parameter> parameters) throws VulpeApplicationException;
+	CallableStatement executeFunction(final String name, final int returType, List<Parameter> parameters)
+			throws VulpeApplicationException;
+
+	/**
+	 * Execute Callable Statement (Procedure or Function).
+	 *
+	 * @param name
+	 *            Full name of procedure or function
+	 * @param returnType
+	 *            Return Type of function, if case
+	 * @param parameters
+	 *            List of parameters
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
+	CallableStatement executeCallableStatement(final String name, final Integer returnType,
+			final List<Parameter> parameters) throws VulpeApplicationException;
 
 	boolean exists(ENTITY entity) throws VulpeApplicationException;
 }

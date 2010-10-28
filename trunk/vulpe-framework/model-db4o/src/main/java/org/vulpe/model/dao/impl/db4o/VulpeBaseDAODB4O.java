@@ -58,8 +58,8 @@ import com.db4o.query.Query;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
-public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends AbstractVulpeBaseDAODB4O<ENTITY, ID> {
+public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		AbstractVulpeBaseDAODB4O<ENTITY, ID> {
 
 	private static final Logger LOG = Logger.getLogger(VulpeBaseDAODB4O.class.getName());
 
@@ -247,8 +247,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
-					getClass(), getClass().getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
@@ -320,10 +320,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			if (field.isAnnotationPresent(IgnoreAutoFilter.class)) {
 				continue;
 			}
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity,
-					field.getName());
-			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass())
-					&& field.getName().equals(DB4O.STATUS)) {
+			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass()) && field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
 			}
 			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
@@ -407,13 +405,11 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
+	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
 	@Override
-	public CallableStatement executeProcedure(String name, List<Parameter> parameters)
-			throws VulpeApplicationException {
+	public CallableStatement executeProcedure(String name, List<Parameter> parameters) throws VulpeApplicationException {
 		return null;
 	}
 
@@ -435,8 +431,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			query.constrain(entity.getClass());
 			for (QueryParameter parameter : parameters) {
 				try {
-					query.descend(parameter.name()).constrain(
-							PropertyUtils.getProperty(entity, parameter.name()));
+					query.descend(parameter.name()).constrain(PropertyUtils.getProperty(entity, parameter.name()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}
@@ -456,6 +451,19 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 */
 	@Override
 	public CallableStatement executeFunction(String name, int returType, List<Parameter> parameters)
+			throws VulpeApplicationException {
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
+	 * java.lang.Integer, java.util.List)
+	 */
+	@Override
+	public CallableStatement executeCallableStatement(String name, Integer returnType, List<Parameter> parameters)
 			throws VulpeApplicationException {
 		return null;
 	}
