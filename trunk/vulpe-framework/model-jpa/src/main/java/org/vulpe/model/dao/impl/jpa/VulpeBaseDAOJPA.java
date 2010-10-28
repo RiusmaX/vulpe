@@ -219,7 +219,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			query.setFirstResult(paging.getFromIndex());
 			query.setMaxResults(pageSize);
 			final List<ENTITY> entities = query.getResultList();
-			loadRelationships(entities, params);
+			loadRelationships(entities, params, false);
 			paging.setList(entities);
 		}
 

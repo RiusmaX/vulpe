@@ -1793,7 +1793,7 @@ var vulpe = {
 				}
 				if (options.individualLoading) {
 					vulpe.config.showLoading = false;
-					var elements = jQuery("select,input,span", "#" + options.layer);
+					var elements = jQuery("select,input", "#" + options.layer);
 					for (var i = 0; i < elements.length; i++) {
 						var elementId = elements[i].id;
 						if (vulpe.util.get(elementId).attr("type") != null && vulpe.util.get(elementId).attr("type") == "hidden") {
