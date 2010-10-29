@@ -250,6 +250,34 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		loadRelationships(entities, null, true);
 	}
 
+	private String mountRelationshipReference(final String attribute, final String parent) {
+		final StringBuilder hqlAttribute = new StringBuilder();
+		final String[] attributeParts = attribute.substring(attribute.indexOf("[") + 1,
+				attribute.length() - 1).split(",");
+		for (String attributePart : attributeParts) {
+			if (attributePart.contains("[")) {
+				String subAttributeParent = attributePart.substring(0, attributePart.indexOf("["));
+				attributePart = attributePart.substring(attributePart.indexOf("[") + 1,
+						attributePart.length() - 1);
+				final String[] subAttributeParts = attributePart.split(",");
+				for (String subAttributePart : subAttributeParts) {
+					if (subAttributePart.contains("[")) {
+						hqlAttribute.append(mountRelationshipReference(subAttributePart, subAttributeParent));
+					}
+					hqlAttribute.append(", obj.").append(
+							StringUtils.isNotEmpty(parent) ? parent : "")
+							.append(subAttributeParent).append(".").append(subAttributePart)
+							.append(" as ").append(subAttributeParent).append("_").append(
+									subAttributePart);
+				}
+			} else {
+				hqlAttribute.append(", obj.").append(attributePart).append(" as ").append(
+						attributePart);
+			}
+		}
+		return hqlAttribute.toString();
+	}
+
 	/**
 	 * Load relationships and optimize lazy load.
 	 * 
@@ -307,30 +335,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									int joinCount = hqlJoin.size() + 1;
 									hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj."
 											+ attributeParent + " obj" + joinCount);
-									final String[] attributeParts = attribute.substring(
-											attribute.indexOf("[") + 1, attribute.length() - 1)
-											.split(",");
-									for (String attributePart : attributeParts) {
-										if (attributePart.contains("[")) {
-											String subAttributeParent = attributePart.substring(0,
-													attributePart.indexOf("["));
-											attributePart = attributePart.substring(attributePart
-													.indexOf("[") + 1, attributePart.length() - 1);
-											final String[] subAttributeParts = attributePart
-													.split(",");
-											for (String subAttributePart : subAttributeParts) {
-												hqlAttribute.append(", obj").append(".").append(
-														subAttributeParent).append(".").append(
-														subAttributePart).append(" as ").append(
-														subAttributeParent).append("_").append(
-														subAttributePart);
-											}
-										} else {
-											hqlAttribute.append(", obj").append(".").append(
-													attributePart).append(" as ").append(
-													attributePart);
-										}
-									}
+									hqlAttribute.append(mountRelationshipReference(attribute, null));
 									final Class attributeParentType = PropertyUtils
 											.getPropertyType(propertyType.newInstance(),
 													attributeParent);
