@@ -55,6 +55,7 @@ import org.vulpe.model.entity.VulpeEntity;
  * Default implementation of DAO with JPA
  * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
@@ -259,20 +260,25 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				String subAttributeParent = attributePart.substring(0, attributePart.indexOf("["));
 				attributePart = attributePart.substring(attributePart.indexOf("[") + 1,
 						attributePart.length() - 1);
-				final String[] subAttributeParts = attributePart.split(",");
+				final String[] subAttributeParts = attributePart.split("#");
 				for (String subAttributePart : subAttributeParts) {
 					if (subAttributePart.contains("[")) {
-						hqlAttribute.append(mountRelationshipReference(subAttributePart, subAttributeParent));
+						hqlAttribute.append(mountRelationshipReference(subAttributePart,
+								subAttributeParent));
+					} else {
+						hqlAttribute.append(", obj.").append(
+								StringUtils.isNotEmpty(parent) ? parent : "").append(
+								subAttributeParent).append(".").append(subAttributePart).append(
+								" as ").append(subAttributeParent).append("_").append(
+								subAttributePart);
 					}
-					hqlAttribute.append(", obj.").append(
-							StringUtils.isNotEmpty(parent) ? parent : "")
-							.append(subAttributeParent).append(".").append(subAttributePart)
-							.append(" as ").append(subAttributeParent).append("_").append(
-									subAttributePart);
 				}
 			} else {
-				hqlAttribute.append(", obj.").append(attributePart).append(" as ").append(
-						attributePart);
+				hqlAttribute.append(", obj.").append(
+						StringUtils.isNotEmpty(parent) ? parent.replaceAll("_", ".") + "." : "")
+						.append(attributePart).append(" as ").append(
+								StringUtils.isNotEmpty(parent) ? parent + "_" : "").append(
+								attributePart);
 			}
 		}
 		return hqlAttribute.toString();
@@ -329,13 +335,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							} else {
 								if (attribute.contains("[")) {
 									final StringBuilder hqlAttribute = new StringBuilder(
-											"select new map(obj.id");
+											"select new map(obj.id as id");
 									String attributeParent = attribute.substring(0, attribute
 											.indexOf("["));
 									int joinCount = hqlJoin.size() + 1;
 									hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj."
 											+ attributeParent + " obj" + joinCount);
-									hqlAttribute.append(mountRelationshipReference(attribute, null));
+									hqlAttribute
+											.append(mountRelationshipReference(attribute, null));
 									final Class attributeParentType = PropertyUtils
 											.getPropertyType(propertyType.newInstance(),
 													attributeParent);
@@ -460,36 +467,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 										final Query queryx = getEntityManager().createQuery(hqlx)
 												.setParameter("id", newAttribute.getId());
 										final Map resultx = (Map) queryx.getSingleResult();
-										String attributex = attribute.substring(attribute
-												.indexOf("[") + 1, attribute.length() - 1);
-										final String[] attributeParts = attributex.split(",");
-										for (String attributePart : attributeParts) {
-											if (attributePart.contains("[")) {
-												String subAttributeParent = attributePart
-														.substring(0, attributePart.indexOf("["));
-												attributePart = attributePart.substring(
-														attributePart.indexOf("[") + 1,
-														attributePart.length() - 1);
-												final String[] subAttributeParts = attributePart
-														.split(",");
-												final Class subAttributeType = PropertyUtils
-														.getPropertyType(newAttribute,
-																subAttributeParent);
-												final VulpeEntity<ID> newSubAttribute = (VulpeEntity<ID>) subAttributeType
-														.newInstance();
-												for (String subAttributePart : subAttributeParts) {
-													PropertyUtils.setProperty(newSubAttribute,
-															subAttributePart, resultx
-																	.get(subAttributeParent + "_"
-																			+ subAttributePart));
-												}
-												PropertyUtils.setProperty(newAttribute,
-														subAttributeParent, newSubAttribute);
-											} else {
-												PropertyUtils.setProperty(newAttribute,
-														attributePart, resultx.get(attributePart));
-											}
-										}
+										mountProperties(resultx, newAttribute, attribute);
 										PropertyUtils.setProperty(child, attributeParent,
 												newAttribute);
 									} else {
@@ -538,6 +516,42 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Method loadRelationships - End");
 			}
+		}
+	}
+
+	private void mountProperties(Map<String, Object> resultx, VulpeEntity<ID> newAttribute,
+			String attribute) {
+		try {
+			String attributex = attribute.substring(attribute.indexOf("[") + 1,
+					attribute.length() - 1);
+			final String[] attributeParts = attributex.split(",");
+			for (String attributePart : attributeParts) {
+				if (attributePart.contains("[")) {
+					String subAttributeParent = attributePart.substring(0, attributePart
+							.indexOf("["));
+					attributePart = attributePart.substring(attributePart.indexOf("[") + 1,
+							attributePart.length() - 1);
+					final String[] subAttributeParts = attributePart.split("#");
+					final Class subAttributeType = PropertyUtils.getPropertyType(newAttribute,
+							subAttributeParent);
+					final VulpeEntity<ID> newSubAttribute = (VulpeEntity<ID>) subAttributeType
+							.newInstance();
+					for (String subAttributePart : subAttributeParts) {
+						if (subAttributePart.contains("[")) {
+							mountProperties(resultx, newSubAttribute, subAttributePart);
+						} else {
+							PropertyUtils.setProperty(newSubAttribute, subAttributePart, resultx
+									.get(subAttributeParent + "_" + subAttributePart));
+						}
+					}
+					PropertyUtils.setProperty(newAttribute, subAttributeParent, newSubAttribute);
+				} else {
+					PropertyUtils.setProperty(newAttribute, attributePart, resultx
+							.get(attributePart));
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
 		}
 	}
 
