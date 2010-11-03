@@ -22,21 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to query complementation and replacement.
+ * Annotation to query configurations.
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface QueryConfiguration {
+public @interface QueryConfigurations {
 
-	String name() default "default";
-
-	QueryComplement complement() default @QueryComplement;
-
-	QueryReplace replace() default @QueryReplace;
-
-	Relationship[] relationships() default {};
+	QueryConfiguration value() default @QueryConfiguration;
 
 }
