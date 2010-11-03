@@ -267,11 +267,7 @@ $(document).ready(function() {
 	if (fields && fields.length > 0) {
 		for (var i = 0; i < fields.length; i++) {
 			var field = jQuery(fields[i]);
-			var idField = field.attr("id");
-			var idRequiredField = idField + "FieldRequired";
-			if (vulpe.util.get(idRequiredField).length == 0) {
-				vulpe.util.get(idField + "-errorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
-			}
+			vulpe.util.addRequiredField(field);
 		}
 	}
 <c:choose>

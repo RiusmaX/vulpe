@@ -120,6 +120,29 @@ var vulpe = {
 
 	// vulpe.util
 	util: {
+		setRequired: function(name, enabled) {
+			var field = vulpe.util.getElementField(name);
+			if (enabled) {
+				field.addClass("vulpeRequired");
+				vulpe.util.addRequiredField(field);
+			} else {
+				field.removeClass("vulpeRequired");
+				vulpe.util.addRequiredField(field);
+				var idField = field.attr("id");
+				var idRequiredField = idField + "FieldRequired";
+				vulpe.util.get(idRequiredField).hide();
+			}
+		},
+
+		addRequiredField: function(field) {
+			var idField = field.attr("id");
+			var idRequiredField = idField + "FieldRequired";
+			if (vulpe.util.get(idRequiredField).length == 0) {
+				vulpe.util.get(idField + "-errorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
+			}
+			vulpe.util.get(idRequiredField).show();
+		},
+		
 		get: function(id, parent) {
 			if (vulpe.util.isEmpty(id)) {
 				return null;
