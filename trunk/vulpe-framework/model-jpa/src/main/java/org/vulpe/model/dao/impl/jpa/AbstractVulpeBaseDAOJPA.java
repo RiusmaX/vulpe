@@ -383,7 +383,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								if (attribute.contains("[")) {
 									final StringBuilder hqlAttribute = new StringBuilder(
 											"select new map(obj.id as id");
-									String attributeParent = attribute.substring(0, attribute
+									final String attributeParent = attribute.substring(0, attribute
 											.indexOf("["));
 									int joinCount = hqlJoin.size() + 1;
 									hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj."
@@ -402,10 +402,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								} else {
 									final Class attributeType = PropertyUtils.getPropertyType(
 											propertyType.newInstance(), attribute);
-									boolean vulpeEntity = VulpeEntity.class
-											.isAssignableFrom(attributeType);
+									boolean manyToOne = attributeType
+											.isAnnotationPresent(ManyToOne.class);
 									hql.append(", ").append("obj.").append(
-											attribute + (vulpeEntity ? ".id" : "")).append(" as ")
+											attribute + (manyToOne ? ".id" : "")).append(" as ")
 											.append(attribute);
 								}
 							}
@@ -522,9 +522,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									} else {
 										final Class attributeType = PropertyUtils.getPropertyType(
 												propertyType.newInstance(), attribute);
-										boolean vulpeEntity = VulpeEntity.class
-												.isAssignableFrom(attributeType);
-										if (vulpeEntity) {
+										boolean manyToOne = attributeType
+												.isAnnotationPresent(ManyToOne.class);
+										if (manyToOne) {
 											final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
 													.newInstance();
 											newAttribute.setId((ID) map.get(attribute));
