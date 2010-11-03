@@ -1630,7 +1630,9 @@ var vulpe = {
 			 */
 			submitPopup: function(options) {
 				vulpe.util.setVulpePopup(options.name);
-				var popup = jQuery('<div>').attr('id', options.name).attr('layerParent', options.layerParent).attr('properties', options.properties).attr('expressions', options.expressions);
+				vulpe.util.get(options.name).remove();
+				var popup = jQuery('<div>');
+				popup.attr('id', options.name).attr('layerParent', options.layerParent).attr('properties', options.properties).attr('expressions', options.expressions)
 				popup.hide();
 				popup.css("height", "100%");
 				popup.addClass('vulpePopup');

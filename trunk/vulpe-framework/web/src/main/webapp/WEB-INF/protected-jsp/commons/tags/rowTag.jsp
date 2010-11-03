@@ -135,6 +135,7 @@
 			<c:when test="${empty onclick}"><c:set var="onclick" value="vulpe.view.selectRow(this, '${valueSelectRow}');"/></c:when>
 			<c:otherwise><c:set var="onclick" value="${onclick}; vulpe.view.selectRow('${valueSelectRow}');"/></c:otherwise>
 		</c:choose>
+		<c:set var="elementId" value="${currentItem.id}"/>
 	</c:if>
 	<c:if test="${not empty onclick}"><c:set var="onclick"> onclick="${onclick}"</c:set></c:if>
 	<c:if test="${not empty style}"><c:set var="style"> style="${style}"</c:set></c:if>

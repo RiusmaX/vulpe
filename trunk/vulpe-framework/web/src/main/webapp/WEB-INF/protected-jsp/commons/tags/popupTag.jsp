@@ -11,7 +11,7 @@
 		</c:choose>
 	</c:if>
 	<c:if test="${empty popupTargetName}">
-		<c:if test="${empty targetConfig}"><c:set var="popupTargetName" value="${vulpeFormName}-entity."/></c:if>
+		<c:if test="${empty targetConfig}"><c:set var="popupTargetName" value="${vulpeFormName}-${not empty vulpeTargetName ? vulpeTargetName : 'entity'}_"/></c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="popupTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
 			<c:set var="popupTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
@@ -22,7 +22,7 @@
 		<c:otherwise><c:set var="popupTargetName" value="${popupTargetName}"/></c:otherwise>
 	</c:choose>
 	<c:if test="${empty paramTargetName}">
-		<c:if test="${empty targetConfig}"><c:set var="paramTargetName" value="${vulpeFormName}-entity"/></c:if>
+		<c:if test="${empty targetConfig}"><c:set var="paramTargetName" value="${vulpeFormName}-${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="paramTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
 			<c:set var="paramTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
@@ -59,10 +59,10 @@
 	<c:set var="popupPropertiesAux" value=""/>
 	<c:if test="${not empty popupProperties}">
 		<c:forEach items="${fn:split(fn:trim(popupProperties), ',')}" var="prop" varStatus="sProp">
-			<c:set var="propResultName" value="${prop}"/>
+			<c:set var="propResultName" value="${fn:replace(prop, '.', '_')}"/>
 			<c:set var="propName" value="${prop}"/>
 			<c:forEach items="${fn:split(prop, '=')}" var="propCfg" varStatus="sPropCfg">
-				<c:if test="${sPropCfg.first}"><c:set var="propResultName" value="${propCfg}"/></c:if>
+				<c:if test="${sPropCfg.first}"><c:set var="propResultName" value="${fn:replace(propCfg, '.', '_')}"/></c:if>
 				<c:if test="${sPropCfg.last}"><c:set var="propName" value="${propCfg}"/></c:if>
 			</c:forEach>
 			<c:choose>
