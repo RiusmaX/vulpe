@@ -34,12 +34,13 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.config.annotations.VulpeProject;
-import org.vulpe.controller.helper.CachedObjectsHelper;
+import org.vulpe.controller.helper.VulpeCachedObjectsHelper;
+import org.vulpe.controller.helper.VulpeJobSchedulerHelper;
 import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Class to manager startup of application.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
@@ -53,7 +54,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seejavax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
 	 * ServletContextEvent)
 	 */
@@ -66,7 +67,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
 	 * .ServletContextEvent)
@@ -140,7 +141,8 @@ public class VulpeStartupListener implements ServletContextListener {
 		}
 		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
 		evt.getServletContext().setAttribute(Context.GLOBAL, global);
-		CachedObjectsHelper.putAnnotedObjectsInCache(evt.getServletContext());
+		VulpeCachedObjectsHelper.putAnnotedObjectsInCache(evt.getServletContext());
+		VulpeJobSchedulerHelper.schedulerAnnotedJobs(evt.getServletContext());
 		loadControllerMethods();
 	}
 

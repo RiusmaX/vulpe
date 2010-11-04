@@ -25,6 +25,7 @@ import org.vulpe.exception.VulpeSystemException;
  * Utility class to control objects in cache.
  * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 public final class VulpeCacheHelper {

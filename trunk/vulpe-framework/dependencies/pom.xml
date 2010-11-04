@@ -325,6 +325,11 @@
 			<version>1.45</version>
 		</dependency>
 		<!-- VERSION ADDED -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.8.4</version>
+		</dependency>
 	</dependencies>
 
 	<description>Vulpe Framework ;) Quick and Smart - Dependencies</description>

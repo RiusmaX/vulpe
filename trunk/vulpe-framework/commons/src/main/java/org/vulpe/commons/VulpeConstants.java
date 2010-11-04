@@ -50,6 +50,8 @@ public class VulpeConstants {
 	public static final String VULPE = "vulpe";
 	public static final String VULPE_SECURITY = "vulpe-security";
 	public static final String DOMAINS = "domains";
+	public static final String COMMONS = "commons";
+	public static final String CONTROLLER = "controller";
 	public static final String CONTEXT = "vulpeContext";
 	public static final String SECURITY_CONTEXT = "VulpeSecurityContext";
 	public static final String CURRENT_SERVLET_CONTEXT = "currentServletContext";

@@ -33,53 +33,55 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.config.annotations.VulpeDomains;
+import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.CachedEnum;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Class to control Cached Objects.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 @SuppressWarnings("unchecked")
-public final class CachedObjectsHelper {
+public final class VulpeCachedObjectsHelper {
 
-	private CachedObjectsHelper() {
+	private VulpeCachedObjectsHelper() {
 	}
 
-	private static final Logger LOG = Logger.getLogger(CachedObjectsHelper.class);
+	private static final Logger LOG = Logger.getLogger(VulpeCachedObjectsHelper.class);
 
 	private static AnnotationDB annotationDB;
 
 	/**
 	 * Load list of classes noted with @CachedClass
-	 *
+	 * 
 	 * @param servletContext
 	 * @return
 	 */
 	private static Set<String> loadCachedClasses(final ServletContext servletContext) {
 		scannotation(servletContext);
 		final Set<String> cachedClasses = annotationDB.getAnnotationIndex().get(
-				org.vulpe.model.annotations.CachedClass.class.getName());
+				CachedClass.class.getName());
 		return cachedClasses;
 	}
 
 	/**
 	 * Load list of classes noted with @CachedEnum
-	 *
+	 * 
 	 * @param servletContext
 	 * @return
 	 */
 	private static Set<String> loadCachedEnums(final ServletContext servletContext) {
 		scannotation(servletContext);
 		final Set<String> cachedEnums = annotationDB.getAnnotationIndex().get(
-				org.vulpe.model.annotations.CachedEnum.class.getName());
+				CachedEnum.class.getName());
 		return cachedEnums;
 	}
 
 	/**
 	 * Scanning libs of application to find noted classes.
-	 *
+	 * 
 	 * @param servletContext
 	 * @return
 	 * @return
@@ -123,7 +125,7 @@ public final class CachedObjectsHelper {
 	/**
 	 * Puts domains objects with annotations (@CachedClass and @CachedEnum) in
 	 * cache.
-	 *
+	 * 
 	 * @param servletContext
 	 */
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
@@ -194,7 +196,7 @@ public final class CachedObjectsHelper {
 
 	/**
 	 * Puts domains objects configured by @VulpeDomains annotation in cache.
-	 *
+	 * 
 	 * @param servletContext
 	 */
 	public static void putObjectsInCache(final ServletContext servletContext) {
