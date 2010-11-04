@@ -96,7 +96,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @param id
 	 * @return ENTITY
 	 */
-	ENTITY find(ID id) throws VulpeApplicationException;
+	ENTITY find(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Execute procedure.

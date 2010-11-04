@@ -87,11 +87,11 @@ public interface VulpeManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	/**
 	 * Method used to add business rules on find entity by id.
 	 *
-	 * @param entityId
+	 * @param entity
 	 * @return Entity
 	 * @throws VulpeApplicationException
 	 */
-	ENTITY_CLASS find(ENTITY_ID entityId) throws VulpeApplicationException;
+	ENTITY_CLASS find(ENTITY_CLASS entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on persist list of entities.

@@ -31,6 +31,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface QueryConfigurations {
 
-	QueryConfiguration value() default @QueryConfiguration;
+	QueryConfiguration[] value();
 
 }

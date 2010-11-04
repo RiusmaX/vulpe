@@ -35,9 +35,9 @@ public class AuditServicePOJO implements AuditService {
 	private transient AuditOccurrenceManager occurrenceManager;
 
 	@Transactional(readOnly = true)
-	public AuditOccurrence findAuditOccurrence(final Long long0)
+	public AuditOccurrence findAuditOccurrence(final AuditOccurrence occurrence0)
 			throws VulpeApplicationException {
-		return occurrenceManager.find(long0);
+		return occurrenceManager.find(occurrence0);
 	}
 
 	@Transactional(readOnly = true)

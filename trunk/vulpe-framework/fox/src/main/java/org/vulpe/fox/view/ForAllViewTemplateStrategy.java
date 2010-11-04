@@ -61,11 +61,9 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 	 * net.sf.jelly.apt.TemplateModel)
 	 */
 	@Override
-	public boolean preProcess(final TemplateBlock block,
-			final TemplateOutput<TemplateBlock> output, final TemplateModel model)
-			throws IOException, TemplateException {
-		if (super.preProcess(block, output, model)
-				&& getDeclaration() instanceof DecoratedClassDeclaration) {
+	public boolean preProcess(final TemplateBlock block, final TemplateOutput<TemplateBlock> output,
+			final TemplateModel model) throws IOException, TemplateException {
+		if (super.preProcess(block, output, model) && getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
 			if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())) {
 				return false;
@@ -75,7 +73,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				return false;
 			}
 			final DecoratedView view = new DecoratedView();
-			view.setName(clazz.getSimpleName());
+			view.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
+					.getSimpleName());
 			view.setProjectName(VulpeConfigHelper.getProjectName());
 			view.setModuleName(getModuleName(clazz));
 			view.setPopupProperties(codeGenerator.view().popupProperties());
@@ -95,9 +94,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	protected String getLabel(final DecoratedView view, final String name, final String type) {
 		final String classSimpleName = this.getClass().getSimpleName();
-		return "label.".concat(view.getProjectName()).concat(".").concat(view.getModuleName())
-				.concat(".").concat(classSimpleName).concat(".").concat(type).concat(".").concat(
-						name);
+		return "label.".concat(view.getProjectName()).concat(".").concat(view.getModuleName()).concat(".").concat(
+				classSimpleName).concat(".").concat(type).concat(".").concat(name);
 	}
 
 	protected void prepareFields(final DecoratedClassDeclaration clazz, final DecoratedView view) {
@@ -125,16 +123,13 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					detailFields.add(decoratedViewFieldDetail);
 					decoratedViewDetail.setFields(detailFields);
 				} else {
-					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(
-							detail.target());
+					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(detail.target());
 					for (Field detailField : listDetailField) {
-						if (detailField.getName().toString().equals(
-								clazz.getSimpleName().toLowerCase())) {
+						if (detailField.getName().toString().equals(clazz.getSimpleName().toLowerCase())) {
 							continue;
 						}
 						final VulpeColumn column = detailField.getAnnotation(VulpeColumn.class);
-						final DecoratedViewField decoratedViewFieldDetail = generateViewField(null,
-								detailField);
+						final DecoratedViewField decoratedViewFieldDetail = generateViewField(null, detailField);
 						if (column != null) {
 							decoratedViewFieldDetail.setAlign(column.align());
 						}
@@ -175,7 +170,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		view.setArguments(arguments);
 		view.setItems(items);
 		view.setLabels(labels);
-		if (view.getTypes().size() == 1 && view.getTypes().get(0).equals("TABULAR")){
+		if (view.getTypes().size() == 1 && view.getTypes().get(0).equals("TABULAR")) {
 			view.setColumnSpan(fields.size() + 3);
 		} else {
 			view.setColumnSpan(items.size() + 5);
@@ -185,8 +180,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 	private DecoratedViewField generateViewField(FieldDeclaration fDeclaration, Field field) {
 		DecoratedViewField decoratedViewField = new DecoratedViewField();
 		String name = "";
-		final VulpeText text = fDeclaration == null ? field.getAnnotation(VulpeText.class)
-				: fDeclaration.getAnnotation(VulpeText.class);
+		final VulpeText text = fDeclaration == null ? field.getAnnotation(VulpeText.class) : fDeclaration
+				.getAnnotation(VulpeText.class);
 		if (text != null) {
 			name = text.name();
 			decoratedViewField.setArgument(text.argument());
@@ -196,8 +191,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setMask(text.mask());
 			decoratedViewField.setType("text");
 		}
-		final VulpeTextArea textarea = fDeclaration == null ? field
-				.getAnnotation(VulpeTextArea.class) : fDeclaration
+		final VulpeTextArea textarea = fDeclaration == null ? field.getAnnotation(VulpeTextArea.class) : fDeclaration
 				.getAnnotation(VulpeTextArea.class);
 		if (textarea != null) {
 			name = textarea.name();
@@ -207,8 +201,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setRows(textarea.rows());
 			decoratedViewField.setType("textarea");
 		}
-		final VulpePassword password = fDeclaration == null ? field
-				.getAnnotation(VulpePassword.class) : fDeclaration
+		final VulpePassword password = fDeclaration == null ? field.getAnnotation(VulpePassword.class) : fDeclaration
 				.getAnnotation(VulpePassword.class);
 		if (password != null) {
 			name = password.name();
@@ -218,8 +211,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setSize(password.size());
 			decoratedViewField.setType("password");
 		}
-		final VulpeDate date = fDeclaration == null ? field.getAnnotation(VulpeDate.class)
-				: fDeclaration.getAnnotation(VulpeDate.class);
+		final VulpeDate date = fDeclaration == null ? field.getAnnotation(VulpeDate.class) : fDeclaration
+				.getAnnotation(VulpeDate.class);
 		if (date != null) {
 			name = date.name();
 			decoratedViewField.setArgument(date.argument());
@@ -228,8 +221,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setSize(date.size());
 			decoratedViewField.setType("date");
 		}
-		final VulpeCheckbox checkbox = fDeclaration == null ? field
-				.getAnnotation(VulpeCheckbox.class) : fDeclaration
+		final VulpeCheckbox checkbox = fDeclaration == null ? field.getAnnotation(VulpeCheckbox.class) : fDeclaration
 				.getAnnotation(VulpeCheckbox.class);
 		if (checkbox != null) {
 			name = checkbox.name();
@@ -238,8 +230,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setFieldValue(checkbox.fieldValue());
 			decoratedViewField.setType("checkbox");
 		}
-		final VulpeSelect select = fDeclaration == null ? field.getAnnotation(VulpeSelect.class)
-				: fDeclaration.getAnnotation(VulpeSelect.class);
+		final VulpeSelect select = fDeclaration == null ? field.getAnnotation(VulpeSelect.class) : fDeclaration
+				.getAnnotation(VulpeSelect.class);
 		if (select != null) {
 			name = select.name();
 			decoratedViewField.setArgument(select.argument());
@@ -260,9 +252,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setAutoLoad(select.autoLoad());
 			decoratedViewField.setType("select");
 		}
-		final VulpeCheckboxlist checkboxlist = fDeclaration == null ? field
-				.getAnnotation(VulpeCheckboxlist.class) : fDeclaration
-				.getAnnotation(VulpeCheckboxlist.class);
+		final VulpeCheckboxlist checkboxlist = fDeclaration == null ? field.getAnnotation(VulpeCheckboxlist.class)
+				: fDeclaration.getAnnotation(VulpeCheckboxlist.class);
 		if (checkboxlist != null) {
 			name = checkboxlist.name();
 			decoratedViewField.setArgument(checkboxlist.argument());
@@ -283,8 +274,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			decoratedViewField.setType("checkboxlist");
 		}
-		final VulpeRadio radio = fDeclaration == null ? field.getAnnotation(VulpeRadio.class)
-				: fDeclaration.getAnnotation(VulpeRadio.class);
+		final VulpeRadio radio = fDeclaration == null ? field.getAnnotation(VulpeRadio.class) : fDeclaration
+				.getAnnotation(VulpeRadio.class);
 		if (radio != null) {
 			name = radio.name();
 			decoratedViewField.setArgument(radio.argument());
@@ -302,9 +293,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			}
 			decoratedViewField.setType("radio");
 		}
-		final VulpeSelectPopup selectPopup = fDeclaration == null ? field
-				.getAnnotation(VulpeSelectPopup.class) : fDeclaration
-				.getAnnotation(VulpeSelectPopup.class);
+		final VulpeSelectPopup selectPopup = fDeclaration == null ? field.getAnnotation(VulpeSelectPopup.class)
+				: fDeclaration.getAnnotation(VulpeSelectPopup.class);
 		if (selectPopup != null) {
 			name = selectPopup.name();
 			decoratedViewField.setArgument(selectPopup.argument());
@@ -317,13 +307,12 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			decoratedViewField.setAutocomplete(selectPopup.autocomplete());
 			decoratedViewField.setType("selectPopup");
 		}
-		final Autocomplete autoComplete = fDeclaration == null ? field
-				.getAnnotation(Autocomplete.class) : fDeclaration.getAnnotation(Autocomplete.class);
+		final Autocomplete autoComplete = fDeclaration == null ? field.getAnnotation(Autocomplete.class) : fDeclaration
+				.getAnnotation(Autocomplete.class);
 		if (autoComplete != null) {
 			decoratedViewField.setAutocomplete(true);
 		}
-		final VulpeValidate validate = fDeclaration == null ? field
-				.getAnnotation(VulpeValidate.class) : fDeclaration
+		final VulpeValidate validate = fDeclaration == null ? field.getAnnotation(VulpeValidate.class) : fDeclaration
 				.getAnnotation(VulpeValidate.class);
 		if (validate != null) {
 			decoratedViewField.setValidateType(validate.type().name());
@@ -405,8 +394,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				decoratedViewField.setValidateType("");
 			}
 		}
-		decoratedViewField.setName(StringUtils.isNotBlank(name) ? name
-				: fDeclaration == null ? field.getName() : fDeclaration.getSimpleName());
+		decoratedViewField.setName(StringUtils.isNotBlank(name) ? name : fDeclaration == null ? field.getName()
+				: fDeclaration.getSimpleName());
 		return decoratedViewField;
 	}
 }

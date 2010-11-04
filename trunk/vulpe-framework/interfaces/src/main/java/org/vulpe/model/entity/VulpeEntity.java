@@ -50,4 +50,9 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 	void setAutocomplete(final String autoComplete);
 
 	VulpeEntity<ID> clone();
+
+	String getQueryConfigurationName();
+
+	void setQueryConfigurationName(final String queryConfigurationName);
+
 }

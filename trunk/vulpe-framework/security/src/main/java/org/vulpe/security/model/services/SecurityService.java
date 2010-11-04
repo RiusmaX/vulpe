@@ -26,7 +26,7 @@ import org.vulpe.security.model.entity.User;
 
 public interface SecurityService extends VulpeService {
 
-	User findUser(Long long0) throws VulpeApplicationException;
+	User findUser(User user0) throws VulpeApplicationException;
 
 	void deleteUser(User user0) throws VulpeApplicationException;
 
@@ -43,7 +43,7 @@ public interface SecurityService extends VulpeService {
 
 	List<User> persistUser(List<User> list0) throws VulpeApplicationException;
 
-	Role findRole(Long long0) throws VulpeApplicationException;
+	Role findRole(Role role0) throws VulpeApplicationException;
 
 	void deleteRole(Role role0) throws VulpeApplicationException;
 
@@ -60,7 +60,7 @@ public interface SecurityService extends VulpeService {
 
 	List<Role> persistRole(List<Role> list0) throws VulpeApplicationException;
 
-	SecureResource findSecureResource(Long long0) throws VulpeApplicationException;
+	SecureResource findSecureResource(SecureResource secureResource0) throws VulpeApplicationException;
 
 	void deleteSecureResource(SecureResource secureResource0) throws VulpeApplicationException;
 

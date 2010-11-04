@@ -24,7 +24,7 @@ import org.vulpe.model.services.VulpeService;
 
 public interface AuditService extends VulpeService {
 
-	AuditOccurrence findAuditOccurrence(final Long long0)
+	AuditOccurrence findAuditOccurrence(final AuditOccurrence occurrence0)
 			throws VulpeApplicationException;
 
 	List<AuditOccurrence> findByParentAuditOccurrence(

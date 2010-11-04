@@ -147,20 +147,20 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
-	public ENTITY find(final ID identifier) throws VulpeApplicationException {
+	public ENTITY find(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("Retriving id: ".concat(identifier.toString()));
+			LOG.debug("Retriving id: ".concat(entity.getId().toString()));
 		}
-		ENTITY entity = null;
+		ENTITY newEntity = null;
 		try {
 			final ObjectContainer container = getObjectContainer();
-			entity = getEntityClass().newInstance();
-			entity.setId(identifier);
-			entity = (ENTITY) container.queryByExample(entity).get(0);
-			if (entity instanceof VulpeLogicEntity) {
-				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
+			newEntity = getEntityClass().newInstance();
+			newEntity.setId(entity.getId());
+			newEntity = (ENTITY) container.queryByExample(newEntity).get(0);
+			if (newEntity instanceof VulpeLogicEntity) {
+				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) newEntity;
 				if (Status.D.equals(logicEntity.getStatus())) {
-					entity = null;
+					newEntity = null;
 				}
 			}
 		} catch (Exception e) {
@@ -170,7 +170,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			rollback();
 			close();
 		}
-		return entity;
+		return newEntity;
 	}
 
 	/*

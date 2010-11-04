@@ -43,4 +43,6 @@ public @interface CodeGenerator {
 	boolean manager() default true;
 
 	boolean dao() default true;
+
+	String baseName() default "";
 }

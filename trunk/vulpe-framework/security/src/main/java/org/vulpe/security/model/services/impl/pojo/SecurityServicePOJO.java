@@ -45,8 +45,8 @@ public class SecurityServicePOJO implements SecurityService {
 	private transient SecureResourceManager secureResourceManager;
 
 	@Transactional(readOnly = true)
-	public User findUser(final Long long0) throws VulpeApplicationException {
-		return userManager.find(long0);
+	public User findUser(final User user0) throws VulpeApplicationException {
+		return userManager.find(user0);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -86,8 +86,8 @@ public class SecurityServicePOJO implements SecurityService {
 	}
 
 	@Transactional(readOnly = true)
-	public Role findRole(final Long long0) throws VulpeApplicationException {
-		return roleManager.find(long0);
+	public Role findRole(final Role role0) throws VulpeApplicationException {
+		return roleManager.find(role0);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -127,8 +127,8 @@ public class SecurityServicePOJO implements SecurityService {
 	}
 
 	@Transactional(readOnly = true)
-	public SecureResource findSecureResource(final Long long0) throws VulpeApplicationException {
-		return secureResourceManager.find(long0);
+	public SecureResource findSecureResource(final SecureResource secureResource0) throws VulpeApplicationException {
+		return secureResourceManager.find(secureResource0);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)

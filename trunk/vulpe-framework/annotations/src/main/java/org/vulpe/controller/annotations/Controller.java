@@ -86,4 +86,5 @@ public @interface Controller {
 	 */
 	Report report() default @Report;
 
+	String queryConfigurationName() default "default";
 }

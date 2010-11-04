@@ -53,8 +53,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 */
 	protected Class<ENTITY_DAO> getDaoClass() {
 		if (daoClass == null) {
-			daoClass = (Class<ENTITY_DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(),
-					2);
+			daoClass = (Class<ENTITY_DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(), 2);
 		}
 		return daoClass;
 	}
@@ -66,8 +65,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 * @return DAO implementation.
 	 */
 	protected ENTITY_DAO getDAO() {
-		return (ENTITY_DAO) AbstractVulpeBeanFactory.getInstance().getBean(
-				getDaoClass().getSimpleName());
+		return (ENTITY_DAO) AbstractVulpeBeanFactory.getInstance().getBean(getDaoClass().getSimpleName());
 	}
 
 	/*
@@ -214,15 +212,15 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 * (non-Javadoc)
 	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
-	 * find(java.io.Serializable)
+	 * find(org.vulpe.model.entity.VulpeEntity)
 	 */
 	@TransactionType(TransactionAttributeType.NOT_SUPPORTED)
 	@Sufix
-	public ENTITY_CLASS find(final ENTITY_ID entityId) throws VulpeApplicationException {
-		findBefore(entityId);
-		final ENTITY_CLASS entity = getDAO().find(entityId);
-		findAfter(entityId, entity);
-		return entity;
+	public ENTITY_CLASS find(final ENTITY_CLASS entity) throws VulpeApplicationException {
+		findBefore(entity.getId());
+		final ENTITY_CLASS newEntity = getDAO().find(entity);
+		findAfter(entity.getId(), newEntity);
+		return newEntity;
 	}
 
 	/**
@@ -235,8 +233,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	/**
 	 * Extension point to code rules after select entity.
 	 */
-	protected void findAfter(final ENTITY_ID entityId, final ENTITY_CLASS entity)
-			throws VulpeApplicationException {
+	protected void findAfter(final ENTITY_ID entityId, final ENTITY_CLASS entity) throws VulpeApplicationException {
 		// extension point
 	}
 
@@ -249,8 +246,8 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 */
 	@TransactionType(TransactionAttributeType.NOT_SUPPORTED)
 	@Sufix
-	public Paging<ENTITY_CLASS> paging(final ENTITY_CLASS entity, final Integer pageSize,
-			final Integer page) throws VulpeApplicationException {
+	public Paging<ENTITY_CLASS> paging(final ENTITY_CLASS entity, final Integer pageSize, final Integer page)
+			throws VulpeApplicationException {
 		pagingBefore(entity);
 		final Paging<ENTITY_CLASS> paging = getDAO().paging(entity, pageSize, page);
 		pagingAfter(entity, paging);
@@ -279,8 +276,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 * persist(java.util.List)
 	 */
 	@Sufix
-	public List<ENTITY_CLASS> persist(final List<ENTITY_CLASS> entities)
-			throws VulpeApplicationException {
+	public List<ENTITY_CLASS> persist(final List<ENTITY_CLASS> entities) throws VulpeApplicationException {
 		persistBefore(entities);
 		final List<ENTITY_CLASS> entitiesPersist = new ArrayList<ENTITY_CLASS>();
 		for (ENTITY_CLASS entity : entities) {
@@ -309,16 +305,15 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 	 * @since 1.0
 	 * @throws VulpeApplicationException
 	 */
-	protected void persistBefore(final List<ENTITY_CLASS> entities)
-			throws VulpeApplicationException {
+	protected void persistBefore(final List<ENTITY_CLASS> entities) throws VulpeApplicationException {
 		// extension point
 	}
 
 	/**
 	 * Extension point to code rules after persist entities
 	 */
-	protected void persistAfter(final List<ENTITY_CLASS> entities,
-			final List<ENTITY_CLASS> entitiesPersist) throws VulpeApplicationException {
+	protected void persistAfter(final List<ENTITY_CLASS> entities, final List<ENTITY_CLASS> entitiesPersist)
+			throws VulpeApplicationException {
 		// extension point
 	}
 }

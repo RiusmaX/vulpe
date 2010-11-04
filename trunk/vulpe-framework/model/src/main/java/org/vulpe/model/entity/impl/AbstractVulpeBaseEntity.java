@@ -48,6 +48,9 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@IgnoreAudit
 	private transient String autocomplete;
 
+	@IgnoreAudit
+	private transient String queryConfigurationName;
+
 	public AbstractVulpeBaseEntity() {
 	}
 
@@ -158,6 +161,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	public String getAutocomplete() {
 		return autocomplete;
+	}
+
+	public final String getQueryConfigurationName() {
+		return queryConfigurationName;
+	}
+
+	public final void setQueryConfigurationName(String queryConfigurationName) {
+		this.queryConfigurationName = queryConfigurationName;
 	}
 
 }
