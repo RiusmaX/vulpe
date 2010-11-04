@@ -31,5 +31,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Job {
 
-	String value() default "0/20 * * * * ?";
+	String value() default "0 0 24 * * ?";
 }
