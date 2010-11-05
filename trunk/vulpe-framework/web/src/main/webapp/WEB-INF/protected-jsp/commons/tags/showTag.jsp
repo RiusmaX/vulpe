@@ -40,7 +40,12 @@
 			</c:when>
 		</c:choose>
 	</c:when>
+	<c:otherwise>
+	<c:choose>
+	<c:when test="${not empty booleanTo}">${util:booleanTo(value, booleanTo)}</c:when>
 	<c:otherwise>${value}</c:otherwise>
+	</c:choose>
+	</c:otherwise>
 </c:choose>
 </span>
 <c:if test="${not empty paragraph && paragraph}"></p></c:if>

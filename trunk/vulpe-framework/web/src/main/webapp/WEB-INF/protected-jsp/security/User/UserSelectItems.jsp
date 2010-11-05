@@ -13,7 +13,7 @@
 			<v:column labelKey="label.vulpe.security.User.select.username" property="username" sort="true"/>
 			<v:column labelKey="label.vulpe.security.User.select.name" property="name" sort="true"/>
 			<v:column labelKey="label.vulpe.security.User.select.email" property="email" sort="true"/>
-			<v:column labelKey="label.vulpe.security.User.select.active" property="active" sort="true" booleanTo="{Yes}|{No"/>
+			<v:column labelKey="label.vulpe.security.User.select.active" property="active" sort="true" booleanTo="{Yes}|{No}"/>
 		</v:row>
 	</jsp:attribute>
 </v:table>
