@@ -262,7 +262,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	private String mountRelationshipReference(final String attribute, final String parent) {
 		final StringBuilder hqlAttribute = new StringBuilder();
 		final List<String> attributeList = new ArrayList<String>();
-		final String first = attribute.substring(0, attribute.indexOf("[")) + "_";
+		String first = attribute.substring(0, attribute.indexOf("["));
+		if (StringUtils.isNotEmpty(first)) {
+			first += "_";
+		}
 		separateAttributes(attributeList, attribute);
 		for (String attributeName : attributeList) {
 			hqlAttribute.append(", obj.").append(attributeName).append(" as ").append(first)
@@ -276,12 +279,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param attributeList
 	 * @param value
 	 */
-	private void separateAttributes(List<String> attributeList, String value) {
+	private static void separateAttributes(List<String> attributeList, String value) {
 		List<String> attributeInternalList = new ArrayList<String>();
 		if (value.indexOf("[") != -1) {
 			String first = VulpeValidationUtil.isEmpty(attributeList) ? "" : value.substring(0,
-					value.indexOf("["))
-					+ ".";
+					value.indexOf("["));
+			if (StringUtils.isNotEmpty(first)) {
+				first += ".";
+			}
 			String subAttributes = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
 			if (subAttributes.contains(",")) {
 				while (subAttributes.contains(",")) {
@@ -394,24 +399,35 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 										if (attribute.contains("[")) {
 											final StringBuilder hqlAttribute = new StringBuilder(
 													"select new map(obj.id as id");
-											final String attributeParent = attribute.substring(0,
+											String attributeParent = attribute.substring(0,
 													attribute.indexOf("["));
-											int joinCount = hqlJoin.size() + 1;
-											hqlJoin.add((joinCount > 0 ? "" : ",")
-													+ "left outer join obj." + attributeParent
-													+ " obj" + joinCount);
 											hqlAttribute.append(mountRelationshipReference(
 													attribute, null));
-											final Class attributeParentType = PropertyUtils
-													.getPropertyType(propertyType.newInstance(),
-															attributeParent);
-											hqlAttribute.append(") from ").append(
-													attributeParentType.getSimpleName()).append(
-													" obj");
+											if (StringUtils.isEmpty(attributeParent)) {
+												attributeParent = relationship.property();
+												final Class attributeParentType = PropertyUtils
+														.getPropertyType(firstEntity,
+																attributeParent);
+												hqlAttribute.append(") from ").append(
+														attributeParentType.getSimpleName())
+														.append(" obj");
+											} else {
+												final Class attributeParentType = PropertyUtils
+														.getPropertyType(
+																propertyType.newInstance(),
+																attributeParent);
+												hqlAttribute.append(") from ").append(
+														attributeParentType.getSimpleName())
+														.append(" obj");
+												int joinCount = hqlJoin.size() + 1;
+												hqlJoin.add((joinCount > 0 ? "" : ",")
+														+ "left outer join obj." + attributeParent
+														+ " obj" + joinCount);
+												hql.append(", obj").append(joinCount).append(".id")
+														.append(" as ").append(attributeParent);
+											}
 											hqlAttribute.append(" where obj.id = :id");
 											hqlAttributes.put(attribute, hqlAttribute.toString());
-											hql.append(", obj").append(joinCount).append(".id")
-													.append(" as ").append(attributeParent);
 										} else {
 											final Class attributeType = PropertyUtils
 													.getPropertyType(propertyType.newInstance(),
@@ -527,22 +543,33 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 														0, attribute.indexOf("["));
 												final String hqlAttribute = hqlAttributes
 														.get(attribute);
-												final Class attributeType = PropertyUtils
-														.getPropertyType(
-																propertyType.newInstance(),
-																attributeParent);
-												final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
-														.newInstance();
-												newAttribute.setId((ID) map.get(attributeParent));
-												final Query queryAttribute = getEntityManager()
-														.createQuery(hqlAttribute).setParameter(
-																"id", newAttribute.getId());
-												final Map attributeMap = (Map) queryAttribute
-														.getSingleResult();
-												mountProperties(attributeMap, newAttribute,
-														attribute, null);
-												PropertyUtils.setProperty(child, attributeParent,
-														newAttribute);
+												if (StringUtils.isNotEmpty(attributeParent)) {
+													final Class attributeType = PropertyUtils
+															.getPropertyType(propertyType
+																	.newInstance(), attributeParent);
+													final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
+															.newInstance();
+													newAttribute.setId((ID) map
+															.get(attributeParent));
+													final Query queryAttribute = getEntityManager()
+															.createQuery(hqlAttribute)
+															.setParameter("id",
+																	newAttribute.getId());
+													final Map attributeMap = (Map) queryAttribute
+															.getSingleResult();
+													mountProperties(attributeMap, newAttribute,
+															attribute, null);
+													PropertyUtils.setProperty(child,
+															attributeParent, newAttribute);
+												} else {
+													final Query queryAttribute = getEntityManager()
+															.createQuery(hqlAttribute)
+															.setParameter("id", child.getId());
+													final Map attributeMap = (Map) queryAttribute
+															.getSingleResult();
+													mountProperties(attributeMap, child, attribute,
+															null);
+												}
 											} else {
 												final Class attributeType = PropertyUtils
 														.getPropertyType(
@@ -610,7 +637,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final String attribute, final String parent) {
 		try {
 			final List<String> attributeList = new ArrayList<String>();
-			final String first = attribute.substring(0, attribute.indexOf("[")) + "_";
+			String first = attribute.substring(0, attribute.indexOf("["));
+			if (StringUtils.isNotEmpty(first)) {
+				first += "_";
+			}
 			separateAttributes(attributeList, attribute);
 			for (String attributeName : attributeList) {
 				mountPropertiesByAttributes(map, entity, attributeName, first + attributeName);
@@ -664,4 +694,5 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
+
 }

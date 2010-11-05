@@ -38,32 +38,37 @@ import com.sun.mirror.declaration.FieldDeclaration;
 public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	@Override
-	public boolean preProcess(final TemplateBlock block, final TemplateOutput<TemplateBlock> output,
-			final TemplateModel model) throws IOException, TemplateException {
-		if (super.preProcess(block, output, model) && getDeclaration() instanceof DecoratedClassDeclaration) {
+	public boolean preProcess(final TemplateBlock block,
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model)
+			throws IOException, TemplateException {
+		if (super.preProcess(block, output, model)
+				&& getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
 			if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())) {
 				return false;
 			}
 			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
-			if (codeGenerator == null || codeGenerator.controller().controllerType().equals(ControllerType.NONE)) {
+			if (codeGenerator == null
+					|| codeGenerator.controller().controllerType().equals(ControllerType.NONE)) {
 				return false;
 			}
 			final DecoratedController controller = new DecoratedController();
-			controller.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
-					.getSimpleName());
+			controller.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator
+					.baseName() : clazz.getSimpleName());
+			controller.setEntityName(clazz.getSimpleName());
 			controller.setPackageName(clazz.getPackage().toString());
 			controller.setProjectPackageName(VulpeConfigHelper.getProjectPackage());
-			controller
-					.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(), ".entity", ".services"));
-			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(), ".model.entity",
-					".controller"));
+			controller.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(),
+					".entity", ".services"));
+			controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),
+					".model.entity", ".controller"));
 			controller.setModuleName(getModuleName(clazz));
 
 			final List<String> types = new ArrayList<String>();
 			final ControllerType controllerType = codeGenerator.controller().controllerType();
 			types.add(controllerType.toString());
-			if (controllerType.equals(ControllerType.ALL) || controllerType.equals(ControllerType.CRUD)) {
+			if (controllerType.equals(ControllerType.ALL)
+					|| controllerType.equals(ControllerType.CRUD)) {
 				final List<DecoratedControllerDetail> details = new ArrayList<DecoratedControllerDetail>();
 				int count = codeGenerator.controller().detailsConfig().length;
 				for (DetailConfig detailConfig : codeGenerator.controller().detailsConfig()) {
@@ -98,10 +103,12 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 					controller.setDetails(details);
 				}
 
-				if (controllerType.equals(ControllerType.ALL) || controllerType.equals(ControllerType.SELECT)) {
+				if (controllerType.equals(ControllerType.ALL)
+						|| controllerType.equals(ControllerType.SELECT)) {
 					controller.setPageSize(codeGenerator.controller().select().pageSize());
 				}
-				if (controllerType.equals(ControllerType.ALL) || controllerType.equals(ControllerType.TABULAR)) {
+				if (controllerType.equals(ControllerType.ALL)
+						|| controllerType.equals(ControllerType.TABULAR)) {
 					final StringBuilder tabularDespise = new StringBuilder();
 					if (codeGenerator.controller().tabular().despiseFields().length > 0) {
 						for (String s : codeGenerator.controller().tabular().despiseFields()) {
@@ -113,10 +120,13 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 						}
 					}
 					controller.setTabularDespiseFields(tabularDespise.toString());
-					controller.setTabularStartNewRecords(codeGenerator.controller().tabular().startNewRecords());
-					controller.setTabularNewRecords(codeGenerator.controller().tabular().newRecords());
+					controller.setTabularStartNewRecords(codeGenerator.controller().tabular()
+							.startNewRecords());
+					controller.setTabularNewRecords(codeGenerator.controller().tabular()
+							.newRecords());
 					controller.setTabularName(codeGenerator.controller().tabular().name());
-					controller.setTabularPropertyName(codeGenerator.controller().tabular().propertyName());
+					controller.setTabularPropertyName(codeGenerator.controller().tabular()
+							.propertyName());
 				}
 			}
 			controller.setTypes(types);
@@ -135,7 +145,8 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 		return false;
 	}
 
-	protected void prepareMethods(final DecoratedClassDeclaration clazz, final DecoratedController controller) {
+	protected void prepareMethods(final DecoratedClassDeclaration clazz,
+			final DecoratedController controller) {
 		// prepare methods to controller
 	}
 

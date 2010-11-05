@@ -1821,9 +1821,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setEntities(null);
 		try {
 			if (getControllerType().equals(ControllerType.TWICE)) {
-				setEntity(getControllerConfig().getEntityClass().newInstance());
+				if (getEntity() == null) {
+					setEntity(getControllerConfig().getEntityClass().newInstance());
+				}
 			}
-			setEntitySelect(getControllerConfig().getEntityClass().newInstance());
+			if (getEntitySelect() == null) {
+				setEntitySelect(getControllerConfig().getEntityClass().newInstance());
+			}
 		} catch (Exception e) {
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				setEntity(null);

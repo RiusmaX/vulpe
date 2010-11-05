@@ -23,6 +23,7 @@ import java.util.List;
 public class DecoratedController implements Serializable {
 
 	private String name;
+	private String entityName;
 	private String idType;
 	private String moduleName;
 	private String projectPackageName;
@@ -169,5 +170,13 @@ public class DecoratedController implements Serializable {
 
 	public int getTabularStartNewRecords() {
 		return tabularStartNewRecords;
+	}
+
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public String getEntityName() {
+		return entityName;
 	}
 }
