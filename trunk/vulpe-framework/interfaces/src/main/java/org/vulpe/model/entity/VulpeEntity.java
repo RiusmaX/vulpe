@@ -16,10 +16,11 @@
 package org.vulpe.model.entity;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Default entity Interface
- *
+ * 
  * @param <ID>
  *            Type of entity identifier
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
@@ -51,8 +52,7 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 
 	VulpeEntity<ID> clone();
 
-	String getQueryConfigurationName();
+	Map<String, Object> getMap();
 
-	void setQueryConfigurationName(final String queryConfigurationName);
-
+	void setMap(final Map<String, Object> map);
 }

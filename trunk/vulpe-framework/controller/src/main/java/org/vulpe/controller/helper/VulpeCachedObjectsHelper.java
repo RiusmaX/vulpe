@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.scannotation.AnnotationDB;
 import org.scannotation.WarUrlFinder;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -137,8 +138,13 @@ public final class VulpeCachedObjectsHelper {
 					final Class classicClass = Class.forName(cachedClass);
 					if (VulpeEntity.class.isAssignableFrom(classicClass)) {
 						final Class<? extends VulpeEntity<?>> clazz = (Class<? extends VulpeEntity<?>>) classicClass;
+						final VulpeEntity<?> entity = clazz.newInstance();
+						final CachedClass cachedClassAnnotation = clazz
+								.getAnnotation(CachedClass.class);
+						entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
+								cachedClassAnnotation.queryConfigurationName());
 						mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper
-								.getService().getList(clazz.newInstance()));
+								.getService().getList(entity));
 					}
 				} catch (Exception e) {
 					LOG.error(e);
@@ -206,8 +212,13 @@ public final class VulpeCachedObjectsHelper {
 		if (cachedClass != null) {
 			for (Class<? extends VulpeEntity<?>> clazz : cachedClass) {
 				try {
+					final VulpeEntity<?> entity = clazz.newInstance();
+					final CachedClass cachedClassAnnotation = clazz
+							.getAnnotation(CachedClass.class);
+					entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
+							cachedClassAnnotation.queryConfigurationName());
 					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
-							.getList(clazz.newInstance()));
+							.getList(entity));
 				} catch (Exception e) {
 					LOG.error(e);
 				}

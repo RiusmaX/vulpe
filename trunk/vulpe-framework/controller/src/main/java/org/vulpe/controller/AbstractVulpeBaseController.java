@@ -35,6 +35,7 @@ import org.vulpe.commons.VulpeConstants.Error;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -891,11 +892,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			throw new VulpeSystemException(e);
 		}
 		if (Operation.READ.equals(operation)) {
-			getEntitySelect().setQueryConfigurationName(
+			getEntitySelect().getMap().put(Entity.QUERY_CONFIGURATION_NAME,
 					getControllerConfig().getController().queryConfigurationName());
 		} else {
-			entity.setQueryConfigurationName(getControllerConfig().getController()
-					.queryConfigurationName());
+			entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
+					getControllerConfig().getController().queryConfigurationName());
 		}
 		return entity;
 	}

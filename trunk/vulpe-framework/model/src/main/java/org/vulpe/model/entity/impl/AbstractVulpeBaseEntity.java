@@ -18,6 +18,8 @@ package org.vulpe.model.entity.impl;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -49,7 +51,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	private transient String autocomplete;
 
 	@IgnoreAudit
-	private transient String queryConfigurationName;
+	private transient Map<String, Object> map = new HashMap<String, Object>();
 
 	public AbstractVulpeBaseEntity() {
 	}
@@ -163,12 +165,12 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		return autocomplete;
 	}
 
-	public final String getQueryConfigurationName() {
-		return queryConfigurationName;
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
 	}
 
-	public final void setQueryConfigurationName(String queryConfigurationName) {
-		this.queryConfigurationName = queryConfigurationName;
+	public Map<String, Object> getMap() {
+		return map;
 	}
 
 }
