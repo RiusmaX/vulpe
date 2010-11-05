@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${show}">
+	<c:set var="recordId" value="${currentItem.id}"/>
 	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
 	<c:if test="${empty showDeleteButton}"><c:set var="showDeleteButton" value="${true}"/></c:if>
 	<c:if test="${empty disableDelete}"><c:set var="disableDelete" value="${false}"/></c:if>
@@ -48,7 +49,7 @@
 		<c:if test="${empty updateLayerFields}"><c:set var="updateLayerFields" value="${updateFormName}"/></c:if>
 		<c:if test="${empty updateLayer}"><c:set var="updateLayer" value="${vulpeBodyTwice ? 'crud' : 'body'}"/></c:if>
 		<c:if test="${not empty updateValue && !isHeaderTableTag}">
-			<c:set var="elementId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
+			<c:set var="recordId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
 			<c:if test="${empty showUpdateButton || !showUpdateButton}">
 			<c:choose>
 				<c:when test="${not empty updateLayer && updateLayer != 'body'}"><c:set var="updateLayer" value=", layer: '${updateLayer}'"/></c:when>
@@ -63,14 +64,14 @@
 			<c:choose>
 				<c:when test="${empty onclick}">
 					<c:choose>
-						<c:when test="${view}"><c:set var="onclick" value="vulpe.view.request.submitView({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}',${updateLayer}${updateBeforeJs}${updateAfterJs}})"/></c:when>
-						<c:otherwise><c:set var="onclick" value="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}, verify: true})"/></c:otherwise>
+						<c:when test="${view}"><c:set var="onclick" value="vulpe.view.request.submitView({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}',${updateLayer}${updateBeforeJs}${updateAfterJs}})"/></c:when>
+						<c:otherwise><c:set var="onclick" value="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}, verify: true})"/></c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${view}"><c:set var="onclick" value="${onclick}; vulpe.view.request.submitView({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}});"/></c:when>
-						<c:otherwise><c:set var="onclick" value="${onclick}; vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}, verify: true});"/></c:otherwise>
+						<c:when test="${view}"><c:set var="onclick" value="${onclick}; vulpe.view.request.submitView({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}});"/></c:when>
+						<c:otherwise><c:set var="onclick" value="${onclick}; vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}, verify: true});"/></c:otherwise>
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
@@ -81,7 +82,7 @@
 						vulpe.util.addHotKey({
 								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
 								command: function (){
-									vulpe.util.get("${vulpeFormName}-row-${elementId}").click();
+									vulpe.util.get("${vulpeFormName}-row-${recordId}").click();
 									return false;
 								}
 						});
@@ -93,7 +94,7 @@
 		</c:if>
 	</c:if>
 	<c:if test="${not empty deleteValue && deleteValue ne 'false' && showDeleteButton}">
-		<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="elementId" value="${currentItem.id}"/></c:if>
+		<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="recordId" value="${currentItem.id}"/></c:if>
 		<c:if test="${empty deleteActionName}"><c:set var="deleteActionName" value="${controllerConfig.ownerController}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/></c:if>
 		<c:if test="${empty deleteFormName}"><c:set var="deleteFormName" value="${vulpeFormName}"/></c:if>
 		<c:if test="${empty deleteLayerFields}"><c:set var="deleteLayerFields" value="${deleteFormName}"/></c:if>
@@ -135,20 +136,20 @@
 			<c:when test="${empty onclick}"><c:set var="onclick" value="vulpe.view.selectRow(this, '${valueSelectRow}');"/></c:when>
 			<c:otherwise><c:set var="onclick" value="${onclick}; vulpe.view.selectRow('${valueSelectRow}');"/></c:otherwise>
 		</c:choose>
-		<c:set var="elementId" value="${currentItem.id}"/>
 	</c:if>
 	<c:if test="${not empty onclick}"><c:set var="onclick"> onclick="${onclick}"</c:set></c:if>
 	<c:if test="${not empty style}"><c:set var="style"> style="${style}"</c:set></c:if>
 	<c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
 	<c:if test="${not empty rowspan}"><c:set var="rowspan"> rowspan="${rowspan}"</c:set></c:if>
-	<tr id="${vulpeFormName}-row-${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
+	<c:set var="elementId" value="${vulpeFormName}-row-${recordId}"/>
+	<tr id="${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
 		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" width="1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeLineHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}">${currentStatus.count}.</c:if></v:column></c:if>
 		<c:if test="${!onlyToSee && showDeleteButton && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
 					<c:if test="${disableDelete}"><c:set var="disableSelect" value="disabled=\"true\""/></c:if>
-					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${elementId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>"${disableSelect}>
+					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>"${disableSelect}>
 				</td>
 			</c:when>
 			<c:otherwise>
@@ -184,7 +185,7 @@
 			<c:if test="${not empty updateAfterJs}"><c:set var="updateAfterJs" value=", afterJs: '${updateAfterJs}'"/></c:if>
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}"><v:column elementId="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" width="1%" showBodyInHeader="true" style="text-align: center">&nbsp;</v:column></c:if>
 			<c:if test="${!isHeaderTableTag}">
-				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${elementId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}})" width="1%" />
+				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}})" width="1%" />
 				<c:if test="${now['controllerType'] == 'SELECT'}">
 					<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
 						<script type="text/javascript">
@@ -237,10 +238,11 @@
 			</c:if>
 		</c:if>
 	</tr>
-	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
+	<c:if test="${(popup || (not empty updateValue && updateValue ne 'false')) && (empty showUpdateButton || !showUpdateButton)}">
 	<script type="text/javascript">
 	jQuery(function($){
-		$("#${vulpeFormName}-row-${elementId}").bind("mouseenter mouseleave", function(event){
+		$("#${elementId}").unbind("mouseenter mouseleave");
+		$("#${elementId}").bind("mouseenter mouseleave", function(event){
 			$(this).find('td').toggleClass("vulpeSelectedRow");
 		});
 	});

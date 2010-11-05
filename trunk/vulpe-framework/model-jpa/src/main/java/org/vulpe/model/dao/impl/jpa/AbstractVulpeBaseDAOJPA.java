@@ -695,4 +695,27 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return entityManager;
 	}
 
+	public Object findByNamedQuery(final String name) {
+		return getEntityManager().createNamedQuery(name).getSingleResult();
+	}
+
+	public Object findByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
+		final Query query = getEntityManager().createNamedQuery(name);
+		for (final String parameter : map.keySet()) {
+			query.setParameter(name, map.get(parameter));
+		}
+		return query.getSingleResult();
+	}
+
+	public List<?> listByNamedQuery(final String name) {
+		return getEntityManager().createNamedQuery(name).getResultList();
+	}
+
+	public List<?> listByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
+		final Query query = getEntityManager().createNamedQuery(name);
+		for (final String parameter : map.keySet()) {
+			query.setParameter(name, map.get(parameter));
+		}
+		return query.getResultList();
+	}
 }

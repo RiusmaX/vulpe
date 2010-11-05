@@ -46,20 +46,15 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		</#if>
 		<#if method.returnType == dao.name>
 		<#if method.parameters?has_content>
-		final List<${method.returnType}> list = (List<${method.returnType}>) getJpaTemplate().findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
+		return (${method.returnType}) findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
 		<#else>
-		final List<${method.returnType}> list = (List<${method.returnType}>) getJpaTemplate().findByNamedQuery("${dao.name}.${method.name}");
+		return (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
 		</#if>
-		if (list != null && !list.isEmpty()) {
-			return list.get(0);
-		} else {
-			return null;
-		}
 		<#else>
 		<#if method.parameters?has_content>
-		return (${method.returnType}) getJpaTemplate().findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
+		return (${method.returnType}) listByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
 		<#else>
-		return (${method.returnType}) getJpaTemplate().findByNamedQuery("${dao.name}.${method.name}");
+		return (${method.returnType}) listByNamedQuery("${dao.name}.${method.name}");
 		</#if>
 		</#if>
 	}
