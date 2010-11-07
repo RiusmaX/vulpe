@@ -142,7 +142,7 @@ var vulpe = {
 			}
 			vulpe.util.get(idRequiredField).show();
 		},
-		
+
 		get: function(id, parent) {
 			if (vulpe.util.isEmpty(id)) {
 				return null;
@@ -170,7 +170,7 @@ var vulpe = {
 			}
 			return ret;
 		},
-		
+
 		checkRepeatedCharacters: function(value) {
 			var firstChar = value.charAt(0);
 			var equalChars = true;
@@ -211,16 +211,20 @@ var vulpe = {
 			}
 			if (position == -1 || (position != -1 && options.override)) {
 				jQuery(document).bind("keydown", options.hotKey, options.command);
-				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
-					jQuery(document).bind("keydown", "return", options.command);
-				}
-				if (options.dontFireInText) {
+				var dontFire = function(hotKey) {
 					var dontFireInText = jQuery(document).attr("dontFireInText");
 					if (!dontFireInText) {
 						dontFireInText = new Array();
 					}
-					dontFireInText[options.hotKey] = true;
+					dontFireInText[hotKey] = true;
 					jQuery(document).attr("dontFireInText", dontFireInText);
+				}
+				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
+					jQuery(document).bind("keydown", "return", options.command);
+					dontFire("return");
+				}
+				if (options.dontFireInText) {
+					dontFire(options.hotKey);
 				}
 			}
 		},
@@ -1942,7 +1946,7 @@ var vulpe = {
 								if (vulpe.util.checkRepeatedCharacters(value)) {
 									vulpe.exception.showFieldError(this);
 								} else {
-									vulpe.exception.hideFieldError(this);	
+									vulpe.exception.hideFieldError(this);
 								}
 							}
 						} else {
