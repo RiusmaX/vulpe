@@ -1047,18 +1047,19 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		controlResultForward();
 		if (validateEntity() && validateDetails()) {
 			showButtons(Operation.UPDATE);
-			final ENTITY entity = onCreatePost();
-			addActionMessage(getDefaultMessage());
-			if (entity.getClass().isAnnotationPresent(CachedClass.class)) {
-				final String entityName = entity.getClass().getSimpleName();
-				List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
-				if (list == null) {
-					list = new ArrayList<ENTITY>();
+			if (onCreatePost()) {
+				addActionMessage(getDefaultMessage());
+				if (getEntity().getClass().isAnnotationPresent(CachedClass.class)) {
+					final String entityName = getEntity().getClass().getSimpleName();
+					List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
+					if (list == null) {
+						list = new ArrayList<ENTITY>();
+					}
+					list.add(getEntity());
+					getCachedClass().put(entityName, list);
 				}
-				list.add(entity);
-				getCachedClass().put(entityName, list);
 			}
-			createPostAfter(entity);
+			createPostAfter();
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				onRead();
 			}
@@ -1074,14 +1075,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 * @return Entity created.
 	 */
-	protected ENTITY onCreatePost() {
+	protected boolean onCreatePost() {
 		setEntity((ENTITY) invokeServices(Operation.CREATE.getValue().concat(
 				getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { getControllerConfig().getEntityClass() },
 				new Object[] { prepareEntity(Operation.CREATE_POST) }));
 		setId(getEntity().getId());
 		setExecuted(true);
-		return getEntity();
+		return true;
 	}
 
 	/**
@@ -1100,10 +1101,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * Extension point to code after confirm create.
 	 * 
 	 * @since 1.0
-	 * @param entity
-	 *            Entity to create.
 	 */
-	protected void createPostAfter(final ENTITY entity) {
+	protected void createPostAfter() {
 		// extension point
 	}
 
