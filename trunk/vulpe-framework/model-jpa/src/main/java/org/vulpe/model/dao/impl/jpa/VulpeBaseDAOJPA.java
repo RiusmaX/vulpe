@@ -31,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -43,6 +44,7 @@ import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.QueryConfiguration;
+import org.vulpe.model.annotations.QueryConfigurations;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.entity.VulpeEntity;
@@ -292,8 +294,20 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
-		final QueryConfiguration queryConfiguration = entity.getClass().getAnnotation(
-				QueryConfiguration.class);
+		QueryConfiguration queryConfiguration = null;
+		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(
+				QueryConfigurations.class);
+		if (queryConfigurations != null) {
+			final String queryConfigurationName = entity.getMap().containsKey(
+					Entity.QUERY_CONFIGURATION_NAME) ? (String) entity.getMap().get(
+					Entity.QUERY_CONFIGURATION_NAME) : "default";
+			for (QueryConfiguration queryConfig : queryConfigurations.value()) {
+				if (queryConfig.name().equals(queryConfigurationName)) {
+					queryConfiguration = queryConfig;
+					break;
+				}
+			}
+		}
 		final boolean complement = queryConfiguration != null
 				&& queryConfiguration.complement() != null;
 		final boolean replace = queryConfiguration != null && queryConfiguration.replace() != null;
@@ -312,7 +326,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							.getFieldsWithAnnotation(entity.getClass(), Autocomplete.class);
 					for (Field field : autocompleteFields) {
 						if (!field.getName().equals(entity.getAutocomplete())) {
-							hql.append(",obj.").append(field.getName());
+							hql.append(", obj.").append(field.getName());
 						}
 					}
 				}
@@ -346,7 +360,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append(" where ");
 				}
 				int count = 0;
-				for (String name : params.keySet()) {
+				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
 					final QueryParameter parameter = VulpeReflectUtil.getInstance()
@@ -386,11 +400,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			}
 			if (entity instanceof VulpeLogicEntity) {
 				if (hql.toString().toLowerCase().contains("where")) {
-					hql.append(" and");
+					hql.append(" and ");
 				} else {
-					hql.append(" where");
+					hql.append(" where ");
 				}
-				hql.append(" obj.status <> :status");
+				hql.append("obj.status <> :status");
 				params.put("status", Status.D);
 			}
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().where())) {
@@ -404,17 +418,16 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		// add order by
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().orderBy())) {
-			hql.append(" order by");
+			hql.append(" order by ");
 			hql.append(queryConfiguration.replace().orderBy());
 		} else {
 			if (StringUtils.isNotEmpty(entity.getOrderBy())
 					|| StringUtils.isNotEmpty(order.toString())) {
 				if (hql.toString().toLowerCase().contains("order by")) {
-					hql.append(",");
+					hql.append(", ");
 				} else {
-					hql.append(" order by");
+					hql.append(" order by ");
 				}
-				hql.append(" ");
 				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
 						.getOrderBy());
 			}
