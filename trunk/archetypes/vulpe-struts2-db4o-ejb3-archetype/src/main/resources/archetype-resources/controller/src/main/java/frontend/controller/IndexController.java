@@ -16,7 +16,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
-@Controller(controllerType = ControllerType.FRONTEND)
+@Controller(type = ControllerType.FRONTEND)
 public class IndexController extends ApplicationBaseSimpleController {
 
 	protected final Logger LOG = Logger.getLogger(IndexController.class);
