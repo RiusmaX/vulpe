@@ -640,9 +640,17 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 															parent);
 													loadedChilds.add(child);
 												}
+												PropertyUtils.setProperty(parent, relationship
+														.property(), loadedChilds);
+											} else {
+												final VulpeEntity<ID> parentChild = (VulpeEntity<ID>) PropertyUtils
+														.getProperty(parent, relationship
+																.property());
+												if (child.getId().equals(parentChild.getId())) {
+													PropertyUtils.setProperty(parent, relationship
+															.property(), child);
+												}
 											}
-											PropertyUtils.setProperty(parent, relationship
-													.property(), oneToMany ? loadedChilds : child);
 										}
 									}
 								}
