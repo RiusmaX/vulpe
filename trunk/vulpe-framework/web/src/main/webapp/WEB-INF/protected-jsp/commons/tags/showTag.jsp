@@ -24,7 +24,7 @@
 <c:set var="propertyTarget" value="${empty targetValue ? currentItem : targetValue}"/>
 <c:set var="valueEL" value="${'${'}propertyTarget.${property}${'}'}"/>
 <c:set var="value" value="${util:eval(pageContext, valueEL)}"/>
-<c:if test="${not empty paragraph && paragraph}"><p></c:if>
+<c:if test="${not empty paragraph && paragraph}"><p class="vulpeField"></c:if>
 <c:if test="${not empty labelKey}"><v:label key="${labelKey}"/></c:if>
 <c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
 <c:if test="${not empty style}"><c:set var="style"> style="${style}"</c:set></c:if>

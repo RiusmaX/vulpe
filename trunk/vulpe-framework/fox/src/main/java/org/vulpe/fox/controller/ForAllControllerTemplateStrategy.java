@@ -49,7 +49,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			}
 			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
 			if (codeGenerator == null
-					|| codeGenerator.controller().controllerType().equals(ControllerType.NONE)) {
+					|| codeGenerator.controller().type().equals(ControllerType.NONE)) {
 				return false;
 			}
 			final DecoratedController controller = new DecoratedController();
@@ -65,7 +65,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			controller.setModuleName(getModuleName(clazz));
 
 			final List<String> types = new ArrayList<String>();
-			final ControllerType controllerType = codeGenerator.controller().controllerType();
+			final ControllerType controllerType = codeGenerator.controller().type();
 			types.add(controllerType.toString());
 			if (controllerType.equals(ControllerType.ALL)
 					|| controllerType.equals(ControllerType.CRUD)) {

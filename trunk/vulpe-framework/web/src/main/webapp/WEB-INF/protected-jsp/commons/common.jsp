@@ -48,6 +48,7 @@ $(document).ready(function() {
 					return false;
 				},
 				putSameOnReturnKey: true,
+				dontFireInText: true,
 				override: true
 			});
 		}
@@ -62,6 +63,7 @@ $(document).ready(function() {
 					return false;
 				},
 				putSameOnReturnKey: true,
+				dontFireInText: true,
 				override: true
 			});
 		}

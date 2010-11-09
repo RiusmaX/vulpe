@@ -26,7 +26,7 @@ import br.com.caelum.vraptor.Resource;
 @Resource
 @Path("/authenticator")
 @SuppressWarnings("serial")
-@Controller(controllerType = ControllerType.OTHER)
+@Controller(type = ControllerType.OTHER)
 public class VulpeLoginController extends VulpeVRaptorSimpleController {
 
 	private Integer loginError;

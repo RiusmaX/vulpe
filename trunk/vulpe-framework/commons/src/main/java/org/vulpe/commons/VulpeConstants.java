@@ -313,6 +313,7 @@ public class VulpeConstants {
 	public class Model {
 		public class Entity {
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
+			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 		}
 
 		public class DAO {

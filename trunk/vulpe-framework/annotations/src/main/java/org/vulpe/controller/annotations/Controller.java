@@ -27,7 +27,7 @@ import org.vulpe.model.services.VulpeService;
 
 /**
  * Controller configurations.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
@@ -39,7 +39,7 @@ public @interface Controller {
 	/**
 	 * Type of logic
 	 */
-	ControllerType controllerType() default ControllerType.ALL;
+	ControllerType type() default ControllerType.ALL;
 
 	/**
 	 * Base name to mount view (JSPs)
@@ -50,6 +50,16 @@ public @interface Controller {
 	 * Service interface
 	 */
 	Class<? extends VulpeService> serviceClass() default VulpeService.class;
+
+	/**
+	 * Indicates to invoke the create method after create post
+	 */
+	boolean newOnPost() default false;
+
+	/**
+	 * Indicates to only update details
+	 */
+	boolean onlyUpdateDetails() default false;
 
 	// CRUD - configurations
 	/**
@@ -86,5 +96,8 @@ public @interface Controller {
 	 */
 	Report report() default @Report;
 
+	/**
+	 * Name of Query Configuration on entity
+	 */
 	String queryConfigurationName() default "default";
 }

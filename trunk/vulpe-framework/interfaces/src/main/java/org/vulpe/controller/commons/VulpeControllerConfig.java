@@ -88,6 +88,10 @@ public interface VulpeControllerConfig {
 	String getViewSelectPath();
 
 	String getViewBaseName();
+	
+	boolean isOnlyUpdateDetails();
+	
+	boolean isNewOnPost();
 
 	/**
 	 * Controllers type

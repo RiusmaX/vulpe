@@ -36,7 +36,7 @@ import org.vulpe.view.annotations.View.ViewType;
 @Target(ElementType.TYPE)
 public @interface CodeGenerator {
 
-	Controller controller() default @Controller(controllerType = ControllerType.NONE);
+	Controller controller() default @Controller(type = ControllerType.NONE);
 
 	View view() default @View(viewType = { ViewType.NONE });
 

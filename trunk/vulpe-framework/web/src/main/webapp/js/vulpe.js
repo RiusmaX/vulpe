@@ -221,7 +221,9 @@ var vulpe = {
 				}
 				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
 					jQuery(document).bind("keydown", "return", options.command);
-					dontFire("return");
+					if (options.dontFireInText) {
+						dontFire("return");
+					}
 				}
 				if (options.dontFireInText) {
 					dontFire(options.hotKey);

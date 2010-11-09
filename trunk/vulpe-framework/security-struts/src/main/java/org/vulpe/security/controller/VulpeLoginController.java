@@ -26,7 +26,7 @@ import org.vulpe.controller.struts.VulpeStrutsSimpleController;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.authenticator")
 @SuppressWarnings("serial")
-@Controller(controllerType = ControllerType.OTHER)
+@Controller(type = ControllerType.OTHER)
 public class VulpeLoginController extends VulpeStrutsSimpleController {
 
 	private Integer loginError;

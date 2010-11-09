@@ -109,6 +109,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private boolean onlyToSee = false;
 
 	/**
+	 * If true, define entity master as read only
+	 */
+	private boolean onlyUpdateDetails = false;
+
+	/**
 	 * Selected tab name
 	 */
 	private String selectedTab;
@@ -661,12 +666,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				showButtons();
 			}
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
+			showButtons(Button.READ, Button.PREPARE, Button.CREATE, Button.UPDATE, Button.DELETE);
 			if (getControllerConfig().getController().select().showReport()) {
-				showButtons(Button.READ, Button.REPORT, Button.PREPARE, Button.CREATE,
-						Button.UPDATE, Button.DELETE);
-			} else {
-				showButtons(Button.READ, Button.PREPARE, Button.CREATE, Button.UPDATE,
-						Button.DELETE);
+				showButton(Button.REPORT);
 			}
 			if (isPopup()) {
 				hideButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
@@ -1066,7 +1068,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			showButtons(Operation.CREATE);
 		}
-		return getResultName();
+		return getControllerConfig().isNewOnPost() ? create() : getResultName();
 	}
 
 	/**
@@ -1255,6 +1257,31 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected boolean onUpdatePost() {
 		final ENTITY entity = prepareEntity(Operation.UPDATE_POST);
+		if (getControllerConfig().isOnlyUpdateDetails()) {
+			final List<String> details = new ArrayList<String>();
+			for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+				details.add(detailConfig.getName());
+			}
+			entity.getMap().put(Entity.ONLY_UPDATE_DETAILS, details);
+		}
+		for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+			List<ENTITY> details = null;
+			try {
+				details = (List<ENTITY>) PropertyUtils.getProperty(entity, detailConfig.getName());
+			} catch (Exception e) {
+				LOG.error(e);
+			}
+			if (VulpeValidationUtil.isNotEmpty(details)) {
+				for (final ENTITY detail : details) {
+					updateAuditInformation(detail);
+				}
+				try {
+					PropertyUtils.setProperty(entity, detailConfig.getName(), details);
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
 		invokeServices(Operation.UPDATE.getValue().concat(
 				getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
@@ -1635,7 +1662,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				.concat(getControllerConfig().getEntityClass().getSimpleName()),
 				new Class[] { List.class }, new Object[] { getEntities() });
 		setEntities(list);
-
 		tabularPagingMount(false);
 		setExecuted(true);
 	}
@@ -1990,6 +2016,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void setReportCollection(Collection<?> collection) {
 		now.put(Controller.REPORT_COLLECTION, collection);
+	}
+
+	public void setOnlyUpdateDetails(boolean onlyUpdateDetails) {
+		this.onlyUpdateDetails = onlyUpdateDetails;
+	}
+
+	public boolean isOnlyUpdateDetails() {
+		onlyUpdateDetails = getControllerConfig().isOnlyUpdateDetails();
+		return onlyUpdateDetails;
 	}
 
 }
