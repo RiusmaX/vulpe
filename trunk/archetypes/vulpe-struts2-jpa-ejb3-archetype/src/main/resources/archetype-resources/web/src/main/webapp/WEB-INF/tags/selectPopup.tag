@@ -9,6 +9,7 @@
 <%@ attribute name="description" required="true" rtexprvalue="true" %>
 <%@ attribute name="icon" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="identifier" required="true" rtexprvalue="true" %>
+<%@ attribute name="identifierSize" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="mask" required="false" rtexprvalue="true" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
@@ -28,4 +29,5 @@
 <%@ attribute name="requiredParamExpressions" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="requiredParamProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
+<%@ attribute name="showIdentifier" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/selectPopupTag.jsp" %>
