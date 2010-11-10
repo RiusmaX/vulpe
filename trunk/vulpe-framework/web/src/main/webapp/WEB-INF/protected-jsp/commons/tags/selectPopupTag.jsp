@@ -5,13 +5,30 @@
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributesConfig.jsp" %>
 	<div id="${elementId}-selectPopup">
 	<c:remove var="elementId"/>
-	<v:hidden property="${property}.${identifier}"/>
-	<c:if test="${autocomplete && empty autocompleteMinLength}">
-		<c:set var="autocompleteMinLength" value="3"/>
-	</c:if>
+	<c:if test="${autocomplete && empty autocompleteMinLength}"><c:set var="autocompleteMinLength" value="3"/></c:if>
 	<c:set var="autocompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
-	<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${autocomplete ? false : true}" elementId="${elementId}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}">
-		<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="label.vulpe.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
-	</v:text>
+	<c:choose>
+		<c:when test="${showIdentifier}">
+			<p class="vulpeField">
+			<c:set var="name" value="${targetName}.${property}.${description}"/>
+			<c:set var="prepareName" value="${fn:replace(name, '[', '__')}"/>
+			<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
+			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}"/>
+			<c:set var="autocompleteId" value="${fn:replace(autocompleteId, '.', '_')}"/>
+			<c:if test="${empty identifierSize}"><c:set var="identifierSize" value="5"/></c:if>
+			<v:label key="${labelKey}"/>
+			<v:text property="${property}.${identifier}" size="${identifierSize}" mask="INTEGER" paragraph="false" onblur="vulpe.view.request.submitAutocompleteIdentifier({url: '${autocompleteAction}', autocomplete: '${description}', value: $(this).val(), id: '${autocompleteId}'})"/>
+			<v:text property="${property}.${description}" readonly="${autocomplete ? false : true}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" paragraph="false">
+				<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="label.vulpe.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
+			</v:text>
+			</p>
+		</c:when>
+		<c:otherwise>
+			<v:hidden property="${property}.${identifier}"/>
+			<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${autocomplete ? false : true}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}">
+				<c:if test="${!showAsText}"><v:popup action="${action}" labelKey="label.vulpe.selected" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
+			</v:text>
+		</c:otherwise>
+	</c:choose>
 	</div>
 </c:if>

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +40,9 @@ import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.Tab;
-import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
-import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
@@ -817,46 +814,33 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						.getFieldsWithAnnotation(getControllerConfig().getEntityClass(),
 								Autocomplete.class);
 				final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
-				if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
-					for (ENTITY entity : autocompleteList) {
-						try {
-							map.put("id", entity.getId());
-							map.put("value", PropertyUtils.getProperty(entity, getEntitySelect()
-									.getAutocomplete()));
-							if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
-								for (Field field : autocompleteFields) {
-									if (!field.getName()
-											.equals(getEntitySelect().getAutocomplete())) {
-										map.put(field.getName(), PropertyUtils.getProperty(entity,
-												field.getName()));
-									}
-								}
-							}
-						} catch (Exception e) {
-							LOG.error(e);
-						}
-						values.add(map);
-					}
-				} else {
-					for (Iterator iterator = autocompleteList.iterator(); iterator.hasNext();) {
-						final Object[] type = (Object[]) iterator.next();
-						map.put("id", type[0]);
-						map.put("value", type[1]);
-						int count = 2;
+				for (final ENTITY entity : autocompleteList) {
+					try {
+						map.put("id", entity.getId());
+						map.put("value", PropertyUtils.getProperty(entity, getEntitySelect()
+								.getAutocomplete()));
 						if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
-							for (Field field : autocompleteFields) {
+							for (final Field field : autocompleteFields) {
 								if (!field.getName().equals(getEntitySelect().getAutocomplete())) {
-									map.put(field.getName(), type[count]);
-									++count;
+									map.put(field.getName(), PropertyUtils.getProperty(entity,
+											field.getName()));
 								}
 							}
 						}
-						values.add(map);
+						if (getEntitySelect().getId() != null) {
+							now.put("JSON", map.get("value"));
+							break;
+						}
+					} catch (Exception e) {
+						LOG.error(e);
 					}
+					values.add(map);
 				}
 			}
 		}
-		now.put("JSON", new JSONArray(values));
+		if (getEntitySelect().getId() == null) {
+			now.put("JSON", new JSONArray(values));
+		}
 		return Forward.JSON;
 	}
 

@@ -246,9 +246,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		int countParam = 0;
 		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 			try {
-				final String value = "%"
-						+ PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
-				params.put(entity.getAutocomplete(), value);
+				if (entity.getId() != null) {
+					params.put("id", entity.getId());
+				} else {
+					final String value = "%"
+							+ PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
+					params.put(entity.getAutocomplete(), value);
+				}
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
@@ -320,9 +324,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().select())) {
 				hql.append(queryConfiguration.replace().select());
 			} else {
-				hql.append("obj");
 				if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
-					hql.append(".id, obj.").append(entity.getAutocomplete());
+					hql.append("new ");
+					hql.append(entity.getClass().getSimpleName());
+					hql.append("(obj.id, obj.").append(entity.getAutocomplete());
 					final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
 							.getFieldsWithAnnotation(entity.getClass(), Autocomplete.class);
 					for (Field field : autocompleteFields) {
@@ -330,10 +335,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append(", obj.").append(field.getName());
 						}
 					}
-				}
-				if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
-					hql.append(", ");
-					hql.append(queryConfiguration.complement().select());
+					hql.append(")");
+				} else {
+					hql.append("obj");
+					if (complement
+							&& StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
+						hql.append(", ");
+						hql.append(queryConfiguration.complement().select());
+					}
 				}
 			}
 			hql.append(" from ");

@@ -1782,7 +1782,13 @@ var vulpe = {
 									} else {
 										html = data;
 									}
-									vulpe.util.get(options.layer).html(html);
+									var layerObject = vulpe.util.get(options.layer);
+									var layerObjectType = layerObject.attr("type");
+									if (layerObjectType && layerObjectType == "text") {
+										layerObject.val(html);
+									} else {
+										layerObject.html(html);
+									}
 									if (vulpe.util.isNotEmpty(options.afterJs)) {
 										try {
 											eval(webtoolkit.url.decode(options.afterJs));
@@ -1808,6 +1814,18 @@ var vulpe = {
 				return true;
 			},
 
+			/**
+			 *
+			 * @param options {url, autocomplete, value, id}
+			 */
+			submitAutocompleteIdentifier: function(options) {
+				if (options.value && options.value != "") {
+					vulpe.view.request.submitAjax({url: options.url + '?entitySelect.autocomplete=' + options.autocomplete + '&entitySelect.id=' + options.value, layer: options.id, layerFields: options.id});
+				} else {
+					vulpe.util.get(options.id).val("");
+				}
+			},
+			
 			/**
 			 *
 			 * @param options {url, uri, formName, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
