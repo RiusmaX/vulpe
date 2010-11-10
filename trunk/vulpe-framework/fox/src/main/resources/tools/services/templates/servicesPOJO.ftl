@@ -24,9 +24,18 @@ public class ${baseClassName}ServicePOJO implements ${baseClassName}Service {
 	private static final Logger LOG = Logger.getLogger(${baseClassName}ServicePOJO.class.getName());
 
 <@forAllValidClasses ; type, signatureClass>
+	<#assign simpleManagerName = type.simpleName?replace("Manager", "")>
+	<#if simpleManagerName?upper_case == simpleManagerName>
+	@Qualifier("${type.simpleName}")
+	<#else>
 	@Qualifier("${type.simpleName?uncap_first}")
+	</#if>
 	@Autowired
+	<#if simpleManagerName?upper_case == simpleManagerName>
+	private ${signatureClass} ${type.simpleName};
+	<#else>
 	private ${signatureClass} ${type.simpleName?uncap_first};
+	</#if>
 
 </@forAllValidClasses>
 
@@ -40,7 +49,12 @@ public class ${baseClassName}ServicePOJO implements ${baseClassName}Service {
 			milliseconds = System.currentTimeMillis();
 			LOG.debug("Method ${methodName} - Start");
 		}
-		<#if method.returnType != 'void'>final ${resolveType(method.returnType)} result = </#if>${type.simpleName?uncap_first}.${method.simpleName}(<#list method.parameters as p><#if p_index &gt; 0>, </#if>${p.simpleName}</#list>);
+		<#assign simpleManagerName = type.simpleName?replace("Manager", "")>
+		<#assign managerName = type.simpleName?uncap_first>
+		<#if simpleManagerName?upper_case == simpleManagerName>
+			<#assign managerName = type.simpleName>
+		</#if>
+		<#if method.returnType != 'void'>final ${resolveType(method.returnType)} result = </#if>${managerName}.${method.simpleName}(<#list method.parameters as p><#if p_index &gt; 0>, </#if>${p.simpleName}</#list>);
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method ${methodName} - End");
 			LOG.debug("Operation executed in "  + (System.currentTimeMillis() - milliseconds) + "ms");
