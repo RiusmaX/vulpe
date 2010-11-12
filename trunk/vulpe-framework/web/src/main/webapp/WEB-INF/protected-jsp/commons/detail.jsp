@@ -2,6 +2,7 @@
 <c:set var="targetConfigLocal" value="${targetConfig}"/>
 <c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 <c:set var="index" value=""/>
+<c:remove var="currentDetailIndex" scope="request"/>
 <c:if test="${not empty targetConfig.parentDetailConfig}">
 	<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
 	<c:set var="index" value="-${util:eval(pageContext, indexEL)}"/>

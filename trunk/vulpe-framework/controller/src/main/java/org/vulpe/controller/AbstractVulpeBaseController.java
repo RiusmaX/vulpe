@@ -1268,9 +1268,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 		}
-		invokeServices(Operation.UPDATE.getValue().concat(
+		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(
 				getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
+				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity }));
 		setExecuted(true);
 		return true;
 	}

@@ -68,13 +68,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
-	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
+	 * @param <T>
+	 * @param entity
 	 */
-	public <T> T merge(final T entity) {
-		List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+	private <T> void repairRelationship(final T entity) {
+		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
 		for (final Field field : fields) {
 			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 			if (oneToMany != null) {
@@ -82,8 +82,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					final List<ENTITY> entities = (List<ENTITY>) PropertyUtils.getProperty(entity,
 							field.getName());
 					if (VulpeValidationUtil.isNotEmpty(entities)) {
-						for (final ENTITY entity2 : entities) {
-							PropertyUtils.setProperty(entity2, oneToMany.mappedBy(), entity);
+						for (final ENTITY entityChild : entities) {
+							repairRelationship(entityChild);
+							PropertyUtils.setProperty(entityChild, oneToMany.mappedBy(), entity);
 						}
 					}
 				} catch (Exception e) {
@@ -91,6 +92,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 			}
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
+	 */
+	public <T> T merge(final T entity) {
+		repairRelationship(entity);
 		T merged = entity;
 		if (((ENTITY) entity).getMap().containsKey(Entity.ONLY_UPDATE_DETAILS)) {
 			final List<String> detailNames = (List<String>) ((ENTITY) entity).getMap().get(
@@ -113,6 +123,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 		} else {
 			merged = entityManager.merge(entity);
+			((ENTITY) merged).setMap(((ENTITY) entity).getMap());
 		}
 		loadEntityRelationships((ENTITY) merged);
 		entityManager.flush();
@@ -523,7 +534,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									for (final ENTITY entity : entities) {
 										final VulpeEntity<ID> propertyEntity = (VulpeEntity<ID>) PropertyUtils
 												.getProperty(entity, relationship.property());
-										ids.add(propertyEntity.getId());
+										if (VulpeValidationUtil.isNotEmpty(propertyEntity)) {
+											ids.add(propertyEntity.getId());
+										}
 									}
 									query.setParameter("ids", ids);
 								}
@@ -552,7 +565,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 											if (field.isAnnotationPresent(ManyToOne.class)) {
 												final VulpeEntity<ID> fieldValue = (VulpeEntity<ID>) PropertyUtils
 														.getProperty(child, field.getName());
-												if (fieldValue != null) {
+												if (VulpeValidationUtil.isNotEmpty(fieldValue)) {
 													PropertyUtils.setProperty(child, field
 															.getName(), (ENTITY) getEntityManager()
 															.getReference(field.getType(),
