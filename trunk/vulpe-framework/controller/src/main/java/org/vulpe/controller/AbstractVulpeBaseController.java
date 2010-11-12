@@ -1211,18 +1211,20 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 				getCachedClass().put(entityName, list);
 			}
-			final List<ENTITY> entities = getSessionAttribute(getSelectTableKey());
-			if (entities != null && !entities.isEmpty()) {
-				final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
-				int index = 0;
-				for (ENTITY entity : entitiesOld) {
-					if (entity.getId().equals(getEntity().getId())) {
-						entities.remove(index);
-						entities.add(index, getEntity());
+			if (!getControllerConfig().isOnlyUpdateDetails()) {
+				final List<ENTITY> entities = getSessionAttribute(getSelectTableKey());
+				if (entities != null && !entities.isEmpty()) {
+					final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
+					int index = 0;
+					for (ENTITY entity : entitiesOld) {
+						if (entity.getId().equals(getEntity().getId())) {
+							entities.remove(index);
+							entities.add(index, getEntity());
+						}
+						++index;
 					}
-					++index;
+					setSessionAttribute(getSelectTableKey(), entities);
 				}
-				setSessionAttribute(getSelectTableKey(), entities);
 			}
 			updatePostAfter();
 			if (getControllerType().equals(ControllerType.TWICE)) {

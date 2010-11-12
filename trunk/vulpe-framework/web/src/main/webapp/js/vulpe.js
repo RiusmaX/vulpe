@@ -118,6 +118,9 @@ var vulpe = {
 		accentMap: {}
 	},
 
+	// RTE Array
+	RTEs: new Array(),
+	
 	// vulpe.util
 	util: {
 		setRequired: function(name, enabled) {
@@ -1831,6 +1834,12 @@ var vulpe = {
 			 * @param options {url, uri, formName, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
 			 */
 			submitAjax: function(options) {
+				for (var i = 0; i < vulpe.RTEs.length; i++) {
+					var rteId = vulpe.RTEs[i];
+					var rte = vulpe.util.get(rteId).contents();
+					var rteContent = vulpe.util.get(rteId + "-content");
+					rteContent.val(rte.find('body').html());
+				}
 				if (options.uri) {
 					options.url = (options.uri.indexOf(vulpe.config.contextPath) == -1 ? vulpe.config.contextPath : '') + options.uri;
 				}

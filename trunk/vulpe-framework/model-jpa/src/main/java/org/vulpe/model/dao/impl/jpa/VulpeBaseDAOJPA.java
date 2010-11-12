@@ -386,6 +386,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append("obj.").append(name).append(" = :").append(name);
 						}
 					} else {
+						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
+								Like.class, entity.getClass(), name);
+						if (like != null) {
+							hql.append("upper(");
+						}
 						hql.append(parameter.alias());
 						hql.append('.');
 						if (parameter.name().equals("")) {
@@ -393,15 +398,19 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						} else {
 							hql.append(parameter.name());
 						}
-						hql.append(" ");
-						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-								Like.class, entity.getClass(), name);
 						if (like != null) {
-							hql.append("like");
+							hql.append(")");
+						}
+						hql.append(" ");
+						if (like != null) {
+							hql.append("like upper(");
 						} else {
 							hql.append(parameter.operator().getValue());
 						}
 						hql.append(" :").append(name);
+						if (like != null) {
+							hql.append(")");
+						}
 					}
 					if (count < countParam) {
 						hql.append(" and ");
