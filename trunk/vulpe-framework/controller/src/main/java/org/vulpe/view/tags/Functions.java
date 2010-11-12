@@ -34,6 +34,7 @@ import javax.swing.ImageIcon;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 import org.vulpe.commons.VulpeConstants;
@@ -365,9 +366,10 @@ public class Functions {
 				for (final Object item : fieldClass.getEnumConstants()) {
 					if (StringUtils.isNotEmpty(removeEnumItems)) {
 						boolean remove = false;
-						final String[] itemsPosition = removeEnumItems.split(",");
-						for (final String position : itemsPosition) {
-							if (Integer.valueOf(position) == count) {
+						final String[] items = removeEnumItems.split(",");
+						for (final String eItem : items) {
+							if ((NumberUtils.isNumber(eItem) && Integer.valueOf(eItem) == count)
+									|| item.toString().equals(eItem)) {
 								remove = true;
 								break;
 							}
