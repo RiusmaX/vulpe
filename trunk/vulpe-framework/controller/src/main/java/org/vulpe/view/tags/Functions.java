@@ -338,16 +338,18 @@ public class Functions {
 	 * 
 	 * @param bean
 	 * @param field
+	 * @param removeEnumItems
 	 * @return
 	 * @throws JspException
 	 */
-	public static List listInField(final Object bean, final String field) throws JspException {
+	public static List listInField(final Object bean, final String field,
+			final String removeEnumItems) throws JspException {
 		try {
 			if (bean == null) {
 				return null;
 			}
 			final List list = new ArrayList();
-			String[] fieldParts = field.replace(".id", "").split("\\.");
+			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 2) {
 				Class<?> parentClass = VulpeReflectUtil.getInstance().getFieldClass(
@@ -359,11 +361,24 @@ public class Functions {
 						fieldParts[0]);
 			}
 			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
+				int count = 0;
 				for (final Object item : fieldClass.getEnumConstants()) {
-					key = fieldClass.getName().concat(".").concat(item.toString());
-					value = findText(key);
+					if (StringUtils.isNotEmpty(removeEnumItems)) {
+						boolean remove = false;
+						final String[] itemsPosition = removeEnumItems.split(",");
+						for (final String position : itemsPosition) {
+							if (Integer.valueOf(position) == count) {
+								remove = true;
+								break;
+							}
+						}
+						++count;
+						if (remove) {
+							continue;
+						}
+					}
+					final String key = fieldClass.getName().concat(".").concat(item.toString());
+					final String value = findText(key);
 					list.add(new ValueBean(item.toString(), value));
 				}
 			}

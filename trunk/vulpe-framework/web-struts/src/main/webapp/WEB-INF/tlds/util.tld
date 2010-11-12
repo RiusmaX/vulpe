@@ -20,7 +20,7 @@
 	<function>
 		<name>listInField</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.util.List listInField(java.lang.Object, java.lang.String)</function-signature>
+		<function-signature>java.util.List listInField(java.lang.Object, java.lang.String, java.lang.String)</function-signature>
 	</function>
 
 	<function>
