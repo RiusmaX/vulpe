@@ -58,13 +58,12 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			final AbstractVulpeBaseSimpleController simpleController = (AbstractVulpeBaseSimpleController) invocation
 					.getAction();
 			if (simpleController.ever != null) {
-				final String currentControllerKey = simpleController.ever
-						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = simpleController.getControllerUtil()
-						.getCurrentControllerKey();
+				final String currentControllerKey = simpleController.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+				final String controllerKey = simpleController.getControllerUtil().getCurrentControllerKey();
 				if (StringUtils.isEmpty(currentControllerKey)) {
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
-				} else if (!currentControllerKey.equals(controllerKey)) {
+				} else if (!currentControllerKey.equals(controllerKey)
+						&& StringUtils.isEmpty(simpleController.getPopupKey())) {
 					simpleController.ever.removeWeakRef();
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 				}
@@ -72,15 +71,14 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			ServletActionContext.getRequest().getSession().setAttribute(
 					VulpeConstants.Configuration.Ever.class.getName(), simpleController.ever);
 		}
-		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerKey()
+				.concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
 			final Map params = (Map) ActionContext.getContext().getSession().get(key);
 			if (params != null) {
-				final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(stack
-						.getContext());
+				final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(stack.getContext());
 				try {
 					for (final Iterator iterator = params.keySet().iterator(); iterator.hasNext();) {
 						final String name = (String) iterator.next();
@@ -108,7 +106,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */
@@ -118,8 +116,8 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			if (invocation.getAction() instanceof ValidationAware) {
 				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
 				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
-						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
-								.isAnnotationPresent(ResetSession.class));
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod()).isAnnotationPresent(
+								ResetSession.class));
 			}
 			return reset;
 		} catch (Exception e) {
