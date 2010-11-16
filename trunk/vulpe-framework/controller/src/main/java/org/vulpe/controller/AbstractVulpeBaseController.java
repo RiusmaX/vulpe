@@ -739,8 +739,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public boolean validateEntity() {
 		if (getOperation().equals(Operation.CREATE_POST) && validateExists()) {
-			final NotExistEqual notExistEqual = getEntity().getClass().getAnnotation(
-					NotExistEqual.class);
+			final NotExistEqual notExistEqual = getControllerConfig().getEntityClass()
+					.getAnnotation(NotExistEqual.class);
 			String message = "vulpe.error.entity.exists";
 			if (StringUtils.isNotEmpty(notExistEqual.message())) {
 				message = notExistEqual.message();
@@ -1035,8 +1035,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			showButtons(Operation.UPDATE);
 			if (onCreatePost()) {
 				addActionMessage(getDefaultMessage());
-				if (getEntity().getClass().isAnnotationPresent(CachedClass.class)) {
-					final String entityName = getEntity().getClass().getSimpleName();
+				if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
+					final String entityName = getControllerConfig().getEntityClass()
+							.getSimpleName();
 					List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
 					if (list == null) {
 						list = new ArrayList<ENTITY>();
@@ -1193,8 +1194,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (onUpdatePost()) {
 				addActionMessage(getDefaultMessage());
 			}
-			if (getEntity().getClass().isAnnotationPresent(CachedClass.class)) {
-				final String entityName = getEntity().getClass().getSimpleName();
+			if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
+				final String entityName = getControllerConfig().getEntityClass().getSimpleName();
 				List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
 				if (list == null || list.isEmpty()) {
 					list = new ArrayList<ENTITY>();
@@ -1268,9 +1269,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 		}
-		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(
+		invokeServices(Operation.UPDATE.getValue().concat(
 				getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity }));
+				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
+		setEntity(entity);
 		setExecuted(true);
 		return true;
 	}
