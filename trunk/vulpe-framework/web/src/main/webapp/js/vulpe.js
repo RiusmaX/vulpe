@@ -120,7 +120,7 @@ var vulpe = {
 
 	// RTE Array
 	RTEs: new Array(),
-	
+
 	// vulpe.util
 	util: {
 		setRequired: function(name, enabled) {
@@ -224,7 +224,7 @@ var vulpe = {
 				}
 				if (options.putSameOnReturnKey && vulpe.util.checkHotKeyExists("return") == -1) {
 					jQuery(document).bind("keydown", "return", options.command);
-					if (options.dontFireInText) {
+					if (options.returnKeyDontFireInText) {
 						dontFire("return");
 					}
 				}
@@ -1828,7 +1828,7 @@ var vulpe = {
 					vulpe.util.get(options.id).val("");
 				}
 			},
-			
+
 			/**
 			 *
 			 * @param options {url, uri, formName, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
