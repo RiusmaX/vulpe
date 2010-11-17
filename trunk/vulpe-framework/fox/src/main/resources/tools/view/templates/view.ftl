@@ -159,7 +159,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 </#if>
 <#if t == 'MAIN' || t == 'ALL'>
 ################################################################################
-# View Main: ${view.name}
+# View MAIN: ${view.name}
 ################################################################################
 label.${view.projectName}.${view.moduleName}.${view.name}.main=Management of ${view.name?capitalize}
 <#list view.fields as field>
