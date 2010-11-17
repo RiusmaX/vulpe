@@ -22,6 +22,7 @@ import java.util.List;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Transient;
 
+import org.apache.log4j.Logger;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -34,7 +35,7 @@ import org.vulpe.model.services.manager.VulpeManager;
 
 /**
  * Default implementation to Manager for MAIN's.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @TransactionType
@@ -42,12 +43,14 @@ import org.vulpe.model.services.manager.VulpeManager;
 public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeDAO<ENTITY_CLASS, ENTITY_ID>>
 		implements VulpeManager<ENTITY_CLASS, ENTITY_ID, ENTITY_DAO> {
 
+	protected static final Logger LOG = Logger.getLogger(VulpeBaseManager.class);
+
 	@Transient
 	private transient Class<ENTITY_DAO> daoClass;
 
 	/**
 	 * Method returns DAO interface.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return
 	 */
@@ -60,7 +63,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/**
 	 * Method returns implementation of DAO to current Manager.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return DAO implementation.
 	 */
@@ -70,7 +73,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -99,7 +102,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -126,7 +129,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * delete(java.util.List)
 	 */
@@ -153,7 +156,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -183,7 +186,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -210,7 +213,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * find(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -239,7 +242,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * paging(org.vulpe.model.entity.VulpeEntity, java.lang.Integer,
 	 * java.lang.Integer)
@@ -271,7 +274,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * persist(java.util.List)
 	 */
@@ -300,7 +303,7 @@ public class VulpeBaseManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTIT
 
 	/**
 	 * Extension point to code rules before persist entities.
-	 *
+	 * 
 	 * @param entities
 	 * @since 1.0
 	 * @throws VulpeApplicationException

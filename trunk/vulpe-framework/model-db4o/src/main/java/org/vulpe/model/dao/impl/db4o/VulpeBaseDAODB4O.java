@@ -28,7 +28,6 @@ import javax.persistence.Transient;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Model.DAO.DB4O;
 import org.vulpe.commons.beans.Paging;
@@ -60,8 +59,6 @@ import com.db4o.query.Query;
 @SuppressWarnings( { "unchecked" })
 public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
 		AbstractVulpeBaseDAODB4O<ENTITY, ID> {
-
-	private static final Logger LOG = Logger.getLogger(VulpeBaseDAODB4O.class.getName());
 
 	/*
 	 * (non-Javadoc)

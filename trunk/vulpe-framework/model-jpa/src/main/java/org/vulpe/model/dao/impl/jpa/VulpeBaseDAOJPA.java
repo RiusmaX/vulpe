@@ -28,7 +28,6 @@ import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
@@ -53,19 +52,17 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
 @Repository
-public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends AbstractVulpeBaseDAOJPA<ENTITY, ID> {
-
-	private static final Logger LOG = Logger.getLogger(VulpeBaseDAOJPA.class.getName());
+public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		AbstractVulpeBaseDAOJPA<ENTITY, ID> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -86,7 +83,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -95,8 +92,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			LOG.debug("Deleting object: ".concat(entity.toString()));
 		}
 		// persistent entity
-		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
-				entity.getId());
+		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(), entity.getId());
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
@@ -114,8 +110,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				LOG.debug("Deleting object: ".concat(entity.toString()));
 			}
 			// persistent entity
-			final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(
-					entity.getClass(), entity.getId());
+			final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(), entity.getId());
 			if (entity instanceof VulpeLogicEntity) {
 				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
 				logicEntity.setStatus(Status.D);
@@ -129,7 +124,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -147,7 +142,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -169,7 +164,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -186,7 +181,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -234,7 +229,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 *
+	 * 
 	 * @param entity
 	 * @param params
 	 * @return
@@ -248,8 +243,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (entity.getId() != null) {
 					params.put("id", entity.getId());
 				} else {
-					final String value = "%"
-							+ PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
+					final String value = "%" + PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
 					params.put(entity.getAutocomplete(), value);
 				}
 			} catch (Exception e) {
@@ -257,9 +251,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			}
 		} else {
 			for (Field field : fields) {
-				if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
-						|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
-						.getModifiers()))
+				if ((field.isAnnotationPresent(IgnoreAutoFilter.class) || field.isAnnotationPresent(Transient.class) || Modifier
+						.isTransient(field.getModifiers()))
 						&& !field.isAnnotationPresent(QueryParameter.class)) {
 					continue;
 				}
@@ -268,8 +261,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					if (StringUtils.isNotBlank(order.toString())) {
 						order.append(",");
 					}
-					order.append("obj.").append(field.getName()).append(" ").append(
-							orderBy.type().name());
+					order.append("obj.").append(field.getName()).append(" ").append(orderBy.type().name());
 				}
 				Object value = null;
 				try {
@@ -296,15 +288,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 
 		final StringBuilder hql = new StringBuilder();
-		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
-				.getSimpleName().concat(".read"));
+		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass().getSimpleName().concat(".read"));
 		QueryConfiguration queryConfiguration = null;
-		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(
-				QueryConfigurations.class);
+		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(QueryConfigurations.class);
 		if (queryConfigurations != null) {
-			final String queryConfigurationName = entity.getMap().containsKey(
-					Entity.QUERY_CONFIGURATION_NAME) ? (String) entity.getMap().get(
-					Entity.QUERY_CONFIGURATION_NAME) : "default";
+			final String queryConfigurationName = entity.getMap().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) entity
+					.getMap().get(Entity.QUERY_CONFIGURATION_NAME)
+					: "default";
 			for (QueryConfiguration queryConfig : queryConfigurations.value()) {
 				if (queryConfig.name().equals(queryConfigurationName)) {
 					queryConfiguration = queryConfig;
@@ -312,8 +302,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				}
 			}
 		}
-		final boolean complement = queryConfiguration != null
-				&& queryConfiguration.complement() != null;
+		final boolean complement = queryConfiguration != null && queryConfiguration.complement() != null;
 		final boolean replace = queryConfiguration != null && queryConfiguration.replace() != null;
 		if (namedQuery == null) {
 			hql.append("select ");
@@ -327,8 +316,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append("new ");
 					hql.append(entity.getClass().getSimpleName());
 					hql.append("(obj.id, obj.").append(entity.getAutocomplete());
-					final List<Field> autocompleteFields = VulpeReflectUtil.getInstance()
-							.getFieldsWithAnnotation(entity.getClass(), Autocomplete.class);
+					final List<Field> autocompleteFields = VulpeReflectUtil.getInstance().getFieldsWithAnnotation(
+							entity.getClass(), Autocomplete.class);
 					for (Field field : autocompleteFields) {
 						if (!field.getName().equals(entity.getAutocomplete())) {
 							hql.append(", obj.").append(field.getName());
@@ -337,8 +326,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append(")");
 				} else {
 					hql.append("obj");
-					if (complement
-							&& StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
+					if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
 						hql.append(", ");
 						hql.append(queryConfiguration.complement().select());
 					}
@@ -372,21 +360,20 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
-					final QueryParameter parameter = VulpeReflectUtil.getInstance()
-							.getAnnotationInField(QueryParameter.class, entity.getClass(), name);
+					final QueryParameter parameter = VulpeReflectUtil.getInstance().getAnnotationInField(
+							QueryParameter.class, entity.getClass(), name);
 					if (parameter == null) {
 						if (value instanceof String) {
-							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-									Like.class, entity.getClass(), name);
-							hql.append("upper(obj.").append(name).append(") ").append(
-									like != null ? "like" : "=").append(" upper(:").append(name)
-									.append(")");
+							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+									entity.getClass(), name);
+							hql.append("upper(obj.").append(name).append(") ").append(like != null ? "like" : "=")
+									.append(" upper(:").append(name).append(")");
 						} else {
 							hql.append("obj.").append(name).append(" = :").append(name);
 						}
 					} else {
-						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-								Like.class, entity.getClass(), name);
+						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+								entity.getClass(), name);
 						if (like != null) {
 							hql.append("upper(");
 						}
@@ -439,15 +426,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(" order by ");
 			hql.append(queryConfiguration.replace().orderBy());
 		} else {
-			if (StringUtils.isNotEmpty(entity.getOrderBy())
-					|| StringUtils.isNotEmpty(order.toString())) {
+			if (StringUtils.isNotEmpty(entity.getOrderBy()) || StringUtils.isNotEmpty(order.toString())) {
 				if (hql.toString().toLowerCase().contains("order by")) {
 					hql.append(", ");
 				} else {
 					hql.append(" order by ");
 				}
-				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
-						.getOrderBy());
+				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity.getOrderBy());
 			}
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().orderBy())) {
 				if (!hql.toString().toLowerCase().contains("order by")) {
@@ -469,8 +454,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
-					getClass(), getClass().getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
@@ -485,7 +470,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -504,7 +489,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -522,11 +507,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
 			final Map<String, Object> values = new HashMap<String, Object>();
 			for (QueryParameter parameter : parameters) {
-				hql.append("obj.").append(parameter.name()).append(" ").append(
-						parameter.operator().getValue()).append(" :").append(parameter.name());
+				hql.append("obj.").append(parameter.name()).append(" ").append(parameter.operator().getValue()).append(
+						" :").append(parameter.name());
 				try {
-					values.put(parameter.name(), PropertyUtils
-							.getProperty(entity, parameter.name()));
+					values.put(parameter.name(), PropertyUtils.getProperty(entity, parameter.name()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}

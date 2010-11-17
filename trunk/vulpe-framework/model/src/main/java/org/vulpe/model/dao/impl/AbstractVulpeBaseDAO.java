@@ -40,7 +40,7 @@ import org.vulpe.model.entity.VulpeEntity;
 public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		implements VulpeDAO<ENTITY, ID> {
 
-	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAO.class.getName());
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAO.class);
 
 	/**
 	 * Make audit.
