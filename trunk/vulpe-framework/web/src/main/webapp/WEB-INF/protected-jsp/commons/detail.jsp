@@ -46,9 +46,9 @@
 			var id = 'vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}';
 			vulpe.util.get(id).accordion({
 				collapsible: true,
-				animated: false
+				animated: false,
+				active: false
 			});
-			<c:if test="${not empty targetConfig.parentDetailConfig}">vulpe.util.get(id + '-link').click();</c:if>
 		});
 	</script>
 </c:if>
