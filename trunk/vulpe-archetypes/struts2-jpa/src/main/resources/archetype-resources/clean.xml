@@ -1,0 +1,54 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<packaging>pom</packaging>
+	<name>${artifactId} - Clean Vulpe Library</name>
+	
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-parent-struts-db4o</artifactId>
+		<version>1.0</version>
+	</parent>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>clean</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<property environment="env" />
+								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml">
+									<classpath>
+										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
+									</classpath>
+								</taskdef>
+								<if>
+									<equals arg1="${symbol_dollar}{updateVulpeLibrary}" arg2="true" />
+									<then>
+										<delete dir="${symbol_dollar}{maven.repo}/org/vulpe/" />
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
