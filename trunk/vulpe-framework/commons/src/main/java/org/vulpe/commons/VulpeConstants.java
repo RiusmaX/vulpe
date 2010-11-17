@@ -270,12 +270,12 @@ public class VulpeConstants {
 			public static final String SUFFIX_JSP_SELECT_ITEMS = "SelectItems.jsp";
 			public static final String SUFFIX_JSP_REPORT = "Report.jsp";
 			public static final String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
-			public static final String SUFFIX_JSP_CRUD = "CRUD.jsp";
+			public static final String SUFFIX_JSP_MAIN = "Main.jsp";
 
 			public static final String BODY_TWICE_JSP = "bodyTwice.jsp";
 			public static final String BODY_JSP = "body.jsp";
-			public static final String BODY_CRUD_JSP = "crud.jsp";
-			public static final String BODY_CRUD_ACTIONS_JSP = "crudActions.jsp";
+			public static final String BODY_MAIN_JSP = "main.jsp";
+			public static final String BODY_MAIN_ACTIONS_JSP = "mainActions.jsp";
 			public static final String BODY_SELECT_JSP = "select.jsp";
 			public static final String BODY_SELECT_ACTIONS_JSP = "selectActions.jsp";
 			public static final String BODY_TABULAR_JSP = "tabular.jsp";
@@ -290,7 +290,6 @@ public class VulpeConstants {
 			public static final String BACKEND = "backend/";
 			public static final String FRONTEND = "frontend/";
 			public static final String REPORT = "/report";
-			public static final String CRUD = "/crud";
 			public static final String SELECT = "/select";
 			public static final String TABULAR = "/tabular";
 			public static final String AJAX = "/ajax";

@@ -36,6 +36,6 @@ public @interface View {
 	ViewType[] viewType();
 
 	enum ViewType {
-		CRUD, SELECT, TABULAR, NONE, ALL
+		MAIN, SELECT, TABULAR, NONE, ALL
 	}
 }

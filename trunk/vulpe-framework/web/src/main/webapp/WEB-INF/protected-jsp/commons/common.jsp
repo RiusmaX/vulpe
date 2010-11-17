@@ -2,7 +2,7 @@
 <c:set var="vulpeFormName" value="${controllerConfig.formName}" scope="request"/>
 <c:if test="${vulpeBodyTwice}">
 	<c:choose>
-		<c:when test="${vulpeBodyTwiceType == 'CRUD'}"><c:set var="vulpeFormName" value="${controllerConfig.CRUDFormName}" scope="request"/></c:when>
+		<c:when test="${vulpeBodyTwiceType == 'MAIN'}"><c:set var="vulpeFormName" value="${controllerConfig.MainFormName}" scope="request"/></c:when>
 		<c:when test="${vulpeBodyTwiceType == 'SELECT'}"><c:set var="vulpeFormName" value="${controllerConfig.selectFormName}" scope="request"/></c:when>
 	</c:choose>
 </c:if>
@@ -25,7 +25,7 @@ $(document).ready(function() {
 		vulpe.config.formName = "${vulpeFormName}";
 		vulpe.config.logic.prepareName = "${prepareName}";
 		vulpe.util.removeHotKeys(["return", "Ctrl+f7", "Ctrl+f8", "Ctrl+f9", "Ctrl+f10", "Ctrl+f12", "Ctrl+del", "Alt+f8", "Alt+Shift+del"]);
-	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['CRUD_create']}">
+	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['Main_create']}">
 		var buttonCreate = vulpe.util.get("vulpeButtonCreate-${vulpeFormName}");
 		if (buttonCreate.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -38,7 +38,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['createPost'] || now['buttons']['SELECT_createPost'] || now['buttons']['CRUD_createPost']}">
+	<c:if test="${now['buttons']['createPost'] || now['buttons']['SELECT_createPost'] || now['buttons']['Main_createPost']}">
 		var buttonCreatePost = vulpe.util.get("vulpeButtonCreatePost-${vulpeFormName}");
 		if (buttonCreatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -53,7 +53,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['updatePost'] || now['buttons']['SELECT_updatePost'] || now['buttons']['CRUD_updatePost']}">
+	<c:if test="${now['buttons']['updatePost'] || now['buttons']['SELECT_updatePost'] || now['buttons']['Main_updatePost']}">
 		var buttonUpdatePost = vulpe.util.get("vulpeButtonUpdatePost-${vulpeFormName}");
 		if (buttonUpdatePost.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -81,7 +81,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['delete'] || now['buttons']['SELECT_delete'] || now['buttons']['CRUD_delete']}">
+	<c:if test="${now['buttons']['delete'] || now['buttons']['SELECT_delete'] || now['buttons']['Main_delete']}">
 		var buttonDelete = vulpe.util.get("vulpeButtonDelete-${vulpeFormName}");
 		if (buttonDelete.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -93,10 +93,10 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['prepare'] || now['buttons']['SELECT_prepare'] || now['buttons']['CRUD_prepare']}">
+	<c:if test="${now['buttons']['prepare'] || now['buttons']['SELECT_prepare'] || now['buttons']['Main_prepare']}">
 		var buttonPrepare = vulpe.util.get("vulpeButtonPrepare-${vulpeFormName}");
 		if (buttonPrepare.attr("onclick")) {
-			<c:if test="${now['controllerType'] == 'CRUD'}">
+			<c:if test="${now['controllerType'] == 'MAIN'}">
 			<c:set var="prepare" value="Ctrl+backspace"/>
 			</c:if>
 			<c:if test="${now['controllerType'] == 'SELECT'}">
@@ -139,7 +139,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['read'] || now['buttons']['SELECT_read'] || now['buttons']['CRUD_read']}">
+	<c:if test="${now['buttons']['read'] || now['buttons']['SELECT_read'] || now['buttons']['Main_read']}">
 		var buttonRead = vulpe.util.get("vulpeButtonRead-${vulpeFormName}");
 		if (buttonRead.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -153,7 +153,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['report'] || now['buttons']['SELECT_report'] || now['buttons']['CRUD_report']}">
+	<c:if test="${now['buttons']['report'] || now['buttons']['SELECT_report'] || now['buttons']['Main_report']}">
 		var buttonReport = vulpe.util.get("vulpeButtonReport-${vulpeFormName}");
 		if (buttonReport.attr("onclick")) {
 			vulpe.util.addHotKey({
@@ -165,7 +165,7 @@ $(document).ready(function() {
 			});
 		}
 	</c:if>
-	<c:if test="${now['buttons']['clear'] || now['buttons']['SELECT_clear'] || now['buttons']['CRUD_clear']}">
+	<c:if test="${now['buttons']['clear'] || now['buttons']['SELECT_clear'] || now['buttons']['Main_clear']}">
 		var buttonClear = vulpe.util.get("vulpeButtonClear-${vulpeFormName}");
 		if (buttonClear.attr("onclick")) {
 			vulpe.util.addHotKey({

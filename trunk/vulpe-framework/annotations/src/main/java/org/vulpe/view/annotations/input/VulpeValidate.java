@@ -94,6 +94,6 @@ public @interface VulpeValidate {
 	 * Scope for input validation
 	 */
 	enum VulpeValidateScope {
-		ALL, CRUD, DETAIL, SELECT, TABULAR
+		ALL, MAIN, DETAIL, SELECT, TABULAR
 	}
 }

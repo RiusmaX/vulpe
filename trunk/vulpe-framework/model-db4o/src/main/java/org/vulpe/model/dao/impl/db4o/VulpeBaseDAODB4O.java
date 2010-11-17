@@ -53,7 +53,7 @@ import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 
 /**
- * Default implementation of DAO for CRUD's with DB4O.
+ * Default implementation of DAO for MAIN's with DB4O.
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */

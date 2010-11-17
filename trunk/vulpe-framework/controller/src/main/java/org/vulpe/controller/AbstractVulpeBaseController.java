@@ -76,7 +76,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private List<ENTITY> entities;
 
 	/**
-	 * Current CRUD Entity
+	 * Current MAIN Entity
 	 */
 	private ENTITY entity;
 
@@ -638,7 +638,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void showButtons(final Operation operation) {
 		getButtons().clear();
-		if (getControllerType().equals(ControllerType.CRUD)) {
+		if (getControllerType().equals(ControllerType.MAIN)) {
 			if (getControllerConfig().getDetails() != null) {
 				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 					if (Operation.VIEW.equals(operation)) {
@@ -681,9 +681,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else if (getControllerType().equals(ControllerType.TWICE)) {
 			if (Operation.DELETE.equals(operation) || Operation.CREATE.equals(operation)
 					|| Operation.TWICE.equals(operation)) {
-				showButtons(ControllerType.CRUD, Button.CREATE_POST, Button.CLEAR);
+				showButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)) {
-				showButtons(ControllerType.CRUD, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
+				showButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
 			} else if (Operation.VIEW.equals(operation)) {
 				showButtons();
 			}
@@ -934,7 +934,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void addDetailBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)
+		if (!getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TABULAR)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
@@ -959,7 +959,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession(before = true)
 	public String create() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			changeControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.MAIN);
 		}
 		setOperation(Operation.CREATE);
 		createBefore();
@@ -967,7 +967,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setSelectedTab(null);
 		showButtons(Operation.CREATE);
 		if (getControllerType().equals(ControllerType.TWICE)) {
-			setBodyTwice(ControllerType.CRUD);
+			setBodyTwice(ControllerType.MAIN);
 			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
@@ -982,7 +982,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void onCreate() {
-		if (getControllerType().equals(ControllerType.CRUD)
+		if (getControllerType().equals(ControllerType.MAIN)
 				|| getControllerType().equals(ControllerType.TWICE)) {
 			try {
 				setEntity(getControllerConfig().getEntityClass().newInstance());
@@ -1003,7 +1003,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void createBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)
+		if (!getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TWICE)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
@@ -1026,7 +1026,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession
 	public String createPost() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			changeControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.MAIN);
 		}
 		setOperation(Operation.CREATE_POST);
 		createPostBefore();
@@ -1078,7 +1078,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void createPostBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)
+		if (!getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TWICE)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
@@ -1104,7 +1104,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession(before = true)
 	public String update() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			changeControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.MAIN);
 		}
 		setOperation(Operation.UPDATE);
 		updateBefore();
@@ -1115,7 +1115,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setSelectedTab(null);
 		showButtons(Operation.UPDATE);
 		if (getControllerType().equals(ControllerType.TWICE)) {
-			setBodyTwice(ControllerType.CRUD);
+			setBodyTwice(ControllerType.MAIN);
 			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
@@ -1144,7 +1144,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void onUpdate() {
-		if (getControllerType().equals(ControllerType.CRUD)
+		if (getControllerType().equals(ControllerType.MAIN)
 				|| getControllerType().equals(ControllerType.TWICE)) {
 			final ENTITY persistentEntity = (ENTITY) invokeServices(Operation.FIND.getValue()
 					.concat(getControllerConfig().getEntityClass().getSimpleName()),
@@ -1161,7 +1161,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void updateBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)
+		if (!getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TWICE)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
@@ -1184,7 +1184,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession
 	public String updatePost() {
 		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
-			changeControllerType(ControllerType.CRUD);
+			changeControllerType(ControllerType.MAIN);
 		}
 		setOperation(Operation.UPDATE_POST);
 		updatePostBefore();
@@ -1283,7 +1283,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void updatePostBefore() {
-		if (!getControllerType().equals(ControllerType.CRUD)
+		if (!getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TWICE)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}
@@ -1312,7 +1312,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setSelectedTab(null);
 		}
 		deleteAfter();
-		if (getControllerType().equals(ControllerType.CRUD)) {
+		if (getControllerType().equals(ControllerType.MAIN)) {
 			setEntity(null);
 			controlResultForward();
 			return getResultName();
@@ -1365,7 +1365,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected void deleteBefore() {
 		if (!getControllerType().equals(ControllerType.SELECT)
-				&& !getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TWICE)
 				&& !getControllerType().equals(ControllerType.TABULAR)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
@@ -1427,7 +1427,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected void deleteDetailBefore() {
 		if (!getControllerType().equals(ControllerType.SELECT)
-				&& !getControllerType().equals(ControllerType.CRUD)
+				&& !getControllerType().equals(ControllerType.MAIN)
 				&& !getControllerType().equals(ControllerType.TABULAR)) {
 			throw new VulpeSystemException(Error.CONTROLLER);
 		}

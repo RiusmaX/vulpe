@@ -68,7 +68,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			final ControllerType controllerType = codeGenerator.controller().type();
 			types.add(controllerType.toString());
 			if (controllerType.equals(ControllerType.ALL)
-					|| controllerType.equals(ControllerType.CRUD)) {
+					|| controllerType.equals(ControllerType.MAIN)) {
 				final List<DecoratedControllerDetail> details = new ArrayList<DecoratedControllerDetail>();
 				int count = codeGenerator.controller().detailsConfig().length;
 				for (DetailConfig detailConfig : codeGenerator.controller().detailsConfig()) {

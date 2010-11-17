@@ -306,7 +306,7 @@ public class ControllerUtil {
 				details.add(new VulpeBaseDetailConfig());
 			}
 			final VulpeBaseDetailConfig detailConfig = details.get(count);
-			config.setControllerType(ControllerType.CRUD);
+			config.setControllerType(ControllerType.MAIN);
 			detailConfig.setupDetail(config, detail);
 			count++;
 		}

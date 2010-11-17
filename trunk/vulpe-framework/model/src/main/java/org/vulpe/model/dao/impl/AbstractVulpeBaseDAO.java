@@ -31,7 +31,7 @@ import org.vulpe.model.dao.VulpeDAO;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
- * Abstract Base to implementation of CRUD DAO.
+ * Abstract Base to implementation of MAIN DAO.
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *

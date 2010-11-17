@@ -45,7 +45,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.input.VulpeValidate;
 import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateScope;
-import org.vulpe.view.annotations.logic.crud.Detail;
+import org.vulpe.view.annotations.logic.main.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 import com.sun.mirror.declaration.FieldDeclaration;

@@ -4,9 +4,9 @@
 <v:table>
 	<jsp:attribute name="tableBody">
 		<v:row>
-			<v:column labelKey="label.vulpe.security.SecureResource.crud.secureResourceRoles.role">
+			<v:column labelKey="label.vulpe.security.SecureResource.main.secureResourceRoles.role">
 				<v:hidden property="role.name"/>
-				<v:selectPopup labelKey="label.vulpe.security.SecureResource.crud.secureResourceRoles.role.name"
+				<v:selectPopup labelKey="label.vulpe.security.SecureResource.main.secureResourceRoles.role.name"
 					property="role" identifier="id" description="description" readonly="true"
 					action="/security/Role/select" popupId="roleSelectPopup"
 					popupProperties="role.description=description,role.name=name,role.id=id" size="60"

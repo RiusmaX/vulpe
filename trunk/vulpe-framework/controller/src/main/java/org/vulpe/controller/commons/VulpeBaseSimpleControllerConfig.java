@@ -47,7 +47,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	private String controllerName;
 	private String moduleName;
 	private String simpleControllerName;
-	private String viewCRUDPath;
+	private String viewMainPath;
 	private String viewSelectPath;
 	private String viewSelectItemsPath;
 	private String viewPath;
@@ -206,11 +206,11 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getCRUDFormName()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMainFormName()
 	 */
-	public String getCRUDFormName() {
+	public String getMainFormName() {
 		final StringBuilder formName = new StringBuilder();
-		final String type = VulpeStringUtil.capitalize(ControllerType.CRUD.name());
+		final String type = VulpeStringUtil.capitalize(ControllerType.MAIN.name());
 		formName.append(getModuleName().concat(getSimpleControllerName().concat(type)));
 		return formName.append(Layout.SUFFIX_FORM).toString();
 	}
@@ -434,14 +434,14 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/").concat(
 					viewBaseName);
 			if (getControllerType().equals(ControllerType.TWICE)) {
-				this.viewCRUDPath = this.viewPath + Layout.SUFFIX_JSP_CRUD;
+				this.viewMainPath = this.viewPath + Layout.SUFFIX_JSP_MAIN;
 				this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
 				this.viewSelectItemsPath = this.viewItemsPath
 						+ getModuleName().concat("/").concat(viewBaseName).concat("/").concat(
 								viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
-			if (getControllerType().equals(ControllerType.CRUD)) {
-				this.viewPath += Layout.SUFFIX_JSP_CRUD;
+			if (getControllerType().equals(ControllerType.MAIN)) {
+				this.viewPath += Layout.SUFFIX_JSP_MAIN;
 			}
 			if (getControllerType().equals(ControllerType.TABULAR)) {
 				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
@@ -500,12 +500,12 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		return viewSelectItemsPath;
 	}
 
-	public void setViewCRUDPath(final String viewCRUDPath) {
-		this.viewCRUDPath = viewCRUDPath;
+	public void setViewMainPath(final String viewMainPath) {
+		this.viewMainPath = viewMainPath;
 	}
 
-	public String getViewCRUDPath() {
-		return viewCRUDPath;
+	public String getViewMainPath() {
+		return viewMainPath;
 	}
 
 	public void setViewSelectPath(final String viewSelectPath) {

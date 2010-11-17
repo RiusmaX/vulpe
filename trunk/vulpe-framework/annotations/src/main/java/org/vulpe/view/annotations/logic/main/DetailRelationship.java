@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.view.annotations.logic.crud;
+package org.vulpe.view.annotations.logic.main;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -22,17 +22,25 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to represent detail in the entity.
+ * Annotation to represent detail relationship.
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Detail {
+public @interface DetailRelationship {
 
-	Class<?> target();
+	String name();
 
-	DetailRelationship relationship() default @DetailRelationship(name = "", description = "", identifier = "", action = "");
+	String identifier();
+
+	String description();
+
+	String action();
+
+	int size() default 40;
+
+	int popupWidth() default 600;
 
 }

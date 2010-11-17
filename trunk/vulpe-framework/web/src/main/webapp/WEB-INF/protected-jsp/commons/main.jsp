@@ -1,33 +1,33 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:if test="${vulpeBodyTwice}">
 <fieldset>
-<legend><fmt:message>${fn:replace(now['titleKey'], '.twice', '.crud')}</fmt:message></legend>
+<legend><fmt:message>${fn:replace(now['titleKey'], '.twice', '.main')}</fmt:message></legend>
 </c:if>
-<div id="vulpeCRUD">
-	<div id="vulpeCRUDActions" class="vulpeActions">
-		<%@include file="/WEB-INF/protected-jsp/commons/crudActions.jsp" %>
+<div id="vulpeMain">
+	<div id="vulpeMainActions" class="vulpeActions">
+		<%@include file="/WEB-INF/protected-jsp/commons/mainActions.jsp" %>
 	</div>
 	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
-		<div id="vulpeCRUDBodyTabs">
+		<div id="vulpeMainBodyTabs">
 		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
 		<ul title="${tabNavigationTitle}">
 			<c:set var="tabTitle"><fmt:message key="${now['masterTitleKey']}"/></c:set>
 			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}"><c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/></c:if>
-			<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs0" href="#vulpeCRUDBody">${tabTitle}</a></li>
+			<li title="${tabTitle}"><a id="vulpeMainBodyTabs0" href="#vulpeMainBody">${tabTitle}</a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
 				<c:if test="${empty detail.parentDetailConfig}">
 					<c:set var="tabTitle"><fmt:message key="${detail.titleKey}"/></c:set>
 					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}"><c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/></c:if>
-					<li title="${tabTitle}"><a id="vulpeCRUDBodyTabs${status.count}" href="#vulpeDetail-${detail.baseName}">${tabTitle}</a></li>
+					<li title="${tabTitle}"><a id="vulpeMainBodyTabs${status.count}" href="#vulpeDetail-${detail.baseName}">${tabTitle}</a></li>
 				</c:if>
 			</c:forEach>
-			<c:if test="${not empty vulpeCRUDFooter}"><li><a href="#vulpeCRUDFooter"><fmt:message key="label.vulpe.completion"/></a></li></c:if>
+			<c:if test="${not empty vulpeMainFooter}"><li><a href="#vulpeMainFooter"><fmt:message key="label.vulpe.completion"/></a></li></c:if>
 		</ul>
 	</c:if>
-	<div id="vulpeCRUDBody">
+	<div id="vulpeMainBody">
 		<c:remove var="targetConfig" scope="request"/>
 		<c:remove var="targetConfigPropertyName" scope="request"/>
-		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewCRUDPath : controllerConfig.viewPath}" />
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewMainPath : controllerConfig.viewPath}" />
 	</div>
 	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<c:forEach items="${controllerConfig.details}" var="detail">
@@ -42,12 +42,12 @@
 			</c:if>
 		</c:forEach>
 	</c:if>
-	<div id="vulpeCRUDFooter"></div>
+	<div id="vulpeMainFooter"></div>
 	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				var tabsName = '#vulpeCRUDBodyTabs';
+				var tabsName = '#vulpeMainBodyTabs';
 				$(tabsName).tabs({
 				    show: function(event, ui) {
 				    	var selected = ui.panel.id;
@@ -76,8 +76,8 @@
 							tabIndex = tabIndex + 1;
 						}
 					}
-					var parent = jQuery("#vulpeCRUDBodyTabs" + tabIndex).attr("href");
-					jQuery("#vulpeCRUDBodyTabs" + tabIndex).click();
+					var parent = jQuery("#vulpeMainBodyTabs" + tabIndex).attr("href");
+					jQuery("#vulpeMainBodyTabs" + tabIndex).click();
 					vulpe.util.focusFirst(parent);
 					count = 1;
 				}

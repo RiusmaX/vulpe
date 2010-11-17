@@ -378,7 +378,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param params
 	 */
 	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params,
-			final boolean onlyInCRUD) {
+			final boolean onlyInMain) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method loadRelationships - Start");
 		}
@@ -402,8 +402,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						for (final Relationship relationship : queryConfiguration.relationships()) {
 							final boolean loadAll = relationship.attributes().length == 1
 									&& "*".equals(relationship.attributes()[0]);
-							if ((!relationship.scope().equals(RelationshipScope.SELECT) && loadAll && !onlyInCRUD)
-									|| (relationship.scope().equals(RelationshipScope.SELECT) && onlyInCRUD)) {
+							if ((!relationship.scope().equals(RelationshipScope.SELECT) && loadAll && !onlyInMain)
+									|| (relationship.scope().equals(RelationshipScope.SELECT) && onlyInMain)) {
 								continue;
 							}
 							try {

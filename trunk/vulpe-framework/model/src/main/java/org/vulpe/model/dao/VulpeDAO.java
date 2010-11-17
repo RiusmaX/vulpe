@@ -25,7 +25,7 @@ import org.vulpe.model.entity.Parameter;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
- * Default Interface of DAO for CRUD's
+ * Default Interface of DAO for MAIN's
  *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */

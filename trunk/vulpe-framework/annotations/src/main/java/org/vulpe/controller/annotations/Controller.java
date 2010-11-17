@@ -61,7 +61,7 @@ public @interface Controller {
 	 */
 	boolean onlyUpdateDetails() default false;
 
-	// CRUD - configurations
+	// MAIN - configurations
 	/**
 	 * Details configuration
 	 */
@@ -72,7 +72,7 @@ public @interface Controller {
 	 */
 	boolean detailsInTabs() default true;
 
-	// SELECT and CRUD - control configurations
+	// SELECT and MAIN - control configurations
 	/**
 	 * Controller to redirect after selection
 	 */

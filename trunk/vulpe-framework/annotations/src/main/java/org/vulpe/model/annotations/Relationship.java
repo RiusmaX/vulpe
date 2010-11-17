@@ -42,6 +42,6 @@ public @interface Relationship {
 	RelationshipScope scope() default RelationshipScope.ALL;
 
 	public enum RelationshipScope {
-		ALL, SELECT, CRUD
+		ALL, SELECT, MAIN
 	}
 }

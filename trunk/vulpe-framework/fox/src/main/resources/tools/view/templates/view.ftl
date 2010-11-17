@@ -157,22 +157,22 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${labe
 </v:table>
 </@file>
 </#if>
-<#if t == 'CRUD' || t == 'ALL'>
+<#if t == 'MAIN' || t == 'ALL'>
 ################################################################################
-# View CRUD: ${view.name}
+# View Main: ${view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.crud=Management of ${view.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.main=Management of ${view.name?capitalize}
 <#list view.fields as field>
-label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${field.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${field.name?capitalize}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}CRUD.jsp">
+<@file name="${view.moduleName}/${view.name}/${view.name}Main.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
 <#list view.fields as field>
 <v:${field.type}
-	labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}"
+	labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}"
 <#if field.itemKey?has_content>
 	property="${field.name}.${field.itemKey}"
 <#else>
@@ -242,10 +242,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 	enumeration="${field.enumeration}"
 	</#if>
 </#if>
-<#if field.required && (field.validateRequiredScope == "ALL" || field.validateRequiredScope?contains("CRUD"))>
+<#if field.required && (field.validateRequiredScope == "ALL" || field.validateRequiredScope?contains("MAIN"))>
 	required="${field.required}"
 </#if>
-<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("CRUD"))>
+<#if field.validateType?has_content && field.validateScope?has_content && (field.validateScope == "ALL" || field.validateScope?contains("MAIN"))>
 	validateType="${field.validateType}"
 	<#if field.validateMas?has_content>
 	validateMask="${field.validateMask}"
@@ -277,13 +277,13 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${field.name}=${f
 </#list>
 </@file>
 <#list view.details as detail>
-label.${view.projectName}.${view.moduleName}.${view.name}.crud.master=${view.name}
+label.${view.projectName}.${view.moduleName}.${view.name}.main.master=${view.name}
 ################################################################################
-# View CRUD Detail: ${detail.name}
+# View Main Detail: ${detail.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}=${detail.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}=${detail.name?capitalize}
 <#list detail.fields as detailField>
-label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${detailField.name}=${detailField.name?capitalize}
+label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}=${detailField.name?capitalize}
 </#list>
 <@file name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
@@ -293,7 +293,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<#list detail.fields as detailField>
-			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.crud.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
+			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
 				<v:${detailField.type} property="${detailField.name}"
 				<#if detailField.type == 'selectPopup'>
 					identifier="${detailField.identifier}" description="${detailField.description}"

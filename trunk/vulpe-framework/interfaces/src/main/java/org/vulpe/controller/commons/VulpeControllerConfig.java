@@ -39,7 +39,7 @@ public interface VulpeControllerConfig {
 
 	String getSelectFormName();
 
-	String getCRUDFormName();
+	String getMainFormName();
 
 	boolean isDetailsInTabs();
 
@@ -79,9 +79,9 @@ public interface VulpeControllerConfig {
 
 	String getViewSelectItemsPath();
 
-	void setViewCRUDPath(final String viewCRUDPath);
+	void setViewMainPath(final String viewMainPath);
 
-	String getViewCRUDPath();
+	String getViewMainPath();
 
 	void setViewSelectPath(final String viewSelectPath);
 
@@ -99,6 +99,6 @@ public interface VulpeControllerConfig {
 	 * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
 	 */
 	public enum ControllerType {
-		CRUD, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE
+		MAIN, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE
 	}
 }

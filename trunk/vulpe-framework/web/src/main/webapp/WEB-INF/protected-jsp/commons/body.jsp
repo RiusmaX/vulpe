@@ -2,7 +2,7 @@
 <c:set var="vulpeFormName" value="${now['formName']}" scope="request"/>
 <c:if test="${vulpeBodyTwice}">
 	<c:choose>
-	<c:when test="${vulpeBodyTwiceType == 'CRUD'}"><c:set var="vulpeFormName" value="${controllerConfig.CRUDFormName}" scope="request"/></c:when>
+	<c:when test="${vulpeBodyTwiceType == 'MAIN'}"><c:set var="vulpeFormName" value="${controllerConfig.MainFormName}" scope="request"/></c:when>
 	<c:when test="${vulpeBodyTwiceType == 'SELECT'}"><c:set var="vulpeFormName" value="${controllerConfig.selectFormName}" scope="request"/></c:when>
 	</c:choose>
 </c:if>
@@ -16,7 +16,7 @@
 	<input type="hidden" name="executed" value="${executed}" id="${vulpeFormName}-executed"/>
 	<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}"><input type="hidden" name="entitySelect.orderBy" value="${entity.orderBy}" id="${vulpeFormName}-entitySelect_orderBy"/></c:if>
 	<input type="hidden" name="popupKey" value="${popupKey}" id="${vulpeFormName}-popupKey"/>
-	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'CRUD')}"><%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %></c:if>
+	<c:if test="${securityContext.authenticated && empty popupKey && (empty vulpeBodyTwice || vulpeBodyTwiceType == 'MAIN')}"><%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %></c:if>
 	<c:if test="${now['showContentTitle'] && empty vulpeBodyTwice}">
 	<c:if test="${not empty now['titleKey']}"><fmt:message var="contentTitle">${now['titleKey']}${onlyToSee ? '.view' : ''}</fmt:message></c:if>
 	<div id="contentTitle">${not empty now['contentTitle'] ? now['contentTitle'] : contentTitle}</div>

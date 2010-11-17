@@ -47,7 +47,7 @@
 		<c:if test="${empty updateActionName}"><c:set var="updateActionName" value="${controllerConfig.ownerController}/update"/></c:if>
 		<c:if test="${empty updateFormName}"><c:set var="updateFormName" value="${vulpeFormName}"/></c:if>
 		<c:if test="${empty updateLayerFields}"><c:set var="updateLayerFields" value="${updateFormName}"/></c:if>
-		<c:if test="${empty updateLayer}"><c:set var="updateLayer" value="${vulpeBodyTwice ? 'crud' : 'body'}"/></c:if>
+		<c:if test="${empty updateLayer}"><c:set var="updateLayer" value="${vulpeBodyTwice ? 'main' : 'body'}"/></c:if>
 		<c:if test="${not empty updateValue && !isHeaderTableTag}">
 			<c:set var="recordId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
 			<c:if test="${empty showUpdateButton || !showUpdateButton}">

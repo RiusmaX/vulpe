@@ -1,11 +1,11 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
-<v:text labelKey="label.vulpe.audit.Occurrence.crud.id" property="id" showAsText="true"/>
-<v:text labelKey="label.vulpe.audit.Occurrence.crud.occurrenceType" property="occurrenceType" showAsText="true"/>
-<v:text labelKey="label.vulpe.audit.Occurrence.crud.entity" property="entity" showAsText="true"/>
-<v:text labelKey="label.vulpe.audit.Occurrence.crud.primaryKey" property="primaryKey" showAsText="true"/>
-<v:text labelKey="label.vulpe.audit.Occurrence.crud.username" property="username" showAsText="true"/>
-<v:date labelKey="label.vulpe.audit.Occurrence.crud.dateTime" property="dateTime" showAsText="true"/>
+<v:text labelKey="label.vulpe.audit.Occurrence.main.id" property="id" showAsText="true"/>
+<v:text labelKey="label.vulpe.audit.Occurrence.main.occurrenceType" property="occurrenceType" showAsText="true"/>
+<v:text labelKey="label.vulpe.audit.Occurrence.main.entity" property="entity" showAsText="true"/>
+<v:text labelKey="label.vulpe.audit.Occurrence.main.primaryKey" property="primaryKey" showAsText="true"/>
+<v:text labelKey="label.vulpe.audit.Occurrence.main.username" property="username" showAsText="true"/>
+<v:date labelKey="label.vulpe.audit.Occurrence.main.dateTime" property="dateTime" showAsText="true"/>
 <table width="100%" cellspacing="0" cellpadding="2" style="border: 1px solid #eee;">
 	<tr>
 		<td colspan="2" ><strong><fmt:message key="label.vulpe.audit.dataHistory"/></strong></td>
