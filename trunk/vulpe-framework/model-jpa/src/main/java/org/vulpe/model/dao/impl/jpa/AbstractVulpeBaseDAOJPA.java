@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -34,14 +35,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import ognl.Ognl;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.ejb.HibernateEntityManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.model.annotations.ForceLoadRelationship;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryConfigurations;
@@ -283,14 +289,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param parent
 	 * @return
 	 */
-	private String mountRelationshipReference(final String attribute, final String parent) {
+	private String loadRelationshipsMountReference(final String attribute, final String parent) {
 		final StringBuilder hqlAttribute = new StringBuilder();
 		final List<String> attributeList = new ArrayList<String>();
 		String first = attribute.substring(0, attribute.indexOf("["));
 		if (StringUtils.isNotEmpty(first)) {
 			first += "_";
 		}
-		separateAttributes(attributeList, attribute);
+		loadRelationshipsSeparateAttributes(attributeList, attribute);
 		for (String attributeName : attributeList) {
 			hqlAttribute.append(", obj.").append(attributeName).append(" as ").append(first).append(
 					attributeName.replaceAll("\\.", "_"));
@@ -303,7 +309,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param attributeList
 	 * @param value
 	 */
-	private static void separateAttributes(List<String> attributeList, String value) {
+	private void loadRelationshipsSeparateAttributes(List<String> attributeList, String value) {
 		List<String> attributeInternalList = new ArrayList<String>();
 		if (value.indexOf("[") != -1) {
 			String first = VulpeValidationUtil.isEmpty(attributeList) ? "" : value.substring(0, value.indexOf("["));
@@ -350,7 +356,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 		for (String string : attributeInternalList) {
 			if (string.contains("[")) {
-				separateAttributes(attributeList, string);
+				loadRelationshipsSeparateAttributes(attributeList, string);
 			} else {
 				attributeList.add(string);
 			}
@@ -363,6 +369,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param entities
 	 * @param params
 	 */
+	@Transactional(readOnly = true)
 	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params,
 			final boolean onlyInMain) {
 		if (LOG.isDebugEnabled()) {
@@ -398,93 +405,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final boolean oneToMany = VulpeReflectUtil.getInstance().getAnnotationInField(
 										OneToMany.class, entityClass, relationship.property()) != null;
 								final Map<String, String> hqlAttributes = new HashMap<String, String>();
-								final List<String> hqlJoin = new ArrayList<String>();
+								// select and from
+								hql.append(loadRelationshipsMountSelectAndFrom(relationship, parentName, propertyType,
+										firstEntity, hqlAttributes, oneToMany, loadAll));
+								// where
+								hql.append(loadRelationshipsMountWhere(relationship, parentName, params, oneToMany));
 
-								if (oneToMany && loadAll) {
-									hql.append("select obj ");
-								} else {
-									hql.append("select new map(obj.id as id");
-									for (final String attribute : relationship.attributes()) {
-										if ("id".equals(attribute)) {
-											continue;
-										}
-										if (oneToMany) {
-											final Class attributeType = PropertyUtils.getPropertyType(relationship
-													.target().newInstance(), attribute);
-											boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
-													|| VulpeEntity.class.isAssignableFrom(attributeType);
-											hql.append(", ").append("obj.")
-													.append(attribute + (manyToOne ? ".id" : "")).append(" as ")
-													.append(attribute);
-										} else {
-											if (attribute.contains("[")) {
-												final StringBuilder hqlAttribute = new StringBuilder(
-														"select new map(obj.id as id");
-												String attributeParent = attribute.substring(0, attribute.indexOf("["));
-												hqlAttribute.append(mountRelationshipReference(attribute, null));
-												if (StringUtils.isEmpty(attributeParent)) {
-													attributeParent = relationship.property();
-													final Class attributeParentType = PropertyUtils.getPropertyType(
-															firstEntity, attributeParent);
-													hqlAttribute.append(") from ").append(
-															attributeParentType.getSimpleName()).append(" obj");
-												} else {
-													final Class attributeParentType = PropertyUtils.getPropertyType(
-															propertyType.newInstance(), attributeParent);
-													hqlAttribute.append(") from ").append(
-															attributeParentType.getSimpleName()).append(" obj");
-													int joinCount = hqlJoin.size() + 1;
-													hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj."
-															+ attributeParent + " obj" + joinCount);
-													hql.append(", obj").append(joinCount).append(".id").append(" as ")
-															.append(attributeParent);
-												}
-												hqlAttribute.append(" where obj.id = :id");
-												hqlAttributes.put(attribute, hqlAttribute.toString());
-											} else {
-												final Class attributeType = PropertyUtils.getPropertyType(propertyType
-														.newInstance(), attribute);
-												boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
-														|| VulpeEntity.class.isAssignableFrom(attributeType);
-												hql.append(", ").append("obj.").append(
-														attribute + (manyToOne ? ".id" : "")).append(" as ").append(
-														attribute);
-											}
-										}
-									}
-									if (oneToMany) {
-										hql.append(", obj.").append(parentName).append(".id as ").append(parentName);
-									}
-									hql.append(")");
-								}
-								final String className = relationship.target().equals(Class.class) ? propertyType
-										.getSimpleName() : relationship.target().getSimpleName();
-								hql.append(" from ").append(className).append(" obj ");
-								for (final String join : hqlJoin) {
-									hql.append(join);
-								}
-								if (oneToMany) {
-									hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
-								} else {
-									hql.append(" where obj.id in (:ids)");
-								}
-								if (relationship.parameters() != null) {
-									for (final QueryParameter parameter : relationship.parameters()) {
-										if (params.containsKey(parameter.name())) {
-											hql.append(" and ");
-											hql.append(
-													StringUtils.isNotEmpty(parameter.alias()) ? parameter.alias()
-															: "obj").append(".");
-											hql.append(parameter.name());
-											final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(
-													Like.class, relationship.target(), parameter.name());
-											hql.append(" ").append(
-													like != null ? "like" : parameter.operator().getValue())
-													.append(" ");
-											hql.append(":").append(parameter.name());
-										}
-									}
-								}
 								final Query query = entityManager.createQuery(hql.toString());
 								if (oneToMany) {
 									query.setParameter("parentIds", parentIds);
@@ -510,146 +436,250 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
 								if (oneToMany && loadAll) {
 									final List<ENTITY> result = query.getResultList();
-									for (final ENTITY child : result) {
-										final VulpeEntity<ID> parent = (VulpeEntity<ID>) PropertyUtils.getProperty(
-												child, parentName);
-										relationshipIds.put(child.getId(), parent.getId());
-										final List<Field> childFields = VulpeReflectUtil.getInstance().getFields(
-												child.getClass());
-										for (final Field field : childFields) {
-											if (field.getName().equals(parentName)) {
-												continue;
-											}
-											if (field.isAnnotationPresent(ManyToOne.class)) {
-												final VulpeEntity<ID> fieldValue = (VulpeEntity<ID>) PropertyUtils
-														.getProperty(child, field.getName());
-												if (VulpeValidationUtil.isNotEmpty(fieldValue)) {
-													PropertyUtils.setProperty(child, field.getName(),
-															(ENTITY) getEntityManager().getReference(field.getType(),
-																	fieldValue.getId()));
-												}
-											}
-										}
-										childs.add(child);
-									}
+									loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
+											parentName);
 								} else {
 									final List<Map> result = query.getResultList();
-									for (final Map map : result) {
-										final ENTITY child = (ENTITY) (oneToMany ? relationship.target().newInstance()
-												: propertyType.newInstance());
-										PropertyUtils.setProperty(child, "id", map.get("id"));
-										relationshipIds.put(child.getId(), (ID) map.get(parentName));
-										for (final String attribute : relationship.attributes()) {
-											if (oneToMany) {
-												final Class attributeType = PropertyUtils.getPropertyType(relationship
-														.target().newInstance(), attribute);
-												boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
-														|| VulpeEntity.class.isAssignableFrom(attributeType);
-												if (manyToOne) {
-													final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
-															.newInstance();
-													newAttribute.setId((ID) map.get(attribute));
-													PropertyUtils.setProperty(child, attribute, newAttribute);
-												} else {
-													PropertyUtils.setProperty(child, attribute, map.get(attribute));
-												}
-											} else {
-												if (hqlAttributes.containsKey(attribute)) {
-													final String attributeParent = attribute.substring(0, attribute
-															.indexOf("["));
-													final String hqlAttribute = hqlAttributes.get(attribute);
-													if (StringUtils.isNotEmpty(attributeParent)) {
-														final Class attributeType = PropertyUtils.getPropertyType(
-																propertyType.newInstance(), attributeParent);
-														final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
-																.newInstance();
-														newAttribute.setId((ID) map.get(attributeParent));
-														final Query queryAttribute = getEntityManager().createQuery(
-																hqlAttribute).setParameter("id", newAttribute.getId());
-														final Map attributeMap = (Map) queryAttribute.getSingleResult();
-														mountProperties(attributeMap, newAttribute, attribute, null);
-														PropertyUtils.setProperty(child, attributeParent, newAttribute);
-													} else {
-														final Query queryAttribute = getEntityManager().createQuery(
-																hqlAttribute).setParameter("id", child.getId());
-														final Map attributeMap = (Map) queryAttribute.getSingleResult();
-														mountProperties(attributeMap, child, attribute, null);
-													}
-												} else {
-													final Class attributeType = PropertyUtils.getPropertyType(
-															propertyType.newInstance(), attribute);
-													boolean manyToOne = attributeType
-															.isAnnotationPresent(ManyToOne.class)
-															|| VulpeEntity.class.isAssignableFrom(attributeType);
-													if (manyToOne) {
-														final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
-																.newInstance();
-														newAttribute.setId((ID) map.get(attribute));
-														PropertyUtils.setProperty(child, attribute, newAttribute);
-													} else {
-														PropertyUtils.setProperty(child, attribute, map.get(attribute));
-													}
-												}
-											}
-										}
-										childs.add(child);
-									}
+									loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
+											parentName, propertyType, hqlAttributes, oneToMany);
 								}
-								for (final ENTITY parent : entities) {
-									if (VulpeValidationUtil.isEmpty(childs)) {
-										PropertyUtils.setProperty(parent, relationship.property(), null);
-									} else {
-										final List<ENTITY> loadedChilds = new ArrayList<ENTITY>();
-										for (final ENTITY child : childs) {
-											if (oneToMany) {
-												final ID parentId = (ID) relationshipIds.get(child.getId());
-												if (parent.getId().equals(parentId)) {
-													PropertyUtils.setProperty(child, parentName, parent);
-													loadedChilds.add(child);
-												}
-												PropertyUtils
-														.setProperty(parent, relationship.property(), loadedChilds);
-											} else {
-												final VulpeEntity<ID> parentChild = (VulpeEntity<ID>) PropertyUtils
-														.getProperty(parent, relationship.property());
-												if (child.getId().equals(parentChild.getId())) {
-													PropertyUtils.setProperty(parent, relationship.property(), child);
-												}
-											}
-										}
-									}
-								}
+								loadRelationshipsMountEntities(relationship, entities, childs, relationshipIds,
+										parentName, oneToMany);
 							} catch (Exception e) {
 								LOG.error(e);
 							}
 						}
 					}
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Method loadRelationships - End");
-					}
 				}
 			}
 		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Method loadRelationships - End");
+		}
 	}
 
-	/**
-	 * 
-	 * @param map
-	 * @param entity
-	 * @param attribute
-	 * @param parent
-	 */
-	private void mountProperties(final Map<String, Object> map, final VulpeEntity<ID> entity, final String attribute,
-			final String parent) {
+	private String loadRelationshipsMountSelectAndFrom(final Relationship relationship, final String parentName,
+			final Class propertyType, final ENTITY firstEntity, final Map<String, String> hqlAttributes,
+			final boolean oneToMany, final boolean loadAll) {
+		final StringBuilder hql = new StringBuilder();
 		try {
-			final List<String> attributeList = new ArrayList<String>();
-			String first = attribute.substring(0, attribute.indexOf("["));
-			if (StringUtils.isNotEmpty(first)) {
-				first += "_";
+			final List<String> hqlJoin = new ArrayList<String>();
+			if (oneToMany && loadAll) {
+				hql.append("select obj ");
+			} else {
+				hql.append("select new map(obj.id as id");
+				for (final String attribute : relationship.attributes()) {
+					if ("id".equals(attribute)) {
+						continue;
+					}
+					if (oneToMany) {
+						final Class attributeType = PropertyUtils.getPropertyType(relationship.target().newInstance(),
+								attribute);
+						boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
+								|| VulpeEntity.class.isAssignableFrom(attributeType);
+						hql.append(", ").append("obj.").append(attribute + (manyToOne ? ".id" : "")).append(" as ")
+								.append(attribute);
+					} else {
+						if (attribute.contains("[")) {
+							final StringBuilder hqlAttribute = new StringBuilder("select new map(obj.id as id");
+							String attributeParent = attribute.substring(0, attribute.indexOf("["));
+							hqlAttribute.append(loadRelationshipsMountReference(attribute, null));
+							if (StringUtils.isEmpty(attributeParent)) {
+								attributeParent = relationship.property();
+								final Class attributeParentType = PropertyUtils.getPropertyType(firstEntity,
+										attributeParent);
+								hqlAttribute.append(") from ").append(attributeParentType.getSimpleName()).append(
+										" obj");
+							} else {
+								final Class attributeParentType = PropertyUtils.getPropertyType(propertyType
+										.newInstance(), attributeParent);
+								hqlAttribute.append(") from ").append(attributeParentType.getSimpleName()).append(
+										" obj");
+								int joinCount = hqlJoin.size() + 1;
+								hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj." + attributeParent
+										+ " obj" + joinCount);
+								hql.append(", obj").append(joinCount).append(".id").append(" as ").append(
+										attributeParent);
+							}
+							hqlAttribute.append(" where obj.id = :id");
+							hqlAttributes.put(attribute, hqlAttribute.toString());
+						} else {
+							final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
+									attribute);
+							boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
+									|| VulpeEntity.class.isAssignableFrom(attributeType);
+							hql.append(", ").append("obj.").append(attribute + (manyToOne ? ".id" : "")).append(" as ")
+									.append(attribute);
+						}
+					}
+				}
+				if (oneToMany) {
+					hql.append(", obj.").append(parentName).append(".id as ").append(parentName);
+				}
+				hql.append(")");
 			}
-			separateAttributes(attributeList, attribute);
-			for (String attributeName : attributeList) {
-				mountPropertiesByAttributes(map, entity, attributeName, first + attributeName);
+			final String className = relationship.target().equals(Class.class) ? propertyType.getSimpleName()
+					: relationship.target().getSimpleName();
+			hql.append(" from ").append(className).append(" obj ");
+			for (final String join : hqlJoin) {
+				hql.append(join);
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return hql.toString();
+	}
+
+	private String loadRelationshipsMountWhere(final Relationship relationship, final String parentName,
+			final Map<String, Object> params, final boolean oneToMany) {
+		final StringBuilder hql = new StringBuilder();
+		if (oneToMany) {
+			hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
+		} else {
+			hql.append(" where obj.id in (:ids)");
+		}
+		if (relationship.parameters() != null) {
+			for (final QueryParameter parameter : relationship.parameters()) {
+				if (params.containsKey(parameter.name())) {
+					hql.append(" and ");
+					hql.append(StringUtils.isNotEmpty(parameter.alias()) ? parameter.alias() : "obj").append(".");
+					hql.append(parameter.name());
+					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+							relationship.target(), parameter.name());
+					hql.append(" ").append(like != null ? "like" : parameter.operator().getValue()).append(" ");
+					hql.append(":").append(parameter.name());
+				}
+			}
+		}
+		return hql.toString();
+	}
+
+	private void loadRelationshipsMountChild(final Relationship relationship, final List<ENTITY> result,
+			final List<ENTITY> childs, final Map<ID, ID> relationshipIds, final String parentName) {
+		try {
+			for (final ENTITY entity : result) {
+				final ENTITY parent = (ENTITY) PropertyUtils.getProperty(entity, parentName);
+				relationshipIds.put(entity.getId(), parent.getId());
+				final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+				for (final Field field : fields) {
+					if (field.getName().equals(parentName)) {
+						continue;
+					}
+					if (field.isAnnotationPresent(ManyToOne.class)) {
+						final ENTITY childEntity = (ENTITY) PropertyUtils.getProperty(entity, field.getName());
+						if (VulpeValidationUtil.isNotEmpty(childEntity)) {
+							PropertyUtils.setProperty(entity, field.getName(), (ENTITY) getEntityManager()
+									.getReference(field.getType(), childEntity.getId()));
+						}
+					} else if (relationship.forceLoad() && field.isAnnotationPresent(OneToMany.class)
+							&& field.isAnnotationPresent(ForceLoadRelationship.class)) {
+						final List<ENTITY> list = (List<ENTITY>) PropertyUtils.getProperty(entity, field.getName());
+						for (final ENTITY vulpeEntity : list) {
+							final List<Field> childFields = VulpeReflectUtil.getInstance().getFields(
+									vulpeEntity.getClass());
+							for (final Field childField : childFields) {
+								if (childField.getName().equals(
+										VulpeStringUtil.lowerCaseFirst(entity.getClass().getSimpleName()))) {
+									continue;
+								}
+								if (childField.isAnnotationPresent(ManyToOne.class)) {
+									final ENTITY chieldEntity = (ENTITY) PropertyUtils.getProperty(vulpeEntity,
+											childField.getName());
+									if (VulpeValidationUtil.isNotEmpty(chieldEntity)) {
+										loadEntityRelationships(chieldEntity);
+									}
+								}
+							}
+						}
+					}
+				}
+				childs.add(entity);
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+	}
+
+	private void loadRelationshipsMountChild(final Relationship relationship, final List<Map> result,
+			final List<ENTITY> childs, final Map<ID, ID> relationshipIds, final String parentName,
+			final Class propertyType, final Map<String, String> hqlAttributes, final boolean oneToMany) {
+		try {
+			for (final Map map : result) {
+				final ENTITY child = (ENTITY) (oneToMany ? relationship.target().newInstance() : propertyType
+						.newInstance());
+				Ognl.setValue("id", child, map.get("id"));
+				relationshipIds.put(child.getId(), (ID) map.get(parentName));
+				final Map context = Ognl.createDefaultContext(child);
+				context.put("xwork.NullHandler.createNullObjects", true);
+				for (final String attribute : relationship.attributes()) {
+					if (oneToMany) {
+						final Class attributeType = PropertyUtils.getPropertyType(relationship.target().newInstance(),
+								attribute);
+						boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
+								|| VulpeEntity.class.isAssignableFrom(attributeType);
+						Ognl.setValue(attribute + (manyToOne ? ".id" : ""), context, child, map.get(attribute));
+					} else {
+						if (hqlAttributes.containsKey(attribute)) {
+							final String attributeParent = attribute.substring(0, attribute.indexOf("["));
+							final String hqlAttribute = hqlAttributes.get(attribute);
+							if (StringUtils.isNotEmpty(attributeParent)) {
+								final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
+										attributeParent);
+								final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType.newInstance();
+								newAttribute.setId((ID) map.get(attributeParent));
+								final Query queryAttribute = getEntityManager().createQuery(hqlAttribute).setParameter(
+										"id", newAttribute.getId());
+								final Map attributeMap = (Map) queryAttribute.getSingleResult();
+								loadRelationshipsMountProperties(attributeMap, newAttribute, attribute, null);
+								Ognl.setValue(attributeParent, context, child, newAttribute);
+							} else {
+								final Query queryAttribute = getEntityManager().createQuery(hqlAttribute).setParameter(
+										"id", child.getId());
+								final Map attributeMap = (Map) queryAttribute.getSingleResult();
+								loadRelationshipsMountProperties(attributeMap, child, attribute, null);
+							}
+						} else {
+							final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
+									attribute);
+							boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
+									|| VulpeEntity.class.isAssignableFrom(attributeType);
+							Ognl.setValue(attribute + (manyToOne ? ".id" : ""), context, child, map.get(attribute));
+						}
+					}
+				}
+				childs.add(child);
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+	}
+
+	private void loadRelationshipsMountEntities(final Relationship relationship, final List<ENTITY> entities,
+			final List<ENTITY> childs, final Map<ID, ID> relationshipIds, final String parentName,
+			final boolean oneToMany) {
+		try {
+			for (final ENTITY parent : entities) {
+				if (VulpeValidationUtil.isEmpty(childs)) {
+					PropertyUtils.setProperty(parent, relationship.property(), null);
+				} else {
+					final List<ENTITY> loadedChilds = new ArrayList<ENTITY>();
+					for (final ENTITY child : childs) {
+						if (oneToMany) {
+							final ID parentId = (ID) relationshipIds.get(child.getId());
+							if (parent.getId().equals(parentId)) {
+								PropertyUtils.setProperty(child, parentName, parent);
+								loadedChilds.add(child);
+							}
+							PropertyUtils.setProperty(parent, relationship.property(), loadedChilds);
+						} else {
+							final VulpeEntity<ID> parentChild = (VulpeEntity<ID>) PropertyUtils.getProperty(parent,
+									relationship.property());
+							if (child.getId().equals(parentChild.getId())) {
+								PropertyUtils.setProperty(parent, relationship.property(), child);
+							}
+						}
+					}
+				}
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -660,29 +690,22 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * 
 	 * @param map
 	 * @param entity
-	 * @param attributeName
-	 * @param attributeReference
+	 * @param attribute
+	 * @param parent
 	 */
-	private void mountPropertiesByAttributes(final Map<String, Object> map, final VulpeEntity<ID> entity,
-			String attributeName, final String attributeReference) {
+	private void loadRelationshipsMountProperties(final Map<String, Object> map, final VulpeEntity<ID> entity,
+			final String attribute, final String parent) {
 		try {
-			if (attributeName.contains(".")) {
-				final String attributeParent = attributeName.substring(0, attributeName.indexOf("."));
-				attributeName = attributeName.substring(attributeName.indexOf(".") + 1);
-				VulpeEntity<ID> newEntity = (VulpeEntity<ID>) PropertyUtils.getProperty(entity, attributeParent);
-				if (newEntity == null) {
-					final Class attributeType = PropertyUtils.getPropertyType(entity, attributeParent);
-					newEntity = (VulpeEntity<ID>) attributeType.newInstance();
-				}
-				if (attributeName.contains(".")) {
-					mountPropertiesByAttributes(map, newEntity, attributeName, attributeReference);
-				} else {
-					PropertyUtils.setProperty(newEntity, attributeName, map.get(attributeReference.replaceAll("\\.",
-							"_")));
-				}
-				PropertyUtils.setProperty(entity, attributeParent, newEntity);
-			} else {
-				PropertyUtils.setProperty(entity, attributeName, map.get(attributeReference.replaceAll("\\.", "_")));
+			final List<String> attributeList = new ArrayList<String>();
+			String first = attribute.substring(0, attribute.indexOf("["));
+			if (StringUtils.isNotEmpty(first)) {
+				first += "_";
+			}
+			loadRelationshipsSeparateAttributes(attributeList, attribute);
+			final Map context = Ognl.createDefaultContext(entity);
+			context.put("xwork.NullHandler.createNullObjects", true);
+			for (final String attributeName : attributeList) {
+				Ognl.setValue(attributeName, context, entity, map.get(first + attributeName.replaceAll("\\.", "_")));
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -697,22 +720,34 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return entityManager;
 	}
 
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public Object findByNamedQuery(final String name) {
-		return getEntityManager().createNamedQuery(name).getSingleResult();
-	}
-
-	public Object findByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
-		final Query query = getEntityManager().createNamedQuery(name);
-		for (final String parameter : map.keySet()) {
-			query.setParameter(parameter, map.get(parameter));
+		try {
+			return getEntityManager().createNamedQuery(name).getSingleResult();
+		} catch (EntityNotFoundException e) {
+			return null;
 		}
-		return query.getSingleResult();
 	}
 
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
+	public Object findByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
+		try {
+			final Query query = getEntityManager().createNamedQuery(name);
+			for (final String parameter : map.keySet()) {
+				query.setParameter(parameter, map.get(parameter));
+			}
+			return query.getSingleResult();
+		} catch (EntityNotFoundException e) {
+			return null;
+		}
+	}
+
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<?> listByNamedQuery(final String name) {
 		return getEntityManager().createNamedQuery(name).getResultList();
 	}
 
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<?> listByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
 		final Query query = getEntityManager().createNamedQuery(name);
 		for (final String parameter : map.keySet()) {

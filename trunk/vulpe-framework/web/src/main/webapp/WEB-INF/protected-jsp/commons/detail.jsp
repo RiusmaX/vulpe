@@ -8,12 +8,8 @@
 	<c:set var="index" value="-${util:eval(pageContext, indexEL)}"/>
 	<c:set var="currentDetailIndex" value="${util:eval(pageContext, indexEL)}" scope="request"/>
 	<c:choose>
-		<c:when test="${(util:eval(pageContext, indexEL) % 2) == 0}">
-<tr class="vulpeLineOn">
-		</c:when>
-		<c:otherwise>
-<tr class="vulpeLineOff">
-		</c:otherwise>
+		<c:when test="${(util:eval(pageContext, indexEL) % 2) == 0}"><tr class="vulpeLineOn"></c:when>
+		<c:otherwise><tr class="vulpeLineOff"></c:otherwise>
 	</c:choose>
 	<td colspan="100">
 </c:if>

@@ -123,6 +123,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * Detail index to delete
 	 */
 	private Integer detailIndex;
+	
+	/**
+	 * Detail layer
+	 */
+	private String detailLayer;
 
 	/**
 	 *
@@ -2013,6 +2018,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public boolean isOnlyUpdateDetails() {
 		onlyUpdateDetails = getControllerConfig().isOnlyUpdateDetails();
 		return onlyUpdateDetails;
+	}
+
+	public void setDetailLayer(String detailLayer) {
+		this.detailLayer = detailLayer;
+	}
+
+	public String getDetailLayer() {
+		return detailLayer;
 	}
 
 }

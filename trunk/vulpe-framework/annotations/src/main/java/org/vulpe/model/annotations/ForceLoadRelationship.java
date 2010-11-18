@@ -22,28 +22,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Tells Vulpe to optimize lazy load on relationship.
- * 
+ * Tells Vulpe to force load on relationship OneToMany.
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Relationship {
+@Target(ElementType.FIELD)
+public @interface ForceLoadRelationship {
 
-	Class<?> target() default Class.class;
-
-	String property();
-
-	String[] attributes();
-
-	QueryParameter[] parameters() default {};
-
-	RelationshipScope scope() default RelationshipScope.ALL;
-
-	boolean forceLoad() default false;
-
-	public enum RelationshipScope {
-		ALL, SELECT, MAIN
-	}
 }
