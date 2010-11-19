@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe-parent-struts-jpa</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - Parent Struts JPA</name>
+
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-parent-struts-base</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<description>Vulpe Framework ;) Quick and Smart - Parent Struts JPA</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<properties>
+		<hibernate.version>3.2.1.ga</hibernate.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-audit-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-model-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-audit-dao-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-security-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-security-dao-jpa</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.0.1B</version>
+		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-archive-browsing</artifactId>
+			<version>5.0.0alpha-200607201-119</version>
+		</dependency>
+	</dependencies>
+</project>
