@@ -68,6 +68,8 @@ import org.vulpe.model.entity.VulpeEntity;
 public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
+	private static final String OGNL_CREATE_NULL_OBJECTS = "xwork.NullHandler.createNullObjects";
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -610,7 +612,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				Ognl.setValue("id", child, map.get("id"));
 				relationshipIds.put(child.getId(), (ID) map.get(parentName));
 				final Map context = Ognl.createDefaultContext(child);
-				context.put("xwork.NullHandler.createNullObjects", true);
+				context.put(OGNL_CREATE_NULL_OBJECTS, true);
 				for (final String attribute : relationship.attributes()) {
 					if (oneToMany) {
 						final Class attributeType = PropertyUtils.getPropertyType(relationship.target().newInstance(),
@@ -646,6 +648,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							Ognl.setValue(attribute + (manyToOne ? ".id" : ""), context, child, map.get(attribute));
 						}
 					}
+					context.remove(OGNL_CREATE_NULL_OBJECTS);
 				}
 				childs.add(child);
 			}
@@ -703,10 +706,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 			loadRelationshipsSeparateAttributes(attributeList, attribute);
 			final Map context = Ognl.createDefaultContext(entity);
-			context.put("xwork.NullHandler.createNullObjects", true);
+			context.put(OGNL_CREATE_NULL_OBJECTS, true);
 			for (final String attributeName : attributeList) {
 				Ognl.setValue(attributeName, context, entity, map.get(first + attributeName.replaceAll("\\.", "_")));
 			}
+			context.remove(OGNL_CREATE_NULL_OBJECTS);
 		} catch (Exception e) {
 			LOG.error(e);
 		}

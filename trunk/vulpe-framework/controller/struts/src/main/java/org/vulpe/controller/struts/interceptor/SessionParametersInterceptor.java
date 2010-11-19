@@ -24,6 +24,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
@@ -60,10 +61,18 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			if (simpleController.ever != null) {
 				final String currentControllerKey = simpleController.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = simpleController.getControllerUtil().getCurrentControllerKey();
+				boolean autocomplete = false;
+				if (simpleController instanceof AbstractVulpeBaseController) {
+					final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) simpleController;
+					if (controller.getEntitySelect() != null
+							&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
+						autocomplete = true;
+					}
+				}
 				if (StringUtils.isEmpty(currentControllerKey)) {
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 				} else if (!currentControllerKey.equals(controllerKey)
-						&& StringUtils.isEmpty(simpleController.getPopupKey())) {
+						&& StringUtils.isEmpty(simpleController.getPopupKey()) && !autocomplete) {
 					simpleController.ever.removeWeakRef();
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 				}
@@ -106,7 +115,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
