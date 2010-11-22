@@ -236,7 +236,9 @@ public class ControllerUtil {
 			return StringUtils.isEmpty(getCurrentController().get()) ? "" : getCurrentController()
 					.get();
 		}
-		if (base.endsWith(Layout.SUFFIX_JSP)) {
+		if (base.contains(Layout.JS_CONTEXT) || base.contains(Layout.THEMES_CONTEXT)
+				|| base.contains(Layout.CSS_CONTEXT) || base.contains(Layout.IMAGES_CONTEXT)
+				|| base.contains(Layout.SUFFIX_JSP)) {
 			return getCurrentController().get();
 		}
 		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");

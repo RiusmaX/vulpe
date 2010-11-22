@@ -1225,21 +1225,31 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			entity.getMap().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
 		for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
-			List<ENTITY> details = null;
 			try {
-				details = (List<ENTITY>) PropertyUtils.getProperty(entity, detailConfig.getName());
+				final List<ENTITY> details = (List<ENTITY>) PropertyUtils.getProperty(entity, detailConfig
+						.getParentDetailConfig() != null ? detailConfig.getParentDetailConfig().getParentDetailConfig()
+						.getName() : detailConfig.getName());
+				if (VulpeValidationUtil.isNotEmpty(details)) {
+					if (detailConfig.getParentDetailConfig() == null) {
+						for (final ENTITY detail : details) {
+							updateAuditInformation(detail);
+						}
+					} else {
+						for (final ENTITY detail : details) {
+							final List<ENTITY> subDetails = (List<ENTITY>) PropertyUtils.getProperty(detail,
+									detailConfig.getName());
+							if (VulpeValidationUtil.isNotEmpty(subDetails)) {
+								for (ENTITY subDetail : subDetails) {
+									updateAuditInformation(subDetail);
+								}
+								PropertyUtils.setProperty(detail, detailConfig.getName(), subDetails);
+							}
+						}
+					}
+					PropertyUtils.setProperty(entity, detailConfig.getName(), details);
+				}
 			} catch (Exception e) {
 				LOG.error(e);
-			}
-			if (VulpeValidationUtil.isNotEmpty(details)) {
-				for (final ENTITY detail : details) {
-					updateAuditInformation(detail);
-				}
-				try {
-					PropertyUtils.setProperty(entity, detailConfig.getName(), details);
-				} catch (Exception e) {
-					LOG.error(e);
-				}
 			}
 		}
 		invokeServices(Operation.UPDATE.getValue().concat(getControllerConfig().getEntityClass().getSimpleName()),
