@@ -55,4 +55,6 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 	Map<String, Object> getMap();
 
 	void setMap(final Map<String, Object> map);
+
+	void setQueryConfigurationName(final String queryConfigurationName);
 }

@@ -27,6 +27,7 @@ import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.model.entity.VulpeEntity;
@@ -36,8 +37,8 @@ import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends
-		VulpeBaseSimpleEntity implements VulpeEntity<ID> {
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends VulpeBaseSimpleEntity
+		implements VulpeEntity<ID> {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -75,8 +76,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@Override
 	public boolean equals(final Object obj) {
 		final AbstractVulpeBaseEntity<ID> entity = (AbstractVulpeBaseEntity<ID>) obj;
-		if ((obj == null || obj.getClass() != this.getClass())
-				|| (entity.getId() == null || getId() == null)) {
+		if ((obj == null || obj.getClass() != this.getClass()) || (entity.getId() == null || getId() == null)) {
 			return false;
 		}
 
@@ -85,8 +85,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName().concat(
-				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
+		return getClass().getSimpleName().concat(this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
 	public int compareTo(final VulpeSimpleEntity entity) {
@@ -145,8 +144,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				|| attribute.getType() == Character.class || attribute.getType() == Integer.class
 				|| attribute.getType() == Short.class || attribute.getType() == Long.class
 				|| attribute.getType() == Double.class || attribute.getType() == Date.class
-				|| attribute.getType() == java.sql.Date.class
-				|| attribute.getType() == java.sql.Timestamp.class) {
+				|| attribute.getType() == java.sql.Date.class || attribute.getType() == java.sql.Timestamp.class) {
 			return true;
 		}
 		return false;
@@ -171,6 +169,10 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	public Map<String, Object> getMap() {
 		return map;
+	}
+
+	public void setQueryConfigurationName(final String queryConfigurationName) {
+		this.map.put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
 	}
 
 }

@@ -3,6 +3,14 @@
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 <urlrewrite>
 	<rule>
+		<from>^/([a-z]+)/([a-z]+)/([a-z]+)/([0-9]+)</from>
+		<to>/$1/$2/$3?id=$4</to>
+	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/([a-z]+)/ajax/([0-9]+)</from>
+		<to>/$1/$2/$3/ajax?id=$4</to>
+	</rule>
+	<rule>
 		<from>^/([a-z]+)/([a-z]+)/delete/([0-9]+)</from>
 		<to>/$1/$2/delete?id=$3</to>
 	</rule>
