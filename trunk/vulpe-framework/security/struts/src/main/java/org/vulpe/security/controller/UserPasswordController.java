@@ -50,28 +50,28 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 		final User user = getSecurityContext().getUser();
 		boolean valid = super.validateEntity();
 		if (StringUtils.isBlank(getEntity().getCurrentPassword())) {
-			addActionError(getText("vulpe.security.user.error.empty.current.password"));
+			addActionError("{vulpe.security.user.error.empty.current.password}");
 			valid = false;
 		} else {
 			if (user.getPassword().equals(getEntity().getCurrentPassword())) {
 				if (StringUtils.isBlank(getEntity().getPassword())) {
-					addActionError(getText("vulpe.security.user.error.empty.password"));
+					addActionError("{vulpe.security.user.error.empty.password}");
 					setEntity(user);
 					return false;
 				}
 				if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
 						.isNotBlank(getEntity().getPasswordConfirm()))
 						&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-					addActionError(getText("vulpe.security.user.error.new.password.not.match"));
+					addActionError("{vulpe.security.user.error.new.password.not.match}");
 					valid = false;
 				}
 				if (getEntity().getPassword().equals(getEntity().getCurrentPassword())) {
-					addActionError(getText("vulpe.security.user.error.must.be.different.new.password.and.old.password"));
+					addActionError("{vulpe.security.user.error.must.be.different.new.password.and.old.password}");
 					setEntity(user);
 					return false;
 				}
 			} else {
-				addActionError(getText("vulpe.security.user.error.empty.current.password.not.match"));
+				addActionError("{vulpe.security.user.error.empty.current.password.not.match}");
 				valid = false;
 			}
 		}

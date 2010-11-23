@@ -158,11 +158,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public String getDefaultMessage(final Operation operation) {
-		String message = defaultMessage.getSelf(operation);
-		if (message.startsWith("{") && message.endsWith("}")) {
-			message = getText(message.substring(1, message.length() - 1));
-		}
-		return message;
+		return defaultMessage.getSelf(operation);
 	}
 
 	public String getDefaultMessage() {
@@ -728,11 +724,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getOperation().equals(Operation.CREATE_POST) && validateExists()) {
 			final NotExistEqual notExistEqual = getControllerConfig().getEntityClass().getAnnotation(
 					NotExistEqual.class);
-			String message = "vulpe.error.entity.exists";
+			String message = "{vulpe.error.entity.exists}";
 			if (StringUtils.isNotEmpty(notExistEqual.message())) {
 				message = notExistEqual.message();
 			}
-			addActionError(getText(message));
+			addActionError(message);
 			return false;
 		}
 		return EntityValidator.validate(getEntity());
@@ -1373,7 +1369,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (size > 0) {
 			// final String defaultMessage =
 			// getDefaultMessage(Operation.DELETE_DETAIL);
-			addActionMessage(getText(size > 1 ? "vulpe.msg.delete.details" : "vulpe.msg.delete.detail"));
+			addActionMessage(size > 1 ? "{vulpe.msg.delete.details}" : "{vulpe.msg.delete.detail}");
 		}
 		if (isAjax()) {
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(getDetail());
@@ -1497,7 +1493,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				filters.append("\"").append(getText(text)).append("\"");
 				++filterCount;
 			}
-			addActionError(getText("vulpe.error.validate.require.one.of.filters", filters.toString()));
+			addActionError("{vulpe.error.validate.require.one.of.filters}", filters.toString());
 			return;
 		}
 		final ENTITY entity = prepareEntity(Operation.READ);

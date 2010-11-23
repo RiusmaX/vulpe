@@ -375,55 +375,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					} else {
 						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
 								entity.getClass(), name);
-						if (like != null) {
-							hql.append("upper(");
-						}
 						if (queryParameter.orEquals().length > 0) {
 							hql.append("(");
 						}
-						hql.append(queryParameter.equals().alias());
-						hql.append('.');
-						if (queryParameter.equals().name().equals("")) {
-							hql.append(name);
-						} else {
-							hql.append(queryParameter.equals().name());
-						}
-						if (like != null) {
-							hql.append(")");
-						}
-						hql.append(" ");
-						if (like != null) {
-							hql.append("like upper(");
-						} else {
-							hql.append(queryParameter.equals().operator().getValue());
-						}
-						hql.append(" :").append(name);
-						if (like != null) {
-							hql.append(")");
-						}
+						hql.append(addHQLQueryParameter(queryParameter.equals(), name, like));
 						if (queryParameter.orEquals().length > 0) {
-							for (Parameter orEquals : queryParameter.orEquals()) {
+							for (Parameter parameter : queryParameter.orEquals()) {
 								hql.append(" or ");
-								hql.append(orEquals.alias());
-								hql.append('.');
-								if (orEquals.name().equals("")) {
-									hql.append(name);
-								} else {
-									hql.append(orEquals.name());
-								}
-								if (like != null) {
-									hql.append(")");
-								}
-								hql.append(" ");
-								if (like != null) {
-									hql.append("like upper(");
-								} else {
-									hql.append(orEquals.operator().getValue());
-								}
-								hql.append(" :").append(name);
-								if (like != null) {
-									hql.append(")");
-								}
+								hql.append(addHQLQueryParameter(parameter, name, like));
 							}
 							hql.append(")");
 						}
@@ -472,6 +431,38 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				}
 				hql.append(queryConfiguration.complement().orderBy());
 			}
+		}
+		return hql.toString();
+	}
+
+	private String addHQLQueryParameter(final Parameter parameter, final String paramName, final Like like) {
+		final StringBuilder hql = new StringBuilder();
+		if (like != null) {
+			hql.append("upper(");
+		}
+		hql.append(parameter.alias());
+		hql.append('.');
+		if (parameter.name().equals("")) {
+			hql.append(paramName);
+		} else {
+			hql.append(parameter.name());
+		}
+		if (like != null) {
+			hql.append(")");
+		}
+		hql.append(" ");
+		if (like != null) {
+			hql.append("like upper(");
+		} else {
+			hql.append(parameter.operator().getValue());
+		}
+		if (StringUtils.isNotEmpty(parameter.value())) {
+			hql.append("'").append(parameter.value()).append("'");
+		} else {
+			hql.append(" :").append(paramName);
+		}
+		if (like != null) {
+			hql.append(")");
 		}
 		return hql.toString();
 	}

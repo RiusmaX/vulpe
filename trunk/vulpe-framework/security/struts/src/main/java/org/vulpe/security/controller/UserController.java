@@ -46,13 +46,13 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	public boolean validateEntity() {
 		boolean valid = super.validateEntity();
 		if (getOperation().equals(Operation.CREATE_POST) && StringUtils.isBlank(getEntity().getPassword())) {
-			addActionError(getText("vulpe.security.user.error.empty.password"));
+			addActionError("{vulpe.security.user.error.empty.password}");
 			return false;
 		}
 		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils.isNotBlank(getEntity()
 				.getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			addActionError(getText("vulpe.security.user.error.password.not.match"));
+			addActionError("{vulpe.security.user.error.password.not.match}");
 			valid = false;
 		}
 		return valid;

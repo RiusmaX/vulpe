@@ -36,10 +36,10 @@ public class UserController extends VulpeVRaptorController<User, Long> {
 
 	@Override
 	public String createPost() {
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
+		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils.isNotBlank(getEntity()
+				.getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			return showError("vulpe.security.user.password.not.match");
+			return showError("{vulpe.security.user.password.not.match}");
 		}
 		setPassword(getEntity().getPassword());
 		return super.createPost();
@@ -53,16 +53,15 @@ public class UserController extends VulpeVRaptorController<User, Long> {
 
 	@Override
 	protected boolean onUpdatePost() {
-		if (StringUtils.isBlank(getEntity().getPassword())
-				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
+		if (StringUtils.isBlank(getEntity().getPassword()) && StringUtils.isBlank(getEntity().getPasswordConfirm())) {
 			getEntity().setPassword(getPassword());
 		} else {
 			setPassword(getEntity().getPassword());
 		}
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
+		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils.isNotBlank(getEntity()
+				.getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
-			addActionError(getText("vulpe.security.user.password.not.match"));
+			addActionError("{vulpe.security.user.password.not.match}");
 			return false;
 		}
 		return super.onUpdatePost();

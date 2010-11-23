@@ -387,7 +387,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return getFieldErrors();
 	}
 
-	public void setFieldErrors(Map errorMap) {
+	public void setFieldErrors(final Map errorMap) {
 		validationAware.setFieldErrors(errorMap);
 	}
 
@@ -399,15 +399,25 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		return ActionContext.getContext().getLocale();
 	}
 
-	public void addActionError(String anErrorMessage) {
-		validationAware.addActionError(anErrorMessage);
+	public void addActionError(final String anErrorMessage) {
+		if (anErrorMessage.startsWith("{") && anErrorMessage.endsWith("}")) {
+			final String message = getText(anErrorMessage.substring(1, anErrorMessage.length() - 1));
+			validationAware.addActionError(message);
+		} else {
+			validationAware.addActionError(anErrorMessage);
+		}
 	}
 
-	public void addActionMessage(String aMessage) {
-		validationAware.addActionMessage(aMessage);
+	public void addActionMessage(final String aMessage) {
+		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
+			final String message = getText(aMessage.substring(1, aMessage.length() - 1));
+			validationAware.addActionError(message);
+		} else {
+			validationAware.addActionMessage(aMessage);
+		}
 	}
 
-	public void addFieldError(String fieldName, String errorMessage) {
+	public void addFieldError(final String fieldName, final String errorMessage) {
 		validationAware.addFieldError(fieldName, errorMessage);
 	}
 
