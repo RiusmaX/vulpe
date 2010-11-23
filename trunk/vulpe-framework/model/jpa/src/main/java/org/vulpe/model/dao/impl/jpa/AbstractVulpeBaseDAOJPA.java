@@ -821,7 +821,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			sql.append(column != null ? column.name() : "id").append(" = ").append(entity.getId());
 			final Query query = entityManager.createNativeQuery(sql.toString());
 			for (final String key : map.keySet()) {
-				query.setParameter(key, map.get(key));
+				final Object value = map.get(key);
+				if (value instanceof Enum) {
+					query.setParameter(key, value.toString());
+				} else if (value instanceof VulpeEntity) {
+					query.setParameter(key, ((VulpeEntity<ID>) value).getId());
+				} else {
+					query.setParameter(key, value);
+				}
 			}
 			query.executeUpdate();
 		} catch (Exception e) {
