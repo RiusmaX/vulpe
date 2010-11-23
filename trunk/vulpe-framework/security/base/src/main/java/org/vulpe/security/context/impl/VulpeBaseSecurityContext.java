@@ -30,7 +30,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
@@ -51,7 +51,7 @@ import org.vulpe.security.model.services.SecurityService;
  */
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Component(VulpeConstants.SECURITY_CONTEXT)
+@Component(Security.SECURITY_CONTEXT)
 public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements VulpeSecurityContext {
 
 	private static final Logger LOG = Logger.getLogger(VulpeBaseSecurityContext.class);

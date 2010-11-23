@@ -53,7 +53,6 @@ public class VulpeConstants {
 	public static final String COMMONS = "commons";
 	public static final String CONTROLLER = "controller";
 	public static final String CONTEXT = "vulpeContext";
-	public static final String SECURITY_CONTEXT = "VulpeSecurityContext";
 	public static final String CURRENT_SERVLET_CONTEXT = "currentServletContext";
 	public static final String FILTER_DISPATCHER = "vulpeFilterDispatcher";
 
@@ -306,7 +305,9 @@ public class VulpeConstants {
 		public static final String USER_AUTHENTICATED = "vulpeUserAuthenticated";
 		public static final String LOGOUT_EXECUTED = "vulpeLogoutExecuted";
 		public static final String ROLE_PREFIX = "ROLE_";
+		public static final String SECURITY_CONTEXT = "VulpeSecurityContext";
 		public static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
+		public static final String AFTER_USER_AUTHENTICATION_CALLBACK = "AfterUserAuthenticationCallback";
 	}
 
 	public class Model {
@@ -331,5 +332,6 @@ public class VulpeConstants {
 		public class Services {
 		}
 	}
+	
 
 }
