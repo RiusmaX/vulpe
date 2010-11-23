@@ -411,7 +411,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	public void addActionMessage(final String aMessage) {
 		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
 			final String message = getText(aMessage.substring(1, aMessage.length() - 1));
-			validationAware.addActionError(message);
+			validationAware.addActionMessage(message);
 		} else {
 			validationAware.addActionMessage(aMessage);
 		}
