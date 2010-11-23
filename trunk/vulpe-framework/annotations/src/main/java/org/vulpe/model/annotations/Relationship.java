@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target(ElementType.ANNOTATION_TYPE)
 public @interface Relationship {
 
 	Class<?> target() default Class.class;

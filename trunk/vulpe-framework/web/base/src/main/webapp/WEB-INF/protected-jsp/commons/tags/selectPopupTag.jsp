@@ -15,7 +15,7 @@
 			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}"/>
 			<c:set var="autocompleteId" value="${fn:replace(autocompleteId, '.', '_')}"/>
 			<c:if test="${empty identifierSize}"><c:set var="identifierSize" value="5"/></c:if>
-			<v:label key="${labelKey}"/>
+			<c:if test="${not empty labelKey}"><v:label key="${labelKey}"/></c:if>
 			<c:choose><c:when test="${!showAsText}"><v:text property="${property}.${identifier}" size="${identifierSize}" mask="INTEGER" paragraph="false" onblur="${readonly?'return false;':''}vulpe.view.request.submitAutocompleteIdentifier({url: '${autocompleteAction}', autocomplete: '${description}', value: $(this).val(), id: '${autocompleteId}'})" readonly="${readonly}"/></c:when><c:otherwise><v:hidden property="${property}.${identifier}"/></c:otherwise></c:choose>
 			<v:text property="${property}.${description}" readonly="${empty readonly ? !autocomplete : readonly}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" paragraph="false">
 				<c:if test="${!showAsText && !readonly}"><v:popup action="${action}" labelKey="label.vulpe.browse" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>

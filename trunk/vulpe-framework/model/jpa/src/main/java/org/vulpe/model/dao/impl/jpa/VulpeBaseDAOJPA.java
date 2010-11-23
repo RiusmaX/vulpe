@@ -42,6 +42,7 @@ import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
 import org.vulpe.model.annotations.OrderBy;
+import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryConfigurations;
 import org.vulpe.model.annotations.QueryParameter;
@@ -360,9 +361,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
-					final QueryParameter parameter = VulpeReflectUtil.getInstance().getAnnotationInField(
+					final QueryParameter queryParameter = VulpeReflectUtil.getInstance().getAnnotationInField(
 							QueryParameter.class, entity.getClass(), name);
-					if (parameter == null) {
+					if (queryParameter == null) {
 						if (value instanceof String) {
 							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
 									entity.getClass(), name);
@@ -377,12 +378,15 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (like != null) {
 							hql.append("upper(");
 						}
-						hql.append(parameter.alias());
+						if (queryParameter.orEquals().length > 0) {
+							hql.append("(");
+						}
+						hql.append(queryParameter.equals().alias());
 						hql.append('.');
-						if (parameter.name().equals("")) {
+						if (queryParameter.equals().name().equals("")) {
 							hql.append(name);
 						} else {
-							hql.append(parameter.name());
+							hql.append(queryParameter.equals().name());
 						}
 						if (like != null) {
 							hql.append(")");
@@ -391,10 +395,36 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (like != null) {
 							hql.append("like upper(");
 						} else {
-							hql.append(parameter.operator().getValue());
+							hql.append(queryParameter.equals().operator().getValue());
 						}
 						hql.append(" :").append(name);
 						if (like != null) {
+							hql.append(")");
+						}
+						if (queryParameter.orEquals().length > 0) {
+							for (Parameter orEquals : queryParameter.orEquals()) {
+								hql.append(" or ");
+								hql.append(orEquals.alias());
+								hql.append('.');
+								if (orEquals.name().equals("")) {
+									hql.append(name);
+								} else {
+									hql.append(orEquals.name());
+								}
+								if (like != null) {
+									hql.append(")");
+								}
+								hql.append(" ");
+								if (like != null) {
+									hql.append("like upper(");
+								} else {
+									hql.append(orEquals.operator().getValue());
+								}
+								hql.append(" :").append(name);
+								if (like != null) {
+									hql.append(")");
+								}
+							}
 							hql.append(")");
 						}
 					}
@@ -500,17 +530,19 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
 		if (notExistEqual != null) {
-			final QueryParameter[] parameters = notExistEqual.parameters();
+			final QueryParameter[] queryParameters = notExistEqual.parameters();
 			// getting total records
 			final StringBuilder hql = new StringBuilder();
 			hql.append("select count(*) from ");
 			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
 			final Map<String, Object> values = new HashMap<String, Object>();
-			for (QueryParameter parameter : parameters) {
-				hql.append("obj.").append(parameter.name()).append(" ").append(parameter.operator().getValue()).append(
-						" :").append(parameter.name());
+			for (QueryParameter queryParameter : queryParameters) {
+				hql.append("obj.").append(queryParameter.equals().name()).append(" ").append(
+						queryParameter.equals().operator().getValue()).append(" :").append(
+						queryParameter.equals().name());
 				try {
-					values.put(parameter.name(), PropertyUtils.getProperty(entity, parameter.name()));
+					values.put(queryParameter.equals().name(), PropertyUtils.getProperty(entity, queryParameter
+							.equals().name()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}

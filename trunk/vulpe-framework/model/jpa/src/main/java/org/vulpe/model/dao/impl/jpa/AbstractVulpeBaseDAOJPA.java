@@ -428,9 +428,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									query.setParameter("ids", ids);
 								}
 								if (relationship.parameters() != null) {
-									for (final QueryParameter parameter : relationship.parameters()) {
-										if (params.containsKey(parameter.name())) {
-											query.setParameter(parameter.name(), params.get(parameter.name()));
+									for (final QueryParameter queryParameter : relationship.parameters()) {
+										if (params.containsKey(queryParameter.equals().name())) {
+											query.setParameter(queryParameter.equals().name(), params.get(queryParameter.equals().name()));
 										}
 									}
 								}
@@ -541,15 +541,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			hql.append(" where obj.id in (:ids)");
 		}
 		if (relationship.parameters() != null) {
-			for (final QueryParameter parameter : relationship.parameters()) {
-				if (params.containsKey(parameter.name())) {
+			for (final QueryParameter queryParameter : relationship.parameters()) {
+				if (params.containsKey(queryParameter.equals().name())) {
 					hql.append(" and ");
-					hql.append(StringUtils.isNotEmpty(parameter.alias()) ? parameter.alias() : "obj").append(".");
-					hql.append(parameter.name());
+					hql.append(StringUtils.isNotEmpty(queryParameter.equals().alias()) ? queryParameter.equals().alias() : "obj").append(".");
+					hql.append(queryParameter.equals().name());
 					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
-							relationship.target(), parameter.name());
-					hql.append(" ").append(like != null ? "like" : parameter.operator().getValue()).append(" ");
-					hql.append(":").append(parameter.name());
+							relationship.target(), queryParameter.equals().name());
+					hql.append(" ").append(like != null ? "like" : queryParameter.equals().operator().getValue()).append(" ");
+					hql.append(":").append(queryParameter.equals().name());
 				}
 			}
 		}

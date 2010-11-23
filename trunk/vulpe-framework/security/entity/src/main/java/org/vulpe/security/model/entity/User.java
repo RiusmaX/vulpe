@@ -26,13 +26,14 @@ import javax.persistence.Table;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryParameter;
-import org.vulpe.model.annotations.QueryParameter.OperatorType;
+import org.vulpe.model.annotations.Parameter.OperatorType;
 
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
-@NotExistEqual(parameters = { @QueryParameter(name = "username", operator = OperatorType.EQUAL) }, message = "vulpe.security.error.user.exists")
+@NotExistEqual(parameters = { @QueryParameter(equals = @Parameter(name = "username", operator = OperatorType.EQUAL)) }, message = "vulpe.security.error.user.exists")
 public class User extends BasicUser {
 
 	@Id
@@ -76,8 +77,7 @@ public class User extends BasicUser {
 		this.name = name;
 	}
 
-	public User(final String username, final String password, final boolean active,
-			final List<UserRole> userRoles) {
+	public User(final String username, final String password, final boolean active, final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);
@@ -85,8 +85,8 @@ public class User extends BasicUser {
 		this.setUserRoles(userRoles);
 	}
 
-	public User(final String username, final String password, final String name,
-			final String email, final List<UserRole> userRoles) {
+	public User(final String username, final String password, final String name, final String email,
+			final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);
@@ -96,8 +96,7 @@ public class User extends BasicUser {
 		this.setUserRoles(userRoles);
 	}
 
-	public User(final String username, final String password, final String name,
-			final List<UserRole> userRoles) {
+	public User(final String username, final String password, final String name, final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);

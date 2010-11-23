@@ -26,47 +26,8 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD, ElementType.METHOD })
 public @interface QueryParameter {
 
-	/**
-	 * Operator.
-	 *
-	 * @return
-	 */
-	OperatorType operator() default OperatorType.EQUAL;
+	Parameter equals();
 
-	/**
-	 * Attribute name.
-	 *
-	 * @return
-	 */
-	String name();
-
-	/**
-	 * Attribute value.
-	 *
-	 * @return
-	 */
-	String value() default "";
-
-	/**
-	 * Only use with JPA.
-	 *
-	 * @return
-	 */
-	String alias() default "obj";
-
-	public enum OperatorType {
-
-		EQUAL("="), GREATER(">"), SMALLER("<"), GREATER_OR_EQUAL(">="), SMALLER_OR_EQUAL("<=");
-
-		private String value;
-
-		private OperatorType(final String value) {
-			this.value = value;
-		}
-
-		public String getValue() {
-			return value;
-		}
-	}
+	Parameter[] orEquals() default {};
 
 }

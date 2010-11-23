@@ -21,46 +21,52 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Tells Vulpe to complement parts in query.
- *
- * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface QueryComplement {
+public @interface Parameter {
 
 	/**
-	 * Add distinct on query.
-	 */
-	boolean distinct() default false;
-
-	/**
-	 * Append to select clause.
-	 */
-	String select() default "";
-
-	/**
-	 * Append to from clause.
-	 */
-	String from() default "";
-
-	/**
-	 * Append to join clause.
-	 */
-	String join() default "";
-
-	/**
-	 * Append filter on where clause.
-	 */
-	String where() default "";
-
-	/**
-	 * Append to order by clause.
+	 * Operator.
 	 *
 	 * @return
 	 */
-	String orderBy() default "";
+	OperatorType operator() default OperatorType.EQUAL;
+
+	/**
+	 * Attribute name.
+	 *
+	 * @return
+	 */
+	String name();
+
+	/**
+	 * Attribute value.
+	 *
+	 * @return
+	 */
+	String value() default "";
+
+	/**
+	 * Only use with JPA.
+	 *
+	 * @return
+	 */
+	String alias() default "obj";
+	
+	public enum OperatorType {
+
+		EQUAL("="), GREATER(">"), SMALLER("<"), GREATER_OR_EQUAL(">="), SMALLER_OR_EQUAL("<=");
+
+		private String value;
+
+		private OperatorType(final String value) {
+			this.value = value;
+		}
+
+		public String getValue() {
+			return value;
+		}
+	}
 
 }

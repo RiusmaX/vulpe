@@ -8,13 +8,14 @@ import javax.persistence.Table;
 
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryParameter;
-import org.vulpe.model.annotations.QueryParameter.OperatorType;
+import org.vulpe.model.annotations.Parameter.OperatorType;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
 @Entity
 @Table(name = "VulpeMenu")
-@NotExistEqual(parameters = { @QueryParameter(name = "name", operator = OperatorType.EQUAL) }, message = "vulpe.error.menu.exists")
+@NotExistEqual(parameters = { @QueryParameter(equals = @Parameter(name = "name", operator = OperatorType.EQUAL)) }, message = "vulpe.error.menu.exists")
 @SuppressWarnings("serial")
 public class Menu extends AbstractVulpeBaseEntity<Long> {
 
