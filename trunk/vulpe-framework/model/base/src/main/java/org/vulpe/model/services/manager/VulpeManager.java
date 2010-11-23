@@ -25,80 +25,86 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default Manager interface to MAIN's
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
-public interface VulpeManager<ENTITY_CLASS extends VulpeEntity<ENTITY_ID>, ENTITY_ID extends Serializable & Comparable, ENTITY_DAO extends VulpeDAO<ENTITY_CLASS, ENTITY_ID>> {
+public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable, DAO extends VulpeDAO<ENTITY, ID>> {
 	/**
 	 * Method used to add business rules on create entity.
-	 *
+	 * 
 	 * @param entity
 	 * @return Return id of created entity
 	 * @throws VulpeApplicationException
 	 */
-	ENTITY_CLASS create(ENTITY_CLASS entity) throws VulpeApplicationException;
+	ENTITY create(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on delete entity.
-	 *
+	 * 
 	 * @param entity
 	 * @throws VulpeApplicationException
 	 */
-	void delete(ENTITY_CLASS entity) throws VulpeApplicationException;
+	void delete(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on delete entities.
-	 *
+	 * 
 	 * @param entities
 	 * @throws VulpeApplicationException
 	 */
-	void delete(List<ENTITY_CLASS> entities) throws VulpeApplicationException;
+	void delete(List<ENTITY> entities) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on update entity.
-	 *
+	 * 
 	 * @param entity
 	 * @throws VulpeApplicationException
 	 */
-	void update(ENTITY_CLASS entity) throws VulpeApplicationException;
+	void update(ENTITY entity) throws VulpeApplicationException;
+
+	/**
+	 * 
+	 * @param entity
+	 * @throws VulpeApplicationException
+	 */
+	void updateSomeAttributes(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on read list of entities.
-	 *
+	 * 
 	 * @param entity
 	 * @return List of entities
 	 * @throws VulpeApplicationException
 	 */
-	List<ENTITY_CLASS> read(ENTITY_CLASS entity) throws VulpeApplicationException;
+	List<ENTITY> read(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on paging entities.
-	 *
+	 * 
 	 * @param entity
 	 * @param pageSize
 	 * @param page
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	Paging<ENTITY_CLASS> paging(ENTITY_CLASS entity, Integer pageSize, Integer page)
-			throws VulpeApplicationException;
+	Paging<ENTITY> paging(ENTITY entity, Integer pageSize, Integer page) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on find entity by id.
-	 *
+	 * 
 	 * @param entity
 	 * @return Entity
 	 * @throws VulpeApplicationException
 	 */
-	ENTITY_CLASS find(ENTITY_CLASS entity) throws VulpeApplicationException;
+	ENTITY find(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on persist list of entities.
-	 *
+	 * 
 	 * @param entities
 	 * @return List of persisted entities
 	 * @throws VulpeApplicationException
 	 */
-	List<ENTITY_CLASS> persist(List<ENTITY_CLASS> entities) throws VulpeApplicationException;
+	List<ENTITY> persist(List<ENTITY> entities) throws VulpeApplicationException;
 }

@@ -26,7 +26,7 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default Interface of DAO for MAIN's
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
@@ -34,7 +34,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Make ENTITY merge.
-	 *
+	 * 
 	 * @param entity
 	 * @return ENTITY
 	 */
@@ -42,7 +42,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Creates ENTITY
-	 *
+	 * 
 	 * @param entity
 	 * @return ENTITY
 	 */
@@ -50,7 +50,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Returns list of ENTITY
-	 *
+	 * 
 	 * @param entity
 	 * @return List of ENTITY filter by parameters of ENTITY
 	 */
@@ -58,7 +58,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Returns list of ENTITY with paging.
-	 *
+	 * 
 	 * @param entity
 	 * @param pageSize
 	 *            Page size
@@ -71,28 +71,28 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Updates ENTITY.
-	 *
+	 * 
 	 * @param entity
 	 */
 	void update(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Remove ENTITY.
-	 *
+	 * 
 	 * @param entity
 	 */
 	void delete(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Remove list of ENTITY.
-	 *
+	 * 
 	 * @param entity
 	 */
 	void delete(List<ENTITY> entities) throws VulpeApplicationException;
 
 	/**
 	 * Returns ENTITY by id.
-	 *
+	 * 
 	 * @param id
 	 * @return ENTITY
 	 */
@@ -100,7 +100,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Execute procedure.
-	 *
+	 * 
 	 * @param name
 	 *            Full name of procedure
 	 * @param parameters
@@ -112,7 +112,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Execute function.
-	 *
+	 * 
 	 * @param name
 	 *            Full name of function
 	 * @param returnType
@@ -127,7 +127,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 
 	/**
 	 * Execute Callable Statement (Procedure or Function).
-	 *
+	 * 
 	 * @param name
 	 *            Full name of procedure or function
 	 * @param returnType
@@ -140,5 +140,17 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	CallableStatement executeCallableStatement(final String name, final Integer returnType,
 			final List<Parameter> parameters) throws VulpeApplicationException;
 
-	boolean exists(ENTITY entity) throws VulpeApplicationException;
+	/**
+	 * 
+	 * @param entity
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
+	boolean exists(final ENTITY entity) throws VulpeApplicationException;
+
+	/**
+	 * 
+	 * @param entity
+	 */
+	void updateSomeAttributes(final ENTITY entity);
 }

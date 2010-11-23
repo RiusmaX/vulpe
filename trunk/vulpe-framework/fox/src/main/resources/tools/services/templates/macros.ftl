@@ -131,14 +131,14 @@ ${ident} *${line}
  -- Make method signature
  -->
 <#function getSignatureMethod type method>
-	<#local isSufix=false>
+	<#local isSuffix=false>
 	<#list method.annotations?keys as entry>
-		<#if entry == "org.vulpe.model.annotations.Sufix">
-		     <#local isSufix=true>
+		<#if entry == "org.vulpe.model.annotations.GenerateSuffix">
+		     <#local isSuffix=true>
 	    </#if>
 	</#list>
 	<#local ret = resolveType(method.returnType) + " " + method.simpleName>
-	<#if isSufix==true>
+	<#if isSuffix==true>
 		<#local ret = ret + type.simpleName?replace("Manager", "")>
 	</#if>
 	<#local ret = ret + "(">
@@ -162,13 +162,13 @@ ${ident} *${line}
 </#function>
 
 <#function getMethodName type method>
-	<#local isSufix=false>
+	<#local isSuffix=false>
 	<#list method.annotations?keys as entry>
-		<#if entry == "org.vulpe.model.annotations.Sufix">
-		     <#local isSufix=true>
+		<#if entry == "org.vulpe.model.annotations.GenerateSuffix">
+		     <#local isSuffix=true>
 	    </#if>
 	</#list>
-	<#if isSufix==true>
+	<#if isSuffix==true>
 		<#return method.simpleName + type.simpleName?replace("Manager", "")>
 	<#else>
 		<#return method.simpleName>

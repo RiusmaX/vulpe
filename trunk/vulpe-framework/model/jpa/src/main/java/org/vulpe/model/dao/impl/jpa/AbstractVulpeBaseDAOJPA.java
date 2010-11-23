@@ -17,6 +17,7 @@ package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.ManyToOne;
@@ -34,6 +36,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.Table;
 
 import ognl.Ognl;
 
@@ -43,6 +46,7 @@ import org.hibernate.ejb.HibernateEntityManager;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -430,7 +434,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								if (relationship.parameters() != null) {
 									for (final QueryParameter queryParameter : relationship.parameters()) {
 										if (params.containsKey(queryParameter.equals().name())) {
-											query.setParameter(queryParameter.equals().name(), params.get(queryParameter.equals().name()));
+											query.setParameter(queryParameter.equals().name(), params
+													.get(queryParameter.equals().name()));
 										}
 									}
 								}
@@ -544,11 +549,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			for (final QueryParameter queryParameter : relationship.parameters()) {
 				if (params.containsKey(queryParameter.equals().name())) {
 					hql.append(" and ");
-					hql.append(StringUtils.isNotEmpty(queryParameter.equals().alias()) ? queryParameter.equals().alias() : "obj").append(".");
+					hql.append(
+							StringUtils.isNotEmpty(queryParameter.equals().alias()) ? queryParameter.equals().alias()
+									: "obj").append(".");
 					hql.append(queryParameter.equals().name());
 					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
 							relationship.target(), queryParameter.equals().name());
-					hql.append(" ").append(like != null ? "like" : queryParameter.equals().operator().getValue()).append(" ");
+					hql.append(" ").append(like != null ? "like" : queryParameter.equals().operator().getValue())
+							.append(" ");
 					hql.append(":").append(queryParameter.equals().name());
 				}
 			}
@@ -761,5 +769,63 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			query.setParameter(parameter, map.get(parameter));
 		}
 		return query.getResultList();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#updateSomeAttributes(org.vulpe.model.entity
+	 * .VulpeEntity)
+	 */
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Override
+	public void updateSomeAttributes(final ENTITY entity) {
+		if (entity.getId() == null) {
+			LOG.debug(entity.getClass().getSimpleName() + " id not found");
+			return;
+		}
+		final StringBuilder sql = new StringBuilder();
+		sql.append("update ");
+		final Table table = entity.getClass().getAnnotation(Table.class);
+		if (table != null) {
+			sql.append(table.name());
+		} else {
+			sql.append(entity.getClass().getSimpleName());
+		}
+		sql.append(" set ");
+		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		try {
+			final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
+			for (final Field field : fields) {
+				if (field.getName().equals("id") || Modifier.isTransient(field.getModifiers())) {
+					continue;
+				}
+				final Object value = Ognl.getValue(field.getName(), entity);
+				if (VulpeValidationUtil.isNotEmpty(value)) {
+					final Column column = field.getAnnotation(Column.class);
+					map.put(column != null ? column.name() : field.getName(), value);
+				}
+			}
+			int count = 0;
+			for (final String key : map.keySet()) {
+				if (count > 0) {
+					sql.append(" and ");
+				}
+				sql.append(key).append(" = ").append(":").append(key);
+				++count;
+			}
+			sql.append(" where ");
+			final Field idField = VulpeReflectUtil.getInstance().getField(entity.getClass(), "id");
+			final Column column = idField.getAnnotation(Column.class);
+			sql.append(column != null ? column.name() : "id").append(" = ").append(entity.getId());
+			final Query query = entityManager.createNativeQuery(sql.toString());
+			for (final String key : map.keySet()) {
+				query.setParameter(key, map.get(key));
+			}
+			query.executeUpdate();
+		} catch (Exception e) {
+			LOG.error(e);
+		}
 	}
 }

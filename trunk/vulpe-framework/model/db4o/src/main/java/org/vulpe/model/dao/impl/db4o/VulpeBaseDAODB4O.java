@@ -465,4 +465,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			throws VulpeApplicationException {
 		return null;
 	}
+
+	@Override
+	public void updateSomeAttributes(ENTITY entity) {
+	}
 }
