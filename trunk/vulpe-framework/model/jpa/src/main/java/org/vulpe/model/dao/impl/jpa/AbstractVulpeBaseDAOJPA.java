@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -299,11 +300,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		final StringBuilder hqlAttribute = new StringBuilder();
 		final List<String> attributeList = new ArrayList<String>();
 		String first = attribute.substring(0, attribute.indexOf("["));
+		loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
 		if (StringUtils.isNotEmpty(first)) {
 			first += "_";
 		}
-		loadRelationshipsSeparateAttributes(attributeList, attribute);
-		for (String attributeName : attributeList) {
+		for (final String attributeName : attributeList) {
 			hqlAttribute.append(", obj.").append(attributeName).append(" as ").append(first).append(
 					attributeName.replaceAll("\\.", "_"));
 		}
@@ -315,56 +316,75 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param attributeList
 	 * @param value
 	 */
-	private void loadRelationshipsSeparateAttributes(List<String> attributeList, String value) {
-		List<String> attributeInternalList = new ArrayList<String>();
-		if (value.indexOf("[") != -1) {
-			String first = VulpeValidationUtil.isEmpty(attributeList) ? "" : value.substring(0, value.indexOf("["));
-			if (StringUtils.isNotEmpty(first)) {
-				first += ".";
+	private void loadRelationshipsSeparateAttributes(final List<String> attributeList, String value, String parent) {
+		boolean initial = value.startsWith("[") && value.endsWith("]");
+		if (!initial && value.contains("],")) {
+			final String[] valueParts = value.split("\\],");
+			int count = 1;
+			for (String valuePart : valueParts) {
+				int countBracketOpen = VulpeStringUtil.count(valuePart, "[");
+				int countBracketClose = VulpeStringUtil.count(valuePart, "]");
+				for (int i = countBracketOpen; i > countBracketClose; i--) {
+					valuePart += "]";
+				}
+				if (count == valueParts.length) {
+					value = value.replace(valuePart, "");
+				} else {
+					value = value.replace(valuePart + "],", "");
+				}
+				loadRelationshipsSeparateAttributes(attributeList, valuePart, parent);
+				++count;
 			}
-			String subAttributes = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
-			if (subAttributes.contains(",")) {
-				while (subAttributes.contains(",")) {
-					int position = subAttributes.indexOf(",");
-					String subAttributesInternal = subAttributes.substring(0, position);
-					if (!subAttributesInternal.contains("[") && !subAttributesInternal.contains("]")) {
-						attributeInternalList.add(first + subAttributes.substring(0, position));
-						subAttributes = subAttributes.substring(position + 1);
-						boolean last = subAttributes.substring(position + 1).indexOf(",") == -1;
-						if (last) {
-							attributeInternalList.add(first + subAttributes);
-							subAttributes = "";
-						}
-					} else {
-						position = subAttributes.lastIndexOf("],");
-						if (position != -1) {
-							attributeInternalList.add(first + subAttributes.substring(0, position + 1));
-							subAttributes = subAttributes.substring(position + 2);
-						} else {
-							position = subAttributes.indexOf(",");
-							boolean last = subAttributes.substring(position + 1).indexOf(",") == -1;
-							if (last) {
-								attributeInternalList.add(first + subAttributes);
-								subAttributes = "";
-							} else {
-								attributeInternalList.add(first + "."
-										+ subAttributes.substring(0, subAttributes.lastIndexOf("]") + 1));
-							}
-						}
+		} else {
+			if (value.indexOf("[") > 0) {
+				if (StringUtils.isEmpty(parent)) {
+					parent = value.substring(0, value.indexOf("["));
+				} else {
+					String x = value.substring(0, value.indexOf("["));
+					if (!parent.endsWith(x)) {
+						parent += x;
 					}
 				}
-				if (StringUtils.isNotEmpty(subAttributes)) {
-					attributeList.add(first + subAttributes.replace("[", ".").replace("]", ""));
+				if (parent.contains(",")) {
+					final String[] parentParts = parent.split(",");
+					int count = 1;
+					for (final String parentPart : parentParts) {
+						if (count == parentParts.length) {
+							parent = parentPart;
+						} else {
+							attributeList.add(parentPart);
+						}
+						++count;
+					}
 				}
-			} else {
-				attributeList.add(first + subAttributes);
 			}
-		}
-		for (String string : attributeInternalList) {
-			if (string.contains("[")) {
-				loadRelationshipsSeparateAttributes(attributeList, string);
-			} else {
-				attributeList.add(string);
+			value = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
+			final String text = value.contains("[") ? value.substring(0, value.indexOf("[")) : value;
+			final String[] textParts = text.split(",");
+			parent = StringUtils.isNotEmpty(parent) ? parent + "." : "";
+			String subParent = "";
+			int count = 1;
+			for (final String textPart : textParts) {
+				if (count == textParts.length && !textPart.equals(value)) {
+					subParent = textPart;
+				} else {
+					attributeList.add(parent + textPart);
+					if (textPart.equals(value)) {
+						value = "";
+					} else {
+						value = value.substring(textPart.length() + 1);
+					}
+				}
+				++count;
+			}
+			if (StringUtils.isEmpty(subParent) && StringUtils.isNotEmpty(value)) {
+				attributeList.add(value);
+			}
+			if (value.contains("[")) {
+				if (value.contains("],")) {
+					subParent = "";
+				}
+				loadRelationshipsSeparateAttributes(attributeList, value, parent + subParent);
 			}
 		}
 	}
@@ -375,7 +395,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param entities
 	 * @param params
 	 */
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params,
 			final boolean onlyInMain) {
 		if (LOG.isDebugEnabled()) {
@@ -712,10 +732,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		try {
 			final List<String> attributeList = new ArrayList<String>();
 			String first = attribute.substring(0, attribute.indexOf("["));
+			loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
 			if (StringUtils.isNotEmpty(first)) {
 				first += "_";
 			}
-			loadRelationshipsSeparateAttributes(attributeList, attribute);
 			final Map context = Ognl.createDefaultContext(entity);
 			context.put(OGNL_CREATE_NULL_OBJECTS, true);
 			for (final String attributeName : attributeList) {
@@ -804,7 +824,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				final Object value = Ognl.getValue(field.getName(), entity);
 				if (VulpeValidationUtil.isNotEmpty(value)) {
 					final Column column = field.getAnnotation(Column.class);
-					map.put(column != null ? column.name() : field.getName(), value);
+					final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
+					if (column != null) {
+						map.put(column.name(), value);
+					} else if (joinColumn != null) {
+						map.put(StringUtils.isNotEmpty(joinColumn.referencedColumnName()) ? joinColumn
+								.referencedColumnName() : joinColumn.name(), value);
+					} else {
+						map.put(field.getName(), value);
+					}
 				}
 			}
 			int count = 0;
@@ -835,4 +863,5 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			LOG.error(e);
 		}
 	}
+
 }
