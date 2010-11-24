@@ -273,7 +273,7 @@ $(document).ready(function() {
 		}
 	}
 <c:choose>
-	<c:when test="${now['requireOneFilter']}">vulpe.config.requireOneFilter = true;</c:when>
+	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
 </c:choose>
 });

@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Utility class to access and control global parameters.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -33,7 +33,7 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 	/**
 	 * Add object on the map to use in current case. When the flow is changed or
 	 * the case is finished the object is released from the map.
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @return
@@ -44,7 +44,7 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.HashMap#get(java.lang.Object)
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.HashMap#remove(java.lang.Object)
 	 */
 	@Override
@@ -83,5 +83,19 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 			obj = super.remove(key);
 		}
 		return obj;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.util.HashMap#containsKey(java.lang.Object)
+	 */
+	@Override
+	public boolean containsKey(Object key) {
+		boolean contains = super.containsKey(WEAK_REFERENCE + key);
+		if (!contains) {
+			contains = super.containsKey(key);
+		}
+		return contains;
 	}
 }

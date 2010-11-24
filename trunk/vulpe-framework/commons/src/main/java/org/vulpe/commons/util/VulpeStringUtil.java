@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Vulpe String Utility class.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -94,21 +94,20 @@ public class VulpeStringUtil {
 
 	/**
 	 * String accent normalize
-	 *
+	 * 
 	 * @param term
 	 * @return
 	 */
 	public static String normalize(final String term) {
 		final StringBuilder normalized = new StringBuilder();
 		for (int i = 0; i < term.length(); i++) {
-			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i))
-					: term.charAt(i));
+			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i)) : term.charAt(i));
 		}
 		return normalized.toString();
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -132,7 +131,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in upper case.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -142,7 +141,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in lower case.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -152,7 +151,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 *
+	 * 
 	 * @param blob
 	 * @return
 	 */
@@ -177,7 +176,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 *
+	 * 
 	 * @param blob
 	 * @return
 	 */
@@ -198,5 +197,27 @@ public class VulpeStringUtil {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public static int count(final String value, final String token) {
+		int count = 0;
+		for (int i = 0; i < value.length(); i++) {
+			if (value.charAt(i) == token.charAt(0)) {
+				++count;
+			}
+		}
+		return count;
+	}
+
+	public static int count(final String value, final String tokenBegin, final String tokenEnd) {
+		String[] valueParts = value.split(tokenBegin);
+		int count = 0;
+		for (String string : valueParts) {
+			if (string.contains(tokenEnd)) {
+				break;
+			}
+			++count;
+		}
+		return count;
 	}
 }

@@ -232,7 +232,10 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	protected void setupReturn(final DecoratedDAO dao, final String queryName, final QueryHint[] hints,
 			final DecoratedDAOMethod method, final boolean unique) {
-		if (unique || isReturnEntity(hints)) {
+		final String returnType = findQueryHint("return", hints);
+		if (StringUtils.isNotEmpty(returnType)) {
+			method.setReturnType(returnType);
+		} else if (unique || isReturnEntity(hints)) {
 			method.setReturnType(dao.getName());
 		} else {
 			method.setReturnType("java.util.List<".concat(dao.getName()).concat(">"));
