@@ -19,7 +19,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${package}</groupId>
-			<artifactId>${rootArtifactId}-domains</artifactId>
+			<artifactId>${rootArtifactId}-commons</artifactId>
 			<version>1.0</version>
 		</dependency>
 		<dependency>
