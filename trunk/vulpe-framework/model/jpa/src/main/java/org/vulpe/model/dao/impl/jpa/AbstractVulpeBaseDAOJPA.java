@@ -44,9 +44,6 @@ import ognl.Ognl;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
-import org.hibernate.ejb.HibernateEntityManager;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -66,7 +63,7 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default implementation of DAO with JPA
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
@@ -80,7 +77,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	private EntityManager entityManager;
 
 	/**
-	 *
+	 * 
 	 * @param <T>
 	 * @param entity
 	 */
@@ -106,7 +103,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
 	 */
 	public <T> T merge(final T entity) {
@@ -141,7 +138,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/**
 	 * Execute HQL query.
-	 *
+	 * 
 	 * @param <T>
 	 * @param hql
 	 * @param params
@@ -159,7 +156,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
@@ -170,7 +167,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
 	 * java.util.List)
 	 */
@@ -182,7 +179,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
 	 * java.lang.Integer, java.util.List)
@@ -191,7 +188,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final List<Parameter> parameters) throws VulpeApplicationException {
 		CallableStatement cstmt = null;
 		try {
-			final Connection connection = ((HibernateEntityManager) entityManager).getSession().connection();
+			final Session session = (Session) entityManager.getDelegate();
+			final Connection connection = session.connection();
 			final StringBuilder call = new StringBuilder();
 			call.append(returnType == null ? "{call " : "{? = call ");
 			call.append(name);
@@ -282,7 +280,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param entity
 	 */
 	protected void loadEntityRelationships(final ENTITY entity) {
@@ -292,7 +290,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param attribute
 	 * @param parent
 	 * @return
@@ -313,7 +311,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param attributeList
 	 * @param value
 	 */
@@ -392,18 +390,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/**
 	 * Load relationships and optimize lazy load.
-	 *
+	 * 
 	 * @param entities
 	 * @param params
 	 */
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	protected void loadRelationships(final List<ENTITY> entities, final Map<String, Object> params,
 			final boolean onlyInMain) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method loadRelationships - Start");
 		}
-		final Session session = (Session) entityManager.getDelegate();
-		session.clear();
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
 			final ENTITY firstEntity = entities.get(0);
 			final String queryConfigurationName = firstEntity.getMap().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) firstEntity
@@ -472,6 +467,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									final List<Map> result = query.getResultList();
 									loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
 											parentName, propertyType, hqlAttributes, oneToMany);
+								}
+								if (!onlyInMain) {
+									final Session session = (Session) entityManager.getDelegate();
+									session.clear();
 								}
 								loadRelationshipsMountEntities(relationship, entities, childs, relationshipIds,
 										parentName, oneToMany);
@@ -724,7 +723,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param map
 	 * @param entity
 	 * @param attribute
@@ -758,7 +757,6 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return entityManager;
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public Object findByNamedQuery(final String name) {
 		try {
 			return getEntityManager().createNamedQuery(name).getSingleResult();
@@ -767,7 +765,6 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public Object findByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
 		try {
 			final Query query = getEntityManager().createNamedQuery(name);
@@ -780,12 +777,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<?> listByNamedQuery(final String name) {
 		return getEntityManager().createNamedQuery(name).getResultList();
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<?> listByNamedQueryAndNamedParams(final String name, final Map<String, Object> map) {
 		final Query query = getEntityManager().createNamedQuery(name);
 		for (final String parameter : map.keySet()) {
@@ -796,12 +791,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#updateSomeAttributes(org.vulpe.model.entity
 	 * .VulpeEntity)
 	 */
-	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void updateSomeAttributes(final ENTITY entity) {
 		if (entity.getId() == null) {
@@ -841,7 +835,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			int count = 0;
 			for (final String key : map.keySet()) {
 				if (count > 0) {
-					sql.append(" and ");
+					sql.append(", ");
 				}
 				sql.append(key).append(" = ").append(":").append(key);
 				++count;
