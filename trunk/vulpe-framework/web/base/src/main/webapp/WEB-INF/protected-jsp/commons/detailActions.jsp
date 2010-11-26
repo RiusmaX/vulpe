@@ -10,14 +10,12 @@
 <c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${targetConfig.baseName}']${'}'}" />
 <c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" />
 <c:set var="style" value="display: none;" />
-<c:if test="${buttonDetail}">
 <v:action
 	layerFields="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}"
 	validate="false" labelKey="addDetail"
 	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"
 	queryString="detail=${targetConfigPropertyName}&detailLayer=vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" showButtonAsImage="false"
-	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" />
-</c:if>
+	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" show="${buttonDetail}" />
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsAppend.jsp"%>
 </p>
