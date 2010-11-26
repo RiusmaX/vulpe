@@ -45,131 +45,136 @@ public class SecurityServicePOJO implements SecurityService {
 	private transient SecureResourceManager secureResourceManager;
 
 	@Transactional(readOnly = true)
-	public User findUser(final User user0) throws VulpeApplicationException {
-		return userManager.find(user0);
+	public User findUser(final User user) throws VulpeApplicationException {
+		return userManager.find(user);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteUser(final User user0) throws VulpeApplicationException {
-		userManager.delete(user0);
+	public void deleteUser(final User user) throws VulpeApplicationException {
+		userManager.delete(user);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteUser(final List<User> list0) throws VulpeApplicationException {
-		userManager.delete(list0);
+	public void deleteUser(final List<User> list) throws VulpeApplicationException {
+		userManager.delete(list);
 	}
 
 	@Transactional(readOnly = true)
-	public List<User> readUser(final User user0) throws VulpeApplicationException {
-		return userManager.read(user0);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public User createUser(final User user0) throws VulpeApplicationException {
-		return userManager.create(user0);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateUser(final User user0) throws VulpeApplicationException {
-		userManager.update(user0);
+	public List<User> readUser(final User user) throws VulpeApplicationException {
+		return userManager.read(user);
 	}
 
 	@Transactional(readOnly = true)
-	public Paging<User> pagingUser(final User user0, final Integer integer1, final Integer integer2)
+	public List<User> getUsersByRole(final String roleName) throws VulpeApplicationException {
+		return userManager.getUsersByRole(roleName);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public User createUser(final User user) throws VulpeApplicationException {
+		return userManager.create(user);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void updateUser(final User user) throws VulpeApplicationException {
+		userManager.update(user);
+	}
+
+	@Transactional(readOnly = true)
+	public Paging<User> pagingUser(final User user, final Integer integer1, final Integer integer2)
 			throws VulpeApplicationException {
-		return userManager.paging(user0, integer1, integer2);
+		return userManager.paging(user, integer1, integer2);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<User> persistUser(final List<User> list0) throws VulpeApplicationException {
-		return userManager.persist(list0);
+	public List<User> persistUser(final List<User> list) throws VulpeApplicationException {
+		return userManager.persist(list);
 	}
 
 	@Transactional(readOnly = true)
-	public Role findRole(final Role role0) throws VulpeApplicationException {
-		return roleManager.find(role0);
+	public Role findRole(final Role role) throws VulpeApplicationException {
+		return roleManager.find(role);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteRole(final Role role0) throws VulpeApplicationException {
-		roleManager.delete(role0);
+	public void deleteRole(final Role role) throws VulpeApplicationException {
+		roleManager.delete(role);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteRole(final List<Role> list0) throws VulpeApplicationException {
-		roleManager.delete(list0);
+	public void deleteRole(final List<Role> list) throws VulpeApplicationException {
+		roleManager.delete(list);
 	}
 
 	@Transactional(readOnly = true)
-	public List<Role> readRole(final Role role0) throws VulpeApplicationException {
-		return roleManager.read(role0);
+	public List<Role> readRole(final Role role) throws VulpeApplicationException {
+		return roleManager.read(role);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public Role createRole(final Role role0) throws VulpeApplicationException {
-		return roleManager.create(role0);
+	public Role createRole(final Role role) throws VulpeApplicationException {
+		return roleManager.create(role);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateRole(final Role role0) throws VulpeApplicationException {
-		roleManager.update(role0);
+	public void updateRole(final Role role) throws VulpeApplicationException {
+		roleManager.update(role);
 	}
 
 	@Transactional(readOnly = true)
-	public Paging<Role> pagingRole(final Role role0, final Integer integer1, final Integer integer2)
+	public Paging<Role> pagingRole(final Role role, final Integer integer1, final Integer integer2)
 			throws VulpeApplicationException {
-		return roleManager.paging(role0, integer1, integer2);
+		return roleManager.paging(role, integer1, integer2);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Role> persistRole(final List<Role> list0) throws VulpeApplicationException {
-		return roleManager.persist(list0);
+	public List<Role> persistRole(final List<Role> list) throws VulpeApplicationException {
+		return roleManager.persist(list);
 	}
 
 	@Transactional(readOnly = true)
-	public SecureResource findSecureResource(final SecureResource secureResource0) throws VulpeApplicationException {
-		return secureResourceManager.find(secureResource0);
+	public SecureResource findSecureResource(final SecureResource secureResource) throws VulpeApplicationException {
+		return secureResourceManager.find(secureResource);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteSecureResource(final SecureResource secureResource0)
+	public void deleteSecureResource(final SecureResource secureResource)
 			throws VulpeApplicationException {
-		secureResourceManager.delete(secureResource0);
+		secureResourceManager.delete(secureResource);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void deleteSecureResource(final List<SecureResource> list0)
+	public void deleteSecureResource(final List<SecureResource> list)
 			throws VulpeApplicationException {
-		secureResourceManager.delete(list0);
+		secureResourceManager.delete(list);
 	}
 
 	@Transactional(readOnly = true)
-	public List<SecureResource> readSecureResource(final SecureResource secureResource0)
+	public List<SecureResource> readSecureResource(final SecureResource secureResource)
 			throws VulpeApplicationException {
-		return secureResourceManager.read(secureResource0);
+		return secureResourceManager.read(secureResource);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public SecureResource createSecureResource(final SecureResource secureResource0)
+	public SecureResource createSecureResource(final SecureResource secureResource)
 			throws VulpeApplicationException {
-		return secureResourceManager.create(secureResource0);
+		return secureResourceManager.create(secureResource);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateSecureResource(final SecureResource secureResource0)
+	public void updateSecureResource(final SecureResource secureResource)
 			throws VulpeApplicationException {
-		secureResourceManager.update(secureResource0);
+		secureResourceManager.update(secureResource);
 	}
 
 	@Transactional(readOnly = true)
-	public Paging<SecureResource> pagingSecureResource(final SecureResource secureResource0,
+	public Paging<SecureResource> pagingSecureResource(final SecureResource secureResource,
 			final Integer integer1, final Integer integer2) throws VulpeApplicationException {
-		return secureResourceManager.paging(secureResource0, integer1, integer2);
+		return secureResourceManager.paging(secureResource, integer1, integer2);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<SecureResource> persistSecureResource(final List<SecureResource> list0)
+	public List<SecureResource> persistSecureResource(final List<SecureResource> list)
 			throws VulpeApplicationException {
-		return secureResourceManager.persist(list0);
+		return secureResourceManager.persist(list);
 	}
 }

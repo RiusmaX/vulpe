@@ -26,57 +26,59 @@ import org.vulpe.security.model.entity.User;
 
 public interface SecurityService extends VulpeService {
 
-	User findUser(User user0) throws VulpeApplicationException;
+	User findUser(User user) throws VulpeApplicationException;
 
-	void deleteUser(User user0) throws VulpeApplicationException;
+	void deleteUser(User user) throws VulpeApplicationException;
 
-	void deleteUser(List<User> list0) throws VulpeApplicationException;
+	void deleteUser(List<User> list) throws VulpeApplicationException;
 
-	List<User> readUser(User user0) throws VulpeApplicationException;
+	List<User> readUser(User user) throws VulpeApplicationException;
+	
+	List<User> getUsersByRole(String roleName) throws VulpeApplicationException;
 
-	User createUser(User user0) throws VulpeApplicationException;
+	User createUser(User user) throws VulpeApplicationException;
 
-	void updateUser(User user0) throws VulpeApplicationException;
+	void updateUser(User user) throws VulpeApplicationException;
 
-	Paging<User> pagingUser(User user0, Integer integer1, Integer integer2)
+	Paging<User> pagingUser(User user, Integer integer1, Integer integer2)
 			throws VulpeApplicationException;
 
-	List<User> persistUser(List<User> list0) throws VulpeApplicationException;
+	List<User> persistUser(List<User> list) throws VulpeApplicationException;
 
-	Role findRole(Role role0) throws VulpeApplicationException;
+	Role findRole(Role role) throws VulpeApplicationException;
 
-	void deleteRole(Role role0) throws VulpeApplicationException;
+	void deleteRole(Role role) throws VulpeApplicationException;
 
-	void deleteRole(List<Role> list0) throws VulpeApplicationException;
+	void deleteRole(List<Role> list) throws VulpeApplicationException;
 
-	List<Role> readRole(Role role0) throws VulpeApplicationException;
+	List<Role> readRole(Role role) throws VulpeApplicationException;
 
-	Role createRole(Role role0) throws VulpeApplicationException;
+	Role createRole(Role role) throws VulpeApplicationException;
 
-	void updateRole(Role role0) throws VulpeApplicationException;
+	void updateRole(Role role) throws VulpeApplicationException;
 
-	Paging<Role> pagingRole(Role role0, Integer integer1, Integer integer2)
+	Paging<Role> pagingRole(Role role, Integer integer1, Integer integer2)
 			throws VulpeApplicationException;
 
-	List<Role> persistRole(List<Role> list0) throws VulpeApplicationException;
+	List<Role> persistRole(List<Role> list) throws VulpeApplicationException;
 
-	SecureResource findSecureResource(SecureResource secureResource0) throws VulpeApplicationException;
+	SecureResource findSecureResource(SecureResource secureResource) throws VulpeApplicationException;
 
-	void deleteSecureResource(SecureResource secureResource0) throws VulpeApplicationException;
+	void deleteSecureResource(SecureResource secureResource) throws VulpeApplicationException;
 
-	void deleteSecureResource(List<SecureResource> list0) throws VulpeApplicationException;
+	void deleteSecureResource(List<SecureResource> list) throws VulpeApplicationException;
 
-	List<SecureResource> readSecureResource(SecureResource secureResource0)
+	List<SecureResource> readSecureResource(SecureResource secureResource)
 			throws VulpeApplicationException;
 
-	SecureResource createSecureResource(SecureResource secureResource0)
+	SecureResource createSecureResource(SecureResource secureResource)
 			throws VulpeApplicationException;
 
-	void updateSecureResource(SecureResource secureResource0) throws VulpeApplicationException;
+	void updateSecureResource(SecureResource secureResource) throws VulpeApplicationException;
 
-	Paging<SecureResource> pagingSecureResource(SecureResource secureResource0, Integer integer1,
+	Paging<SecureResource> pagingSecureResource(SecureResource secureResource, Integer integer1,
 			Integer integer2) throws VulpeApplicationException;
 
-	List<SecureResource> persistSecureResource(List<SecureResource> list0)
+	List<SecureResource> persistSecureResource(List<SecureResource> list)
 			throws VulpeApplicationException;
 }

@@ -15,9 +15,14 @@
  */
 package org.vulpe.security.model.dao;
 
+import java.util.List;
+
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeDAO;
 import org.vulpe.security.model.entity.User;
 
 public interface UserDAO extends VulpeDAO<User, Long> {
 
+	List<User> getUsersByRole(final String roleName) throws VulpeApplicationException;
+	
 }

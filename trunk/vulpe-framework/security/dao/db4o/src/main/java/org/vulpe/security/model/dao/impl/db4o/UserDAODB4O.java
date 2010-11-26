@@ -15,8 +15,11 @@
  */
 package org.vulpe.security.model.dao.impl.db4o;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.db4o.VulpeBaseDAODB4O;
 import org.vulpe.security.model.dao.UserDAO;
 import org.vulpe.security.model.entity.User;
@@ -24,5 +27,10 @@ import org.vulpe.security.model.entity.User;
 @Repository("UserDAO")
 @Transactional
 public class UserDAODB4O extends VulpeBaseDAODB4O<User, Long> implements UserDAO {
+
+	@Override
+	public List<User> getUsersByRole(String roleName) throws VulpeApplicationException {
+		return null;
+	}
 
 }

@@ -21,6 +21,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +32,7 @@ import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Parameter.OperatorType;
 
+@NamedQuery(name = "User.getUsersByRole", query = "select obj from User obj inner join obj.userRoles userRole where userRole.role.name = :name", hints = @QueryHint(name = "return", value = "java.util.List<org.vulpe.security.model.entity.User>"))
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")

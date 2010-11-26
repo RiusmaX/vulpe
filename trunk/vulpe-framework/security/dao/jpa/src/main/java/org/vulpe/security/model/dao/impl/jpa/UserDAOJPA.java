@@ -15,8 +15,14 @@
  */
 package org.vulpe.security.model.dao.impl.jpa;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.impl.jpa.VulpeBaseDAOJPA;
 import org.vulpe.security.model.dao.UserDAO;
 import org.vulpe.security.model.entity.User;
@@ -25,4 +31,10 @@ import org.vulpe.security.model.entity.User;
 @Transactional
 public class UserDAOJPA extends VulpeBaseDAOJPA<User, Long> implements UserDAO {
 
+	@SuppressWarnings("unchecked")
+	public List<User> getUsersByRole(final String roleName) throws VulpeApplicationException {
+		final Map<String, Object> map = new HashMap();
+		map.put("name", roleName.startsWith(Security.ROLE_PREFIX) ? roleName : Security.ROLE_PREFIX + roleName);
+		return (List<User>) listByNamedQueryAndNamedParams("User.getUsersByRole", map);
+	}
 }

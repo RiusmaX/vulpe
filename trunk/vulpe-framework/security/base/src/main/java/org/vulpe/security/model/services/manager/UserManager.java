@@ -15,7 +15,10 @@
  */
 package org.vulpe.security.model.services.manager;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.services.manager.impl.VulpeBaseManager;
 import org.vulpe.security.model.dao.UserDAO;
 import org.vulpe.security.model.entity.User;
@@ -23,4 +26,7 @@ import org.vulpe.security.model.entity.User;
 @Service
 public class UserManager extends VulpeBaseManager<User, Long, UserDAO> {
 
+	public List<User> getUsersByRole(final String roleName) throws VulpeApplicationException {
+		return getDAO().getUsersByRole(roleName);
+	}
 }
