@@ -32,7 +32,7 @@ import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Parameter.OperatorType;
 
-@NamedQuery(name = "User.getUsersByRole", query = "select obj from User obj inner join obj.userRoles userRole where userRole.role.name = :name", hints = @QueryHint(name = "return", value = "java.util.List<org.vulpe.security.model.entity.User>"))
+@NamedQuery(name = "User.getUsersByRole", query = "select new User(obj.username, obj.name, obj.email) from User obj inner join obj.userRoles userRole where userRole.role.name = :name", hints = @QueryHint(name = "return", value = "java.util.List<org.vulpe.security.model.entity.User>"))
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
@@ -107,6 +107,13 @@ public class User extends BasicUser {
 		this.email = username + "@localhost";
 		this.setActive(true);
 		this.setUserRoles(userRoles);
+	}
+
+	public User(final String username, final String name, final String email) {
+		super();
+		this.setUsername(username);
+		this.name = name;
+		this.email = email;
 	}
 
 	public Long getId() {
