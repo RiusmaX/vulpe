@@ -121,6 +121,11 @@ var vulpe = {
 	// RTE Array
 	RTEs: new Array(),
 
+	login: {
+		executeBefore: function(){},
+		executeAfter: function(){},
+	},
+	
 	// vulpe.util
 	util: {
 		setRequired: function(name, enabled) {
@@ -1752,9 +1757,6 @@ var vulpe = {
 					return false;
 				}
 				options.queryString = (vulpe.util.isNotEmpty(options.queryString) ? options.queryString + '&' : '') + 'ajax=true';
-				if (!vulpe.util.existsVulpePopups()) {
-					//hotkeys.triggersMap = {};
-				}
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",
@@ -1766,18 +1768,24 @@ var vulpe = {
 						vulpe.view.hideLoading();
 						vulpe.config.showLoading = true;
 						var authenticator = options.url.indexOf("/j_spring_security_check") != -1;
-						var loginError = data.indexOf("vulpeLoginForm") == -1;
+						var loginForm = data.indexOf("vulpeLoginForm") == -1;
 						var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						} else if (!authenticator && !loginError && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
+						} else if (!authenticator && !loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {
 								vulpe.config.redirectToIndex = true;
-								if (authenticator && loginError && validUrlRedirect) {
+								if (authenticator && loginForm && validUrlRedirect) {
 									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
+									if (loginForm) {
+										var userAuthenticatedLayer = vulpe.util.get("userAuthenticated");
+										if (userAuthenticatedLayer.length == 1) {
+											userAuthenticatedLayer.hide();
+										}
+									}
 									var html = "";
 									if (vulpe.util.existsVulpePopups(options.layer)) {
 										var messagePopup = "<div id=\"messagesPopup_" + options.layer + "\" style=\"display: none;\" class=\"vulpeMessages\"></div>";
