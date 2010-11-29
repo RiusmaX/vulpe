@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -1014,7 +1015,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
 					final String entityName = getControllerConfig().getEntityClass().getSimpleName();
 					List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
-					if (list == null) {
+					if (VulpeValidationUtil.isEmpty(list)) {
 						list = new ArrayList<ENTITY>();
 					}
 					list.add(getEntity());
@@ -1166,7 +1167,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
 				final String entityName = getControllerConfig().getEntityClass().getSimpleName();
 				List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
-				if (list == null || list.isEmpty()) {
+				if (VulpeValidationUtil.isEmpty(list)) {
 					list = new ArrayList<ENTITY>();
 					list.add(getEntity());
 				} else {
@@ -1287,6 +1288,19 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (onDelete()) {
 			addActionMessage(getDefaultMessage());
 			setSelectedTab(null);
+		}
+		if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
+			final String entityName = getControllerConfig().getEntityClass().getSimpleName();
+			final List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
+			if (VulpeValidationUtil.isNotEmpty(list)) {
+				for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
+					final ENTITY entity = iterator.next();
+					if (entity.getId().equals(getEntity().getId())) {
+						iterator.remove();
+					}
+				}
+			}
+			getCachedClass().put(entityName, list);
 		}
 		deleteAfter();
 		if (getControllerType().equals(ControllerType.MAIN)) {
