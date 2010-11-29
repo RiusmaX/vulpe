@@ -173,8 +173,10 @@ var vulpe = {
 
 		normalize: function(term) {
 			var ret = "";
-			for (var i = 0; i < term.length; i++) {
-				ret += vulpe.config.accentMap[term.charAt(i)] || term.charAt(i);
+			if (typeof term != "undefined") {
+				for (var i = 0; i < term.length; i++) {
+					ret += vulpe.config.accentMap[term.charAt(i)] || term.charAt(i);
+				}
 			}
 			return ret;
 		},
@@ -1261,10 +1263,10 @@ var vulpe = {
 					jQuery(webtoolkit.url.decode(c), vulpe.util.get(layerParent)).val(value);
 				}
 			});
-
+			vulpe.view.request.invokeSelectRowCallback(popupName);
 			vulpe.view.hidePopup(popupName);
 		},
-
+		
 		loading: null,
 
 		showLoading: function() {
@@ -1346,6 +1348,7 @@ var vulpe = {
 				return vulpe.view.request.openPopup(actionURL, width, height, popupName);
 			},
 
+			selectRowCallback: new Array(),
 			globalsBeforeJs: new Array(),
 			globalsAfterJs: new Array(),
 
@@ -1368,6 +1371,10 @@ var vulpe = {
 				if (!exists) {
 					array[array.length] = newFunction;
 				}
+			},
+
+			registerSelectRowCallback: function(callback, key, layerFields) {
+				vulpe.view.request.registerFunctions(vulpe.view.request.selectRowCallback, callback, key, layerFields);
 			},
 
 			registerGlobalsBeforeJs: function(callback, key, layerFields) {
@@ -1398,6 +1405,10 @@ var vulpe = {
 				});
 			},
 
+			removeSelectRowCallback: function(key, layerFields) {
+				vulpe.view.request.removeFunctions(vulpe.view.request.selectRowCallback, key, layerFields);
+			},
+			
 			removeGlobalsBeforeJs: function(key, layerFields) {
 				vulpe.view.request.removeFunctions(vulpe.view.request.globalsBeforeJs, key, layerFields);
 			},
@@ -1411,9 +1422,14 @@ var vulpe = {
 					layerFields = '';
 				}
 				jQuery(array).each(function(i) {
-					if (this.layerFields == layerFields)
+					if (this.layerFields == layerFields) {
 						this.callback();
+					}
 				});
+			},
+
+			invokeSelectRowCallback: function(layerFields) {
+				vulpe.view.request.invokeFunctions(vulpe.view.request.selectRowCallback, layerFields);
 			},
 
 			invokeGlobalsBeforeJs: function(layerFields) {
@@ -1831,7 +1847,11 @@ var vulpe = {
 			 */
 			submitAutocompleteIdentifier: function(options) {
 				if (options.value && options.value != "") {
-					vulpe.view.request.submitAjax({url: options.url + '?entitySelect.autocomplete=' + options.autocomplete + '&entitySelect.id=' + options.value, layer: options.id, layerFields: options.id});
+					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
+					options.layer = options.id;
+					options.layerFields = options.id;
+					options.id = "";
+					vulpe.view.request.submitAjax(options);
 				} else {
 					vulpe.util.get(options.id).val("");
 				}

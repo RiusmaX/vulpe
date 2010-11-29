@@ -5,6 +5,7 @@
 <%@ attribute name="autocompleteSelect" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="autocompleteURL" required="false" rtexprvalue="true" %>
 <%@ attribute name="autocompleteValueList" required="false" rtexprvalue="true" type="java.lang.Object" %>
+<%@ attribute name="autocompleteCallback" required="false" rtexprvalue="true" %>
 <%@ attribute name="lowerCase" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="mask" required="false" rtexprvalue="true" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>

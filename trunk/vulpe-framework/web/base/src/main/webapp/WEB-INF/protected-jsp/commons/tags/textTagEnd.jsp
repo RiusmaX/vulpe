@@ -67,6 +67,16 @@
 				}
 				</c:if>
 				vulpe.util.get("${elementId}").blur();
+				<c:if test="${not empty autocompleteCallback}">
+				var autocompleteCallback = "${autocompleteCallback}";
+				if (vulpe.util.isNotEmpty(autocompleteCallback)) {
+					try {
+						eval(webtoolkit.url.decode(autocompleteCallback));
+					} catch(e) {
+						// do nothing
+					}
+				}
+				</c:if>
 			},
 			</c:if>
 			minLength: ${autocompleteMinLength}
