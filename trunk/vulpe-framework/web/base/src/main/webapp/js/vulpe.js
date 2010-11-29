@@ -125,7 +125,7 @@ var vulpe = {
 		executeBefore: function(){},
 		executeAfter: function(){},
 	},
-	
+
 	// vulpe.util
 	util: {
 		setRequired: function(name, enabled) {
@@ -1768,16 +1768,16 @@ var vulpe = {
 						vulpe.view.hideLoading();
 						vulpe.config.showLoading = true;
 						var authenticator = options.url.indexOf("/j_spring_security_check") != -1;
-						var loginForm = data.indexOf("vulpeLoginForm") == -1;
+						var loginForm = data.indexOf("vulpeLoginForm") != -1;
 						var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
-						} else if (!authenticator && !loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
+						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
 						} else {
 							try {
 								vulpe.config.redirectToIndex = true;
-								if (authenticator && loginForm && validUrlRedirect) {
+								if (authenticator && !loginForm && validUrlRedirect) {
 									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
 									if (loginForm) {
