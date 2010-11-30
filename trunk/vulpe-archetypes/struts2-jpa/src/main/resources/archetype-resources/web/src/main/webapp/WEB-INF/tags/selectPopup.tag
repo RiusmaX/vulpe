@@ -29,5 +29,6 @@
 <%@ attribute name="requiredParamExpressions" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="requiredParamProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
+<%@ attribute name="showBrowseButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showIdentifier" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/selectPopupTag.jsp" %>
