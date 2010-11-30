@@ -11,7 +11,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
-//		ViewType.CRUD, ViewType.SELECT }))
+//		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
 public class Link extends BasePortal {

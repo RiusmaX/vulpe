@@ -12,7 +12,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @CachedClass
 @Inheritance
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 1)), view = @View(viewType = {
-//		ViewType.CRUD, ViewType.SELECT }))
+//		ViewType.MAIN, ViewType.SELECT }))
 @SuppressWarnings("serial")
 public class Portal extends BasePortal {
 

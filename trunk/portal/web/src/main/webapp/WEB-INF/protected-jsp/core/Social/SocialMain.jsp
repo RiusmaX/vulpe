@@ -3,30 +3,30 @@
 
 <v:hidden property="id"/>
 <v:select
-	labelKey="label.portal.core.Social.crud.network"
+	labelKey="label.portal.core.Social.main.network"
 	property="network"
 	showBlank="true" autoLoad="false"
 	required="true"
 />
 <v:text
-	labelKey="label.portal.core.Social.crud.name"
+	labelKey="label.portal.core.Social.main.name"
 	property="name"
 	size="30"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Social.crud.description"
+	labelKey="label.portal.core.Social.main.description"
 	property="description"
 	size="60"
 />
 <v:select
-	labelKey="label.portal.core.Social.crud.target"
+	labelKey="label.portal.core.Social.main.target"
 	property="target"
 	showBlank="true" autoLoad="false"
 	required="true"
 />
 <v:select
-	labelKey="label.portal.core.Social.crud.status"
+	labelKey="label.portal.core.Social.main.status"
 	property="status"
 	required="true"
 />

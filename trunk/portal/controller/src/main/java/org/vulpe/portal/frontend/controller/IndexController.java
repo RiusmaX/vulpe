@@ -21,7 +21,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
-@Controller(controllerType = ControllerType.FRONTEND)
+@Controller(type = ControllerType.FRONTEND)
 public class IndexController extends ApplicationBaseSimpleController {
 
 	protected final Logger LOG = Logger.getLogger(IndexController.class);
@@ -30,7 +30,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public String section() {
 		try {
-			final Section section = getService(CoreService.class).findSection(getId());
+			final Section section = getService(CoreService.class).findSection(new Section(getId()));
 			now.put(Now.CONTENT_TITLE, section.getName());
 			now.put(Now.SHOW_CONTENT_TITLE, true);
 			now.put(Now.CONTENT_SUBTITLE, section.getDescription());
@@ -48,7 +48,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public String content() {
 		try {
-			final Content content = getService(CoreService.class).findContent(getId());
+			final Content content = getService(CoreService.class).findContent(new Content(getId()));
 			content.increaseView();
 			getService(CoreService.class).updateContent(content);
 			now.put(Now.CONTENT_TITLE, content.getTitle());
@@ -64,7 +64,7 @@ public class IndexController extends ApplicationBaseSimpleController {
 
 	public String download() {
 		try {
-			final Download download = getService(CoreService.class).findDownload(getId());
+			final Download download = getService(CoreService.class).findDownload(new Download(getId()));
 			download.increaseDownload();
 			getService(CoreService.class).updateDownload(download);
 			return redirectTo(download.getUrl(), false);

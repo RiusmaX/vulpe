@@ -7,7 +7,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5)), view = @View(viewType = {
-//		ViewType.CRUD, ViewType.SELECT }))
+//		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
 public class Download extends BasePortal {
@@ -32,6 +32,13 @@ public class Download extends BasePortal {
 	private String url;
 
 	private Long downloads;
+	
+	public Download() {
+	}
+
+	public Download(final Long id) {
+		setId(id);
+	}
 
 	public void setName(TextTranslate name) {
 		this.name = name;

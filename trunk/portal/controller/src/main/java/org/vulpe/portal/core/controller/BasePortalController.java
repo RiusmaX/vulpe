@@ -11,7 +11,7 @@ import org.vulpe.portal.core.model.entity.BasePortal;
  */
 @SuppressWarnings("serial")
 public class BasePortalController<ENTITY_PORTAL extends BasePortal> extends
-		ApplicationBaseController<ENTITY_PORTAL, java.lang.Long> {
+		ApplicationBaseController<ENTITY_PORTAL, Long> {
 
 	@Override
 	protected ENTITY_PORTAL prepareEntity(Operation operation) {

@@ -3,24 +3,24 @@
 
 <v:hidden property="id"/>
 <v:textTranslate
-	labelKey="label.portal.core.Download.crud.name"
+	labelKey="label.portal.core.Download.main.name"
 	property="name"
 	size="60"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Download.crud.description"
+	labelKey="label.portal.core.Download.main.description"
 	property="description"
 	size="100"
 	required="true"
 />
 <v:text
-	labelKey="label.portal.core.Download.crud.url"
+	labelKey="label.portal.core.Download.main.url"
 	property="url"
 	size="100" required="true"
 />
 <v:select
-	labelKey="label.portal.core.Download.crud.status"
+	labelKey="label.portal.core.Download.main.status"
 	property="status"
 	required="true"
 />

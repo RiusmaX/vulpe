@@ -17,6 +17,13 @@ public class Section extends BasePortal {
 	@VulpeText(size = 60)
 	private TextTranslate description;
 
+	public Section() {
+	}
+	
+	public Section(final Long id) {
+		setId(id);
+	}
+	
 	public void setName(TextTranslate name) {
 		this.name = name;
 	}

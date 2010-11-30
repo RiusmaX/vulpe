@@ -3,19 +3,19 @@
 
 <v:hidden property="id"/>
 <v:textTranslate
-	labelKey="label.portal.core.Menu.crud.name"
+	labelKey="label.portal.core.Menu.main.name"
 	property="name"
 	size="40"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Menu.crud.description"
+	labelKey="label.portal.core.Menu.main.description"
 	property="description"
 	size="100"
 	required="true"
 />
 <v:select
-	labelKey="label.portal.core.Menu.crud.navigateToSection"
+	labelKey="label.portal.core.Menu.main.navigateToSection"
 	property="navigateToSection.id"
 	items="Section"
 	itemKey="id"
@@ -23,16 +23,16 @@
 	showBlank="true" autoLoad="true"
 />
 <v:text
-	labelKey="label.portal.core.Menu.crud.url"
+	labelKey="label.portal.core.Menu.main.url"
 	property="url"
 	size="100"
 />
 <v:checkbox
-	labelKey="label.portal.core.Menu.crud.selectOnLoad"
+	labelKey="label.portal.core.Menu.main.selectOnLoad"
 	property="selectOnLoad"
 	fieldValue="true"
 />
 <v:select
-	labelKey="label.portal.core.Menu.crud.status"
+	labelKey="label.portal.core.Menu.main.status"
 	property="status" required="true"
 />

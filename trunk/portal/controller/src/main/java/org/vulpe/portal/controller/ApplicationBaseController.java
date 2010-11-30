@@ -63,32 +63,32 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 
 	@Override
 	public String select() {
-		final String redirecionar = validarCongregacaoSelecionada();
-		if (StringUtils.isNotEmpty(redirecionar)) {
-			return redirecionar;
+		final String redirect = validateSelectedConfiguration();
+		if (StringUtils.isNotEmpty(redirect)) {
+			return redirect;
 		}
-		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.select();
+		return StringUtils.isNotEmpty(redirect) ? redirect : super.select();
 	}
 
 	@Override
 	public String create() {
-		final String redirecionar = validarCongregacaoSelecionada();
-		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.create();
+		final String redirect = validateSelectedConfiguration();
+		return StringUtils.isNotEmpty(redirect) ? redirect : super.create();
 	}
 
 	@Override
 	public String update() {
-		final String redirecionar = validarCongregacaoSelecionada();
-		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.update();
+		final String redirect = validateSelectedConfiguration();
+		return StringUtils.isNotEmpty(redirect) ? redirect : super.update();
 	}
 
 	@Override
 	public String tabular() {
-		final String redirecionar = validarCongregacaoSelecionada();
-		return StringUtils.isNotEmpty(redirecionar) ? redirecionar : super.tabular();
+		final String redirect = validateSelectedConfiguration();
+		return StringUtils.isNotEmpty(redirect) ? redirect : super.tabular();
 	}
 
-	private String validarCongregacaoSelecionada() {
+	private String validateSelectedConfiguration() {
 		if (getSessionAttribute(Core.VULPE_PORTAL) == null
 				&& !this.getClass().getName().equals(PortalController.class.getName())) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {

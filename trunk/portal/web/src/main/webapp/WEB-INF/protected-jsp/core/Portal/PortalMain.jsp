@@ -3,46 +3,46 @@
 
 <v:hidden property="id"/>
 <v:textTranslate
-	labelKey="label.portal.core.Portal.crud.name"
+	labelKey="label.portal.core.Portal.main.name"
 	property="name"
 	size="40"
 	maxlength="100"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Portal.crud.title"
+	labelKey="label.portal.core.Portal.main.title"
 	property="title"
 	size="40"
 	maxlength="100"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Portal.crud.description"
+	labelKey="label.portal.core.Portal.main.description"
 	property="description"
 	rows="3" cols="50"
 	required="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Portal.crud.copyright"
+	labelKey="label.portal.core.Portal.main.copyright"
 	property="copyright"
 	size="40"
 	maxlength="100"
 	required="true"
 />
 <v:checkbox
-	labelKey="label.portal.core.Portal.crud.offline"
+	labelKey="label.portal.core.Portal.main.offline"
 	property="offline"
 	fieldValue="true"
 />
 <v:textTranslate
-	labelKey="label.portal.core.Portal.crud.offlineMessage"
+	labelKey="label.portal.core.Portal.main.offlineMessage"
 	property="offlineMessage"
 	size="40"
 	maxlength="100"
 	required="true"
 />
 <v:select
-	labelKey="label.portal.core.Portal.crud.status"
+	labelKey="label.portal.core.Portal.main.status"
 	property="status"
 	showBlank="true" autoLoad="false"
 	required="true"

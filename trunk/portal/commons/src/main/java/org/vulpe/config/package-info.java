@@ -7,7 +7,8 @@
 				showButtonText = false
 		),
 		theme = "portal",
-		frontendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.NONE
+		frontendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.NONE,
+		backendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.DROPPY
 )
 package org.vulpe.config;
 

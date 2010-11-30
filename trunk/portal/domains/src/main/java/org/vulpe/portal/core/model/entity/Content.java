@@ -10,7 +10,7 @@ import org.vulpe.view.annotations.input.VulpeTextArea;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5, requireOneFilter = true)), view = @View(viewType = {
-//		ViewType.CRUD, ViewType.SELECT }))
+//		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
 public class Content extends BasePortal {
@@ -44,6 +44,13 @@ public class Content extends BasePortal {
 	private boolean escapeXml;
 
 	private Boolean showComplete;
+
+	public Content() {
+	}
+
+	public Content(final Long id) {
+		setId(id);
+	}
 
 	public TextTranslate getTitle() {
 		return title;
