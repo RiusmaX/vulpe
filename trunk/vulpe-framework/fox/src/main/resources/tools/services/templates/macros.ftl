@@ -232,13 +232,23 @@ ${ident} *${line}
 	<#return ret>
 </#function>
 
+<#function hasIgnoreManager type>
+	<#local ignore=false>
+	<#list type.annotations?keys as entry>
+		<#if entry == "org.vulpe.model.annotations.IgnoreManager">
+		     <#local ignore=true>
+	    </#if>
+	</#list>
+	<#return ignore>
+</#function>
+
 <#--
  -- Make loop in valid classes
  -->
 <#macro forAllValidClasses>
 	<@forAllTypes var="type">
 		<#if type?last_index_of("Manager") != -1>
-			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.impl.VulpeBaseManager")>
+			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.impl.VulpeBaseManager") && !hasIgnoreManager(type)>
 				<#assign typeVariables = findTypeVariables(type, type.superclass)>
 				<#local signatureClass = getSignatureClass(type)>
 				<#nested type signatureClass>

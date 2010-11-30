@@ -861,6 +861,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			getEntitySelect().getMap().put(Entity.QUERY_CONFIGURATION_NAME,
 					getControllerConfig().getController().queryConfigurationName());
 		} else {
+			if (VulpeValidationUtil.isEmpty(entity.getMap())) {
+				entity.setMap(new HashMap<String, Object>());
+			}
 			entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
 					getControllerConfig().getController().queryConfigurationName());
 		}
