@@ -123,7 +123,7 @@ var vulpe = {
 
 	login: {
 		executeBefore: function(){},
-		executeAfter: function(){},
+		executeAfter: function(){}
 	},
 
 	// vulpe.util
@@ -833,8 +833,7 @@ var vulpe = {
 							bValid =  false;
 							vulpe.exception.setupError(idField, message);
 						}
-					} else
-					if ((orderMonth < orderYear && orderMonth > orderDay)) {
+					} else if ((orderMonth < orderYear && orderMonth > orderDay)) {
 						var iDelim1 = orderDay + DAY.length;
 						var iDelim2 = orderMonth + MONTH.length;
 						var delim1 = datePattern.substring(iDelim1, iDelim1 + 1);
