@@ -15,7 +15,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Component("core.MenuController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5))
+@Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5, readOnShow = true))
 public class MenuController extends BasePortalController<Menu> {
 
 }
