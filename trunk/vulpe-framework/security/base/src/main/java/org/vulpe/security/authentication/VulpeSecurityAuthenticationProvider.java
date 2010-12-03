@@ -25,12 +25,12 @@ import org.vulpe.security.model.entity.UserRole;
  * This is a customized <code>AuthenticationProvider</code> used for dynamic
  * data based authentication. Here authentication is externalized and is
  * performed by a common authentication service.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  * @see {@link org.springframework.security.providers.AuthenticationProvider}
- *
+ * 
  */
 @SuppressWarnings("unchecked")
 public class VulpeSecurityAuthenticationProvider implements AuthenticationProvider {
@@ -41,17 +41,15 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @seeorg.springframework.security.providers.AuthenticationProvider#
-	 * authenticate(org. acegisecurity.Authentication)
+	 * 
+	 * @seeorg.springframework.security.authentication.AuthenticationProvider#
+	 * authenticate(org.springframework.security.core.Authentication)
 	 */
-	public Authentication authenticate(final Authentication authentication)
-			throws AuthenticationException {
+	public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
 		VulpeAuthenticationResponse authResponse = null;
 		try {
-			authResponse = authenticationService.authenticateUser(authentication.getPrincipal()
-					.toString(), VulpeDigestUtil.encrypt(
-					authentication.getCredentials().toString(), "md5"));
+			authResponse = authenticationService.authenticateUser(authentication.getPrincipal().toString(),
+					VulpeDigestUtil.encrypt(authentication.getCredentials().toString(), "md5"));
 		} catch (VulpeSecurityException e) {
 			throw new BadCredentialsException("Exception occurred while executing service", e);
 		}
@@ -67,22 +65,21 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 				}
 			}
 
-			user = new org.springframework.security.core.userdetails.User(authentication
-					.getPrincipal().toString(), authentication.getCredentials().toString(), true,
-					true, true, true, list);
+			user = new org.springframework.security.core.userdetails.User(authentication.getPrincipal().toString(),
+					authentication.getCredentials().toString(), true, true, true, true, list);
 		} else {
 			throw new BadCredentialsException("Bad Credentials", ((Object) (user)));
 		}
 
-		final UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(
-				user, authentication.getCredentials(), user.getAuthorities());
+		final UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(user, authentication
+				.getCredentials(), user.getAuthorities());
 		result.setDetails(authentication.getDetails());
 		return result;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.springframework.security.providers.AuthenticationProvider#supports
 	 * (java.lang .Class)
@@ -93,7 +90,7 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 
 	/**
 	 * Sets the authService
-	 *
+	 * 
 	 * @param authService
 	 *            The authService to set.
 	 */

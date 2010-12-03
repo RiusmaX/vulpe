@@ -22,6 +22,11 @@ public final class VulpeSecurityConstants {
 	 * A return code for authentication failure.
 	 */
 	public static final int AUTHENTICATION_FAILED = 1;
+	
+	/**
+	 * 
+	 */
+	public static final String AUTHENTICATION_LOGIN_BYPASS = "AuthenticationLoginBypass";
 
 	public final class Context {
 		public static final String ANONYMOUS_USER = "anonymousUser";
