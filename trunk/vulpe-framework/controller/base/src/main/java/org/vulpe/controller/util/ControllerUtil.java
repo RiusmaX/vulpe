@@ -228,6 +228,9 @@ public class ControllerUtil {
 		if (StringUtils.isEmpty(base)) {
 			return StringUtils.isEmpty(getCurrentController().get()) ? "" : getCurrentController().get();
 		}
+		if (base.contains("?")) {
+			base = base.substring(0, base.indexOf("?"));
+		}
 		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");
 		if (base.startsWith("/")) {
 			base = base.substring(1);
