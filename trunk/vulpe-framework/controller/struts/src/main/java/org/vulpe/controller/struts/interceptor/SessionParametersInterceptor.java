@@ -80,8 +80,8 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			ServletActionContext.getRequest().getSession().setAttribute(
 					VulpeConstants.Configuration.Ever.class.getName(), simpleController.ever);
 		}
-		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest()).getCurrentControllerKey()
-				.concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+				VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
@@ -115,7 +115,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */

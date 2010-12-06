@@ -15,7 +15,6 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
-import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
@@ -31,15 +30,15 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.MethodFilterInterceptor#doIntercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
 	 */
 	@Override
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
-		final String key = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+				VulpeConstants.PARAMS_SESSION_KEY);
 		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		}
@@ -47,7 +46,7 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */
@@ -57,8 +56,8 @@ public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
 			if (invocation.getAction() instanceof ValidationAware) {
 				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
 				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
-						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
-								.isAnnotationPresent(ResetSession.class));
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod()).isAnnotationPresent(
+								ResetSession.class));
 			}
 			return reset;
 		} catch (Exception e) {

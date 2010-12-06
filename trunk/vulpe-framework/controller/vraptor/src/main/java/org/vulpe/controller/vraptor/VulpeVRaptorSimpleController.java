@@ -56,7 +56,7 @@ public class VulpeVRaptorSimpleController extends AbstractVulpeBaseSimpleControl
 	}
 
 	public ControllerUtil getControllerUtil() {
-		return ControllerUtil.getInstance(getRequest());
+		return ControllerUtil.getInstance();
 	}
 
 	public void addActionMessage(final String message) {

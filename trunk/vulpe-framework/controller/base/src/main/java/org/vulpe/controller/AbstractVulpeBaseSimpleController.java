@@ -198,8 +198,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @since 1.0
 	 * @return Object
 	 */
-	public Object invokeServices(final String serviceName, final Class<?>[] argsType,
-			final Object[] argsValues) {
+	public Object invokeServices(final String serviceName, final Class<?>[] argsType, final Object[] argsValues) {
 		final VulpeService service = getService();
 		try {
 			final Method method = service.getClass().getMethod(serviceName, argsType);
@@ -288,13 +287,12 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return getText(key, getText(arg1), getText(arg2));
 	}
 
-	public String getTextArg(final String key, final String arg1, final String arg2,
-			final String arg3) {
+	public String getTextArg(final String key, final String arg1, final String arg2, final String arg3) {
 		return getText(key, getText(arg1), getText(arg2), getText(arg3));
 	}
 
-	public String getTextArg(final String key, final String arg1, final String arg2,
-			final String arg3, final String arg4) {
+	public String getTextArg(final String key, final String arg1, final String arg2, final String arg3,
+			final String arg4) {
 		return getText(key, getText(arg1), getText(arg2), getText(arg3), getText(arg4));
 	}
 
@@ -550,7 +548,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @return
 	 */
 	public ControllerUtil getControllerUtil() {
-		return ControllerUtil.getInstance(getRequest());
+		return ControllerUtil.getInstance();
 	}
 
 	/*
@@ -560,8 +558,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	public void controlResultForward() {
 		setResultForward(getControllerType().equals(ControllerType.TWICE) ? Layout.PROTECTED_JSP_COMMONS
-				.concat(Layout.BODY_TWICE_JSP)
-				: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+				.concat(Layout.BODY_TWICE_JSP) : Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}
 
 	/**
@@ -606,8 +603,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 			roleName.append(Security.ROLE_PREFIX);
 		}
 		roleName.append(role);
-		return getSecurityContext() == null ? false : getSecurityContext().getUserRoles().contains(
-				roleName.toString());
+		return getSecurityContext() == null ? false : getSecurityContext().getUserRoles().contains(roleName.toString());
 	}
 
 	/*
@@ -721,8 +717,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	private String getControllerKey() {
 		String key = getControllerUtil().getCurrentControllerKey();
 		if (StringUtils.isNotEmpty(getControllerConfig().getViewBaseName())) {
-			key = key.substring(0, key.lastIndexOf(".") + 1)
-					+ getControllerConfig().getViewBaseName();
+			key = key.substring(0, key.lastIndexOf(".") + 1) + getControllerConfig().getViewBaseName();
 		}
 		return key;
 	}

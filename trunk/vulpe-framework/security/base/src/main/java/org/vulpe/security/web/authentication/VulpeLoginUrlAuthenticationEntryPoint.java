@@ -36,10 +36,9 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
-		setLoginFormUrl(URI.AUTHENTICATOR
-				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
+	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+			throws IOException, ServletException {
+		setLoginFormUrl(URI.AUTHENTICATOR + (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
 		super.commence(request, response, authException);
 	}
 
@@ -48,16 +47,15 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 	 * @param request
 	 */
 	public void changeSavedRequest(final HttpServletRequest request) {
-		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
-				.getAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY);
+		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession().getAttribute(
+				DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY);
 		if (savedRequest != null && !savedRequest.getRequestURI().contains(URI.AUTHENTICATOR)) {
 			String requestURI = savedRequest.getRequestURI();
 			if (!requestURI.endsWith(URI.AJAX)) {
 				requestURI += URI.AJAX;
 			}
 			VulpeReflectUtil.getInstance().setFieldValue(savedRequest, "requestURI", requestURI);
-			request.getSession().setAttribute(
-					DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
+			request.getSession().setAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
 		}
 	}
 }

@@ -21,14 +21,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.View;
-import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -56,19 +55,18 @@ public class ControllerUtil {
 
 	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
 
-	private HttpServletRequest request;
+	private final VulpeContext vulpeContext = VulpeContext.getInstance();
 
 	/**
 	 * Returns instance of ControllerUtil
 	 */
-	public static ControllerUtil getInstance(HttpServletRequest request) {
+	public static ControllerUtil getInstance() {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
 		if (controllerUtil == null) {
 			controllerUtil = new ControllerUtil();
 			cache.put(ControllerUtil.class, controllerUtil);
 		}
-		controllerUtil.setRequest(request);
 		return controllerUtil;
 	}
 
@@ -89,23 +87,21 @@ public class ControllerUtil {
 							final Collection<Object> objects = (Collection<Object>) partBean;
 							boolean empty = true;
 							for (Object object : objects) {
-								final Object value = VulpeReflectUtil.getInstance().getFieldValue(
-										object, part);
+								final Object value = VulpeReflectUtil.getInstance().getFieldValue(object, part);
 								if (VulpeValidationUtil.isNotEmpty(value)) {
 									empty = false;
 								}
 							}
 							return empty;
 						} else {
-							final Object value = VulpeReflectUtil.getInstance().getFieldValue(
-									partBean, part);
+							final Object value = VulpeReflectUtil.getInstance().getFieldValue(partBean, part);
 							if (VulpeValidationUtil.isEmpty(value)) {
 								return true;
 							}
 						}
 					} else {
-						partBean = VulpeReflectUtil.getInstance().getFieldValue(
-								partBean == null ? bean : partBean, part);
+						partBean = VulpeReflectUtil.getInstance().getFieldValue(partBean == null ? bean : partBean,
+								part);
 					}
 					++count;
 				}
@@ -128,9 +124,8 @@ public class ControllerUtil {
 	 * @param duplicatedBeans
 	 * @return if duplicated, returns true
 	 */
-	public boolean duplicatedItem(final Collection<VulpeEntity<?>> beans,
-			final VulpeEntity<?> bean, final String[] fieldNames,
-			final Collection<DuplicatedBean> duplicatedBeans) {
+	public boolean duplicatedItem(final Collection<VulpeEntity<?>> beans, final VulpeEntity<?> bean,
+			final String[] fieldNames, final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
 			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
@@ -139,8 +134,7 @@ public class ControllerUtil {
 					if (realBean.getId() != null && realBean.getId().equals(bean.getId())) {
 						continue;
 					}
-					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(
-							realBean, fieldName);
+					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(realBean, fieldName);
 					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
@@ -222,8 +216,7 @@ public class ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
-		return VulpeConfigHelper.getProjectName().concat(".").concat(
-				getCurrentControllerName().replace("/", "."));
+		return VulpeConfigHelper.getProjectName().concat(".").concat(getCurrentControllerName().replace("/", "."));
 	}
 
 	/**
@@ -231,26 +224,22 @@ public class ControllerUtil {
 	 * @return
 	 */
 	public String getCurrentControllerName() {
-		String base = getRequest().getRequestURI();
+		String base = vulpeContext.getCurrentController();
 		if (StringUtils.isEmpty(base)) {
-			return StringUtils.isEmpty(getCurrentController().get()) ? "" : getCurrentController()
-					.get();
-		}
-		if (base.contains(Layout.JS_CONTEXT) || base.contains(Layout.THEMES_CONTEXT)
-				|| base.contains(Layout.CSS_CONTEXT) || base.contains(Layout.IMAGES_CONTEXT)
-				|| base.contains(Layout.SUFFIX_JSP)) {
-			return getCurrentController().get();
+			return StringUtils.isEmpty(getCurrentController().get()) ? "" : getCurrentController().get();
 		}
 		base = base.replace("/" + VulpeConfigHelper.getProjectName() + "/", "");
+		if (base.startsWith("/")) {
+			base = base.substring(1);
+		}
 		base = base.replace(Logic.AJAX, "");
 		getCurrentControllerURI().set(base);
 		final String last = base.substring(StringUtils.lastIndexOf(base, '/') + 1);
 		if (NumberUtils.isNumber(last)) {
 			base = base.substring(0, StringUtils.lastIndexOf(base, '/'));
 		}
-		if (!base.contains(Logic.BACKEND) && !base.contains(Logic.FRONTEND)
-				&& !base.contains(View.AUTHENTICATOR)) {
-			String[] parts = base.split("/");
+		if (!base.contains(Logic.BACKEND) && !base.contains(Logic.FRONTEND) && !base.contains(View.AUTHENTICATOR)) {
+			final String[] parts = base.split("/");
 			base = parts[0] + "/" + parts[1];
 		}
 		getCurrentController().set(base);
@@ -298,8 +287,7 @@ public class ControllerUtil {
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
-		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller
-				.getClass(), details);
+		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller.getClass(), details);
 		VulpeCacheHelper.getInstance().put(key, config);
 
 		int count = 0;
@@ -320,15 +308,13 @@ public class ControllerUtil {
 	 * @param controller
 	 * @return
 	 */
-	public VulpeBaseSimpleControllerConfig getControllerConfig(
-			final VulpeSimpleController controller) {
+	public VulpeBaseSimpleControllerConfig getControllerConfig(final VulpeSimpleController controller) {
 		final String key = getCurrentControllerKey();
 		if (VulpeCacheHelper.getInstance().contains(key)) {
 			return VulpeCacheHelper.getInstance().get(key);
 		}
 
-		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(
-				controller.getClass());
+		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(controller.getClass());
 		VulpeCacheHelper.getInstance().put(key, config);
 
 		return config;
@@ -344,14 +330,6 @@ public class ControllerUtil {
 	 */
 	public static ServletContext getServletContext() {
 		return VulpeCacheHelper.getInstance().get(VulpeConstants.CURRENT_SERVLET_CONTEXT);
-	}
-
-	public void setRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public HttpServletRequest getRequest() {
-		return request;
 	}
 
 	public ThreadLocal<String> getCurrentController() {

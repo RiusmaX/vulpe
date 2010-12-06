@@ -46,19 +46,18 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkKey(final String key, final String contentType,
-			final String contentDisposition) throws JspException {
+	public static String linkKey(final String key, final String contentType, final String contentDisposition)
+			throws JspException {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
-				ControllerUtil.getInstance(ServletActionContext.getRequest())
-						.getCurrentControllerName()).append("/download?downloadKey=").append(
+				ControllerUtil.getInstance().getCurrentControllerName()).append("/download?downloadKey=").append(
 				urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
 			link.append("&downloadContentType=").append(contentType);
@@ -71,7 +70,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -79,26 +78,24 @@ public final class StrutsFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkProperty(final PageContext pageContext, final String property,
-			final String contentType, final String contentDisposition) throws JspException {
+	public static String linkProperty(final PageContext pageContext, final String property, final String contentType,
+			final String contentDisposition) throws JspException {
 		String baseName = "entity.";
-		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext,
-				"${targetConfig}");
+		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext, "${targetConfig}");
 		if (detailConfig != null) {
-			final Number index = (Number) eval(pageContext, "${".concat(detailConfig.getBaseName())
-					.concat("_status.index}"));
-			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("[")
-					.concat(index.toString()).concat("].");
+			final Number index = (Number) eval(pageContext, "${".concat(detailConfig.getBaseName()).concat(
+					"_status.index}"));
+			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("[").concat(index.toString())
+					.concat("].");
 		}
 
 		final String key = (property.contains(baseName)) ? property : baseName.concat(property);
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
-					.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
-			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
-					.getAttribute(keyForm);
+			final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+					VulpeConstants.PARAMS_SESSION_KEY);
+			final Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
 				saveInSession(key, value, false);
 			}
@@ -108,12 +105,12 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance(ServletActionContext.getRequest())
-				.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -123,7 +120,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -133,23 +130,21 @@ public final class StrutsFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkImage(final PageContext pageContext, final String key,
-			final String contentType, final String contentDisposition, final Integer width,
-			final Integer thumbWidth) throws JspException {
+	public static String linkImage(final PageContext pageContext, final String key, final String contentType,
+			final String contentDisposition, final Integer width, final Integer thumbWidth) throws JspException {
 		Object value = getProperty(pageContext, key);
 		if (value != null) {
 			value = saveImageInSession(key, value, false, thumbWidth);
 			saveInSession(key, value, false);
 			if (thumbWidth != null && thumbWidth > 0) {
-				saveImageInSession(key.concat(VulpeConstants.Upload.Image.THUMB), value, false,
-						thumbWidth);
+				saveImageInSession(key.concat(VulpeConstants.Upload.Image.THUMB), value, false, thumbWidth);
 			}
 		}
 		return linkKey(key, contentType, contentDisposition);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -166,15 +161,15 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
 	 * @param width
 	 * @return
 	 */
-	public static Object saveImageInSession(final String key, final Object value,
-			final Boolean expire, final Integer width) {
+	public static Object saveImageInSession(final String key, final Object value, final Boolean expire,
+			final Integer width) {
 		final Object newValue = value;
 		if (VulpeValidationUtil.isNotEmpty(newValue)) {
 			final Byte[] bytes = (Byte[]) newValue;
@@ -183,8 +178,7 @@ public final class StrutsFunctions extends Functions {
 				imageData[i] = bytes[i].byteValue();
 			}
 			try {
-				getFormParams().put(key,
-						new Object[] { expire, resizeImageAsJPG(imageData, width) });
+				getFormParams().put(key, new Object[] { expire, resizeImageAsJPG(imageData, width) });
 			} catch (IOException e) {
 				LOG.error(e);
 			}
@@ -195,15 +189,15 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param pagingName
 	 * @param pageSize
 	 * @param fullList
 	 * @return
 	 */
-	public static SessionPaging findPaging(final PageContext pageContext, final String pagingName,
-			final Long pageSize, final List fullList) {
+	public static SessionPaging findPaging(final PageContext pageContext, final String pagingName, final Long pageSize,
+			final List fullList) {
 		SessionPaging paging = (SessionPaging) pageContext.getSession().getAttribute(pagingName);
 		if (paging == null && fullList != null) {
 			paging = new SessionPaging(pageSize.intValue(), fullList);
@@ -213,25 +207,24 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 * @throws JspException
 	 */
 	public static String toString(final Object value) throws JspException {
-		return (String) XWorkConverter.getInstance().convertValue(
-				ActionContext.getContext().getContextMap(), value, String.class);
+		return (String) XWorkConverter.getInstance().convertValue(ActionContext.getContext().getContextMap(), value,
+				String.class);
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return
 	 * @throws JspException
 	 */
-	public static String evalString(final PageContext pageContext, final String expression)
-			throws JspException {
+	public static String evalString(final PageContext pageContext, final String expression) throws JspException {
 		try {
 			final Object value = eval(pageContext, expression);
 			return toString(value);
