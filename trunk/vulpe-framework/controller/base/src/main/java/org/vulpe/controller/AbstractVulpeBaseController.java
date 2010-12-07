@@ -60,7 +60,7 @@ import org.vulpe.model.services.GenericService;
 
 /**
  * Base Controller
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -264,7 +264,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to retrieve download info.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return DownlodInfo object.
 	 */
@@ -274,10 +274,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Set download info.
-	 * 
+	 *
 	 * @param downloadInfo
 	 *            Download Info.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	public void setDownloadInfo(final DownloadInfo downloadInfo) {
@@ -286,7 +286,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadKey()
 	 */
 	public String getDownloadKey() {
@@ -295,7 +295,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadKey(java.lang
 	 * .String)
 	 */
@@ -305,7 +305,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadContentType()
 	 */
 	public String getDownloadContentType() {
@@ -314,7 +314,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadContentType
 	 * (java.lang.String)
 	 */
@@ -324,7 +324,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.VulpeSimpleController#getDownloadContentDisposition
 	 * ()
@@ -335,7 +335,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.VulpeSimpleController#setDownloadContentDisposition
 	 * (java.lang.String)
@@ -346,7 +346,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#isUploaded()
 	 */
 	public boolean isUploaded() {
@@ -355,7 +355,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#setUploaded(boolean)
 	 */
 	public void setUploaded(final boolean uploaded) {
@@ -364,7 +364,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to report load.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected abstract DownloadInfo doReportLoad();
@@ -375,7 +375,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to validate quantity of details.
-	 * 
+	 *
 	 * @param beans
 	 * @param detailConfig
 	 * @return
@@ -432,7 +432,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to validate duplicated details.
-	 * 
+	 *
 	 * @param beans
 	 * @param detailConfig
 	 * @return
@@ -470,7 +470,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Returns current action configuration.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -480,7 +480,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Returns current detail configuration.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -490,12 +490,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @param beans
 	 *            details
 	 * @param detailConfig
 	 *            Configuration of detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetailItens(final Collection<VulpeEntity<?>> beans, final VulpeBaseDetailConfig detailConfig) {
@@ -507,7 +507,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetails() {
@@ -520,7 +520,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Validate if entity already exists
-	 * 
+	 *
 	 * @return
 	 */
 	protected boolean validateExists() {
@@ -567,7 +567,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to manager button.
-	 * 
+	 *
 	 * @param button
 	 *            Button
 	 * @param show
@@ -589,7 +589,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to show button.
-	 * 
+	 *
 	 * @param button
 	 *            Button.
 	 * @since 1.0
@@ -600,7 +600,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to show buttons.
-	 * 
+	 *
 	 * @param buttons
 	 *            Buttons.
 	 * @since 1.0
@@ -619,7 +619,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to show buttons and configure forward.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	public void showButtons(final Operation operation) {
@@ -679,7 +679,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to hide button.
-	 * 
+	 *
 	 * @param button
 	 *            Button.
 	 * @since 1.0
@@ -690,7 +690,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to hide buttons.
-	 * 
+	 *
 	 * @param buttons
 	 *            Buttons.
 	 * @since 1.0
@@ -703,7 +703,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to show error
-	 * 
+	 *
 	 * @param message
 	 * @return
 	 */
@@ -718,7 +718,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#validateEntity()
 	 */
 	public boolean validateEntity() {
@@ -831,7 +831,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to prepare entity.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected ENTITY prepareEntity(final Operation operation) {
@@ -872,7 +872,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to prepare detail.
-	 * 
+	 *
 	 * @param detail
 	 *            Detail.
 	 * @since 1.0
@@ -891,7 +891,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#addDetail()
 	 */
 	public String addDetail() {
@@ -913,7 +913,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void addDetailBefore() {
@@ -924,7 +924,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void addDetailAfter() {
@@ -935,7 +935,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#create()
 	 */
 	@ResetSession(before = true)
@@ -960,7 +960,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to create record.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onCreate() {
@@ -980,7 +980,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createBefore() {
@@ -991,7 +991,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createAfter() {
@@ -1000,7 +1000,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#createPost()
 	 */
 	@ResetSession
@@ -1037,7 +1037,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code in confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Entity created.
 	 */
@@ -1052,7 +1052,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createPostBefore() {
@@ -1063,7 +1063,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after confirm create.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void createPostAfter() {
@@ -1074,7 +1074,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#update()
 	 */
 	@ResetSession(before = true)
@@ -1102,7 +1102,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Make visualization read only.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -1116,7 +1116,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to prepare update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onUpdate() {
@@ -1131,7 +1131,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updateBefore() {
@@ -1142,7 +1142,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updateAfter() {
@@ -1151,7 +1151,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#updatePost()
 	 */
 	@ResetSession
@@ -1212,7 +1212,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point prepare confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected boolean onUpdatePost() {
@@ -1261,7 +1261,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updatePostBefore() {
@@ -1272,7 +1272,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after confirm update.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void updatePostAfter() {
@@ -1281,7 +1281,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#delete()
 	 */
 	public String delete() {
@@ -1298,8 +1298,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (VulpeValidationUtil.isNotEmpty(list)) {
 				for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
 					final ENTITY entity = iterator.next();
-					if (entity.getId().equals(getEntity().getId())) {
-						iterator.remove();
+					if (getControllerType().equals(ControllerType.SELECT)) {
+						if (entity.getId().equals(getId())) {
+							iterator.remove();
+						}
+					} else {
+						if (entity.getId().equals(getEntity().getId())) {
+							iterator.remove();
+						}
 					}
 				}
 			}
@@ -1321,7 +1327,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to delete.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected boolean onDelete() {
@@ -1353,7 +1359,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before delete.
-	 * 
+	 *
 	 * @since
 	 */
 	protected void deleteBefore() {
@@ -1366,7 +1372,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after delete.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteAfter() {
@@ -1375,7 +1381,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#deleteDetail()
 	 */
 	public String deleteDetail() {
@@ -1404,7 +1410,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return number of items affected
 	 */
@@ -1412,7 +1418,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteDetailBefore() {
@@ -1424,7 +1430,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void deleteDetailAfter() {
@@ -1433,7 +1439,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Method to read record.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -1483,7 +1489,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to read record.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onRead() {
@@ -1555,7 +1561,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before read.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void readBefore() {
@@ -1568,7 +1574,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after read.
-	 * 
+	 *
 	 * @since
 	 */
 	protected void readAfter() {
@@ -1577,7 +1583,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#tabularFilter()
 	 */
 	@ResetSession
@@ -1587,7 +1593,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#tabularPost()
 	 */
 	@ResetSession
@@ -1615,7 +1621,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onTabularPost() {
@@ -1638,7 +1644,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void tabularPostBefore() {
@@ -1649,7 +1655,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after logic tabulate.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void tabularPostAfter() {
@@ -1658,7 +1664,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
 	@ResetSession(before = true)
@@ -1701,7 +1707,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#select()
 	 */
 	@ResetSession(before = true)
@@ -1772,7 +1778,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#tabular()
 	 */
 	@ResetSession(before = true)
@@ -1808,7 +1814,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to prepare show.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onPrepare() {
@@ -1848,7 +1854,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#upload()
 	 */
 	public String upload() {
@@ -1860,7 +1866,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to upload.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onUpload() {
@@ -1869,7 +1875,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code before upload.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void uploadAfter() {
@@ -1878,7 +1884,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after upload.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void uploadBefore() {
@@ -1887,7 +1893,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeSimpleController#download()
 	 */
 	public String download() {
@@ -1900,7 +1906,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void onDownload() {
@@ -1910,14 +1916,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected abstract DownloadInfo prepareDownloadInfo();
 
 	/**
 	 * Extension point to code before download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void downloadAfter() {
@@ -1926,7 +1932,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Extension point to code after download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void downloadBefore() {
@@ -1934,7 +1940,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	/**
-	 * 
+	 *
 	 * @param entity
 	 */
 	public boolean isFiltersEmpty(final ENTITY entity) {
@@ -1954,7 +1960,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Retrieves Report Parameters.
-	 * 
+	 *
 	 * @return
 	 */
 	public VulpeHashMap<String, Object> getReportParameters() {
@@ -1968,7 +1974,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Retrieves Report Collection Data Source.
-	 * 
+	 *
 	 * @return
 	 */
 	public Collection<?> getReportCollection() {
@@ -1980,7 +1986,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	/**
 	 * Sets Report Collection Data Source.
-	 * 
+	 *
 	 * @return
 	 */
 	public void setReportCollection(Collection<?> collection) {

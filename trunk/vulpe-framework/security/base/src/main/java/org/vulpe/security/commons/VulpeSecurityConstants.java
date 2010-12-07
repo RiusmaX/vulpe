@@ -14,6 +14,9 @@ public final class VulpeSecurityConstants {
 	private VulpeSecurityConstants() {
 	}
 
+	public static final String SPRING_SECURITY_USERNAME_FIELD = "j_username";
+	public static final String SPRING_SECURITY_PASSWORD_FIELD = "j_password";
+
 	/**
 	 * A return code for authentication success.
 	 */
@@ -22,9 +25,9 @@ public final class VulpeSecurityConstants {
 	 * A return code for authentication failure.
 	 */
 	public static final int AUTHENTICATION_FAILED = 1;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static final String AUTHENTICATION_LOGIN_BYPASS = "AuthenticationLoginBypass";
 
