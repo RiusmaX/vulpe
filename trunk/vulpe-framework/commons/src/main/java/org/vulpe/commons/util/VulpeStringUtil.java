@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Vulpe String Utility class.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -33,6 +33,8 @@ import org.apache.log4j.Logger;
 public class VulpeStringUtil {
 
 	private static VulpeHashMap<Character, String> accentMap = new VulpeHashMap<Character, String>();
+	private static final VulpeHashMap<String, String> utfChars = new VulpeHashMap<String, String>();
+	private static final VulpeHashMap<String, String> specialChars = new VulpeHashMap<String, String>();
 
 	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
 
@@ -90,11 +92,77 @@ public class VulpeStringUtil {
 		accentMap.put("Ù".charAt(0), "U");
 		accentMap.put("Ü".charAt(0), "U");
 		accentMap.put("Û".charAt(0), "U");
+
+		//  (´)
+		specialChars.put("á", "&aacute;");
+		specialChars.put("é", "&eacute;");
+		specialChars.put("í", "&iacute;");
+		specialChars.put("ó", "&oacute;");
+		specialChars.put("ú", "&uacute;");
+		specialChars.put("Á", "&Aacute;");
+		specialChars.put("É", "&Eacute;");
+		specialChars.put("Í", "&Iacute;");
+		specialChars.put("Ó", "&Oacute;");
+		specialChars.put("Ú", "&Uacute;");
+		// (~)
+		specialChars.put("ã", "&atilde;");
+		specialChars.put("ñ", "&ntilde;");
+		specialChars.put("õ", "&otilde;");
+		specialChars.put("Ã", "&Atilde;");
+		specialChars.put("Ñ", "&Ntilde;");
+		specialChars.put("Õ", "&Otilde;");
+		// (^)
+		specialChars.put("â", "&acirc;");
+		specialChars.put("ê", "&ecirc;");
+		specialChars.put("î", "&icirc;");
+		specialChars.put("ô", "&ocirc;");
+		specialChars.put("û", "&ucirc;");
+		specialChars.put("Â", "&Acirc;");
+		specialChars.put("Ê", "&Ecirc;");
+		specialChars.put("Î", "&Icirc;");
+		specialChars.put("Ô", "&Ocirc;");
+		specialChars.put("Û", "&Ucirc;");
+		// (ç Ç)
+		specialChars.put("ç", "&ccedil;");
+		specialChars.put("Ç", "&Ccedil;");
+
+		// (´)
+		utfChars.put("á", "=E1");
+		utfChars.put("é", "=E9");
+		utfChars.put("í", "=ED");
+		utfChars.put("ó", "=F3");
+		utfChars.put("ú", "=FA");
+		utfChars.put("Á", "=C1");
+		utfChars.put("É", "=C9");
+		utfChars.put("Í", "=CD");
+		utfChars.put("Ó", "=D3");
+		utfChars.put("Ú", "=DA");
+		// (~)
+		utfChars.put("ã", "=E3");
+		utfChars.put("ñ", "=F1");
+		utfChars.put("õ", "=F5");
+		utfChars.put("Ã", "=C3");
+		utfChars.put("Ñ", "=D1");
+		utfChars.put("Õ", "=D5");
+		// (^)
+		utfChars.put("â", "=E2");
+		utfChars.put("ê", "=EA");
+		utfChars.put("î", "=EE");
+		utfChars.put("ô", "=F4");
+		utfChars.put("û", "=FB");
+		utfChars.put("Â", "=C2");
+		utfChars.put("Ê", "=CA");
+		utfChars.put("Î", "=CE");
+		utfChars.put("Ô", "=D4");
+		utfChars.put("Û", "=DB");
+		// (ç Ç)
+		utfChars.put("ç", "=E7");
+		utfChars.put("Ç", "=C7");
 	}
 
 	/**
 	 * String accent normalize
-	 * 
+	 *
 	 * @param term
 	 * @return
 	 */
@@ -107,7 +175,7 @@ public class VulpeStringUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -131,7 +199,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in upper case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -141,7 +209,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in lower case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -151,7 +219,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 * 
+	 *
 	 * @param blob
 	 * @return
 	 */
@@ -176,7 +244,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 * 
+	 *
 	 * @param blob
 	 * @return
 	 */
