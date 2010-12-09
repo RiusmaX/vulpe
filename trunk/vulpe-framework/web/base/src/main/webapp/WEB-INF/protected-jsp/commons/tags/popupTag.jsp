@@ -14,7 +14,7 @@
 		<c:if test="${empty targetConfig}"><c:set var="popupTargetName" value="${vulpeFormName}-${not empty vulpeTargetName ? vulpeTargetName : 'entity'}_"/></c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="popupTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="popupTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, popupTargetNameEL)}:"/>
+			<c:set var="popupTargetName" value="${vulpeFormName}-${fn:replace(targetConfigPropertyName, '.', '_')}__${util:eval(pageContext, popupTargetNameEL)}__"/>
 		</c:if>
 	</c:if>
 	<c:choose>
@@ -25,7 +25,7 @@
 		<c:if test="${empty targetConfig}"><c:set var="paramTargetName" value="${vulpeFormName}-${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:if>
 		<c:if test="${not empty targetConfig}">
 			<c:set var="paramTargetNameEL" value="${'${'}${targetConfig.baseName}_status.index${'}'}"/>
-			<c:set var="paramTargetName" value="${vulpeFormName}-${targetConfigPropertyName}:${util:eval(pageContext, paramTargetNameEL)}:"/>
+			<c:set var="paramTargetName" value="${vulpeFormName}-${fn:replace(targetConfigPropertyName, '.', '_')}__${util:eval(pageContext, paramTargetNameEL)}__"/>
 		</c:if>
 	</c:if>
 	<c:choose>
