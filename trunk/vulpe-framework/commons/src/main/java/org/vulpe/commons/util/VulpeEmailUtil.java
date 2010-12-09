@@ -21,18 +21,16 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import javax.naming.InitialContext;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.log4j.Logger;
 import org.vulpe.exception.VulpeSystemException;
 
@@ -56,6 +54,18 @@ public final class VulpeEmailUtil {
 	private VulpeEmailUtil(final String mailFrom) {
 		super();
 		this.mailFrom = mailFrom;
+	}
+
+	/**
+	 * Returns VulpeEmailUtil instance.
+	 * 
+	 * @return VulpeEmailUtil instance
+	 */
+	public static VulpeEmailUtil getInstance() {
+		if (instance == null) {
+			instance = new VulpeEmailUtil();
+		}
+		return instance;
 	}
 
 	/**
@@ -90,7 +100,6 @@ public final class VulpeEmailUtil {
 		if (!checkValidEmail(recipients)) {
 			throw new VulpeSystemException("Invalid mails: " + recipients);
 		}
-
 		if (isDebugEnabled) {
 			LOG.debug("Entering in sendMail...");
 			for (int i = 0; i < recipients.length; i++) {
@@ -100,28 +109,45 @@ public final class VulpeEmailUtil {
 			LOG.debug("body: " + body);
 		}
 		try {
-
 			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
 			if (bundle != null) {
-				final Properties properties = convertResourceBundleToProperties(bundle);
-				properties.put("mail.transport.protocol", "smtp");
-				Authenticator auth = null;
-				if (properties.containsKey("mail.smtp.auth")
-						&& Boolean.valueOf(properties.getProperty("mail.smtp.auth"))) {
-					auth = new VulpeEmailSMTPAuthenticator();
+				final HtmlEmail mail = new HtmlEmail();
+				if (bundle.containsKey("mail.smtp.auth") && Boolean.valueOf(bundle.getString("mail.smtp.auth"))) {
+					final String username = bundle.getString("mail.smtp.user");
+					final String password = bundle.getString("mail.smtp.password");
+					mail.setAuthentication(username, password);
 				}
-				final Session session = Session.getDefaultInstance(properties, auth);
-				final MimeMessage message = new MimeMessage(session);
-				message.setFrom(new InternetAddress(mailFrom));
-				final InternetAddress ainternetaddress[] = getAddress(recipients);
-				message.setRecipients(javax.mail.Message.RecipientType.TO, ainternetaddress);
-				// message.setRecipients(javax.mail.Message.RecipientType.CC,
-				// ainternetaddress);
-				message.setSubject(MimeUtility.encodeText(subject, "UTF-8", null));
-				message.setText(body);
-				message.addHeader("Content-type", "text/html");
-				message.setHeader("X-Mailer", "MailerInstance");
-				Transport.send(message);
+				if (bundle.containsKey("mail.from")) {
+					mailFrom = bundle.getString("mail.from");
+				}
+				mail.setFrom(mailFrom);
+				for (final String recipient : recipients) {
+					mail.addTo(recipient);
+				}
+				mail.setHostName(bundle.getString("mail.smtp.host"));
+				final String port = bundle.getString("mail.smtp.port");
+				mail.setSmtpPort(Integer.valueOf(port));
+				if (bundle.containsKey("mail.smtp.starttls.enable")
+						&& Boolean.valueOf(bundle.getString("mail.smtp.starttls.enable"))) {
+					mail.setTLS(true);
+					mail.setSSL(true);
+					if (bundle.containsKey("mail.smtp.socketFactory.port")) {
+						String factoryPort = bundle.getString("mail.smtp.socketFactory.port");
+						mail.setSslSmtpPort(factoryPort);
+					}
+				}
+				String subjectEncode = "UTF-8";
+				if (bundle.containsKey("mail.subject.encode")) {
+					subjectEncode = bundle.getString("mail.subject.encode");
+				}
+				mail.setSubject(MimeUtility.encodeText(subject, subjectEncode, null));
+				if (bundle.containsKey("mail.body.htmlSpecials.encode")
+						&& Boolean.valueOf(bundle.getString("mail.body.htmlSpecials.encode"))) {
+					mail.setHtmlMsg(VulpeStringUtil.encodeHTMLSpecials(body));
+				} else {
+					mail.setHtmlMsg(body);
+				}
+				mail.send();
 			} else {
 				throw new Exception("Send Mail properties not setted");
 			}
@@ -193,8 +219,8 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMailByService(final String[] recipients, final String subject,
-			final String body, final String mailerService) throws VulpeSystemException {
+	public void sendMailByService(final String[] recipients, final String subject, final String body,
+			final String mailerService) throws VulpeSystemException {
 		try {
 			final InitialContext initialContext = new InitialContext();
 			final Session session = (Session) initialContext.lookup(mailerService);
@@ -212,30 +238,6 @@ public final class VulpeEmailUtil {
 			LOG.error(e);
 		}
 
-	}
-
-	/**
-	 * Converte um array de String de endereços de e-mail em array de
-	 * InternetAddress.
-	 * 
-	 * @param address
-	 *            array de endereços (do tipo String)
-	 * @return array de InternetAddress
-	 * @throws AddressException
-	 *             Erro ao converter uma String de endereço para InternetAddress
-	 */
-	private InternetAddress[] getAddress(final String[] address) throws AddressException {
-		final InternetAddress[] iAddresses = new InternetAddress[address.length];
-		for (int i = 0; i < address.length; i++) {
-			try {
-				if (address[i].length() > 0) {
-					iAddresses[i] = new InternetAddress(address[i]);
-				}
-			} catch (Exception e) {
-				LOG.error("Error on get address of: " + address[i]);
-			}
-		}
-		return iAddresses;
 	}
 
 	/**
@@ -271,8 +273,7 @@ public final class VulpeEmailUtil {
 	private boolean checkEmailFormat(final String email) {
 		final char arroba = "@".charAt(0);
 		final char dot = ".".charAt(0);
-		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false
-				: true;
+		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false : true;
 	}
 
 	public String getMailFrom() {
@@ -281,15 +282,6 @@ public final class VulpeEmailUtil {
 
 	public void setMailFrom(final String mailFrom) {
 		this.mailFrom = mailFrom;
-	}
-
-	private class VulpeEmailSMTPAuthenticator extends javax.mail.Authenticator {
-		public PasswordAuthentication getPasswordAuthentication() {
-			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
-			final String username = (String) bundle.getObject("mail.smtp.user");
-			final String password = (String) bundle.getObject("mail.smtp.password");
-			return new PasswordAuthentication(username, password);
-		}
 	}
 
 	/**
@@ -305,5 +297,10 @@ public final class VulpeEmailUtil {
 			properties.put(key, resource.getString(key));
 		}
 		return properties;
+	}
+
+	public static void main(String[] args) {
+		VulpeEmailUtil.getInstance("ibrowsebh@gmail.com").sendMail("geraldo.felipe@ibrowse.com.br", "validação",
+				"validação teste");
 	}
 }

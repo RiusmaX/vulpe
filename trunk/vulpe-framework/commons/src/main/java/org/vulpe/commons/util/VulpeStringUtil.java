@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Vulpe String Utility class.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -33,8 +33,8 @@ import org.apache.log4j.Logger;
 public class VulpeStringUtil {
 
 	private static VulpeHashMap<Character, String> accentMap = new VulpeHashMap<Character, String>();
-	private static final VulpeHashMap<String, String> utfChars = new VulpeHashMap<String, String>();
-	private static final VulpeHashMap<String, String> specialChars = new VulpeHashMap<String, String>();
+	private static final VulpeHashMap<Character, String> utfChars = new VulpeHashMap<Character, String>();
+	private static final VulpeHashMap<Character, String> specialChars = new VulpeHashMap<Character, String>();
 
 	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
 
@@ -93,76 +93,76 @@ public class VulpeStringUtil {
 		accentMap.put("Ü".charAt(0), "U");
 		accentMap.put("Û".charAt(0), "U");
 
-		//  (´)
-		specialChars.put("á", "&aacute;");
-		specialChars.put("é", "&eacute;");
-		specialChars.put("í", "&iacute;");
-		specialChars.put("ó", "&oacute;");
-		specialChars.put("ú", "&uacute;");
-		specialChars.put("Á", "&Aacute;");
-		specialChars.put("É", "&Eacute;");
-		specialChars.put("Í", "&Iacute;");
-		specialChars.put("Ó", "&Oacute;");
-		specialChars.put("Ú", "&Uacute;");
+		// (´)
+		specialChars.put("á".charAt(0), "&aacute;");
+		specialChars.put("é".charAt(0), "&eacute;");
+		specialChars.put("í".charAt(0), "&iacute;");
+		specialChars.put("ó".charAt(0), "&oacute;");
+		specialChars.put("ú".charAt(0), "&uacute;");
+		specialChars.put("Á".charAt(0), "&Aacute;");
+		specialChars.put("É".charAt(0), "&Eacute;");
+		specialChars.put("Í".charAt(0), "&Iacute;");
+		specialChars.put("Ó".charAt(0), "&Oacute;");
+		specialChars.put("Ú".charAt(0), "&Uacute;");
 		// (~)
-		specialChars.put("ã", "&atilde;");
-		specialChars.put("ñ", "&ntilde;");
-		specialChars.put("õ", "&otilde;");
-		specialChars.put("Ã", "&Atilde;");
-		specialChars.put("Ñ", "&Ntilde;");
-		specialChars.put("Õ", "&Otilde;");
+		specialChars.put("ã".charAt(0), "&atilde;");
+		specialChars.put("ñ".charAt(0), "&ntilde;");
+		specialChars.put("õ".charAt(0), "&otilde;");
+		specialChars.put("Ã".charAt(0), "&Atilde;");
+		specialChars.put("Ñ".charAt(0), "&Ntilde;");
+		specialChars.put("Õ".charAt(0), "&Otilde;");
 		// (^)
-		specialChars.put("â", "&acirc;");
-		specialChars.put("ê", "&ecirc;");
-		specialChars.put("î", "&icirc;");
-		specialChars.put("ô", "&ocirc;");
-		specialChars.put("û", "&ucirc;");
-		specialChars.put("Â", "&Acirc;");
-		specialChars.put("Ê", "&Ecirc;");
-		specialChars.put("Î", "&Icirc;");
-		specialChars.put("Ô", "&Ocirc;");
-		specialChars.put("Û", "&Ucirc;");
+		specialChars.put("â".charAt(0), "&acirc;");
+		specialChars.put("ê".charAt(0), "&ecirc;");
+		specialChars.put("î".charAt(0), "&icirc;");
+		specialChars.put("ô".charAt(0), "&ocirc;");
+		specialChars.put("û".charAt(0), "&ucirc;");
+		specialChars.put("Â".charAt(0), "&Acirc;");
+		specialChars.put("Ê".charAt(0), "&Ecirc;");
+		specialChars.put("Î".charAt(0), "&Icirc;");
+		specialChars.put("Ô".charAt(0), "&Ocirc;");
+		specialChars.put("Û".charAt(0), "&Ucirc;");
 		// (ç Ç)
-		specialChars.put("ç", "&ccedil;");
-		specialChars.put("Ç", "&Ccedil;");
+		specialChars.put("ç".charAt(0), "&ccedil;");
+		specialChars.put("Ç".charAt(0), "&Ccedil;");
 
 		// (´)
-		utfChars.put("á", "=E1");
-		utfChars.put("é", "=E9");
-		utfChars.put("í", "=ED");
-		utfChars.put("ó", "=F3");
-		utfChars.put("ú", "=FA");
-		utfChars.put("Á", "=C1");
-		utfChars.put("É", "=C9");
-		utfChars.put("Í", "=CD");
-		utfChars.put("Ó", "=D3");
-		utfChars.put("Ú", "=DA");
+		utfChars.put("á".charAt(0), "=E1");
+		utfChars.put("é".charAt(0), "=E9");
+		utfChars.put("í".charAt(0), "=ED");
+		utfChars.put("ó".charAt(0), "=F3");
+		utfChars.put("ú".charAt(0), "=FA");
+		utfChars.put("Á".charAt(0), "=C1");
+		utfChars.put("É".charAt(0), "=C9");
+		utfChars.put("Í".charAt(0), "=CD");
+		utfChars.put("Ó".charAt(0), "=D3");
+		utfChars.put("Ú".charAt(0), "=DA");
 		// (~)
-		utfChars.put("ã", "=E3");
-		utfChars.put("ñ", "=F1");
-		utfChars.put("õ", "=F5");
-		utfChars.put("Ã", "=C3");
-		utfChars.put("Ñ", "=D1");
-		utfChars.put("Õ", "=D5");
+		utfChars.put("ã".charAt(0), "=E3");
+		utfChars.put("ñ".charAt(0), "=F1");
+		utfChars.put("õ".charAt(0), "=F5");
+		utfChars.put("Ã".charAt(0), "=C3");
+		utfChars.put("Ñ".charAt(0), "=D1");
+		utfChars.put("Õ".charAt(0), "=D5");
 		// (^)
-		utfChars.put("â", "=E2");
-		utfChars.put("ê", "=EA");
-		utfChars.put("î", "=EE");
-		utfChars.put("ô", "=F4");
-		utfChars.put("û", "=FB");
-		utfChars.put("Â", "=C2");
-		utfChars.put("Ê", "=CA");
-		utfChars.put("Î", "=CE");
-		utfChars.put("Ô", "=D4");
-		utfChars.put("Û", "=DB");
+		utfChars.put("â".charAt(0), "=E2");
+		utfChars.put("ê".charAt(0), "=EA");
+		utfChars.put("î".charAt(0), "=EE");
+		utfChars.put("ô".charAt(0), "=F4");
+		utfChars.put("û".charAt(0), "=FB");
+		utfChars.put("Â".charAt(0), "=C2");
+		utfChars.put("Ê".charAt(0), "=CA");
+		utfChars.put("Î".charAt(0), "=CE");
+		utfChars.put("Ô".charAt(0), "=D4");
+		utfChars.put("Û".charAt(0), "=DB");
 		// (ç Ç)
-		utfChars.put("ç", "=E7");
-		utfChars.put("Ç", "=C7");
+		utfChars.put("ç".charAt(0), "=E7");
+		utfChars.put("Ç".charAt(0), "=C7");
 	}
 
 	/**
 	 * String accent normalize
-	 *
+	 * 
 	 * @param term
 	 * @return
 	 */
@@ -175,7 +175,33 @@ public class VulpeStringUtil {
 	}
 
 	/**
-	 *
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String encodeUTF(final String value) {
+		final StringBuilder encoded = new StringBuilder();
+		for (int i = 0; i < value.length(); i++) {
+			encoded.append(utfChars.containsKey(value.charAt(i)) ? utfChars.get(value.charAt(i)) : value.charAt(i));
+		}
+		return encoded.toString();
+	}
+
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String encodeHTMLSpecials(final String value) {
+		final StringBuilder encoded = new StringBuilder();
+		for (int i = 0; i < value.length(); i++) {
+			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value.charAt(i)) : value.charAt(i));
+		}
+		return encoded.toString();
+	}
+
+	/**
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -199,7 +225,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in upper case.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -209,7 +235,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in lower case.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -219,7 +245,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 *
+	 * 
 	 * @param blob
 	 * @return
 	 */
@@ -244,7 +270,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 *
+	 * 
 	 * @param blob
 	 * @return
 	 */
