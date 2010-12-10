@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PACKAGE)
+@Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeView {
 
 	boolean messageSlideUp() default false;

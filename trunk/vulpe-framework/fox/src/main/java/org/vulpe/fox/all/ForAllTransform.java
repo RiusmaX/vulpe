@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.config.annotations;
+package org.vulpe.fox.all;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import net.sf.jelly.apt.freemarker.FreemarkerTransform;
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface VulpeUpload {
+public class ForAllTransform extends
+		FreemarkerTransform<ForAllTemplateStrategy> {
 
-	int maxWidthImageUpload() default 640;
+	public ForAllTransform(final String namespace) {
+		super(namespace);
+	}
 
+	public ForAllTemplateStrategy newStrategy() {
+		return new ForAllTemplateStrategy();
+	}
+
+	@Override
+	public String getTransformName() {
+		return "forAll";
+	}
 }

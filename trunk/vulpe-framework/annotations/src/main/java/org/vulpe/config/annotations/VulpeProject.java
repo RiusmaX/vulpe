@@ -43,6 +43,8 @@ public @interface VulpeProject {
 	boolean mobileEnabled() default false;
 
 	VulpeMobile mobile() default @VulpeMobile;
+	
+	VulpeCodeGenerator codeGenerator() default @VulpeCodeGenerator;
 
 	String theme() default "default";
 

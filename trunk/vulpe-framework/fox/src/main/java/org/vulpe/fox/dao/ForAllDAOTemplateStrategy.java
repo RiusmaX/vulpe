@@ -32,6 +32,7 @@ import net.sf.jelly.apt.TemplateOutput;
 import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
+import org.vulpe.commons.VulpeConstants.Code;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.exception.VulpeSystemException;
@@ -63,15 +64,18 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 				return false;
 			}
 			final DecoratedDAO dao = new DecoratedDAO();
-			dao.setName(clazz.getSimpleName());
-			dao.setDaoName(clazz.getSimpleName() + "DAO");
-			dao.setPackageName(clazz.getPackage().toString());
-			dao.setDaoPackageName(StringUtils.replace(clazz.getPackage().toString(), ".entity", ".dao"));
+			final String simpleName = clazz.getSimpleName();
+			dao.setName(simpleName);
+			dao.setDaoName(simpleName + Code.Generator.DAO_SUFFIX);
+			final String packageName = clazz.getPackage().toString();
+			dao.setPackageName(packageName);
+			dao.setDaoPackageName(StringUtils.replace(packageName, Code.Generator.ENTITY_PACKAGE,
+					Code.Generator.DAO_PACKAGE));
 			if (clazz.getAnnotation(javax.persistence.Inheritance.class) != null
 					|| clazz.getAnnotation(org.vulpe.model.annotations.db4o.Inheritance.class) != null) {
 				dao.setInheritance(true);
 				dao.setDaoSuperclassPackageName(StringUtils.replace(clazz.getSuperclass().getDeclaration().getPackage()
-						.toString(), ".entity", ".dao"));
+						.toString(), Code.Generator.ENTITY_PACKAGE, Code.Generator.DAO_PACKAGE));
 			}
 			// if super class isn't Object
 			if (clazz.getSuperclass() != null
@@ -86,9 +90,11 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 							clazz.getSuperclass()).equals(VulpeBaseDB4OAuditEntity.class.getName()))) {
 				final String superClassName = getClassName(clazz.getSuperclass());
 				final String simpleSuperClassName = superClassName.substring(superClassName.lastIndexOf(".") + 1);
-				if (!simpleSuperClassName.startsWith("Abstract")) {
+				if (!simpleSuperClassName.startsWith(Code.Generator.ABSTRACT_PREFIX)) {
 					dao.setSuperclassName(superClassName);
-					dao.setDaoSuperclassName(StringUtils.replace(dao.getSuperclassName(), ".entity", ".dao") + "DAO");
+					dao.setDaoSuperclassName(StringUtils.replace(dao.getSuperclassName(),
+							Code.Generator.ENTITY_PACKAGE, Code.Generator.DAO_PACKAGE)
+							+ Code.Generator.DAO_SUFFIX);
 				}
 			}
 

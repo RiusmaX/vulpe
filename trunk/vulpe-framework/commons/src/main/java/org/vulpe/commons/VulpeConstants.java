@@ -332,6 +332,20 @@ public class VulpeConstants {
 		public class Services {
 		}
 	}
-	
+
+	public class Code {
+		public class Generator {
+			public static final String ABSTRACT_PREFIX = "Abstract";
+			public static final String ENTITY_PACKAGE = ".model.entity";
+			public static final String CONTROLLER_PACKAGE = ".controller";
+			public static final String CONTROLLER_SUFFIX = "Controller";
+			public static final String DAO_PACKAGE = ".model.dao";
+			public static final String DAO_SUFFIX = "DAO";
+			public static final String MANAGER_PACKAGE = ".model.manager";
+			public static final String MANAGER_SUFFIX = "Manager";
+			public static final String SERVICE_PACKAGE = ".model.services";
+			public static final String SERVICE_SUFFIX = "Service";
+		}
+	}
 
 }

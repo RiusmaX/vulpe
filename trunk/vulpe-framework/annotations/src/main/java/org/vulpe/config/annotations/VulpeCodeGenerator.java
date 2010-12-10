@@ -21,11 +21,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Annotation to configure Code Gerenarator.  
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface VulpeUpload {
+public @interface VulpeCodeGenerator {
 
-	int maxWidthImageUpload() default 640;
+	String prefixLabelOfSelection() default "Selection of";
+	String prefixLabelOfSelectionList() default "List of";
+	String prefixLabelOfMaintenance() default "Management of";
+	String prefixLabelOfTabular() default "Management of";
 
 }

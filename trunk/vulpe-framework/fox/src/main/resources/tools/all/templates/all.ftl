@@ -1,22 +1,100 @@
-<#include "macros.ftl"/>
-<@forAllValidView ; type, view>
-<#list view.types as t>
+<#include "*/macros.ftl"/>
+***********************************************************************************************
+Vulpe Fox - Code Generator
+***********************************************************************************************
+<@forAllValid ; type, all>
+<#if all.manager?has_content>
+Generating Manager: ${all.manager.managerPackageName}.${all.manager.name}
+<@javaSource name="${all.manager.moduleName}.src.main.java.${all.manager.managerPackageName}.${all.manager.name}">
+package ${all.manager.managerPackageName};
+
+import org.springframework.stereotype.Service;
+
+import ${all.manager.daoPackageName}.${all.manager.entityName}DAO;
+<#if !all.manager.managerSuperclassName??>
+import org.vulpe.model.services.manager.impl.VulpeBaseManager;
+</#if>
+import ${all.manager.packageName}.${all.manager.entityName};
+
+/**
+ * Manager implementation of ${all.manager.entityName}
+ */
+@Service
+<#if all.manager.managerSuperclassName??>
+<#if all.manager.inheritance>
+public class ${all.manager.name} extends ${all.manager.managerSuperclassName}<${all.manager.entityName}, ${all.manager.entityName}DAO<${all.manager.entityName}>> {
+<#else>
+public class ${all.manager.name} extends ${all.manager.managerSuperclassName}<${all.manager.entityName}> {
+</#if>
+<#else>
+<#if all.manager.inheritance>
+public class ${all.manager.name}<ENTITY_CLASS extends ${all.manager.entityName}, ENTITY_DAO extends ${all.manager.entityName}DAO<ENTITY_CLASS>> extends VulpeBaseManager<ENTITY_CLASS, ${all.manager.idType}, ENTITY_DAO> {
+<#else>
+public class ${all.manager.name} extends VulpeBaseManager<${all.manager.entityName}, ${all.manager.idType}, ${all.manager.entityName}DAO> {
+</#if>
+</#if>
+
+}
+</@javaSource>
+</#if>
+<#if all.controller?has_content>
+Generating Controller: ${all.controller.controllerPackageName}.${all.controller.name}Controller
+<@javaSource name="controller.src.main.java.${all.controller.controllerPackageName}.${all.controller.name}Controller">
+package ${all.controller.controllerPackageName};
+
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+<#if all.controller.details?has_content>
+import org.vulpe.commons.annotations.DetailConfig;
+</#if>
+
+import org.vulpe.controller.annotations.Controller;
+<#if (all.controller.pageSize > 0)>
+import org.vulpe.controller.annotations.Select;
+</#if>
+<#if all.controller.tabularDespiseFields?has_content>
+import org.vulpe.controller.annotations.Tabular;
+</#if>
+
+import ${all.controller.packageName}.${all.controller.entityName};
+import ${all.controller.servicePackageName}.${all.controller.moduleName?capitalize}Service;
+import ${all.controller.projectPackageName}.controller.ApplicationBaseController;
+
+
+/**
+ * Controller implementation of ${all.controller.entityName}
+ */
+@Component("${all.controller.moduleName}.${all.controller.name}Controller")
+@SuppressWarnings("serial")
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+@Controller(serviceClass = ${all.controller.moduleName?capitalize}Service.class<#if all.controller.details?has_content>, detailsConfig = { <#list controller.details as detail>@DetailConfig(<#if detail.name?has_content>name = "${detail.name}"</#if><#if detail.propertyName?has_content>, propertyName = "${detail.propertyName}"</#if><#if detail.despiseFields?has_content>, despiseFields = "${detail.despiseFields}"</#if><#if (detail.startNewDetails > 0)>, startNewDetails = ${detail.startNewDetails}</#if><#if (detail.newDetails > 0)>, newDetails = ${detail.newDetails}</#if><#if detail.parentDetailName?has_content>, parentDetailName = "${detail.parentDetailName}"</#if>)${detail.next}</#list> }</#if><#if (all.controller.pageSize > 0)>, select = @Select(pageSize = ${all.controller.pageSize})</#if><#if all.controller.tabularDespiseFields?has_content>, tabular = @Tabular(despiseFields = { ${all.controller.tabularDespiseFields} }<#if all.controller.tabularName?has_content>, name = "${all.controller.tabularName}"</#if><#if all.controller.tabularPropertyName?has_content>, propertyName = "${all.controller.tabularPropertyName}"</#if><#if (all.controller.tabularStartNewRecords > 0)>, startNewRecords = ${all.controller.tabularStartNewRecords}</#if><#if (all.controller.tabularNewRecords > 0)>, newRecords = ${all.controller.tabularNewRecords}</#if>)</#if>)
+public class ${all.controller.name}Controller extends ApplicationBaseController<${all.controller.entityName}, ${all.controller.idType}> {
+
+}
+</@javaSource>
+</#if>
+<#if all.view?has_content>
+[ BEGIN - COPY AND PASTE THE FOLLOWING LINES IN THE FILE: ApplicationResources.properties ]
+
+<#list all.view.types as t>
 <#if t == 'SELECT' || t == 'ALL'>
 ################################################################################
-# View Select: ${view.name}
+# View Select: ${all.view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.select=${view.prefixLabelOfSelection} ${view.label}
-label.${view.projectName}.${view.moduleName}.${view.name}.select.header=${view.prefixLabelOfSelectionList} ${view.label}
-<#list view.labels?keys as label>
-label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view.labels[label]}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select=${all.view.prefixLabelOfSelection} ${all.view.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.header=${all.view.prefixLabelOfSelectionList} ${all.view.label}
+<#list all.view.labels?keys as label>
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${label}=${all.view.labels[label]}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
+<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Select.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
-<#list view.arguments as field>
+<#list all.view.arguments as field>
 <v:${field.type}
-	labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}"
+	labelKey="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${field.name}"
 <#if field.itemKey?has_content>
 	property="${field.name}.${field.itemKey}"
 <#else>
@@ -120,19 +198,19 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 />
 </#list>
 </@file>
-<@file name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
+<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}SelectItems.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
-		<th colspan="${view.columnSpan}"><fmt:message key="label.${view.projectName}.${view.moduleName}.${view.name}.select.header"/></th>
+		<th colspan="${all.view.columnSpan}"><fmt:message key="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
-		<v:row<#if view.popupProperties?has_content> popupProperties="${view.popupProperties}"</#if>>
-			<#list view.items as field>
+		<v:row<#if all.view.popupProperties?has_content> popupProperties="${all.view.popupProperties}"</#if>>
+			<#list all.view.items as field>
 			<v:column
-				labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.select.${field.name}"
+				labelKey="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${field.name}"
 				<#if field.attribute?has_content>
 				property="${field.name}.${field.attribute}"
 				<#else>
@@ -152,27 +230,27 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
+		<th colspan="${all.view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
 </@file>
 </#if>
 <#if t == 'MAIN' || t == 'ALL'>
 ################################################################################
-# View MAIN: ${view.name}
+# View MAIN: ${all.view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.main=${view.prefixLabelOfMaintenance} ${view.label}
-<#list view.fields as field>
-label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${field.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main=${all.view.prefixLabelOfMaintenance} ${all.view.label}
+<#list all.view.fields as field>
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${field.name}=${field.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Main.jsp">
+<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Main.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
-<#list view.fields as field>
+<#list all.view.fields as field>
 <v:${field.type}
-	labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}"
+	labelKey="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${field.name}"
 <#if field.itemKey?has_content>
 	property="${field.name}.${field.itemKey}"
 <#else>
@@ -276,16 +354,16 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 />
 </#list>
 </@file>
-<#list view.details as detail>
-label.${view.projectName}.${view.moduleName}.${view.name}.main.master=${view.name}
+<#list all.view.details as detail>
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.master=${all.view.name}
 ################################################################################
 # View Main Detail: ${detail.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}=${detail.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${detail.name}=${detail.label}
 <#list detail.fields as detailField>
-label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}=${detailField.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${detail.name}.${detailField.name}=${detailField.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
+<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${detail.name}Detail.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -293,7 +371,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<#list detail.fields as detailField>
-			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
+			<v:column labelKey="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${detail.name}.${detailField.name}"<#if detailField.align?has_content> align="${detailField.align}"</#if>>
 				<v:${detailField.type} property="${detailField.name}"
 				<#if detailField.type == 'selectPopup'>
 					identifier="${detailField.identifier}" description="${detailField.description}"
@@ -401,25 +479,25 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${
 </#if>
 <#if t == 'TABULAR' || t == 'ALL'>
 ################################################################################
-# View Tabular: ${view.name}
+# View Tabular: ${all.view.name}
 ################################################################################
-label.${view.projectName}.${view.moduleName}.${view.name}.tabular=${view.prefixLabelOfTabular} ${view.label}
-label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header=${view.label}
-<#list view.fields as field>
-label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=${field.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular=${all.view.prefixLabelOfTabular} ${all.view.label}
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.header=${all.view.label}
+<#list all.view.fields as field>
+label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.${field.name}=${field.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
+<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Tabular.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
 	<jsp:attribute name="tableHeader">
-		<th colspan="${view.columnSpan}"><fmt:message key="label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header"/></th>
+		<th colspan="${all.view.columnSpan}"><fmt:message key="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row>
-		<#list view.fields as field>
-			<v:column labelKey="label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}">
+		<#list all.view.fields as field>
+			<v:column labelKey="label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.${field.name}">
 				<v:${field.type}
 				<#if field.itemKey?has_content>
 					property="${field.name}.${field.itemKey}"
@@ -526,10 +604,14 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 		</v:row>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
+		<th colspan="${all.view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
 </@file>
 </#if>
 </#list>
-</@forAllValidView>
+
+[ END - COPY AND PASTE THE ABOVE LINES IN THE FILE: ApplicationResources.properties ]
+***********************************************************************************************
+</#if>
+</@forAllValid>

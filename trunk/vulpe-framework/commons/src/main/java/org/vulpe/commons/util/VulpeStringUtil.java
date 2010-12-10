@@ -21,6 +21,7 @@ import java.sql.Blob;
 
 import javax.sql.rowset.serial.SerialBlob;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -195,7 +196,8 @@ public class VulpeStringUtil {
 	public static String encodeHTMLSpecials(final String value) {
 		final StringBuilder encoded = new StringBuilder();
 		for (int i = 0; i < value.length(); i++) {
-			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value.charAt(i)) : value.charAt(i));
+			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value.charAt(i)) : value
+					.charAt(i));
 		}
 		return encoded.toString();
 	}
@@ -313,5 +315,17 @@ public class VulpeStringUtil {
 			++count;
 		}
 		return count;
+	}
+
+	public static String separateWords(final String value) {
+		final StringBuilder newValue = new StringBuilder();
+		for (int i = 0; i < value.length(); i++) {
+			if (i > 0 && StringUtils.isAllUpperCase(value.substring(i, i + 1))) {
+				newValue.append(" ").append(value.charAt(i));
+			} else {
+				newValue.append(value.charAt(i));
+			}
+		}
+		return newValue.toString();
 	}
 }

@@ -26,7 +26,7 @@ import org.vulpe.config.annotations.VulpeProject;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @since 1.0
  */
-@SuppressWarnings({ "unchecked" })
+@SuppressWarnings( { "unchecked" })
 public final class VulpeConfigHelper {
 
 	private VulpeConfigHelper() {
@@ -138,6 +138,23 @@ public final class VulpeConfigHelper {
 			LOG.error(e);
 		}
 		return themeName;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static VulpeProject getProjectConfiguration() {
+		try {
+			final Class config = getConfig();
+			if (config != null) {
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+				return project;
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return null;
 	}
 
 	/**

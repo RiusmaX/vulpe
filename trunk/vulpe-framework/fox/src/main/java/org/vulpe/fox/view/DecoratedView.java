@@ -17,11 +17,17 @@ package org.vulpe.fox.view;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class DecoratedView implements Serializable {
 
 	private String name;
+	private String prefixLabelOfSelection;
+	private String prefixLabelOfSelectionList;
+	private String prefixLabelOfMaintenance;
+	private String prefixLabelOfTabular;
+	private String label;
 	private String projectName;
 	private String moduleName;
 	private String popupProperties;
@@ -31,7 +37,7 @@ public class DecoratedView implements Serializable {
 	private List<DecoratedViewField> arguments;
 	private List<DecoratedViewField> items;
 	private List<DecoratedViewField> fields;
-	private List<String> labels;
+	private Map<String, String> labels;
 
 	public String getName() {
 		return name;
@@ -113,12 +119,52 @@ public class DecoratedView implements Serializable {
 		return details;
 	}
 
-	public void setLabels(List<String> labels) {
+	public void setLabels(Map<String, String> labels) {
 		this.labels = labels;
 	}
 
-	public List<String> getLabels() {
+	public Map<String, String> getLabels() {
 		return labels;
+	}
+
+	public String getPrefixLabelOfSelection() {
+		return prefixLabelOfSelection;
+	}
+
+	public void setPrefixLabelOfSelection(String prefixLabelOfSelection) {
+		this.prefixLabelOfSelection = prefixLabelOfSelection;
+	}
+
+	public String getPrefixLabelOfSelectionList() {
+		return prefixLabelOfSelectionList;
+	}
+
+	public void setPrefixLabelOfSelectionList(String prefixLabelOfSelectionList) {
+		this.prefixLabelOfSelectionList = prefixLabelOfSelectionList;
+	}
+
+	public String getPrefixLabelOfMaintenance() {
+		return prefixLabelOfMaintenance;
+	}
+
+	public void setPrefixLabelOfMaintenance(String prefixLabelOfMaintenance) {
+		this.prefixLabelOfMaintenance = prefixLabelOfMaintenance;
+	}
+
+	public String getPrefixLabelOfTabular() {
+		return prefixLabelOfTabular;
+	}
+
+	public void setPrefixLabelOfTabular(String prefixLabelOfTabular) {
+		this.prefixLabelOfTabular = prefixLabelOfTabular;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 }

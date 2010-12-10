@@ -18,7 +18,9 @@ package org.vulpe.fox.view;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.jelly.apt.TemplateBlock;
 import net.sf.jelly.apt.TemplateException;
@@ -29,6 +31,7 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.fox.VulpeForAllTemplateStrategy;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CodeGenerator;
@@ -52,9 +55,11 @@ import com.sun.mirror.declaration.FieldDeclaration;
 
 public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 
+	private DecoratedView view;
+
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * net.sf.jelly.apt.strategies.TemplateBlockStrategy#preProcess(net.sf.jelly
 	 * .apt.TemplateBlock, net.sf.jelly.apt.TemplateOutput,
@@ -65,29 +70,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			final TemplateModel model) throws IOException, TemplateException {
 		if (super.preProcess(block, output, model) && getDeclaration() instanceof DecoratedClassDeclaration) {
 			final DecoratedClassDeclaration clazz = (DecoratedClassDeclaration) getDeclaration();
-			if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())) {
-				return false;
-			}
-			final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
-			if (codeGenerator == null || codeGenerator.view().viewType()[0].equals(ViewType.NONE)) {
-				return false;
-			}
-			final DecoratedView view = new DecoratedView();
-			view.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
-					.getSimpleName());
-			view.setProjectName(VulpeConfigHelper.getProjectName());
-			view.setModuleName(getModuleName(clazz));
-			view.setPopupProperties(codeGenerator.view().popupProperties());
-			final List<String> types = new ArrayList<String>();
-			for (ViewType viewType : codeGenerator.view().viewType()) {
-				types.add(viewType.toString());
-			}
-			view.setTypes(types);
-
-			prepareFields(clazz, view);
-
-			model.setVariable(getVar(), view);
-			return true;
+			return executePreProcess(clazz, block, output, model);
 		}
 		return false;
 	}
@@ -101,7 +84,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 	protected void prepareFields(final DecoratedClassDeclaration clazz, final DecoratedView view) {
 		final List<DecoratedViewDetail> details = new ArrayList<DecoratedViewDetail>();
 		final List<DecoratedViewField> fields = new ArrayList<DecoratedViewField>();
-		final List<String> labels = new ArrayList<String>();
+		final Map<String, String> labels = new HashMap<String, String>();
 		final List<DecoratedViewField> items = new ArrayList<DecoratedViewField>();
 		final List<DecoratedViewField> arguments = new ArrayList<DecoratedViewField>();
 		for (FieldDeclaration field : clazz.getFields()) {
@@ -113,6 +96,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				if (StringUtils.isNotBlank(detail.relationship().identifier())) {
 					final DecoratedViewField decoratedViewFieldDetail = new DecoratedViewField();
 					decoratedViewFieldDetail.setName(detail.relationship().name());
+					decoratedViewFieldDetail.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil
+							.upperCaseFirst(decoratedViewFieldDetail.getName())));
 					decoratedViewFieldDetail.setAction(detail.relationship().action());
 					decoratedViewFieldDetail.setSize(detail.relationship().size());
 					decoratedViewFieldDetail.setPopupWidth(detail.relationship().popupWidth());
@@ -124,7 +109,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 					decoratedViewDetail.setFields(detailFields);
 				} else {
 					final List<Field> listDetailField = VulpeReflectUtil.getInstance().getFields(detail.target());
-					for (Field detailField : listDetailField) {
+					for (final Field detailField : listDetailField) {
 						if (detailField.getName().toString().equals(clazz.getSimpleName().toLowerCase())) {
 							continue;
 						}
@@ -162,7 +147,12 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				items.add(decoratedViewField);
 			}
 			if (column != null || decoratedViewField.isArgument()) {
-				labels.add(decoratedViewField.getName());
+				if (StringUtils.isNotEmpty(decoratedViewField.getLabel())) {
+					labels.put(decoratedViewField.getName(), decoratedViewField.getLabel());
+				} else {
+					labels.put(decoratedViewField.getName(), VulpeStringUtil.separateWords(VulpeStringUtil
+							.upperCaseFirst(decoratedViewField.getName())));
+				}
 			}
 		}
 		view.setDetails(details);
@@ -178,12 +168,13 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 	}
 
 	private DecoratedViewField generateViewField(FieldDeclaration fDeclaration, Field field) {
-		DecoratedViewField decoratedViewField = new DecoratedViewField();
+		final DecoratedViewField decoratedViewField = new DecoratedViewField();
 		String name = "";
 		final VulpeText text = fDeclaration == null ? field.getAnnotation(VulpeText.class) : fDeclaration
 				.getAnnotation(VulpeText.class);
 		if (text != null) {
 			name = text.name();
+			decoratedViewField.setLabel(text.label());
 			decoratedViewField.setArgument(text.argument());
 			decoratedViewField.setRequired(text.required());
 			decoratedViewField.setMaxlength(text.maxlength());
@@ -195,6 +186,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeTextArea.class);
 		if (textarea != null) {
 			name = textarea.name();
+			decoratedViewField.setLabel(textarea.label());
 			decoratedViewField.setArgument(textarea.argument());
 			decoratedViewField.setRequired(textarea.required());
 			decoratedViewField.setCols(textarea.cols());
@@ -205,6 +197,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpePassword.class);
 		if (password != null) {
 			name = password.name();
+			decoratedViewField.setLabel(password.label());
 			decoratedViewField.setArgument(password.argument());
 			decoratedViewField.setRequired(password.required());
 			decoratedViewField.setMaxlength(password.maxlength());
@@ -215,6 +208,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeDate.class);
 		if (date != null) {
 			name = date.name();
+			decoratedViewField.setLabel(date.label());
 			decoratedViewField.setArgument(date.argument());
 			decoratedViewField.setRequired(date.required());
 			decoratedViewField.setMaxlength(date.maxlength());
@@ -225,6 +219,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeCheckbox.class);
 		if (checkbox != null) {
 			name = checkbox.name();
+			decoratedViewField.setLabel(checkbox.label());
 			decoratedViewField.setArgument(checkbox.argument());
 			decoratedViewField.setRequired(checkbox.required());
 			decoratedViewField.setFieldValue(checkbox.fieldValue());
@@ -234,6 +229,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeSelect.class);
 		if (select != null) {
 			name = select.name();
+			decoratedViewField.setLabel(select.label());
 			decoratedViewField.setArgument(select.argument());
 			decoratedViewField.setRequired(select.required());
 			if (StringUtils.isNotBlank(select.items())) {
@@ -256,6 +252,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				: fDeclaration.getAnnotation(VulpeCheckboxlist.class);
 		if (checkboxlist != null) {
 			name = checkboxlist.name();
+			decoratedViewField.setLabel(checkboxlist.label());
 			decoratedViewField.setArgument(checkboxlist.argument());
 			decoratedViewField.setRequired(checkboxlist.required());
 			if (StringUtils.isNotBlank(checkboxlist.list())) {
@@ -278,6 +275,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				.getAnnotation(VulpeRadio.class);
 		if (radio != null) {
 			name = radio.name();
+			decoratedViewField.setLabel(radio.label());
 			decoratedViewField.setArgument(radio.argument());
 			decoratedViewField.setRequired(radio.required());
 			if (StringUtils.isNotBlank(radio.list())) {
@@ -297,6 +295,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				: fDeclaration.getAnnotation(VulpeSelectPopup.class);
 		if (selectPopup != null) {
 			name = selectPopup.name();
+			decoratedViewField.setLabel(selectPopup.label());
 			decoratedViewField.setArgument(selectPopup.argument());
 			decoratedViewField.setRequired(selectPopup.required());
 			decoratedViewField.setIdentifier(selectPopup.identifier());
@@ -396,6 +395,59 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		}
 		decoratedViewField.setName(StringUtils.isNotBlank(name) ? name : fDeclaration == null ? field.getName()
 				: fDeclaration.getSimpleName());
+		if (StringUtils.isNotEmpty(decoratedViewField.getLabel())) {
+			decoratedViewField.setLabel(decoratedViewField.getLabel());
+		} else {
+			decoratedViewField.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil.upperCaseFirst(decoratedViewField
+					.getName())));
+		}
 		return decoratedViewField;
+	}
+
+	private boolean executePreProcess(final DecoratedClassDeclaration clazz, final TemplateBlock block,
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model) throws IOException,
+			TemplateException {
+		if (getClassName(clazz.getSuperclass()).equals(VulpeBaseSimpleEntity.class.getName())) {
+			return false;
+		}
+		final CodeGenerator codeGenerator = clazz.getAnnotation(CodeGenerator.class);
+		if (codeGenerator == null || codeGenerator.view().viewType()[0].equals(ViewType.NONE)) {
+			return false;
+		}
+		view = new DecoratedView();
+		view.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
+				.getSimpleName());
+		if (StringUtils.isNotEmpty(codeGenerator.label())) {
+			view.setLabel(codeGenerator.label());
+		} else {
+			view.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil.upperCaseFirst(view.getName())));
+		}
+		view.setPrefixLabelOfMaintenance(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+				.prefixLabelOfMaintenance());
+		view.setPrefixLabelOfSelection(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+				.prefixLabelOfSelection());
+		view.setPrefixLabelOfSelectionList(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+				.prefixLabelOfSelectionList());
+		view
+				.setPrefixLabelOfTabular(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+						.prefixLabelOfTabular());
+		view.setProjectName(VulpeConfigHelper.getProjectName());
+		view.setModuleName(getModuleName(clazz));
+		view.setPopupProperties(codeGenerator.view().popupProperties());
+		final List<String> types = new ArrayList<String>();
+		for (final ViewType viewType : codeGenerator.view().viewType()) {
+			types.add(viewType.toString());
+		}
+		view.setTypes(types);
+		prepareFields(clazz, view);
+		model.setVariable(getVar(), view);
+		return true;
+	}
+	
+	public DecoratedView execute(final DecoratedClassDeclaration clazz, final TemplateBlock block,
+			final TemplateOutput<TemplateBlock> output, final TemplateModel model) throws IOException,
+			TemplateException {
+		executePreProcess(clazz, block, output, model);
+		return view;
 	}
 }

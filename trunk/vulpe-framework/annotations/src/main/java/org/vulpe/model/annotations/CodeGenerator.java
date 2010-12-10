@@ -28,7 +28,7 @@ import org.vulpe.view.annotations.View.ViewType;
 
 /**
  * Tells Vulpe to create code from entity.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
@@ -36,13 +36,33 @@ import org.vulpe.view.annotations.View.ViewType;
 @Target(ElementType.TYPE)
 public @interface CodeGenerator {
 
+	/**
+	 * Information about Controller.
+	 */
 	Controller controller() default @Controller(type = ControllerType.NONE);
 
+	/**
+	 * Information about View.
+	 */
 	View view() default @View(viewType = { ViewType.NONE });
 
+	/**
+	 * Indicates to generate Manager.
+	 */
 	boolean manager() default true;
 
+	/**
+	 * Indicates to generate DAO.
+	 */
 	boolean dao() default true;
 
+	/**
+	 * Label of Entity on View.
+	 */
+	String label() default "";
+
+	/**
+	 * Base name to generate code.
+	 */
 	String baseName() default "";
 }
