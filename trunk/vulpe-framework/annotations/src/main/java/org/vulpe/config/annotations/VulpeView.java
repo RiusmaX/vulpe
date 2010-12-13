@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeView {
 
+	boolean focusFirst() default true;
+	
 	boolean messageSlideUp() default false;
 
 	int messageSlideUpTime() default 10000;

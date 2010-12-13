@@ -47,6 +47,7 @@ import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
+import org.vulpe.view.annotations.View;
 
 /**
  * Simple Base Controller implementation.
@@ -105,6 +106,10 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
 		if (getControllerConfig().isRequireOneFilter()) {
 			now.put(Now.REQUIRE_ONE_FILTER, true);
+		}
+		final View view = this.getClass().getAnnotation(View.class);
+		if (view != null) {
+			now.put(Now.FIELD_TO_FOCUS, view.fieldToFocus());
 		}
 		// now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
 	}

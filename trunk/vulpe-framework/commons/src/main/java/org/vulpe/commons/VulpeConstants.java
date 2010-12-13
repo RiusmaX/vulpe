@@ -74,6 +74,7 @@ public class VulpeConstants {
 			public static final String FRONTEND_MENU_TYPE = "frontendMenuType";
 			public static final String BACKEND_MENU_TYPE = "backendMenuType";
 			public static final String BACKEND_CENTERED_LAYOUT = "backendCenteredLayout";
+			public static final String FOCUS_FIRST = "focusFirst";
 			public static final String FRONTEND_CENTERED_LAYOUT = "frontendCenteredLayout";
 			public static final String SHOW_BUTTON_AS_IMAGE = "showButtonAsImage";
 			public static final String SHOW_BUTTON_ICON = "showButtonIcon";
@@ -117,6 +118,7 @@ public class VulpeConstants {
 			public static final String MASTER_TITLE_KEY = "masterTitleKey";
 			public static final String TITLE_KEY = "titleKey";
 			public static final String FORM_NAME = "formName";
+			public static final String FIELD_TO_FOCUS = "fieldToFocus";
 			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
 		}
 

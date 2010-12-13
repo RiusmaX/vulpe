@@ -17,7 +17,8 @@
 <c:set var="vulpeShowActions" value="true" scope="request"/>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-	vulpe.util.focusFirst();
+	<c:if test="${global['focusFirst']}">vulpe.util.focusFirst();</c:if>
+	<c:if test="${not empty now['fieldToFocus']}">vulpe.util.getElementField("${now['fieldToFocus']}").focus();</c:if>
 	<c:if test="${(global['frontendMenuType'] == 'DROPPY' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['backendMenuType'] == 'DROPPY' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">$("#nav").droppy();</c:if>
 	<c:if test="${(global['frontendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['backendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">if (vulpe.config.browser.ie) { $("#nav").superfish().find("ul").bgIframe({opacity: false}); } else { $("#nav").superfish(); }</c:if>
 	<c:if test="${pageContext.request.locale ne 'en_US'}">$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);</c:if>
