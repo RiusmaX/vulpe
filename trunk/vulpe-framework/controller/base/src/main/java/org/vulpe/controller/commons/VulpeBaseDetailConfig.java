@@ -39,6 +39,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private String viewPath;
 	private Quantity quantiity;
 	private VulpeBaseDetailConfig parentDetailConfig;
+	private boolean showAsAccordion;
 	private List<VulpeBaseDetailConfig> subDetails = new LinkedList<VulpeBaseDetailConfig>();
 
 	public VulpeBaseDetailConfig() {
@@ -157,6 +158,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
 		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
+		this.showAsAccordion = detail.showAsArccodion();
 	}
 
 	private void setSimpleName() {
@@ -208,6 +210,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public boolean isAddNewDetailsOnTop() {
 		return addNewDetailsOnTop;
+	}
+
+	public void setShowAsAccordion(boolean showAsAccordion) {
+		this.showAsAccordion = showAsAccordion;
+	}
+
+	public boolean isShowAsAccordion() {
+		return showAsAccordion;
 	}
 
 }
