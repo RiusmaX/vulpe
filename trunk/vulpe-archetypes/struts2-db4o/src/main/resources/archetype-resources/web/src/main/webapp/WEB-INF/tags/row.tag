@@ -20,7 +20,8 @@
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showLine" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showUpdateButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="showDeleteButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showDeleteButtons" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showDeleteThisButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="style" required="false" rtexprvalue="true" %>
 <%@ attribute name="updateValue" required="false" rtexprvalue="true" type="java.lang.String" %>
