@@ -27,55 +27,51 @@ import org.vulpe.view.tags.Functions;
 
 /**
  * Vulpe Controller Config implementation.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
 @SuppressWarnings( { "serial", "unchecked" })
-public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends VulpeBaseSimpleControllerConfig implements Serializable {
+public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		VulpeBaseSimpleControllerConfig implements Serializable {
 
 	private final List<VulpeBaseDetailConfig> details;
 	private final Class<ID> idClass;
 	private final Class<ENTITY> entityClass;
 
 	/**
-	 *
+	 * 
 	 * @param controllerClass
 	 * @param details
 	 */
-	public VulpeBaseControllerConfig(final Class<?> controllerClass,
-			final List<VulpeBaseDetailConfig> details) {
+	public VulpeBaseControllerConfig(final Class<?> controllerClass, final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
-				controllerClass));
+		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class, controllerClass));
 		setControllerName(getControllerUtil().getCurrentControllerName());
-		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(
-				controllerClass, 0);
+		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 0);
 		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 1);
 		this.details = details;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public List<VulpeBaseDetailConfig> getDetails() {
-		if (!getControllerType().equals(ControllerType.TABULAR)
-				&& getController().detailsConfig().length == 0) {
+		if (!getControllerType().equals(ControllerType.TABULAR) && getController().detailsConfig().length == 0) {
 			this.details.clear();
 		}
 		return this.details;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public VulpeBaseDetailConfig getTabularConfig() {
-		if (getControllerType().equals(ControllerType.TABULAR)
-				&& (this.details == null || this.details.isEmpty())) {
+		if (getControllerType().equals(ControllerType.TABULAR) && (this.details == null || this.details.isEmpty())) {
+			final boolean addNewDetailsOnTop = getController().tabular().addNewRecordsOnTop();
 			final int newDetails = getController().tabular().newRecords();
 			final int startNewDetails = getController().tabular().startNewRecords();
 			final String[] despiseFields = getController().tabular().despiseFields();
@@ -87,14 +83,14 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			if (StringUtils.isNotBlank(getController().tabular().propertyName())) {
 				propertyName = getController().tabular().propertyName();
 			}
-			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails,
-					newDetails, despiseFields));
+			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails, newDetails,
+					addNewDetailsOnTop, despiseFields));
 		}
 		return getDetail(VulpeConstants.Controller.ENTITIES);
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public Class<ENTITY> getEntityClass() {
@@ -102,7 +98,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public Class<ID> getIdClass() {
@@ -110,7 +106,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 *
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -124,7 +120,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 *
+	 * 
 	 * @param detail
 	 * @return
 	 */
@@ -134,8 +130,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			return detailConfig;
 		}
 
-		final String name = Functions.clearChars(Functions.replaceSequence(detail, "[", "]", ""),
-				".");
+		final String name = Functions.clearChars(Functions.replaceSequence(detail, "[", "]", ""), ".");
 		detailConfig = getDetail(name);
 		if (detailConfig != null) {
 			return detailConfig;

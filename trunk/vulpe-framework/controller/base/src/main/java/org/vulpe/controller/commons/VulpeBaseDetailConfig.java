@@ -16,13 +16,13 @@
 package org.vulpe.controller.commons;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View.Layout;
-import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.view.tags.Functions;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -32,13 +32,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private String propertyName;
 	private String simpleName;
 	private String titleKey;
+	private boolean addNewDetailsOnTop;
 	private int newDetails;
 	private int startNewDetails;
 	private String[] despiseFields;
 	private String viewPath;
 	private Quantity quantiity;
 	private VulpeBaseDetailConfig parentDetailConfig;
-	private List<VulpeBaseDetailConfig> subDetails = new ArrayList<VulpeBaseDetailConfig>();
+	private List<VulpeBaseDetailConfig> subDetails = new LinkedList<VulpeBaseDetailConfig>();
 
 	public VulpeBaseDetailConfig() {
 		this.newDetails = 1;
@@ -52,12 +53,13 @@ public class VulpeBaseDetailConfig implements Serializable {
 	}
 
 	public VulpeBaseDetailConfig(final String name, final String propertyName,
-			final int startNewDetails, final int newDetails, final String[] despiseFields) {
+			final int startNewDetails, final int newDetails, final boolean addNewDetailsOnTop, final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
 		this.startNewDetails = startNewDetails == 0 ? 1 : startNewDetails;
 		this.newDetails = newDetails == 0 ? 1 : newDetails;
 		this.despiseFields = despiseFields.clone();
+		this.addNewDetailsOnTop = addNewDetailsOnTop;
 		setSimpleName();
 	}
 
@@ -154,6 +156,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 					.parentDetailName());
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
+		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
 	}
 
 	private void setSimpleName() {
@@ -197,6 +200,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public Quantity getQuantity() {
 		return quantiity;
+	}
+
+	public void setAddNewDetailsOnTop(boolean addNewDetailsOnTop) {
+		this.addNewDetailsOnTop = addNewDetailsOnTop;
+	}
+
+	public boolean isAddNewDetailsOnTop() {
+		return addNewDetailsOnTop;
 	}
 
 }

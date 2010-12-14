@@ -142,7 +142,7 @@ public class ControllerUtil {
 				}
 			}
 		}
-		return (items > 1);
+		return (items > 0);
 	}
 
 	/**

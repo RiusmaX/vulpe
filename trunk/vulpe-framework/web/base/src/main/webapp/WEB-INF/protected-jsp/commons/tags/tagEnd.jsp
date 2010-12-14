@@ -1,4 +1,4 @@
-<c:if test="${!showAsText || !onlyToSee}">
+<c:if test="${(!showAsText || !onlyToSee) && showRequiredIcon}">
 <img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" />
 <img id="${elementId}-errorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" />
 </c:if>

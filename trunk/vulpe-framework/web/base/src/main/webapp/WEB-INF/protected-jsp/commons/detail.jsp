@@ -14,7 +14,7 @@
 	<td colspan="100">
 </c:if>
 <div id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}" class="detailBody">
-<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
+<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false}">
 		<h3 id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}-title"><a href="#" id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}-link"><fmt:message key="${targetConfigLocal.titleKey}"/></a></h3>
 		<div>
 </c:if>
@@ -28,7 +28,7 @@
 			<c:set var="targetConfig" value="${targetConfigLocal}" scope="request"/>
 			<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 		</div>
-<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
+<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false}">
 		</div>
 </c:if>
 </div>
@@ -36,7 +36,7 @@
 	</td>
 </tr>
 </c:if>
-<c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.detailsInTabs eq false}">
+<c:if test="${(not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false) && targetConfig.showAsAccordion}">
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var id = 'vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}';

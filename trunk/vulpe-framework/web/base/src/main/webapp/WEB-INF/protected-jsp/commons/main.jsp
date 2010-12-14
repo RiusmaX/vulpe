@@ -7,7 +7,7 @@
 	<div id="vulpeMainActions" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/mainActions.jsp" %>
 	</div>
-	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
+	<c:if test="${controllerConfig.showInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeMainBodyTabs">
 		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
 		<ul title="${tabNavigationTitle}">
@@ -43,7 +43,7 @@
 		</c:forEach>
 	</c:if>
 	<div id="vulpeMainFooter"></div>
-	<c:if test="${controllerConfig.detailsInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
+	<c:if test="${controllerConfig.showInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function() {

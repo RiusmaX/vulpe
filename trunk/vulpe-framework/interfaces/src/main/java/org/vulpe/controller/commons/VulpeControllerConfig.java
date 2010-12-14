@@ -41,7 +41,7 @@ public interface VulpeControllerConfig {
 
 	String getMainFormName();
 
-	boolean isDetailsInTabs();
+	boolean isShowInTabs();
 
 	String getReportFormat();
 

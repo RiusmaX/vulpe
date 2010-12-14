@@ -291,7 +291,7 @@ var vulpe = {
 		getElementField: function(name, element) {
 			var prefix = element ? vulpe.util.getPrefixIdByElement(element) : vulpe.util.getPrefixId();
 			var field = vulpe.util.get(name.indexOf(prefix) != -1 ? name : prefix + name);
-			if (field.length == 0){
+			if (field.length == 0 && vulpe.util.isNotEmpty(element)) {
 				prefix = vulpe.util.getElementId(element) + vulpe.config.token.dot;
 				field = vulpe.util.get(prefix + name);
 				if (field.length == 0) {

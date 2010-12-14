@@ -68,9 +68,9 @@ public @interface Controller {
 	DetailConfig[] detailsConfig() default {};
 
 	/**
-	 * Configure details in tab-folders
+	 * Show main and detail in tab-folders
 	 */
-	boolean detailsInTabs() default true;
+	boolean showInTabs() default true;
 
 	// SELECT and MAIN - control configurations
 	/**

@@ -23,13 +23,18 @@ import java.lang.annotation.Target;
 
 /**
  * Detail configuration
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 public @interface DetailConfig {
+	/**
+	 * Add news details on top of list.
+	 */
+	boolean addNewDetailsOnTop() default false;
+
 	/**
 	 * Quantity of news details
 	 */
@@ -67,8 +72,14 @@ public @interface DetailConfig {
 
 	/**
 	 * Quantity of details
-	 *
+	 * 
 	 * @return
 	 */
 	Quantity quantity() default @Quantity;
+	
+	/**
+	 * Show detail as accordion view.
+	 */
+	boolean showAsArccodion() default true;
+
 }

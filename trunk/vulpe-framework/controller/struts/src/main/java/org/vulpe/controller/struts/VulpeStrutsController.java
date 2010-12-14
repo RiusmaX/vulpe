@@ -610,14 +610,28 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @throws OgnlException
 	 */
 	protected void doAddDetail(final Collection collection) throws OgnlException {
-		final Map context = ActionContext.getContext().getContextMap();
-		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
-		final Integer index = Integer.valueOf(collection.size());
-		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-		updateAuditInformation(detail);
-		final ENTITY preparedDetail = prepareDetail(detail);
-		if (!preparedDetail.equals(detail)) {
-			accessor.setProperty(context, collection, index, preparedDetail);
+		if ((getControllerType().equals(ControllerType.TABULAR) && getControllerConfig().getTabularConfig()
+				.isAddNewDetailsOnTop())
+				|| (getControllerType().equals(ControllerType.MAIN) && getDetailConfig().isAddNewDetailsOnTop())) {
+			try {
+				final ENTITY detail = getControllerConfig().getEntityClass().newInstance();
+				updateAuditInformation(detail);
+				((ArrayList<ENTITY>) collection).add(0, prepareDetail(detail));
+			} catch (InstantiationException e) {
+				LOG.error(e);
+			} catch (IllegalAccessException e) {
+				LOG.error(e);
+			}
+		} else {
+			final Map context = ActionContext.getContext().getContextMap();
+			final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
+			final Integer index = Integer.valueOf(collection.size());
+			final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
+			updateAuditInformation(detail);
+			final ENTITY preparedDetail = prepareDetail(detail);
+			if (!preparedDetail.equals(detail)) {
+				accessor.setProperty(context, collection, index, preparedDetail);
+			}
 		}
 	}
 

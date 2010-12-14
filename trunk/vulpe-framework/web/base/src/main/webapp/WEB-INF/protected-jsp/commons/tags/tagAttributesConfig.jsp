@@ -2,7 +2,8 @@
 <c:if test="${empty expireInSession}"><c:set var="expireInSession" value="${false}"/></c:if>
 <c:if test="${empty paragraph}"><c:set var="paragraph" value="true"/></c:if>
 <c:if test="${empty style}"><c:set var="style" value=""/></c:if>
-<c:set var="styleClass" value="${styleClass} focused"/>
+<c:if test="${empty focused}"><c:set var="focused" value="true"/></c:if>
+<c:set var="styleClass" value="${styleClass}${focused ? ' focused' : ''}"/>
 <c:if test="${required && !showAsText}"><c:set var="styleClass" value="${styleClass} vulpeRequired"/></c:if>
 <c:if test="${not empty global['showAsMobile'] || global['breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty targetName}">
@@ -39,3 +40,4 @@
 <c:if test="${not empty value}"><c:set var="value" value="${util:toString(value)}"/></c:if>
 <c:if test="${empty showAsText && onlyToSee && targetName != 'entitySelect'}"><c:set var="showAsText" value="${true}"/></c:if>
 <c:if test="${onlyUpdateDetails && targetName == 'entity'}"><c:set var="showAsText" value="${true}"/></c:if>
+<c:if test="${empty showRequiredIcon}"><c:set var="showRequiredIcon" value="${true}"/></c:if>

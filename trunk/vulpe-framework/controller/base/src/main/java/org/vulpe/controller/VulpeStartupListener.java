@@ -108,7 +108,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 		if (vulpeProject.view() != null) {
 			global.put(Global.BACKEND_CENTERED_LAYOUT, vulpeProject.view().focusFirst());
-			global.put(Global.FOCUS_FIRST, vulpeProject.view().backendCenteredLayout());
+			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
 			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view()
 					.frontendCenteredLayout());
 			global.put(Global.SHOW_BUTTON_AS_IMAGE, vulpeProject.view().showButtonAsImage());

@@ -32,6 +32,11 @@ import java.lang.annotation.Target;
 public @interface Tabular {
 
 	/**
+	 * Add news records on top of list.
+	 */
+	boolean addNewRecordsOnTop() default false;
+
+	/**
 	 * Fields to despise items in tabular
 	 */
 	String[] despiseFields() default {};

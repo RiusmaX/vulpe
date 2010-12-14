@@ -168,7 +168,7 @@
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" width="1%" styleClass="vulpeSelect ${xstyleClass}">
-					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${!disableDelete ? deleteName : 'unselected'}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}"/>
+					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${!disableDelete ? deleteName : 'unselected'}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
 				</v:column>
 			</c:if>
 		</c:if>

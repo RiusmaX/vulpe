@@ -240,10 +240,10 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isDetailsInTabs()
+	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isShowInTabs()
 	 */
-	public boolean isDetailsInTabs() {
-		return this.controller.detailsInTabs();
+	public boolean isShowInTabs() {
+		return this.controller.showInTabs();
 	}
 
 	/*

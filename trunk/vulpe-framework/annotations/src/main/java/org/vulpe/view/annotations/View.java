@@ -35,7 +35,7 @@ public @interface View {
 	
 	String popupProperties() default "";
 
-	ViewType[] viewType();
+	ViewType[] viewType() default ViewType.NONE;
 
 	enum ViewType {
 		MAIN, SELECT, TABULAR, NONE, ALL
