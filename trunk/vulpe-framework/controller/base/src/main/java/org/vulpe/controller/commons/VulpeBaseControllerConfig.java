@@ -72,6 +72,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	public VulpeBaseDetailConfig getTabularConfig() {
 		if (getControllerType().equals(ControllerType.TABULAR) && (this.details == null || this.details.isEmpty())) {
 			final boolean addNewDetailsOnTop = getController().tabular().addNewRecordsOnTop();
+			final boolean showFilter = getController().tabular().showFilter();
 			final int newDetails = getController().tabular().newRecords();
 			final int startNewDetails = getController().tabular().startNewRecords();
 			final String[] despiseFields = getController().tabular().despiseFields();
@@ -84,7 +85,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 				propertyName = getController().tabular().propertyName();
 			}
 			this.details.add(new VulpeBaseDetailConfig(name, propertyName, startNewDetails, newDetails,
-					addNewDetailsOnTop, despiseFields));
+					addNewDetailsOnTop, showFilter, despiseFields));
 		}
 		return getDetail(VulpeConstants.Controller.ENTITIES);
 	}

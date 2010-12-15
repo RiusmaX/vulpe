@@ -26,11 +26,25 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeView {
 
+	boolean backendCenteredLayout() default false;
+
+	boolean breakLabel() default false;
+
 	boolean focusFirst() default true;
-	
+
+	boolean frontendCenteredLayout() default false;
+
+	int heightButtonIcon() default 32;
+
+	int heightMobileButtonIcon() default 32;
+
 	boolean messageSlideUp() default false;
 
 	int messageSlideUpTime() default 10000;
+
+	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
+
+	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
 
 	boolean showButtonAsImage() default false;
 
@@ -38,31 +52,22 @@ public @interface VulpeView {
 
 	boolean showButtonText() default true;
 
+	boolean showCopyright() default true;
+
+	boolean showPoweredBy() default true;
+
+	boolean showWarningBeforeUpdatePost() default false;
+	
+	boolean showModificationWarning() default true;
+	
+	boolean useBackendLayer() default false;
+
+	boolean useFrontendLayer() default true;
+	
 	int widthButtonIcon() default 32;
 
 	int widthMobileButtonIcon() default 32;
 
-	int heightButtonIcon() default 32;
-
-	int heightMobileButtonIcon() default 32;
-
-	boolean backendCenteredLayout() default false;
-
-	boolean frontendCenteredLayout() default false;
-
-	boolean breakLabel() default false;
-
-	boolean showCopyright() default true;
-
-	boolean showPoweredBy() default true;
-	
-	boolean useFrontendLayer() default true;
-	
-	boolean useBackendLayer() default false;
-
-	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
-
-	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
 
 	public enum PagingStyle {
 		NUMERIC, PAGE_OF

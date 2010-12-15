@@ -8,6 +8,10 @@
 		<c:set var="showDeleteConfirmation" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
+	<c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmUpdatePost()')}">
+		<c:set var="showWarningBeforeUpdatePost" value="true" />
+		<c:set var="beforeJs" value="" />
+	</c:if>
 	<c:set var="buttonPrefix" value="vulpeButton" />
 	<c:set var="labelKeyPrefix" value="label.vulpe." />
 	<c:if test="${not empty labelKey && !fn:contains(labelKey, '.')}"><c:set var="labelKey" value="${labelKeyPrefix}${labelKey}" /></c:if>
@@ -29,7 +33,8 @@
 	<c:if test="${empty javascript}">
 		<c:choose>
 			<c:when test="${empty action}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showDeleteConfirmation ? '})': ''}" /></c:when>
-			<c:when test="${!noSubmitForm}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showDeleteConfirmation ? '})': ''}" /></c:when>
+			<c:when test="${!noSubmitForm && showDeleteConfirmation}"><c:set var="javascript" value="vulpe.view.confirmExclusion(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeUpdatePost}"><c:set var="javascript" value="vulpe.view.confirmUpdatePost(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
 			<c:otherwise><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitPage({url: '${action}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showDeleteConfirmation ? '})': ''}" /></c:otherwise>
 		</c:choose>
 	</c:if>
@@ -78,7 +83,7 @@
 	$(document).ready(function() {
 		vulpe.util.addHotKey({
 			hotKey: "${hotKey}",
-			command: function (evt){
+			command: function (evt) {
 				vulpe.util.get("${elementId}").click();
 				return false;
 			}

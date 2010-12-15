@@ -444,6 +444,9 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 				this.viewPath += Layout.SUFFIX_JSP_MAIN;
 			}
 			if (getControllerType().equals(ControllerType.TABULAR)) {
+				if (getController().tabular().showFilter()) {
+					this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
+				}
 				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
 			}
 			if (getControllerType().equals(ControllerType.SELECT)) {

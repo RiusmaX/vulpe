@@ -40,6 +40,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private Quantity quantiity;
 	private VulpeBaseDetailConfig parentDetailConfig;
 	private boolean showAsAccordion;
+	private boolean showFilter;
 	private List<VulpeBaseDetailConfig> subDetails = new LinkedList<VulpeBaseDetailConfig>();
 
 	public VulpeBaseDetailConfig() {
@@ -53,20 +54,21 @@ public class VulpeBaseDetailConfig implements Serializable {
 		setSimpleName();
 	}
 
-	public VulpeBaseDetailConfig(final String name, final String propertyName,
-			final int startNewDetails, final int newDetails, final boolean addNewDetailsOnTop, final String[] despiseFields) {
+	public VulpeBaseDetailConfig(final String name, final String propertyName, final int startNewDetails,
+			final int newDetails, final boolean addNewDetailsOnTop, final boolean showFilter,
+			final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
 		this.startNewDetails = startNewDetails == 0 ? 1 : startNewDetails;
 		this.newDetails = newDetails == 0 ? 1 : newDetails;
 		this.despiseFields = despiseFields.clone();
 		this.addNewDetailsOnTop = addNewDetailsOnTop;
+		this.showFilter = showFilter;
 		setSimpleName();
 	}
 
-	public VulpeBaseDetailConfig(final String name, final String propertyName,
-			final int detailNews, final String[] despiseFields,
-			final Quantity quantity) {
+	public VulpeBaseDetailConfig(final String name, final String propertyName, final int detailNews,
+			final String[] despiseFields, final Quantity quantity) {
 		this.name = name;
 		this.propertyName = propertyName;
 		this.newDetails = detailNews;
@@ -127,9 +129,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 			setSimpleName();
 		}
 
-		this.viewPath = config.getViewPath().substring(0,
-				StringUtils.lastIndexOf(config.getViewPath(), '/')).concat("/").concat(
-				getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
+		this.viewPath = config.getViewPath().substring(0, StringUtils.lastIndexOf(config.getViewPath(), '/')).concat(
+				"/").concat(getBaseName()).concat(Layout.SUFFIX_JSP_DETAIL);
 
 		if (StringUtils.isEmpty(getTitleKey()) && StringUtils.isNotEmpty(getPropertyName())) {
 			setTitleKey(config.getTitleKey().concat(".").concat(getBaseName()));
@@ -153,8 +154,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			if (config.getDetail(detail.parentDetailName()) == null) {
 				config.getDetails().add(new VulpeBaseDetailConfig(detail.parentDetailName()));
 			}
-			this.parentDetailConfig = (VulpeBaseDetailConfig) config.getDetail(detail
-					.parentDetailName());
+			this.parentDetailConfig = (VulpeBaseDetailConfig) config.getDetail(detail.parentDetailName());
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
 		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
@@ -164,8 +164,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private void setSimpleName() {
 		if (StringUtils.isNotEmpty(this.propertyName)) {
 			if (StringUtils.lastIndexOf(this.propertyName, '.') >= 0) {
-				this.simpleName = this.propertyName.substring(StringUtils.lastIndexOf(
-						this.propertyName, '.') + 1);
+				this.simpleName = this.propertyName.substring(StringUtils.lastIndexOf(this.propertyName, '.') + 1);
 			} else {
 				this.simpleName = this.propertyName;
 			}
@@ -218,6 +217,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public boolean isShowAsAccordion() {
 		return showAsAccordion;
+	}
+
+	public void setShowFilter(boolean showFilter) {
+		this.showFilter = showFilter;
+	}
+
+	public boolean isShowFilter() {
+		return showFilter;
 	}
 
 }

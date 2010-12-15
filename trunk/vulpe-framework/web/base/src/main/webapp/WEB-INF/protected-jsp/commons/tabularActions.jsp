@@ -6,6 +6,6 @@
 <c:set var="button" value="${util:eval(pageContext, buttonEL)}" />
 <v:action validate="false" labelKey="addDetail" elementId="AddDetail-${targetConfig.name}" action="addDetail" queryString="detail=${targetConfigPropertyName}" helpKey="tabularNew" icon="add" iconClass="AddDetail" show="${!onlyToSee && button}" />
 <v:action validate="false" labelKey="tabularReload" elementId="TabularReload" action="tabular" helpKey="tabularReload" icon="refresh" iconClass="TabularReload" show="${now['buttons']['tabularReload']}" />
-<v:action validate="true" labelKey="tabularPost" elementId="TabularPost" action="tabularPost" helpKey="tabularPost" icon="save" iconClass="TabularPost" show="${!onlyToSee && now['buttons']['tabularPost']}" />
+<v:action validate="true" labelKey="tabularPost" elementId="TabularPost" action="tabularPost" helpKey="tabularPost" icon="save" iconClass="TabularPost" show="${!onlyToSee && now['buttons']['tabularPost']}" beforeJs="vulpe.view.validateSelectedsToExclusion()" />
 <%@include file="/WEB-INF/protected-jsp/commons/mainActionsAppend.jsp"%>
 </p>

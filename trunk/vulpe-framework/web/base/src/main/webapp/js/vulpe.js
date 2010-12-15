@@ -80,6 +80,7 @@ var vulpe = {
 			keyRequired: "vulpe.js.error.key.required",
 			selectedExclusion: "vulpe.msg.confirm.selected.exclusion",
 			selectRecordsExclusion: "vulpe.msg.select.records.exclusion",
+			updatePost: "vulpe.msg.confirm.updatePost",
 			upload: "vulpe.error.upload",
 			close: "vulpe.messages.close"
 		},
@@ -1109,12 +1110,35 @@ var vulpe = {
 			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.exclusion);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
-
+		
 		confirmSelectedExclusion: function() {
 			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 
+		validateSelectedsToExclusion: function(command) {
+			var selections = jQuery(":checkbox[name$='selected']");
+			var selected = false;
+			for (var i = 0; i < selections.length; i++) {
+				if (selections[i].checked) {
+					selected = true;
+					break;
+				}
+			}
+			if (!selected) {
+				return true;
+			}
+			vulpe.command = command;
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+			$(vulpe.config.layers.confirmationDialog).dialog('open');
+		},
+
+		confirmUpdatePost: function(command) {
+			vulpe.command = command;
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.updatePost);
+			$(vulpe.config.layers.confirmationDialog).dialog('open');
+		},
+		
 		prepareRead: function(formName) {
 			vulpe.util.setPagingPage('', formName);
 			return true;
@@ -1768,6 +1792,7 @@ var vulpe = {
 			 * @param options {url, queryString, layer, beforeJs, afterJs, afterCallback}
 			 */
 			submitPage: function(options) {
+				jQuery(vulpe.config.layers.messages).hide();
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;
 				}
@@ -1894,7 +1919,6 @@ var vulpe = {
 						}
 					}
 				}
-				jQuery(vulpe.config.layers.messages).hide();
 				// verifier if exists validations before submit
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;

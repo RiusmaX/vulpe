@@ -145,7 +145,6 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan"> rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-row-${recordId}"/>
 	<tr id="${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
-		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" width="1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeLineHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}">${currentStatus.count}.</c:if></v:column></c:if>
 		<c:if test="${!onlyToSee && showDeleteButtons && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
@@ -173,6 +172,7 @@
 				</v:column>
 			</c:if>
 		</c:if>
+		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" width="1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeLineHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}">${currentStatus.count}.</c:if></v:column></c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showUpdateButton}">
 			<c:choose>

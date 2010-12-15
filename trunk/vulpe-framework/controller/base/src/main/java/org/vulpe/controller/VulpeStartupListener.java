@@ -108,26 +108,28 @@ public class VulpeStartupListener implements ServletContextListener {
 
 		if (vulpeProject.view() != null) {
 			global.put(Global.BACKEND_CENTERED_LAYOUT, vulpeProject.view().focusFirst());
+			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
 			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
 			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view()
 					.frontendCenteredLayout());
-			global.put(Global.SHOW_BUTTON_AS_IMAGE, vulpeProject.view().showButtonAsImage());
-			global.put(Global.SHOW_BUTTON_ICON, vulpeProject.view().showButtonIcon());
-			global.put(Global.SHOW_BUTTON_TEXT, vulpeProject.view().showButtonText());
-			global.put(Global.WIDTH_BUTTON_ICON, vulpeProject.view().widthButtonIcon());
-			global
-					.put(Global.WIDTH_MOBILE_BUTTON_ICON, vulpeProject.view()
-							.widthMobileButtonIcon());
 			global.put(Global.HEIGHT_BUTTON_ICON, vulpeProject.view().heightButtonIcon());
 			global.put(Global.HEIGHT_MOBILE_BUTTON_ICON, vulpeProject.view()
 					.heightMobileButtonIcon());
 			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
 			global.put(Global.MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
-			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
-			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
-			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
 			global.put(Global.PAGING_STYLE, vulpeProject.view().pagingStyle());
 			global.put(Global.PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
+			global.put(Global.SHOW_BUTTON_AS_IMAGE, vulpeProject.view().showButtonAsImage());
+			global.put(Global.SHOW_BUTTON_ICON, vulpeProject.view().showButtonIcon());
+			global.put(Global.SHOW_BUTTON_TEXT, vulpeProject.view().showButtonText());
+			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
+			global.put(Global.SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
+			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
+			global.put(Global.SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
+			global.put(Global.WIDTH_BUTTON_ICON, vulpeProject.view().widthButtonIcon());
+			global
+					.put(Global.WIDTH_MOBILE_BUTTON_ICON, vulpeProject.view()
+							.widthMobileButtonIcon());
 			global.put(Global.USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
 			global.put(Global.USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
 		}

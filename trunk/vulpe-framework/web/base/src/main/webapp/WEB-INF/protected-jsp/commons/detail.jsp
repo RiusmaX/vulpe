@@ -15,7 +15,13 @@
 </c:if>
 <div id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}" class="detailBody">
 <c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false}">
+	<c:if test="${!showAsAccordion}"><fieldset></c:if>
+	<c:choose>
+		<c:when test="${showAsAccordion}">
 		<h3 id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}-title"><a href="#" id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}-link"><fmt:message key="${targetConfigLocal.titleKey}"/></a></h3>
+		</c:when>
+		<c:otherwise><legend><fmt:message key="${targetConfigLocal.titleKey}"/></legend></c:otherwise>
+	</c:choose>
 		<div>
 </c:if>
 		<c:if test="${!onlyToSee}">
@@ -30,6 +36,7 @@
 		</div>
 <c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false}">
 		</div>
+		<c:if test="${!showAsAccordion}"></fieldset></c:if>
 </c:if>
 </div>
 <c:if test="${not empty targetConfig.parentDetailConfig}">

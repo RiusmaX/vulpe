@@ -54,6 +54,7 @@ vulpe.config.messages = {
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
 	selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
+	updatePost: '<fmt:message key="vulpe.msg.confirm.updatePost"/>',
 	upload: '<fmt:message key="vulpe.error.upload"/>',
 	close: '<fmt:message key="vulpe.messages.close"/>'
 }

@@ -6,7 +6,12 @@
 	<div id="vulpeTabularActions-${controllerConfig.tabularConfig.baseName}" class="vulpeActions">
 		<%@include file="/WEB-INF/protected-jsp/commons/tabularActions.jsp" %>
 	</div>
-	<div id="vulpeTabularBody-${controllerConfig.tabularConfig.baseName}">
+	<c:if test="${targetConfig.showFilter}">
+	<div id="vulpeTabularSelect-${targetConfig.baseName}">
+		<jsp:include page="${controllerConfig.viewSelectPath}" />
+	</div>
+	</c:if>
+	<div id="vulpeTabularBody-${targetConfig.baseName}">
 		<jsp:include page="${controllerConfig.viewPath}" />
 	</div>
 </div>
