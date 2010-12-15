@@ -129,11 +129,15 @@ public class ControllerUtil {
 		for (String fieldName : fieldNames) {
 			final Object value = VulpeReflectUtil.getFieldValue(bean, fieldName);
 			if (value != null && StringUtils.isNotBlank(value.toString())) {
+				int count = 0;
 				for (VulpeEntity<?> realBean : beans) {
-					if (realBean.getId() != null && realBean.getId().equals(bean.getId())) {
+					final Object valueRealBean = VulpeReflectUtil.getFieldValue(realBean, fieldName);
+					if (((realBean.getId() != null && realBean.getId().equals(bean.getId())) || (realBean.getId() == null && valueRealBean
+							.equals(value)))
+							&& count == 0) {
+						count++;
 						continue;
 					}
-					final Object valueRealBean = VulpeReflectUtil.getFieldValue(realBean, fieldName);
 					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;

@@ -40,7 +40,7 @@ public class ${dao.daoName}DB4O extends org.vulpe.model.dao.impl.db4o.VulpeBaseD
 		</#list>
 	</#if>
 
-	<#if method.returnType == dao.name>
+	<#if method.returnType == dao.name || method.returnType?index_of("List") == -1>
 		<#if method.parameters?has_content>
 		return (java.util.List<${method.returnType}>) getObject(entity);
 		<#else>

@@ -44,15 +44,23 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		map.put("${parameter.name}", ${parameter.name});
 		</#list>
 		</#if>
-		<#if method.returnType == dao.name>
+		<#if method.returnType == dao.name || method.returnType?index_of("List") == -1>
 		<#if method.parameters?has_content>
+		<#if method.returnType == dao.name>
 		final ${method.returnType} object = (${method.returnType}) findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
 		loadEntityRelationships(object);
 		return object;
 		<#else>
+		return (${method.returnType}) findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
+		</#if>
+		<#else>
+		<#if method.returnType == dao.name>
 		final ${method.returnType} object = (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
 		loadEntityRelationships(object);
 		return object;
+		<#else>
+		return (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
+		</#if>
 		</#if>
 		<#else>
 		<#if method.parameters?has_content>
