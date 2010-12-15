@@ -1620,13 +1620,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			controlResultForward();
 			showButtons(Operation.TABULAR_POST);
 			if (validateDetails()) {
-				onTabularPost();
-				addActionMessage(getDefaultMessage());
-				if (!getEntities().isEmpty()) {
-					final ENTITY entityTabular = getEntities().get(0);
-					if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
-						final String entityName = entityTabular.getClass().getSimpleName();
-						getCachedClass().put(entityName, getEntities());
+				if (onTabularPost()) {
+					addActionMessage(getDefaultMessage());
+					if (!getEntities().isEmpty()) {
+						final ENTITY entityTabular = getEntities().get(0);
+						if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
+							final String entityName = entityTabular.getClass().getSimpleName();
+							getCachedClass().put(entityName, getEntities());
+						}
 					}
 				}
 			}
@@ -1640,7 +1641,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @since 1.0
 	 */
-	protected void onTabularPost() {
+	protected boolean onTabularPost() {
 		final int size = getEntities().size();
 		despiseDetails();
 		final int sizeDespise = getEntities().size();
@@ -1656,6 +1657,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setEntities(list);
 		tabularPagingMount(false);
 		setExecuted(true);
+		return true;
 	}
 
 	/**
