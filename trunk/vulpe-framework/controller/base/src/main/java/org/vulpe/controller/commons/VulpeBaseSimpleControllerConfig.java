@@ -61,7 +61,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	}
 
 	public VulpeBaseSimpleControllerConfig(final Class<?> controllerClass) {
-		this.controller = VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class,
+		this.controller = VulpeReflectUtil.getAnnotationInClass(Controller.class,
 				controllerClass);
 		this.controllerName = getControllerUtil().getCurrentControllerName();
 	}

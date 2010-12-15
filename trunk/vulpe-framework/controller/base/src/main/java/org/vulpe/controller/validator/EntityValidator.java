@@ -37,7 +37,7 @@ public class EntityValidator {
 	 * @return
 	 */
 	public static boolean validate(VulpeEntity entity) {
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (Field field : fields) {
 			final VulpeValidate validate = field.getAnnotation(VulpeValidate.class);
 			if (validate != null) {

@@ -161,7 +161,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 * @param object
 	 */
 	public void emptyToNull(final Object object) {
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(object.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(object.getClass());
 		for (Field field : fields) {
 			try {
 				if ((Modifier.isTransient(field.getModifiers()) || field.isAnnotationPresent(Transient.class))
@@ -197,9 +197,9 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 */
 	protected <T> void repairRelationship(final T entity, final ObjectContainer container) {
 		emptyToNull(entity);
-		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
+		for (Field field : VulpeReflectUtil.getFields(entity.getClass())) {
 			if (!Modifier.isTransient(field.getModifiers())) {
-				final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+				final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
 				if (value != null) {
 					if (VulpeEntity.class.isAssignableFrom(field.getType())) {
 						try {
@@ -271,9 +271,9 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 * @throws Exception
 	 */
 	public <T> void repair(final T entity, final ObjectContainer container) throws VulpeSystemException {
-		for (Field field : VulpeReflectUtil.getInstance().getFields(entity.getClass())) {
+		for (Field field : VulpeReflectUtil.getFields(entity.getClass())) {
 			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
-				final VulpeEntity<Long> value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+				final VulpeEntity<Long> value = VulpeReflectUtil.getFieldValue(entity, field.getName());
 				if (value != null) {
 					try {
 						if (value.getId() != null) {

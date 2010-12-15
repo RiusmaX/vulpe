@@ -21,23 +21,13 @@ import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.vulpe.commons.helper.VulpeCacheHelper;
-
 public class VulpeConvertUtil {
-
-	public static VulpeConvertUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(VulpeConvertUtil.class)) {
-			cache.put(VulpeConvertUtil.class, new VulpeConvertUtil());
-		}
-		return cache.get(VulpeConvertUtil.class);
-	}
 
 	protected VulpeConvertUtil() {
 		// default constructor
 	}
 
-	public List<XMLGregorianCalendar> convertToXMLDate(final List<Date> dates) {
+	public static List<XMLGregorianCalendar> convertToXMLDate(final List<Date> dates) {
 		if (dates == null) {
 			return null;
 		}
@@ -49,7 +39,7 @@ public class VulpeConvertUtil {
 		return list;
 	}
 
-	public List<Date> convertToDate(final List<XMLGregorianCalendar> dates) {
+	public static List<Date> convertToDate(final List<XMLGregorianCalendar> dates) {
 		if (dates == null) {
 			return null;
 		}
@@ -61,7 +51,7 @@ public class VulpeConvertUtil {
 		return list;
 	}
 
-	public XMLGregorianCalendar convertToXMLDate(final Date dates) {
+	public static XMLGregorianCalendar convertToXMLDate(final Date dates) {
 		if (dates == null) {
 			return null;
 		}
@@ -76,7 +66,7 @@ public class VulpeConvertUtil {
 		}
 	}
 
-	public Date convertToDate(final XMLGregorianCalendar date) {
+	public static Date convertToDate(final XMLGregorianCalendar date) {
 		return (date == null || date.toGregorianCalendar() == null) ? null : date
 				.toGregorianCalendar().getTime();
 	}

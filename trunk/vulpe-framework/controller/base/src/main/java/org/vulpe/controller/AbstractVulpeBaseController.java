@@ -17,6 +17,7 @@ package org.vulpe.controller;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -144,10 +145,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
 	{
-		defaultMessage.put(Operation.CREATE_POST, "{vulpe.msg.create.post}");
-		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.msg.update.post}");
-		defaultMessage.put(Operation.TABULAR_POST, "{vulpe.msg.tabular.post}");
-		defaultMessage.put(Operation.DELETE, "{vulpe.msg.delete}");
+		defaultMessage.put(Operation.CREATE_POST, "{vulpe.message.create.post}");
+		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.message.update.post}");
+		defaultMessage.put(Operation.TABULAR_POST, "{vulpe.message.tabular.post}");
+		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
 	}
 
 	public String getDefaultMessage(final Operation operation) {
@@ -641,7 +642,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				showButtons();
 			}
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
-			showButtons(Button.READ, Button.PREPARE, Button.CREATE, Button.UPDATE, Button.DELETE);
+			showButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE, Button.DELETE);
 			if (getControllerConfig().getController().select().showReport()) {
 				showButton(Button.REPORT);
 			}
@@ -782,8 +783,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
-				final List<Field> autocompleteFields = VulpeReflectUtil.getInstance().getFieldsWithAnnotation(
-						getControllerConfig().getEntityClass(), Autocomplete.class);
+				final List<Field> autocompleteFields = VulpeReflectUtil.getFieldsWithAnnotation(getControllerConfig()
+						.getEntityClass(), Autocomplete.class);
 				for (final ENTITY entity : autocompleteList) {
 					final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 					try {
@@ -928,6 +929,24 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.vulpe.controller.VulpeController#clear()
+	 */
+	@ResetSession(before = true)
+	public String clear() {
+		if (getControllerType().equals(ControllerType.MAIN)) {
+			return create();
+		} else if (getControllerType().equals(ControllerType.SELECT)) {
+			getSession().removeAttribute(getSelectFormKey());
+			getSession().removeAttribute(getSelectTableKey());
+			getSession().removeAttribute(getSelectPagingKey());
+			return select();
+		}
+		return getResultName();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.vulpe.controller.VulpeController#create()
 	 */
 	@ResetSession(before = true)
@@ -958,7 +977,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onCreate() {
 		if (getControllerType().equals(ControllerType.MAIN) || getControllerType().equals(ControllerType.TWICE)) {
 			try {
-				setEntity(getControllerConfig().getEntityClass().newInstance());
+				setEntity(prepareEntity(getOperation()));
 				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
 					createDetails(getControllerConfig().getDetails(), false);
 					setDetail("");
@@ -1185,7 +1204,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					for (ENTITY entity : entitiesOld) {
 						if (entity.getId().equals(getEntity().getId())) {
 							entities.remove(index);
-							entities.add(index, getEntity());
+							entities.add(index, repairCachedClasses(getEntity()));
 						}
 						++index;
 					}
@@ -1384,7 +1403,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (size > 0) {
 			// final String defaultMessage =
 			// getDefaultMessage(Operation.DELETE_DETAIL);
-			addActionMessage(size > 1 ? "{vulpe.msg.delete.details}" : "{vulpe.msg.delete.detail}");
+			addActionMessage(size > 1 ? "{vulpe.message.delete.details}" : "{vulpe.message.delete.detail}");
 		}
 		if (isAjax()) {
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(getDetail());
@@ -2013,6 +2032,39 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public boolean isTabularFilter() {
 		return tabularFilter;
+	}
+
+	/**
+	 * Method to repair cached classes used by entity.
+	 * 
+	 * @param entity
+	 * @return Entity with cached values reloaded
+	 */
+	private ENTITY repairCachedClasses(final ENTITY entity) {
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+		for (final Field field : fields) {
+			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+				try {
+					final VulpeEntity<ID> value = (VulpeEntity<ID>) PropertyUtils.getProperty(entity, field.getName());
+					if (value.getClass().isAnnotationPresent(CachedClass.class)) {
+						final List<ENTITY> cachedList = getCachedClass().getSelf(value.getClass().getSimpleName());
+						for (final ENTITY cached : cachedList) {
+							if (cached.getId().equals(value.getId())) {
+								PropertyUtils.setProperty(entity, field.getName(), cached);
+								break;
+							}
+						}
+					}
+				} catch (IllegalAccessException e) {
+					LOG.error(e);
+				} catch (InvocationTargetException e) {
+					LOG.error(e);
+				} catch (NoSuchMethodException e) {
+					LOG.error(e);
+				}
+			}
+		}
+		return entity;
 	}
 
 }

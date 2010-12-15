@@ -75,12 +75,13 @@ var vulpe = {
 					repeatedCharacters: "vulpe.error.validate.repeated.characters"
 				}
 			},
-			exclusion: "vulpe.msg.confirm.exclusion",
+			clear: "vulpe.message.confirm.clear",
+			delete: "vulpe.message.confirm.delete",
 			fieldRequired: "vulpe.js.error.required",
 			keyRequired: "vulpe.js.error.key.required",
-			selectedExclusion: "vulpe.msg.confirm.selected.exclusion",
-			selectRecordsExclusion: "vulpe.msg.select.records.exclusion",
-			updatePost: "vulpe.msg.confirm.updatePost",
+			deleteSelected: "vulpe.message.confirm.delete.selected",
+			selectRecordsToDelete: "vulpe.message.select.records.to.delete",
+			updatePost: "vulpe.message.confirm.updatePost",
 			upload: "vulpe.error.upload",
 			close: "vulpe.messages.close"
 		},
@@ -1105,14 +1106,8 @@ var vulpe = {
 	},
 	// vulpe.view
 	view: {
-		confirmExclusion: function(command) {
-			vulpe.command = command;
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.exclusion);
-			$(vulpe.config.layers.confirmationDialog).dialog('open');
-		},
-		
 		confirmSelectedExclusion: function() {
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 
@@ -1129,13 +1124,23 @@ var vulpe = {
 				return true;
 			}
 			vulpe.command = command;
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 
-		confirmUpdatePost: function(command) {
+		confirm: function(type, command) {
 			vulpe.command = command;
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.updatePost);
+			var message = "";
+			if (type == "clear") {
+				message = vulpe.config.messages.clear;
+			} else if (type == "delete") {
+				message = vulpe.config.messages.delete;
+			} else if (type == "deleteSelected") {
+				message = vulpe.config.messages.deleteSelected;
+			} else if (type == "updatePost") {
+				message = vulpe.config.messages.updatePost;
+			}
+			$(vulpe.config.layers.confirmationMessage).html(message);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
 		
@@ -1530,7 +1535,7 @@ var vulpe = {
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
 				if (count > 0) {
-					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
 					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
 						resizable: false,
@@ -1560,7 +1565,7 @@ var vulpe = {
 					});
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsToDelete);
 					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},
@@ -1578,7 +1583,7 @@ var vulpe = {
 					selectedIds[i] = selections[i].checked ? selections[i].value : "";
 				}
 				if (count > 0) {
-					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.selectedExclusion);
+					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
 					$(vulpe.config.layers.confirmationDialog).dialog({
 						autoOpen: false,
 						resizable: false,
@@ -1607,7 +1612,7 @@ var vulpe = {
 					});
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
-					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsExclusion);
+					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsToDelete);
 					$(vulpe.config.layers.alertDialog).dialog('open');
 				}
 			},

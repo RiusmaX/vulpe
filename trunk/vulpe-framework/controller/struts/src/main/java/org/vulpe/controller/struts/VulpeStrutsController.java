@@ -315,7 +315,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (value == null) {
 				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext().getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
 					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());

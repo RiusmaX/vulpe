@@ -82,7 +82,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param entity
 	 */
 	private <T> void repairRelationship(final T entity) {
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 			if (oneToMany != null) {
@@ -426,7 +426,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final String parentName = VulpeStringUtil.lowerCaseFirst(entityClass.getSimpleName());
 								final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
 										relationship.property());
-								final boolean oneToMany = VulpeReflectUtil.getInstance().getAnnotationInField(
+								final boolean oneToMany = VulpeReflectUtil.getAnnotationInField(
 										OneToMany.class, entityClass, relationship.property()) != null;
 								final Map<String, String> hqlAttributes = new HashMap<String, String>();
 								// select and from
@@ -575,7 +575,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							StringUtils.isNotEmpty(queryParameter.equals().alias()) ? queryParameter.equals().alias()
 									: "obj").append(".");
 					hql.append(queryParameter.equals().name());
-					final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+					final Like like = VulpeReflectUtil.getAnnotationInField(Like.class,
 							relationship.target(), queryParameter.equals().name());
 					hql.append(" ").append(like != null ? "like" : queryParameter.equals().operator().getValue())
 							.append(" ");
@@ -592,7 +592,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			for (final ENTITY entity : result) {
 				final ENTITY parent = (ENTITY) PropertyUtils.getProperty(entity, parentName);
 				relationshipIds.put(entity.getId(), parent.getId());
-				final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+				final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 				for (final Field field : fields) {
 					if (field.getName().equals(parentName)) {
 						continue;
@@ -608,7 +608,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						final List<ENTITY> list = (List<ENTITY>) PropertyUtils.getProperty(entity, field.getName());
 						if (VulpeValidationUtil.isNotEmpty(list)) {
 							for (final ENTITY vulpeEntity : list) {
-								final List<Field> childFields = VulpeReflectUtil.getInstance().getFields(
+								final List<Field> childFields = VulpeReflectUtil.getFields(
 										vulpeEntity.getClass());
 								for (final Field childField : childFields) {
 									if (childField.getName().equals(
@@ -811,7 +811,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			sql.append(entity.getClass().getSimpleName());
 		}
 		sql.append(" set ");
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		try {
 			final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 			for (final Field field : fields) {
@@ -841,7 +841,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				++count;
 			}
 			sql.append(" where ");
-			final Field idField = VulpeReflectUtil.getInstance().getField(entity.getClass(), "id");
+			final Field idField = VulpeReflectUtil.getField(entity.getClass(), "id");
 			final Column column = idField.getAnnotation(Column.class);
 			sql.append(column != null ? column.name() : "id").append(" = ").append(entity.getId());
 			final Query query = entityManager.createNativeQuery(sql.toString());

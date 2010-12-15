@@ -54,7 +54,7 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 			if (!requestURI.endsWith(URI.AJAX)) {
 				requestURI += URI.AJAX;
 			}
-			VulpeReflectUtil.getInstance().setFieldValue(savedRequest, "requestURI", requestURI);
+			VulpeReflectUtil.setFieldValue(savedRequest, "requestURI", requestURI);
 			request.getSession().setAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
 		}
 	}

@@ -56,6 +56,10 @@ public @interface VulpeView {
 
 	boolean showPoweredBy() default true;
 
+	boolean showWarningBeforeClear() default false;
+	
+	boolean showWarningBeforeDelete() default true;
+	
 	boolean showWarningBeforeUpdatePost() default false;
 	
 	boolean showModificationWarning() default true;

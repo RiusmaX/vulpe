@@ -123,7 +123,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		String strXml = "";
 		final XStream xstream = new XStream();
 		try {
-			for (Field attribute : VulpeReflectUtil.getInstance().getFields(this.getClass())) {
+			for (Field attribute : VulpeReflectUtil.getFields(this.getClass())) {
 				if (!isConvertible(attribute)) {
 					xstream.omitField(this.getClass(), attribute.getName());
 				}

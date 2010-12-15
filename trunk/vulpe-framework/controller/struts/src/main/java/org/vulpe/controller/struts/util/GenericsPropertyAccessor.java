@@ -100,7 +100,7 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 
 	protected Object getValue(final OgnlContext ognlContext, final Object target,
 			final String name, final Member member, final Type type, final Object value) {
-		final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
+		final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(
 				target.getClass(), type);
 		return OgnlRuntime.getConvertedType(ognlContext, target, member, name, value,
 				declaredType.getType());

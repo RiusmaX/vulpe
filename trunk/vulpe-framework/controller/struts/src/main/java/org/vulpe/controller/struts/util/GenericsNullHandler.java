@@ -37,43 +37,35 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 /**
  * Classe utilizada para corrigir problemas ao instanciar tipos genericos e
  * Set's.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
-public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends InstantiatingNullHandler implements NullHandler {
+public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		InstantiatingNullHandler implements NullHandler {
 
-	private static final Logger LOG = Logger
-			.getLogger(GenericsNullHandler.class);
+	private static final Logger LOG = Logger.getLogger(GenericsNullHandler.class);
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seecom.opensymphony.xwork2.conversion.impl.InstantiatingNullHandler#
 	 * nullPropertyValue(java.util.Map, java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public Object nullPropertyValue(final Map context, final Object target,
-			final Object property) {
+	public Object nullPropertyValue(final Map context, final Object target, final Object property) {
 		try {
-			final boolean createNullObjects = OgnlContextState
-					.isCreatingNullObjects(context);
+			final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(context);
 			if (property != null && createNullObjects) {
-				final Object realTarget = OgnlUtil.getRealTarget(property
-						.toString(), context, target);
+				final Object realTarget = OgnlUtil.getRealTarget(property.toString(), context, target);
 				if (realTarget != null) {
 					Class clazz = null;
-					final Field field = VulpeReflectUtil.getInstance().getField(
-							realTarget.getClass(), property.toString());
+					final Field field = VulpeReflectUtil.getField(realTarget.getClass(), property.toString());
 					if (field != null) {
 						if (!field.getType().equals(field.getGenericType())) {
-							final DeclaredType declaredType = VulpeReflectUtil
-									.getInstance().getDeclaredType(
-											realTarget.getClass(),
-											field.getGenericType());
-							if (!Collection.class.isAssignableFrom(declaredType
-									.getType())
+							final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(realTarget.getClass(),
+									field.getGenericType());
+							if (!Collection.class.isAssignableFrom(declaredType.getType())
 									&& declaredType.getType() != Map.class) {
 								clazz = declaredType.getType();
 							}
@@ -83,11 +75,9 @@ public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Seri
 					}
 					if (clazz != null) {
 						final ObjectFactory objectFactory = new ObjectFactory();
-						final Object param = objectFactory.buildBean(clazz,
-								context);
+						final Object param = objectFactory.buildBean(clazz, context);
 						if (param != null) {
-							Ognl.setValue(property.toString(), context,
-									realTarget, param);
+							Ognl.setValue(property.toString(), context, realTarget, param);
 							return param;
 						}
 					}
@@ -95,10 +85,7 @@ public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Seri
 			}
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) {
-				LOG
-						.debug(
-								"Não foi possível instanciar atributos declarados com Generics.",
-								e);
+				LOG.debug("Não foi possível instanciar atributos declarados com Generics.", e);
 			}
 		}
 		return super.nullPropertyValue(context, target, property);

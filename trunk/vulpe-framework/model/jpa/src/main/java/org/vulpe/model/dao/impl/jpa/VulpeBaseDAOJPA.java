@@ -236,7 +236,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 * @return
 	 */
 	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		final StringBuilder order = new StringBuilder();
 		int countParam = 0;
 		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
@@ -317,7 +317,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append("new ");
 					hql.append(entity.getClass().getSimpleName());
 					hql.append("(obj.id, obj.").append(entity.getAutocomplete());
-					final List<Field> autocompleteFields = VulpeReflectUtil.getInstance().getFieldsWithAnnotation(
+					final List<Field> autocompleteFields = VulpeReflectUtil.getFieldsWithAnnotation(
 							entity.getClass(), Autocomplete.class);
 					for (Field field : autocompleteFields) {
 						if (!field.getName().equals(entity.getAutocomplete())) {
@@ -361,11 +361,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
-					final QueryParameter queryParameter = VulpeReflectUtil.getInstance().getAnnotationInField(
+					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(
 							QueryParameter.class, entity.getClass(), name);
 					if (queryParameter == null) {
 						if (value instanceof String) {
-							final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+							final Like like = VulpeReflectUtil.getAnnotationInField(Like.class,
 									entity.getClass(), name);
 							hql.append("upper(obj.").append(name).append(") ").append(like != null ? "like" : "=")
 									.append(" upper(:").append(name).append(")");
@@ -373,7 +373,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append("obj.").append(name).append(" = :").append(name);
 						}
 					} else {
-						final Like like = VulpeReflectUtil.getInstance().getAnnotationInField(Like.class,
+						final Like like = VulpeReflectUtil.getAnnotationInField(Like.class,
 								entity.getClass(), name);
 						if (queryParameter.orEquals().length > 0) {
 							hql.append("(");
@@ -475,7 +475,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
+			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(),
 					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;

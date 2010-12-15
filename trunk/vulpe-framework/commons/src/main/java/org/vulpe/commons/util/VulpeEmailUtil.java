@@ -44,45 +44,6 @@ public final class VulpeEmailUtil {
 
 	private static boolean isDebugEnabled = LOG.isDebugEnabled();
 
-	/** singleton instance */
-	private static VulpeEmailUtil instance = null;
-	private String mailFrom = null;
-
-	private VulpeEmailUtil() {
-	}
-
-	private VulpeEmailUtil(final String mailFrom) {
-		super();
-		this.mailFrom = mailFrom;
-	}
-
-	/**
-	 * Returns VulpeEmailUtil instance.
-	 * 
-	 * @return VulpeEmailUtil instance
-	 */
-	public static VulpeEmailUtil getInstance() {
-		if (instance == null) {
-			instance = new VulpeEmailUtil();
-		}
-		return instance;
-	}
-
-	/**
-	 * Returns VulpeEmailUtil instance.
-	 * 
-	 * @param mailFrom
-	 *            From
-	 * 
-	 * @return VulpeEmailUtil instance
-	 */
-	public static VulpeEmailUtil getInstance(final String mailFrom) {
-		if (instance == null) {
-			instance = new VulpeEmailUtil(mailFrom);
-		}
-		return instance;
-	}
-
 	/**
 	 * Send Mail to many recipients.
 	 * 
@@ -95,7 +56,7 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMail(final String[] recipients, final String subject, final String body)
+	public static void sendMail(final String[] recipients, final String subject, final String body)
 			throws VulpeSystemException {
 		if (!checkValidEmail(recipients)) {
 			throw new VulpeSystemException("Invalid mails: " + recipients);
@@ -112,6 +73,7 @@ public final class VulpeEmailUtil {
 			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
 			if (bundle != null) {
 				final HtmlEmail mail = new HtmlEmail();
+				String mailFrom = "";
 				if (bundle.containsKey("mail.smtp.auth") && Boolean.valueOf(bundle.getString("mail.smtp.auth"))) {
 					final String username = bundle.getString("mail.smtp.user");
 					final String password = bundle.getString("mail.smtp.password");
@@ -168,8 +130,8 @@ public final class VulpeEmailUtil {
 	 * 
 	 * @return
 	 */
-	public String[] getRecipients(final List recipients, final String property) {
-		String[] address = new String[recipients.size()];
+	public static String[] getRecipients(final List recipients, final String property) {
+		final String[] address = new String[recipients.size()];
 		for (int i = 0; i < recipients.size(); i++) {
 			final Object recipient = (Object) recipients.get(i);
 			try {
@@ -196,7 +158,7 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMail(final String recipient, final String subject, final String body) {
+	public static void sendMail(final String recipient, final String subject, final String body) {
 		LOG.debug("Entering in sendMail...");
 		LOG.debug("recipient: " + recipient);
 		LOG.debug("subject: " + subject);
@@ -219,9 +181,14 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public void sendMailByService(final String[] recipients, final String subject, final String body,
+	public static void sendMailByService(final String[] recipients, final String subject, final String body,
 			final String mailerService) throws VulpeSystemException {
 		try {
+			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
+			String mailFrom = "";
+			if (bundle.containsKey("mail.from")) {
+				mailFrom = bundle.getString("mail.from");
+			}
 			final InitialContext initialContext = new InitialContext();
 			final Session session = (Session) initialContext.lookup(mailerService);
 			final Message message = new MimeMessage(session);
@@ -243,7 +210,7 @@ public final class VulpeEmailUtil {
 	/**
 	 * Checks if the email is valid
 	 */
-	public boolean checkValidEmail(final String email) {
+	public static boolean checkValidEmail(final String email) {
 		final StringTokenizer stringTokenizer = new StringTokenizer(email, ",");
 		while (stringTokenizer.hasMoreTokens()) {
 			if (!checkEmailFormat(stringTokenizer.nextToken())) {
@@ -256,7 +223,7 @@ public final class VulpeEmailUtil {
 	/**
 	 * Verifies that the emails are valid
 	 */
-	public boolean checkValidEmail(final String[] emails) {
+	public static boolean checkValidEmail(final String[] emails) {
 		for (String email : emails) {
 			if (!checkValidEmail(email)) {
 				return false;
@@ -270,18 +237,10 @@ public final class VulpeEmailUtil {
 	 * 
 	 * @return true if valid
 	 */
-	private boolean checkEmailFormat(final String email) {
+	private static boolean checkEmailFormat(final String email) {
 		final char arroba = "@".charAt(0);
 		final char dot = ".".charAt(0);
 		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false : true;
-	}
-
-	public String getMailFrom() {
-		return mailFrom;
-	}
-
-	public void setMailFrom(final String mailFrom) {
-		this.mailFrom = mailFrom;
 	}
 
 	/**
@@ -289,7 +248,7 @@ public final class VulpeEmailUtil {
 	 * @param resource
 	 * @return
 	 */
-	public Properties convertResourceBundleToProperties(final ResourceBundle resource) {
+	public static Properties convertResourceBundleToProperties(final ResourceBundle resource) {
 		final Properties properties = new Properties();
 		final Enumeration<String> keys = resource.getKeys();
 		while (keys.hasMoreElements()) {
@@ -299,8 +258,4 @@ public final class VulpeEmailUtil {
 		return properties;
 	}
 
-	public static void main(String[] args) {
-		VulpeEmailUtil.getInstance("ibrowsebh@gmail.com").sendMail("geraldo.felipe@ibrowse.com.br", "validação",
-				"validação teste");
-	}
 }

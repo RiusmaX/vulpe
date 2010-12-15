@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<p><fmt:message key="vulpe.msg.report.generated.successfully" /></p>
+<p><fmt:message key="vulpe.message.report.generated.successfully" /></p>
 <%--<jsp:include page="${controllerConfig.viewItemsPath}" />--%>
 <c:if test="${not empty downloadInfo}">
 	<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true"
@@ -11,5 +11,5 @@
 	</script>
 </c:if>
 <c:if test="${empty downloadInfo}">
-	<p><fmt:message key="vulpe.msg.empty.list" /></p>
+	<p><fmt:message key="vulpe.message.empty.list" /></p>
 </c:if>

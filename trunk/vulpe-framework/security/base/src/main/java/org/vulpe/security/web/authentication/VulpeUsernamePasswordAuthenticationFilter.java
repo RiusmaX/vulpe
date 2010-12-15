@@ -55,7 +55,7 @@ public class VulpeUsernamePasswordAuthenticationFilter extends UsernamePasswordA
 			if (url.contains(Layout.JS_CONTEXT) || url.contains(Layout.THEMES_CONTEXT)
 					|| url.contains(Layout.CSS_CONTEXT) || url.contains(Layout.IMAGES_CONTEXT)
 					|| url.contains(Layout.SUFFIX_JSP)) {
-				VulpeReflectUtil.getInstance().setFieldValue(savedRequest, "redirectUrl", "index.jsp");
+				VulpeReflectUtil.setFieldValue(savedRequest, "redirectUrl", "index.jsp");
 			}
 			request.getSession().setAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
 		}

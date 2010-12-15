@@ -47,10 +47,10 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 */
 	public VulpeBaseControllerConfig(final Class<?> controllerClass, final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
-		setController(VulpeReflectUtil.getInstance().getAnnotationInClass(Controller.class, controllerClass));
+		setController(VulpeReflectUtil.getAnnotationInClass(Controller.class, controllerClass));
 		setControllerName(getControllerUtil().getCurrentControllerName());
-		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 0);
-		this.idClass = (Class<ID>) VulpeReflectUtil.getInstance().getIndexClass(controllerClass, 1);
+		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getIndexClass(controllerClass, 0);
+		this.idClass = (Class<ID>) VulpeReflectUtil.getIndexClass(controllerClass, 1);
 		this.details = details;
 	}
 

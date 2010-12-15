@@ -45,7 +45,7 @@ public class VulpeControllerInterceptor implements Interceptor {
 		if (resourceInstance != null
 				&& resourceInstance instanceof VulpeVRaptorSimpleController) {
 			VulpeVRaptorSimpleController controller = (VulpeVRaptorSimpleController) resourceInstance;
-			List<Field> fields = VulpeReflectUtil.getInstance().getFields(controller.getClass());
+			List<Field> fields = VulpeReflectUtil.getFields(controller.getClass());
 			for (Field field : fields) {
 				try {
 					result.include(field.getName(), PropertyUtils.getProperty(controller, field
@@ -54,7 +54,7 @@ public class VulpeControllerInterceptor implements Interceptor {
 					LOG.error(e);
 				}
 			}
-			List<Method> methods = VulpeReflectUtil.getInstance().getMethods(controller.getClass());
+			List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (Method method2 : methods) {
 				String methodName = method2.getName();
 				if (methodName.contains("get")

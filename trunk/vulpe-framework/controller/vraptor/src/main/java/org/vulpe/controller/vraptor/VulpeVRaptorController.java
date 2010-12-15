@@ -287,7 +287,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				// ActionContext.getContext()
 				// .getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getInstance().getDownloadInfo(value,
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
 					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());

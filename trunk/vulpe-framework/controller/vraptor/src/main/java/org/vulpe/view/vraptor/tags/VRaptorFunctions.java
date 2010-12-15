@@ -59,7 +59,7 @@ public final class VRaptorFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
 					field.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
@@ -90,7 +90,7 @@ public final class VRaptorFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
 					field.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;

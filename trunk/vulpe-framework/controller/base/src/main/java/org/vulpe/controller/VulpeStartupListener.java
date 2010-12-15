@@ -125,6 +125,8 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
 			global.put(Global.SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
 			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
+			global.put(Global.SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
+			global.put(Global.SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
 			global.put(Global.SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
 			global.put(Global.WIDTH_BUTTON_ICON, vulpeProject.view().widthButtonIcon());
 			global

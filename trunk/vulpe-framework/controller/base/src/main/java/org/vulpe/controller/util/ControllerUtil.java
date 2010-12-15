@@ -46,9 +46,9 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to controller
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 @SuppressWarnings("unchecked")
 public class ControllerUtil {
@@ -72,7 +72,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 *
+	 * 
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -87,26 +87,25 @@ public class ControllerUtil {
 							final Collection<Object> objects = (Collection<Object>) partBean;
 							boolean empty = true;
 							for (Object object : objects) {
-								final Object value = VulpeReflectUtil.getInstance().getFieldValue(object, part);
+								final Object value = VulpeReflectUtil.getFieldValue(object, part);
 								if (VulpeValidationUtil.isNotEmpty(value)) {
 									empty = false;
 								}
 							}
 							return empty;
 						} else {
-							final Object value = VulpeReflectUtil.getInstance().getFieldValue(partBean, part);
+							final Object value = VulpeReflectUtil.getFieldValue(partBean, part);
 							if (VulpeValidationUtil.isEmpty(value)) {
 								return true;
 							}
 						}
 					} else {
-						partBean = VulpeReflectUtil.getInstance().getFieldValue(partBean == null ? bean : partBean,
-								part);
+						partBean = VulpeReflectUtil.getFieldValue(partBean == null ? bean : partBean, part);
 					}
 					++count;
 				}
 			} else {
-				final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+				final Object value = VulpeReflectUtil.getFieldValue(bean, fieldName);
 				if (VulpeValidationUtil.isEmpty(value)) {
 					return true;
 				}
@@ -117,7 +116,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 *
+	 * 
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
@@ -128,13 +127,13 @@ public class ControllerUtil {
 			final String[] fieldNames, final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
 		for (String fieldName : fieldNames) {
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(bean, fieldName);
+			final Object value = VulpeReflectUtil.getFieldValue(bean, fieldName);
 			if (value != null && StringUtils.isNotBlank(value.toString())) {
 				for (VulpeEntity<?> realBean : beans) {
 					if (realBean.getId() != null && realBean.getId().equals(bean.getId())) {
 						continue;
 					}
-					final Object valueRealBean = VulpeReflectUtil.getInstance().getFieldValue(realBean, fieldName);
+					final Object valueRealBean = VulpeReflectUtil.getFieldValue(realBean, fieldName);
 					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
 						items++;
@@ -147,7 +146,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 *
+	 * 
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
@@ -185,7 +184,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 *
+	 * 
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
@@ -212,7 +211,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
@@ -220,7 +219,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getCurrentControllerName() {
@@ -279,7 +278,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
@@ -307,7 +306,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
@@ -328,7 +327,7 @@ public class ControllerUtil {
 	private transient final ThreadLocal<String> currentControllerURI = new ThreadLocal<String>();
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static ServletContext getServletContext() {

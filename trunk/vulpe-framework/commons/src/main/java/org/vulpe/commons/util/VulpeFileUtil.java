@@ -33,17 +33,6 @@ import org.vulpe.exception.VulpeSystemException;
  */
 public class VulpeFileUtil {
 
-	/**
-	 * Returns VulpeFileUtil instance
-	 */
-	public static VulpeFileUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(VulpeFileUtil.class)) {
-			cache.put(VulpeFileUtil.class, new VulpeFileUtil());
-		}
-		return cache.get(VulpeFileUtil.class);
-	}
-
 	protected VulpeFileUtil() {
 		// default constructor
 	}
@@ -51,7 +40,7 @@ public class VulpeFileUtil {
 	/**
 	 * Returns resource properties by resource name
 	 */
-	public Properties getResourceProperties(final String resourceName) {
+	public static Properties getResourceProperties(final String resourceName) {
 		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
 		if (!cache.contains(resourceName)) {
 			final InputStream iStream = Thread.currentThread()
@@ -67,7 +56,7 @@ public class VulpeFileUtil {
 		return cache.get(resourceName);
 	}
 
-	public byte[][] openFiles(final File[] files) {
+	public static byte[][] openFiles(final File[] files) {
 		try {
 			byte[][] bytes = new byte[files.length][];
 			for (int i = 0; i < files.length; i++) {
@@ -79,7 +68,7 @@ public class VulpeFileUtil {
 		}
 	}
 
-	public DownloadInfo getDownloadInfo(final Object value,
+	public static DownloadInfo getDownloadInfo(final Object value,
 			final String contentType, final String contentDisposition) {
 		DownloadInfo downloadInfo = null;
 		if (value instanceof byte[]) {

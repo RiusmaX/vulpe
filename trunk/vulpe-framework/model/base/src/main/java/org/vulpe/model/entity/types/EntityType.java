@@ -109,7 +109,7 @@ public class EntityType implements UserType, ParameterizedType {
 			try {
 				final VulpeEntity<?> origin = (VulpeEntity<?>) value;
 				final VulpeEntity<?> destination = this.returnedClass.newInstance();
-				VulpeReflectUtil.getInstance().copy(destination, origin);
+				VulpeReflectUtil.copy(destination, origin);
 				return destination;
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
@@ -151,7 +151,7 @@ public class EntityType implements UserType, ParameterizedType {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		this.idClass = (Class<? extends Serializable>) VulpeReflectUtil.getInstance()
+		this.idClass = (Class<? extends Serializable>) VulpeReflectUtil
 				.getFieldClass(this.returnedClass, "id");
 
 		final String type = (String) props.get("type");

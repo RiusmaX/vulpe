@@ -48,7 +48,7 @@ public class VulpeJPATransactionManager extends JpaTransactionManager {
 		final Throwable constraintViolation = getConstraintViolationCause(e);
 		if (constraintViolation != null) {
 			final Throwable first = getFirstCause(e);
-			final Throwable firstNext = VulpeReflectUtil.getInstance().getFieldValue(first, "next");
+			final Throwable firstNext = VulpeReflectUtil.getFieldValue(first, "next");
 			String key = "vulpe.error.sql.constraint.violation.exception";
 			if (firstNext != null) {
 				String message = firstNext.getMessage().toUpperCase();

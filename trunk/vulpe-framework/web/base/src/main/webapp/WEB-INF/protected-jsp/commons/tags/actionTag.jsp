@@ -4,12 +4,16 @@
 	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['showButtonAsImage']}" /></c:if>
 	<c:if test="${empty showButtonIcon}"><c:set var="showButtonIcon" value="${global['showButtonIcon']}" /></c:if>
 	<c:if test="${empty showButtonText}"><c:set var="showButtonText" value="${global['showButtonText']}" /></c:if>
-	<c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmExclusion()')}">
-		<c:set var="showDeleteConfirmation" value="true" />
+	<c:if test="${global['showWarningBeforeDelete'] && action == 'updatePost'}">
+		<c:set var="showWarningBeforeDelete" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${not empty beforeJs && fn:contains(beforeJs, 'vulpe.view.confirmUpdatePost()')}">
+	<c:if test="${global['showWarningBeforeUpdatePost'] && action == 'updatePost'}">
 		<c:set var="showWarningBeforeUpdatePost" value="true" />
+		<c:set var="beforeJs" value="" />
+	</c:if>
+	<c:if test="${global['showWarningBeforeClear'] && action == 'clear'}">
+		<c:set var="showWarningBeforeClear" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
 	<c:set var="buttonPrefix" value="vulpeButton" />
@@ -32,10 +36,17 @@
 	<c:if test="${not empty action && !fn:contains(action, '/')}"><c:set var="action" value="${controllerConfig.controllerName}/${action}/ajax"/></c:if>
 	<c:if test="${empty javascript}">
 		<c:choose>
-			<c:when test="${empty action}"><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showDeleteConfirmation ? '})': ''}" /></c:when>
-			<c:when test="${!noSubmitForm && showDeleteConfirmation}"><c:set var="javascript" value="vulpe.view.confirmExclusion(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
-			<c:when test="${!noSubmitForm && showWarningBeforeUpdatePost}"><c:set var="javascript" value="vulpe.view.confirmUpdatePost(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
-			<c:otherwise><c:set var="javascript" value="${showDeleteConfirmation ? 'vulpe.view.confirmExclusion(function(){': ''}vulpe.view.request.submitPage({url: '${action}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showDeleteConfirmation ? '})': ''}" /></c:otherwise>
+			<c:when test="${empty action}">
+				<c:if test="${showWarningBeforeDelete}"><c:set var="confirmDelete" value="vulpe.view.confirm('delete', function(){"/></c:if>
+				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showWarningBeforeDelete ? '})': ''}" />
+			</c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeDelete}"><c:set var="javascript" value="vulpe.view.confirm('delete', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeUpdatePost}"><c:set var="javascript" value="vulpe.view.confirm('updatePost', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeClear}"><c:set var="javascript" value="vulpe.view.confirm('clear', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:otherwise>
+				<c:if test="${showWarningBeforeDelete}"><c:set var="confirmDelete" value="vulpe.view.confirm('delete', function(){"/></c:if>
+				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjaxAction({url: '${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showWarningBeforeDelete ? '})': ''}" />
+			</c:otherwise>
 		</c:choose>
 	</c:if>
 	<c:choose>

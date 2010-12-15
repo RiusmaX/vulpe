@@ -51,7 +51,7 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 	 * present, so too does this interceptor. If the "__multiselect_" request
 	 * parameter is present and its visible counterpart is not, set a new
 	 * request parameter to an empty Sting.
-	 *
+	 * 
 	 * @param actionInvocation
 	 *            ActionInvocation
 	 * @return the result of the action
@@ -61,13 +61,11 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 	 */
 	@Override
 	public String intercept(final ActionInvocation actionInvocation) throws Exception {
-		final Map parameters = actionInvocation.getInvocationContext()
-				.getParameters();
+		final Map parameters = actionInvocation.getInvocationContext().getParameters();
 		final Map<String, Object> newParams = new HashMap<String, Object>();
 		final Set<String> keys = parameters.keySet();
 
-		for (final Iterator<String> iterator = keys.iterator(); iterator
-				.hasNext();) {
+		for (final Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
 			final String key = iterator.next();
 
 			if (key.startsWith("__multiselect_")) {
@@ -79,31 +77,23 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 				if (parameters.containsKey(name)) {
 					final Object[] values = (Object[]) parameters.get(name);
 					if (values != null) {
-						final VulpeStrutsController baseAction = VulpeReflectUtil.getInstance()
-								.getFieldValue(actionInvocation, "action");
-						final Object entity = baseAction.getControllerConfig()
-								.getEntityClass().newInstance();
-						final String attributeName = name.contains("entities") ? name
-								.substring(name.indexOf("].") + 2)
+						final VulpeStrutsController baseAction = VulpeReflectUtil.getFieldValue(actionInvocation,
+								"action");
+						final Object entity = baseAction.getControllerConfig().getEntityClass().newInstance();
+						final String attributeName = name.contains("entities") ? name.substring(name.indexOf("].") + 2)
 								: name.substring("entity.".length());
 						if (String[].class.isAssignableFrom(values.getClass())) {
-							final Field field = VulpeReflectUtil.getInstance()
-									.getField(entity.getClass(), attributeName);
+							final Field field = VulpeReflectUtil.getField(entity.getClass(), attributeName);
 							if (List.class.isAssignableFrom(field.getType())) {
-								final Type[] fieldListType = VulpeReflectUtil
-										.getInstance().getFieldValue(
-												field.getGenericType(),
-												"actualTypeArguments");
-								final Object[] enumConstants = VulpeReflectUtil
-										.getInstance().getFieldValue(
-												fieldListType[0],
-												"enumConstants");
+								final Type[] fieldListType = VulpeReflectUtil.getFieldValue(field.getGenericType(),
+										"actualTypeArguments");
+								final Object[] enumConstants = VulpeReflectUtil.getFieldValue(fieldListType[0],
+										"enumConstants");
 								if (!ArrayUtils.isEmpty(enumConstants)) {
 									final List list = new ArrayList();
 									for (Object eConstant : enumConstants) {
 										for (Object value : values) {
-											if (eConstant.toString().equals(
-													value.toString())) {
+											if (eConstant.toString().equals(value.toString())) {
 												list.add(eConstant);
 											}
 										}

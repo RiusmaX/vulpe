@@ -263,9 +263,9 @@ public class Functions {
 				Security.SPRING_SECURITY_CONTEXT);
 		boolean has = false;
 		if (springSecurity != null) {
-			final Object springSecurityAutentication = VulpeReflectUtil.getInstance()
+			final Object springSecurityAutentication = VulpeReflectUtil
 					.getFieldValue(springSecurity, "authentication");
-			final Collection<?> authorities = VulpeReflectUtil.getInstance().getFieldValue(
+			final Collection<?> authorities = VulpeReflectUtil.getFieldValue(
 					springSecurityAutentication, "authorities");
 			final String[] roles = requestedRoles.split(",");
 			for (final String role : roles) {
@@ -273,7 +273,7 @@ public class Functions {
 						: Security.ROLE_PREFIX + requestedRoles;
 				if (VulpeValidationUtil.isNotEmpty(authorities)) {
 					for (Object grantedAuthority : authorities) {
-						final String authority = VulpeReflectUtil.getInstance().getFieldValue(
+						final String authority = VulpeReflectUtil.getFieldValue(
 								grantedAuthority, "authority");
 						if (authority.equals(fullRole)) {
 							has = true;
@@ -294,9 +294,9 @@ public class Functions {
 		final VulpeContext vulpeContext = VulpeContext.getInstance();
 		final Object springSecurity = vulpeContext.getSession().getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
-		final Object springSecurityAutentication = VulpeReflectUtil.getInstance().getFieldValue(
+		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(
 				springSecurity, "authentication");
-		final Boolean authenticated = VulpeReflectUtil.getInstance().getFieldValue(
+		final Boolean authenticated = VulpeReflectUtil.getFieldValue(
 				springSecurityAutentication, "authenticated");
 		if (authenticated != null && authenticated.booleanValue()) {
 			return true;
@@ -353,12 +353,12 @@ public class Functions {
 			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getInstance().getFieldClass(
+				Class<?> parentClass = VulpeReflectUtil.getFieldClass(
 						bean.getClass(), fieldParts[0]);
-				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(parentClass,
+				fieldClass = VulpeReflectUtil.getFieldClass(parentClass,
 						fieldParts[1]);
 			} else {
-				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
 						fieldParts[0]);
 			}
 			if (fieldClass.isEnum()) {
@@ -407,12 +407,12 @@ public class Functions {
 			String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getInstance().getFieldClass(
+				Class<?> parentClass = VulpeReflectUtil.getFieldClass(
 						bean.getClass(), fieldParts[0]);
-				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(parentClass,
+				fieldClass = VulpeReflectUtil.getFieldClass(parentClass,
 						fieldParts[1]);
 			} else {
-				fieldClass = VulpeReflectUtil.getInstance().getFieldClass(bean.getClass(),
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
 						fieldParts[0]);
 			}
 			if (fieldClass == null) {

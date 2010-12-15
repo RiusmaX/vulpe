@@ -114,7 +114,7 @@ public class VulpeServiceLocator {
 	protected <T extends VulpeService> Factory<T> getFactory(final Class<T> clazz) {
 		try {
 			if (!VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".factory"))) {
-				final FactoryClass factoryClass = VulpeReflectUtil.getInstance()
+				final FactoryClass factoryClass = VulpeReflectUtil
 						.getAnnotationInClass(FactoryClass.class, clazz);
 				final Factory<?> factory = VulpeFactoryLocator.getInstance().getFactory(
 						factoryClass.value());

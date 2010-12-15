@@ -56,7 +56,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 */
 	protected Class<DAO> getDaoClass() {
 		if (daoClass == null) {
-			daoClass = (Class<DAO>) VulpeReflectUtil.getInstance().getIndexClass(getClass(), 2);
+			daoClass = (Class<DAO>) VulpeReflectUtil.getIndexClass(getClass(), 2);
 		}
 		return daoClass;
 	}

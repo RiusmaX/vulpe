@@ -244,7 +244,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(getClass(),
+			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(),
 					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
@@ -313,11 +313,11 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			}
 		}
 		emptyToNull(entity);
-		for (Field field : VulpeReflectUtil.getInstance().getFields(getEntityClass())) {
+		for (Field field : VulpeReflectUtil.getFields(getEntityClass())) {
 			if (field.isAnnotationPresent(IgnoreAutoFilter.class)) {
 				continue;
 			}
-			final Object value = VulpeReflectUtil.getInstance().getFieldValue(entity, field.getName());
+			final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
 			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass()) && field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
 			}

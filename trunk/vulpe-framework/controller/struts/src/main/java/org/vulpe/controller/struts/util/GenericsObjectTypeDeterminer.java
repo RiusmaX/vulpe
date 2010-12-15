@@ -37,12 +37,12 @@ public class GenericsObjectTypeDeterminer extends DefaultObjectTypeDeterminer {
 	public Class getElementClass(final Class parentClass, final String property, final Object key) {
 		Class clazz = super.getElementClass(parentClass, property, key);
 		if (clazz == null) {
-			final Field field = VulpeReflectUtil.getInstance().getField(parentClass, property);
+			final Field field = VulpeReflectUtil.getField(parentClass, property);
 			if (field.getGenericType() instanceof ParameterizedType) {
 				final ParameterizedType type = (ParameterizedType) field.getGenericType();
-				final int index = (Map.class.isAssignableFrom(VulpeReflectUtil.getInstance()
+				final int index = (Map.class.isAssignableFrom(VulpeReflectUtil
 						.getDeclaredType(clazz, type.getRawType()).getType()) ? 1 : 0);
-				final DeclaredType declaredType = VulpeReflectUtil.getInstance().getDeclaredType(
+				final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(
 						parentClass, type);
 				clazz = declaredType.getItems().get(index).getType();
 			}

@@ -4,7 +4,7 @@
 <c:if test="${show}">
 	<c:if test="${empty sortPropertyInfo}"><c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/></c:if>
 	<c:if test="${empty renderId}"><c:set var="renderId" value="${true}"/></c:if>
-	<c:if test="${empty emptyKey}"><c:set var="emptyKey" value="vulpe.msg.empty.list"/></c:if>
+	<c:if test="${empty emptyKey}"><c:set var="emptyKey" value="vulpe.message.empty.list"/></c:if>
 	<c:set var="name" value=""/>
 	<c:set var="baseName" value=""/>
 	<c:set var="itemName" value=""/>

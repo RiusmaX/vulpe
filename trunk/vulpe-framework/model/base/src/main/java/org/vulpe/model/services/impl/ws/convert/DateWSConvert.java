@@ -29,10 +29,10 @@ import org.vulpe.commons.util.VulpeConvertUtil;
 public class DateWSConvert implements WSConvert<Date, XMLGregorianCalendar> {
 
 	public Date toBean(final XMLGregorianCalendar wsBean) {
-		return VulpeConvertUtil.getInstance().convertToDate(wsBean);
+		return VulpeConvertUtil.convertToDate(wsBean);
 	}
 
 	public XMLGregorianCalendar toWSBean(final Date bean) {
-		return VulpeConvertUtil.getInstance().convertToXMLDate(bean);
+		return VulpeConvertUtil.convertToXMLDate(bean);
 	}
 }

@@ -49,12 +49,13 @@ vulpe.config.messages = {
 			repeatedCharacters: '<fmt:message key="vulpe.error.validate.repeated.characters"/>'
 		}
 	},
-	exclusion: '<fmt:message key="vulpe.msg.confirm.exclusion"/>',
+	clear: '<fmt:message key="vulpe.message.confirm.clear"/>',
+	delete: '<fmt:message key="vulpe.message.confirm.delete"/>',
 	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
-	selectedExclusion: '<fmt:message key="vulpe.msg.confirm.selected.exclusion"/>',
-	selectRecordsExclusion: '<fmt:message key="vulpe.msg.select.records.exclusion"/>',
-	updatePost: '<fmt:message key="vulpe.msg.confirm.updatePost"/>',
+	deleteSelected: '<fmt:message key="vulpe.message.confirm.delete.selected"/>',
+	selectRecordsToDelete: '<fmt:message key="vulpe.message.select.records.to.delete"/>',
+	updatePost: '<fmt:message key="vulpe.message.confirm.updatePost"/>',
 	upload: '<fmt:message key="vulpe.error.upload"/>',
 	close: '<fmt:message key="vulpe.messages.close"/>'
 }

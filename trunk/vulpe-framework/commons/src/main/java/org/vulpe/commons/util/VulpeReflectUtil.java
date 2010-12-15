@@ -40,19 +40,6 @@ public class VulpeReflectUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeReflectUtil.class);
 
-	/**
-	 * Returns instance of VulpeReflectUtil.
-	 *
-	 * @return
-	 */
-	public static VulpeReflectUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		if (!cache.contains(VulpeReflectUtil.class)) {
-			cache.put(VulpeReflectUtil.class, new VulpeReflectUtil());
-		}
-		return cache.get(VulpeReflectUtil.class);
-	}
-
 	protected VulpeReflectUtil() {
 		// default constructor
 	}
@@ -63,7 +50,7 @@ public class VulpeReflectUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public List<Field> getFields(final Class<?> clazz) {
+	public static List<Field> getFields(final Class<?> clazz) {
 		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".fields"))) {
 			return VulpeCacheHelper.getInstance().get(clazz.getName().concat(".fields"));
 		}
@@ -88,7 +75,7 @@ public class VulpeReflectUtil {
 	 * @param annotationClass
 	 * @return
 	 */
-	public List<Field> getFieldsWithAnnotation(final Class<?> clazz,
+	public static List<Field> getFieldsWithAnnotation(final Class<?> clazz,
 			final Class<? extends Annotation> annotationClass) {
 		final List<Field> filtredFields = new ArrayList<Field>();
 		final List<Field> fields = getFields(clazz);
@@ -107,7 +94,7 @@ public class VulpeReflectUtil {
 	 * @param fieldName
 	 * @return
 	 */
-	public Field getField(final Class<?> clazz, final String fieldName) {
+	public static Field getField(final Class<?> clazz, final String fieldName) {
 		Map<String, Field> fieldMap = new HashMap<String, Field>();
 		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".fieldMap"))) {
 			fieldMap = VulpeCacheHelper.getInstance().get(clazz.getName().concat(".fieldMap"));
@@ -121,7 +108,7 @@ public class VulpeReflectUtil {
 		return fieldMap.get(fieldName);
 	}
 
-	public Class<?> getFieldClass(final Class<?> clazz, final String fieldName) {
+	public static Class<?> getFieldClass(final Class<?> clazz, final String fieldName) {
 		final Field field = getField(clazz, fieldName);
 		return field == null ? null : getDeclaredType(clazz, field.getGenericType()).getType();
 	}
@@ -132,7 +119,7 @@ public class VulpeReflectUtil {
 	 * @param destination
 	 * @param origin
 	 */
-	public void copy(final Object destination, final Object origin) {
+	public static void copy(final Object destination, final Object origin) {
 		final List<Field> fields = getFields(origin.getClass());
 		for (Field field : fields) {
 			try {
@@ -169,7 +156,7 @@ public class VulpeReflectUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public List<Method> getMethods(final Class<?> clazz) {
+	public static List<Method> getMethods(final Class<?> clazz) {
 		if (VulpeCacheHelper.getInstance().contains(clazz.getName().concat(".methods"))) {
 			return VulpeCacheHelper.getInstance().get(clazz.getName().concat(".methods"));
 		}
@@ -196,7 +183,7 @@ public class VulpeReflectUtil {
 	 * @param typeParams
 	 * @return
 	 */
-	public Method getMethod(final Class<?> clazz, final String methodName,
+	public static Method getMethod(final Class<?> clazz, final String methodName,
 			final Class<?>... typeParams) {
 		final List<Method> methods = getMethods(clazz);
 		Method methodFirst = null;
@@ -222,7 +209,7 @@ public class VulpeReflectUtil {
 	 * @param type
 	 * @return
 	 */
-	public DeclaredType getDeclaredType(final Class<?> clazz, final Type type) {
+	public static DeclaredType getDeclaredType(final Class<?> clazz, final Type type) {
 		if (type == null) {
 			return null;
 		}
@@ -269,7 +256,7 @@ public class VulpeReflectUtil {
 	 * @param typeVariable
 	 * @return
 	 */
-	private DeclaredType getDeclaredTypeVariable(final Class<?> clazz,
+	private static DeclaredType getDeclaredTypeVariable(final Class<?> clazz,
 			final TypeVariable<?> typeVariable) {
 		final int index = getIndexTypeVariable(typeVariable);
 		final VariableInfo info = new VariableInfo(index);
@@ -303,7 +290,7 @@ public class VulpeReflectUtil {
 	 * @param info
 	 * @return
 	 */
-	private DeclaredType getDeclaredTypeVariableDeclared(final Class<?> clazz,
+	private static DeclaredType getDeclaredTypeVariableDeclared(final Class<?> clazz,
 			final Class<?> superClass, final TypeVariable<?> typeVariable, final VariableInfo info) {
 		if (clazz.equals(Object.class)) {
 			return null;
@@ -360,7 +347,7 @@ public class VulpeReflectUtil {
 	 * @param typeVariable
 	 * @return
 	 */
-	private int getIndexTypeVariable(final TypeVariable<?> typeVariable) {
+	private static int getIndexTypeVariable(final TypeVariable<?> typeVariable) {
 		int index = -1;
 		for (TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration()
 				.getTypeParameters()) {
@@ -504,7 +491,7 @@ public class VulpeReflectUtil {
 	 * @param index
 	 * @return
 	 */
-	public Class<?> getIndexClass(final Class<?> clazz, final int index) {
+	public static Class<?> getIndexClass(final Class<?> clazz, final int index) {
 		if (clazz.getGenericSuperclass() instanceof ParameterizedType) {
 			final ParameterizedType type = (ParameterizedType) clazz.getGenericSuperclass();
 			DeclaredType declaredType = null;
@@ -530,7 +517,7 @@ public class VulpeReflectUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInClass(final Class<T> annotationClass,
+	public static <T extends Annotation> T getAnnotationInClass(final Class<T> annotationClass,
 			final Class<?> clazz) {
 		Class<?> baseClass = clazz;
 		while (baseClass != null && !baseClass.equals(Object.class)) {
@@ -559,7 +546,7 @@ public class VulpeReflectUtil {
 	 * @param clazz
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInClass(final Class<T> annotationClass,
+	public static <T extends Annotation> boolean isAnnotationInClass(final Class<T> annotationClass,
 			final Class<?> clazz) {
 		return getAnnotationInClass(annotationClass, clazz) != null;
 	}
@@ -573,7 +560,7 @@ public class VulpeReflectUtil {
 	 * @param fieldName
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
+	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
 			final Class<?> clazz, final String fieldName) {
 		final Field field = getField(clazz, fieldName);
 		if (field != null && field.isAnnotationPresent(annotationClass)) {
@@ -604,7 +591,7 @@ public class VulpeReflectUtil {
 	 * @param field
 	 * @return
 	 */
-	public <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
+	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
 			final Class<?> clazz, final Field field) {
 		if (field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
@@ -635,7 +622,7 @@ public class VulpeReflectUtil {
 	 * @param fieldName
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
+	public static <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
 			final Class<?> clazz, final String fieldName) {
 		return getAnnotationInField(annotationClass, clazz, fieldName) != null;
 	}
@@ -649,7 +636,7 @@ public class VulpeReflectUtil {
 	 * @param field
 	 * @return
 	 */
-	public <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
+	public static <T extends Annotation> boolean isAnnotationInField(final Class<T> annotationClass,
 			final Class<?> clazz, final Field field) {
 		return getAnnotationInField(annotationClass, clazz, field) != null;
 	}
@@ -661,7 +648,7 @@ public class VulpeReflectUtil {
 	 * @param fieldName
 	 * @param value
 	 */
-	public void setFieldValue(final Object object, final String fieldName, final Object value) {
+	public static void setFieldValue(final Object object, final String fieldName, final Object value) {
 		try {
 			final String name = fieldName.substring(0, 1).toUpperCase().concat(
 					fieldName.substring(1));
@@ -724,7 +711,7 @@ public class VulpeReflectUtil {
 	 * @param fieldName
 	 * @return
 	 */
-	public <T> T getFieldValue(final Object object, final String fieldName) {
+	public static <T> T getFieldValue(final Object object, final String fieldName) {
 		try {
 			final String name = fieldName.substring(0, 1).toUpperCase().concat(
 					fieldName.substring(1));

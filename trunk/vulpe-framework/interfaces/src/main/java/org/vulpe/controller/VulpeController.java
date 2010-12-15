@@ -36,6 +36,14 @@ public interface VulpeController extends VulpeSimpleController {
 	String addDetail();
 
 	/**
+	 * Method to clear screen.
+	 *
+	 * @since 1.0
+	 * @return Navigation.
+	 */
+	String clear();
+		
+	/**
 	 * Method to create new record.
 	 *
 	 * @since 1.0
@@ -68,7 +76,7 @@ public interface VulpeController extends VulpeSimpleController {
 	String deleteDetail();
 
 	/**
-	 * Method to prepare show.
+	 * Method to prepare to show.
 	 *
 	 * @since 1.0
 	 * @return Navigation
