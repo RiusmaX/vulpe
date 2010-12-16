@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
 <p>
 <%@include file="/WEB-INF/protected-jsp/commons/mainActionsPrepend.jsp"%>
-<c:if test="${now['buttons']['tabularFilter']}"><v:action validate="false" labelKey="tabularFilter" elementId="TabularFilter" action="tabularFilter" helpKey="tabularFilter" icon="filter" iconClass="TabularFilter" /></c:if>
+<c:if test="${now['buttons']['tabularFilter']}"><v:action validate="false" labelKey="tabularFilter" elementId="TabularFilter" action="tabularFilter" helpKey="tabularFilter" icon="filter" iconClass="TabularFilter" layerFields="vulpeTabularSelect-${targetConfigPropertyName}" /></c:if>
 <c:set var="buttonEL" value="${'${'}now['buttons']['addDetail${targetConfig.name}']${'}'}" />
 <c:set var="button" value="${util:eval(pageContext, buttonEL)}" />
 <v:action validate="false" labelKey="addDetail" elementId="AddDetail-${targetConfig.name}" action="addDetail" queryString="detail=${targetConfigPropertyName}" helpKey="tabularNew" icon="add" iconClass="AddDetail" show="${!onlyToSee && button}" />

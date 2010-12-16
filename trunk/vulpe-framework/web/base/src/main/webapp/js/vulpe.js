@@ -76,7 +76,7 @@ var vulpe = {
 				}
 			},
 			clear: "vulpe.message.confirm.clear",
-			delete: "vulpe.message.confirm.delete",
+			deleteThis: "vulpe.message.confirm.delete",
 			fieldRequired: "vulpe.js.error.required",
 			keyRequired: "vulpe.js.error.key.required",
 			deleteSelected: "vulpe.message.confirm.delete.selected",
@@ -1106,12 +1106,7 @@ var vulpe = {
 	},
 	// vulpe.view
 	view: {
-		confirmSelectedExclusion: function() {
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
-			$(vulpe.config.layers.confirmationDialog).dialog('open');
-		},
-
-		validateSelectedsToExclusion: function(command) {
+		validateSelectedToDelete: function(command) {
 			var selections = jQuery(":checkbox[name$='selected']");
 			var selected = false;
 			for (var i = 0; i < selections.length; i++) {
@@ -1120,12 +1115,13 @@ var vulpe = {
 					break;
 				}
 			}
-			if (!selected) {
-				return true;
-			}
 			vulpe.command = command;
-			$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
-			$(vulpe.config.layers.confirmationDialog).dialog('open');
+			if (selected) {
+				$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
+				$(vulpe.config.layers.confirmationDialog).dialog('open');
+			} else {
+				vulpe.command();
+			}
 		},
 
 		confirm: function(type, command) {
@@ -1134,7 +1130,7 @@ var vulpe = {
 			if (type == "clear") {
 				message = vulpe.config.messages.clear;
 			} else if (type == "delete") {
-				message = vulpe.config.messages.delete;
+				message = vulpe.config.messages.deleteThis;
 			} else if (type == "deleteSelected") {
 				message = vulpe.config.messages.deleteSelected;
 			} else if (type == "updatePost") {

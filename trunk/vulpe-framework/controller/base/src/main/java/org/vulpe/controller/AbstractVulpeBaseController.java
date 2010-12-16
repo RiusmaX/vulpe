@@ -977,6 +977,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onCreate() {
 		if (getControllerType().equals(ControllerType.MAIN) || getControllerType().equals(ControllerType.TWICE)) {
 			try {
+				setEntity(getControllerConfig().getEntityClass().newInstance());
 				setEntity(prepareEntity(getOperation()));
 				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
 					createDetails(getControllerConfig().getDetails(), false);
@@ -1488,12 +1489,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			if (getControllerType().equals(ControllerType.TABULAR)) {
 				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())
-						&& VulpeValidationUtil.isEmpty(getEntities())) {
-					if (isTabularFilter()) {
-						setEntities(null);
-					} else {
-						createDetails(getControllerConfig().getDetails(), false);
-					}
+						&& VulpeValidationUtil.isEmpty(getEntities()) && !isTabularFilter()) {
+					createDetails(getControllerConfig().getDetails(), false);
 				}
 			}
 			controlResultForward();
@@ -1553,7 +1550,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setTabularSize(paging.getSize());
 				if (paging.getList() == null || paging.getList().isEmpty()) {
 					setDetail(Controller.ENTITIES);
-					onAddDetail(true);
+					if (!isTabularFilter()) {
+						onAddDetail(true);
+					}
 				}
 			}
 		} else {

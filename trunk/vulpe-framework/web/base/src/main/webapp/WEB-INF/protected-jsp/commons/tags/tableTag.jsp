@@ -108,9 +108,7 @@
 		<thead>
 			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
 			<c:if test="${not empty tableHeader}"><tr class="vulpeTableHeader">${tableHeader}</tr></c:if>
-			<tr>
-				<jsp:invoke fragment="tableBody"/>
-			</tr>
+			<jsp:invoke fragment="tableBody"/>
 		</thead>
 		<c:if test="${not empty tableFooter}">
 			<tfoot>

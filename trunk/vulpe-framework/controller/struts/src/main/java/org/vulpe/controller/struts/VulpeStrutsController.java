@@ -315,8 +315,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (value == null) {
 				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext().getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, getDownloadContentType(),
+					getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());
 			}
@@ -610,11 +610,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @throws OgnlException
 	 */
 	protected void doAddDetail(final Collection collection) throws OgnlException {
+		final Map context = ActionContext.getContext().getContextMap();
+		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
+		final Integer index = Integer.valueOf(collection.size());
 		if ((getControllerType().equals(ControllerType.TABULAR) && getControllerConfig().getTabularConfig()
 				.isAddNewDetailsOnTop())
 				|| (getControllerType().equals(ControllerType.MAIN) && getDetailConfig().isAddNewDetailsOnTop())) {
+			final Object value = accessor.getProperty(context, collection, 0);
 			try {
-				final ENTITY detail = getControllerConfig().getEntityClass().newInstance();
+				final ENTITY detail = (ENTITY) value.getClass().newInstance();
 				updateAuditInformation(detail);
 				((ArrayList<ENTITY>) collection).add(0, prepareDetail(detail));
 			} catch (InstantiationException e) {
@@ -623,9 +627,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				LOG.error(e);
 			}
 		} else {
-			final Map context = ActionContext.getContext().getContextMap();
-			final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
-			final Integer index = Integer.valueOf(collection.size());
 			final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
 			updateAuditInformation(detail);
 			final ENTITY preparedDetail = prepareDetail(detail);
