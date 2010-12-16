@@ -939,6 +939,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			getSession().removeAttribute(getSelectFormKey());
 			getSession().removeAttribute(getSelectTableKey());
 			getSession().removeAttribute(getSelectPagingKey());
+			setEntitySelect(null);
 			return select();
 		}
 		return getResultName();
