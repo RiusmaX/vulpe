@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
@@ -44,7 +44,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -67,7 +67,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -131,7 +131,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
@@ -143,7 +143,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pattern
 	 * @param locale
 	 * @return

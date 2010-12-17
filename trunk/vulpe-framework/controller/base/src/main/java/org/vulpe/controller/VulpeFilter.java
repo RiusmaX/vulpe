@@ -39,13 +39,13 @@ public class VulpeFilter extends CharacterEncodingFilter {
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 			final HttpServletRequest httpRequest = (HttpServletRequest) request;
-			vulpeContext.setRequest(httpRequest);
-			vulpeContext.setResponse((HttpServletResponse) response);
-			vulpeContext.setSession(httpRequest.getSession());
 			final String url = buildRequestUrl(httpRequest);
 			if (!url.contains(Layout.JS_CONTEXT) && !url.contains(Layout.THEMES_CONTEXT)
 					&& !url.contains(Layout.CSS_CONTEXT) && !url.contains(Layout.IMAGES_CONTEXT)
 					&& !url.contains(Layout.SUFFIX_JSP)) {
+				vulpeContext.setRequest(httpRequest);
+				vulpeContext.setResponse((HttpServletResponse) response);
+				vulpeContext.setSession(httpRequest.getSession());
 				vulpeContext.setCurrentController(url);
 			}
 		}

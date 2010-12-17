@@ -1139,7 +1139,7 @@ var vulpe = {
 			$(vulpe.config.layers.confirmationMessage).html(message);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
-		
+
 		prepareRead: function(formName) {
 			vulpe.util.setPagingPage('', formName);
 			return true;
@@ -1290,7 +1290,7 @@ var vulpe = {
 			vulpe.view.request.invokeSelectRowCallback(popupName);
 			vulpe.view.hidePopup(popupName);
 		},
-		
+
 		loading: null,
 
 		showLoading: function() {
@@ -1358,6 +1358,7 @@ var vulpe = {
 
 		hidePopup: function(elementId) {
 			$("#" + elementId).dialog("close");
+			vulpe.util.removeArray(vulpe.view.popups, elementId);
 		},
 
 		request: { // vulpe.view.request
@@ -1432,7 +1433,7 @@ var vulpe = {
 			removeSelectRowCallback: function(key, layerFields) {
 				vulpe.view.request.removeFunctions(vulpe.view.request.selectRowCallback, key, layerFields);
 			},
-			
+
 			removeGlobalsBeforeJs: function(key, layerFields) {
 				vulpe.view.request.removeFunctions(vulpe.view.request.globalsBeforeJs, key, layerFields);
 			},

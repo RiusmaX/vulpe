@@ -6,6 +6,8 @@
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}"><c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/></c:if>
 	<c:if test="${saveInSession}"><c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/></c:if>
 	<c:if test="${onlyToSee}"><c:set var="showAsText" value="${true}"/></c:if>
+	<c:if test="${empty validateType}"><c:set var="validateType" value="DATE"/></c:if>
+	<c:if test="${empty validateDatePattern}"><c:set var="validateDatePattern" value="dd/MM/yyyy"/></c:if>
 	<c:choose>
 		<c:when test="${showAsText}"><span>${value}</span><v:hidden property="${property}"/></c:when>
 		<c:otherwise><s:textfield theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" maxlength="${maxlength}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" readonly="${readonly}" size="${size}" cssStyle="${style}" cssClass="${styleClass}" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${value}"/></c:otherwise>

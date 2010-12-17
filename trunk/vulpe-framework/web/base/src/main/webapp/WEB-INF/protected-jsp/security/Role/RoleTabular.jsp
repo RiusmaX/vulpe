@@ -1,10 +1,4 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
-<table>
-	<tr>
-		<td><v:text labelKey="label.vulpe.security.Role.select.description"
-			targetName="entitySelect" property="description" size="60" maxlength="60" /></td>
-	</tr>
-</table>
 <v:table>
 	<jsp:attribute name="tableHeader">
 		<th colspan="6"><fmt:message key="label.vulpe.security.Role.select.header" /></th>
