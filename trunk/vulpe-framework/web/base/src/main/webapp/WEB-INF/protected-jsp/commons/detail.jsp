@@ -13,7 +13,7 @@
 	</c:choose>
 	<td colspan="100">
 </c:if>
-<div id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}" class="detailBody">
+<div id="vulpeDetail-${targetConfigLocal.baseName}${currentDetailIndex}" class="${not empty targetConfig.parentDetailConfig ? 'vulpeSubDetailBody' : 'vulpeDetailBody'}">
 <c:if test="${not empty targetConfig.parentDetailConfig || controllerConfig.showInTabs eq false}">
 	<c:if test="${!showAsAccordion}"><fieldset></c:if>
 	<c:choose>

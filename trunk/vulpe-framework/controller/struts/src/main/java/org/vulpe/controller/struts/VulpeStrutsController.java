@@ -588,6 +588,20 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(Layout.DETAIL_ITEM),
 							parent);
 				}
+//				if (VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails()) && !start) {
+//					for (final VulpeBaseDetailConfig detail : detailConfig.getSubDetails()) {
+//						try {
+//							final Collection collectionx = (Collection) Ognl.getValue(getDetail(), context, this);
+//							for (int i = 0; i < collectionx.size(); i++) {
+//								setDetail(detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."
+//										+ detail.getPropertyName());
+//								onAddDetail(false);
+//							}
+//						} catch (OgnlException e) {
+//							LOG.error(e);
+//						}
+//					}
+//				}
 			}
 
 			if (getControllerType().equals(ControllerType.TABULAR)) {
@@ -615,8 +629,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		if (((getControllerType().equals(ControllerType.TABULAR) && getControllerConfig().getTabularConfig()
-				.isAddNewDetailsOnTop())
-				|| (getControllerType().equals(ControllerType.MAIN) && getDetailConfig().isAddNewDetailsOnTop()))
+				.isAddNewDetailsOnTop()) || (getControllerType().equals(ControllerType.MAIN) && getDetailConfig()
+				.isAddNewDetailsOnTop()))
 				&& VulpeValidationUtil.isNotEmpty(collection)) {
 			final Object value = accessor.getProperty(context, collection, 0);
 			try {
@@ -639,7 +653,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	}
 
 	protected void createDetails(final List<VulpeBaseDetailConfig> details, final boolean subDetail) {
-		for (VulpeBaseDetailConfig detail : details) {
+		for (final VulpeBaseDetailConfig detail : details) {
 			if (subDetail) {
 				final Map context = ActionContext.getContext().getContextMap();
 				try {
@@ -656,7 +670,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				setDetail(detail.getPropertyName());
 				onAddDetail(true);
 			}
-			if (detail.getSubDetails() != null && !detail.getSubDetails().isEmpty()) {
+			if (VulpeValidationUtil.isNotEmpty(detail.getSubDetails())) {
 				createDetails(detail.getSubDetails(), true);
 			}
 		}

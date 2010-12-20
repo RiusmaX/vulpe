@@ -1135,6 +1135,9 @@ var vulpe = {
 			} else if (type == "deleteSelected") {
 				message = vulpe.config.messages.deleteSelected;
 			} else if (type == "updatePost") {
+				if (!vulpe.validate.validateAttributes(vulpe.config.formName)) {
+					return false;
+				}
 				message = vulpe.config.messages.updatePost;
 			}
 			$(vulpe.config.layers.confirmationMessage).html(message);
