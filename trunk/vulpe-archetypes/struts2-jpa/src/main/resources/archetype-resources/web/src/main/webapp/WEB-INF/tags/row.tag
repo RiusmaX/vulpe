@@ -17,11 +17,11 @@
 <%@ attribute name="popupProperties" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="rowspan" required="false" rtexprvalue="true" %>
-<%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showButtonDeleteThis" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showButtonUpdate" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showButtonsDelete" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showLine" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="showUpdateButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="showDeleteButtons" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="showDeleteThisButton" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true" %>
 <%@ attribute name="style" required="false" rtexprvalue="true" %>
 <%@ attribute name="updateValue" required="false" rtexprvalue="true" type="java.lang.String" %>
