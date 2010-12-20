@@ -46,7 +46,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of fields in class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @return
 	 */
@@ -70,7 +70,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of fields noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param clazz
 	 * @param annotationClass
 	 * @return
@@ -89,7 +89,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns field of class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @param fieldName
 	 * @return
@@ -115,18 +115,31 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Copy attributes from <code>origin</code> to <code>destination</code>.
-	 *
+	 * 
 	 * @param destination
 	 * @param origin
 	 */
 	public static void copy(final Object destination, final Object origin) {
+		copy(destination, origin, false);
+	}
+
+	/**
+	 * Copy attributes from <code>origin</code> to <code>destination</code>.
+	 * 
+	 * @param destination
+	 * @param origin
+	 * @param ignoreTransient
+	 */
+	public static void copy(final Object destination, final Object origin, boolean ignoreTransient) {
 		final List<Field> fields = getFields(origin.getClass());
-		for (Field field : fields) {
+		for (final Field field : fields) {
+			if (ignoreTransient && Modifier.isTransient(field.getModifiers())) {
+				continue;
+			}
 			try {
 				final Object value = PropertyUtils.getProperty(origin, field.getName());
 				if (Collection.class.isAssignableFrom(field.getType())) {
-					final Collection valueDes = (Collection) PropertyUtils.getProperty(destination,
-							field.getName());
+					final Collection valueDes = (Collection) PropertyUtils.getProperty(destination, field.getName());
 					if (value == null) {
 						if (valueDes != null) {
 							valueDes.clear();
@@ -152,7 +165,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of methods in class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @return
 	 */
@@ -164,8 +177,7 @@ public class VulpeReflectUtil {
 		final List<Method> list = new ArrayList<Method>();
 		while (!baseClass.equals(Object.class)) {
 			for (Method method : baseClass.getDeclaredMethods()) {
-				if (!method.isSynthetic() && !method.isBridge()
-						&& !Modifier.isStatic(method.getModifiers())) {
+				if (!method.isSynthetic() && !method.isBridge() && !Modifier.isStatic(method.getModifiers())) {
 					list.add(method);
 				}
 			}
@@ -177,21 +189,20 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns method of class or superclass.
-	 *
+	 * 
 	 * @param clazz
 	 * @param methodName
 	 * @param typeParams
 	 * @return
 	 */
-	public static Method getMethod(final Class<?> clazz, final String methodName,
-			final Class<?>... typeParams) {
+	public static Method getMethod(final Class<?> clazz, final String methodName, final Class<?>... typeParams) {
 		final List<Method> methods = getMethods(clazz);
 		Method methodFirst = null;
 		for (Method method : methods) {
 			if (method.getName().equals(methodName)) {
 				if ((typeParams == null && method.getParameterTypes() == null)
-						|| (typeParams != null && method.getParameterTypes() != null && Arrays
-								.equals(typeParams, method.getParameterTypes()))) {
+						|| (typeParams != null && method.getParameterTypes() != null && Arrays.equals(typeParams,
+								method.getParameterTypes()))) {
 					return method;
 				}
 				if (typeParams == null && methodFirst == null) {
@@ -204,7 +215,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of Type.
-	 *
+	 * 
 	 * @param clazz
 	 * @param type
 	 * @return
@@ -224,8 +235,7 @@ public class VulpeReflectUtil {
 			final DeclaredType rawType = getDeclaredType(clazz, parameterizedType.getRawType());
 			declaredType.setType(rawType.getType());
 			for (int i = 0; i < parameterizedType.getActualTypeArguments().length; i++) {
-				declaredType.getItems().add(
-						getDeclaredType(clazz, parameterizedType.getActualTypeArguments()[i]));
+				declaredType.getItems().add(getDeclaredType(clazz, parameterizedType.getActualTypeArguments()[i]));
 			}
 		} else if (type instanceof TypeVariable) {
 			return getDeclaredTypeVariable(clazz, (TypeVariable<?>) type);
@@ -233,15 +243,13 @@ public class VulpeReflectUtil {
 			declaredType = new DeclaredType();
 			final WildcardType wildcardType = (WildcardType) type;
 			if (wildcardType.getLowerBounds().length > 0) {
-				declaredType.setType(getDeclaredType(clazz, wildcardType.getLowerBounds()[0])
-						.getType());
+				declaredType.setType(getDeclaredType(clazz, wildcardType.getLowerBounds()[0]).getType());
 			} else {
 				declaredType.setType(null);
 			}
 
 			for (int i = 0; i < wildcardType.getUpperBounds().length; i++) {
-				declaredType.getTypeItems().add(
-						getDeclaredType(clazz, wildcardType.getUpperBounds()[i]));
+				declaredType.getTypeItems().add(getDeclaredType(clazz, wildcardType.getUpperBounds()[i]));
 			}
 
 			return declaredType;
@@ -251,21 +259,18 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 *
+	 * 
 	 * @param clazz
 	 * @param typeVariable
 	 * @return
 	 */
-	private static DeclaredType getDeclaredTypeVariable(final Class<?> clazz,
-			final TypeVariable<?> typeVariable) {
+	private static DeclaredType getDeclaredTypeVariable(final Class<?> clazz, final TypeVariable<?> typeVariable) {
 		final int index = getIndexTypeVariable(typeVariable);
 		final VariableInfo info = new VariableInfo(index);
-		DeclaredType declaredType = getDeclaredTypeVariableDeclared(clazz, clazz.getSuperclass(),
-				typeVariable, info);
+		DeclaredType declaredType = getDeclaredTypeVariableDeclared(clazz, clazz.getSuperclass(), typeVariable, info);
 		if (declaredType == null) {
 			if (info.isInSuperclass()) {
-				final ParameterizedType pType = (ParameterizedType) info.getFirstClass()
-						.getGenericSuperclass();
+				final ParameterizedType pType = (ParameterizedType) info.getFirstClass().getGenericSuperclass();
 				final Type type = pType.getActualTypeArguments()[info.getIndex()];
 				if (type instanceof TypeVariable) {
 					declaredType = getDeclaredType(clazz, ((TypeVariable<?>) type).getBounds()[0]);
@@ -273,8 +278,8 @@ public class VulpeReflectUtil {
 					declaredType = getDeclaredType(clazz, type);
 				}
 			} else {
-				declaredType = getDeclaredType(clazz, info.getFirstClass().getTypeParameters()[info
-						.getIndex()].getBounds()[0]);
+				declaredType = getDeclaredType(clazz, info.getFirstClass().getTypeParameters()[info.getIndex()]
+						.getBounds()[0]);
 			}
 			return declaredType;
 		}
@@ -283,15 +288,15 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 *
+	 * 
 	 * @param clazz
 	 * @param superClass
 	 * @param typeVariable
 	 * @param info
 	 * @return
 	 */
-	private static DeclaredType getDeclaredTypeVariableDeclared(final Class<?> clazz,
-			final Class<?> superClass, final TypeVariable<?> typeVariable, final VariableInfo info) {
+	private static DeclaredType getDeclaredTypeVariableDeclared(final Class<?> clazz, final Class<?> superClass,
+			final TypeVariable<?> typeVariable, final VariableInfo info) {
 		if (clazz.equals(Object.class)) {
 			return null;
 		}
@@ -316,8 +321,8 @@ public class VulpeReflectUtil {
 				return getDeclaredType(clazz, type);
 			}
 		} else {
-			final DeclaredType declaredType = getDeclaredTypeVariableDeclared(
-					clazz.getSuperclass(), superClass.getSuperclass(), typeVariable, info);
+			final DeclaredType declaredType = getDeclaredTypeVariableDeclared(clazz.getSuperclass(), superClass
+					.getSuperclass(), typeVariable, info);
 			if (declaredType == null) {
 				ParameterizedType parameterizedType = null;
 				if (clazz.getGenericSuperclass() instanceof ParameterizedType) {
@@ -343,14 +348,13 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns position of TypeVariable in list of getTypeParameters on class.
-	 *
+	 * 
 	 * @param typeVariable
 	 * @return
 	 */
 	private static int getIndexTypeVariable(final TypeVariable<?> typeVariable) {
 		int index = -1;
-		for (TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration()
-				.getTypeParameters()) {
+		for (TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration().getTypeParameters()) {
 			index++;
 			if (typeVariable.getName().equals(typeVariable2.getName())) {
 				break;
@@ -486,7 +490,7 @@ public class VulpeReflectUtil {
 	/**
 	 * Returns class on index in the parameterized type on <code>clazz</code> or
 	 * <code>super</code>.
-	 *
+	 * 
 	 * @param clazz
 	 * @param index
 	 * @return
@@ -498,8 +502,8 @@ public class VulpeReflectUtil {
 			if (type.getActualTypeArguments().length > index + 1) {
 				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[index]);
 			} else {
-				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[type
-						.getActualTypeArguments().length - 1]);
+				declaredType = getDeclaredType(clazz,
+						type.getActualTypeArguments()[type.getActualTypeArguments().length - 1]);
 			}
 			return (Class<?>) declaredType.getType();
 		} else if (clazz.getGenericSuperclass() instanceof Class) {
@@ -511,14 +515,13 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @return
 	 */
-	public static <T extends Annotation> T getAnnotationInClass(final Class<T> annotationClass,
-			final Class<?> clazz) {
+	public static <T extends Annotation> T getAnnotationInClass(final Class<T> annotationClass, final Class<?> clazz) {
 		Class<?> baseClass = clazz;
 		while (baseClass != null && !baseClass.equals(Object.class)) {
 			if (baseClass.isAnnotationPresent(annotationClass)) {
@@ -540,7 +543,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -553,15 +556,15 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param fieldName
 	 * @return
 	 */
-	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
-			final Class<?> clazz, final String fieldName) {
+	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass, final Class<?> clazz,
+			final String fieldName) {
 		final Field field = getField(clazz, fieldName);
 		if (field != null && field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
@@ -584,21 +587,20 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
 	 * @param field
 	 * @return
 	 */
-	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass,
-			final Class<?> clazz, final Field field) {
+	public static <T extends Annotation> T getAnnotationInField(final Class<T> annotationClass, final Class<?> clazz,
+			final Field field) {
 		if (field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
 		}
 
-		final String name = field.getName().substring(0, 1).toUpperCase().concat(
-				field.getName().substring(1));
+		final String name = field.getName().substring(0, 1).toUpperCase().concat(field.getName().substring(1));
 
 		Method method = getMethod(clazz, "get".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
@@ -615,7 +617,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -629,7 +631,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 *
+	 * 
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -643,19 +645,17 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Sets field value in object.
-	 *
+	 * 
 	 * @param object
 	 * @param fieldName
 	 * @param value
 	 */
 	public static void setFieldValue(final Object object, final String fieldName, final Object value) {
 		try {
-			final String name = fieldName.substring(0, 1).toUpperCase().concat(
-					fieldName.substring(1));
+			final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
 
 			Method method = null;
-			Class<?> classField = (value == null ? getFieldClass(object.getClass(), fieldName)
-					: value.getClass());
+			Class<?> classField = (value == null ? getFieldClass(object.getClass(), fieldName) : value.getClass());
 			while (classField != null && !classField.equals(Object.class)) {
 				method = getMethod(object.getClass(), "set".concat(name), classField);
 				if (method != null) {
@@ -705,7 +705,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns field value from object.
-	 *
+	 * 
 	 * @param <T>
 	 * @param object
 	 * @param fieldName
@@ -713,8 +713,7 @@ public class VulpeReflectUtil {
 	 */
 	public static <T> T getFieldValue(final Object object, final String fieldName) {
 		try {
-			final String name = fieldName.substring(0, 1).toUpperCase().concat(
-					fieldName.substring(1));
+			final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
 
 			final Method method = getMethod(object.getClass(), "get".concat(name));
 			if (method != null) {

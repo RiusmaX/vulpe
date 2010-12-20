@@ -18,12 +18,14 @@
 	<script type="text/javascript">
 		jQuery(function($){
 			vulpe.util.get('${elementId}').mask("99/99/9999");
-			vulpe.util.get('${elementId}').datepicker({
-				showOn: 'button',
-				buttonImage: '${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/button-calendar-16x16.png',
-				buttonImageOnly: true
-			});
-			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
+			if (!vulpe.config.browser.ie6) {
+				vulpe.util.get('${elementId}').datepicker({
+					showOn: 'button',
+					buttonImage: '${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/button-calendar-16x16.png',
+					buttonImageOnly: true
+				});
+				vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
+			}
 		});
 	</script>
 	</c:if>

@@ -77,8 +77,8 @@ public class VulpeStartupListener implements ServletContextListener {
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 			VulpeDB4OUtil.getInstance().getObjectServer();
 			if (VulpeConfigHelper.isSecurityEnabled()) {
-				final VulpeSecurityContext vulpeSecurityContext = AbstractVulpeBeanFactory
-						.getInstance().getBean(VulpeSecurityContext.class.getSimpleName());
+				final VulpeSecurityContext vulpeSecurityContext = AbstractVulpeBeanFactory.getInstance().getBean(
+						VulpeSecurityContext.class.getSimpleName());
 				if (vulpeSecurityContext != null) {
 					vulpeSecurityContext.initialize();
 				}
@@ -86,14 +86,10 @@ public class VulpeStartupListener implements ServletContextListener {
 		}
 
 		// sets scopes as attributes to use in tags and JSPs
-		evt.getServletContext().setAttribute(Context.APPLICATION_SCOPE,
-				Integer.valueOf(PageContext.APPLICATION_SCOPE));
-		evt.getServletContext().setAttribute(Context.PAGE_SCOPE,
-				Integer.valueOf(PageContext.PAGE_SCOPE));
-		evt.getServletContext().setAttribute(Context.REQUEST_SCOPE,
-				Integer.valueOf(PageContext.REQUEST_SCOPE));
-		evt.getServletContext().setAttribute(Context.SESSION_SCOPE,
-				Integer.valueOf(PageContext.SESSION_SCOPE));
+		evt.getServletContext().setAttribute(Context.APPLICATION_SCOPE, Integer.valueOf(PageContext.APPLICATION_SCOPE));
+		evt.getServletContext().setAttribute(Context.PAGE_SCOPE, Integer.valueOf(PageContext.PAGE_SCOPE));
+		evt.getServletContext().setAttribute(Context.REQUEST_SCOPE, Integer.valueOf(PageContext.REQUEST_SCOPE));
+		evt.getServletContext().setAttribute(Context.SESSION_SCOPE, Integer.valueOf(PageContext.SESSION_SCOPE));
 
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
@@ -110,28 +106,28 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.BACKEND_CENTERED_LAYOUT, vulpeProject.view().focusFirst());
 			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
 			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
-			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view()
-					.frontendCenteredLayout());
-			global.put(Global.HEIGHT_BUTTON_ICON, vulpeProject.view().heightButtonIcon());
-			global.put(Global.HEIGHT_MOBILE_BUTTON_ICON, vulpeProject.view()
-					.heightMobileButtonIcon());
+			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view().frontendCenteredLayout());
+			global.put(Global.ICON_HEIGHT, vulpeProject.view().iconHeight());
+			global.put(Global.MOBILE_ICON_HEIGHT, vulpeProject.view().mobileIconHeight());
 			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
 			global.put(Global.MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
 			global.put(Global.PAGING_STYLE, vulpeProject.view().pagingStyle());
 			global.put(Global.PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
-			global.put(Global.SHOW_BUTTON_AS_IMAGE, vulpeProject.view().showButtonAsImage());
-			global.put(Global.SHOW_BUTTON_ICON, vulpeProject.view().showButtonIcon());
-			global.put(Global.SHOW_BUTTON_TEXT, vulpeProject.view().showButtonText());
+			global.put(Global.SHOW_BUTTONS_AS_IMAGE, vulpeProject.view().showButtonsAsImage());
+			global.put(Global.SHOW_ICON_OF_BUTTON, vulpeProject.view().showIconOfButton());
+			global.put(Global.SHOW_TEXT_OF_BUTTON, vulpeProject.view().showTextOfButton());
+			global.put(Global.SHOW_BUTTON_DELETE_THIS, vulpeProject.view().showButtonDeleteThis());
+			global.put(Global.SHOW_BUTTON_UPDATE, vulpeProject.view().showButtonUpdate());
+			global.put(Global.SHOW_BUTTONS_DELETE, vulpeProject.view().showButtonsDelete());
+			global.put(Global.SHOW_LINE, vulpeProject.view().showLine());
 			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
 			global.put(Global.SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
 			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
 			global.put(Global.SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
 			global.put(Global.SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
 			global.put(Global.SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
-			global.put(Global.WIDTH_BUTTON_ICON, vulpeProject.view().widthButtonIcon());
-			global
-					.put(Global.WIDTH_MOBILE_BUTTON_ICON, vulpeProject.view()
-							.widthMobileButtonIcon());
+			global.put(Global.ICON_WIDTH, vulpeProject.view().iconWidth());
+			global.put(Global.MOBILE_ICON_WIDTH, vulpeProject.view().mobileIconWidth());
 			global.put(Global.USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
 			global.put(Global.USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
 		}

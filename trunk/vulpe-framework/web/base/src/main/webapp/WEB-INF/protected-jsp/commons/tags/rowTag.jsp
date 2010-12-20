@@ -3,8 +3,9 @@
 <c:if test="${show}">
 	<c:set var="recordId" value="${currentItem.id}"/>
 	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
-	<c:if test="${empty showDeleteButtons}"><c:set var="showDeleteButtons" value="${true}"/></c:if>
-	<c:if test="${empty showDeleteThisButton}"><c:set var="showDeleteThisButton" value="${true}"/></c:if>
+	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['showButtonsDelete']}"/></c:if>
+	<c:if test="${empty showButtonDeleteThis}"><c:set var="showButtonDeleteThis" value="${global['showButtonDeleteThis']}"/></c:if>
+	<c:if test="${empty showButtonUpdate}"><c:set var="showButtonUpdate" value="${global['showButtonUpdate']}"/></c:if>
 	<c:if test="${empty disableDelete}"><c:set var="disableDelete" value="${false}"/></c:if>
 	<c:if test="${empty styleClass && not empty currentStatus}">
 		<c:choose>
@@ -51,7 +52,7 @@
 		<c:if test="${empty updateLayer}"><c:set var="updateLayer" value="${vulpeBodyTwice ? 'main' : 'body'}"/></c:if>
 		<c:if test="${not empty updateValue && !isHeaderTableTag}">
 			<c:set var="recordId" value="${util:urlEncode(util:evalString(pageContext, updateValue))}"/>
-			<c:if test="${empty showUpdateButton || !showUpdateButton}">
+			<c:if test="${empty showButtonUpdate || !showButtonUpdate}">
 			<c:choose>
 				<c:when test="${not empty updateLayer && updateLayer != 'body'}"><c:set var="updateLayer" value=", layer: '${updateLayer}'"/></c:when>
 				<c:otherwise><c:set var="updateLayer" value=""/></c:otherwise>
@@ -94,7 +95,7 @@
 			</c:if>
 		</c:if>
 	</c:if>
-	<c:if test="${not empty deleteValue && deleteValue ne 'false' && showDeleteButtons}">
+	<c:if test="${not empty deleteValue && deleteValue ne 'false' && showButtonsDelete}">
 		<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="recordId" value="${currentItem.id}"/></c:if>
 		<c:if test="${empty deleteActionName}"><c:set var="deleteActionName" value="${controllerConfig.ownerController}/${deleteType == 'detail' ? 'deleteDetail' : 'delete'}"/></c:if>
 		<c:if test="${empty deleteFormName}"><c:set var="deleteFormName" value="${vulpeFormName}"/></c:if>
@@ -113,7 +114,7 @@
 		</c:if>
 		<c:if test="${empty deleteBeforeJs}"><c:set var="deleteBeforeJs" value=""/></c:if>
 	</c:if>
-	<c:if test="${(popup || not empty updateValue) && (empty showUpdateButton || !showUpdateButton)}">
+	<c:if test="${(popup || not empty updateValue) && (empty showButtonUpdate || !showButtonUpdate)}">
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover"> onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout"> onmouseout="${onmouseout}"</c:set></c:if>
 	</c:if>
@@ -145,7 +146,7 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan"> rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-row-${recordId}"/>
 	<tr id="${elementId}"${onclick}${onmouseover}${onmouseout}${styleClass}${style}${rowspan}>
-		<c:if test="${!onlyToSee && showDeleteButtons && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
+		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
@@ -160,7 +161,7 @@
 			</c:otherwise>
 		</c:choose>
 		</c:if>
-		<c:if test="${!onlyToSee && showDeleteButtons && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
+		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th id="vulpeSelectAll" width="10px" style="text-align: center">
 					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
@@ -174,7 +175,7 @@
 		</c:if>
 		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" width="1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeLineHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}">${currentStatus.count}.</c:if></v:column></c:if>
 		<jsp:doBody/>
-		<c:if test="${not empty updateValue && updateValue ne 'false' && showUpdateButton}">
+		<c:if test="${not empty updateValue && updateValue ne 'false' && showButtonUpdate}">
 			<c:choose>
 				<c:when test="${not empty updateLayer && updateLayer != 'body'}"><c:set var="updateLayer" value=", layer: '${updateLayer}'"/></c:when>
 				<c:otherwise><c:set var="updateLayer" value=""/></c:otherwise>
@@ -205,7 +206,7 @@
 				</c:if>
 			</c:if>
 		</c:if>
-		<c:if test="${!onlyToSee && showDeleteButtons && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
+		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
 			<c:choose>
 				<c:when test="${not empty deleteLayer && deleteLayer != 'body'}"><c:set var="deleteLayer" value=", layer: '${deleteLayer}'"/></c:when>
 				<c:otherwise><c:set var="deleteLayer" value=""/></c:otherwise>
@@ -226,7 +227,7 @@
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<c:choose>
-				<c:when test="${showDeleteThisButton}">
+				<c:when test="${showButtonDeleteThis}">
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
 						<c:set var="javascript">vulpe.view.confirm('delete', function() {vulpe.view.request.submitDeleteDetail({detail: '${targetConfigPropertyName}', detailIndex: ${currentStatus.index}, url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'});});</c:set>
@@ -245,7 +246,7 @@
 			</c:if>
 		</c:if>
 	</tr>
-	<c:if test="${(popup || (not empty updateValue && updateValue ne 'false')) && (empty showUpdateButton || !showUpdateButton)}">
+	<c:if test="${(popup || (not empty updateValue && updateValue ne 'false')) && (empty showButtonUpdate || !showButtonUpdate)}">
 	<script type="text/javascript">
 	jQuery(function($){
 		$("#${elementId}").unbind("mouseenter mouseleave");

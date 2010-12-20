@@ -1,9 +1,9 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${show}">
-	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['showButtonAsImage']}" /></c:if>
-	<c:if test="${empty showButtonIcon}"><c:set var="showButtonIcon" value="${global['showButtonIcon']}" /></c:if>
-	<c:if test="${empty showButtonText}"><c:set var="showButtonText" value="${global['showButtonText']}" /></c:if>
+	<c:if test="${empty showButtonsAsImage}"><c:set var="showButtonsAsImage" value="${global['showButtonsAsImage']}" /></c:if>
+	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['showIconOfButton']}" /></c:if>
+	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['showTextOfButton']}" /></c:if>
 	<c:if test="${global['showWarningBeforeDelete'] && action == 'delete'}">
 		<c:set var="showWarningBeforeDelete" value="true" />
 		<c:set var="beforeJs" value="" />
@@ -55,14 +55,14 @@
 		</c:choose>
 	</c:if>
 	<c:choose>
-		<c:when test="${!showButtonAsImage}">
+		<c:when test="${!showButtonsAsImage}">
 			<c:if test="${empty styleClass}"><c:set var="styleClass" value="vulpeSubmit" /></c:if>
 			<input style="${style}" id="${elementId}" type="button" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 		</c:when>
 		<c:otherwise>
 			<c:if test="${not empty icon}">
-				<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['showAsMobile'] ? global['widthMobileButtonIcon'] : global['widthButtonIcon']}" /></c:if>
-				<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['showAsMobile'] ? global['heightMobileButtonIcon'] : global['heightButtonIcon']}" /></c:if>
+				<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['showAsMobile'] ? global['mobileIconWidth'] : global['iconWidth']}" /></c:if>
+				<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['showAsMobile'] ? global['mobileIconHeight'] : global['iconHeight']}" /></c:if>
 				<c:if test="${empty iconBorder}"><c:set var="iconBorder" value="0" /></c:if>
 				<c:if test="${empty iconExtension}"><c:set var="iconExtension" value="png" /></c:if>
 				<c:set var="iconPrefix"	value="themes/${global['theme']}/images/icons/button" />
@@ -70,21 +70,21 @@
 				<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}"><c:set var="icon" value="${pageContext.request.contextPath}/${icon}" /></c:if>
 			</c:if>
 			<c:choose>
-				<c:when test="${showButtonAsImage}">
+				<c:when test="${showButtonsAsImage}">
 					<c:choose>
 						<c:when test="${fn:contains(javascript, 'Popup')}">
 							<c:if test="${empty iconClass}"><c:set var="iconClass" value="vulpeImagePopupButton" /></c:if>
-							<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" onclick="${javascript}" /><c:if test="${showButtonText}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
+							<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" onclick="${javascript}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${not empty iconClass}"><c:set var="iconClass" value="${buttonPrefix}${iconClass}" /></c:if>
-							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /></c:if><c:if test="${showButtonText}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a>
+							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${showButtonIcon}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /><c:if test="${showButtonText}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
+						<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
 						<c:otherwise>
 							<c:set var="styleClass" value="vulpeSubmit" />
 							<input style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />

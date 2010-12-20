@@ -17,7 +17,6 @@ package org.vulpe.model.dao.impl.jpa;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -42,7 +41,6 @@ import javax.persistence.Table;
 
 import ognl.Ognl;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
@@ -134,13 +132,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			((ENTITY) merged).setMap(((ENTITY) entity).getMap());
 		}
 		loadEntityRelationships((ENTITY) merged);
-		try {
-			BeanUtils.copyProperties(entity, merged);
-		} catch (IllegalAccessException e) {
-			LOG.error(e);
-		} catch (InvocationTargetException e) {
-			LOG.error(e);
-		}
+		VulpeReflectUtil.copy(entity, merged, true);
 		entityManager.flush();
 		return merged;
 	}

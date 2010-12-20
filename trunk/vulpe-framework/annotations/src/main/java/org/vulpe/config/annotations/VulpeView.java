@@ -34,9 +34,9 @@ public @interface VulpeView {
 
 	boolean frontendCenteredLayout() default false;
 
-	int heightButtonIcon() default 32;
+	int iconHeight() default 32;
 
-	int heightMobileButtonIcon() default 32;
+	int mobileIconHeight() default 32;
 
 	boolean messageSlideUp() default false;
 
@@ -46,14 +46,22 @@ public @interface VulpeView {
 
 	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
 
-	boolean showButtonAsImage() default false;
+	boolean showButtonsAsImage() default false;
 
-	boolean showButtonIcon() default false;
+	boolean showIconOfButton() default false;
 
-	boolean showButtonText() default true;
+	boolean showTextOfButton() default true;
 
 	boolean showCopyright() default true;
+	
+	boolean showButtonDeleteThis() default true;
+	
+	boolean showButtonUpdate() default false;
+	
+	boolean showButtonsDelete() default true;
 
+	boolean showLine() default true;
+	
 	boolean showPoweredBy() default true;
 
 	boolean showWarningBeforeClear() default false;
@@ -68,9 +76,9 @@ public @interface VulpeView {
 
 	boolean useFrontendLayer() default true;
 	
-	int widthButtonIcon() default 32;
+	int iconWidth() default 32;
 
-	int widthMobileButtonIcon() default 32;
+	int mobileIconWidth() default 32;
 
 
 	public enum PagingStyle {
