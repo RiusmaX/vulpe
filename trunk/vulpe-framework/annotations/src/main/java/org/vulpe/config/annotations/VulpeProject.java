@@ -21,41 +21,92 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Annotation to configure Project properties.
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PACKAGE)
 public @interface VulpeProject {
 
+	/**
+	 * Project Name.
+	 */
 	String name();
 
+	/**
+	 * Project Package.
+	 */
 	String projectPackage();
-	
+
+	/**
+	 * Character Encoding.
+	 */
 	String characterEncoding() default "UTF-8";
 
+	/**
+	 * I18N message files name.
+	 */
 	String[] i18n() default { "VulpeResources", "VulpeSecurityResources", "ApplicationResources" };
 
+	/**
+	 * I18N Manager.
+	 */
 	String i18nManager() default "org.vulpe.controller.commons.MultipleResourceBundle";
 
+	/**
+	 * Configure View properties.
+	 */
 	VulpeView view() default @VulpeView;
 
+	/**
+	 * Configure File Upload properties.
+	 */
 	VulpeUpload upload() default @VulpeUpload;
 
+	/**
+	 * Enable Mobile adapter access.
+	 */
 	boolean mobileEnabled() default false;
 
+	/**
+	 * Configure Mobile properties.
+	 */
 	VulpeMobile mobile() default @VulpeMobile;
-	
+
+	/**
+	 * Configure Code Generator Properties
+	 */
 	VulpeCodeGenerator codeGenerator() default @VulpeCodeGenerator;
 
+	/**
+	 * Project Theme.
+	 */
 	String theme() default "default";
 
+	/**
+	 * Audit enable/disable.
+	 */
 	boolean audit() default true;
 
+	/**
+	 * Security enable/disable.
+	 */
 	boolean security() default true;
 
+	/**
+	 * Menu Type to frontend.
+	 */
 	MenuType frontendMenuType() default MenuType.SUPERFISH;
 
+	/**
+	 * Menu Type to backend.
+	 */
 	MenuType backendMenuType() default MenuType.SUPERFISH;
 
+	/**
+	 * Menu Type.
+	 */
 	enum MenuType {
 		DROPPY, SUPERFISH, NONE
 	}
