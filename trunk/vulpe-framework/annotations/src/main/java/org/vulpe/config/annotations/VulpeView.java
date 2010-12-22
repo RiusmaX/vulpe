@@ -34,18 +34,24 @@ public @interface VulpeView {
 
 	boolean frontendCenteredLayout() default false;
 
+	int globalPageSize() default 5;
+
 	int iconHeight() default 32;
 
-	int mobileIconHeight() default 32;
+	int iconWidth() default 32;
 
 	boolean messageSlideUp() default false;
 
 	int messageSlideUpTime() default 10000;
 
+	int mobileIconHeight() default 32;
+
+	int mobileIconWidth() default 32;
+
 	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
 
 	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
-
+	
 	boolean showButtonsAsImage() default false;
 
 	boolean showIconOfButton() default false;
@@ -53,33 +59,28 @@ public @interface VulpeView {
 	boolean showTextOfButton() default true;
 
 	boolean showCopyright() default true;
-	
+
 	boolean showButtonDeleteThis() default true;
-	
+
 	boolean showButtonUpdate() default false;
-	
+
 	boolean showButtonsDelete() default true;
 
 	boolean showLine() default true;
-	
+
 	boolean showPoweredBy() default true;
 
 	boolean showWarningBeforeClear() default false;
-	
+
 	boolean showWarningBeforeDelete() default true;
-	
+
 	boolean showWarningBeforeUpdatePost() default false;
-	
+
 	boolean showModificationWarning() default true;
-	
+
 	boolean useBackendLayer() default false;
 
 	boolean useFrontendLayer() default true;
-	
-	int iconWidth() default 32;
-
-	int mobileIconWidth() default 32;
-
 
 	public enum PagingStyle {
 		NUMERIC, PAGE_OF

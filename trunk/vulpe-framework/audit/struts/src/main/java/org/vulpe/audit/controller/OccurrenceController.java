@@ -26,13 +26,12 @@ import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.audit.model.services.AuditService;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("audit.OccurrenceController")
-@Controller(serviceClass = AuditService.class, select = @Select(pageSize = 5))
+@Controller(serviceClass = AuditService.class)
 @SuppressWarnings("serial")
 public class OccurrenceController extends VulpeStrutsController<AuditOccurrence, Long> {
 
