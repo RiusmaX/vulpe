@@ -10,7 +10,7 @@
 		<c:set var="contentTypeEL" value="${'${'}${name}ContentType${'}'}"/>
 		<c:set var="contentType" value="${util:eval(pageContext, contentTypeEL)}"/>
 		<c:set var="contentDisposition" value="attachment;filename=${fileName}"/>
-		<a href="${util:linkProperty(pageContext, name, contentType, contentDisposition)}"><fmt:message key="vulpe.label.download"/> (${fileName})</a>
+		<a href="${util:linkProperty(pageContext, name, contentType, contentDisposition)}"><fmt:message key="label.vulpe.download"/> (${fileName})</a>
 		<v:hidden property="${property}ContentType"/>
 		<v:hidden property="${property}FileName"/>
 	</c:if>
