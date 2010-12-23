@@ -155,7 +155,8 @@
 				</td>
 			</c:when>
 			<c:otherwise>
-				<th id="vulpeSelectAll" width="10px">
+				<th id="vulpeSelectAll" width="10px" style="text-align: center">
+					<fmt:message key='label.vulpe.delete'/><br>
 					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:otherwise>
@@ -164,6 +165,7 @@
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th id="vulpeSelectAll" width="10px" style="text-align: center">
+					<fmt:message key='label.vulpe.delete'/><br>
 					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
 				</th>
 			</c:if>

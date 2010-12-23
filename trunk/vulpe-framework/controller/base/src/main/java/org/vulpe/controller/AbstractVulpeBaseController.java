@@ -1410,6 +1410,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			// final String defaultMessage =
 			// getDefaultMessage(Operation.DELETE_DETAIL);
 			addActionMessage(size > 1 ? "{vulpe.message.delete.details}" : "{vulpe.message.delete.detail}");
+			if (getControllerType().equals(ControllerType.TABULAR)) {
+				if (!getEntities().isEmpty()) {
+					final ENTITY entityTabular = getEntities().get(0);
+					if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
+						final String entityName = entityTabular.getClass().getSimpleName();
+						getCachedClass().put(entityName, getEntities());
+					}
+				}
+			}
 		}
 		if (isAjax()) {
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(getDetail());
