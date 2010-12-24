@@ -2064,10 +2064,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					if (VulpeValidationUtil.isNotEmpty(value) && !Modifier.isTransient(field.getModifiers())
 							&& value.getClass().isAnnotationPresent(CachedClass.class)) {
 						final List<ENTITY> cachedList = getCachedClass().getSelf(value.getClass().getSimpleName());
-						for (final ENTITY cached : cachedList) {
-							if (cached.getId().equals(value.getId())) {
-								PropertyUtils.setProperty(entity, field.getName(), cached);
-								break;
+						if (VulpeValidationUtil.isNotEmpty(cachedList)) {
+							for (final ENTITY cached : cachedList) {
+								if (cached.getId().equals(value.getId())) {
+									PropertyUtils.setProperty(entity, field.getName(), cached);
+									break;
+								}
 							}
 						}
 					}
