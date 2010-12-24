@@ -98,10 +98,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 	validateDatePattern="${field.validateDatePattern}"
 	</#if>
 	<#if field.validateType == 'STRING'>
-	<#if field.validateMinLength?has_content>
+	<#if (field.validateMinLength > 0)>
 	validateMinLength="${field.validateMinLength}"
 	</#if>
-	<#if field.validateMaxLength?has_content>
+	<#if (field.validateMaxLength > 0)>
 	validateMaxLength="${field.validateMaxLength}"
 	</#if>
 	</#if>
@@ -109,10 +109,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 	<#if field.validateRange?has_content>
 	validateRange="${field.validateRange}"
 	</#if>
-	<#if field.validateMin?has_content>
+	<#if (field.validateMin > 0)>
 	validateMin="${field.validateMin}"
 	</#if>
-	<#if field.validateMax?has_content>
+	<#if (field.validateMax > 0)>
 	validateMax="${field.validateMax}"
 	</#if>
 	</#if>
@@ -254,10 +254,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 	validateDatePattern="${field.validateDatePattern}"
 	</#if>
 	<#if field.validateType == 'STRING'>
-	<#if field.validateMinLength?has_content>
+	<#if (field.validateMinLength > 0)>
 	validateMinLength="${field.validateMinLength}"
 	</#if>
-	<#if field.validateMaxLength?has_content>
+	<#if (field.validateMaxLength > 0)>
 	validateMaxLength="${field.validateMaxLength}"
 	</#if>
 	</#if>
@@ -265,10 +265,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 	<#if field.validateRange?has_content>
 	validateRange="${field.validateRange}"
 	</#if>
-	<#if field.validateMin?has_content>
+	<#if (field.validateMin > 0)>
 	validateMin="${field.validateMin}"
 	</#if>
-	<#if field.validateMax?has_content>
+	<#if (field.validateMax > 0)>
 	validateMax="${field.validateMax}"
 	</#if>
 	</#if>
@@ -501,10 +501,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					validateDatePattern="${field.validateDatePattern}"
 					</#if>
 					<#if field.validateType == 'STRING'>
-					<#if field.validateMinLength?has_content>
+					<#if (field.validateMinLength > 0)>
 					validateMinLength="${field.validateMinLength}"
 					</#if>
-					<#if field.validateMaxLength?has_content>
+					<#if (field.validateMaxLength > 0)>
 					validateMaxLength="${field.validateMaxLength}"
 					</#if>
 					</#if>
@@ -512,10 +512,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					<#if field.validateRange?has_content>
 					validateRange="${field.validateRange}"
 					</#if>
-					<#if field.validateMin?has_content>
+					<#if (field.validateMin > 0)>
 					validateMin="${field.validateMin}"
 					</#if>
-					<#if field.validateMax?has_content>
+					<#if (field.validateMax > 0)>
 					validateMax="${field.validateMax}"
 					</#if>
 					</#if>
