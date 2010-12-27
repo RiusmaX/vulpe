@@ -116,11 +116,11 @@ public interface VulpeController extends VulpeSimpleController {
 
 	String autocomplete();
 
-	void buttonControl(final String button, final boolean show);
+	void manageButton(final String button, final boolean show);
 
 	void showButton(final String button);
 
-	void showButtons(final Operation operation);
+	void manageButtons(final Operation operation);
 
 	void showButtons(final String... buttons);
 

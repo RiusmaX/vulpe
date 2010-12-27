@@ -22,6 +22,7 @@ import java.util.List;
 public class DecoratedViewDetail implements Serializable {
 
 	private String name;
+	private String label;
 	private String popupProperties;
 	private List<DecoratedViewField> fields;
 
@@ -47,6 +48,14 @@ public class DecoratedViewDetail implements Serializable {
 
 	public List<DecoratedViewField> getFields() {
 		return fields;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 }

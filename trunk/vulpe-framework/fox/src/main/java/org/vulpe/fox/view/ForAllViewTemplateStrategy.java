@@ -93,6 +93,8 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 				final DecoratedViewDetail decoratedViewDetail = new DecoratedViewDetail();
 				final List<DecoratedViewField> detailFields = new ArrayList<DecoratedViewField>();
 				decoratedViewDetail.setName(field.getSimpleName());
+				decoratedViewDetail.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil
+						.upperCaseFirst(decoratedViewDetail.getName())));
 				if (StringUtils.isNotBlank(detail.relationship().identifier())) {
 					final DecoratedViewField decoratedViewFieldDetail = new DecoratedViewField();
 					decoratedViewFieldDetail.setName(detail.relationship().name());
@@ -443,7 +445,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		model.setVariable(getVar(), view);
 		return true;
 	}
-	
+
 	public DecoratedView execute(final DecoratedClassDeclaration clazz, final TemplateBlock block,
 			final TemplateOutput<TemplateBlock> output, final TemplateModel model) throws IOException,
 			TemplateException {

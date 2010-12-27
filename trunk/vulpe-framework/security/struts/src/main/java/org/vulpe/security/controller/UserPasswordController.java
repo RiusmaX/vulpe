@@ -101,8 +101,8 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	}
 
 	@Override
-	public void showButtons(Operation operation) {
-		super.showButtons(operation);
+	public void manageButtons(Operation operation) {
+		super.manageButtons(operation);
 		hideButtons(Button.CLEAR, Button.CREATE, Button.DELETE, Button.PREPARE);
 	}
 }

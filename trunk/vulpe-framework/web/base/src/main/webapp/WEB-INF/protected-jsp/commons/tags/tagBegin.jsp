@@ -1,7 +1,8 @@
 <c:if test="${empty tabindex}"><c:set var="tabindex" value="${TABINDEX}"/></c:if>
 <c:if test="${not empty titleKey}"><fmt:message key="${titleKey}" var="title"/></c:if>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributesConfig.jsp" %>
-<c:if test="${paragraph}"><p class="vulpeField"></c:if>
+<c:if test="${not empty style}"><c:set var="pStyle"> style="${style}"</c:set></c:if>
+<c:if test="${paragraph}"><p class="vulpeField"${pStyle}></c:if>
 <c:if test="${not empty labelKey}">
 	<fmt:message key="${labelKey}" var="label"/>
 	<c:if test="${empty titleKey}"><c:set var="title" value="${label}"/></c:if>

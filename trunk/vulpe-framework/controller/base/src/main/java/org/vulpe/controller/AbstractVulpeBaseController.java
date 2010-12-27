@@ -560,7 +560,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	/**
-	 * Method to manager button.
+	 * Method to manage button.
 	 * 
 	 * @param button
 	 *            Button
@@ -568,7 +568,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 *            Show (true|false)
 	 * @since 1.0
 	 */
-	public void buttonControl(final String button, final boolean show) {
+	public void manageButton(final String button, final boolean show) {
 		if (getControllerType().equals(ControllerType.TABULAR)) {
 			getButtons().put(Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName()),
 					(Boolean) show);
@@ -589,7 +589,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	public void showButton(final String button) {
-		buttonControl(button, true);
+		manageButton(button, true);
 	}
 
 	/**
@@ -600,27 +600,27 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	public void showButtons(final String... buttons) {
-		for (String button : buttons) {
+		for (final String button : buttons) {
 			showButton(button);
 		}
 	}
 
 	public void showButtons(final ControllerType controllerType, final String... buttons) {
-		for (String button : buttons) {
+		for (final String button : buttons) {
 			showButton(controllerType + "_" + button);
 		}
 	}
 
 	/**
-	 * Method to show buttons and configure forward.
+	 * Method to manage buttons and configure forward.
 	 * 
 	 * @since 1.0
 	 */
-	public void showButtons(final Operation operation) {
+	public void manageButtons(final Operation operation) {
 		getButtons().clear();
 		if (getControllerType().equals(ControllerType.MAIN)) {
 			if (getControllerConfig().getDetails() != null) {
-				for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
+				for (final VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 					if (Operation.VIEW.equals(operation)) {
 						addDetailHide(detail.getBaseName());
 						deleteDetailHide(detail.getBaseName());
@@ -666,7 +666,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (Operation.VIEW.equals(operation)) {
 				showButtons();
 			}
-
 			showButtons(ControllerType.SELECT, Button.READ, Button.PREPARE, Button.UPDATE, Button.DELETE);
 		}
 	}
@@ -679,7 +678,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	public void hideButton(final String button) {
-		buttonControl(button, false);
+		manageButton(button, false);
 	}
 
 	/**
@@ -702,7 +701,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return
 	 */
 	protected String showError(final String message) {
-		showButtons(getOperation());
+		manageButtons(getOperation());
 		addActionError(getText(message));
 		controlResultForward();
 		return Forward.SUCCESS;
@@ -893,7 +892,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String addDetail() {
 		addDetailBefore();
 		final VulpeBaseDetailConfig detailConfig = onAddDetail(false);
-		showButtons(Operation.ADD_DETAIL);
+		manageButtons(Operation.ADD_DETAIL);
 		if (isAjax()) {
 			if (detailConfig == null || detailConfig.getViewPath() == null) {
 				controlResultForward();
@@ -963,7 +962,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		createBefore();
 		onCreate();
 		setSelectedTab(null);
-		showButtons(Operation.CREATE);
+		manageButtons(Operation.CREATE);
 		if (getControllerType().equals(ControllerType.TWICE)) {
 			setBodyTwice(ControllerType.MAIN);
 			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
@@ -1029,7 +1028,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		createPostBefore();
 		controlResultForward();
 		if (validateEntity() && validateDetails()) {
-			showButtons(Operation.UPDATE);
+			manageButtons(Operation.UPDATE);
 			if (onCreatePost()) {
 				addActionMessage(getDefaultMessage());
 				if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
@@ -1047,7 +1046,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				onRead();
 			}
 		} else {
-			showButtons(Operation.CREATE);
+			manageButtons(Operation.CREATE);
 		}
 		return getControllerConfig().isNewOnPost() ? create() : getResultName();
 	}
@@ -1106,7 +1105,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		onUpdate();
 		setSelectedTab(null);
-		showButtons(Operation.UPDATE);
+		manageButtons(Operation.UPDATE);
 		if (getControllerType().equals(ControllerType.TWICE)) {
 			setBodyTwice(ControllerType.MAIN);
 			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
@@ -1127,7 +1126,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String view() {
 		setOnlyToSee(true);
 		final String update = update();
-		showButtons(Operation.VIEW);
+		manageButtons(Operation.VIEW);
 		return update;
 	}
 
@@ -1179,7 +1178,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setOperation(Operation.UPDATE_POST);
 		updatePostBefore();
 		controlResultForward();
-		showButtons(Operation.UPDATE);
+		manageButtons(Operation.UPDATE);
 		if (validateEntity() && validateDetails()) {
 			if (onUpdatePost()) {
 				addActionMessage(getDefaultMessage());
@@ -1222,7 +1221,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				onRead();
 			}
 		} else {
-			showButtons(Operation.UPDATE);
+			manageButtons(Operation.UPDATE);
 		}
 		return getResultName();
 	}
@@ -1304,7 +1303,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String delete() {
 		setOperation(Operation.DELETE);
 		deleteBefore();
-		showButtons(Operation.DELETE);
+		manageButtons(Operation.DELETE);
 		if (onDelete()) {
 			addActionMessage(getDefaultMessage());
 			setSelectedTab(null);
@@ -1404,7 +1403,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String deleteDetail() {
 		setOperation(Operation.UPDATE_POST);
 		deleteDetailBefore();
-		showButtons(Operation.UPDATE);
+		manageButtons(Operation.UPDATE);
 		final int size = onDeleteDetail();
 		if (size > 0) {
 			// final String defaultMessage =
@@ -1476,7 +1475,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		readBefore();
 		onRead();
-		showButtons(Operation.READ);
+		manageButtons(Operation.READ);
 		if (getControllerType().equals(ControllerType.SELECT)) {
 			if (isBack()) {
 				controlResultForward();
@@ -1631,7 +1630,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setOperation(Operation.TABULAR_POST);
 			tabularPostBefore();
 			controlResultForward();
-			showButtons(Operation.TABULAR_POST);
+			manageButtons(Operation.TABULAR_POST);
 			if (validateDetails()) {
 				if (onTabularPost()) {
 					addActionMessage(getDefaultMessage());
@@ -1702,7 +1701,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String prepare() {
 		prepareBefore();
 		onPrepare();
-		showButtons(Operation.PREPARE);
+		manageButtons(Operation.PREPARE);
 		if (getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(ControllerType.REPORT)) {
 			if (isBack()) {
 				setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
@@ -1730,7 +1729,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		changeControllerType(ControllerType.TWICE);
 		prepareBefore();
 		onPrepare();
-		showButtons(Operation.TWICE);
+		manageButtons(Operation.TWICE);
 		controlResultForward();
 		prepareAfter();
 		return getResultName();
@@ -1746,7 +1745,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		changeControllerType(ControllerType.SELECT);
 		selectBefore();
 		onPrepare();
-		showButtons(Operation.PREPARE);
+		manageButtons(Operation.PREPARE);
 		if (isBack()) {
 			setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
 			setEntities((List<ENTITY>) getSessionAttribute(getSelectTableKey()));
@@ -1786,7 +1785,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public String report() {
 		changeControllerType(ControllerType.REPORT);
 		reportBefore();
-		showButtons(Operation.PREPARE);
+		manageButtons(Operation.PREPARE);
 		final String read = read();
 		reportAfter();
 		changeControllerType(ControllerType.SELECT);
@@ -1824,7 +1823,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		tabularBefore();
 		onPrepare();
-		showButtons(Operation.TABULAR);
+		manageButtons(Operation.TABULAR);
 		tabularAfter();
 		return read();
 	}

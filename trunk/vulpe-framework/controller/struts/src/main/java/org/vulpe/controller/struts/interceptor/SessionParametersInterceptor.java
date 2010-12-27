@@ -53,7 +53,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 				final VulpeController controller = (VulpeController) invocation.getAction();
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
-					controller.showButtons(controller.getOperation());
+					controller.manageButtons(controller.getOperation());
 				}
 			}
 			final AbstractVulpeBaseSimpleController simpleController = (AbstractVulpeBaseSimpleController) invocation
