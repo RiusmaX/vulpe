@@ -21,7 +21,7 @@
 			<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
 			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}"/>
 			<c:set var="autocompleteId" value="${fn:replace(autocompleteId, '.', '_')}"/>
-			<c:if test="${not empty afterJs}"><c:set var="autocompleteIdAfterJs">, afterJs: ${afterJs}</c:set></c:if>
+			<c:if test="${not empty afterJs}"><c:set var="autocompleteIdAfterJs">, afterJs: function(){${afterJs}}</c:set></c:if>
 			<c:if test="${empty identifierSize}"><c:set var="identifierSize" value="5"/></c:if>
 			<c:if test="${not empty labelKey}"><v:label key="${labelKey}"/></c:if>
 			<c:choose><c:when test="${!showAsText}"><v:text property="${property}.${identifier}" size="${identifierSize}" mask="INTEGER" paragraph="false" onblur="${readonly?'return false;':''}vulpe.view.request.submitAutocompleteIdentifier({url: '${autocompleteAction}', autocomplete: '${description}', value: $(this).val(), id: '${autocompleteId}'${autocompleteIdAfterJs}})" readonly="${readonly}" showRequiredIcon="false" required="${required}"/></c:when><c:otherwise><v:hidden property="${property}.${identifier}"/></c:otherwise></c:choose>

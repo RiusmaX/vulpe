@@ -1846,7 +1846,13 @@ var vulpe = {
 									} else {
 										layerObject.html(html);
 									}
-									if (vulpe.util.isNotEmpty(options.afterJs)) {
+									if (typeof options.afterJs == "function") {
+										try {
+											options.afterJs();
+										} catch(e) {
+											// do nothing
+										}
+									} else if (vulpe.util.isNotEmpty(options.afterJs)) {
 										try {
 											eval(webtoolkit.url.decode(options.afterJs));
 											vulpe.view.request.invokeGlobalsAfterJs();
