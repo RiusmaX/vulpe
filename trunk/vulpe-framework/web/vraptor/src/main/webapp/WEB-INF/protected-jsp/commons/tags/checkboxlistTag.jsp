@@ -7,7 +7,7 @@
 	</c:if>
 
 	<c:if test="${empty styleClass}">
-		<c:set var="styleClass" value=".vulpeNoBoarder"/>
+		<c:set var="styleClass" value=".vulpeNoBorder"/>
 	</c:if>
 
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">

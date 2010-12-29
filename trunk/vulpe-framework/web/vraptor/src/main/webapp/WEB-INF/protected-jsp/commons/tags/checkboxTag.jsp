@@ -1,8 +1,6 @@
 <c:if test="${show}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
-	<c:if test="${empty styleClass}">
-		<c:set var="styleClass" value=".vulpeNoBoarder"/>
-	</c:if>
+	<c:if test="${empty styleClass}"><c:set var="styleClass" value=".vulpeNoBorder"/></c:if>
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
 		<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
 	</c:if>

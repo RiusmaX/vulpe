@@ -7,7 +7,7 @@
 	<c:set var="itemKeyEL" value="${'${'}item.${itemKey}${'}'}"/>
 	<c:set var="itemLabelEL" value="${'${'}item.${itemLabel}${'}'}"/>
 	<c:if test="${not empty property && empty items}"><c:set var="items" value="${util:listInField(targetValue, property)}"/></c:if>
-	<c:if test="${empty styleClass}"><c:set var="styleClass" value=".vulpeNoBoarder"/></c:if>
+	<c:if test="${empty styleClass}"><c:set var="styleClass" value=".vulpeNoBorder"/></c:if>
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}"><c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/></c:if>
 	<c:if test="${saveInSession}"><c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/></c:if>
 	<c:forEach items="${items}" var="item" varStatus="i">

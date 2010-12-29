@@ -425,8 +425,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							try {
 								final StringBuilder hql = new StringBuilder();
 								final String parentName = VulpeStringUtil.lowerCaseFirst(entityClass.getSimpleName());
-								final Object propetyValue = PropertyUtils.getProperty(entityClass.newInstance(),
-										relationship.property());
+								final Object propetyValue = PropertyUtils.getProperty(firstEntity, relationship
+										.property());
 								if (VulpeValidationUtil.isNotEmpty(propetyValue)) {
 									final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
 											relationship.property());
