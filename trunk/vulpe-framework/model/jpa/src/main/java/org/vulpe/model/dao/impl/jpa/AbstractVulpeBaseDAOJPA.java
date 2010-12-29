@@ -131,9 +131,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			merged = entityManager.merge(entity);
 			((ENTITY) merged).setMap(((ENTITY) entity).getMap());
 		}
+		entityManager.flush();
 		loadEntityRelationships((ENTITY) merged);
 		VulpeReflectUtil.copy(entity, merged, true);
-		entityManager.flush();
 		return merged;
 	}
 
