@@ -63,7 +63,7 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default implementation of DAO with JPA
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
@@ -77,7 +77,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	private EntityManager entityManager;
 
 	/**
-	 *
+	 * 
 	 * @param <T>
 	 * @param entity
 	 */
@@ -103,7 +103,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
 	 */
 	public <T> T merge(final T entity) {
@@ -139,7 +139,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/**
 	 * Execute HQL query.
-	 *
+	 * 
 	 * @param <T>
 	 * @param hql
 	 * @param params
@@ -157,7 +157,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
@@ -168,7 +168,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
 	 * java.util.List)
 	 */
@@ -180,7 +180,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
 	 * java.lang.Integer, java.util.List)
@@ -281,7 +281,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param entity
 	 */
 	protected void loadEntityRelationships(final ENTITY entity) {
@@ -291,7 +291,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param attribute
 	 * @param parent
 	 * @return
@@ -312,7 +312,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param attributeList
 	 * @param value
 	 */
@@ -391,7 +391,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/**
 	 * Load relationships and optimize lazy load.
-	 *
+	 * 
 	 * @param entities
 	 * @param params
 	 */
@@ -425,56 +425,61 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							try {
 								final StringBuilder hql = new StringBuilder();
 								final String parentName = VulpeStringUtil.lowerCaseFirst(entityClass.getSimpleName());
-								final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
+								final Object propetyValue = PropertyUtils.getProperty(entityClass.newInstance(),
 										relationship.property());
-								final boolean oneToMany = VulpeReflectUtil.getAnnotationInField(OneToMany.class,
-										entityClass, relationship.property()) != null;
-								final Map<String, String> hqlAttributes = new HashMap<String, String>();
-								// select and from
-								hql.append(loadRelationshipsMountSelectAndFrom(relationship, parentName, propertyType,
-										firstEntity, hqlAttributes, oneToMany, loadAll));
-								// where
-								hql.append(loadRelationshipsMountWhere(relationship, parentName, params, oneToMany));
-
-								final Query query = entityManager.createQuery(hql.toString());
-								if (oneToMany) {
-									query.setParameter("parentIds", parentIds);
-								} else {
-									final List<ID> ids = new ArrayList<ID>();
-									for (final ENTITY entity : entities) {
-										final VulpeEntity<ID> propertyEntity = (VulpeEntity<ID>) PropertyUtils
-												.getProperty(entity, relationship.property());
-										if (VulpeValidationUtil.isNotEmpty(propertyEntity)) {
-											ids.add(propertyEntity.getId());
+								if (VulpeValidationUtil.isNotEmpty(propetyValue)) {
+									final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
+											relationship.property());
+									final boolean oneToMany = VulpeReflectUtil.getAnnotationInField(OneToMany.class,
+											entityClass, relationship.property()) != null;
+									final Map<String, String> hqlAttributes = new HashMap<String, String>();
+									// select and from
+									hql.append(loadRelationshipsMountSelectAndFrom(relationship, parentName,
+											propertyType, firstEntity, hqlAttributes, oneToMany, loadAll));
+									// where
+									hql
+											.append(loadRelationshipsMountWhere(relationship, parentName, params,
+													oneToMany));
+									final Query query = entityManager.createQuery(hql.toString());
+									if (oneToMany) {
+										query.setParameter("parentIds", parentIds);
+									} else {
+										final List<ID> ids = new ArrayList<ID>();
+										for (final ENTITY entity : entities) {
+											final VulpeEntity<ID> propertyEntity = (VulpeEntity<ID>) PropertyUtils
+													.getProperty(entity, relationship.property());
+											if (VulpeValidationUtil.isNotEmpty(propertyEntity)) {
+												ids.add(propertyEntity.getId());
+											}
+										}
+										query.setParameter("ids", ids);
+									}
+									if (relationship.parameters() != null) {
+										for (final QueryParameter queryParameter : relationship.parameters()) {
+											if (params.containsKey(queryParameter.equals().name())) {
+												query.setParameter(queryParameter.equals().name(), params
+														.get(queryParameter.equals().name()));
+											}
 										}
 									}
-									query.setParameter("ids", ids);
-								}
-								if (relationship.parameters() != null) {
-									for (final QueryParameter queryParameter : relationship.parameters()) {
-										if (params.containsKey(queryParameter.equals().name())) {
-											query.setParameter(queryParameter.equals().name(), params
-													.get(queryParameter.equals().name()));
-										}
+									final List<ENTITY> childs = new ArrayList<ENTITY>();
+									final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
+									if (oneToMany && loadAll) {
+										final List<ENTITY> result = query.getResultList();
+										loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
+												parentName);
+									} else {
+										final List<Map> result = query.getResultList();
+										loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
+												parentName, propertyType, hqlAttributes, oneToMany);
 									}
+									if (!onlyInMain) {
+										final Session session = (Session) entityManager.getDelegate();
+										session.clear();
+									}
+									loadRelationshipsMountEntities(relationship, entities, childs, relationshipIds,
+											parentName, oneToMany);
 								}
-								final List<ENTITY> childs = new ArrayList<ENTITY>();
-								final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
-								if (oneToMany && loadAll) {
-									final List<ENTITY> result = query.getResultList();
-									loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
-											parentName);
-								} else {
-									final List<Map> result = query.getResultList();
-									loadRelationshipsMountChild(relationship, result, childs, relationshipIds,
-											parentName, propertyType, hqlAttributes, oneToMany);
-								}
-								if (!onlyInMain) {
-									final Session session = (Session) entityManager.getDelegate();
-									session.clear();
-								}
-								loadRelationshipsMountEntities(relationship, entities, childs, relationshipIds,
-										parentName, oneToMany);
 							} catch (Exception e) {
 								LOG.error(e);
 							}
@@ -723,7 +728,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	}
 
 	/**
-	 *
+	 * 
 	 * @param map
 	 * @param entity
 	 * @param attribute
@@ -791,7 +796,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#updateSomeAttributes(org.vulpe.model.entity
 	 * .VulpeEntity)

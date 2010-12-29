@@ -171,6 +171,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 		while (newQuery.indexOf(dots) > -1) {
 			newQuery = newQuery.substring(newQuery.indexOf(dots));
 			String param = newQuery.substring(1);
+			param = param.replace(")", "").replace("(", "");
 			if (newQuery.indexOf(space) > -1) {
 				param = newQuery.substring(1, newQuery.indexOf(space));
 			}

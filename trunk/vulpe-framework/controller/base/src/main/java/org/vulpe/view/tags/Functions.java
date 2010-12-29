@@ -270,7 +270,7 @@ public class Functions {
 			final String[] roles = requestedRoles.split(",");
 			for (final String role : roles) {
 				final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role
-						: Security.ROLE_PREFIX + requestedRoles;
+						: Security.ROLE_PREFIX + role;
 				if (VulpeValidationUtil.isNotEmpty(authorities)) {
 					for (Object grantedAuthority : authorities) {
 						final String authority = VulpeReflectUtil.getFieldValue(
