@@ -463,7 +463,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							}
 							try {
 								final StringBuilder hql = new StringBuilder();
-								final String parentName = VulpeStringUtil.lowerCaseFirst(entityClass.getSimpleName());
+								final String parentName = VulpeStringUtil.getAttributeName(entityClass.getSimpleName());
 								final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
 										relationship.property());
 								final boolean oneToMany = VulpeReflectUtil.getAnnotationInField(OneToMany.class,
@@ -657,7 +657,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final List<Field> childFields = VulpeReflectUtil.getFields(vulpeEntity.getClass());
 								for (final Field childField : childFields) {
 									if (childField.getName().equals(
-											VulpeStringUtil.lowerCaseFirst(entity.getClass().getSimpleName()))) {
+											VulpeStringUtil.getAttributeName(entity.getClass().getSimpleName()))) {
 										continue;
 									}
 									if (childField.isAnnotationPresent(ManyToOne.class)) {
