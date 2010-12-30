@@ -13,6 +13,7 @@
 <%@ attribute name="pagingAfterJs" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="sortPropertyInfo" required="false" rtexprvalue="true" %>
 <%@ attribute name="tableBody" fragment="true" %>
