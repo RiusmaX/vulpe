@@ -286,15 +286,6 @@ public class VulpeStringUtil {
 		return blob;
 	}
 
-	public static boolean isInteger(final String input) {
-		try {
-			Integer.parseInt(input);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
 	public static int count(final String value, final String token) {
 		int count = 0;
 		for (int i = 0; i < value.length(); i++) {
@@ -327,5 +318,15 @@ public class VulpeStringUtil {
 			}
 		}
 		return newValue.toString();
+	}
+	
+	public static String getAttributeName(final String value) {
+		String attributeName = value;
+		if (StringUtils.isAllUpperCase(value)) {
+			attributeName = value.toLowerCase();
+		} else {
+			attributeName = lowerCaseFirst(value);
+		}
+		return attributeName;
 	}
 }

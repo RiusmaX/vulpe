@@ -714,7 +714,6 @@ public class VulpeReflectUtil {
 	public static <T> T getFieldValue(final Object object, final String fieldName) {
 		try {
 			final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
-
 			final Method method = getMethod(object.getClass(), "get".concat(name));
 			if (method != null) {
 				synchronized (method) {
