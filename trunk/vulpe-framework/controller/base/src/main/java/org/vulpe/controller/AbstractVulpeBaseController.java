@@ -1137,10 +1137,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected void onUpdate() {
 		if (getControllerType().equals(ControllerType.MAIN) || getControllerType().equals(ControllerType.TWICE)) {
-			final ENTITY persistentEntity = (ENTITY) invokeServices(Operation.FIND.getValue().concat(
+			setEntity((ENTITY) invokeServices(Operation.FIND.getValue().concat(
 					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
-					.getEntityClass() }, new Object[] { prepareEntity(getOperation()) });
-			setEntity(persistentEntity);
+					.getEntityClass() }, new Object[] { prepareEntity(getOperation()) }));
 			setExecuted(false);
 		}
 	}
@@ -1206,10 +1205,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (entities != null && !entities.isEmpty()) {
 					final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
 					int index = 0;
-					for (ENTITY entity : entitiesOld) {
+					for (final ENTITY entity : entitiesOld) {
 						if (entity.getId().equals(getEntity().getId())) {
 							entities.remove(index);
-							entities.add(index, repairCachedClasses(getEntity()));
+							entities.add(index, getEntity());
+							// entities.add(index,
+							// repairCachedClasses(getEntity()));
 						}
 						++index;
 					}
@@ -1268,9 +1269,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				LOG.error(e);
 			}
 		}
-		invokeServices(Operation.UPDATE.getValue().concat(getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
-		setEntity(entity);
+		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(
+				getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
+				.getEntityClass() }, new Object[] { entity }));
 		setExecuted(true);
 		return true;
 	}
@@ -2054,7 +2055,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @param entity
 	 * @return Entity with cached values reloaded
 	 */
-	private ENTITY repairCachedClasses(final ENTITY entity) {
+	protected ENTITY repairCachedClasses(final ENTITY entity) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			if (VulpeEntity.class.isAssignableFrom(field.getType())) {

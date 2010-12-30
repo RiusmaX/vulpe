@@ -191,10 +191,11 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * update(org.vulpe.model.entity.VulpeEntity)
 	 */
 	@GenerateSuffix
-	public void update(final ENTITY entity) throws VulpeApplicationException {
+	public ENTITY update(final ENTITY entity) throws VulpeApplicationException {
 		updateBefore(entity);
-		getDAO().update(entity);
-		updateAfter(entity);
+		final ENTITY entityUpdated = getDAO().update(entity);
+		updateAfter(entityUpdated);
+		return entityUpdated;
 	}
 
 	/**

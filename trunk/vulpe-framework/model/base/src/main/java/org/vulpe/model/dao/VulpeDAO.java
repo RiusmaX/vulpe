@@ -38,7 +38,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @param entity
 	 * @return ENTITY
 	 */
-	<T> T merge(final T entity);
+	<T> T merge(T entity);
 
 	/**
 	 * Creates ENTITY
@@ -73,13 +73,16 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * Updates ENTITY.
 	 * 
 	 * @param entity
+	 * @return
+	 * @throws VulpeApplicationException
 	 */
-	void update(ENTITY entity) throws VulpeApplicationException;
+	ENTITY update(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * Remove ENTITY.
 	 * 
 	 * @param entity
+	 * @throws VulpeApplicationException
 	 */
 	void delete(ENTITY entity) throws VulpeApplicationException;
 
@@ -87,6 +90,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * Remove list of ENTITY.
 	 * 
 	 * @param entity
+	 * @throws VulpeApplicationException
 	 */
 	void delete(List<ENTITY> entities) throws VulpeApplicationException;
 
@@ -95,6 +99,7 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * 
 	 * @param id
 	 * @return ENTITY
+	 * @throws VulpeApplicationException
 	 */
 	ENTITY find(ENTITY entity) throws VulpeApplicationException;
 

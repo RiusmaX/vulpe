@@ -129,7 +129,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
-	public void update(final ENTITY entity) throws VulpeApplicationException {
+	public ENTITY update(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Updating object: ".concat(entity.toString()));
 		}
@@ -138,7 +138,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
 			logicEntity.setStatus(Status.U);
 		}
-		merge(entity);
+		return merge(entity);
 	}
 
 	/*

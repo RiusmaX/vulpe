@@ -126,7 +126,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
-	public void update(final ENTITY entity) throws VulpeApplicationException {
+	public ENTITY update(final ENTITY entity) throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Updating object: ".concat(entity.toString()));
 		}
@@ -135,7 +135,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
 			logicEntity.setStatus(Status.U);
 		}
-		merge(entity);
+		return merge(entity);
 	}
 
 	/*

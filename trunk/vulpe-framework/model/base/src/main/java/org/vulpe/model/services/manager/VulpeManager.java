@@ -59,9 +59,10 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * Method used to add business rules on update entity.
 	 * 
 	 * @param entity
+	 * @return 
 	 * @throws VulpeApplicationException
 	 */
-	void update(ENTITY entity) throws VulpeApplicationException;
+	ENTITY update(ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 * 
