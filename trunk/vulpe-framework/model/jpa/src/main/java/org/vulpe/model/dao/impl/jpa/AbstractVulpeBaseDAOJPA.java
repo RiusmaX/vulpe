@@ -661,10 +661,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 										continue;
 									}
 									if (childField.isAnnotationPresent(ManyToOne.class)) {
-										final ENTITY chieldEntity = (ENTITY) PropertyUtils.getProperty(vulpeEntity,
+										final ENTITY childEntity = (ENTITY) PropertyUtils.getProperty(vulpeEntity,
 												childField.getName());
-										if (VulpeValidationUtil.isNotEmpty(chieldEntity)) {
-											loadEntityRelationships(chieldEntity);
+										if (VulpeValidationUtil.isNotEmpty(childEntity)) {
+											loadEntityRelationships(childEntity);
 										}
 									}
 								}
@@ -727,6 +727,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						}
 					}
 					context.remove(OGNL_CREATE_NULL_OBJECTS);
+				}
+				if (relationship.forceLoad()) {
+					loadEntityRelationships(child);
 				}
 				childs.add(child);
 			}
