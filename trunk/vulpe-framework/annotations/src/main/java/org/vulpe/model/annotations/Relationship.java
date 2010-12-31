@@ -31,8 +31,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface Relationship {
 
-	Class<?> target() default Class.class;
-
 	String property();
 
 	String[] attributes();
