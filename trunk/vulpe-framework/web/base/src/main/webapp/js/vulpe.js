@@ -1160,6 +1160,8 @@ var vulpe = {
 		isSelection: false,
 
 		popups: new Array(),
+		
+		selectPopupIds: new Array(),
 
 		resetFields: function(formName) {
 			vulpe.util.get(formName).resetForm();
@@ -1883,6 +1885,12 @@ var vulpe = {
 			 */
 			submitAutocompleteIdentifier: function(options) {
 				if (options.value && options.value != "") {
+					var id = vulpe.view.selectPopupIds[options.id];
+					if (typeof id == "undefined" || id != options.value) {
+						vulpe.view.selectPopupIds[options.id] = options.value;
+					} else if (id == options.value) {
+						return;
+					}
 					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
 					options.layer = options.id;
 					options.layerFields = options.id;
