@@ -468,7 +468,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 										relationship.property());
 								final OneToMany oneToMany = VulpeReflectUtil.getAnnotationInField(OneToMany.class,
 										entityClass, relationship.property());
-								if (oneToMany != null) {
+								if (oneToMany == null) {
 									final Object propetyValue = PropertyUtils.getProperty(firstEntity, relationship
 											.property());
 									if (VulpeValidationUtil.isEmpty(propetyValue)) {
