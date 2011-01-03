@@ -56,10 +56,11 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public static void sendMail(final String[] recipients, final String subject, final String body)
-			throws VulpeSystemException {
+	public static boolean sendMail(final String[] recipients, final String subject, final String body) {
+		boolean sended = true;
 		if (!checkValidEmail(recipients)) {
-			throw new VulpeSystemException("Invalid mails: " + recipients);
+			LOG.error("Invalid mails: " + recipients);
+			sended = false;
 		}
 		if (isDebugEnabled) {
 			LOG.debug("Entering in sendMail...");
@@ -111,14 +112,15 @@ public final class VulpeEmailUtil {
 				}
 				mail.send();
 			} else {
-				throw new Exception("Send Mail properties not setted");
+				LOG.error("Send Mail properties not setted");
+				sended = false;
 			}
-
 		} catch (Exception e) {
 			LOG.error("Error on send mail", e);
-			throw new VulpeSystemException(e);
+			sended = false;
 		}
 		LOG.debug("Out of sendMail...");
+		return sended;
 	}
 
 	/**
@@ -158,13 +160,14 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public static void sendMail(final String recipient, final String subject, final String body) {
+	public static boolean sendMail(final String recipient, final String subject, final String body) {
 		LOG.debug("Entering in sendMail...");
 		LOG.debug("recipient: " + recipient);
 		LOG.debug("subject: " + subject);
 		LOG.debug("body: " + body);
-		sendMail(new String[] { recipient }, subject, body);
+		final boolean sended = sendMail(new String[] { recipient }, subject, body);
 		LOG.debug("Out of sendMail...");
+		return sended;
 	}
 
 	/**
