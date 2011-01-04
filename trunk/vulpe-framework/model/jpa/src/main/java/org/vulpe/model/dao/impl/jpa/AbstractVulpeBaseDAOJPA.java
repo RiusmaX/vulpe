@@ -44,6 +44,7 @@ import ognl.Ognl;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
+import org.hibernate.proxy.pojo.cglib.CGLIBLazyInitializer;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -72,6 +73,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
 	private static final String OGNL_CREATE_NULL_OBJECTS = "xwork.NullHandler.createNullObjects";
+
+	private static final String CGLIB_ENHANCER = "EnhancerByCGLIB";
+	private static final String CGLIB_CALLBACK_0 = "CGLIB$CALLBACK_0";
+	private static final String CGLIB_CALLBACK_0_TARGET = "target";
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -646,8 +651,24 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					if (field.isAnnotationPresent(ManyToOne.class)) {
 						final ENTITY childEntity = (ENTITY) PropertyUtils.getProperty(entity, field.getName());
 						if (VulpeValidationUtil.isNotEmpty(childEntity)) {
-							PropertyUtils.setProperty(entity, field.getName(), (ENTITY) getEntityManager()
-									.getReference(field.getType(), childEntity.getId()));
+							if (relationship.forceLoad()) {
+								if (childEntity.getClass().getSimpleName().contains(CGLIB_ENHANCER)) {
+									final CGLIBLazyInitializer lazyInitializer = VulpeReflectUtil.getFieldValue(
+											childEntity, CGLIB_CALLBACK_0);
+									if (VulpeValidationUtil.isNotEmpty(lazyInitializer)) {
+										final ENTITY childEntity2 = (ENTITY) VulpeReflectUtil.getFieldValue(
+												lazyInitializer, CGLIB_CALLBACK_0_TARGET);
+										loadEntityRelationships(childEntity2);
+										PropertyUtils.setProperty(entity, field.getName(), childEntity2);
+									}
+								} else {
+									loadEntityRelationships(childEntity);
+									PropertyUtils.setProperty(entity, field.getName(), childEntity);
+								}
+							} else {
+								PropertyUtils.setProperty(entity, field.getName(), (ENTITY) getEntityManager()
+										.getReference(field.getType(), childEntity.getId()));
+							}
 						}
 					} else if (relationship.forceLoad() && field.isAnnotationPresent(OneToMany.class)
 							&& field.isAnnotationPresent(ForceLoadRelationship.class)) {

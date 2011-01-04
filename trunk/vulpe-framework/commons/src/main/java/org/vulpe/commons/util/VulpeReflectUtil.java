@@ -665,17 +665,17 @@ public class VulpeReflectUtil {
 			}
 			if (method != null) {
 				synchronized (method) {
-					boolean setou = false;
+					boolean setted = false;
 					if (!method.isAccessible()) {
 						method.setAccessible(true);
-						setou = true;
+						setted = true;
 					}
 					try {
 						method.invoke(object, value);
 					} catch (Exception e) {
 						LOG.error(e);
 					} finally {
-						if (setou) {
+						if (setted) {
 							method.setAccessible(false);
 						}
 					}
@@ -684,15 +684,15 @@ public class VulpeReflectUtil {
 			final Field field = getField(object.getClass(), fieldName);
 			if (field != null) {
 				synchronized (field) {
-					boolean setou = false;
+					boolean setted = false;
 					if (!field.isAccessible()) {
 						field.setAccessible(true);
-						setou = true;
+						setted = true;
 					}
 					try {
 						field.set(object, value);
 					} finally {
-						if (setou) {
+						if (setted) {
 							field.setAccessible(false);
 						}
 					}
