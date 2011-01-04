@@ -4,11 +4,11 @@
 <c:set var="layer" value="body" />
 <c:if test="${vulpeBodyTwice}"><c:set var="layer" value="main" /></c:if>
 <c:if test="${!onlyToSee}">
-	<v:action validate="false" labelKey="clear" helpKey="clear" elementId="Clear" action="clear" icon="clear" iconClass="Clear" show="${now['buttons']['clear'] || now['buttons']['Main_clear']}" />
-	<v:action validate="false" style="${style}" labelKey="create" elementId="Create" action="create" beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)" helpKey="create" layer="${layer}" icon="add" iconClass="Create" show="${now['buttons']['create'] || now['buttons']['Main_create']}" />
-	<v:action labelKey="createPost" elementId="CreatePost" action="createPost"	helpKey="createPost" icon="save" iconClass="CreatePost" show="${now['buttons']['createPost'] || now['buttons']['Main_createPost']}" />
-	<v:action validate="false"	labelKey="delete" elementId="Delete" action="delete" helpKey="delete" icon="delete" iconClass="Delete" show="${now['buttons']['delete'] || now['buttons']['Main_delete']}" />
-	<v:action labelKey="updatePost"	elementId="UpdatePost" action="updatePost" helpKey="updatePost" icon="save" iconClass="UpdatePost" show="${now['buttons']['updatePost'] || now['buttons']['Main_updatePost']}" />
+	<v:action validate="false" labelKey="clear" helpKey="clear" elementId="Clear" action="clear" icon="clear" iconClass="Clear" render="${now['buttons']['clear'] || now['buttons']['Main_clear']}" />
+	<v:action validate="false" style="${style}" labelKey="create" elementId="Create" action="create" beforeJs="vulpe.view.resetFields(%27${vulpeFormName}%27)" helpKey="create" layer="${layer}" icon="add" iconClass="Create" render="${now['buttons']['create'] || now['buttons']['Main_create']}" />
+	<v:action labelKey="createPost" elementId="CreatePost" action="createPost"	helpKey="createPost" icon="save" iconClass="CreatePost" render="${now['buttons']['createPost'] || now['buttons']['Main_createPost']}" />
+	<v:action validate="false"	labelKey="delete" elementId="Delete" action="delete" helpKey="delete" icon="delete" iconClass="Delete" render="${now['buttons']['delete'] || now['buttons']['Main_delete']}" />
+	<v:action labelKey="updatePost"	elementId="UpdatePost" action="updatePost" helpKey="updatePost" icon="save" iconClass="UpdatePost" render="${now['buttons']['updatePost'] || now['buttons']['Main_updatePost']}" />
 </c:if>
 <c:if test="${now['buttons']['prepare'] || now['buttons']['Main_prepare']}">
 	<c:set var="action"	value="${controllerConfig.ownerController}/select/ajax${operation == 'UPDATE' || operation == 'UPDATE_POST' ? '?back=true' : ''}" />
