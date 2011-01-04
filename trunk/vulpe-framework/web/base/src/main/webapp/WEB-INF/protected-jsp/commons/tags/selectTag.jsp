@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty autoLoad}"><c:set var="autoLoad" value="${false}"/></c:if>
 	<c:if test="${empty removeEnumItems}"><c:set var="removeEnumItems" value=""/></c:if>

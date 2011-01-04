@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty itemLabel}"><c:set var="itemLabel" value="value"/></c:if>
 	<c:if test="${empty itemKey}"><c:set var="itemKey" value="id"/></c:if>

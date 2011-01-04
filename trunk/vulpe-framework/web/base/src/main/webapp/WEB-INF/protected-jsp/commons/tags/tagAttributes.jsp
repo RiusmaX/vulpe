@@ -23,6 +23,7 @@
 <%@ attribute name="onmouseover" required="false" rtexprvalue="true" %>
 <%@ attribute name="onmouseup" required="false" rtexprvalue="true" %>
 <%@ attribute name="paragraph" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="required" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="requiredField" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>

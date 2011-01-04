@@ -1,8 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
-<c:if test="${not empty property && empty name}">
-	<c:set var="name" value="${targetName}.${property}"/>
-</c:if>
+<c:if test="${not empty property && empty name}"><c:set var="name" value="${targetName}.${property}"/></c:if>
 <c:if test="${not empty property && empty value}">
 	<c:set var="valueEL" value="${'${'}targetValue.${property}${'}'}"/>
 	<c:set var="value" value="${util:eval(pageContext, valueEL)}"/>

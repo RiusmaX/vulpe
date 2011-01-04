@@ -1,4 +1,4 @@
-<c:if test="${show}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty styleClass}"><c:set var="styleClass" value=".vulpeNoBorder"/></c:if>
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">

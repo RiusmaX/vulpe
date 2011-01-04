@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<c:if test="${empty showButtonsAsImage}"><c:set var="showButtonsAsImage" value="${global['showButtonsAsImage']}" /></c:if>
 	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['showIconOfButton']}" /></c:if>
 	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['showTextOfButton']}" /></c:if>

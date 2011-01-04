@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty styleClass}"><c:set var="styleClass" value="rte-zone"/></c:if>
 	<c:choose>

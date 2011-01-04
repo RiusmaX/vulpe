@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<c:if test="${isHeader}"><th scope="col" width="${width}"><fmt:message key="${labelKey}"/></th></c:if>
 	<c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
 	<c:if test="${not empty selectCheckOn}"><c:set var="onclick"> onclick="${selectCheckOn}"</c:set></c:if>

@@ -1,4 +1,4 @@
-<c:if test="${show}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty size && not empty maxlength}"><c:set var="size" value="${maxlength}"/></c:if>
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">

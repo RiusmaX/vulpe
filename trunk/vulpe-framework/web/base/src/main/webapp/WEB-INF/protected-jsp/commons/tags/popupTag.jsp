@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
 	<c:if test="${not empty popupExpressions}"><c:set var="popupExpressions" value="${fn:trim(popupExpressions)}"/></c:if>
 	<c:if test="${not empty paramExpressions}"><c:set var="paramExpressions" value="${fn:trim(paramExpressions)}"/></c:if>
 	<c:if test="${empty elementId}"><c:set var="elementId" value="${labelKey}"/></c:if>

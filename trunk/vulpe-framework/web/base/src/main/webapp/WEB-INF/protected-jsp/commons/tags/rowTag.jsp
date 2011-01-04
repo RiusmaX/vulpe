@@ -1,6 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${show}">
+<c:if test="${render}">
+	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
+	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 	<c:set var="recordId" value="${currentItem.id}"/>
 	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
 	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['showButtonsDelete']}"/></c:if>

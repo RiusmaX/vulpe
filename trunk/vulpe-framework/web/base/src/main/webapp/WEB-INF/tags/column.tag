@@ -15,6 +15,7 @@
 <%@ attribute name="onmouseout" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="onclick" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showBodyInHeader" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

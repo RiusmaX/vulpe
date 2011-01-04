@@ -1,4 +1,4 @@
-<c:if test="${show}">
+<c:if test="${render}">
 <%@include file="/WEB-INF/protected-jsp/commons/tags/textTagBegin.jsp" %>
 <c:choose>
 	<c:when test="${showAsText}"><span>${value}</span><v:hidden property="${property}"/></c:when>

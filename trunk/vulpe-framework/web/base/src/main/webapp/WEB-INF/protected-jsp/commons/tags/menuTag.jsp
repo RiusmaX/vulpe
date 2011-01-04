@@ -28,8 +28,10 @@
 </c:when>
 <c:when test="${not empty url}"><c:set var="onclick"> onclick="$(window.location).attr('href', '${url}');"</c:set></c:when>
 </c:choose>
-<c:if test="${show}">
-<li id="vulpeMenu-${elementId}">
+<c:if test="${render}">
+<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
+<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
+<li id="vulpeMenu-${elementId}" style="${style}">
 	<a id="vulpeMenuLink-${elementId}" href="javascript:void(0);"${currentClass}${onclick}${accesskey} title="${help}"><span>${label}</span></a>
 	<jsp:doBody var="theBody"/>
 	<c:if test="${not empty theBody}"><ul>${theBody}</ul></c:if>
