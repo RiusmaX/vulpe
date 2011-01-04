@@ -17,6 +17,7 @@
 <%@ attribute name="layerFields" required="false" rtexprvalue="true"%>
 <%@ attribute name="noSubmitForm" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="queryString" required="false" rtexprvalue="true"%>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="showButtonsAsImage" required="false" rtexprvalue="true"%>
