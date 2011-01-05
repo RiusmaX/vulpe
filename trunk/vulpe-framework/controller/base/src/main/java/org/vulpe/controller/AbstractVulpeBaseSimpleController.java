@@ -80,7 +80,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	/**
 	 * Calendar
 	 */
-	private final Calendar calendar = Calendar.getInstance();
+	public final Calendar calendar = Calendar.getInstance();
 
 	{
 		now.put(Now.SHOW_CONTENT_TITLE, true);
