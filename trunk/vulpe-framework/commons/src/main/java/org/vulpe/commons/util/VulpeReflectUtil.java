@@ -164,6 +164,46 @@ public class VulpeReflectUtil {
 	}
 
 	/**
+	 * Copy transient attributes from <code>origin</code> to
+	 * <code>destination</code>.
+	 * 
+	 * @param destination
+	 * @param origin
+	 */
+	public static void copyOnlyTransient(final Object destination, final Object origin) {
+		final List<Field> fields = getFields(origin.getClass());
+		for (final Field field : fields) {
+			if (!Modifier.isTransient(field.getModifiers())) {
+				continue;
+			}
+			try {
+				final Object value = PropertyUtils.getProperty(origin, field.getName());
+				if (Collection.class.isAssignableFrom(field.getType())) {
+					final Collection valueDes = (Collection) PropertyUtils.getProperty(destination, field.getName());
+					if (value == null) {
+						if (valueDes != null) {
+							valueDes.clear();
+						}
+					} else {
+						if (valueDes == null) {
+							PropertyUtils.setProperty(destination, field.getName(), value);
+						} else {
+							valueDes.clear();
+							valueDes.addAll((Collection) value);
+						}
+					}
+				} else {
+					PropertyUtils.setProperty(destination, field.getName(), value);
+				}
+			} catch (NoSuchMethodException e) {
+				LOG.debug("Method not found.", e);
+			} catch (Exception e) {
+				throw new VulpeSystemException(e);
+			}
+		}
+	}
+
+	/**
 	 * Returns list of methods in class or superclass.
 	 * 
 	 * @param clazz

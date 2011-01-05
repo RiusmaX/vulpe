@@ -2,6 +2,7 @@
 <img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" />
 <img id="${elementId}-errorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" />
 </c:if>
+<c:if test="${showAsText && empty value}">&nbsp;</c:if>
 <c:if test="${paragraph}"></p></c:if>
 <script type="text/javascript">
 vulpe.util.get('${elementId}-loading').hide();
