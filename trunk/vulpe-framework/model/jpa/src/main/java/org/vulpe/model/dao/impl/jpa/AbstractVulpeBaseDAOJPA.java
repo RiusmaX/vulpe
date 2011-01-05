@@ -380,13 +380,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				++count;
 			}
 		} else {
+			String subParent = "";
 			if (value.indexOf("[") > 0) {
 				if (StringUtils.isEmpty(parent)) {
 					parent = value.substring(0, value.indexOf("["));
 				} else {
-					String x = value.substring(0, value.indexOf("["));
-					if (!parent.endsWith(x)) {
-						parent += x;
+					final String parentTest = value.substring(0, value.indexOf("["));
+					if (!parent.endsWith(parentTest)) {
+						parent += parentTest;
 					}
 				}
 				if (parent.contains(",")) {
@@ -402,11 +403,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					}
 				}
 			}
-			value = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
+			if (value.contains("[")) {
+				value = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
+			}
 			final String text = value.contains("[") ? value.substring(0, value.indexOf("[")) : value;
 			final String[] textParts = text.split(",");
 			parent = StringUtils.isNotEmpty(parent) ? parent + "." : "";
-			String subParent = "";
 			int count = 1;
 			for (final String textPart : textParts) {
 				if (count == textParts.length && !textPart.equals(value)) {
