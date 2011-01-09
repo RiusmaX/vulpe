@@ -21,7 +21,7 @@ public class VulpeJPATransactionManager extends JpaTransactionManager {
 		try {
 			super.doCommit(status);
 		} catch (TransactionSystemException e) {
-			treatContraintViolationException(e);
+			treatConstraintViolationException(e);
 		}
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Vulpe JPA Transaction Manager - override doComit end");
@@ -44,7 +44,7 @@ public class VulpeJPATransactionManager extends JpaTransactionManager {
 		return throwable;
 	}
 
-	protected void treatContraintViolationException(TransactionSystemException e) {
+	protected void treatConstraintViolationException(TransactionSystemException e) {
 		final Throwable constraintViolation = getConstraintViolationCause(e);
 		if (constraintViolation != null) {
 			final Throwable first = getFirstCause(e);
