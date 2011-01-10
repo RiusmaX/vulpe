@@ -12,7 +12,7 @@
 		<meta name="viewport" content="width=${global['viewportWidth']}, height=${global['viewportHeight']}, user-scalable=${global['viewportUserScalable']}, initial-scale=${global['viewportInitialScale']}, maximum-scale=${global['viewportMaximumScale']}, minimum-scale=${global['viewportMinimumScale']}" />
 		</c:if>
 		<fmt:message key="vulpe.title.application" var="backendTitle" />
-		<title>${not empty vulpePortal ? vulpePortal.title : backendTitle}</title>
+		<title>${not empty ever['vulpePortal'] ? ever['vulpePortal'].title : backendTitle}</title>
 		<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['theme']}/images/icon.png" rel="shortcut icon"/>
 		<c:set var="vulpeCurrentLayout" value="BACKEND" scope="session"/>
 		<%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>

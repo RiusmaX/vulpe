@@ -2,7 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:choose>
 	<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
-		<c:forEach var="menu" items="${vulpePortalMenus}">
+		<c:forEach var="menu" items="${ever['vulpePortalMenus']}">
 			<c:choose>
 				<c:when test="${not empty menu.navigateToSection}">
 					<v:menu elementId="${menu.id}" label="${menu.name}"

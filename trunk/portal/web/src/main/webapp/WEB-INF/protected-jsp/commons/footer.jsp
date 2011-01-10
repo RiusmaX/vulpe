@@ -2,7 +2,7 @@
 <center>
 <c:if test="${global['showCopyright']}">
 <fmt:message key="vulpe.copyright" var="copyright" />
-<div id="copyright">${currentYear} &copy; ${not empty vulpePortal ? vulpePortal.copyright : copyright}<br>
+<div id="copyright">${currentYear} &copy; ${not empty ever['vulpePortal'] ? ever['vulpePortal'].copyright : copyright}<br>
 </div>
 </c:if>
 <c:if test="${global['showPoweredBy']}">

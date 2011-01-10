@@ -23,7 +23,7 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
-		final List<Portal> portalList = getCachedClass().getSelf(Portal.class.getSimpleName());
+		final List<Portal> portalList = getCachedClasses().getSelf(Portal.class.getSimpleName());
 		if (portalList != null) {
 			for (Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
