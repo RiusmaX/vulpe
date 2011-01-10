@@ -1008,7 +1008,7 @@ var vulpe = {
 					}
 				}
 			}
-			var allFields = jQuery("input", parent);
+			var allFields = jQuery(":text,textarea", parent);
 			var invalidFields = 0;
 			for (var i = 0; i < allFields.length; i++) {
 				var field = jQuery(allFields[i]);
