@@ -27,23 +27,23 @@ public class ApplicationBaseSimpleController extends VulpeStrutsSimpleController
 		if (portalList != null) {
 			for (Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
-					setSessionAttribute(Core.VULPE_PORTAL, portal);
+					ever.put(Core.VULPE_PORTAL, portal);
 				}
 			}
 		}
 		try {
 			final List<Menu> menus = getService(CoreService.class).readMenu(new Menu());
-			setSessionAttribute(Core.VULPE_PORTAL_MENUS, menus);
+			ever.put(Core.VULPE_PORTAL_MENUS, menus);
 			final List<Download> downloads = getService(CoreService.class).readDownload(
 					new Download());
-			setSessionAttribute(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+			ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
 			final List<Link> links = getService(CoreService.class).readLink(new Link());
-			setSessionAttribute(Core.VULPE_PORTAL_LINKS, links);
+			ever.put(Core.VULPE_PORTAL_LINKS, links);
 			final List<Social> social = getService(CoreService.class).readSocial(new Social());
-			setSessionAttribute(Core.VULPE_PORTAL_SOCIAL, social);
+			ever.put(Core.VULPE_PORTAL_SOCIAL, social);
 			final List<Community> communities = getService(CoreService.class).readCommunity(
 					new Community());
-			setSessionAttribute(Core.VULPE_PORTAL_COMMUNITIES, communities);
+			ever.put(Core.VULPE_PORTAL_COMMUNITIES, communities);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
