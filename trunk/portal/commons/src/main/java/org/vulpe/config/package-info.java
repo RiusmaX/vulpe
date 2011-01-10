@@ -2,9 +2,9 @@
 		name = "portal",
 		projectPackage = "org.vulpe.portal",
 		view = @VulpeView(
-				showButtonAsImage = true,
-				showButtonIcon = false,
-				showButtonText = false
+				showButtonsAsImage = true,
+				showIconOfButton = false,
+				showTextOfButton = false
 		),
 		theme = "portal",
 		frontendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.NONE,

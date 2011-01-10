@@ -8,6 +8,7 @@
 <%@ attribute name="help" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="hotKey" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>

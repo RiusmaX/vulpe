@@ -2,6 +2,7 @@ package org.vulpe.portal.controller;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.controller.PortalController;
+import org.vulpe.portal.core.model.entity.BasePortal;
 import org.vulpe.portal.core.model.entity.Portal;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -41,10 +43,10 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 	@Override
 	protected ENTITY prepareEntity(Operation operation) {
 		final ENTITY entity = super.prepareEntity(operation);
-		final List<Field> fields = VulpeReflectUtil.getInstance().getFields(entity.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			if (field.getType().getName().equals(TextTranslate.class.getName())) {
-				final TextTranslate textTranslate = VulpeReflectUtil.getInstance().getFieldValue(
+				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(
 						entity, field.getName());
 				if (textTranslate != null
 						&& VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
@@ -54,6 +56,20 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 						if (StringUtils.isEmpty(textTranslateLanguage.getText())) {
 							iterator.remove();
 						}
+					}
+				}
+			}
+		}
+		if (entity instanceof BasePortal) {
+			final BasePortal portal = (BasePortal) entity;
+			if (operation != null) {
+				if (operation.equals(Operation.CREATE_POST)) {
+					portal.setDate(new Date());
+					portal.setStatus(Status.ACTIVE);
+				}
+				if (operation.equals(Operation.UPDATE_POST)) {
+					if (portal.getDate() == null) {
+						portal.setDate(new Date());
 					}
 				}
 			}

@@ -17,11 +17,12 @@
 <%@ attribute name="layerFields" required="false" rtexprvalue="true"%>
 <%@ attribute name="noSubmitForm" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="queryString" required="false" rtexprvalue="true"%>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
-<%@ attribute name="showButtonAsImage" required="false" rtexprvalue="true"%>
-<%@ attribute name="showButtonIcon" required="false" rtexprvalue="true"%>
-<%@ attribute name="showButtonText" required="false" rtexprvalue="true"%>
+<%@ attribute name="showButtonsAsImage" required="false" rtexprvalue="true"%>
+<%@ attribute name="showIconOfButton" required="false" rtexprvalue="true"%>
+<%@ attribute name="showTextOfButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="style" required="false" rtexprvalue="true"%>
 <%@ attribute name="styleClass" required="false" rtexprvalue="true"%>

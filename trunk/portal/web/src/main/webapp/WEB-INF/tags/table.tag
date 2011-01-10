@@ -11,9 +11,11 @@
 <%@ attribute name="pagingLayer" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="pagingBeforeJs" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="pagingAfterJs" required="false" rtexprvalue="true" type="java.lang.String" %>
-<%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" description="true|false" %>
+<%@ attribute name="renderId" required="false" rtexprvalue="true" type="java.lang.Boolean" description="true|false" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
-<%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" description="true|false" %>
+<%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" description="true|false" %>
 <%@ attribute name="sortPropertyInfo" required="false" rtexprvalue="true" %>
 <%@ attribute name="tableBody" fragment="true" %>
 <%@ attribute name="tableFooter" required="false" rtexprvalue="true" %>

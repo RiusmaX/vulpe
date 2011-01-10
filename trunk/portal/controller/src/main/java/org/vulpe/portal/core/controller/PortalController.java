@@ -7,6 +7,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.Status;
+import org.vulpe.portal.controller.ApplicationBaseController;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.services.CoreService;
 
@@ -17,7 +18,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 1))
-public class PortalController extends BasePortalController<Portal> {
+public class PortalController extends ApplicationBaseController<Portal, Long> {
 
 	@Override
 	public String update() {

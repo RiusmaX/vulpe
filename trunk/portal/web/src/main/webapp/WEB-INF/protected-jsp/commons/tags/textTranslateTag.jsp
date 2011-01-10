@@ -1,5 +1,5 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
-<c:if test="${show eq true}">
+<c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp"%>
 	<c:if test="${empty textTranslateIndex}">
 		<c:set var="textTranslateIndex" value="0" />
