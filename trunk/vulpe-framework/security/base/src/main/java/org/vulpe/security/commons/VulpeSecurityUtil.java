@@ -85,14 +85,14 @@ public class VulpeSecurityUtil {
 	}
 
 	public VulpeHashMap<String, Object> getCachedClass() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASS);
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASSES);
 	}
 
 	public VulpeHashMap<String, Object> getCachedEnum() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS);
 	}
 
 	public VulpeHashMap<String, Object> getCachedEnumArray() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM_ARRAY);
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS_ARRAY);
 	}
 }

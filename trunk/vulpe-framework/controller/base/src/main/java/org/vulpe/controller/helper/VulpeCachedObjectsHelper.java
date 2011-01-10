@@ -151,7 +151,7 @@ public final class VulpeCachedObjectsHelper {
 				}
 			}
 		}
-		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASS, mapCachedClass);
+		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASSES, mapCachedClass);
 		final Set<String> cachedEnums = loadCachedEnums(servletContext);
 		if (cachedEnums != null && !cachedEnums.isEmpty()) {
 			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
@@ -194,9 +194,9 @@ public final class VulpeCachedObjectsHelper {
 					LOG.error(e);
 				}
 			}
-			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUM, mapCachedEnum);
+			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);
 			VulpeCacheHelper.getInstance()
-					.put(VulpeConstants.CACHED_ENUM_ARRAY, mapCachedEnumArray);
+					.put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
 		}
 	}
 
@@ -224,7 +224,7 @@ public final class VulpeCachedObjectsHelper {
 				}
 			}
 		}
-		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASS, mapCachedClass);
+		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASSES, mapCachedClass);
 		final Class[] cachedEnum = VulpeConfigHelper.get(VulpeDomains.class).cachedEnum();
 		if (cachedEnum != null) {
 			final String projectName = VulpeConfigHelper.getProjectName();
@@ -262,9 +262,9 @@ public final class VulpeCachedObjectsHelper {
 					LOG.error(e);
 				}
 			}
-			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUM, mapCachedEnum);
+			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);
 			VulpeCacheHelper.getInstance()
-					.put(VulpeConstants.CACHED_ENUM_ARRAY, mapCachedEnumArray);
+					.put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
 		}
 	}
 }

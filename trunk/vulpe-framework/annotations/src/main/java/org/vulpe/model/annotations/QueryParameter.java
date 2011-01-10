@@ -26,7 +26,9 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD, ElementType.METHOD })
 public @interface QueryParameter {
 
-	Parameter equals();
+	String value() default "";
+
+	Parameter equals() default @Parameter(name = "");
 
 	Parameter[] orEquals() default {};
 

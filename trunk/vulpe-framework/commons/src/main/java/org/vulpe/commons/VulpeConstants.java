@@ -43,9 +43,9 @@ public class VulpeConstants {
 	public static final String GENERAL_ERROR = "vulpe.error.general";
 	public static final String CLEAR_PARAMS = "vulpe.clearParams";
 	public static final String PARAMS_SESSION_KEY = "_params";
-	public static final String CACHED_CLASS = "vulpeCachedClass";
-	public static final String CACHED_ENUM = "vulpeCachedEnum";
-	public static final String CACHED_ENUM_ARRAY = "vulpeCachedEnumArray";
+	public static final String CACHED_CLASSES = "vulpeCachedClasses";
+	public static final String CACHED_ENUMS = "vulpeCachedEnums";
+	public static final String CACHED_ENUMS_ARRAY = "vulpeCachedEnumsArray";
 	public static final String CONTROLLER_METHODS = "vulpeControllerMethods";
 	public static final String VULPE = "vulpe";
 	public static final String VULPE_SECURITY = "vulpe-security";

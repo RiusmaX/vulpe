@@ -47,7 +47,7 @@ public class VulpeBaseAuthorizationDAO implements VulpeAuthorizationDAO {
 	public SecureResource getSecureObject(final String securityObjectName) {
 		final Map<String, SecureResource> secureObjects = new HashMap<String, SecureResource>();
 		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
-				VulpeConstants.CACHED_CLASS);
+				VulpeConstants.CACHED_CLASSES);
 		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
 				.get(SecureResource.class.getSimpleName());
 		if (secureResources != null) {

@@ -302,7 +302,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		if (params != null) {
 			for (String name : params.keySet()) {
 				final Object value = params.get(name);
-				query.setParameter(name, value);
+				query.setParameter(name.replace("_", "").replaceAll("\\.", "_"), value);
 			}
 		}
 	}

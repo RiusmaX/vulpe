@@ -421,7 +421,7 @@ public class Functions {
 	 */
 	public static String enumListInField(final String type, final Object fieldValue) throws JspException {
 		try {
-			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUM);
+			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS);
 			final List<ValueBean> enumeration = map.getSelf(type);
 			final StringBuilder list = new StringBuilder();
 			if (fieldValue instanceof Collection<?>) {

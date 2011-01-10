@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 import javax.persistence.Transient;
@@ -228,17 +229,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		return paging;
 	}
 
-	/**
-	 * Retrieves HQL select string to current entity.
-	 * 
-	 * @param entity
-	 * @param params
-	 * @return
-	 */
-	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
+	private void mountParameters(final ENTITY entity, final Map<String, Object> params, final String parent) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		final StringBuilder order = new StringBuilder();
-		int countParam = 0;
 		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 			try {
 				if (entity.getId() != null) {
@@ -251,7 +244,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				throw new VulpeSystemException(e);
 			}
 		} else {
-			for (Field field : fields) {
+			for (final Field field : fields) {
 				if ((field.isAnnotationPresent(IgnoreAutoFilter.class) || field.isAnnotationPresent(Transient.class) || Modifier
 						.isTransient(field.getModifiers()))
 						&& !field.isAnnotationPresent(QueryParameter.class)) {
@@ -264,30 +257,54 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					}
 					order.append("obj.").append(field.getName()).append(" ").append(orderBy.type().name());
 				}
-				Object value = null;
 				try {
-					value = PropertyUtils.getProperty(entity, field.getName());
+					Object value = PropertyUtils.getProperty(entity, field.getName());
+					Class<?> valueClass = PropertyUtils.getPropertyType(entity, field.getName());
+					if (VulpeEntity.class.isAssignableFrom(valueClass)) {
+						final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
+						final QueryParameter queryParameter = field.getAnnotation(QueryParameter.class);
+						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
+								+ (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()) ? "_"
+										+ queryParameter.value() : field.getName());
+						if (value != null) {
+							if (manyToOne != null
+									|| (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()))) {
+								mountParameters((ENTITY) value, params, paramName);
+							} else {
+								params.put(paramName, value);
+							}
+						}
+					} else if (isNotEmpty(value)) {
+						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "") + field.getName();
+						final Like like = field.getAnnotation(Like.class);
+						if (like != null) {
+							if (like.type().equals(LikeType.BEGIN)) {
+								value = value + "%";
+							} else if (like.type().equals(LikeType.END)) {
+								value = "%" + value;
+							} else {
+								value = "%" + value + "%";
+							}
+						}
+						params.put(paramName, value);
+					}
 				} catch (Exception e) {
 					throw new VulpeSystemException(e);
 				}
-				if (isNotEmpty(value)) {
-					final String paramName = field.getName();
-					final Like like = field.getAnnotation(Like.class);
-					if (like != null) {
-						if (like.type().equals(LikeType.BEGIN)) {
-							value = value + "%";
-						} else if (like.type().equals(LikeType.END)) {
-							value = "%" + value;
-						} else {
-							value = "%" + value + "%";
-						}
-					}
-					params.put(paramName, value);
-					countParam++;
-				}
 			}
 		}
+	}
 
+	/**
+	 * Retrieves HQL select string to current entity.
+	 * 
+	 * @param entity
+	 * @param params
+	 * @return
+	 */
+	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
+		final StringBuilder order = new StringBuilder();
+		mountParameters(entity, params, null);
 		final StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass().getSimpleName().concat(".read"));
 		QueryConfiguration queryConfiguration = null;
@@ -317,8 +334,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append("new ");
 					hql.append(entity.getClass().getSimpleName());
 					hql.append("(obj.id, obj.").append(entity.getAutocomplete());
-					final List<Field> autocompleteFields = VulpeReflectUtil.getFieldsWithAnnotation(
-							entity.getClass(), Autocomplete.class);
+					final List<Field> autocompleteFields = VulpeReflectUtil.getFieldsWithAnnotation(entity.getClass(),
+							Autocomplete.class);
 					for (Field field : autocompleteFields) {
 						if (!field.getName().equals(entity.getAutocomplete())) {
 							hql.append(", obj.").append(field.getName());
@@ -361,20 +378,21 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
 					count++;
-					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(
-							QueryParameter.class, entity.getClass(), name);
-					if (queryParameter == null) {
+					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(QueryParameter.class,
+							entity.getClass(), name);
+					if (queryParameter == null || StringUtils.isEmpty(queryParameter.equals().name())) {
+						String hqlAttributeName = name.startsWith("_") ? name.replace("_", "") : "obj." + name;
+						String hqlParamName = name.replace("_", "").replaceAll("\\.", "_");
 						if (value instanceof String) {
-							final Like like = VulpeReflectUtil.getAnnotationInField(Like.class,
-									entity.getClass(), name);
-							hql.append("upper(obj.").append(name).append(") ").append(like != null ? "like" : "=")
-									.append(" upper(:").append(name).append(")");
+							final Like like = VulpeReflectUtil
+									.getAnnotationInField(Like.class, entity.getClass(), name);
+							hql.append("upper(").append(hqlAttributeName).append(") ").append(
+									like != null ? "like" : "=").append(" upper(:").append(hqlParamName).append(")");
 						} else {
-							hql.append("obj.").append(name).append(" = :").append(name);
+							hql.append(hqlAttributeName).append(" = :").append(hqlParamName);
 						}
 					} else {
-						final Like like = VulpeReflectUtil.getAnnotationInField(Like.class,
-								entity.getClass(), name);
+						final Like like = VulpeReflectUtil.getAnnotationInField(Like.class, entity.getClass(), name);
 						if (queryParameter.orEquals().length > 0) {
 							hql.append("(");
 						}
@@ -387,7 +405,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append(")");
 						}
 					}
-					if (count < countParam) {
+					if (count < params.size()) {
 						hql.append(" and ");
 					}
 				}
@@ -442,10 +460,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		hql.append(parameter.alias());
 		hql.append('.');
-		if (parameter.name().equals("")) {
-			hql.append(paramName);
-		} else {
+		if (StringUtils.isNotEmpty(parameter.name())) {
 			hql.append(parameter.name());
+		} else {
+			hql.append(paramName);
 		}
 		if (like != null) {
 			hql.append(")");
@@ -459,7 +477,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (StringUtils.isNotEmpty(parameter.value())) {
 			hql.append("'").append(parameter.value()).append("'");
 		} else {
-			hql.append(" :").append(paramName);
+			hql.append(" :").append(paramName.replaceAll("\\.", "_"));
 		}
 		if (like != null) {
 			hql.append(")");
@@ -475,8 +493,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(),
-					getClass().getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(), getClass()
+					.getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}

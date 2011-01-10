@@ -6,7 +6,7 @@
 	<c:if test="${empty removeEnumItems}"><c:set var="removeEnumItems" value=""/></c:if>
 	<c:if test="${not empty property && empty items && !autoLoad}"><c:set var="items" value="${util:listInField(targetValue, property, removeEnumItems)}"/></c:if>
 	<c:if test="${autoLoad}">
-		<c:set var="itemsEL" value="${'${'}cachedClass['${items}']${'}'}"/>
+		<c:set var="itemsEL" value="${'${'}cachedClasses['${items}']${'}'}"/>
 		<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 	</c:if>
 	<c:if test="${empty itemLabel}"><c:set var="itemLabel" value="value"/></c:if>

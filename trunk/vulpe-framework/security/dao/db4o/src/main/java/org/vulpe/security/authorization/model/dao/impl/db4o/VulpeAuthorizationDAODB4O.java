@@ -90,7 +90,7 @@ public class VulpeAuthorizationDAODB4O extends VulpeBaseDAODB4O<SecureResource, 
 	private synchronized void reloadAuthorizationInfo() {
 		// List<SecureResource> secureResources = getList(new SecureResource());
 		final Map<String, Object> cachedClasses = VulpeCacheHelper.getInstance().get(
-				VulpeConstants.CACHED_CLASS);
+				VulpeConstants.CACHED_CLASSES);
 		final List<SecureResource> secureResources = (List<SecureResource>) cachedClasses
 				.get(SecureResource.class.getSimpleName());
 		if (secureResources != null) {

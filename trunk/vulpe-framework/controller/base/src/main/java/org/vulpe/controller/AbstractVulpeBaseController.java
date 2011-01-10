@@ -1033,12 +1033,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				addActionMessage(getDefaultMessage());
 				if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
 					final String entityName = getControllerConfig().getEntityClass().getSimpleName();
-					List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
+					List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
 					if (VulpeValidationUtil.isEmpty(list)) {
 						list = new ArrayList<ENTITY>();
 					}
 					list.add(getEntity());
-					getCachedClass().put(entityName, list);
+					getCachedClasses().put(entityName, list);
 				}
 			}
 			createPostAfter();
@@ -1184,7 +1184,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
 				final String entityName = getControllerConfig().getEntityClass().getSimpleName();
-				List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
+				List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
 				if (VulpeValidationUtil.isEmpty(list)) {
 					list = new ArrayList<ENTITY>();
 					list.add(getEntity());
@@ -1198,7 +1198,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						++count;
 					}
 				}
-				getCachedClass().put(entityName, list);
+				getCachedClasses().put(entityName, list);
 			}
 			if (!getControllerConfig().isOnlyUpdateDetails()) {
 				final List<ENTITY> entities = getSessionAttribute(getSelectTableKey());
@@ -1311,7 +1311,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
 			final String entityName = getControllerConfig().getEntityClass().getSimpleName();
-			final List<ENTITY> list = (List<ENTITY>) getCachedClass().get(entityName);
+			final List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
 			if (VulpeValidationUtil.isNotEmpty(list)) {
 				for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
 					final ENTITY entity = iterator.next();
@@ -1326,7 +1326,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					}
 				}
 			}
-			getCachedClass().put(entityName, list);
+			getCachedClasses().put(entityName, list);
 		}
 		deleteAfter();
 		if (getControllerType().equals(ControllerType.MAIN)) {
@@ -1415,7 +1415,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					final ENTITY entityTabular = getEntities().get(0);
 					if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
 						final String entityName = entityTabular.getClass().getSimpleName();
-						getCachedClass().put(entityName, getEntities());
+						getCachedClasses().put(entityName, getEntities());
 					}
 				}
 			}
@@ -1639,7 +1639,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						final ENTITY entityTabular = getEntities().get(0);
 						if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
 							final String entityName = entityTabular.getClass().getSimpleName();
-							getCachedClass().put(entityName, getEntities());
+							getCachedClasses().put(entityName, getEntities());
 						}
 					}
 				}
@@ -2063,7 +2063,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					final VulpeEntity<ID> value = (VulpeEntity<ID>) PropertyUtils.getProperty(entity, field.getName());
 					if (VulpeValidationUtil.isNotEmpty(value) && !Modifier.isTransient(field.getModifiers())
 							&& value.getClass().isAnnotationPresent(CachedClass.class)) {
-						final List<ENTITY> cachedList = getCachedClass().getSelf(value.getClass().getSimpleName());
+						final List<ENTITY> cachedList = getCachedClasses().getSelf(value.getClass().getSimpleName());
 						if (VulpeValidationUtil.isNotEmpty(cachedList)) {
 							for (final ENTITY cached : cachedList) {
 								if (cached.getId().equals(value.getId())) {
