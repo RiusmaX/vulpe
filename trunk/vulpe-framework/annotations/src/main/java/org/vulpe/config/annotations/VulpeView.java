@@ -65,6 +65,8 @@ public @interface VulpeView {
 	boolean showButtonUpdate() default false;
 
 	boolean showButtonsDelete() default true;
+	
+	boolean showButtonClone() default true;
 
 	boolean showLine() default true;
 

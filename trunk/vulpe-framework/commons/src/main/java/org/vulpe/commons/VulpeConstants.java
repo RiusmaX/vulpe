@@ -162,10 +162,11 @@ public class VulpeConstants {
 		public class Button {
 			public static final String CREATE = "create";
 			public static final String CREATE_POST = "createPost";
+			public static final String CLONE = "clone";
 			public static final String DELETE = "delete";
 			public static final String UPDATE = "update";
 			public static final String UPDATE_POST = "updatePost";
-			public static final String PREPARE = "prepare";
+			public static final String BACK = "back";
 			public static final String READ = "read";
 			public static final String REPORT = "report";
 			public static final String CLEAR = "clear";

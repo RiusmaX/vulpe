@@ -19,7 +19,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 
 /**
  * Controller Interface.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -29,7 +29,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to control add detail.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -37,15 +37,15 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to clear screen.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
 	String clear();
-		
+
 	/**
 	 * Method to create new record.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -53,15 +53,23 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm create.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
 	String createPost();
 
 	/**
+	 * Method to clone record.
+	 * 
+	 * @since 1.0
+	 * @return Navigation.
+	 */
+	String cloneIt();
+
+	/**
 	 * Method to delete record.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -69,7 +77,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to delete detail items.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -77,7 +85,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to prepare to show.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -85,7 +93,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm logic tabulate.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -93,7 +101,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to update.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -101,7 +109,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to confirm update.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -109,16 +117,16 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Checks if entity is valid.
-	 *
+	 * 
 	 * @return
 	 */
 	boolean validateEntity();
 
 	String autocomplete();
 
-	void manageButton(final String button, final boolean show);
-
 	void showButton(final String button);
+
+	void manageButtons();
 
 	void manageButtons(final Operation operation);
 
@@ -170,7 +178,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to download file.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */
@@ -178,7 +186,7 @@ public interface VulpeController extends VulpeSimpleController {
 
 	/**
 	 * Method to upload file.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation.
 	 */

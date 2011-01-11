@@ -469,16 +469,6 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		return StringUtils.isNotEmpty(getPopupKey());
 	}
 
-	public VulpeEntity<?> findOnCachedClasses(final Class<?> entityClass, final Long id) {
-		final List<VulpeEntity<?>> entities = getCachedClasses().getSelf(entityClass.getSimpleName());
-		for (final VulpeEntity<?> vulpeEntity : entities) {
-			if (vulpeEntity.getId().equals(id)) {
-				return vulpeEntity;
-			}
-		}
-		return null;
-	}
-
 	public VulpeHashMap<String, Object> getCachedClasses() {
 		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASSES);
 	}
@@ -489,6 +479,22 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	public VulpeHashMap<String, Object> getCachedEnumsArray() {
 		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS_ARRAY);
+	}
+
+	/**
+	 * 
+	 * @param entityClass
+	 * @param id
+	 * @return
+	 */
+	public <T extends VulpeEntity<?>> T findOnCachedClasses(final Class<T> entityClass, final Long id) {
+		final List<T> entities = getCachedClasses().getSelf(entityClass.getSimpleName());
+		for (final T entity : entities) {
+			if (entity.getId().equals(id)) {
+				return entity;
+			}
+		}
+		return null;
 	}
 
 	/*

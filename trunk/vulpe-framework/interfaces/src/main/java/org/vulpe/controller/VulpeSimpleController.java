@@ -272,7 +272,7 @@ public interface VulpeSimpleController extends Serializable {
 
 	public enum Operation {
 
-		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), DELETE("delete"), DELETE_DETAIL(
+		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE("delete"), DELETE_DETAIL(
 				"deleteDetail"), UPDATE("update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR(
 				"tabular"), TABULAR_POST("tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT(
 				"select"), REPORT("report"), VIEW("view"), READ("read"), FIND("find"), PAGING(
