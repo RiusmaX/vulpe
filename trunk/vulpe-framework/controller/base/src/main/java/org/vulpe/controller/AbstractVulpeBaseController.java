@@ -1046,10 +1046,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setOperation(Operation.CLONE);
 		cloneItBefore();
 		if (onCloneIt()) {
+			manageButtons(Operation.CREATE);
 			addActionMessage(getDefaultMessage());
 		}
 		setSelectedTab(null);
-		manageButtons();
 		if (getControllerType().equals(ControllerType.TWICE)) {
 			setBodyTwice(ControllerType.MAIN);
 			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
