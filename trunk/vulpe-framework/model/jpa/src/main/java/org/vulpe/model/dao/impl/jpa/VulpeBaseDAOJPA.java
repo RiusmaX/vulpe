@@ -266,7 +266,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
 								+ (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()) ? "_"
 										+ queryParameter.value() : field.getName());
-						if (isNotEmpty(value)) {
+						if (value != null) {
 							if (manyToOne != null
 									|| (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()))) {
 								mountParameters((ENTITY) value, params, paramName);
