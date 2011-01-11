@@ -1,6 +1,7 @@
 <script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.charcounter.js" type="text/javascript" charset="utf-8"></script>
 <!--[if IE]><script src="${pageContext.request.contextPath}/js/jquery.bgiframe.js" type="text/javascript" charset="utf-8"></script><![endif]-->
 <c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
 <c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'SUPERFISH') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'SUPERFISH')}">
@@ -50,6 +51,7 @@ vulpe.config.messages = {
 		}
 	},
 	clear: '<fmt:message key="vulpe.message.confirm.clear"/>',
+	charCount: '<fmt:message key="vulpe.message.charCount"/>',
 	deleteThis: '<fmt:message key="vulpe.message.confirm.delete"/>',
 	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',

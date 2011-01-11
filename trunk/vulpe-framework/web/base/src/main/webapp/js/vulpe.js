@@ -77,6 +77,7 @@ var vulpe = {
 				}
 			},
 			clear: "vulpe.message.confirm.clear",
+			charCount: "vulpe.message.charCount",
 			deleteThis: "vulpe.message.confirm.delete",
 			fieldRequired: "vulpe.js.error.required",
 			keyRequired: "vulpe.js.error.key.required",
