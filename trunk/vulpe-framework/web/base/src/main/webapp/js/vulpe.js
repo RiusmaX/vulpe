@@ -1028,7 +1028,7 @@ var vulpe = {
 
 		validateAttribute: function(field) {
 			var valid = true;
-			if (field.val() == "%") {
+			if (field.val() == "%" && vulpe.config.formName.indexOf("Select") != -1) {
 				return valid;
 			}
 			var idField = field.attr("id");
