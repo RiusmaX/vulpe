@@ -169,42 +169,36 @@
 		decimal = decimal || ".";
 		callback = typeof callback == "function" ? callback : function(){};
 		this.keypress(
-			function(e)
-			{
+			function(e) {
 				var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
 				// allow enter/return key (only when in an input box)
-				if(key == 13 && this.nodeName.toLowerCase() == "input")
-				{
+				if (key == 13 && this.nodeName.toLowerCase() == "input") {
 					return true;
-				}
-				else if(key == 13)
-				{
+				} else if (key == 13) {
 					return false;
 				}
 				var allow = false;
 				// allow Ctrl+A
-				if((e.ctrlKey && key == 97 /* firefox */) || (e.ctrlKey && key == 65) /* opera */) return true;
+				if ((e.ctrlKey && key == 97 /* firefox */) || (e.ctrlKey && key == 65) /* opera */) return true;
 				// allow Ctrl+X (cut)
-				if((e.ctrlKey && key == 120 /* firefox */) || (e.ctrlKey && key == 88) /* opera */) return true;
+				if ((e.ctrlKey && key == 120 /* firefox */) || (e.ctrlKey && key == 88) /* opera */) return true;
 				// allow Ctrl+C (copy)
-				if((e.ctrlKey && key == 99 /* firefox */) || (e.ctrlKey && key == 67) /* opera */) return true;
+				if ((e.ctrlKey && key == 99 /* firefox */) || (e.ctrlKey && key == 67) /* opera */) return true;
 				// allow Ctrl+Z (undo)
-				if((e.ctrlKey && key == 122 /* firefox */) || (e.ctrlKey && key == 90) /* opera */) return true;
+				if ((e.ctrlKey && key == 122 /* firefox */) || (e.ctrlKey && key == 90) /* opera */) return true;
 				// allow or deny Ctrl+V (paste), Shift+Ins
-				if((e.ctrlKey && key == 118 /* firefox */) || (e.ctrlKey && key == 86) /* opera */
+				if ((e.ctrlKey && key == 118 /* firefox */) || (e.ctrlKey && key == 86) /* opera */
 				|| (e.shiftKey && key == 45)) return true;
 				// if a number was not pressed
-				if(key < 48 || key > 57)
-				{
+				if (key < 48 || key > 57) {
 					/* '-' only allowed at start */
-					if(key == 45 && this.value.length == 0) return true;
+					if (key == 45 && this.value.length == 0) { return true };
 					/* only one decimal separator allowed */
-					if(key == decimal.charCodeAt(0) && this.value.indexOf(decimal) != -1)
-					{
+					if (key == decimal.charCodeAt(0) && this.value.indexOf(decimal) != -1) {
 						allow = false;
 					}
 					// check for other keys that have special purposes
-					if(
+					if (
 						key != 8 /* backspace */ &&
 						key != 9 /* tab */ &&
 						key != 13 /* enter */ &&
@@ -213,50 +207,37 @@
 						key != 37 /* left */ &&
 						key != 39 /* right */ &&
 						key != 46 /* del */
-					)
-					{
+					) {
 						allow = false;
-					}
-					else
-					{
+					} else {
 						// for detecting special keys (listed above)
 						// IE does not support 'charCode' and ignores them in keypress anyway
-						if(typeof e.charCode != "undefined")
-						{
+						if (typeof e.charCode != "undefined") {
 							// special keys have 'keyCode' and 'which' the same (e.g. backspace)
-							if(e.keyCode == e.which && e.which != 0)
-							{
+							if (e.keyCode == e.which && e.which != 0) {
 								allow = true;
 							}
 							// or keyCode != 0 and 'charCode'/'which' = 0
-							else if(e.keyCode != 0 && e.charCode == 0 && e.which == 0)
-							{
+							else if (e.keyCode != 0 && e.charCode == 0 && e.which == 0) {
 								allow = true;
 							}
 						}
 					}
 					// if key pressed is the decimal and it is not already in the field
-					if(key == decimal.charCodeAt(0) && this.value.indexOf(decimal) == -1)
-					{
+					if (key == decimal.charCodeAt(0) && this.value.indexOf(decimal) == -1) {
 						allow = true;
 					}
-				}
-				else
-				{
+				} else {
 					allow = true;
 				}
 				return allow;
 			}
-		)
-		.blur(
-			function()
-			{
+		).blur(
+			function() {
 				var val = jQuery(this).val();
-				if(val != "")
-				{
+				if (val != "") {
 					var re = new RegExp("^\\d+$|\\d*" + decimal + "\\d+");
-					if(!re.exec(val))
-					{
+					if (!re.exec(val)) {
 						callback.apply(this);
 					}
 				}
@@ -266,13 +247,17 @@
 	};
 
 /**
+* $HeadURL$ 
+* $Date$
+* $Author$
+* $Revision$
+*
 * Vinter.validate()
-* Version 1.6
-* Updated 9 jan 2008
+* Version 1.9.5
 *
-*	Vinter.validate is (c) 2008 Lars Huring, Olov Nilzén and Vinter (www.vinterwebb.se) and is released under the MIT License:
-*	http://www.opensource.org/licenses/mit-license.php
-*
+* Vinter.validate is (c) 2008 Lars Huring, Olov Nilzén and Vinter (www.vinterwebb.se) and is released under the MIT License:
+* http://www.opensource.org/licenses/mit-license.php
+* 
 * Changelog:
 * 1.1:
 * - Added checkbox validation
@@ -302,160 +287,226 @@
 * - Added "defaultval" class to <option>, config: selectboxdefaultclass
 * - Added selectbox validation to example
 *
+* 1.7
+* - Added source to SVN repository
+* - Changed filenames to exclude version numbers
+* - Updated jQuery-version to 1.2.6
+*
+* 1.8
+* Added by Mehdi Cherifi (superyms)
+* - Added DATE format (Matches the following formats mm/dd/yy, mm/dd/yyyy, mm-dd-yy, mm-dd-yyyy This covers days with 30 or 31 days but does not handle February, it is allowed 30 days.)
+* - Added time format validation
+* - Added Url validation
+*
+* Added by Pitt Phunsanit
+* - Added float-number validation 
+*
+* 1.8.1
+* - Changed isNumber to include whitespace as valid character
+*
+* 1.9
+* - Wrapped error messages in <label for="input_id"></label>, now they can be clicked and re-focus input to the error field. Cheers @twitter.com/icaaq for idea.
+* - Added errorlabelclass option for error message label to enable better styling (see cursor in demo)
+* - Changed $ to jQuery to avoid conflicts
+*
+* 1.9.1
+* - Added oncomplete event
+*
+* 1.9.5
+* - Updated default options to a more jQuery-default syntax.
+* - Added configuration possibility for required, checkboxgroup and radiogroup classes.
+* - Added configuration possibility for required, checkboxgroup and radiogroup patterns.
+* - Added override possibilities for all validation methods
+*
 * Usage:
 * Simple: <input type="submit" value="skicka" onclick="return jQuery.validate();" />
 * Advanced: http://labs.vinterwebb.se/jquery.validate/Default.aspx
+*
 */
-	$.validate = function(options)
-	{
-
-		// Set up some options
-		options = options || {};
-		options.fieldset = options.fieldset || "";
-		options.messagecontainer = options.messagecontainer || "#validationmsg";
-		options.errormsg = options.errormsg || ".errmsg";
-		options.notvalidclass = options.notvalidclass || "notvalid";
-		options.messageheader = options.messageheader || "Hittade några problem i formuläret";
-		options.onerror = options.onerror || "";
-		options.erroridprefix = options.erroridprefix || "validationerror_";
-		options.selectboxdefault = options.selectboxdefault || [""];
-		options.selectboxdefaultclass = options.selectboxdefaultclass || "defaultval";
-		options.usedefault = options.usedefault || false;
-
-	    var errors = new Array();
-		$(options.messagecontainer).empty();
-
-		$("." + options.notvalidclass).each(function(i, item) {
-			$(item).removeClass(options.notvalidclass);
-		});
-
-		function isEmail(str)
-	    {
-		    var regex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
-		    return regex.test(str);
-	    }
-
-	    function isNumber(str)
-	    {
-		    var regex = /^[0-9-]*$/;
-		    return regex.test(str);
-	    }
-
-	    function isEmpty(item)
-	    {
-		    if (item.value == "")
-		        return true;
-
-            if (options.usedefault && item.value == $(item).attr("title"))
-                return true;
-
-            return false;
-	    }
-
-		function getMsg(item)
-		{
-			return $(item.parentNode).find(options.errormsg).html();
-		}
-
-		function validateTextBox(item)
-		{
-			if (isEmpty(item) == true || ($(item).hasClass("email") && isEmail(item.value) == false))
-				errors.push({id: item.id, msg: getMsg(item), type: "text"});
-
-			if (isEmpty(item) == false && $(item).hasClass("number") && isNumber(item.value) == false)
-				errors.push({id: item.id, msg: getMsg(item), type: "number"});
-		}
-
-		function validateCheckbox(item)
-		{
-			if(item.checked != true)
-				errors.push({id: item.id, msg: getMsg(item), type: "checkbox"});
-		}
-
-		function validateSelect(item)
-		{
-			if ($.inArray(item.value, options.selectboxdefault) > -1 || item[item.selectedIndex].className == options.selectboxdefaultclass)
-				errors.push({id: item.id, msg: getMsg(item), type: "select-one"});
-		}
-
-		// Loop
-		$(options.fieldset + " .required").each(function(i, item) {
-
-			// Checkboxes
-			switch (item.type)
-			{
-				case "checkbox":
-					validateCheckbox(item);
-					break;
-
-				case "text":
-				case "file":
-				case "textarea":
-					validateTextBox(item);
-					break;
-
-				case "select-one":
-					validateSelect(item);
-			}
-
-		});
-
-		/*
-		* Validate checkbox groups
-		*/
-		$(options.fieldset + " .checkboxgroup," + options.fieldset + " .radiogroup").each(function(i, item) {
-
-			var checked = 0;
-			var msg = $(item).find(options.errormsg).text();
-
-			$(item).find("input[type=checkbox], input[type=radio]").each(function(i, item) {
-				if (item.checked)
-					checked++;
+	(function(jQuery) {
+		jQuery.validate = function(opt) {
+			/**
+			* Default options
+			*/	
+			var options = jQuery.extend({
+				fieldset: "",
+				messagecontainer: "#validationmsg",
+				errormsg: ".errmsg",
+				notvalidclass: "notvalid",
+				messageheader: "Hittade några problem i formuläret",
+				onerror: "",
+				oncomplete: "",
+				erroridprefix: "validationerror_",
+				selectboxdefault: [""],
+				selectboxdefaultclass: "defaultval",
+				usedefault: false,
+				errorlabelclass: "errormsglabel",
+				requiredclass: "required",
+				radiogroupclass: "radiogroup",
+				checkboxgroupclass: "checkboxgroupclass",
+				isEmail: isEmail,
+				isNumber: isNumber,
+				isEmpty: isEmpty,
+				isUrl: isUrl,
+				isDate: isDate,
+				isTime: isTime,
+				isFloat: isFloat
+			}, opt);
+			
+			options = jQuery.extend({
+				requiredpattern: options.fieldset + " ." + options.requiredclass,
+				radiogrouppattern: options.fieldset + " ." + options.radiogroupclass,
+				checkboxgrouppattern: options.fieldset + " ." + options.checkboxgroupclass
+			}, options);
+					
+		    var errors = new Array();
+			jQuery(options.messagecontainer).empty();
+			
+			jQuery("." + options.notvalidclass).each(function(i, item) {
+				jQuery(item).removeClass(options.notvalidclass);
 			});
-
-			if(checked == 0)
-				errors.push({id: item.id, msg: msg, type: "group"});
-
-		});
-
-		/*
-		* Check errors length and output to page.
-		*/
-		if (errors.length > 0)
-		{
-
-			// Onerror returns errors array to callback
-			if (typeof(options.onerror) == "function")
-			{
-				options.onerror(errors);
+			
+			function isEmail(str) {
+			    var regex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
+			    return regex.test(str);
+		    }
+		    
+		    function isNumber(str) {
+			    var regex = /^[0-9-\s]*$/;
+			    return regex.test(str);
+		    }
+		    
+		    function isEmpty(item) {
+			    if (item.value == "") {
+			        return true;
+			    }
+	            if (options.usedefault && item.value == jQuery(item).attr("title")) {
+	                return true;
+	            }
+	            return false;
+		    }
+			
+			function isUrl(str) {
+			    var regex = /^((http|ftp|https):\/\/w{3}[\d]*.|(http|ftp|https):\/\/|w{3}[\d]*.)([\w\d\._\-#\(\)\[\]\\,;:]+@[\w\d\._\-#\(\)\[\]\\,;:])?([a-z0-9]+.)*[a-z\-0-9]+.([a-z]{2,3})?[a-z]{2,6}(:[0-9]+)?(\/[\/a-z0-9\._\-,]+)*[a-z0-9\-_\.\s\%]+(\?[a-z0-9=%&amp;\.\-,#]+)?$/;
+			    return regex.test(str);
+		    }
+			
+			function isDate(str) {
+			    var regex = /^((0?[13578]|10|12)(-|\/)((0[0-9])|([12])([0-9]?)|(3[01]?))(-|\/)((\d{4})|(\d{2}))|(0?[2469]|11)(-|\/)((0[0-9])|([12])([0-9]?)|(3[0]?))(-|\/)((\d{4}|\d{2})))$/;
+			    return regex.test(str);
+		    }
+			
+			function isTime(str) {
+			    var regex = /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/;
+			    return regex.test(str);
+		    }
+			
+			function isFloat(str) {
+			    var regex = /^([+-]?(((\d+(\.)?)|(\d*\.\d+))([eE][+-]?\d+)?))$/;
+			    return regex.test(str);
+		    }
+			
+			function getMsg(item) {
+				return jQuery(item.parentNode).find(options.errormsg).html();
+			}
+			
+			function validateTextBox(item) {
+				if (options.isEmpty(item) == true || (jQuery(item).hasClass("email") && options.isEmail(item.value) == false)) {
+					errors.push({id: item.id, msg: getMsg(item), type: "text"});
+				}
+				if (options.isEmpty(item) == false && (jQuery(item).hasClass("date") && options.isDate(item.value) == false)) {
+					errors.push({id: item.id, msg: getMsg(item), type: "text"});
+				}
+				if (options.isEmpty(item) == false && (jQuery(item).hasClass("time") && options.isTime(item.value) == false)) {
+					errors.push({id: item.id, msg: getMsg(item), type: "text"});
+				}
+				if (options.isEmpty(item) == false && jQuery(item).hasClass("float") && options.isFloat(item.value) == false) {
+					errors.push({id: item.id, msg: getMsg(item), type: "float"});
+				}
+				if (options.isEmpty(item) == false && (jQuery(item).hasClass("url") && options.isUrl(item.value) == false)) {
+					errors.push({id: item.id, msg: getMsg(item), type: "text"});
+				}
+				if (options.isEmpty(item) == false && jQuery(item).hasClass("number") && options.isNumber(item.value) == false) {
+					errors.push({id: item.id, msg: getMsg(item), type: "number"});
+				}
+			}
+			
+			function validateCheckbox(item)	{
+				if (item.checked != true) {
+					errors.push({id: item.id, msg: getMsg(item), type: "checkbox"});
+				}
+			}
+			
+			function validateSelect(item) {	
+				if (jQuery.inArray(item.value, options.selectboxdefault) > -1 || item[item.selectedIndex].className == options.selectboxdefaultclass) {
+					errors.push({id: item.id, msg: getMsg(item), type: "select-one"});
+				}
+			}
+			// Loop
+			jQuery(options.requiredpattern).each(function(i, item) {
+				// Checkboxes
+				switch (item.type) {
+					case "checkbox":
+						validateCheckbox(item);
+						break;
+					case "text":
+					case "file":
+					case "textarea":
+					case "hidden":
+					case "password":
+						validateTextBox(item);
+						break;
+					case "select-one":
+						validateSelect(item);
+				}
+			});
+			
+			/*
+			* Validate checkbox groups
+			*/
+			jQuery(options.checkboxgrouppattern + "," + options.radiogrouppattern).each(function(i, item) {
+				var checked = 0;
+				var msg = jQuery(item).find(options.errormsg).text();
+				jQuery(item).find("input[type=checkbox], input[type=radio]").each(function(i, item) {
+					if (item.checked)
+						checked++;
+				});
+				if(checked == 0) {
+					errors.push({id: item.id, msg: msg, type: "group"});
+				}
+			});
+			/*
+			* Check errors length and output to page.
+			*/	
+			if (errors.length > 0) {
+				// Onerror returns errors array to callback
+				if (typeof(options.onerror) == "function") {
+					options.onerror(errors);
+					return false;
+				}
+				jQuery(options.messagecontainer).fadeIn("slow");
+				jQuery("<h4/>").text(options.messageheader).appendTo(jQuery(options.messagecontainer));
+				var ul = jQuery("<ul/>");
+				jQuery(errors).each(function(i, item) {
+					jQuery("#" + item.id).addClass(options.notvalidclass);
+					jQuery("<li />")
+						.attr("id", options.erroridprefix + item.id)
+						.append("<label for='" + item.id + "' class='" + options.errorlabelclass + "'>" + item.msg + "</label>")
+						.appendTo(ul);
+				});
+				ul.appendTo(jQuery(options.messagecontainer));
 				return false;
+			}			
+			if (typeof(options.oncomplete) == "function") {
+				options.oncomplete();
 			}
-
-			$(options.messagecontainer).fadeIn("slow");
-
-			$("<h4/>")
-				.text(options.messageheader)
-				.appendTo($(options.messagecontainer));
-
-			var ul = $("<ul/>");
-
-			$(errors).each(function(i, item) {
-
-				$("#" + item.id).addClass(options.notvalidclass);
-				$("<li />").html(item.msg).attr("id", options.erroridprefix + item.id).appendTo(ul);
-
-			});
-
-			ul.appendTo($(options.messagecontainer));
-
-			return false;
+			// Hide if there are no errors
+			jQuery(options.messagecontainer).fadeOut();
+			return true;
+		
 		}
-
-		// Hide if there are no errors
-		$(options.messagecontainer).fadeOut();
-		return true;
-
-	};
+	
+	})(jQuery);
 
 	/**
 	* @Copyright (c) 2008 Aurélio Saraiva (aureliosaraiva@gmail.com)
@@ -494,7 +545,7 @@
 			showSymbol:true
 		}, settings);
 
-		settings.symbol=settings.symbol+" ";
+		settings.symbol = settings.symbol + " ";
 
 		return this.each(function() {
 			var input=$(this);
@@ -535,12 +586,16 @@
 				if (len== 0) {
 					t = "0.00";
 				}
-				for (var i = 0; i < len; i++)
-					if ((v.charAt(i) != '0') && (v.charAt(i) != settings.decimal))
+				for (var i = 0; i < len; i++) {
+					if ((v.charAt(i) != '0') && (v.charAt(i) != settings.decimal)) {
 						break;
+					}
+				}
 
 				for (; i < len; i++) {
-					if (strCheck.indexOf(v.charAt(i))!=-1) a+= v.charAt(i);
+					if (strCheck.indexOf(v.charAt(i))!=-1) { 
+						a+= v.charAt(i) 
+					};
 				}
 
 				var n = parseFloat(a);
@@ -556,7 +611,7 @@
 			}
 
 			function focusEvent() {
-				if (input.val()=="") {
+				if (input.val() == "") {
 					input.val(setSymbol(getDefaultMask()));
 				} else {
 					input.val(setSymbol(input.val()));
@@ -564,7 +619,7 @@
 			}
 
 			function blurEvent() {
-				if (input.val()==setSymbol(getDefaultMask())) {
+				if (input.val() == setSymbol(getDefaultMask())) {
 					input.val("");
 				} else {
 					input.val(input.val().replace(settings.symbol,""))
@@ -573,13 +628,12 @@
 
 			function getDefaultMask() {
 				var n = parseFloat("0")/Math.pow(10, settings.precision);
-				return (n.toFixed(settings.precision)).replace(
-					new RegExp("\\.", "g"), settings.decimal);
+				return (n.toFixed(settings.precision)).replace(new RegExp("\\.", "g"), settings.decimal);
 			}
 
 			function setSymbol(v) {
 				if (settings.showSymbol) {
-					return settings.symbol+v;
+					return settings.symbol + v;
 				}
 				return v;
 			}

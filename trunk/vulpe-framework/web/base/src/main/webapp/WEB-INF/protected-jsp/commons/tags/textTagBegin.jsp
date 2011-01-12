@@ -6,8 +6,9 @@
 	<c:set var="value" value="${util:eval(pageContext, valueEL)}"/>
 </c:if>
 <c:if test="${not empty mask}">
+<c:set var="maskUpper" value="${fn:toUpperCase(mask)}"/>
 <c:choose>
-	<c:when test="${mask eq 'M' || mask eq 'MONEY' || mask eq 'C' || mask eq 'CURRENCY'}">
+	<c:when test="${maskUpper eq 'M' || maskUpper eq 'MONEY' || maskUpper eq 'C' || maskUpper eq 'CURRENCY'}">
 	<script type="text/javascript">
 		jQuery(function($){
 			vulpe.util.get('${elementId}').maskMoney({symbol:"R$",decimal:",",thousands:"."});
@@ -15,7 +16,10 @@
 	</script>
 		<c:set var="style" value="text-align:right; ${style}"/>
 	</c:when>
-	<c:when test="${mask eq 'N' || mask eq 'NUMBER' || mask eq 'I' || mask eq 'INTEGER'}">
+	<c:when test="${maskUpper eq 'N' || maskUpper eq 'NUMBER' || maskUpper eq 'I' || maskUpper eq 'INTEGER'}">
+		<c:if test="${maskUpper == 'INTEGER' || maskUpper == 'I'}">
+		<c:set var="onblur" value="$(this).blur(function () {if (vulpe.validate.isNumber($(this).val())){${onblur}} else {$(this).val('');}});"/>
+		</c:if>
 	<script type="text/javascript">
 		jQuery(function($){
 			vulpe.util.get('${elementId}').numeric();
@@ -38,12 +42,6 @@
 	</c:otherwise>
 </c:choose>
 </c:if>
-<c:if test="${empty autocompleteMinLength}">
-	<c:set var="autocompleteMinLength" value="3"/>
-</c:if>
-<c:if test="${empty size && not empty maxlength}">
-	<c:set var="size" value="${maxlength}"/>
-</c:if>
-<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}">
-	<c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/>
-</c:if>
+<c:if test="${empty autocompleteMinLength}"><c:set var="autocompleteMinLength" value="3"/></c:if>
+<c:if test="${empty size && not empty maxlength}"><c:set var="size" value="${maxlength}"/></c:if>
+<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}"><c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/></c:if>
