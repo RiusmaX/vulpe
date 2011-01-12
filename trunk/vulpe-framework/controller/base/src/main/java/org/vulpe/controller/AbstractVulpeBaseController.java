@@ -1838,14 +1838,16 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getPaging() != null) {
 				getPaging().setList(getEntities());
 			}
+		}
+		controlResultForward();
+		selectAfter();
+		if (isBack()) {
 			return read();
 		} else {
 			getSession().removeAttribute(getSelectFormKey());
 			getSession().removeAttribute(getSelectTableKey());
 			getSession().removeAttribute(getSelectPagingKey());
 		}
-		controlResultForward();
-		selectAfter();
 		if (getControllerConfig().getController().select().readOnShow()) {
 			onRead();
 		}
