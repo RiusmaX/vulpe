@@ -270,7 +270,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							if (manyToOne != null
 									|| (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()))) {
 								mountParameters((ENTITY) value, params, paramName);
-							} else {
+							} else if (isNotEmpty(value)) {
 								params.put(paramName, value);
 							}
 						}
