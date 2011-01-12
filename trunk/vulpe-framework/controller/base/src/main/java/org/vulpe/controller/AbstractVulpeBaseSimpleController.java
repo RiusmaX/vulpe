@@ -352,6 +352,16 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		this.resultForward = resultForward;
 	}
 
+	/**
+	 * 
+	 * @param page
+	 */
+	public void setResultPage(final String page) {
+		if (StringUtils.isNotEmpty(page)) {
+			setResultForward(Layout.PROTECTED_JSP + (page.startsWith("/") ? page.substring(1) : page));
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

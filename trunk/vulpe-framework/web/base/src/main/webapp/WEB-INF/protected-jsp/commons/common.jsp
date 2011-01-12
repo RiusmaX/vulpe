@@ -269,7 +269,7 @@ $(document).ready(function() {
 	if (fields && fields.length > 0) {
 		for (var i = 0; i < fields.length; i++) {
 			var field = jQuery(fields[i]);
-			vulpe.util.addRequiredField(field);
+			vulpe.view.addRequiredField(field);
 		}
 	}
 <c:choose>
