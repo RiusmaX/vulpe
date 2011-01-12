@@ -1922,20 +1922,27 @@ var vulpe = {
 
 			/**
 			 *
-			 * @param options {url, autocomplete, value, id}
+			 * @param options {url, autocomplete, value, identifier, description}
 			 */
 			submitAutocompleteIdentifier: function(options) {
 				if (options.value && options.value != "") {
-					var id = vulpe.view.selectPopupIds[options.id];
-					if (typeof id == "undefined" || id != options.value || vulpe.util.get(options.id).val() == "") {
-						vulpe.view.selectPopupIds[options.id] = options.value;
+					var id = vulpe.view.selectPopupIds[options.description];
+					if (typeof id == "undefined" || id != options.value || vulpe.util.get(options.description).val() == "") {
+						vulpe.view.selectPopupIds[options.description] = options.value;
 					} else if (id == options.value) {
 						return;
 					}
 					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
-					options.layer = options.id;
-					options.layerFields = options.id;
-					options.id = "";
+					options.layer = options.description;
+					options.layerFields = options.description;
+					var identifier = options.identifier;
+					var description = options.description;
+					options.afterJs = function() {
+						if (vulpe.util.get(description).val() == "") {
+							vulpe.util.get(identifier).val("");
+							vulpe.util.get(identifier).focus();
+						}
+					};
 					vulpe.view.request.submitAjax(options);
 				} else {
 					vulpe.util.get(options.id).val("");

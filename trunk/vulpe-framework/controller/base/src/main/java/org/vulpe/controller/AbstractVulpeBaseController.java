@@ -1392,33 +1392,32 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (onDelete()) {
 			addActionMessage(getDefaultMessage());
 			setSelectedTab(null);
-		}
-		if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
-			final String entityName = getControllerConfig().getEntityClass().getSimpleName();
-			final List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
-			if (VulpeValidationUtil.isNotEmpty(list)) {
-				for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
-					final ENTITY entity = iterator.next();
-					if (getControllerType().equals(ControllerType.SELECT)) {
-						if (entity.getId().equals(getId())) {
-							iterator.remove();
-						}
-					} else {
-						if (entity.getId().equals(getEntity().getId())) {
-							iterator.remove();
+			if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
+				final String entityName = getControllerConfig().getEntityClass().getSimpleName();
+				final List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
+				if (VulpeValidationUtil.isNotEmpty(list)) {
+					for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
+						final ENTITY entity = iterator.next();
+						if (getControllerType().equals(ControllerType.SELECT)) {
+							if (entity.getId().equals(getId())) {
+								iterator.remove();
+							}
+						} else {
+							if (entity.getId().equals(getEntity().getId())) {
+								iterator.remove();
+							}
 						}
 					}
 				}
+				getCachedClasses().put(entityName, list);
 			}
-			getCachedClasses().put(entityName, list);
+			setEntity(null);
 		}
 		deleteAfter();
 		if (getControllerType().equals(ControllerType.MAIN)) {
-			setEntity(null);
 			controlResultForward();
 			return getResultName();
 		} else if (getControllerType().equals(ControllerType.TWICE) && getEntity().getId() != null) {
-			setEntity(null);
 			onRead();
 			controlResultForward();
 			return getResultName();
