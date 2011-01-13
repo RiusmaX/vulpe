@@ -22,7 +22,7 @@ $(document).ready(function() {
 	<c:if test="${(global['frontendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['backendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">if (vulpe.config.browser.ie) { $("#nav").superfish().find("ul").bgIframe({opacity: false}); } else { $("#nav").superfish(); }</c:if>
 	<c:if test="${pageContext.request.locale ne 'en_US'}">$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);</c:if>
 	if (document.forms['${vulpeFormName}']) {
-		vulpe.config.formName = "${vulpeFormName}";
+		<c:if test="${empty popupKey}">vulpe.config.formName = "${vulpeFormName}";</c:if>
 		vulpe.config.logic.prepareName = "${prepareName}";
 		vulpe.util.removeHotKeys(["return", "Ctrl+f7", "Ctrl+f8", "Ctrl+f9", "Ctrl+f10", "Ctrl+f12", "Ctrl+del", "Alt+f8", "Alt+Shift+del"]);
 	<c:if test="${now['buttons']['create'] || now['buttons']['SELECT_create'] || now['buttons']['Main_create']}">

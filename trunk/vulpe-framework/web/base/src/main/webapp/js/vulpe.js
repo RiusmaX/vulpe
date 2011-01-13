@@ -484,12 +484,12 @@ var vulpe = {
 		    var regex = /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/;
 		    return regex.test(str);
 	    },
-	    
+
 	    isNumber: function (str) {
 		    var regex = /^[0-9-\s]*$/;
 		    return regex.test(str);
 	    },
-	    
+
 	    isEmpty: function (item) {
 		    if (item.value == "") {
 		        return true;
@@ -499,27 +499,27 @@ var vulpe = {
             }
             return false;
 	    },
-		
+
 		isUrl: function (str) {
 		    var regex = /^((http|ftp|https):\/\/w{3}[\d]*.|(http|ftp|https):\/\/|w{3}[\d]*.)([\w\d\._\-#\(\)\[\]\\,;:]+@[\w\d\._\-#\(\)\[\]\\,;:])?([a-z0-9]+.)*[a-z\-0-9]+.([a-z]{2,3})?[a-z]{2,6}(:[0-9]+)?(\/[\/a-z0-9\._\-,]+)*[a-z0-9\-_\.\s\%]+(\?[a-z0-9=%&amp;\.\-,#]+)?$/;
 		    return regex.test(str);
 	    },
-		
+
 		isDate: function (str) {
 		    var regex = /^((0?[13578]|10|12)(-|\/)((0[0-9])|([12])([0-9]?)|(3[01]?))(-|\/)((\d{4})|(\d{2}))|(0?[2469]|11)(-|\/)((0[0-9])|([12])([0-9]?)|(3[0]?))(-|\/)((\d{4}|\d{2})))$/;
 		    return regex.test(str);
 	    },
-		
+
 		isTime: function (str) {
 		    var regex = /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/;
 		    return regex.test(str);
 	    },
-		
+
 		isFloat: function (str) {
 		    var regex = /^([+-]?(((\d+(\.)?)|(\d*\.\d+))([eE][+-]?\d+)?))$/;
 		    return regex.test(str);
 	    },
-		
+
 		isArray: function(obj) {
 			if (obj.length) {
 				return true;
@@ -1138,7 +1138,7 @@ var vulpe = {
 				vulpe.util.get(idRequiredField).hide();
 			}
 		},
-	
+
 		addRequiredField: function(field) {
 			var idField = field.attr("id");
 			var idRequiredField = idField + "FieldRequired";
@@ -1201,7 +1201,7 @@ var vulpe = {
 		isSelection: false,
 
 		popups: new Array(),
-		
+
 		selectPopupIds: new Array(),
 
 		resetFields: function(formName) {
@@ -1945,7 +1945,7 @@ var vulpe = {
 					};
 					vulpe.view.request.submitAjax(options);
 				} else {
-					vulpe.util.get(options.id).val("");
+					vulpe.util.get(options.identifier).val("");
 				}
 			},
 
