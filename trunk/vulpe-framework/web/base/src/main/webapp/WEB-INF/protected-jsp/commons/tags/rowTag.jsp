@@ -153,13 +153,13 @@
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
 					<c:if test="${disableDelete}"><c:set var="disableSelect" value="disabled=\"true\""/></c:if>
-					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>"${disableSelect}>
+					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>"${disableSelect}/>
 				</td>
 			</c:when>
 			<c:otherwise>
 				<th id="vulpeSelectAll" width="10px" style="text-align: center">
-					<fmt:message key='label.vulpe.delete'/><br>
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
+					<fmt:message key='label.vulpe.delete'/><br/>
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
 				</th>
 			</c:otherwise>
 		</c:choose>
@@ -167,8 +167,8 @@
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<th id="vulpeSelectAll" width="10px" style="text-align: center">
-					<fmt:message key='label.vulpe.delete'/><br>
-					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>">
+					<fmt:message key='label.vulpe.delete'/><br/>
+					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">

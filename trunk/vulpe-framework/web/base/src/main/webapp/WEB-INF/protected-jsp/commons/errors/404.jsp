@@ -21,11 +21,11 @@
 <div id="error">
 <h1><fmt:message key="vulpe.error.404.subtitle" /></h1>
 <h2><fmt:message key="vulpe.error.404" /></h2>
-	<br>
+	<br/>
 	<div id="home">
 		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
 	</div>
-	<br>
+	<br/>
 </div>
 </body>
 </html>

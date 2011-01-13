@@ -27,9 +27,9 @@
 	<tr>
 		<td></td>
 		<td>
-			<strong><fmt:message key="label.vulpe.audit.child.entities"/></strong><br>
+			<strong><fmt:message key="label.vulpe.audit.child.entities"/></strong><br/>
 			<c:forEach var="child" items="${childOccurrences}" varStatus="statusChildren">
-			<a href="javascript:void(0);" onclick="vulpe.view.showHideElement('child-${statusChildren.count}');"><strong>> <fmt:message key="label.vulpe.audit.child.entity"/>:</strong> ${child.entity}; <strong><fmt:message key="label.vulpe.audit.id"/>:</strong> ${child.primaryKey}</a><br>
+			<a href="javascript:void(0);" onclick="vulpe.view.showHideElement('child-${statusChildren.count}');"><strong>> <fmt:message key="label.vulpe.audit.child.entity"/>:</strong> ${child.entity}; <strong><fmt:message key="label.vulpe.audit.id"/>:</strong> ${child.primaryKey}</a><br/>
 			<table width="100%" cellspacing="0" cellpadding="2" style="border: 1px solid #eee; display: none" id="child-${statusChildren.count}">
 				<tr>
 					<td width="1%"><strong><fmt:message key="label.vulpe.audit.attribute"/></strong></td>

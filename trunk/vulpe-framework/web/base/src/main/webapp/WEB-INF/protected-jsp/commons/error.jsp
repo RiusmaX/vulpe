@@ -22,10 +22,10 @@
 <div id="error">
 	<h1><fmt:message key="vulpe.error.internal" /></h1>
 	<div id="message">
-		<strong><fmt:message key="label.vulpe.requestURI" />:</strong> ${pageContext.errorData.requestURI}<br>
-		<strong><fmt:message key="label.vulpe.servletName" />:</strong> ${pageContext.errorData.servletName}<br>
-		<strong><fmt:message key="label.vulpe.statusCode" />:</strong> ${pageContext.errorData.statusCode}<br>
-		<strong><fmt:message key="label.vulpe.message" />:</strong> ${empty pageContext.errorData.throwable.message ? pageContext.errorData.throwable : pageContext.errorData.throwable.message}<br>
+		<strong><fmt:message key="label.vulpe.requestURI" />:</strong> ${pageContext.errorData.requestURI}<br/>
+		<strong><fmt:message key="label.vulpe.servletName" />:</strong> ${pageContext.errorData.servletName}<br/>
+		<strong><fmt:message key="label.vulpe.statusCode" />:</strong> ${pageContext.errorData.statusCode}<br/>
+		<strong><fmt:message key="label.vulpe.message" />:</strong> ${empty pageContext.errorData.throwable.message ? pageContext.errorData.throwable : pageContext.errorData.throwable.message}<br/>
 		<strong><a href="javascript:void(0)" onclick="vulpe.view.showHideElement('stackTrace');"><fmt:message key="label.vulpe.stackTrace" />:</a></strong>
 		<div id="stackTrace" style="display: none; height: 300px; overflow: auto">
 			<c:forEach var="stackTrace" items="${pageContext.errorData.throwable.stackTrace}">
@@ -33,12 +33,12 @@
 			</c:forEach>
 		</div>
 	</div>
-	<br>
+	<br/>
 	<!--
 	<div id="home">
 		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
 	</div>
-	<br>
+	<br/>
 	-->
 </div>
 </body>

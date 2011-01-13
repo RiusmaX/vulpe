@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<form id="vulpeLoginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method="POST">
+<form id="vulpeLoginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
 <div id="contentTitle"><fmt:message key="vulpe.security.login.title.application"/></div>
 <div id="content">
 	<c:if test="${not empty param.loginError}">
@@ -24,7 +24,7 @@
 	<v:text elementId="j_username" name="j_username" targetName="" maxlength="20" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" style="width: 150px;" />
 	<v:password elementId="j_password" name="j_password" targetName="" maxlength="20" labelKey="label.vulpe.security.login.password" style="width: 150px;" />
 	<p>
-		<input name="submit" type="submit" id="buttonSubmitLoginForm" value="<fmt:message key='label.vulpe.security.login'/>" class="vulpeButton" style="width: 75px;">&nbsp;<input name="reset"type="reset" value="<fmt:message key='label.vulpe.security.login.clear'/>" class="vulpeButton" style="width: 75px;">
+		<input name="submit" type="submit" id="buttonSubmitLoginForm" value="<fmt:message key='label.vulpe.security.login'/>" class="vulpeButton" style="width: 75px;"/>&nbsp;<input name="reset"type="reset" value="<fmt:message key='label.vulpe.security.login.clear'/>" class="vulpeButton" style="width: 75px;" />
 	</p>
 <script type="text/javascript">
 $(document).ready(function() {
