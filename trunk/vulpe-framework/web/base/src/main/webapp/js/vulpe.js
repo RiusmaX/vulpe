@@ -1937,10 +1937,13 @@ var vulpe = {
 					options.layerFields = options.description;
 					var identifier = options.identifier;
 					var description = options.description;
+					var afterJs = options.afterJs;
 					options.afterJs = function() {
 						if (vulpe.util.get(description).val() == "") {
 							vulpe.util.get(identifier).val("");
 							vulpe.util.get(identifier).focus();
+						} else {
+							afterJs();
 						}
 					};
 					vulpe.view.request.submitAjax(options);
