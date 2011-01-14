@@ -22,8 +22,8 @@ import org.vulpe.portal.core.model.entity.BasePortal;
 import org.vulpe.portal.core.model.entity.Portal;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends VulpeStrutsController<ENTITY, ID> {
+public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		VulpeStrutsController<ENTITY, ID> {
 
 	protected static final Logger LOG = Logger.getLogger(ApplicationBaseController.class);
 
@@ -46,12 +46,10 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			if (field.getType().getName().equals(TextTranslate.class.getName())) {
-				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(
-						entity, field.getName());
-				if (textTranslate != null
-						&& VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
-					for (final Iterator<TextTranslateLanguage> iterator = textTranslate
-							.getLanguages().iterator(); iterator.hasNext();) {
+				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(entity, field.getName());
+				if (textTranslate != null && VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
+					for (final Iterator<TextTranslateLanguage> iterator = textTranslate.getLanguages().iterator(); iterator
+							.hasNext();) {
 						final TextTranslateLanguage textTranslateLanguage = iterator.next();
 						if (StringUtils.isEmpty(textTranslateLanguage.getText())) {
 							iterator.remove();
@@ -60,16 +58,15 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 				}
 			}
 		}
-		if (entity instanceof BasePortal) {
-			final BasePortal portal = (BasePortal) entity;
+		if (BasePortal.class.isAssignableFrom(entity.getClass())) {
 			if (operation != null) {
 				if (operation.equals(Operation.CREATE_POST)) {
-					portal.setDate(new Date());
-					portal.setStatus(Status.ACTIVE);
+					VulpeReflectUtil.setFieldValue(entity, "date", new Date());
+					VulpeReflectUtil.setFieldValue(entity, "status", Status.ACTIVE);
 				}
 				if (operation.equals(Operation.UPDATE_POST)) {
-					if (portal.getDate() == null) {
-						portal.setDate(new Date());
+					if (VulpeReflectUtil.getFieldValue(entity, "date") == null) {
+						VulpeReflectUtil.setFieldValue(entity, "date", new Date());
 					}
 				}
 			}

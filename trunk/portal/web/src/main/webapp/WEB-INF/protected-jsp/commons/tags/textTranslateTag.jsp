@@ -9,14 +9,14 @@
 			app.textChange("${elementId}", ${not empty editor && editor});
 		});
 	</script>
-	<c:forEach var="language" items="${cachedClass['Language']}" varStatus="status">
+	<c:forEach var="language" items="${cachedClasses['Language']}" varStatus="status">
 		<v:hidden property="${property}.languages[${status.index}].language.id" />
 		<v:hidden property="${property}.languages[${status.index}].text" />
 	</c:forEach>
 	<c:set var="languageIdValueEL" value="${'${'}${name}.languageId${'}'}" />
 	<c:set var="languageIdValue" value="${util:eval(pageContext, languageIdValueEL)}" />
 	<select id="${elementId}-languageIdFlag" style="width: 45px;" name="${name}.languageId">
-		<c:forEach var="language" items="${cachedClass['Language']}" varStatus="status">
+		<c:forEach var="language" items="${cachedClasses['Language']}" varStatus="status">
 			<c:set var="selected" value="" />
 			<c:if test="${language.id == languageIdValue}">
 				<c:set var="selected"> selected="selected"</c:set>
@@ -38,12 +38,12 @@
 	<c:set var="textLanguages" value="${util:eval(pageContext, textLanguagesEL)}" />
 	<c:if test="${empty editor && not empty textLanguages && fn:length(textLanguages) > 1}">
 		<img src="${pageContext.request.contextPath}/images/icons/bullet_arrow_down.png"
-			style="cursor: pointer" id="${elementId}-showOtherLanguages">
+			style="cursor: pointer" id="${elementId}-showOtherLanguages" alt="show languages text"/>
 		<span id="${elementId}-otherLanguages" style="position: relative; left: 27px; display: none;">
 		<c:forEach var="textLanguage" items="${textLanguages}">
-			<span id="${elementId}-otherLanguages${textLanguage.language.id}"><br>
+			<span id="${elementId}-otherLanguages${textLanguage.language.id}"><br/>
 			<img
-				src="${pageContext.request.contextPath}/images/flags/${textLanguage.language.localeCode}.png">&nbsp;${textLanguage.text}</span>
+				src="${pageContext.request.contextPath}/images/flags/${textLanguage.language.localeCode}.png" alt="${textLanguage.text}"/>&nbsp;${textLanguage.text}</span>
 		</c:forEach> </span>
 	</c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp"%>

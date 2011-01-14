@@ -4,9 +4,9 @@
 	<c:set var="content" value="${now['content']}"/>
 	<div id="content_${content.id}">
 		<c:out value="${content.fullText}" escapeXml="${content.escapeXml}" />
-		<br><br>
-		<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/section/ajax/${content.section.id}');"><strong><fmt:message key="label.portal.back"/></strong></a><br>
+		<br/><br/>
+		<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/section/ajax/${content.section.id}');"><strong><fmt:message key="label.portal.back"/></strong></a><br/>
 	</div>
-	<br>
+	<br/>
 </div>
 <jsp:include page="../bottom.jsp"/>
