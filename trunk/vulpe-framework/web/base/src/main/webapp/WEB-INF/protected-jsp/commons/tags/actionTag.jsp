@@ -74,17 +74,17 @@
 					<c:choose>
 						<c:when test="${fn:contains(javascript, 'Popup')}">
 							<c:if test="${empty iconClass}"><c:set var="iconClass" value="vulpeImagePopupButton" /></c:if>
-							<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" onclick="${javascript}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
+							<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" onclick="${javascript}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${not empty iconClass}"><c:set var="iconClass" value="${buttonPrefix}${iconClass}" /></c:if>
-							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a>
+							<a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
+						<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" border="${iconBorder}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
 						<c:otherwise>
 							<c:set var="styleClass" value="vulpeSubmit" />
 							<input style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
