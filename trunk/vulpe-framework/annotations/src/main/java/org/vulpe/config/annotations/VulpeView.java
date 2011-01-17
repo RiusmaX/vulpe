@@ -26,6 +26,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeView {
 
+	/**
+	 * Add news details on top of list.
+	 */
+	boolean addNewDetailsOnTop() default false;
+
 	boolean backendCenteredLayout() default false;
 
 	boolean breakLabel() default false;

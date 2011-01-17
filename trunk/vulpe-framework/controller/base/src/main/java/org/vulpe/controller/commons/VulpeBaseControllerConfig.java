@@ -112,7 +112,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 * @return
 	 */
 	public VulpeBaseDetailConfig getDetail(final String name) {
-		for (VulpeBaseDetailConfig detail : details) {
+		for (final VulpeBaseDetailConfig detail : details) {
 			if (detail.getName().equals(name)) {
 				return detail;
 			}

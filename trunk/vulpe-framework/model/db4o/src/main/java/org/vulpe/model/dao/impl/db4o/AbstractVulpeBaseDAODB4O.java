@@ -172,7 +172,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 					if (value != null) {
 						if (String.class.isAssignableFrom(field.getType())) {
 							if (StringUtils.isEmpty(value.toString()) || "obj.id".equals(value) || "null".equals(value)
-									|| "%".equals(value)) {
+									/*|| "%".equals(value)*/) {
 								PropertyUtils.setProperty(object, field.getName(), null);
 							}
 						} else if (VulpeEntity.class.isAssignableFrom(value.getClass())

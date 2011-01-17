@@ -41,7 +41,7 @@ jQuery(function($){
 });
 </c:if>
 vulpe.config.elements["${elementId}"] = {
-	type: '${validateType}'
+	type: '${fn:toUpperCase(validateType)}'
 	<c:if test="${not empty validateRange}">,range: '${validateRange}'</c:if>
 	<c:if test="${not empty validateMin}">,min: '${validateMin}'</c:if>
 	<c:if test="${not empty validateMax}">,max: '${validateMax}'</c:if>
