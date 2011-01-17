@@ -73,9 +73,7 @@ public class VulpeConstants {
 			public static final String THEME = "theme";
 			public static final String FRONTEND_MENU_TYPE = "frontendMenuType";
 			public static final String BACKEND_MENU_TYPE = "backendMenuType";
-			public static final String BACKEND_CENTERED_LAYOUT = "backendCenteredLayout";
 			public static final String FOCUS_FIRST = "focusFirst";
-			public static final String FRONTEND_CENTERED_LAYOUT = "frontendCenteredLayout";
 			public static final String SHOW_BUTTONS_AS_IMAGE = "showButtonsAsImage";
 			public static final String SHOW_ICON_OF_BUTTON = "showIconOfButton";
 			public static final String SHOW_TEXT_OF_BUTTON = "showTextOfButton";

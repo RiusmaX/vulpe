@@ -24,12 +24,12 @@
 				</c:otherwise>
 			</c:choose>
 		</c:if>
-		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}" </c:set></c:if>
-		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}" </c:set></c:if>
-		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}" </c:set></c:if>
-		<c:if test="${not empty labelStyle}"><c:set var="labelStyle"> style="${labelStyle}"</c:set></c:if>
-		<c:if test="${empty styleClass}"><c:set var="styleClass"> class="vulpeColumnHeader"</c:set></c:if>
-		<th ${elementId}${onclick}${onmouseover}${onmouseout}colspan="${colspan}" ${width}scope="col"${labelStyle}${styleClass}>${label}<c:if test="${showBodyInHeader}"><jsp:doBody/></c:if></th>
+		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}"</c:set></c:if>
+		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
+		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
+		<c:if test="${not empty labelStyle}"><c:set var="labelStyle">style="${labelStyle}"</c:set></c:if>
+		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumnHeader"</c:set></c:if>
+		<th ${elementId} ${onclick} ${onmouseover} ${onmouseout} colspan="${colspan}" ${width} scope="col" ${labelStyle} ${styleClass}>${label}<c:if test="${showBodyInHeader}"><jsp:doBody/></c:if></th>
 	</c:when>
 	<c:otherwise>
 		<c:if test="${empty listName}"><c:set var="listName" value="entities"/></c:if>
@@ -41,13 +41,13 @@
 			<c:if test="${not empty propertyValue}"><c:set var="value" value="${propertyValue}"/></c:if>
 		</c:if>
 		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}" </c:set></c:if>
-		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}" </c:set></c:if>
-		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}" </c:set></c:if>
-		<c:if test="${not empty selectCheckOff && empty onclick}"><c:set var="onclick">onclick="${selectCheckOff}" </c:set></c:if>
-		<c:if test="${not empty colspan}"><c:set var="colspan">colspan="${colspan}" </c:set></c:if>
+		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
+		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
+		<c:if test="${not empty selectCheckOff && empty onclick}"><c:set var="onclick">onclick="${selectCheckOff}"</c:set></c:if>
+		<c:if test="${not empty colspan}"><c:set var="colspan">colspan="${colspan}"</c:set></c:if>
 		<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
-		<c:if test="${empty styleClass}"><c:set var="styleClass"> class="vulpeColumn ${xstyleClass}"</c:set></c:if>
-		<td ${elementId}${onclick}${onmouseover}${onmouseout}${colspan}${style}${styleClass}>
+		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
+		<td ${elementId} ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
 			<c:if test="${not empty value}">
 				<c:choose>
 					<c:when test="${!isImage}">
@@ -61,7 +61,7 @@
 						<c:if test="${empty imageWidth}"><c:set var="imageWidth" value="50"/></c:if>
 						<c:if test="${empty imageHeight}"><c:set var="imageHeight" value="38"/></c:if>
 						<c:set var="key" value="${listName}[${currentStatus.index}].${property}"/>
-						<center><img border="0" src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="vulpeThumb"/></center>
+						<center><img src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="vulpeThumb"/></center>
 					</c:otherwise>
 				</c:choose>
 			</c:if>

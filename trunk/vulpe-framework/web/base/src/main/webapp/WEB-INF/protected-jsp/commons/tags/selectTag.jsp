@@ -28,7 +28,7 @@
 		<v:hidden property="${property}"/>
 	</c:when>
 	<c:otherwise>
-	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}" accesskey="${accesskey}">
+	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}">
 		<c:if test="${not empty headerLabel}"><option value="${headerValue}">${headerLabel}</option></c:if>
 		<c:forEach items="${items}" var="item">
 			<c:set var="keyValueEL" value="${'${'}item.${itemKey}${'}'}"/>
@@ -36,7 +36,7 @@
 			<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
 			<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
 			<c:choose>
-				<c:when test="${value eq keyValue}"><option selected="true" value="${util:toString(keyValue)}">${util:toString(labelValue)}</option></c:when>
+				<c:when test="${value eq keyValue}"><option selected="selected" value="${util:toString(keyValue)}">${util:toString(labelValue)}</option></c:when>
 				<c:otherwise><option value="${util:toString(keyValue)}">${util:toString(labelValue)}</option></c:otherwise>
 			</c:choose>
 		</c:forEach>

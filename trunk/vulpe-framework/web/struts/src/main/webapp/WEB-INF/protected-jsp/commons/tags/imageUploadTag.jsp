@@ -14,7 +14,7 @@
 	<jsp:doBody/>
 	<c:if test="${not empty util:getProperty(pageContext, name)}">
 		<c:set var="thumbName" value="${name}-thumb"/>
-		<a id="${elementId}-image" href="${util:linkImage(pageContext, name, 'image/jpeg', '', imageWidth, imageThumbWidth)}" class="lightbox"><img border="0" src="${util:linkKey(thumbName, 'image/jpeg', '')}" width="${imageThumbWidth}" height="${imageThumbHeight}" class="thumb"/></a>
+		<a id="${elementId}-image" href="${util:linkImage(pageContext, name, 'image/jpeg', '', imageWidth, imageThumbWidth)}" class="lightbox"><img src="${util:linkKey(thumbName, 'image/jpeg', '')}" width="${imageThumbWidth}" height="${imageThumbHeight}" class="thumb"/></a>
 		<script type="text/javascript">
 	    $(function() {
 		    <c:choose>

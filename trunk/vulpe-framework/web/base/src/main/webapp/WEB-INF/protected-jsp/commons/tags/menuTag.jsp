@@ -18,21 +18,21 @@
 	<c:otherwise><fmt:message key="${helpKey}" var="help"/></c:otherwise>
 </c:choose>
 </c:if>
-<c:if test="${not empty accesskey}"><c:set var="accesskey"> accesskey="${accesskey}"</c:set></c:if>
-<c:if test="${current}"><c:set var="currentClass"> class="vulpeCurrentMenu"</c:set></c:if>
+<c:if test="${not empty accesskey}"><c:set var="accesskey">accesskey="${accesskey}"</c:set></c:if>
+<c:if test="${current}"><c:set var="currentClass">class="vulpeCurrentMenu"</c:set></c:if>
 <c:choose>
 <c:when test="${not empty action}">
 	<c:if test="${!fn:startsWith(action, '/')}"><c:set var="action" value="/${action}"/></c:if>
 	<c:if test="${!fn:contains(action, '/ajax')}"><c:set var="action" value="${action}/ajax"/></c:if>
-	<c:set var="onclick"> onclick="vulpe.view.request.submitLink('${action}');"</c:set>
+	<c:set var="onclick">onclick="vulpe.view.request.submitLink('${action}');"</c:set>
 </c:when>
-<c:when test="${not empty url}"><c:set var="onclick"> onclick="$(window.location).attr('href', '${url}');"</c:set></c:when>
+<c:when test="${not empty url}"><c:set var="onclick">onclick="$(window.location).attr('href', '${url}');"</c:set></c:when>
 </c:choose>
 <c:if test="${render}">
 <c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 <c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 <li id="vulpeMenu-${elementId}" style="${style}">
-	<a id="vulpeMenuLink-${elementId}" href="javascript:void(0);"${currentClass}${onclick}${accesskey} title="${help}"><span>${label}</span></a>
+	<a id="vulpeMenuLink-${elementId}" href="javascript:void(0);" ${currentClass} ${onclick} ${accesskey} title="${help}"><span>${label}</span></a>
 	<jsp:doBody var="theBody"/>
 	<c:if test="${not empty theBody}"><ul>${theBody}</ul></c:if>
 	<script type="text/javascript">

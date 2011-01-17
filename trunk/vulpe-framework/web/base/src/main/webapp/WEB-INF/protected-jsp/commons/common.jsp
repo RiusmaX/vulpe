@@ -265,13 +265,7 @@ $(document).ready(function() {
 			}
 		}
 	});
-	var fields = jQuery("[class*='vulpeRequired']");
-	if (fields && fields.length > 0) {
-		for (var i = 0; i < fields.length; i++) {
-			var field = jQuery(fields[i]);
-			vulpe.view.addRequiredField(field);
-		}
-	}
+	vulpe.view.checkRequiredFields();
 <c:choose>
 	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>

@@ -1147,6 +1147,16 @@ var vulpe = {
 			}
 			vulpe.util.get(idRequiredField).show();
 		},
+		
+		checkRequiredFields: function() {
+			var fields = jQuery("[class*='vulpeRequired']");
+			if (fields && fields.length > 0) {
+				for (var i = 0; i < fields.length; i++) {
+					var field = jQuery(fields[i]);
+					vulpe.view.addRequiredField(field);
+				}
+			}
+		},
 
 		validateSelectedToDelete: function(command) {
 			var selections = jQuery(":checkbox[name$='selected']");

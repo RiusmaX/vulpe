@@ -5,7 +5,7 @@
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 	<c:if test="${empty sortPropertyInfo}"><c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/></c:if>
-	<c:if test="${empty renderId}"><c:set var="renderId" value="${true}"/></c:if>
+	<c:if test="${empty renderId}"><c:set var="renderId" value="${true}" scope="request"/></c:if>
 	<c:if test="${empty emptyKey}"><c:set var="emptyKey" value="vulpe.message.empty.list"/></c:if>
 	<c:set var="name" value=""/>
 	<c:set var="baseName" value=""/>
@@ -77,6 +77,16 @@
 		<c:if test="${empty border}"><c:set var="border" value="0"/></c:if>
 		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="0"/></c:if>
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
+		<thead>
+			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
+			<c:if test="${not empty tableHeader}"><tr class="vulpeTableHeader">${tableHeader}</tr></c:if>
+			<jsp:invoke fragment="tableBody"/>
+		</thead>
+		<c:if test="${not empty tableFooter}">
+			<tfoot>
+				<tr class="vulpeTableFooter">${tableFooter}</tr>
+			</tfoot>
+		</c:if>
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
@@ -87,7 +97,7 @@
 			<c:set var="itemTableTag" value="${itemName}" scope="request"/>
 			<c:set var="v_item" value="${util:put(pageContext, itemTableTag, item, applicationScope['REQUEST_SCOPE'])}"/>
 			<c:set var="currentItem" value="${item}" scope="request"/>
-			<c:if test="${not empty detailConfig && renderId}"><v:hidden property="id"/></c:if>
+			<c:set var="currentDetailConfig" value="${detailConfig}" scope="request"/>
 			<jsp:invoke fragment="tableBody"/>
 			<c:if test="${not empty detailConfig && not empty detailConfig.subDetails && fn:length(detailConfig.subDetails) > 0}">
 				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
@@ -109,16 +119,6 @@
 			<c:remove var="itemTableTag" scope="request"/>
 		</c:forEach>
 		</tbody>
-		<thead>
-			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
-			<c:if test="${not empty tableHeader}"><tr class="vulpeTableHeader">${tableHeader}</tr></c:if>
-			<jsp:invoke fragment="tableBody"/>
-		</thead>
-		<c:if test="${not empty tableFooter}">
-			<tfoot>
-				<tr class="vulpeTableFooter">${tableFooter}</tr>
-			</tfoot>
-		</c:if>
 		</table>
 		<v:paging list="${pagingList}" actionName="${pagingActionName}" formName="${pagingFormName}" layer="${pagingLayer}" layerFields="${pagingLayerFields}" beforeJs="${pagingBeforeJs}" afterJs="${pagingAfterJs}"/>
 	</c:if>

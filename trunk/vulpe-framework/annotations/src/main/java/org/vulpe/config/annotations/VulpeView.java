@@ -31,13 +31,9 @@ public @interface VulpeView {
 	 */
 	boolean addNewDetailsOnTop() default false;
 
-	boolean backendCenteredLayout() default false;
-
 	boolean breakLabel() default false;
 
 	boolean focusFirst() default true;
-
-	boolean frontendCenteredLayout() default false;
 
 	int globalPageSize() default 5;
 

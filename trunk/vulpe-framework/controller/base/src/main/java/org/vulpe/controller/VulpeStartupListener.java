@@ -103,10 +103,8 @@ public class VulpeStartupListener implements ServletContextListener {
 		global.put(Global.BACKEND_MENU_TYPE, vulpeProject.backendMenuType());
 
 		if (vulpeProject.view() != null) {
-			global.put(Global.BACKEND_CENTERED_LAYOUT, vulpeProject.view().focusFirst());
 			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
 			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
-			global.put(Global.FRONTEND_CENTERED_LAYOUT, vulpeProject.view().frontendCenteredLayout());
 			global.put(Global.ICON_HEIGHT, vulpeProject.view().iconHeight());
 			global.put(Global.MOBILE_ICON_HEIGHT, vulpeProject.view().mobileIconHeight());
 			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
