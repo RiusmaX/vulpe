@@ -408,6 +408,7 @@ html,body {
 #container {
 	margin: 0 auto;
 	height: 100%;
+	text-align: center;
 	width: 100%;
 }
 
@@ -564,7 +565,8 @@ html,body {
 	top: -2px;
 	background: #ddd;
 	padding-bottom: 2px;
-	text-align: left
+	text-align: left;
+	display: inline-block;
 }
 
 #vulpe {
