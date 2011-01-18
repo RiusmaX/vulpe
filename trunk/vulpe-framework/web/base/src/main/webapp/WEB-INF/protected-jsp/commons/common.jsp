@@ -247,7 +247,7 @@ $(document).ready(function() {
 		autoOpen: false,
 		bgiframe: true,
 		resizable: false,
-		height:140,
+		height: 140,
 		modal: true,
 		overlay: {
 			backgroundColor: '#000',

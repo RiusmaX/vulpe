@@ -27,6 +27,10 @@
 <script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/themes/${global['theme']}/js/frontend/${global['theme']}.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
+vulpe.config.buttons = {
+	ok: '<fmt:message key="label.vulpe.button.ok"/>',
+	cancel: '<fmt:message key="label.vulpe.button.cancel"/>'	
+}
 vulpe.config.contextPath = '${pageContext.request.contextPath}';
 vulpe.config.theme = '${global['theme']}';
 vulpe.config.messages = {
@@ -56,6 +60,7 @@ vulpe.config.messages = {
 	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	deleteSelected: '<fmt:message key="vulpe.message.confirm.delete.selected"/>',
+	loading: '<fmt:message key="vulpe.message.loading"/>',
 	selectRecordsToDelete: '<fmt:message key="vulpe.message.select.records.to.delete"/>',
 	updatePost: '<fmt:message key="vulpe.message.confirm.updatePost"/>',
 	upload: '<fmt:message key="vulpe.error.upload"/>',

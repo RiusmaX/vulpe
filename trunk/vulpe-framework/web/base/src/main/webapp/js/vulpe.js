@@ -28,6 +28,10 @@ var vulpe = {
 			ie6: ((BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer") && BrowserDetect.version == "6"),
 			webkit: (BrowserDetect.browser == "Chrome" || BrowserDetect.browser == "Safari")
 		},
+		buttons: {
+			ok: "label.vulpe.button.ok",
+			cancel: "label.vulpe.button.cancel"
+		},
 		contextPath: "",
 		css: {
 			fieldError: "vulpeFieldError"
@@ -82,6 +86,7 @@ var vulpe = {
 			fieldRequired: "vulpe.js.error.required",
 			keyRequired: "vulpe.js.error.key.required",
 			deleteSelected: "vulpe.message.confirm.delete.selected",
+			loading: "vulpe.message.loading",
 			selectRecordsToDelete: "vulpe.message.select.records.to.delete",
 			updatePost: "vulpe.message.confirm.updatePost",
 			upload: "vulpe.error.upload",
@@ -308,16 +313,14 @@ var vulpe = {
 		focusFirst: function(layer) {
 			var token = "input.focused,select.focused,textarea.focused";
 			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
-			if (fields && fields.length > 0) {
-				var focused = false;
-				for (var i = 0; i < fields.length; i++) {
-					var field = jQuery(fields[i]);
-					if (field.val() == "") {
-						field.focus();
-						focused = true;
-						break;
-					}
+			var focused = false;
+			fields.each(function(index) {
+				if ($(this).val() == "" && !focused) {
+					$(this).focus();
+					focused = true;
 				}
+			});
+			if (fields.length > 0) {
 				if (!focused) {
 					fields[0].focus();
 				}
@@ -965,8 +968,8 @@ var vulpe = {
 			var fields = jQuery("[class*='vulpeRequired']", parent);
 			var invalidCount = 0;
 			if (fields && fields.length > 0) {
-				for (var i = 0; i < fields.length; i++) {
-					var field = jQuery(fields[i]);
+				fields.each(function(index) {
+					var field = $(this);
 					var idField = field.attr("id");
 					if (!vulpe.validate.validateRequired({field: field})) {
 						if (invalidCount == 0 && !vulpe.util.existsVulpePopups()) {
@@ -985,21 +988,17 @@ var vulpe = {
 							valid = false;
 						}
 					}
-				}
+				});
 			} else if (vulpe.config.requireOneFilter) {
-				var filters = jQuery('input[id*=entitySelect],select[id*=entitySelect],textarea[id*=entitySelect]', parent);
-				if (filters && filters.length > 0) {
-					var empty = true;
-					for (var i = 0; i < filters.length; i++) {
-						var field = jQuery(filters[i]);
-						var idField = field.attr("id");
-						var typeField = field.attr("type");
-						if (typeField == "hidden") {
-							continue;
-						} else if (typeField == "checkbox") {
+				var empty = true;
+				jQuery('input[id*=entitySelect],select[id*=entitySelect],textarea[id*=entitySelect]', parent).each(function(index) {
+					var field = $(this);
+					var idField = field.attr("id");
+					var typeField = field.attr("type");
+					if (empty && !typeField == "hidden") {
+						if (typeField == "checkbox") {
 							if (eval(field.attr("checked"))) {
 								empty = false;
-								break;
 							}
 						} else {
 							var idParent = idField.substring(0, idField.lastIndexOf(vulpe.config.token.dot));
@@ -1015,26 +1014,23 @@ var vulpe = {
 							}
 							if (vulpe.util.trim(value).length > 0) {
 								empty = false;
-								break;
 							}
 						}
 					}
-					if (empty) {
-						vulpe.util.focusFirst("#" + formName);
-						vulpe.exception.showMessageError(vulpe.config.messages.error.validate.requireOneFilter);
-						return false;
-					}
+				});
+				if (empty) {
+					vulpe.util.focusFirst("#" + formName);
+					vulpe.exception.showMessageError(vulpe.config.messages.error.validate.requireOneFilter);
+					return false;
 				}
 			}
-			var allFields = jQuery(":text,textarea", parent);
 			var invalidFields = 0;
-			for (var i = 0; i < allFields.length; i++) {
-				var field = jQuery(allFields[i]);
-				if (!vulpe.validate.validateAttribute(field)) {
+			jQuery(":text,textarea", parent).each(function(index){
+				if (!vulpe.validate.validateAttribute($(this))) {
 					valid = false;
 					invalidFields++;
 				}
-			}
+			});
 			if (!valid) {
 				vulpe.exception.focusFirstError(formName);
 				var manyFields = (invalidFields > 1 || fields.length > 1);
@@ -1149,24 +1145,18 @@ var vulpe = {
 		},
 		
 		checkRequiredFields: function() {
-			var fields = jQuery("[class*='vulpeRequired']");
-			if (fields && fields.length > 0) {
-				for (var i = 0; i < fields.length; i++) {
-					var field = jQuery(fields[i]);
-					vulpe.view.addRequiredField(field);
-				}
-			}
+			jQuery("[class*='vulpeRequired']").each(function(index) {
+				vulpe.view.addRequiredField($(this));
+			});
 		},
 
 		validateSelectedToDelete: function(command) {
-			var selections = jQuery(":checkbox[name$='selected']");
 			var selected = false;
-			for (var i = 0; i < selections.length; i++) {
-				if (selections[i].checked) {
+			jQuery(":checkbox[name$='selected']").each(function(index) {
+				if ($(this).attr("checked") && !selected) {
 					selected = true;
-					break;
 				}
-			}
+			});
 			vulpe.command = command;
 			if (selected) {
 				$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
@@ -1272,14 +1262,13 @@ var vulpe = {
 		},
 
 		setupSortTable: function(sortPropertyInfoName) {
-			var columns = jQuery("th[id!='']", "#entities");
-			for (var i = 0; i < columns.length; i++) {
-				var column = columns[i];
-				var order = vulpe.config.order[column.id];
+			jQuery("th[id!='']", "#entities").each(function(index) {
+				var column = $(this);
+				var order = vulpe.config.order[column.attr("id")];
 				if (order) {
-					column.className = order.css;
+					column.addClass(order.css);
 				}
-			}
+			});
 		},
 
 		setSelectCheckbox: function(select) {
@@ -1291,10 +1280,9 @@ var vulpe = {
 			if (!parent) {
 				parent = "#body";
 			}
-			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
-			for (var i = 0; i < selections.length; i++) {
-				selections[i].checked = false;
-			}
+			jQuery(":checkbox[name$='" + name + "']", parent).each(function(index) {
+				$(this).attr("checked", false);
+			});
 			controller.checked = true;
 		},
 
@@ -1302,10 +1290,9 @@ var vulpe = {
 			if (!parent) {
 				parent = "#body";
 			}
-			var selections = jQuery(":checkbox[name$='" + name + "']", parent);
-			for (var i = 0; i < selections.length; i++) {
-				selections[i].checked = controller.checked;
-			}
+			jQuery(":checkbox[name$='" + name + "']", parent).each(function(index) {
+				$(this).attr("checked", controller.checked);
+			});
 		},
 
 		onmouseoverRow: function(row) {
@@ -1582,41 +1569,25 @@ var vulpe = {
 				var selections = jQuery("*[name$='selected']");
 				var selectedIds = new Array();
 				var count = 0;
-				for (var i = 0; i < selections.length; i++) {
-					if (selections[i].checked) {
-						count++;
-					}
-					selectedIds[i] = selections[i].checked ? selections[i].value : "";
-				}
+				selections.each(function(index) {
+					var checked = $(this).attr("checked")
+					if (checked) { count++;	}
+					selectedIds[index] = checked ? $(this).val() : "";
+				});
 				if (count > 0) {
 					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
-					$(vulpe.config.layers.confirmationDialog).dialog({
-						autoOpen: false,
-						resizable: false,
-						height:140,
-						modal: true,
-						overlay: {
-							backgroundColor: '#000',
-							opacity: 0.5
-						},
-						buttons: {
-							Ok: function() {
-								$(this).dialog('close');
-								for (var i = 0; i < selectedIds.length; i++) {
-									if (selectedIds != "") {
-										selections[i].checked;
-										selections[i].value = selectedIds[i];
-									}
-								}
-								options.queryString = "detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail);
-								options.validate = false;
-								vulpe.view.request.submitAjaxAction(options);
-							},
-							Cancel: function() {
-								$(this).dialog('close');
+					vulpe.command = function() {
+						$(this).dialog('close');
+						for (var i = 0; i < selectedIds.length; i++) {
+							if (selectedIds != "") {
+								selections[i].checked;
+								selections[i].value = selectedIds[i];
 							}
 						}
-					});
+						options.queryString = "detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail);
+						options.validate = false;
+						vulpe.view.request.submitAjaxAction(options);
+					}
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
 					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsToDelete);
@@ -1632,38 +1603,24 @@ var vulpe = {
 				var selections = jQuery("*[name$='selected']");
 				var selectedIds = new Array();
 				var count = 0;
-				for (var i = 0; i < selections.length; i++) {
-					if (selections[i].checked) count++;
-					selectedIds[i] = selections[i].checked ? selections[i].value : "";
-				}
+				selections.each(function(index) {
+					var checked = $(this).attr("checked")
+					if (checked) { count++;	}
+					selectedIds[index] = checked ? $(this).val() : "";
+				});
 				if (count > 0) {
 					$(vulpe.config.layers.confirmationMessage).html(vulpe.config.messages.deleteSelected);
-					$(vulpe.config.layers.confirmationDialog).dialog({
-						autoOpen: false,
-						resizable: false,
-						height:140,
-						modal: true,
-						overlay: {
-							backgroundColor: '#000',
-							opacity: 0.5
-						},
-						buttons: {
-							Ok: function() {
-								$(this).dialog('close');
-								for (var i = 0; i < selectedIds.length; i++) {
-									if (selectedIds != "") {
-										selections[i].checked;
-										selections[i].value = selectedIds[i];
-									}
-								}
-								options.validate = false;
-								vulpe.view.request.submitAjaxAction(options);
-							},
-							Cancel: function() {
-								$(this).dialog('close');
+					vulpe.command = function() {
+						$(this).dialog('close');
+						for (var i = 0; i < selectedIds.length; i++) {
+							if (selectedIds != "") {
+								selections[i].checked;
+								selections[i].value = selectedIds[i];
 							}
 						}
-					});
+						options.validate = false;
+						vulpe.view.request.submitAjaxAction(options);
+					}
 					$(vulpe.config.layers.confirmationDialog).dialog('open');
 				} else {
 					$(vulpe.config.layers.vulpeAlertMessage).html(vulpe.config.messages.selectRecordsToDelete);
@@ -2008,21 +1965,20 @@ var vulpe = {
 				}
 				if (options.individualLoading) {
 					vulpe.config.showLoading = false;
-					var elements = jQuery("select,input", "#" + options.layer);
-					for (var i = 0; i < elements.length; i++) {
-						var elementId = elements[i].id;
-						if (vulpe.util.get(elementId).attr("type") != null && vulpe.util.get(elementId).attr("type") == "hidden") {
-							continue;
+					jQuery("select,input", "#" + options.layer).each(function(index) {
+						var elementId = $(this).attr("id");
+						var elementType = $(this).attr("type");
+						if (elementType != null && elementType != "hidden") {
+							var elementLoadingId = elementId + vulpe.config.suffix.loading;
+							var elementLoading = vulpe.util.get(elementLoadingId);
+							if (elementLoading.length == 1) {
+								elementLoading.show();
+							} else {
+								$(this).append("&nbsp;<img id='" + elementLoadingId + "' class='vulpeImageFieldLoading' src='" + vulpe.config.contextPath + "/themes/" + vulpe.config.theme + "/images/ajax/field-loader.gif' alt='" + vulpe.config.messages.loading + "' />");
+								vulpe.util.get(elementLoadingId).show();
+							}
 						}
-						var elementLoadingId = elementId + vulpe.config.suffix.loading;
-						var elementLoading = vulpe.util.get(elementLoadingId);
-						if (elementLoading.length == 1) {
-							elementLoading.show();
-						} else {
-							vulpe.util.get(elementId).append("&nbsp;<img id='" + elementLoadingId + "' class='vulpeImageFieldLoading' src='" + vulpe.config.contextPath + "/themes/" + vulpe.config.theme + "/images/ajax/field-loader.gif' />");
-							vulpe.util.get(elementLoadingId).show();
-						}
-					}
+					});
 				}
 				// verifier if exists validations before submit
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
