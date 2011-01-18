@@ -418,7 +418,7 @@ var vulpe = {
 		},
 
 		isNotEmpty: function(v) {
-			return (typeof v != "undefined" && v && vulpe.util.trim(v) != '');
+			return (v != null && typeof v != "undefined" && v && vulpe.util.trim(v) != "");
 		},
 
 		isEmpty: function(v) {
@@ -1898,6 +1898,29 @@ var vulpe = {
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
+									}
+									if (vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) {
+										$("tr[id*='" + vulpe.config.formName + "-row-']", layerObject).each(function(index) {
+											var id = $(this).attr("id");
+											if (id.indexOf("header") == -1) {
+												$("#" + id).unbind("mouseenter mouseleave");
+												$("#" + id).bind("mouseenter mouseleave", function(event){
+													$(this).find('td').toggleClass("vulpeSelectedRow");
+												});
+												var onclick = $(this).attr("onclick");
+												if (typeof onclick == "function" || vulpe.util.isNotEmpty(onclick)) {
+													vulpe.util.addHotKey({
+														hotKey: "Ctrl+Shift+" + (index == 10 ? 0 : index),
+														command: function () {
+															vulpe.util.get(id).click();
+															return false;
+														}
+													});
+												} else {
+													$(this).find('td').css("cursor", "default");
+												}
+											}
+										});	
 									}
 									if (typeof options.afterJs == "function") {
 										try {

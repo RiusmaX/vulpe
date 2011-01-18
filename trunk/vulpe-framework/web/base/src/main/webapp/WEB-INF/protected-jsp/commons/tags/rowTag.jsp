@@ -137,33 +137,8 @@
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
-					<c:if test="${now['controllerType'] == 'SELECT'}">
-						<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
-							<script type="text/javascript">
-							$(document).ready(function() {
-								vulpe.util.addHotKey({
-										hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
-										command: function (){
-											vulpe.util.get("${vulpeFormName}-row-${recordId}").click();
-											return false;
-										}
-								});
-							});
-							</script>
-						</c:if>
-					</c:if>
-					<c:if test="${(popup || (not empty updateValue && updateValue ne 'false')) && (empty showButtonUpdate || !showButtonUpdate)}">
-					<script type="text/javascript">
-					jQuery(function($){
-						$("#${elementId}").unbind("mouseenter mouseleave");
-						$("#${elementId}").bind("mouseenter mouseleave", function(event){
-							$(this).find('td').toggleClass("vulpeSelectedRow");
-						});
-					});
-					</script>
-					</c:if>
 					<c:if test="${disableDelete}"><c:set var="disableSelect" value="disabled=\"true\""/></c:if>
-					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>"${disableSelect}/>
+					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>" ${disableSelect}/>
 				</td>
 			</c:when>
 			<c:otherwise>
@@ -204,21 +179,6 @@
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}"><v:column elementId="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">&nbsp;</v:column></c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: '${updateLayerFields}'${updateLayer}${updateBeforeJs}${updateAfterJs}})" style="width: 1%" />
-				<c:if test="${now['controllerType'] == 'SELECT'}">
-					<c:if test="${not empty currentStatus && currentStatus.count <= 10}">
-						<script type="text/javascript">
-						$(document).ready(function() {
-							vulpe.util.addHotKey({
-								hotKey: "Ctrl+Shift+${currentStatus.count == 10 ? 0 : currentStatus.count}",
-								command: function (){
-									vulpe.util.get("vulpeButtonUpdate${currentStatus.count}-${vulpeFormName}").click();
-									return false;
-								}
-							});
-						});
-						</script>
-					</c:if>
-				</c:if>
 			</c:if>
 		</c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
