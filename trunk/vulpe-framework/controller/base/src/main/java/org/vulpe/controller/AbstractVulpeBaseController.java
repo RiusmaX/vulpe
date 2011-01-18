@@ -1411,7 +1411,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 				getCachedClasses().put(entityName, list);
 			}
-			setEntity(null);
+			try {
+				setEntity(getControllerConfig().getEntityClass().newInstance());
+			} catch (Exception e) {
+				throw new VulpeSystemException(e);
+			}
 		}
 		deleteAfter();
 		if (getControllerType().equals(ControllerType.MAIN)) {

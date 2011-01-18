@@ -1936,9 +1936,9 @@ var vulpe = {
 			 */
 			submitAutocompleteIdentifier: function(options) {
 				if (options.value && options.value != "") {
-					var id = vulpe.view.selectPopupIds[options.description];
+					var id = vulpe.view.selectPopupIds[options.identifier];
 					if (typeof id == "undefined" || id != options.value || vulpe.util.get(options.description).val() == "") {
-						vulpe.view.selectPopupIds[options.description] = options.value;
+						vulpe.view.selectPopupIds[options.identifier] = options.value;
 					} else if (id == options.value) {
 						return;
 					}
@@ -1959,6 +1959,7 @@ var vulpe = {
 					vulpe.view.request.submitAjax(options);
 				} else {
 					vulpe.util.get(options.identifier).val("");
+					vulpe.util.get(options.description).val("");
 				}
 			},
 
