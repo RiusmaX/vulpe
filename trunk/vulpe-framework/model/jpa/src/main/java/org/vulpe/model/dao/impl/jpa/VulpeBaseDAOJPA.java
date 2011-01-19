@@ -269,7 +269,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (value != null) {
 							if (manyToOne != null
 									|| (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()))) {
-								mountParameters((ENTITY) value, params, paramName);
+								if (!value.getClass().getSimpleName().contains(CGLIB_ENHANCER)) {
+									mountParameters((ENTITY) value, params, paramName);
+								}
 							} else if (isNotEmpty(value)) {
 								params.put(paramName, value);
 							}
