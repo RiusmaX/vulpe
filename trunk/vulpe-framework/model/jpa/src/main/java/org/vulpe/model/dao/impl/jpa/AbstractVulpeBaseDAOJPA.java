@@ -452,7 +452,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Method loadRelationships - Start");
 		}
-		for (ENTITY entity : entities) {
+		for (final ENTITY entity : entities) {
 			if (VulpeValidationUtil.isNotEmpty(entities)) {
 				final String queryConfigurationName = entity.getMap().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) entity
 						.getMap().get(Entity.QUERY_CONFIGURATION_NAME)
