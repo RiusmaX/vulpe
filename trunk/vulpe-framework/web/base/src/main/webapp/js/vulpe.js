@@ -1131,7 +1131,7 @@ var vulpe = {
 				vulpe.view.addRequiredField(field);
 				var idField = field.attr("id");
 				var idRequiredField = idField + "FieldRequired";
-				vulpe.view.get(idRequiredField).hide();
+				vulpe.util.get(idRequiredField).hide();
 			}
 		},
 
