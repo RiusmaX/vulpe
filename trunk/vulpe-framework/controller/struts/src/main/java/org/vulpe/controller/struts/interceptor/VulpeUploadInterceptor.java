@@ -31,6 +31,8 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.apache.struts2.interceptor.FileUploadInterceptor;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeUpload;
 import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -57,12 +59,15 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	 */
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
+		final VulpeUpload upload = VulpeConfigHelper.getProjectConfiguration().upload();
+		setMaximumSize(new Long(upload.maximumSize() * 1048576));
+		if (!"*".equals(upload.allowedTypes())) {
+			setAllowedTypes(upload.allowedTypes());
+		}
 		final ActionContext actionContext = invocation.getInvocationContext();
-		final HttpServletRequest request = (HttpServletRequest) actionContext
-				.get(ServletActionContext.HTTP_REQUEST);
+		final HttpServletRequest request = (HttpServletRequest) actionContext.get(ServletActionContext.HTTP_REQUEST);
 		// sets the files in the session to parameters.
-		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(
-				VulpeConstants.Upload.FILES);
+		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(VulpeConstants.Upload.FILES);
 		if (fileList != null) {
 			for (Object[] object : fileList) {
 				final String inputName = (String) object[0];
@@ -84,9 +89,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
-				LOG.debug(getTextMessage("struts.messages.bypass.request", new Object[] {
-						proxy.getNamespace(), proxy.getActionName() }, ActionContext.getContext()
-						.getLocale()));
+				LOG.debug(getTextMessage("struts.messages.bypass.request", new Object[] { proxy.getNamespace(),
+						proxy.getActionName() }, ActionContext.getContext().getLocale()));
 			}
 			return invocation.invoke();
 		}
@@ -100,8 +104,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 		final MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) request;
 		if (multiWrapper.hasErrors()) {
-			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator
-					.hasNext();) {
+			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator.hasNext();) {
 				final String error = (String) errorIterator.next();
 				if (validation != null) {
 					validation.addActionError(error);
@@ -131,21 +134,21 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 						}
 						byte[][] bytes = new byte[files.length][];
 						for (int index = 0; index < files.length; index++) {
-							if (acceptFile(files[index], contentType[index], inputName, validation,
-									actionContext.getLocale())) {
+							if (acceptFile(files[index], contentType[index], inputName, validation, actionContext
+									.getLocale())) {
 								bytes[index] = FileUtils.readFileToByteArray(files[index]);
 							}
 						}
-						fileList.add(new Object[] { inputName,
-								(files.length == 1 ? bytes[0] : bytes), contentType, fileName });
+						fileList.add(new Object[] { inputName, (files.length == 1 ? bytes[0] : bytes), contentType,
+								fileName });
 					}
 				} else {
-					LOG.error(getTextMessage("struts.messages.invalid.file",
-							new Object[] { inputName }, ActionContext.getContext().getLocale()));
+					LOG.error(getTextMessage("struts.messages.invalid.file", new Object[] { inputName }, ActionContext
+							.getContext().getLocale()));
 				}
 			} else {
-				LOG.error(getTextMessage("struts.messages.invalid.content.type",
-						new Object[] { inputName }, ActionContext.getContext().getLocale()));
+				LOG.error(getTextMessage("struts.messages.invalid.content.type", new Object[] { inputName },
+						ActionContext.getContext().getLocale()));
 			}
 		}
 
@@ -163,8 +166,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			final File[] file = multiWrapper.getFiles(inputValue);
 			for (int index = 0; index < file.length; index++) {
 				final File currentFile = file[index];
-				LOG.info(getTextMessage("struts.messages.removing.file", new Object[] { inputValue,
-						currentFile }, ActionContext.getContext().getLocale()));
+				LOG.info(getTextMessage("struts.messages.removing.file", new Object[] { inputValue, currentFile },
+						ActionContext.getContext().getLocale()));
 				if ((currentFile != null) && currentFile.isFile()) {
 					currentFile.delete();
 				}
@@ -198,10 +201,9 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	 * @param locale
 	 * @return
 	 */
-	protected String getTextMessage(final String messageKey, final Object[] args,
-			final Locale locale) {
-		return args == null || args.length == 0 ? LocalizedTextUtil.findText(this.getClass(),
-				messageKey, locale) : LocalizedTextUtil.findText(this.getClass(), messageKey,
-				locale, DEFAULT_MESSAGE, args);
+	protected String getTextMessage(final String messageKey, final Object[] args, final Locale locale) {
+		return args == null || args.length == 0 ? LocalizedTextUtil.findText(this.getClass(), messageKey, locale)
+				: LocalizedTextUtil.findText(this.getClass(), messageKey, locale, DEFAULT_MESSAGE, args);
 	}
+
 }

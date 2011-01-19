@@ -26,6 +26,19 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeUpload {
 
+	/**
+	 * Max Width to Image upload.
+	 */
 	int maxWidthImageUpload() default 640;
+
+	/**
+	 * Maximum size in Megabyte. Default 2.
+	 */
+	int maximumSize() default 2;
+
+	/**
+	 * Sets the allowed mimetypes. A comma-delimited list of types.
+	 */
+	String allowedTypes() default "*";
 
 }

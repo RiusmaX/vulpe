@@ -744,7 +744,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			addActionError(message);
 			return false;
 		}
-		return EntityValidator.validate(getEntity());
+		return EntityValidator.validate(getEntity()) && validateDetails();
 	}
 
 	protected void updateAuditInformation(final ENTITY entity) {
@@ -1111,7 +1111,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setOperation(Operation.CREATE_POST);
 		createPostBefore();
 		controlResultForward();
-		if (validateEntity() && validateDetails()) {
+		if (validateEntity()) {
 			manageButtons(Operation.UPDATE);
 			if (onCreatePost()) {
 				addActionMessage(getDefaultMessage());
@@ -1262,7 +1262,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		updatePostBefore();
 		controlResultForward();
 		manageButtons(Operation.UPDATE);
-		if (validateEntity() && validateDetails()) {
+		if (validateEntity()) {
 			if (onUpdatePost()) {
 				addActionMessage(getDefaultMessage());
 			}

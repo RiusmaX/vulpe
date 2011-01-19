@@ -1125,13 +1125,13 @@ var vulpe = {
 			var field = vulpe.util.getElementField(name);
 			if (enabled) {
 				field.addClass("vulpeRequired");
-				vulpe.util.addRequiredField(field);
+				vulpe.view.addRequiredField(field);
 			} else {
 				field.removeClass("vulpeRequired");
-				vulpe.util.addRequiredField(field);
+				vulpe.view.addRequiredField(field);
 				var idField = field.attr("id");
 				var idRequiredField = idField + "FieldRequired";
-				vulpe.util.get(idRequiredField).hide();
+				vulpe.view.get(idRequiredField).hide();
 			}
 		},
 
