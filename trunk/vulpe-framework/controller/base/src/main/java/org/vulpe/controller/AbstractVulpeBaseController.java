@@ -1437,27 +1437,42 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected boolean onDelete() {
 		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final List<ENTITY> entities = new ArrayList<ENTITY>();
-		if (getSelected() != null && !getSelected().isEmpty()) {
-			for (ID id : getSelected()) {
-				try {
-					final ENTITY newEntity = getControllerConfig().getEntityClass().newInstance();
-					newEntity.setId(id);
-					entities.add(newEntity);
-				} catch (Exception e) {
-					throw new VulpeSystemException(e);
-				}
-			}
-			if (getControllerConfig().getTabularPageSize() > 0) {
-				setTabularSize(getTabularSize() - (getEntities().size() - getSelected().size()));
+		if (VulpeValidationUtil.isNotEmpty(getSelected())) {
+			if (!onDeleteMany(entities)) {
+				return false;
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			setTabularSize(getTabularSize() - 1);
+		} else {
+			if (!onDeleteOne()) {
+				return false;
+			}
 		}
 		invokeServices(Operation.DELETE.getValue().concat(getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { entities.isEmpty() ? getControllerConfig().getEntityClass() : List.class },
-				new Object[] { entities.isEmpty() ? entity : entities });
+				new Class[] { VulpeValidationUtil.isEmpty(entities) ? getControllerConfig().getEntityClass()
+						: List.class }, new Object[] { VulpeValidationUtil.isEmpty(entities) ? entity : entities });
 
 		setExecuted(true);
+		return true;
+	}
+
+	protected boolean onDeleteOne() {
+		return true;
+	}
+	
+	protected boolean onDeleteMany(final List<ENTITY> entities) {
+		for (final ID id : getSelected()) {
+			try {
+				final ENTITY newEntity = getControllerConfig().getEntityClass().newInstance();
+				newEntity.setId(id);
+				entities.add(newEntity);
+			} catch (Exception e) {
+				throw new VulpeSystemException(e);
+			}
+		}
+		if (getControllerConfig().getTabularPageSize() > 0) {
+			setTabularSize(getTabularSize() - (getEntities().size() - getSelected().size()));
+		}
 		return true;
 	}
 
