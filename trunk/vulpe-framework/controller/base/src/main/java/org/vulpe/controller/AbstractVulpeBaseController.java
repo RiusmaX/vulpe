@@ -22,6 +22,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -57,6 +58,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 import org.vulpe.model.services.GenericService;
@@ -1116,13 +1118,16 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (onCreatePost()) {
 				addActionMessage(getDefaultMessage());
 				if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
-					final String entityName = getControllerConfig().getEntityClass().getSimpleName();
-					List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
-					if (VulpeValidationUtil.isEmpty(list)) {
-						list = new ArrayList<ENTITY>();
+					if (validateCacheClass(getEntity())) {
+						final String entityName = getControllerConfig().getEntityClass().getSimpleName();
+						List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
+						if (VulpeValidationUtil.isEmpty(list)) {
+							list = new ArrayList<ENTITY>();
+						}
+						list.add(getEntity());
+						Collections.sort(list);
+						getCachedClasses().put(entityName, list);
 					}
-					list.add(getEntity());
-					getCachedClasses().put(entityName, list);
 				}
 			}
 			createPostAfter();
@@ -1267,21 +1272,32 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				addActionMessage(getDefaultMessage());
 			}
 			if (getControllerConfig().getEntityClass().isAnnotationPresent(CachedClass.class)) {
+				boolean valid = validateCacheClass(getEntity());
 				final String entityName = getControllerConfig().getEntityClass().getSimpleName();
 				List<ENTITY> list = (List<ENTITY>) getCachedClasses().get(entityName);
-				if (VulpeValidationUtil.isEmpty(list)) {
+				if (VulpeValidationUtil.isEmpty(list) && valid) {
 					list = new ArrayList<ENTITY>();
 					list.add(getEntity());
 				} else {
 					int count = 0;
-					for (ENTITY baseEntity : list) {
+					boolean exist = false;
+					for (final ENTITY baseEntity : list) {
 						if (baseEntity.getId().equals(getEntity().getId())) {
-							list.set(count, getEntity());
+							exist = true;
+							if (valid) {
+								list.set(count, getEntity());
+							} else {
+								list.remove(count);
+							}
 							break;
 						}
 						++count;
 					}
+					if (!exist) {
+						list.add(getEntity());
+					}
 				}
+				Collections.sort(list);
 				getCachedClasses().put(entityName, list);
 			}
 			if (!getControllerConfig().isOnlyUpdateDetails()) {
@@ -1459,7 +1475,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected boolean onDeleteOne() {
 		return true;
 	}
-	
+
 	protected boolean onDeleteMany(final List<ENTITY> entities) {
 		for (final ID id : getSelected()) {
 			try {
@@ -1741,7 +1757,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						final ENTITY entityTabular = getEntities().get(0);
 						if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
 							final String entityName = entityTabular.getClass().getSimpleName();
-							getCachedClasses().put(entityName, getEntities());
+							final List<ENTITY> list = new ArrayList<ENTITY>();
+							for (final ENTITY entity : getEntities()) {
+								if (validateCacheClass(entity)) {
+									list.add(entity);
+								}
+							}
+							Collections.sort(list);
+							getCachedClasses().put(entityName, list);
 						}
 					}
 				}
@@ -2187,6 +2210,32 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		}
 		return entity;
+	}
+
+	/**
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	private boolean validateCacheClass(final ENTITY entity) {
+		boolean valid = true;
+		final CachedClass cachedClass = getControllerConfig().getEntityClass().getAnnotation(CachedClass.class);
+		if (cachedClass != null) {
+			if (cachedClass.parameters().length > 0) {
+				for (final QueryParameter queryParameter : cachedClass.parameters()) {
+					if (StringUtils.isNotBlank(queryParameter.equals().name())
+							&& StringUtils.isNotBlank(queryParameter.equals().value())) {
+						final Object value = VulpeReflectUtil.getFieldValue(entity, queryParameter.equals().name());
+						if (VulpeValidationUtil.isNotEmpty(value)
+								&& !value.toString().equals(queryParameter.equals().value())) {
+							valid = false;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return valid;
 	}
 
 }

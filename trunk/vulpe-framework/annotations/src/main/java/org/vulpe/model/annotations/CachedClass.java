@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Tells Vulpe to put entity in class cache.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
@@ -31,6 +31,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CachedClass {
 
-	String queryConfigurationName() default "default";
-	
+	String queryConfigurationName() default "cachedClass";
+
+	QueryParameter[] parameters() default {};
+
 }
