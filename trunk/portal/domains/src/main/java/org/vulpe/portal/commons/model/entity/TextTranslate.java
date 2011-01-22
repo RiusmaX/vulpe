@@ -7,9 +7,11 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.model.annotations.CreateIfNotExist;
+import org.vulpe.model.annotations.db4o.FindBy;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
 import org.vulpe.portal.core.model.entity.Language;
 
+@FindBy(value = "languages.text", like = true)
 @CreateIfNotExist
 @SuppressWarnings("serial")
 public class TextTranslate extends VulpeBaseDB4OAuditEntity<Long> {

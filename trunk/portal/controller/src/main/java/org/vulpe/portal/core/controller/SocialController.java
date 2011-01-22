@@ -3,14 +3,11 @@ package org.vulpe.portal.core.controller;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
-
+import org.vulpe.portal.controller.ApplicationBaseController;
 import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
-import org.vulpe.portal.controller.ApplicationBaseController;
 
 
 /**
