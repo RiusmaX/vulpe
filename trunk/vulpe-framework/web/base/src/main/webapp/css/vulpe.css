@@ -342,6 +342,10 @@ h2 {
 
 }
 
+img {
+	border: 0;
+}
+
 input,select,textarea {
 	border: 1px solid #000;
 	color: #000;
