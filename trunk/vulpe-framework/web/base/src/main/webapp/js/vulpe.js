@@ -112,6 +112,7 @@ var vulpe = {
 		showLoading: true,
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
+			iconErrorMessage: "-iconErrorMessage",
 			errorMessage: "-errorMessage",
 			identifier: "-id",
 			loading: "-loading",
@@ -1139,7 +1140,7 @@ var vulpe = {
 			var idField = field.attr("id");
 			var idRequiredField = idField + "FieldRequired";
 			if (vulpe.util.get(idRequiredField).length == 0) {
-				vulpe.util.get(idField + "-errorMessage").after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
+				vulpe.util.get(idField + vulpe.config.suffix.iconErrorMessage).after("<span id='" + idRequiredField + "' class='vulpeFieldRequired'>*</span>");
 			}
 			vulpe.util.get(idRequiredField).show();
 		},
@@ -2050,9 +2051,10 @@ var vulpe = {
 		},
 
 		setupError: function(fieldName, message) {
-			var messageSuffix = fieldName + vulpe.config.suffix.errorMessage;
-			vulpe.util.get(messageSuffix).attr("title", message);
+			var messageSuffix = fieldName + vulpe.config.suffix.iconErrorMessage;
 			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
+			/*
+			vulpe.util.get(messageSuffix).attr("title", message);
 			vulpe.util.get(messageSuffix).tooltip({
 				onShow: function() {
 					this.getTip().css("zIndex", "100000");
@@ -2062,14 +2064,18 @@ var vulpe = {
 						vulpe.util.get(messageSuffix).attr("title", "");
 					}
 				}
-			});
+			});*/
 			vulpe.util.get(messageSuffix).show();
+			var errorMessage = vulpe.util.get(fieldName + vulpe.config.suffix.errorMessage);
+			errorMessage.html(message);
+			errorMessage.css("display", "block");
 			var errorController = function () {
 				var config = vulpe.util.getElementConfig(fieldName);
 				if (!config) {
 					if (this.value.length == 0) {
 						vulpe.exception.showFieldError(this);
 					} else {
+						errorMessage.hide();
 						if (this.value != "__/__/_____") {
 							vulpe.exception.hideFieldError(this);
 						}
@@ -2079,12 +2085,32 @@ var vulpe = {
 					var required = field.attr("class").indexOf("vulpeRequired") != -1;
 					var length = field.val().length;
 					if (required && length == 0) {
+						errorMessage.html(vulpe.config.messages.error.validate.required);
 						vulpe.exception.showFieldError(this);
 					} else {
 						if (config.type == "STRING") {
 							var value = field.val();
+							if (config.minlength) {
+								if (vulpe.util.trim(value).length >= config.minlength || length == 0) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									errorMessage.html(vulpe.config.messages.error.validate.minlength.replace("{0}", config.minlength));
+									errorMessage.css("display", "block");
+									vulpe.exception.showFieldError(this);
+								}
+							} else if (config.maxlength) {
+								if (vulpe.util.trim(value).length <= config.maxlength || length == 0) {
+									vulpe.exception.hideFieldError(this);
+								} else {
+									errorMessage.html(vulpe.config.messages.error.validate.maxlength.replace("{0}", config.maxlength));
+									errorMessage.css("display", "block");
+									vulpe.exception.showFieldError(this);
+								}
+							}
 							if (value.length > 1) {
 								if (vulpe.util.checkRepeatedCharacters(value)) {
+									errorMessage.html(vulpe.config.messages.error.validate.repeatedCharacters);
+									errorMessage.css("display", "block");
 									vulpe.exception.showFieldError(this);
 								} else {
 									vulpe.exception.hideFieldError(this);
@@ -2105,19 +2131,6 @@ var vulpe = {
 									vulpe.exception.showFieldError(this);
 								}
 							}
-							if (config.minlength) {
-								if (vulpe.util.trim(field.val()).length >= config.minlength || length == 0) {
-									vulpe.exception.hideFieldError(this);
-								} else {
-									vulpe.exception.showFieldError(this);
-								}
-							} else if (config.maxlength) {
-								if (vulpe.util.trim(field.val()).length <= config.maxlength || length == 0) {
-									vulpe.exception.hideFieldError(this);
-								} else {
-									vulpe.exception.showFieldError(this);
-								}
-							}
 						}
 					}
 				}
@@ -2131,7 +2144,7 @@ var vulpe = {
 		showFieldError: function(element) {
 			if (element) {
 				jQuery(element).addClass(vulpe.config.css.fieldError);
-				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
+				var error = vulpe.util.get(element.id + vulpe.config.suffix.iconErrorMessage);
 				if (error.length == 1) {
 					error.show();
 				}
@@ -2141,16 +2154,17 @@ var vulpe = {
 		hideFieldError: function(element) {
 			if (element) {
 				jQuery(element).removeClass(vulpe.config.css.fieldError);
-				var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
+				var error = vulpe.util.get(element.id + vulpe.config.suffix.iconErrorMessage);
 				if (error.length == 1) {
 					error.hide();
+					vulpe.util.get(element.id + vulpe.config.suffix.errorMessage).hide();
 				}
 			}
 		},
 
 		hideError: function(element) {
 			jQuery(element).removeClass(vulpe.config.css.fieldError);
-			var error = vulpe.util.get(element.id + vulpe.config.suffix.errorMessage);
+			var error = vulpe.util.get(element.id + vulpe.config.suffix.iconErrorMessage);
 			if (error.length == 1) {
 				error.hide();
 			}

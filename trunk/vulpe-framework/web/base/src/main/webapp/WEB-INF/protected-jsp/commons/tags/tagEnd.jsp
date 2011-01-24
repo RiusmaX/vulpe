@@ -1,14 +1,15 @@
 <c:if test="${(!showAsText || !onlyToSee) && showRequiredIcon}">
 <img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" alt="<fmt:message key="label.vulpe.image.loading"/>" />
-<img id="${elementId}-errorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" alt="<fmt:message key="label.vulpe.image.field.error"/>" />
+<img id="${elementId}-iconErrorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" alt="<fmt:message key="label.vulpe.image.field.error"/>" />
+<span id="${elementId}-errorMessage" class="vulpeErrorMessage" style="display: none">&nbsp;</span>
 </c:if>
 <c:if test="${!showAsText && not empty validateMaxLength}"><span id="${elementId}-charcount" class="vulpeCharCount"></span></c:if>
 <c:if test="${showAsText && empty value}">&nbsp;</c:if>
 <c:if test="${paragraph}"></p></c:if>
 <script type="text/javascript">
 vulpe.util.get('${elementId}-loading').hide();
-vulpe.util.get('${elementId}-errorMessage').hide();
-vulpe.util.get('${elementId}-errorMessage').bind('click', function(){
+vulpe.util.get('${elementId}-iconErrorMessage').hide();
+vulpe.util.get('${elementId}-iconErrorMessage').bind('click', function(){
 	vulpe.util.get('${elementId}').focus()
 });
 <c:if test="${not empty requiredField || not empty validateType}">
@@ -24,7 +25,7 @@ vulpe.util.get('${elementId}').blur(function() {
 	} else {
 		vulpe.util.get(requiredFieldId).addClass("vulpeRequired");
 		if (vulpe.util.get(id).length == 0) {
-			vulpe.util.get(requiredFieldId + '-errorMessage').after("<span id='" + id + "' class='vulpeFieldRequired'>*</span>");
+			vulpe.util.get(requiredFieldId + '-iconErrorMessage').after("<span id='" + id + "' class='vulpeFieldRequired'>*</span>");
 		}
 		vulpe.util.get(id).show();
 	}

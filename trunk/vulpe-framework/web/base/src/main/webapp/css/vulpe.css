@@ -39,6 +39,12 @@
 	margin-bottom: 15px;
 }
 
+.vulpeErrorMessage {
+	color: red;
+	font-size: 9px;
+	padding: 3px; 
+}
+
 .vulpeMessageError {
 	color: #D8000C;
 	background-color: #FFBABA;
