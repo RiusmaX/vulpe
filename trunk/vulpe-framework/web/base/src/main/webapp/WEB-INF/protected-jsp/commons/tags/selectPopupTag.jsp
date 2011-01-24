@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributesConfig.jsp" %>
-	<div id="${elementId}-selectPopup">
+	<div id="${elementId}-selectPopup" style="${!show ? 'display:none;' : ''}">
 	<c:remove var="elementId"/>
 	<c:if test="${empty showBrowseButton}"><c:set var="showBrowseButton" value="${true}"/></c:if>
 	<c:if test="${autocomplete && empty autocompleteMinLength}"><c:set var="autocompleteMinLength" value="3"/></c:if>
