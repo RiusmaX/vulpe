@@ -17,6 +17,7 @@ package org.vulpe.commons.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -319,7 +320,7 @@ public class VulpeStringUtil {
 		}
 		return newValue.toString();
 	}
-	
+
 	public static String getAttributeName(final String value) {
 		String attributeName = value;
 		if (StringUtils.isAllUpperCase(value)) {
@@ -328,5 +329,16 @@ public class VulpeStringUtil {
 			attributeName = lowerCaseFirst(value);
 		}
 		return attributeName;
+	}
+
+	public static String encode(final String value, final String encode) {
+		byte[] bytes = value.getBytes();
+		String encoded = value;
+		try {
+			encoded = new String(bytes, encode);
+		} catch (UnsupportedEncodingException e) {
+			LOG.error(e);
+		}
+		return encoded;
 	}
 }
