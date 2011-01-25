@@ -300,9 +300,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 */
 	protected void setParams(final Query query, final Map<String, Object> params) {
 		if (params != null) {
-			for (String name : params.keySet()) {
-				final Object value = params.get(name);
-				query.setParameter(name.replace("_", "").replaceAll("\\.", "_"), value);
+			for (final String name : params.keySet()) {
+				Object value = params.get(name);
+				final String paramName = name.replace("_", "").replaceAll("\\.", "_");
+				if (value instanceof String) {
+					value = ((String) value).replace("[like]", "");
+				}
+				query.setParameter(paramName, value);
 			}
 		}
 	}

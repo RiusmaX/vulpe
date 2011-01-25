@@ -287,6 +287,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							} else {
 								value = "%" + value + "%";
 							}
+							value = "[like]" + value;
 						}
 						params.put(paramName, value);
 					}
@@ -386,10 +387,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						String hqlAttributeName = name.startsWith("_") ? name.replace("_", "") : "obj." + name;
 						String hqlParamName = name.replace("_", "").replaceAll("\\.", "_");
 						if (value instanceof String) {
-							final Like like = VulpeReflectUtil
-									.getAnnotationInField(Like.class, entity.getClass(), name);
-							hql.append("upper(").append(hqlAttributeName).append(") ").append(
-									like != null ? "like" : "=").append(" upper(:").append(hqlParamName).append(")");
+							final String valueString = (String) value;
+							final boolean useLike = valueString.startsWith("[like]");
+							hql.append("upper(").append(hqlAttributeName).append(") ").append(useLike ? "like" : "=")
+									.append(" upper(:").append(hqlParamName).append(")");
 						} else {
 							hql.append(hqlAttributeName).append(" = :").append(hqlParamName);
 						}
