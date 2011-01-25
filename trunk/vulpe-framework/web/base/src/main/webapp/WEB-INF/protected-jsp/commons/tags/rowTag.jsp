@@ -133,6 +133,7 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan">rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-row-${!isHeaderTableTag ? recordId : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
+		<c:if test="${!isHeaderTableTag && not empty currentDetailConfig && renderId}"><td style="display: none"><v:hidden property="id"/></td></c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
@@ -159,7 +160,6 @@
 			<c:if test="${!isHeaderTableTag}">
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}">
 					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${!disableDelete ? deleteName : 'unselected'}" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
-					<c:if test="${not empty currentDetailConfig && renderId}"><v:hidden property="id"/></c:if>
 				</v:column>
 			</c:if>
 		</c:if>
