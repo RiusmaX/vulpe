@@ -61,7 +61,7 @@
 						<c:if test="${empty imageWidth}"><c:set var="imageWidth" value="50"/></c:if>
 						<c:if test="${empty imageHeight}"><c:set var="imageHeight" value="38"/></c:if>
 						<c:set var="key" value="${listName}[${currentStatus.index}].${property}"/>
-						<center><img src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="vulpeThumb"/></center>
+						<img src="${util:linkImage(pageContext, key, 'image/jpeg', '', imageWidth, null)}" width="${imageWidth}" height="${imageHeight}" class="vulpeThumb"/>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
