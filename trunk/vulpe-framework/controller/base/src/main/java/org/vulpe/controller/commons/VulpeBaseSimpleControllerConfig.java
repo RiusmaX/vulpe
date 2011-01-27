@@ -18,12 +18,13 @@ package org.vulpe.controller.commons;
 import java.io.Serializable;
 
 import org.apache.commons.lang.StringUtils;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.VulpeConstants.View.Logic;
 import org.vulpe.commons.VulpeConstants.View.Report;
 import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
@@ -65,9 +66,8 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 		this.controllerName = getControllerUtil().getCurrentControllerName();
 	}
 
-	protected ControllerUtil getControllerUtil() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		return cache.<ControllerUtil> get(ControllerUtil.class);
+	public ControllerUtil getControllerUtil() {
+		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
 
 	/*
@@ -433,22 +433,18 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 				this.viewSelectItemsPath = this.viewItemsPath
 						+ getModuleName().concat("/").concat(viewBaseName).concat("/").concat(viewBaseName).concat(
 								Layout.SUFFIX_JSP_SELECT_ITEMS);
-			}
-			if (getControllerType().equals(ControllerType.MAIN)) {
+			} else if (getControllerType().equals(ControllerType.MAIN)) {
 				this.viewPath += Layout.SUFFIX_JSP_MAIN;
-			}
-			if (getControllerType().equals(ControllerType.TABULAR)) {
+			} else if (getControllerType().equals(ControllerType.TABULAR)) {
 				if (getController().tabular().showFilter()) {
 					this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
 				}
 				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
-			}
-			if (getControllerType().equals(ControllerType.SELECT)) {
+			} else if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewPath += Layout.SUFFIX_JSP_SELECT;
 				this.viewItemsPath += getModuleName().concat("/").concat(viewBaseName).concat("/").concat(viewBaseName)
 						.concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
-			}
-			if (getControllerType().equals(ControllerType.REPORT)) {
+			} else if (getControllerType().equals(ControllerType.REPORT)) {
 				this.viewPath += Layout.SUFFIX_JSP_REPORT;
 				this.viewItemsPath += getModuleName().concat("/").concat(viewBaseName).concat("/").concat(viewBaseName)
 						.concat(Layout.SUFFIX_JSP_REPORT_ITEMS);
@@ -510,6 +506,9 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 	}
 
 	public String getViewSelectPath() {
+		if (StringUtils.isEmpty(this.viewSelectPath)) {
+			getViewPath();
+		}
 		return viewSelectPath;
 	}
 

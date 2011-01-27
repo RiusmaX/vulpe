@@ -35,16 +35,15 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
-public class VulpeExceptionMappingInterceptor extends
-		com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
+public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -67,15 +66,13 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
 	 */
-	protected String findResultFromException(final ActionInvocation invocation,
-			final Throwable exception) {
-		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
-				.getAction();
+	protected String findResultFromException(final ActionInvocation invocation, final Throwable exception) {
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
 		// gets real exception
@@ -85,36 +82,35 @@ public class VulpeExceptionMappingInterceptor extends
 		} else if (newException instanceof VulpeAuthorizationException) {
 			action.addActionMessageKey(newException.getMessage());
 		} else if (newException instanceof VulpeSystemException) {
-			final VulpeSystemException sException = (VulpeSystemException) newException;
-			if (sException.getArgs() != null && sException.getArgs().length > 0) {
-				action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
+			final VulpeSystemException vse = (VulpeSystemException) newException;
+			if (vse.getArgs() != null && vse.getArgs().length > 0) {
+				action.addActionMessage(newException.getMessage(), (Object[]) vse.getArgs());
 			} else {
 				final String key = newException.getMessage();
 				if (key.startsWith("vulpe.error")) {
-					action.addActionError(key, (sException.getCause() == null
-							|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
-							: sException.getCause().getMessage()));
+					action.addActionError(key, (vse.getCause() == null
+							|| StringUtils.isEmpty(vse.getCause().getMessage()) ? "unknown" : vse.getCause()
+							.getMessage()));
 				} else {
-					action.addActionMessage(key, (sException.getCause() == null
-							|| StringUtils.isEmpty(sException.getCause().getMessage()) ? "unknown"
-							: sException.getCause().getMessage()));
+					action.addActionMessage(key, (vse.getCause() == null
+							|| StringUtils.isEmpty(vse.getCause().getMessage()) ? "unknown" : vse.getCause()
+							.getMessage()));
 				}
 			}
 		} else if (newException instanceof VulpeApplicationException) {
-			final VulpeApplicationException sException = (VulpeApplicationException) newException;
-			action.addActionMessage(newException.getMessage(), (Object[]) sException.getArgs());
+			final VulpeApplicationException vae = (VulpeApplicationException) newException;
+			action.addActionMessage(newException.getMessage(), (Object[]) vae.getArgs());
 		} else {
 			final String key = newException.getClass().getName().toLowerCase();
 			String value = action.getText(key);
 			if (StringUtils.isBlank(value) || value.equals(key)) {
-				String msg = newException.getMessage();
-				final MessageFormat msgFormat = buildMessageFormat(TextParseUtil
-						.translateVariables(msg, invocation.getStack()), invocation
-						.getInvocationContext().getLocale());
-				msg = msgFormat.format(null);
-				value = action.getText(msg);
-				if (StringUtils.isBlank(value) || value.equals(msg)) {
-					action.addActionMessage(VulpeConstants.GENERAL_ERROR, msg);
+				String message = newException.getMessage();
+				final MessageFormat messageFormat = buildMessageFormat(TextParseUtil.translateVariables(message, invocation
+						.getStack()), invocation.getInvocationContext().getLocale());
+				message = messageFormat.format(null);
+				value = action.getText(message);
+				if (StringUtils.isBlank(value) || value.equals(message)) {
+					action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
 				} else {
 					action.addActionMessage(value);
 				}
@@ -131,7 +127,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 *
+	 * 
 	 * @param exception
 	 * @return
 	 */
@@ -143,7 +139,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return

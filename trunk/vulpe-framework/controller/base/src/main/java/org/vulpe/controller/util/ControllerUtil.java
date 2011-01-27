@@ -25,6 +25,8 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.View;
@@ -50,25 +52,14 @@ import org.vulpe.model.entity.VulpeEntity;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * 
  */
+@Component
 @SuppressWarnings("unchecked")
 public class ControllerUtil {
 
 	private static final Logger LOG = Logger.getLogger(ControllerUtil.class);
 
-	private final VulpeContext vulpeContext = VulpeContext.getInstance();
-
-	/**
-	 * Returns instance of ControllerUtil
-	 */
-	public static ControllerUtil getInstance() {
-		final VulpeCacheHelper cache = VulpeCacheHelper.getInstance();
-		ControllerUtil controllerUtil = cache.get(ControllerUtil.class);
-		if (controllerUtil == null) {
-			controllerUtil = new ControllerUtil();
-			cache.put(ControllerUtil.class, controllerUtil);
-		}
-		return controllerUtil;
-	}
+	@Autowired
+	private VulpeContext vulpeContext;
 
 	/**
 	 * Checks if detail must be despised

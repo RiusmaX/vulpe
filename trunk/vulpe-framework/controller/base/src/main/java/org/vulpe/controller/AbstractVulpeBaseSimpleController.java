@@ -69,6 +69,9 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	@Autowired
 	protected VulpeContext vulpeContext;
 
+	@Autowired
+	protected ControllerUtil controllerUtil;
+
 	/**
 	 * Global attributes map
 	 */
@@ -573,15 +576,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 * @see org.vulpe.controller.VulpeSimpleController#getControllerConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
-		return getControllerUtil().getControllerConfig(this);
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public ControllerUtil getControllerUtil() {
-		return ControllerUtil.getInstance();
+		return controllerUtil.getControllerConfig(this);
 	}
 
 	/*
@@ -748,7 +743,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	}
 
 	private String getControllerKey() {
-		String key = getControllerUtil().getCurrentControllerKey();
+		String key = controllerUtil.getCurrentControllerKey();
 		if (StringUtils.isNotEmpty(getControllerConfig().getViewBaseName())) {
 			key = key.substring(0, key.lastIndexOf(".") + 1) + getControllerConfig().getViewBaseName();
 		}

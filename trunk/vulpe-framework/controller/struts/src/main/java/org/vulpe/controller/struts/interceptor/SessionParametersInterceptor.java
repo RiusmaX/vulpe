@@ -22,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
@@ -60,7 +61,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 					.getAction();
 			if (simpleController.ever != null) {
 				final String currentControllerKey = simpleController.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = simpleController.getControllerUtil().getCurrentControllerKey();
+				final String controllerKey = getControllerUtil().getCurrentControllerKey();
 				boolean autocomplete = false;
 				if (simpleController instanceof AbstractVulpeBaseController) {
 					final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) simpleController;
@@ -80,8 +81,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 			ServletActionContext.getRequest().getSession().setAttribute(
 					VulpeConstants.Configuration.Ever.class.getName(), simpleController.ever);
 		}
-		final String key = ControllerUtil.getInstance().getCurrentControllerKey().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
+		final String key = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
@@ -115,7 +115,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -132,5 +132,9 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
+	}
+
+	public ControllerUtil getControllerUtil() {
+		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
 }

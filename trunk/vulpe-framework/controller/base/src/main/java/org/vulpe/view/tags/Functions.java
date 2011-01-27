@@ -41,6 +41,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.beans.ValueBean;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -248,7 +249,7 @@ public class Functions {
 	 * @return
 	 */
 	public static Boolean hasRole(final String requestedRoles) {
-		final VulpeContext vulpeContext = VulpeContext.getInstance();
+		final VulpeContext vulpeContext = getVulpeContext();
 		final Object springSecurity = vulpeContext.getSession().getAttribute(Security.SPRING_SECURITY_CONTEXT);
 		boolean has = false;
 		if (springSecurity != null) {
@@ -279,7 +280,7 @@ public class Functions {
 	 * @return
 	 */
 	public static Boolean isAuthenticated() {
-		final VulpeContext vulpeContext = VulpeContext.getInstance();
+		final VulpeContext vulpeContext = getVulpeContext();
 		final Object springSecurity = vulpeContext.getSession().getAttribute(Security.SPRING_SECURITY_CONTEXT);
 		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity, "authentication");
 		final Boolean authenticated = VulpeReflectUtil.getFieldValue(springSecurityAutentication, "authenticated");
@@ -447,5 +448,13 @@ public class Functions {
 		} catch (Exception e) {
 			throw new JspException(e);
 		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static VulpeContext getVulpeContext() {
+		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
 	}
 }

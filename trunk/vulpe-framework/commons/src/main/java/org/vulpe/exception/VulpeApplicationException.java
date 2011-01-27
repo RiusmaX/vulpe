@@ -39,7 +39,7 @@ public class VulpeApplicationException extends Exception {
 	}
 
 	public String[] getArgs() {
-		return args.clone();
+		return args;
 	}
 
 	public String getMessage() {
@@ -47,7 +47,7 @@ public class VulpeApplicationException extends Exception {
 	}
 
 	public void setArgs(final String[] args) {
-		this.args = args.clone();
+		this.args = args;
 	}
 
 	public void setMessage(final String message) {

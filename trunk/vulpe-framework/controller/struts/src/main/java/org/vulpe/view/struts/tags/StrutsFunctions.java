@@ -27,6 +27,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.util.ControllerUtil;
@@ -46,7 +47,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -57,8 +58,7 @@ public final class StrutsFunctions extends Functions {
 			throws JspException {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
-				ControllerUtil.getInstance().getCurrentControllerName()).append("/download?downloadKey=").append(
-				urlEncode(key));
+				getControllerUtil().getCurrentControllerName()).append("/download?downloadKey=").append(urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
 			link.append("&downloadContentType=").append(contentType);
 		}
@@ -70,7 +70,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -93,7 +93,7 @@ public final class StrutsFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+			final String keyForm = getControllerUtil().getCurrentControllerKey().concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -105,12 +105,11 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -120,7 +119,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -144,7 +143,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -161,7 +160,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -189,7 +188,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param pagingName
 	 * @param pageSize
@@ -207,7 +206,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -218,7 +217,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -231,5 +230,9 @@ public final class StrutsFunctions extends Functions {
 		} catch (Exception e) {
 			throw new JspException(e);
 		}
+	}
+
+	public static ControllerUtil getControllerUtil() {
+		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
 }

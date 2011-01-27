@@ -46,7 +46,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @return
@@ -59,8 +59,7 @@ public final class VRaptorFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
-					field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
 				String value = null;
@@ -77,7 +76,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param bean
 	 * @param field
 	 * @return
@@ -90,8 +89,7 @@ public final class VRaptorFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
-					field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;
 			}
@@ -113,7 +111,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -123,15 +121,14 @@ public final class VRaptorFunctions extends Functions {
 	public static String linkKey(final String key, final String contentType, final String contentDisposition)
 			throws JspException {
 		final String link = getRequestInfo().getRequest().getContextPath().concat("/").concat(
-				ControllerUtil.getInstance().getCurrentControllerName()).concat("/download?downloadKey=").concat(
-				urlEncode(key)).concat("&downloadContentType=").concat(contentType).concat(
-				"&downloadContentDisposition=").concat(contentDisposition).concat("&access=").concat(
-				String.valueOf(System.currentTimeMillis()));
+				getControllerUtil().getCurrentControllerName()).concat("/download?downloadKey=").concat(urlEncode(key))
+				.concat("&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=").concat(
+						contentDisposition).concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
 		return link;
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -154,7 +151,7 @@ public final class VRaptorFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
+			final String keyForm = getControllerUtil().getCurrentControllerKey().concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -166,12 +163,11 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = ControllerUtil.getInstance().getCurrentControllerKey().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -181,7 +177,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -205,7 +201,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -222,7 +218,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -250,7 +246,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -260,7 +256,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -278,5 +274,9 @@ public final class VRaptorFunctions extends Functions {
 	private static RequestInfo getRequestInfo() {
 		final RequestInfo requestInfo = AbstractVulpeBeanFactory.getInstance().getBean("requestInfo");
 		return requestInfo;
+	}
+
+	public static ControllerUtil getControllerUtil() {
+		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
 }

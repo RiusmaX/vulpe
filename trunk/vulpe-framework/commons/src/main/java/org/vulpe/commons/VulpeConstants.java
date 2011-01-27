@@ -52,6 +52,7 @@ public class VulpeConstants {
 	public static final String DOMAINS = "domains";
 	public static final String COMMONS = "commons";
 	public static final String CONTROLLER = "controller";
+	public static final String CONTROLLER_UTIL = "controllerUtil";
 	public static final String CONTEXT = "vulpeContext";
 	public static final String CURRENT_SERVLET_CONTEXT = "currentServletContext";
 	public static final String FILTER_DISPATCHER = "vulpeFilterDispatcher";

@@ -82,7 +82,7 @@ public class VulpeStrutsSimpleController extends AbstractVulpeBaseSimpleControll
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = getControllerUtil().getCurrentControllerKey().concat(
+		final String keyForm = controllerUtil.getCurrentControllerKey().concat(
 				VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {

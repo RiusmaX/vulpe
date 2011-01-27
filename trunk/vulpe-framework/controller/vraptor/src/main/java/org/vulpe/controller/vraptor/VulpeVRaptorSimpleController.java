@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.controller.util.ControllerUtil;
 
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
@@ -52,11 +51,7 @@ public class VulpeVRaptorSimpleController extends AbstractVulpeBaseSimpleControl
 	 * @see org.vulpe.controller.VulpeSimpleController#getActionConfig()
 	 */
 	public VulpeControllerConfig getControllerConfig() {
-		return getControllerUtil().getControllerConfig(this);
-	}
-
-	public ControllerUtil getControllerUtil() {
-		return ControllerUtil.getInstance();
+		return controllerUtil.getControllerConfig(this);
 	}
 
 	public void addActionMessage(final String message) {

@@ -438,7 +438,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected boolean validateDuplicatedDetailItens(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
-		final Collection<DuplicatedBean> duplicatedBeans = getControllerUtil().duplicatedItens(beans, despiseFields);
+		final Collection<DuplicatedBean> duplicatedBeans = controllerUtil.duplicatedItens(beans, despiseFields);
 		if (duplicatedBeans != null && !duplicatedBeans.isEmpty()) {
 			if (getControllerType().equals(ControllerType.TABULAR) && duplicatedBeans.size() == 1) {
 				return true;
@@ -473,7 +473,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return ActionConfig object for current action.
 	 */
 	public VulpeBaseControllerConfig<ENTITY, ID> getControllerConfig() {
-		return getControllerUtil().getControllerConfig(this);
+		return controllerUtil.getControllerConfig(this);
 	}
 
 	/**
@@ -497,8 +497,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void despiseDetailItens(final Collection<VulpeEntity<?>> beans, final VulpeBaseDetailConfig detailConfig) {
-		getControllerUtil().despiseItens(beans, detailConfig.getDespiseFields(),
-				getControllerType().equals(ControllerType.TABULAR));
+		controllerUtil.despiseItens(beans, detailConfig.getDespiseFields(), getControllerType().equals(
+				ControllerType.TABULAR));
 	}
 
 	protected abstract void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig);
@@ -1786,7 +1786,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getControllerConfig().getTabularPageSize() > 0) {
 			setTabularSize(getTabularSize() - (size - sizeDespise));
 		}
-		for (ENTITY entity : getEntities()) {
+		for (final ENTITY entity : getEntities()) {
 			updateAuditInformation(entity);
 		}
 		final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.PERSIST.getValue().concat(

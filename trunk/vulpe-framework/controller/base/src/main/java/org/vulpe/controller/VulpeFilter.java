@@ -26,16 +26,25 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.View.Layout;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
 
 public class VulpeFilter extends CharacterEncodingFilter {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.web.filter.CharacterEncodingFilter#doFilterInternal
+	 * (javax.servlet.http.HttpServletRequest,
+	 * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
+	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		final VulpeContext vulpeContext = VulpeContext.getInstance();
+		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 			final HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -65,11 +74,11 @@ public class VulpeFilter extends CharacterEncodingFilter {
 	 * Obtains the web application-specific fragment of the request URL.
 	 * <p>
 	 * Under normal spec conditions,
-	 *
+	 * 
 	 * <pre>
 	 * requestURI = contextPath + servletPath + pathInfo
 	 * </pre>
-	 *
+	 * 
 	 * But the requestURI is not decoded, whereas the servletPath and pathInfo
 	 * are (SEC-1255). This method is typically used to return a URL for
 	 * matching against secured paths, hence the decoded form is used in
@@ -77,10 +86,10 @@ public class VulpeFilter extends CharacterEncodingFilter {
 	 * method may also be called using dummy request objects which just have the
 	 * requestURI and contextPatth set, for example, so it will fall back to
 	 * using those.
-	 *
+	 * 
 	 * @return the decoded URL, excluding any server name, context path or
 	 *         servlet path
-	 *
+	 * 
 	 */
 	public static String buildRequestUrl(final HttpServletRequest request) {
 		return buildRequestUrl(request.getServletPath(), request.getRequestURI(), request.getContextPath(), request

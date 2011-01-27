@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 
 @Component
 public class VulpeContext {
@@ -36,10 +35,6 @@ public class VulpeContext {
 	public static final String CURRENT_CONTROLLER = "currentController";
 
 	private Map<String, Object> map = new HashMap<String, Object>();
-
-	public static VulpeContext getInstance() {
-		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
-	}
 
 	public void setLocale(final Locale locale) {
 		map.put(LOCALE, locale);

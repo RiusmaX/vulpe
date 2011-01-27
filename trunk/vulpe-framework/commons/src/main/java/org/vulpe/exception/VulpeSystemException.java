@@ -26,8 +26,7 @@ public class VulpeSystemException extends RuntimeException {
 	private String args[];
 	private String message;
 
-	public VulpeSystemException(final Throwable throwable, final String message,
-			final String... args) {
+	public VulpeSystemException(final Throwable throwable, final String message, final String... args) {
 		super(message, throwable);
 		this.message = message;
 		this.args = args;
@@ -49,7 +48,7 @@ public class VulpeSystemException extends RuntimeException {
 	}
 
 	public String[] getArgs() {
-		return args.clone();
+		return args;
 	}
 
 	public String getMessage() {
@@ -57,7 +56,7 @@ public class VulpeSystemException extends RuntimeException {
 	}
 
 	public void setArgs(final String[] args) {
-		this.args = args.clone();
+		this.args = args;
 	}
 
 	public void setMessage(final String message) {
