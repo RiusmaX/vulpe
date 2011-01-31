@@ -431,6 +431,15 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(queryConfiguration.complement().where());
 			}
 		}
+		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().groupBy())) {
+			hql.append(" group by ");
+			hql.append(queryConfiguration.replace().groupBy());
+		} else if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().groupBy())) {
+			if (!hql.toString().contains("group by")) {
+				hql.append(" group by ");
+			}
+			hql.append(queryConfiguration.complement().groupBy());
+		}
 		// add order by
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().orderBy())) {
 			hql.append(" order by ");

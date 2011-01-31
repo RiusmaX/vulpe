@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Tells Vulpe to complement parts in query.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
@@ -57,9 +57,12 @@ public @interface QueryComplement {
 	String where() default "";
 
 	/**
+	 * Append to group by clause.
+	 */
+	String groupBy() default "";
+
+	/**
 	 * Append to order by clause.
-	 *
-	 * @return
 	 */
 	String orderBy() default "";
 

@@ -52,9 +52,13 @@ public @interface QueryReplace {
 	String where() default "";
 
 	/**
+	 * Replace group by clause.
+	 */
+	String groupBy() default "";
+
+	
+	/**
 	 * Replace order by clause.
-	 *
-	 * @return
 	 */
 	String orderBy() default "";
 
