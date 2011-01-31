@@ -615,12 +615,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 * 
-	 * @see org.vulpe.controller.VulpeController#manageButtons()
 	 */
-	public void manageButtons() {
+	private void manageButtons() {
 		manageButtons(getOperation());
 	}
 

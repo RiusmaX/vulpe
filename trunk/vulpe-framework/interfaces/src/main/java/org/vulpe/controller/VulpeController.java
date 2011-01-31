@@ -126,8 +126,6 @@ public interface VulpeController extends VulpeSimpleController {
 
 	void showButton(final String button);
 
-	void manageButtons();
-
 	void manageButtons(final Operation operation);
 
 	void showButtons(final String... buttons);
