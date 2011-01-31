@@ -133,7 +133,7 @@ public final class VulpeCachedObjectsHelper {
 		final Set<String> cachedClasses = loadCachedClasses(servletContext);
 		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
 		if (cachedClasses != null && !cachedClasses.isEmpty()) {
-			for (String cachedClass : cachedClasses) {
+			for (final String cachedClass : cachedClasses) {
 				try {
 					final Class classicClass = Class.forName(cachedClass);
 					if (VulpeEntity.class.isAssignableFrom(classicClass)) {
@@ -156,7 +156,7 @@ public final class VulpeCachedObjectsHelper {
 		if (cachedEnums != null && !cachedEnums.isEmpty()) {
 			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
 			final VulpeHashMap<String, String> mapCachedEnumArray = new VulpeHashMap<String, String>();
-			for (String cachedEnum : cachedEnums) {
+			for (final String cachedEnum : cachedEnums) {
 				try {
 					final Class classicClass = Class.forName(cachedEnum);
 					if (classicClass.isEnum()) {
@@ -237,7 +237,7 @@ public final class VulpeCachedObjectsHelper {
 					final List<ValueBean> list = new ArrayList<ValueBean>();
 					final StringBuilder valuesDescricption = new StringBuilder();
 					final StringBuilder array = new StringBuilder("#{");
-					for (Object object : values) {
+					for (final Object object : values) {
 						if (valuesDescricption.length() > 0) {
 							valuesDescricption.append(", ");
 							array.append(", ");

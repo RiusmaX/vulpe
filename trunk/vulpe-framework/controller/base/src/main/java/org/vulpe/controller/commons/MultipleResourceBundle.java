@@ -32,7 +32,7 @@ import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Class to provide multiple Resource Bundle in application.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -44,7 +44,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
 
 	/**
-	 *
+	 * 
 	 * @return Instance of MultipleResourceBundle
 	 */
 	public static MultipleResourceBundle getInstance() {
@@ -53,7 +53,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Gets all bundles in application
-	 *
+	 * 
 	 * @return list of bundles in application
 	 */
 	protected List<ResourceBundle> getBundles() {
@@ -62,8 +62,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 		final String modules[] = project.i18n();
 		List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
 		for (String module : modules) {
-			final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
-					.getLocale());
+			final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext.getLocale());
 			list.add(resourceBundle);
 		}
 		Collections.reverse(list);
@@ -72,7 +71,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.ResourceBundle#getKeys()
 	 */
 	@Override
@@ -93,7 +92,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
 	 */
 	@Override
@@ -105,15 +104,14 @@ public class MultipleResourceBundle extends ResourceBundle {
 					final Object value = resourceBundle.getObject(key);
 					if (value != null) {
 						if (value instanceof String) {
-							if (!value.toString().startsWith("???")
-									&& !value.toString().endsWith("???")) {
+							if (!value.toString().startsWith("???") && !value.toString().endsWith("???")) {
 								return value;
 							}
 						}
 						return value;
 					}
 				} catch (MissingResourceException e) {
-					LOG.debug(resourceBundle.getLocale().getDisplayName() + " - missing key: "  + key);
+					LOG.debug(resourceBundle.getLocale().getDisplayName() + " - missing key: " + key);
 				}
 			}
 		}
@@ -122,13 +120,17 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Method to get key description.
-	 *
+	 * 
 	 * @param servletContext
 	 * @param key
 	 * @return
 	 */
 	public Object getKeyDescription(final String key) {
 		return getObject(key);
+	}
+
+	public String getI18NEnum(Enum<?> value) {
+		return value == null ? "" : getString(value.getClass().getName() + "." + value.name());
 	}
 
 }
