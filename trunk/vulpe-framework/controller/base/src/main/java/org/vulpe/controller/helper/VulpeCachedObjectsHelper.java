@@ -40,9 +40,9 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Class to control Cached Objects.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- * 
+ *
  */
 @SuppressWarnings("unchecked")
 public final class VulpeCachedObjectsHelper {
@@ -56,33 +56,31 @@ public final class VulpeCachedObjectsHelper {
 
 	/**
 	 * Load list of classes noted with @CachedClass
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 */
 	private static Set<String> loadCachedClasses(final ServletContext servletContext) {
 		scannotation(servletContext);
-		final Set<String> cachedClasses = annotationDB.getAnnotationIndex().get(
-				CachedClass.class.getName());
+		final Set<String> cachedClasses = annotationDB.getAnnotationIndex().get(CachedClass.class.getName());
 		return cachedClasses;
 	}
 
 	/**
 	 * Load list of classes noted with @CachedEnum
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 */
 	private static Set<String> loadCachedEnums(final ServletContext servletContext) {
 		scannotation(servletContext);
-		final Set<String> cachedEnums = annotationDB.getAnnotationIndex().get(
-				CachedEnum.class.getName());
+		final Set<String> cachedEnums = annotationDB.getAnnotationIndex().get(CachedEnum.class.getName());
 		return cachedEnums;
 	}
 
 	/**
 	 * Scanning libs of application to find noted classes.
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 * @return
@@ -94,12 +92,10 @@ public final class VulpeCachedObjectsHelper {
 			final List<URL> urls = new ArrayList<URL>();
 			for (URL url : urlsWebInfLib) {
 				final String jarName = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
-				if (!VulpeConfigHelper.isSecurityEnabled()
-						&& jarName.contains(VulpeConstants.VULPE_SECURITY)) {
+				if (!VulpeConfigHelper.isSecurityEnabled() && jarName.contains(VulpeConstants.VULPE_SECURITY)) {
 					continue;
 				}
-				if (jarName.contains(VulpeConstants.VULPE)
-						|| jarName.contains(VulpeConstants.DOMAINS)) {
+				if (jarName.contains(VulpeConstants.VULPE) || jarName.contains(VulpeConstants.DOMAINS)) {
 					urls.add(url);
 				}
 			}
@@ -126,7 +122,7 @@ public final class VulpeCachedObjectsHelper {
 	/**
 	 * Puts domains objects with annotations (@CachedClass and @CachedEnum) in
 	 * cache.
-	 * 
+	 *
 	 * @param servletContext
 	 */
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
@@ -139,12 +135,9 @@ public final class VulpeCachedObjectsHelper {
 					if (VulpeEntity.class.isAssignableFrom(classicClass)) {
 						final Class<? extends VulpeEntity<?>> clazz = (Class<? extends VulpeEntity<?>>) classicClass;
 						final VulpeEntity<?> entity = clazz.newInstance();
-						final CachedClass cachedClassAnnotation = clazz
-								.getAnnotation(CachedClass.class);
-						entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
-								cachedClassAnnotation.queryConfigurationName());
-						mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper
-								.getService().getList(entity));
+						final CachedClass cachedClassAnnotation = clazz.getAnnotation(CachedClass.class);
+						entity.setQueryConfigurationName(cachedClassAnnotation.queryConfigurationName());
+						mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService().getList(entity));
 					}
 				} catch (Exception e) {
 					LOG.error(e);
@@ -172,9 +165,8 @@ public final class VulpeCachedObjectsHelper {
 									array.append(", ");
 								}
 								valuesDescricption.append(object);
-								final ValueBean value = new ValueBean(object.toString(),
-										classicClass.getName().concat(".")
-												.concat(object.toString()));
+								final ValueBean value = new ValueBean(object.toString(), classicClass.getName().concat(
+										".").concat(object.toString()));
 								array.append("'");
 								array.append(value.getId());
 								array.append("':'");
@@ -195,30 +187,26 @@ public final class VulpeCachedObjectsHelper {
 				}
 			}
 			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);
-			VulpeCacheHelper.getInstance()
-					.put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
+			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
 		}
 	}
 
 	/**
 	 * Puts domains objects configured by @VulpeDomains annotation in cache.
-	 * 
+	 *
 	 * @param servletContext
 	 */
 	public static void putObjectsInCache(final ServletContext servletContext) {
-		final Class<? extends VulpeEntity<?>>[] cachedClass = VulpeConfigHelper.get(
-				VulpeDomains.class).cachedClass();
+		final Class<? extends VulpeEntity<?>>[] cachedClass = VulpeConfigHelper.get(VulpeDomains.class).cachedClass();
 		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
 		if (cachedClass != null) {
 			for (Class<? extends VulpeEntity<?>> clazz : cachedClass) {
 				try {
 					final VulpeEntity<?> entity = clazz.newInstance();
-					final CachedClass cachedClassAnnotation = clazz
-							.getAnnotation(CachedClass.class);
-					entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
-							cachedClassAnnotation.queryConfigurationName());
-					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
-							.getList(entity));
+					final CachedClass cachedClassAnnotation = clazz.getAnnotation(CachedClass.class);
+					entity.getMap()
+							.put(Entity.QUERY_CONFIGURATION_NAME, cachedClassAnnotation.queryConfigurationName());
+					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService().getList(entity));
 				} catch (Exception e) {
 					LOG.error(e);
 				}
@@ -243,10 +231,9 @@ public final class VulpeCachedObjectsHelper {
 							array.append(", ");
 						}
 						valuesDescricption.append(object);
-						final ValueBean value = new ValueBean(object.toString(),
-								VulpeConstants.View.LABEL.concat(projectName).concat(
-										VulpeConstants.View.ENUM).concat(enumName).concat(".")
-										.concat(object.toString()));
+						final ValueBean value = new ValueBean(object.toString(), VulpeConstants.View.LABEL.concat(
+								projectName).concat(VulpeConstants.View.ENUM).concat(enumName).concat(".").concat(
+								object.toString()));
 						array.append("'");
 						array.append(value.getId());
 						array.append("':'");
@@ -255,16 +242,15 @@ public final class VulpeCachedObjectsHelper {
 					}
 					array.append("}");
 					mapCachedEnumArray.put(enumName, array.toString());
-					LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(
-							valuesDescricption.toString()).concat("]"));
+					LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(valuesDescricption.toString())
+							.concat("]"));
 					mapCachedEnum.put(enumName, list);
 				} catch (Exception e) {
 					LOG.error(e);
 				}
 			}
 			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);
-			VulpeCacheHelper.getInstance()
-					.put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
+			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS_ARRAY, mapCachedEnumArray);
 		}
 	}
 }

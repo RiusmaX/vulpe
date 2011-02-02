@@ -171,6 +171,11 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		return map;
 	}
 
+	public String getQueryConfigurationName() {
+		return this.map.containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) this.map
+				.get(Entity.QUERY_CONFIGURATION_NAME) : "default";
+	}
+
 	public void setQueryConfigurationName(final String queryConfigurationName) {
 		this.map.put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
 	}

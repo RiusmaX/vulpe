@@ -34,6 +34,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.model.entity.VulpeEntity;
 
 @SuppressWarnings( { "unchecked" })
 public class VulpeReflectUtil {
@@ -46,7 +47,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of fields in class or superclass.
-	 * 
+	 *
 	 * @param clazz
 	 * @return
 	 */
@@ -70,7 +71,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of fields noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param clazz
 	 * @param annotationClass
 	 * @return
@@ -89,7 +90,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns field of class or superclass.
-	 * 
+	 *
 	 * @param clazz
 	 * @param fieldName
 	 * @return
@@ -115,7 +116,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Copy attributes from <code>origin</code> to <code>destination</code>.
-	 * 
+	 *
 	 * @param destination
 	 * @param origin
 	 */
@@ -125,7 +126,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Copy attributes from <code>origin</code> to <code>destination</code>.
-	 * 
+	 *
 	 * @param destination
 	 * @param origin
 	 * @param ignoreTransient
@@ -166,7 +167,7 @@ public class VulpeReflectUtil {
 	/**
 	 * Copy transient attributes from <code>origin</code> to
 	 * <code>destination</code>.
-	 * 
+	 *
 	 * @param destination
 	 * @param origin
 	 */
@@ -205,7 +206,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns list of methods in class or superclass.
-	 * 
+	 *
 	 * @param clazz
 	 * @return
 	 */
@@ -229,7 +230,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns method of class or superclass.
-	 * 
+	 *
 	 * @param clazz
 	 * @param methodName
 	 * @param typeParams
@@ -255,7 +256,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of Type.
-	 * 
+	 *
 	 * @param clazz
 	 * @param type
 	 * @return
@@ -299,7 +300,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 * 
+	 *
 	 * @param clazz
 	 * @param typeVariable
 	 * @return
@@ -328,7 +329,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns class of TypeVariable.
-	 * 
+	 *
 	 * @param clazz
 	 * @param superClass
 	 * @param typeVariable
@@ -388,7 +389,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns position of TypeVariable in list of getTypeParameters on class.
-	 * 
+	 *
 	 * @param typeVariable
 	 * @return
 	 */
@@ -530,7 +531,7 @@ public class VulpeReflectUtil {
 	/**
 	 * Returns class on index in the parameterized type on <code>clazz</code> or
 	 * <code>super</code>.
-	 * 
+	 *
 	 * @param clazz
 	 * @param index
 	 * @return
@@ -555,7 +556,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -583,7 +584,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if class is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -596,7 +597,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -609,25 +610,21 @@ public class VulpeReflectUtil {
 		if (field != null && field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
 		}
-
-		final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
-
+		final String name = VulpeStringUtil.upperCaseFirst(fieldName);
 		Method method = getMethod(clazz, "get".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
 			return method.getAnnotation(annotationClass);
 		}
-
 		method = getMethod(clazz, "set".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
 			return method.getAnnotation(annotationClass);
 		}
-
 		return null;
 	}
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -639,25 +636,21 @@ public class VulpeReflectUtil {
 		if (field.isAnnotationPresent(annotationClass)) {
 			return field.getAnnotation(annotationClass);
 		}
-
-		final String name = field.getName().substring(0, 1).toUpperCase().concat(field.getName().substring(1));
-
+		final String name = VulpeStringUtil.upperCaseFirst(field.getName());
 		Method method = getMethod(clazz, "get".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
 			return method.getAnnotation(annotationClass);
 		}
-
 		method = getMethod(clazz, "set".concat(name));
 		if (method != null && method.isAnnotationPresent(annotationClass)) {
 			return method.getAnnotation(annotationClass);
 		}
-
 		return null;
 	}
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -671,7 +664,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Checks if field is noted by <code>annotationClass</code>.
-	 * 
+	 *
 	 * @param <T>
 	 * @param annotationClass
 	 * @param clazz
@@ -685,15 +678,14 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Sets field value in object.
-	 * 
+	 *
 	 * @param object
 	 * @param fieldName
 	 * @param value
 	 */
 	public static void setFieldValue(final Object object, final String fieldName, final Object value) {
 		try {
-			final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
-
+			final String name = VulpeStringUtil.upperCaseFirst(fieldName);
 			Method method = null;
 			Class<?> classField = (value == null ? getFieldClass(object.getClass(), fieldName) : value.getClass());
 			while (classField != null && !classField.equals(Object.class)) {
@@ -745,7 +737,7 @@ public class VulpeReflectUtil {
 
 	/**
 	 * Returns field value from object.
-	 * 
+	 *
 	 * @param <T>
 	 * @param object
 	 * @param fieldName
@@ -753,7 +745,7 @@ public class VulpeReflectUtil {
 	 */
 	public static <T> T getFieldValue(final Object object, final String fieldName) {
 		try {
-			final String name = fieldName.substring(0, 1).toUpperCase().concat(fieldName.substring(1));
+			final String name = VulpeStringUtil.upperCaseFirst(fieldName);
 			final Method method = getMethod(object.getClass(), "get".concat(name));
 			if (method != null) {
 				synchronized (method) {
@@ -793,6 +785,34 @@ public class VulpeReflectUtil {
 			return null;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
+		}
+	}
+
+	public static void instanciate(Object object, String expression, Object value) {
+		final String[] expressionParts = expression.split("\\.");
+		if (expressionParts.length > 1) {
+			for (final String part : expressionParts) {
+				Object fieldValue = getFieldValue(object, part);
+				if (VulpeValidationUtil.isEmpty(fieldValue)) {
+					final Field field = getField(object.getClass(), part);
+					try {
+						final Class<?> type = field.getType();
+						if (VulpeEntity.class.isAssignableFrom(type)) {
+							final Object instance = type.newInstance();
+							setFieldValue(object, part, instance);
+							object = instance;
+						} else {
+							setFieldValue(object, part, value);
+						}
+					} catch (InstantiationException e) {
+						LOG.error(e);
+					} catch (IllegalAccessException e) {
+						LOG.error(e);
+					}
+				}
+			}
+		} else {
+			setFieldValue(object, expression, value);
 		}
 	}
 
