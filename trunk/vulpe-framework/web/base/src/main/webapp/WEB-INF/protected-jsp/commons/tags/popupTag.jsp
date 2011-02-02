@@ -71,6 +71,10 @@
 			</c:choose>
 		</c:forEach>
 	</c:if>
+	<c:set var="popupPropertiesAux" value="${fn:replace(popupPropertiesAux, '[', '__')}"/>
+	<c:set var="popupPropertiesAux" value="${fn:replace(popupPropertiesAux, '].', '__')}"/>
+	<c:set var="popupPropertiesAux" value="${fn:replace(popupPropertiesAux, ']', '_')}"/>
+	<c:set var="popupPropertiesAux" value="${fn:replace(popupPropertiesAux, '.', '_')}"/>
 	<c:set var="paramPropertiesAux" value=""/>
 	<c:if test="${not empty paramProperties}">
 		<c:forEach items="${fn:split(fn:trim(paramProperties), ',')}" var="prop" varStatus="sProp">

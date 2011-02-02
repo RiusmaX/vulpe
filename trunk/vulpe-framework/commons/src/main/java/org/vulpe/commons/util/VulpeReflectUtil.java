@@ -793,8 +793,8 @@ public class VulpeReflectUtil {
 		if (expressionParts.length > 1) {
 			for (final String part : expressionParts) {
 				Object fieldValue = getFieldValue(object, part);
+				final Field field = getField(object.getClass(), part);
 				if (VulpeValidationUtil.isEmpty(fieldValue)) {
-					final Field field = getField(object.getClass(), part);
 					try {
 						final Class<?> type = field.getType();
 						if (VulpeEntity.class.isAssignableFrom(type)) {
@@ -808,6 +808,12 @@ public class VulpeReflectUtil {
 						LOG.error(e);
 					} catch (IllegalAccessException e) {
 						LOG.error(e);
+					}
+				} else {
+					object = fieldValue;
+					final Class<?> type = field.getType();
+					if (!VulpeEntity.class.isAssignableFrom(type)) {
+						setFieldValue(object, part, value);
 					}
 				}
 			}
