@@ -28,31 +28,29 @@ public @interface Parameter {
 
 	/**
 	 * Operator.
-	 *
-	 * @return
 	 */
 	OperatorType operator() default OperatorType.EQUAL;
 
 	/**
 	 * Attribute name.
-	 *
-	 * @return
 	 */
 	String name();
 
 	/**
 	 * Attribute value.
-	 *
-	 * @return
 	 */
 	String value() default "";
 
 	/**
 	 * Only use with JPA.
-	 *
-	 * @return
 	 */
 	String alias() default "obj";
+	
+	
+	/**
+	 * To compare strings with upper case.
+	 */
+	boolean upper() default false;
 	
 	public enum OperatorType {
 

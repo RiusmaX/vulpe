@@ -54,7 +54,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
@@ -64,7 +64,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -85,7 +85,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -126,7 +126,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -144,7 +144,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -166,7 +166,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -186,7 +186,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -303,7 +303,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 *
+	 * 
 	 * @param entity
 	 * @param params
 	 * @return
@@ -524,7 +524,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -543,7 +543,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -565,9 +565,21 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (count > 0) {
 					hql.append(" and ");
 				}
-				hql.append("obj.").append(queryParameter.equals().name()).append(" ").append(
-						queryParameter.equals().operator().getValue()).append(" :").append(
-						queryParameter.equals().name());
+				if (queryParameter.equals().upper()) {
+					hql.append("upper(");
+				}
+				hql.append("obj.").append(queryParameter.equals().name());
+				if (queryParameter.equals().upper()) {
+					hql.append(")");
+				}
+				hql.append(" ").append(queryParameter.equals().operator().getValue());
+				if (queryParameter.equals().upper()) {
+					hql.append(" upper(");
+				}
+				hql.append(":").append(queryParameter.equals().name());
+				if (queryParameter.equals().upper()) {
+					hql.append(")");
+				}
 				try {
 					values.put(queryParameter.equals().name(), PropertyUtils.getProperty(entity, queryParameter
 							.equals().name()));
