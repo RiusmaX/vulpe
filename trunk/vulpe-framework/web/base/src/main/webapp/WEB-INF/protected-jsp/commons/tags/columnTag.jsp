@@ -3,8 +3,8 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
-	<c:if test="${not empty elementId}"><c:set var="elementId">id="${elementId}" </c:set></c:if>
-	<c:if test="${empty sortProperty}"><c:set var="sortProperty">id="${property}" </c:set></c:if>
+	<c:if test="${not empty elementId}"><c:set var="elementId">${elementId}</c:set></c:if>
+	<c:if test="${empty sortProperty}"><c:set var="sortProperty">${property}</c:set></c:if>
 	<c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
 	<c:choose>
 	<c:when test="${empty isHeaderTableTag || isHeaderTableTag}">
@@ -16,11 +16,11 @@
 			<c:choose>
 				<c:when test="${global['useDB4O']}">
 					<c:set var="elementId">id="${sortPropertyInfoTableTag}_${sortProperty}" </c:set>
-					<c:set var="label"><a href="javascript:void(0);" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${sortProperty}');">${label}</a></c:set>
+					<c:set var="label"><a href="javascript:void(0);" onclick="vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${sortProperty}');">${label}</a></c:set>
 				</c:when>
 				<c:otherwise>
 					<c:set var="elementId">id="${sortPropertyInfoTableTag}-${alias}_${sortProperty}" </c:set>
-					<c:set var="label"><a href="javascript:void(0);" onclick="javascript:vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${sortProperty}');">${label}</a></c:set>
+					<c:set var="label"><a href="javascript:void(0);" onclick="vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${sortProperty}');">${label}</a></c:set>
 				</c:otherwise>
 			</c:choose>
 		</c:if>

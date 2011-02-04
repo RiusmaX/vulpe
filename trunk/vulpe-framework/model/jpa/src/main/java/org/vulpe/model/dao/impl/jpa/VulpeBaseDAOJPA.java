@@ -560,7 +560,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append("select count(*) from ");
 			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
 			final Map<String, Object> values = new HashMap<String, Object>();
+			int count = 0;
 			for (QueryParameter queryParameter : queryParameters) {
+				if (count > 0) {
+					hql.append(" and ");
+				}
 				hql.append("obj.").append(queryParameter.equals().name()).append(" ").append(
 						queryParameter.equals().operator().getValue()).append(" :").append(
 						queryParameter.equals().name());
@@ -570,6 +574,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				} catch (Exception e) {
 					LOG.error(e);
 				}
+				++count;
 			}
 			final Query query = getEntityManager().createQuery(hql.toString());
 			setParams(query, values);
