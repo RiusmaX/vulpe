@@ -794,7 +794,7 @@ public class VulpeReflectUtil {
 			for (final String part : expressionParts) {
 				Object fieldValue = getFieldValue(object, part);
 				final Field field = getField(object.getClass(), part);
-				if (VulpeValidationUtil.isEmpty(fieldValue)) {
+				if (fieldValue == null) {
 					try {
 						final Class<?> type = field.getType();
 						if (VulpeEntity.class.isAssignableFrom(type)) {
