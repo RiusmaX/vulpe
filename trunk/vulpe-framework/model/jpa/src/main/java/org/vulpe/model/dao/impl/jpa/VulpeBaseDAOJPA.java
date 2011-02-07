@@ -588,8 +588,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				}
 				++count;
 			}
+			if (entity.getId() != null) {
+				hql.append(" and obj.id <> :id ");
+			}
 			final Query query = getEntityManager().createQuery(hql.toString());
 			setParams(query, values);
+			if (entity.getId() != null) {
+				query.setParameter("id", entity.getId());
+			}
 			final Long size = (Long) query.getSingleResult();
 			return size > 0;
 		}

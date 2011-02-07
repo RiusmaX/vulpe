@@ -7,10 +7,6 @@ package ${dao.daoPackageName}.impl.jpa;
 import ${dao.packageName}.${dao.name};
 import ${dao.daoPackageName}.${dao.daoName};
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +35,7 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		final ${parameter.type} ${parameter.name}<#if parameter_has_next>,</#if>
 		</#list>) throws org.vulpe.exception.VulpeApplicationException {
 		<#if method.parameters?has_content>
-		final Map<String, Object> map = new HashMap();
+		final java.util.Map<String, Object> map = new java.util.HashMap();
 		<#list method.parameters as parameter>
 		map.put("${parameter.name}", ${parameter.name});
 		</#list>
@@ -54,20 +50,22 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		return (${method.returnType}) findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
 		</#if>
 		<#else>
-		<#if method.returnType == dao.name>
 		final ${method.returnType} object = (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
+		<#if method.returnType == dao.name>
 		loadEntityRelationships(object);
-		return object;
-		<#else>
-		return (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
 		</#if>
+		return object;
 		</#if>
 		<#else>
 		<#if method.parameters?has_content>
-		return (${method.returnType}) listByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
+		final ${method.returnType} list = (${method.returnType}) listByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
 		<#else>
-		return (${method.returnType}) listByNamedQuery("${dao.name}.${method.name}");
+		final ${method.returnType} list = (${method.returnType}) listByNamedQuery("${dao.name}.${method.name}");
 		</#if>
+		<#if method.returnType?index_of(dao.name) != -1>
+		loadRelationships(list, map, false);
+		</#if>
+		return list;
 		</#if>
 	}
 	</#list>
