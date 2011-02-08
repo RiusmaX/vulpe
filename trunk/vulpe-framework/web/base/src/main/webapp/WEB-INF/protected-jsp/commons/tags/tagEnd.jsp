@@ -15,7 +15,9 @@ vulpe.util.get('${elementId}-iconErrorMessage').bind('click', function(){
 <c:if test="${not empty requiredField || not empty validateType}">
 <c:if test="${not empty requiredField}">
 vulpe.util.get('${elementId}').blur(function() {
-	var requiredFieldId = "${vulpeFormName}-${fn:replace(prepareName, property, requiredField)}";
+	var formName = "${vulpeFormName}-";
+	var prepareName = "${fn:replace(prepareName, property, requiredField)}".replace(/\./g, "_");
+	var requiredFieldId = formName + prepareName.replace(/-/g, "_");
 	var value = $(this).val();
 	var requiredFieldValue = vulpe.util.get(requiredFieldId).val();
 	var id = requiredFieldId + "FieldRequired";

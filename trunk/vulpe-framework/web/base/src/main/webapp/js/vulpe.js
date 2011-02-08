@@ -1319,6 +1319,7 @@ var vulpe = {
 				var value = vulpe.util.getValueMap(values, v);
 				value = (typeof value == "undefined") ? '' : webtoolkit.url.decode(value);
 				vulpe.util.get(webtoolkit.url.decode(c)).val(value.replace(/\+/g, " "));
+				vulpe.util.get(webtoolkit.url.decode(c)).blur();
 			});
 
 			var popupExpressions = popup.attr('expressions');
@@ -1857,8 +1858,8 @@ var vulpe = {
 									} else {
 										layerObject.html(html);
 									}
-									if (vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) {
-										$("tr[id*='" + vulpe.config.formName + "-row-']", layerObject).each(function(index) {
+									if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
+										$("tr[id*='-row-']", layerObject).each(function(index) {
 											var id = $(this).attr("id");
 											if (id.indexOf("header") == -1) {
 												$("#" + id).unbind("mouseenter mouseleave");
