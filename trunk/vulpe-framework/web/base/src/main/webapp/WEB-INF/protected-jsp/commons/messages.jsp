@@ -41,7 +41,7 @@
 					</ul>
 				</c:when>
 				<c:otherwise>
-					<div id="errors" class="vulpeMessages">
+					<div id="errors">
 					<ul>
 						<c:if test="${not empty fieldErrors}"><li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li></c:if>
 						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>

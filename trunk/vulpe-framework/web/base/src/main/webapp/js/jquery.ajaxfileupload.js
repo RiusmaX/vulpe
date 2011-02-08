@@ -54,20 +54,22 @@ jQuery.extend({
 
 		var uploadCallback = function() {
 			vulpe.view.hideLoading();
-			try{
+			try {
 				var io = vulpe.util.getElement(frameId);
 				var response = null;
-				if(io.contentWindow) {
+				if (io.contentWindow) {
 					response = vulpe.util.trim(io.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null);
-				}else
-				if(io.contentDocument) {
+				} else if (io.contentDocument) {
 					response = vulpe.util.trim(io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null);
 				}
-
 				if (vulpe.util.trim(response) != 'true'){
-					jQuery("#messages").html(vulpe.config.messages.upload);
-					vulpe.view.showMessages();
-				}else{
+					if (response.indexOf("<!--IS_EXCEPTION-->")) {
+						vulpe.exception.handlerError(response);
+					} else {
+						jQuery(vulpe.config.layers.modalMessages).html(vulpe.config.messages.upload);
+						vulpe.view.showMessages();
+					}
+				} else {
 					vulpe.view.request.submitAjax({
 						formName: formName,
 						layerFields: layerFields,
@@ -80,7 +82,7 @@ jQuery.extend({
 					});
 				}
 			}catch(e){
-				jQuery("#messages").html(vulpe.config.messages.upload);
+				jQuery(vulpe.config.layers.modalMessages).html(vulpe.config.messages.upload);
 				vulpe.view.showMessages();
 			}
 			form.remove();
@@ -98,14 +100,14 @@ jQuery.extend({
 			jQuery(form).attr('action', jQuery.getUploadURL(formName));
 			jQuery(form).attr('method', 'POST');
 			jQuery(form).attr('target', this.frameId);
-			if(form.encoding) {
+			if (form.encoding) {
 				form.encoding = 'multipart/form-data';
 			} else {
 				form.enctype = 'multipart/form-data';
 			}
 			jQuery(form).submit();
 		} catch(e) {
-			jQuery("#messages").html(vulpe.config.messages.upload);
+			jQuery(vulpe.config.layers.modalMessages).html(vulpe.config.messages.upload);
 			vulpe.view.showMessages();
 			return;
 		}

@@ -16,7 +16,9 @@
 package org.vulpe.controller.struts.interceptor;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -34,12 +36,12 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeUpload;
 import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.commons.MultipleResourceBundle;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ValidationAware;
-import com.opensymphony.xwork2.util.LocalizedTextUtil;
 
 /**
  * 
@@ -89,8 +91,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
-				LOG.debug(getTextMessage("struts.messages.bypass.request", new Object[] { proxy.getNamespace(),
-						proxy.getActionName() }, ActionContext.getContext().getLocale()));
+				LOG.debug(getText("vulpe.message.bypass.request", new Object[] { proxy.getNamespace(),
+						proxy.getActionName() }));
 			}
 			return invocation.invoke();
 		}
@@ -106,6 +108,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		if (multiWrapper.hasErrors()) {
 			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator.hasNext();) {
 				final String error = (String) errorIterator.next();
+				// the request was rejected because its size (9014884) exceeds
+				// the configured maximum (2097152)
 				if (validation != null) {
 					validation.addActionError(error);
 				}
@@ -143,12 +147,10 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 								fileName });
 					}
 				} else {
-					LOG.error(getTextMessage("struts.messages.invalid.file", new Object[] { inputName }, ActionContext
-							.getContext().getLocale()));
+					LOG.error(getText("vulpe.message.invalid.file", new Object[] { inputName }));
 				}
 			} else {
-				LOG.error(getTextMessage("struts.messages.invalid.content.type", new Object[] { inputName },
-						ActionContext.getContext().getLocale()));
+				LOG.error(getText("vulpe.message.invalid.content.type", new Object[] { inputName }));
 			}
 		}
 
@@ -166,8 +168,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			final File[] file = multiWrapper.getFiles(inputValue);
 			for (int index = 0; index < file.length; index++) {
 				final File currentFile = file[index];
-				LOG.info(getTextMessage("struts.messages.removing.file", new Object[] { inputValue, currentFile },
-						ActionContext.getContext().getLocale()));
+				LOG.info(getText("vulpe.message.removing.file", new Object[] { inputValue, currentFile }));
 				if ((currentFile != null) && currentFile.isFile()) {
 					currentFile.delete();
 				}
@@ -192,18 +193,84 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		return result;
 	}
 
-	protected static final String DEFAULT_MESSAGE = "no.message.found";
+	public String getText(final String key) {
+		return MultipleResourceBundle.getInstance().getString(key);
+	}
+
+	public String getText(final String key, final Object... args) {
+		return MessageFormat.format(getText(key), args);
+	}
 
 	/**
+	 * Override for added functionality. Checks if the proposed file is
+	 * acceptable based on contentType and size.
 	 * 
-	 * @param messageKey
-	 * @param args
+	 * @param file
+	 *            - proposed upload file.
+	 * @param contentType
+	 *            - contentType of the file.
+	 * @param inputName
+	 *            - inputName of the file.
+	 * @param validation
+	 *            - Non-null ValidationAware if the action implements
+	 *            ValidationAware, allowing for better logging.
 	 * @param locale
-	 * @return
+	 * @return true if the proposed file is acceptable by contentType and size.
 	 */
-	protected String getTextMessage(final String messageKey, final Object[] args, final Locale locale) {
-		return args == null || args.length == 0 ? LocalizedTextUtil.findText(this.getClass(), messageKey, locale)
-				: LocalizedTextUtil.findText(this.getClass(), messageKey, locale, DEFAULT_MESSAGE, args);
+	protected boolean acceptFile(File file, String contentType, String inputName, ValidationAware validation,
+			Locale locale) {
+		boolean fileIsAcceptable = false;
+
+		// If it's null the upload failed
+		if (file == null) {
+			// String errMsg = getText("vulpe.error.uploading", new Object[] {
+			// inputName });
+			final String message = getText("vulpe.error.uploading");
+			if (validation != null) {
+				// validation.addFieldError(inputName, message);
+				validation.addActionError(message);
+			}
+			log.error(message);
+		} else if (maximumSize != null && maximumSize.longValue() < file.length()) {
+			final VulpeUpload upload = VulpeConfigHelper.getProjectConfiguration().upload();
+			// String errMsg = getText("vulpe.error.file.too.large", new
+			// Object[] { inputName, file.getName(),
+			// "" + file.length() });
+			final String message = getText("vulpe.error.file.too.large", upload.maximumSize());
+			if (validation != null) {
+				// validation.addFieldError(inputName, message);
+				validation.addActionError(message);
+			}
+
+			log.error(message);
+		} else if ((!allowedTypesSet.isEmpty()) && (!containsItem(allowedTypesSet, contentType))) {
+			// String errMsg = getText("vulpe.error.content.type.not.allowed",
+			// new Object[] { inputName, file.getName(),
+			// contentType });
+			final String message = getText("vulpe.error.content.type.not.allowed", new Object[] { inputName,
+					file.getName(), contentType });
+			if (validation != null) {
+				// validation.addFieldError(inputName, message);
+				validation.addActionError(message);
+			}
+
+			log.error(message);
+		} else {
+			fileIsAcceptable = true;
+		}
+
+		return fileIsAcceptable;
+	}
+
+	/**
+	 * @param itemCollection
+	 *            - Collection of string items (all lowercase).
+	 * @param key
+	 *            - Key to search for.
+	 * @return true if itemCollection contains the key, false otherwise.
+	 */
+	private static boolean containsItem(Collection itemCollection, String key) {
+		return itemCollection.contains(key.toLowerCase());
 	}
 
 }

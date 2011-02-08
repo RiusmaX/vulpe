@@ -105,25 +105,25 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			String value = action.getText(key);
 			if (StringUtils.isBlank(value) || value.equals(key)) {
 				String message = newException.getMessage();
-				final MessageFormat messageFormat = buildMessageFormat(TextParseUtil.translateVariables(message, invocation
-						.getStack()), invocation.getInvocationContext().getLocale());
-				message = messageFormat.format(null);
-				value = action.getText(message);
-				if (StringUtils.isBlank(value) || value.equals(message)) {
-					action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
-				} else {
-					action.addActionMessage(value);
+				if (StringUtils.isNotEmpty(message)) {
+					final MessageFormat messageFormat = buildMessageFormat(TextParseUtil.translateVariables(message,
+							invocation.getStack()), invocation.getInvocationContext().getLocale());
+					message = messageFormat.format(null);
+					value = action.getText(message);
+					if (StringUtils.isBlank(value) || value.equals(message)) {
+						action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
+					} else {
+						action.addActionMessage(value);
+					}
 				}
 			} else {
 				action.addActionMessage(value);
 			}
 		}
-		if (action.isAjax()) {
-			return VulpeConstants.Controller.Forward.MESSAGES;
-		} else {
+		if (!action.isAjax()) {
 			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
-			return VulpeConstants.Controller.Forward.ERRORS;
 		}
+		return VulpeConstants.Controller.Forward.MESSAGES;
 	}
 
 	/**
@@ -147,4 +147,5 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	protected MessageFormat buildMessageFormat(final String pattern, final Locale locale) {
 		return new MessageFormat(pattern, locale);
 	}
+
 }

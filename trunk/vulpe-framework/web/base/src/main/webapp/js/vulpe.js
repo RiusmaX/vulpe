@@ -169,10 +169,10 @@ var vulpe = {
 		},
 
 		checkRepeatedCharacters: function(value) {
-			var firstChar = value.charAt(0);
+			var firstChar = value.toUpperCase().charAt(0);
 			var equalChars = true;
 			for (var i = 0; i < value.length; i++) {
-				var char = value.charAt(i);
+				var char = value.toUpperCase().charAt(i);
 				if (char != firstChar) {
 					equalChars = false;
 				}
