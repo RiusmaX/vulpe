@@ -872,15 +872,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		if (Operation.READ.equals(operation)) {
-			getEntitySelect().getMap().put(Entity.QUERY_CONFIGURATION_NAME,
-					getControllerConfig().getController().queryConfigurationName());
-		} else {
-			if (VulpeValidationUtil.isEmpty(entity.getMap())) {
-				entity.setMap(new HashMap<String, Object>());
-			}
-			entity.getMap().put(Entity.QUERY_CONFIGURATION_NAME,
-					getControllerConfig().getController().queryConfigurationName());
+		if (StringUtils.isEmpty(getEntitySelect().getQueryConfigurationName())) {
+			entity.setQueryConfigurationName(getControllerConfig().getController().queryConfigurationName());
 		}
 		return entity;
 	}
