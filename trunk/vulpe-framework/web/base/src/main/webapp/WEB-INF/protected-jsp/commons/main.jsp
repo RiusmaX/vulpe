@@ -90,7 +90,7 @@
 					dontFireInText: true
                 });
 				vulpe.util.addHotKey({
-					hotKey: "Alt+Ctrl+left",
+					hotKey: "Alt+Shift+left",
 					command: function () {
 						tabControl(-1);
     	                return false;
@@ -105,7 +105,7 @@
 					dontFireInText: true
                 });
 				vulpe.util.addHotKey({
-					hotKey: "Alt+Ctrl+right",
+					hotKey: "Alt+Shift+right",
 					command: function () {
                     	tabControl(1);
                     	return false;
