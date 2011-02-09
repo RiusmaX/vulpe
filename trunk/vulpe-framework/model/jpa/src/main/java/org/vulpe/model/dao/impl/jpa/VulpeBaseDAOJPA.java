@@ -31,7 +31,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
-import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -54,7 +53,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
@@ -64,7 +63,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -85,7 +84,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -126,7 +125,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -144,7 +143,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -166,7 +165,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -186,7 +185,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -303,7 +302,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 * 
+	 *
 	 * @param entity
 	 * @param params
 	 * @return
@@ -316,10 +315,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		QueryConfiguration queryConfiguration = null;
 		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(QueryConfigurations.class);
 		if (queryConfigurations != null) {
-			final String queryConfigurationName = entity.getMap().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) entity
-					.getMap().get(Entity.QUERY_CONFIGURATION_NAME)
-					: "default";
-			for (QueryConfiguration queryConfig : queryConfigurations.value()) {
+			final String queryConfigurationName = entity.getQueryConfigurationName();
+			for (final QueryConfiguration queryConfig : queryConfigurations.value()) {
 				if (queryConfig.name().equals(queryConfigurationName)) {
 					queryConfiguration = queryConfig;
 					break;
@@ -524,7 +521,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -543,7 +540,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */

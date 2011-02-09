@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.scannotation.AnnotationDB;
 import org.scannotation.WarUrlFinder;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -204,8 +203,7 @@ public final class VulpeCachedObjectsHelper {
 				try {
 					final VulpeEntity<?> entity = clazz.newInstance();
 					final CachedClass cachedClassAnnotation = clazz.getAnnotation(CachedClass.class);
-					entity.getMap()
-							.put(Entity.QUERY_CONFIGURATION_NAME, cachedClassAnnotation.queryConfigurationName());
+					entity.setQueryConfigurationName(cachedClassAnnotation.queryConfigurationName());
 					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService().getList(entity));
 				} catch (Exception e) {
 					LOG.error(e);

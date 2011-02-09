@@ -872,7 +872,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-		if (StringUtils.isEmpty(entity.getQueryConfigurationName())) {
+		if (StringUtils.isEmpty(entity.getQueryConfigurationName())
+				|| "default".equals(entity.getQueryConfigurationName())) {
 			entity.setQueryConfigurationName(getControllerConfig().getController().queryConfigurationName());
 		}
 		return entity;
