@@ -239,7 +239,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (entity.getId() != null) {
 					params.put("id", entity.getId());
 				} else {
-					final String value = "%" + PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
+					final String value = "[like]%" + PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
 					params.put(entity.getAutocomplete(), value);
 				}
 			} catch (Exception e) {
