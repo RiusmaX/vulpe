@@ -231,9 +231,26 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		return paging;
 	}
 
+	private void mountOrder(final ENTITY entity, final StringBuilder order) {
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+		for (final Field field : fields) {
+			if ((field.isAnnotationPresent(IgnoreAutoFilter.class) || field.isAnnotationPresent(Transient.class) || Modifier
+					.isTransient(field.getModifiers()))
+					&& !field.isAnnotationPresent(QueryParameter.class)) {
+				continue;
+			}
+			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
+			if (orderBy != null) {
+				if (StringUtils.isNotBlank(order.toString())) {
+					order.append(",");
+				}
+				order.append("obj.").append(field.getName()).append(" ").append(orderBy.type().name());
+			}
+		}
+	}
+
 	private void mountParameters(final ENTITY entity, final Map<String, Object> params, final String parent) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-		final StringBuilder order = new StringBuilder();
 		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 			try {
 				if (entity.getId() != null) {
@@ -251,13 +268,6 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						.isTransient(field.getModifiers()))
 						&& !field.isAnnotationPresent(QueryParameter.class)) {
 					continue;
-				}
-				final OrderBy orderBy = field.getAnnotation(OrderBy.class);
-				if (orderBy != null) {
-					if (StringUtils.isNotBlank(order.toString())) {
-						order.append(",");
-					}
-					order.append("obj.").append(field.getName()).append(" ").append(orderBy.type().name());
 				}
 				try {
 					Object value = PropertyUtils.getProperty(entity, field.getName());
@@ -309,6 +319,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	 */
 	protected String getHQL(final ENTITY entity, final Map<String, Object> params) {
 		final StringBuilder order = new StringBuilder();
+		mountOrder(entity, order);
 		mountParameters(entity, params, null);
 		final StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass().getSimpleName().concat(".read"));
