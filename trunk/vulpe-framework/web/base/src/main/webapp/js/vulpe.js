@@ -107,7 +107,8 @@ var vulpe = {
 			selectTable: "vulpeSelectTable-"
 		},
 		popup: {
-			mobile: false
+			mobile: false,
+			selectRow: false
 		},
 		showLoading: true,
 		springSecurityCheck: "j_spring_security_check",
@@ -1312,6 +1313,7 @@ var vulpe = {
 		 * returnFieldNameA=fieldNameA,returnFieldNameB=fieldNameB,returnFieldNameC=fieldNameC
 		 */
 		selectRow: function(row, values) {
+			vulpe.config.popup.selectRow = true;
 			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
 			var popup = vulpe.util.get(popupName);
 			var popupProperties = popup.attr('properties');
@@ -1917,6 +1919,10 @@ var vulpe = {
 			 * @param options {url, autocomplete, value, identifier, description}
 			 */
 			submitAutocompleteIdentifier: function(options) {
+				if (vulpe.config.popup.selectRow) {
+					vulpe.config.popup.selectRow = false;
+					return;
+				}
 				if (options.value && options.value != "") {
 					var id = vulpe.view.selectPopupIds[options.identifier];
 					if (typeof id == "undefined" || id != options.value || vulpe.util.get(options.description).val() == "") {
