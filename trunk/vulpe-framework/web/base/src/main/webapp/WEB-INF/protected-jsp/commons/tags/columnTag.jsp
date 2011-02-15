@@ -3,9 +3,9 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
-	<c:if test="${not empty elementId}"><c:set var="elementId">${elementId}</c:set></c:if>
-	<c:if test="${empty sortProperty}"><c:set var="sortProperty">${property}</c:set></c:if>
-	<c:if test="${not empty styleClass}"><c:set var="styleClass"> class="${styleClass}"</c:set></c:if>
+	<c:if test="${not empty elementId}"><c:set var="elementId">id="${elementId}"</c:set></c:if>
+	<c:if test="${empty sortProperty}"><c:set var="sortProperty" value="${property}"/></c:if>
+	<c:if test="${not empty styleClass}"><c:set var="styleClass">class="${styleClass}"</c:set></c:if>
 	<c:choose>
 	<c:when test="${empty isHeaderTableTag || isHeaderTableTag}">
 		<c:if test="${not empty labelKey}"><fmt:message key="${labelKey}" var="label"/></c:if>
