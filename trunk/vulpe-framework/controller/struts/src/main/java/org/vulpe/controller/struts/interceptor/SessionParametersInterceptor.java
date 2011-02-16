@@ -28,6 +28,7 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.VulpeSimpleController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -47,10 +48,11 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	@Override
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
-		if (invocation.getAction() instanceof VulpeController) {
+		if (invocation.getAction() instanceof VulpeSimpleController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
-			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
+			if (invocation.getAction() instanceof VulpeController
+					&& !mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
 				final VulpeController controller = (VulpeController) invocation.getAction();
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
@@ -78,8 +80,9 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 				}
 			}
-			ServletActionContext.getRequest().getSession().setAttribute(
-					VulpeConstants.Configuration.Ever.class.getName(), simpleController.ever);
+			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER,
+					simpleController.ever);
+			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, simpleController.now);
 		}
 		final String key = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
@@ -115,7 +118,7 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */

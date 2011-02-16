@@ -19,7 +19,7 @@ import java.util.Locale;
 
 /**
  * Vulpe Constants
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -63,6 +63,14 @@ public class VulpeConstants {
 		public static final String REQUEST_SCOPE = "REQUEST_SCOPE";
 		public static final String SESSION_SCOPE = "SESSION_SCOPE";
 		public static final String GLOBAL = "global";
+	}
+
+	public class Request {
+		public static final String NOW = "now";
+	}
+
+	public class Session {
+		public static final String EVER = "ever";
 	}
 
 	public class Configuration {
