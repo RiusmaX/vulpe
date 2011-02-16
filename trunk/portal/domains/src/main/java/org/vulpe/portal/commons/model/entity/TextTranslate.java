@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.model.annotations.CreateIfNotExist;
 import org.vulpe.model.annotations.db4o.FindBy;
@@ -56,11 +57,11 @@ public class TextTranslate extends VulpeBaseDB4OAuditEntity<Long> {
 
 	public String getText() {
 		if (VulpeValidationUtil.isNotEmpty(languages)) {
+			VulpeContext context = AbstractVulpeBeanFactory.getInstance().getBean("vulpeContext");
 			for (TextTranslateLanguage translateLanguage : languages) {
 				if (translateLanguage.getLanguage() != null
 						&& StringUtils.isNotEmpty(translateLanguage.getLanguage().getLocaleCode())
-						&& translateLanguage.getLanguage().getLocaleCode().equals(
-								VulpeContext.getInstance().getLocale().toString())) {
+						&& translateLanguage.getLanguage().getLocaleCode().equals(context.getLocale().toString())) {
 					setLanguageId(translateLanguage.getLanguage().getId());
 					text = translateLanguage.getText();
 				}
