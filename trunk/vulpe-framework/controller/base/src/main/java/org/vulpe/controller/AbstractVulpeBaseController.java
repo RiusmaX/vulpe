@@ -898,6 +898,40 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setRequestAttribute(Layout.TARGET_CONFIG_PROPERTY_NAME, getDetail());
 	}
 
+	public String detail() {
+		final Paging paging = ever.getSelf(getDetail() + Controller.DETAIL_PAGING_LIST);
+		final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, getDetail());
+		int index = 0;
+		for (final ENTITY real : (List<ENTITY>) paging.getRealList()) {
+			for (final ENTITY modified : values) {
+				if (real.getId().equals(modified.getId())) {
+					paging.getRealList().set(index, modified);
+					break;
+				}
+			}
+			++index;
+		}
+		if (!getDetail().startsWith("entity")) {
+			setDetail("entity." + getDetail());
+		}
+		configureDetail();
+		final VulpeBaseDetailConfig detailConfig = getDetailConfig();
+		final List<ENTITY> list = new ArrayList<ENTITY>();
+		list.add((ENTITY) paging.getRealList().get(getPaging().getPage() - 1));
+		paging.setPage(getPaging().getPage());
+		paging.processPage();
+		paging.setList(list);
+		manageButtons(Operation.ADD_DETAIL);
+		if (isAjax()) {
+			if (detailConfig == null || detailConfig.getViewPath() == null) {
+				controlResultForward();
+			} else {
+				setResultForward(detailConfig.getViewPath());
+			}
+		}
+		return getResultName();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -1220,6 +1254,29 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntity((ENTITY) invokeServices(Operation.FIND.getValue().concat(
 					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
 					.getEntityClass() }, new Object[] { prepareEntity(getOperation()) }));
+			if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
+				for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+					if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
+						final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, detailConfig.getName());
+						if (VulpeValidationUtil.isNotEmpty(values)) {
+							final List<ENTITY> list = new ArrayList<ENTITY>();
+							int count = 0;
+							for (final ENTITY entity : values) {
+								if (count == detailConfig.getPageSize()) {
+									break;
+								}
+								list.add(entity);
+								++count;
+							}
+							final Paging<ENTITY> paging = new Paging<ENTITY>(values.size(), detailConfig.getPageSize(),
+									0);
+							paging.setList(list);
+							paging.setRealList(values);
+							ever.putWeakRef(detailConfig.getName() + Controller.DETAIL_PAGING_LIST, paging);
+						}
+					}
+				}
+			}
 			setExecuted(false);
 		}
 	}
@@ -1331,31 +1388,41 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			entity.getMap().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
 		for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
-			try {
-				final List<ENTITY> details = (List<ENTITY>) PropertyUtils.getProperty(entity, detailConfig
-						.getParentDetailConfig() != null ? detailConfig.getParentDetailConfig().getParentDetailConfig()
-						.getName() : detailConfig.getName());
-				if (VulpeValidationUtil.isNotEmpty(details)) {
-					if (detailConfig.getParentDetailConfig() == null) {
-						for (final ENTITY detail : details) {
-							updateAuditInformation(detail);
-						}
-					} else {
-						for (final ENTITY detail : details) {
-							final List<ENTITY> subDetails = (List<ENTITY>) PropertyUtils.getProperty(detail,
-									detailConfig.getName());
-							if (VulpeValidationUtil.isNotEmpty(subDetails)) {
-								for (ENTITY subDetail : subDetails) {
-									updateAuditInformation(subDetail);
-								}
-								PropertyUtils.setProperty(detail, detailConfig.getName(), subDetails);
-							}
+			final List<ENTITY> details = VulpeReflectUtil.getFieldValue(entity,
+					detailConfig.getParentDetailConfig() != null ? detailConfig.getParentDetailConfig().getName()
+							: detailConfig.getName());
+			if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
+				final Paging<ENTITY> paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
+				int index = 0;
+				for (final ENTITY real : (List<ENTITY>) paging.getRealList()) {
+					for (final ENTITY modified : details) {
+						if (real.getId().equals(modified.getId())) {
+							paging.getRealList().set(index, modified);
+							break;
 						}
 					}
-					PropertyUtils.setProperty(entity, detailConfig.getName(), details);
+					++index;
 				}
-			} catch (Exception e) {
-				LOG.error(e);
+				details.clear();
+				details.addAll(paging.getRealList());
+			}
+			if (VulpeValidationUtil.isNotEmpty(details)) {
+				if (detailConfig.getParentDetailConfig() == null) {
+					for (final ENTITY detail : details) {
+						updateAuditInformation(detail);
+					}
+				} else {
+					for (final ENTITY detail : details) {
+						final List<ENTITY> subDetails = VulpeReflectUtil.getFieldValue(detail, detailConfig.getName());
+						if (VulpeValidationUtil.isNotEmpty(subDetails)) {
+							for (final ENTITY subDetail : subDetails) {
+								updateAuditInformation(subDetail);
+							}
+							VulpeReflectUtil.setFieldValue(detail, detailConfig.getName(), subDetails);
+						}
+					}
+				}
+				VulpeReflectUtil.setFieldValue(entity, detailConfig.getName(), details);
 			}
 		}
 		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(

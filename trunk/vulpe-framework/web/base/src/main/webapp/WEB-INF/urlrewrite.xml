@@ -50,4 +50,8 @@
 		<from>^/([a-z]+)/([a-z]+)/read/page/ajax/([0-9]+)</from>
 		<to>/$1/$2/read/ajax?paging.page=$3</to>
 	</rule>
+	<rule>
+		<from>^/([a-z]+)/([a-z]+)/detail/([a-z]+)/page/ajax/([0-9]+)</from>
+		<to>/$1/$2/detail/ajax?detail=$3&amp;paging.page=$4</to>
+	</rule>
 </urlrewrite>

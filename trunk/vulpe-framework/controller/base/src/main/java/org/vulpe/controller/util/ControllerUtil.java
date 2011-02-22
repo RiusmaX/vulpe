@@ -48,9 +48,9 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to controller
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- * 
+ *
  */
 @Component
 @SuppressWarnings("unchecked")
@@ -63,7 +63,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 * 
+	 *
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -107,7 +107,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 * 
+	 *
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
@@ -141,7 +141,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 * 
+	 *
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
@@ -179,7 +179,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 * 
+	 *
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
@@ -206,7 +206,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
@@ -214,7 +214,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public String getCurrentControllerName() {
@@ -273,7 +273,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param controller
 	 * @return
 	 */
@@ -288,7 +288,7 @@ public class ControllerUtil {
 		VulpeCacheHelper.getInstance().put(key, config);
 
 		int count = 0;
-		for (DetailConfig detail : config.getDetailsConfig()) {
+		for (final DetailConfig detail : config.getDetailsConfig()) {
 			if (!details.contains(detail)) {
 				details.add(new VulpeBaseDetailConfig());
 			}
@@ -301,7 +301,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param controller
 	 * @return
 	 */
@@ -322,7 +322,7 @@ public class ControllerUtil {
 	private transient final ThreadLocal<String> currentControllerURI = new ThreadLocal<String>();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static ServletContext getServletContext() {

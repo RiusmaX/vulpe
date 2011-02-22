@@ -22,11 +22,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.PROPERTY)
-@XmlType(name = "paging", propOrder = { "firstPage", "lastPage", "list",
-		"nextPage", "page", "pages", "pageSize", "previousPage", "size" })
+@XmlType(name = "paging", propOrder = { "firstPage", "lastPage", "list", "realList", "nextPage", "page", "pages",
+		"pageSize", "previousPage", "size" })
 @SuppressWarnings("serial")
 public class Paging<BEAN extends Serializable> implements Serializable {
+
+	/**
+	 * List of items paged
+	 */
 	private List<BEAN> list;
+	/**
+	 * List of all items
+	 */
+	private List<BEAN> realList;
 	/**
 	 * Items size
 	 */
@@ -102,7 +110,7 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 		}
 	}
 
-	protected void processPage() {
+	public void processPage() {
 		if (getPage() == null || getPage() <= 1) {
 			setFirstPage(null);
 			setPreviousPage(null);
@@ -212,6 +220,14 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 
 	public void setSize(final Integer size) {
 		this.size = size;
+	}
+
+	public void setRealList(List<BEAN> realList) {
+		this.realList = realList;
+	}
+
+	public List<BEAN> getRealList() {
+		return realList;
 	}
 
 }

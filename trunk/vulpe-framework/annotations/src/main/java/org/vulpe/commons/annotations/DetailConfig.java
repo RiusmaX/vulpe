@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Detail configuration
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @Documented
@@ -72,14 +72,19 @@ public @interface DetailConfig {
 
 	/**
 	 * Quantity of details
-	 * 
+	 *
 	 * @return
 	 */
 	Quantity quantity() default @Quantity;
-	
+
 	/**
 	 * Show detail as accordion view.
 	 */
 	boolean showAsArccodion() default true;
+
+	/**
+	 * Paging size of detail.
+	 */
+	int pageSize() default 0;
 
 }

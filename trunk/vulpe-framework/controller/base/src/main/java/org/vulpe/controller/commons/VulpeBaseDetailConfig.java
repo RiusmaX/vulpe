@@ -33,6 +33,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private String simpleName;
 	private String titleKey;
 	private boolean addNewDetailsOnTop;
+	private int pageSize;
 	private int newDetails;
 	private int startNewDetails;
 	private String[] despiseFields;
@@ -159,6 +160,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 		}
 		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
 		this.showAsAccordion = detail.showAsArccodion();
+		this.pageSize = detail.pageSize();
 	}
 
 	private void setSimpleName() {
@@ -225,6 +227,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public boolean isShowFilter() {
 		return showFilter;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageSize() {
+		return pageSize;
 	}
 
 }
