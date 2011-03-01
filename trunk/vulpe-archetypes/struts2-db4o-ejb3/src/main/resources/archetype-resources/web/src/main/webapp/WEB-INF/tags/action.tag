@@ -20,7 +20,7 @@
 <%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
-<%@ attribute name="showButtonsAsImage" required="false" rtexprvalue="true"%>
+<%@ attribute name="showButtonAsImage" required="false" rtexprvalue="true"%>
 <%@ attribute name="showIconOfButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="showTextOfButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
