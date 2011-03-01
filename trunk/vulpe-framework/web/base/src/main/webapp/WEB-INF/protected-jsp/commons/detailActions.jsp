@@ -15,7 +15,7 @@
 	validate="false" labelKey="addDetail"
 	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"
-	queryString="detail=${targetConfigPropertyName}&detailLayer=vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" showButtonsAsImage="false"
+	queryString="detail=${targetConfigPropertyName}&detailLayer=vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" showButtonAsImage="false"
 	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" render="${buttonDetail}" />
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsAppend.jsp"%>
 </p>

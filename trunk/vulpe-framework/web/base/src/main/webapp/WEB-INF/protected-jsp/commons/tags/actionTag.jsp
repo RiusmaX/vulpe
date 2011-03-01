@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${render}">
-	<c:if test="${empty showButtonsAsImage}"><c:set var="showButtonsAsImage" value="${global['showButtonsAsImage']}" /></c:if>
+	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['showButtonsAsImage']}" /></c:if>
 	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['showIconOfButton']}" /></c:if>
 	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['showTextOfButton']}" /></c:if>
 	<c:if test="${global['showWarningBeforeDelete'] && action == 'delete'}">
@@ -55,7 +55,7 @@
 		</c:choose>
 	</c:if>
 	<c:choose>
-		<c:when test="${!showButtonsAsImage}">
+		<c:when test="${!showButtonAsImage}">
 			<c:if test="${empty styleClass}"><c:set var="styleClass" value="vulpeSubmit" /></c:if>
 			<input style="${style}" id="${elementId}" type="button" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 		</c:when>
@@ -70,7 +70,7 @@
 				<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}"><c:set var="icon" value="${pageContext.request.contextPath}/${icon}" /></c:if>
 			</c:if>
 			<c:choose>
-				<c:when test="${showButtonsAsImage}">
+				<c:when test="${showButtonAsImage}">
 					<c:choose>
 						<c:when test="${fn:contains(javascript, 'Popup')}">
 							<c:if test="${empty iconClass}"><c:set var="iconClass" value="vulpeImagePopupButton" /></c:if>

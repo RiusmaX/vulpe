@@ -57,7 +57,7 @@ var vulpe = {
 		logic: {
 			prepareName: ""
 		},
-		masterTabId: "#vulpeCRUDBody",
+		masterTabId: "#vulpeMainBody",
 		messages: {
 			error: {
 				checkfield: "vulpe.error.validate.checkfield",
@@ -997,7 +997,7 @@ var vulpe = {
 					var field = $(this);
 					var idField = field.attr("id");
 					var typeField = field.attr("type");
-					if (empty && !typeField == "hidden") {
+					if (empty && typeField != "hidden") {
 						if (typeField == "checkbox") {
 							if (eval(field.attr("checked"))) {
 								empty = false;
@@ -1145,7 +1145,7 @@ var vulpe = {
 			}
 			vulpe.util.get(idRequiredField).show();
 		},
-		
+
 		checkRequiredFields: function() {
 			jQuery("[class*='vulpeRequired']").each(function(index) {
 				vulpe.view.addRequiredField($(this));
@@ -1881,7 +1881,7 @@ var vulpe = {
 													$(this).find('td').css("cursor", "default");
 												}
 											}
-										});	
+										});
 									}
 									if (typeof options.afterJs == "function") {
 										try {

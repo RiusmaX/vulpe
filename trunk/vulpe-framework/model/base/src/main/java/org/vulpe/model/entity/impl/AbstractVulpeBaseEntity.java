@@ -43,6 +43,9 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
 	@IgnoreAudit
+	private transient boolean fakeId;
+
+	@IgnoreAudit
 	private transient boolean selected;
 
 	@IgnoreAudit
@@ -178,6 +181,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	public void setQueryConfigurationName(final String queryConfigurationName) {
 		this.map.put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
+	}
+
+	public void setFakeId(boolean fakeId) {
+		this.fakeId = fakeId;
+	}
+
+	public boolean isFakeId() {
+		return fakeId;
 	}
 
 }

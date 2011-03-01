@@ -32,6 +32,10 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 
 	void setId(final ID id);
 
+	boolean isFakeId();
+
+	void setFakeId(final boolean fakeId);
+
 	boolean isSelected();
 
 	void setSelected(final boolean selected);

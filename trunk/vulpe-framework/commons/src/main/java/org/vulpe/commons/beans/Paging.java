@@ -21,6 +21,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import org.vulpe.commons.util.VulpeValidationUtil;
+
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.PROPERTY)
 @XmlType(name = "paging", propOrder = { "firstPage", "lastPage", "list", "realList", "nextPage", "page", "pages",
 		"pageSize", "previousPage", "size" })
@@ -77,16 +79,8 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 		this.page = page;
 		this.pageSize = pageSize;
 		final Integer pages = this.size / this.pageSize;
-		if (this.size % this.pageSize > 0) {
-			this.pages = pages + 1;
-		} else {
-			this.pages = pages;
-		}
-		if (this.page > this.pages) {
-			this.page = this.pages;
-		} else {
-			this.page = page;
-		}
+		this.pages = this.size % this.pageSize > 0 ? pages + 1 : pages;
+		this.page = this.page > this.pages ? this.pages : page;
 		if (this.page == null || this.page <= 1) {
 			this.firstPage = null;
 			this.previousPage = null;
@@ -111,6 +105,11 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 	}
 
 	public void processPage() {
+		if (VulpeValidationUtil.isNotEmpty(getRealList())) {
+			setSize(getRealList().size());
+			final Integer pages = getSize() / getPageSize();
+			setPages(getSize() % getPageSize() > 0 ? pages + 1 : pages);
+		}
 		if (getPage() == null || getPage() <= 1) {
 			setFirstPage(null);
 			setPreviousPage(null);

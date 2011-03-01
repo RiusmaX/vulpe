@@ -34,8 +34,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -60,7 +62,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Vulpe Base Controller to Struts2
- * 
+ *
  * @param <ENTITY>
  *            Entity
  * @param <ID>
@@ -99,7 +101,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Make visualization read only.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -111,7 +113,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.AbstractVulpeBaseController#updatePost()
 	 */
 	@ResetSession
@@ -131,7 +133,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return number of items affected
 	 */
@@ -139,13 +141,13 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(getDetail(), context, this);
-			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
+			final List<VulpeEntity<ID>> details = (List<VulpeEntity<ID>>) Ognl.getValue(getDetail(), context, this);
+			final List<VulpeEntity<ID>> removedDetails = new ArrayList<VulpeEntity<ID>>();
 			final int size = details.size();
 			int removed = 0;
 			if (getDetailIndex() == null) {
-				for (final Iterator<VulpeEntity<?>> iterator = details.iterator(); iterator.hasNext();) {
-					final VulpeEntity<?> detail = (VulpeEntity<?>) iterator.next();
+				for (final Iterator<VulpeEntity<ID>> iterator = details.iterator(); iterator.hasNext();) {
+					final VulpeEntity<ID> detail = iterator.next();
 					if (detail.isSelected()) {
 						if (detail.getId() != null) {
 							removedDetails.add(detail);
@@ -155,16 +157,42 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					}
 				}
 			} else {
-				final VulpeEntity<?> detail = details.get(getDetailIndex().intValue());
+				final VulpeEntity<ID> detail = details.get(getDetailIndex().intValue());
 				if (detail.getId() != null) {
 					removedDetails.add(detail);
 				}
 				details.remove(getDetailIndex().intValue());
 				removed++;
 			}
+			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(getDetail());
+			if (detailConfig != null) {
+				final Paging paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
+				if (paging != null) {
+					for (final ENTITY detail : (List<ENTITY>) removedDetails) {
+						for (final Iterator<ENTITY> iterator = paging.getRealList().iterator(); iterator.hasNext();) {
+							final ENTITY realDetail = iterator.next();
+							if (realDetail.getId().equals(detail.getId())) {
+								iterator.remove();
+								break;
+							}
+						}
+					}
+					paging.processPage();
+					final List<ENTITY> list = new ArrayList<ENTITY>();
+					int count = 0;
+					for (final ENTITY detail : (List<ENTITY>) paging.getRealList()) {
+						if (count == detailConfig.getPageSize()) {
+							break;
+						}
+						list.add(detail);
+						++count;
+					}
+					paging.setList(list);
+				}
+			}
 			boolean save = false;
-			for (VulpeEntity<?> baseEntity : removedDetails) {
-				if (baseEntity.getId() != null) {
+			for (VulpeEntity<ID> baseEntity : removedDetails) {
+				if (baseEntity.getId() != null && !baseEntity.isFakeId()) {
 					save = true;
 					break;
 				}
@@ -209,7 +237,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#addDetail()
 	 */
 	@SkipValidation
@@ -219,7 +247,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
 	@SkipValidation
@@ -254,7 +282,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.AbstractVulpeBaseController#doReportLoad()
 	 */
 	protected DownloadInfo doReportLoad() {
@@ -304,7 +332,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	@SuppressWarnings("static-access")
@@ -345,7 +373,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Retrieves form parameters
-	 * 
+	 *
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
@@ -438,7 +466,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * Subclasses should override this method to provide their business logic.
 	 * <p/>
 	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
-	 * 
+	 *
 	 * @return returns {@link #SUCCESS}
 	 * @throws Exception
 	 *             can be thrown by subclasses.
@@ -482,15 +510,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * invocation to return the specified result, such as {@link #SUCCESS},
 	 * {@link #INPUT}, etc.
 	 * <p/>
-	 * 
+	 *
 	 * The next time this action is invoked (and using the same continuation
 	 * ID), the method will resume immediately after where this method was
 	 * called, with the entire call stack in the execute method restored.
 	 * <p/>
-	 * 
+	 *
 	 * Note: this method can <b>only</b> be called within the {@link #execute()}
 	 * method. <!-- END SNIPPET: pause-method -->
-	 * 
+	 *
 	 * @param result
 	 *            the result to return - the same type of return value in the
 	 *            {@link #execute()} method.
@@ -501,7 +529,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Method to validate detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected boolean validateDetails() {
@@ -528,12 +556,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Method to remove detail despised.
-	 * 
+	 *
 	 * @param parent
 	 *            Parent
 	 * @param detailConfig
 	 *            Configuration of detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig) {
@@ -556,7 +584,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 * @param start
 	 *            indicates if use <code>startNewDetails</code> or
@@ -580,8 +608,37 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
-
 			if (detailConfig != null) {
+				final Paging paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
+				if (paging != null) {
+					// final VulpeView view =
+					// VulpeConfigHelper.getProjectConfiguration().view();
+					int id = paging.getRealList().size();
+					for (final ENTITY entity : (List<ENTITY>) collection) {
+						if (entity.getId() == null) {
+							++id;
+							entity.setId((ID) new Long(id));
+							entity.setFakeId(true);
+							paging.getRealList().add(0, entity);
+							// if (view.addNewDetailsOnTop()) {
+							// paging.getRealList().add(0, entity);
+							// } else {
+							// paging.getRealList().add(entity);
+							// }
+						}
+					}
+					paging.processPage();
+					final List<ENTITY> list = new ArrayList<ENTITY>();
+					int count = 0;
+					for (final ENTITY entity : (List<ENTITY>) paging.getRealList()) {
+						if (count == detailConfig.getPageSize()) {
+							break;
+						}
+						list.add(entity);
+						++count;
+					}
+					paging.setList(list);
+				}
 				newDetails = detailConfig.getNewDetails();
 				final String parentName = getControllerConfig().getParentName(getDetail());
 				final Object parent = Ognl.getValue(parentName, context, this);
@@ -626,7 +683,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Method to add detail.
-	 * 
+	 *
 	 * @param collection
 	 * @since 1.0
 	 * @throws OgnlException
