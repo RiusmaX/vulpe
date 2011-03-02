@@ -15,7 +15,7 @@
 			<c:otherwise><c:set var="styleClass" value="vulpeLineOff"/><c:set var="xstyleClass" value="vulpeLineOff" scope="request"/></c:otherwise>
 		</c:choose>
 	</c:if>
-	<c:if test="${isHeaderTableTag}"><c:set var="styleClass" value="vulpeColumnHeader"/></c:if>
+	<c:if test="${isHeaderTableTag}"><c:set var="styleClass" value="vulpeRowHeader"/></c:if>
 	<c:if test="${empty updateValue && isSelectTableTag && (now['buttons']['update'] || now['buttons']['SELECT_update'])}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
@@ -152,7 +152,7 @@
 		</c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
-				<th id="vulpeSelectAll" style="text-align: center; width: 10px">
+				<th id="vulpeSelectAll" ${styleClass} style="text-align: center; width: 10px">
 					<fmt:message key='label.vulpe.delete'/><br/>
 					<input type="checkbox" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
 				</th>
@@ -168,7 +168,7 @@
 			<c:set var="detailPagingListEL" value="${'${'}ever['${detailPagingList}']${'}'}"/>
 			<c:set var="detailPagingList" value="${util:eval(pageContext, detailPagingListEL)}"/>
 		</c:if>
-		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeLineHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}">${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}</c:when><c:otherwise>${currentStatus.count}</c:otherwise></c:choose>.</c:if></v:column></c:if>
+		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}">${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}</c:when><c:otherwise>${currentStatus.count}</c:otherwise></c:choose>.</c:if></v:column></c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showButtonUpdate}">
 			<c:choose>

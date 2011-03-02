@@ -754,6 +754,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					repairDetailPaging(details, paging);
 					details.clear();
 					details.addAll(paging.getRealList());
+					for (final ENTITY entity : details) {
+						if (entity.isFakeId()) {
+							entity.setId(null);
+						}
+					}
 					mountDetailPaging(detailConfig, paging);
 				}
 			}
@@ -918,7 +923,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		int count = 1;
 		int total = 0;
-		for (final ENTITY entity : (List<ENTITY>) paging.getRealList()) {
+		for (final ENTITY entity : paging.getRealList()) {
 			if (count > ((paging.getPage() - 1) * paging.getPageSize())) {
 				if (total == detailConfig.getPageSize()) {
 					break;
@@ -1452,27 +1457,30 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			entity.getMap().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
-		for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
-			final List<ENTITY> details = VulpeReflectUtil.getFieldValue(entity,
-					detailConfig.getParentDetailConfig() != null ? detailConfig.getParentDetailConfig().getName()
-							: detailConfig.getName());
-			if (VulpeValidationUtil.isNotEmpty(details)) {
-				if (detailConfig.getParentDetailConfig() == null) {
-					for (final ENTITY detail : details) {
-						updateAuditInformation(detail);
-					}
-				} else {
-					for (final ENTITY detail : details) {
-						final List<ENTITY> subDetails = VulpeReflectUtil.getFieldValue(detail, detailConfig.getName());
-						if (VulpeValidationUtil.isNotEmpty(subDetails)) {
-							for (final ENTITY subDetail : subDetails) {
-								updateAuditInformation(subDetail);
+		if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
+			for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+				final List<ENTITY> details = VulpeReflectUtil.getFieldValue(entity, detailConfig
+						.getParentDetailConfig() != null ? detailConfig.getParentDetailConfig().getName()
+						: detailConfig.getName());
+				if (VulpeValidationUtil.isNotEmpty(details)) {
+					if (detailConfig.getParentDetailConfig() == null) {
+						for (final ENTITY detail : details) {
+							updateAuditInformation(detail);
+						}
+					} else {
+						for (final ENTITY detail : details) {
+							final List<ENTITY> subDetails = VulpeReflectUtil.getFieldValue(detail, detailConfig
+									.getName());
+							if (VulpeValidationUtil.isNotEmpty(subDetails)) {
+								for (final ENTITY subDetail : subDetails) {
+									updateAuditInformation(subDetail);
+								}
+								VulpeReflectUtil.setFieldValue(detail, detailConfig.getName(), subDetails);
 							}
-							VulpeReflectUtil.setFieldValue(detail, detailConfig.getName(), subDetails);
 						}
 					}
+					VulpeReflectUtil.setFieldValue(entity, detailConfig.getName(), details);
 				}
-				VulpeReflectUtil.setFieldValue(entity, detailConfig.getName(), details);
 			}
 		}
 		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(

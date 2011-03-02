@@ -35,7 +35,7 @@ import org.vulpe.model.services.manager.VulpeManager;
 
 /**
  * Default implementation to Manager for MAIN's.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @TransactionType
@@ -50,7 +50,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method returns DAO interface.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -63,7 +63,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method returns implementation of DAO to current Manager.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return DAO implementation.
 	 */
@@ -73,7 +73,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -102,7 +102,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -129,7 +129,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * delete(java.util.List)
 	 */
@@ -156,7 +156,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -186,7 +186,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -214,7 +214,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.model.services.manager.VulpeManager#updateSomeAttributes(org
 	 * .vulpe.model.entity.VulpeEntity)
@@ -225,7 +225,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		getDAO().updateSomeAttributes(entity);
 		updateSomeAttributesAfter(entity);
 	}
-	
+
 	/**
 	 * Extension point to code rules before update some attributes.
 	 */
@@ -242,7 +242,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * find(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -271,7 +271,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * paging(org.vulpe.model.entity.VulpeEntity, java.lang.Integer,
 	 * java.lang.Integer)
@@ -303,7 +303,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * persist(java.util.List)
 	 */
@@ -332,7 +332,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Extension point to code rules before persist entities.
-	 * 
+	 *
 	 * @param entities
 	 * @since 1.0
 	 * @throws VulpeApplicationException
