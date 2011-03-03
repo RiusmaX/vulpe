@@ -12,25 +12,20 @@ vulpe.util.get('${elementId}-iconErrorMessage').hide();
 vulpe.util.get('${elementId}-iconErrorMessage').bind('click', function(){
 	vulpe.util.get('${elementId}').focus()
 });
-<c:if test="${not empty requiredField || not empty validateType}">
-<c:if test="${not empty requiredField}">
+<c:if test="${not empty requiredFields || not empty validateType}">
+<c:if test="${not empty requiredFields}">
 vulpe.util.get('${elementId}').blur(function() {
 	var formName = "${vulpeFormName}-";
-	var prepareName = "${fn:replace(prepareName, property, requiredField)}".replace(/\./g, "_");
-	var requiredFieldId = formName + prepareName.replace(/-/g, "_");
 	var value = $(this).val();
-	var requiredFieldValue = vulpe.util.get(requiredFieldId).val();
-	var id = requiredFieldId + "FieldRequired";
-	if (value == "" || requiredFieldValue != "") {
-		vulpe.util.get(requiredFieldId).removeClass("vulpeRequired");
-		vulpe.util.get(id).hide();
-	} else {
-		vulpe.util.get(requiredFieldId).addClass("vulpeRequired");
-		if (vulpe.util.get(id).length == 0) {
-			vulpe.util.get(requiredFieldId + '-iconErrorMessage').after("<span id='" + id + "' class='vulpeFieldRequired'>*</span>");
-		}
-		vulpe.util.get(id).show();
+	var checkRequired = function(prepareName, property, requiredField) {
+		var requiredFieldId = formName + prepareName.replace(property, requiredField).replace(/\./g, "_").replace(/-/g, "_");
+		//var requiredFieldValue = vulpe.util.get(requiredFieldId).val();
+		//vulpe.view.setRequired(requiredFieldId, (value != "" && requiredFieldValue == ""));
+		vulpe.view.setRequired(requiredFieldId, (value != ""));
 	}
+	<c:forTokens var="requiredField" items="${requiredFields}" delims=",">
+	checkRequired("${prepareName}", "${property}", "${requiredField}");
+	</c:forTokens>
 });
 </c:if>
 <c:if test="${not empty validateType}">

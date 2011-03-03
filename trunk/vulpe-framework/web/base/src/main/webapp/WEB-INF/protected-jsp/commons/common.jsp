@@ -7,8 +7,10 @@
 	</c:choose>
 </c:if>
 <c:if test="${empty targetName}">
-	<c:if test="${empty targetConfig}"><c:set var="prepareName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:if>
-	<c:if test="${not empty targetConfig}"><c:set var="prepareName" value="${targetConfigPropertyName}[${currentStatus.index}]"/></c:if>
+	<c:choose>
+	<c:when test="${empty targetConfig}"><c:set var="prepareName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:when>
+	<c:otherwise><c:set var="prepareName" value="${targetConfigPropertyName}"/></c:otherwise>
+	</c:choose>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}"/>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '.', '_')}"/>
