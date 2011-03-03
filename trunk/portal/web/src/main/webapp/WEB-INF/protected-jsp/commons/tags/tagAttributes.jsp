@@ -25,7 +25,7 @@
 <%@ attribute name="paragraph" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean" description="true|false"%>
 <%@ attribute name="required" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
-<%@ attribute name="requiredField" required="false" rtexprvalue="true" type="java.lang.String" %>
+<%@ attribute name="requiredFields" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="saveInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
