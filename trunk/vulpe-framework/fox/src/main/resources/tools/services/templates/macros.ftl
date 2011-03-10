@@ -63,7 +63,7 @@ ${ident} *${line}
 <#function findAllTypeVariable type clazz types>
 	<#local ret = types>
 	<@forAllTypeParameters clazz; typeParameter, typeParameter_index, typeParameter_has_next>
-		<#if !ret?contains(typeParameter.simpleName)>
+		<#if !ret?contains(typeParameter.simpleName + '=')>
 			<@forAllTypeArguments clazz ; typeArgument, typeArgument_index, typeArgument_has_next>
 				<#if typeArgument_index == typeParameter_index>
 					<#if typeParameter.simpleName == typeArgument>
@@ -102,8 +102,11 @@ ${ident} *${line}
 					<#local clazz = tv>
 				</#if>
 			</#list>
-			<#if ret?contains(variable)>
+			<#if ret?index_of('.') == -1 && ret?contains(variable)>
 				<#local ret = ret?replace(variable, clazz)>
+			</#if>
+			<#if ret?contains('<' + variable + '>')>
+				<#local ret = ret?replace('<' + variable + '>', '<' + clazz + '>')>
 			</#if>
 		</#if>
 	</#list>

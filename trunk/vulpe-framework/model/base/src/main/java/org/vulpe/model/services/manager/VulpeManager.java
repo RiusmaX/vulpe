@@ -77,7 +77,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @param ids
 	 * @throws VulpeApplicationException
 	 */
-	//void updateSomeAttributes(ENTITY entity, List<ID> ids) throws VulpeApplicationException;
+	void updateSomeAttributes(ENTITY entity, List<ID> ids) throws VulpeApplicationException;
 
 	/**
 	 * Method used to add business rules on read list of entities.

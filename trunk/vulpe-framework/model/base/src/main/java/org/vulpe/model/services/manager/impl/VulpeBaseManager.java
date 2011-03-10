@@ -253,26 +253,26 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * org.vulpe.model.services.manager.VulpeManager#updateSomeAttributes(org
 	 * .vulpe.model.entity.VulpeEntity, java.util.List)
 	 */
-//	@GenerateSuffix
-//	public void updateSomeAttributes(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
-//		updateSomeAttributesBefore(entity, ids);
-//		getDAO().updateSomeAttributes(entity, ids);
-//		updateSomeAttributesAfter(entity, ids);
-//	}
-//
-//	/**
-//	 * Extension point to code rules before update some attributes.
-//	 */
-//	protected void updateSomeAttributesBefore(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
-//		// extension point
-//	}
-//
-//	/**
-//	 * Extension point to code rules after update some attributes.
-//	 */
-//	protected void updateSomeAttributesAfter(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
-//		// extension point
-//	}
+	@GenerateSuffix
+	public void updateSomeAttributes(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+		updateSomeAttributesBefore(entity, ids);
+		getDAO().updateSomeAttributes(entity, ids);
+		updateSomeAttributesAfter(entity, ids);
+	}
+
+	/**
+	 * Extension point to code rules before update some attributes.
+	 */
+	protected void updateSomeAttributesBefore(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code rules after update some attributes.
+	 */
+	protected void updateSomeAttributesAfter(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+		// extension point
+	}
 
 	/*
 	 * (non-Javadoc)
