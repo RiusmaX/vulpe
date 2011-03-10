@@ -32,8 +32,50 @@
 		<c:when test="${not empty enumeration || not empty listValueCheck}">
 			<c:if test="${onlyToSee}"><c:set var="disabled" value="${onlyToSee}" /></c:if>
 			<c:choose>
-			<c:when test="${not empty enumeration}"><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" list="${enumeration}" /></c:when>
-			<c:otherwise><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" listValue="${listValue}" listKey="${listKey}" list="${list}" /></c:otherwise>
+				<c:when test="${not empty enumeration}"><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" list="${enumeration}" /></c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${not empty detail && detail}">
+							<c:set var="propertyValueEL" value="${'${'}entity.${property}${'}'}"/>
+							<c:set var="propertyValue" value="${util:eval(pageContext, propertyValueEL)}"/>
+							<c:choose>
+								<c:when test="${not empty detailProperty}"><c:set var="detailProperty" value="${detailProperty}.${listKey}"/></c:when>
+								<c:otherwise><c:set var="detailProperty" value="${listKey}"/></c:otherwise>
+							</c:choose>
+							<c:forEach var="detailItem" items="${propertyValue}" varStatus="detailStatus">
+								<c:set var="itemName" value="entity.${property}[${detailStatus.index}]"/>
+								<c:set var="itemId" value="${fn:replace(itemName, '[', '__')}"/>
+								<c:set var="itemId" value="${fn:replace(itemId, ']', '__')}"/>
+								<c:set var="itemId" value="${fn:replace(itemId, '.', '_')}"/>
+								<c:if test="${not empty detailProperty}"><input id="${itemId}id" type="hidden" value="${detailItem.id}" name="${itemName}.id"></c:if>
+								<input id="${itemId}selected" type="hidden" value="false" name="${itemName}.selected">
+							</c:forEach>
+							<c:forEach var="item" items="${listValueCheck}" varStatus="itemStatus">
+								<c:set var="checked" value=""/>
+								<c:forEach var="detailItem" items="${propertyValue}">
+									<c:set var="detailItemId" value="${detailItem.id}"/>
+									<c:if test="${not empty detailProperty}">
+										<c:set var="detailItemIdEL" value="${'${'}detailItem.${detailProperty}${'}'}"/>
+										<c:set var="detailItemId" value="${util:eval(pageContext, detailItemIdEL)}"/>
+									</c:if>
+									<c:if test="${item.id == detailItemId}"><c:set var="checked">checked="checked"</c:set></c:if>
+								</c:forEach>
+								<c:set var="itemLabelEL" value="${'${'}item.${listValue}${'}'}"/>
+								<c:set var="itemLabel" value="${util:eval(pageContext, itemLabelEL)}"/>
+								<c:set var="itemPrepareName" value="entity.${property}[${itemStatus.index}]"/>
+								<c:set var="itemPrepareId" value="${fn:replace(itemPrepareName, '[', '__')}"/>
+								<c:set var="itemPrepareId" value="${fn:replace(itemPrepareId, ']', '__')}"/>
+								<c:set var="itemPrepareId" value="${fn:replace(itemPrepareId, '.', '_')}"/>
+								<c:set var="itemName" value="entity.${property}[${itemStatus.index}].${detailProperty}"/>
+								<c:set var="itemId" value="${fn:replace(itemName, '[', '__')}"/>
+								<c:set var="itemId" value="${fn:replace(itemId, '].', '__')}"/>
+								<c:set var="itemId" value="${fn:replace(itemId, '.', '_')}"/>
+								<input id="${itemId}" type="checkbox" ${checked} value="${item.id}" name="entity.${property}[${itemStatus.index}].${detailProperty}" onclick="vulpe.view.controlDetailChecked(this.checked, '${itemPrepareId}')">&nbsp;<label for="${itemId}" style="display: inline;">${itemLabel}</label><c:if test="${breakLabel}"><br/></c:if>
+							</c:forEach>
+						</c:when>
+						<c:otherwise><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" listValue="${listValue}" listKey="${listKey}" list="${list}" /></c:otherwise>
+					</c:choose>
+				</c:otherwise>
 			</c:choose>
 			<jsp:doBody/>
 		</c:when>

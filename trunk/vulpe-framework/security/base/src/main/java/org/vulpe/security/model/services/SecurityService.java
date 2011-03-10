@@ -33,12 +33,12 @@ public interface SecurityService extends VulpeService {
 	void deleteUser(List<User> list) throws VulpeApplicationException;
 
 	List<User> readUser(User user) throws VulpeApplicationException;
-	
+
 	List<User> getUsersByRole(String roleName) throws VulpeApplicationException;
 
 	User createUser(User user) throws VulpeApplicationException;
 
-	void updateUser(User user) throws VulpeApplicationException;
+	User updateUser(User user) throws VulpeApplicationException;
 
 	Paging<User> pagingUser(User user, Integer integer1, Integer integer2)
 			throws VulpeApplicationException;
@@ -55,7 +55,7 @@ public interface SecurityService extends VulpeService {
 
 	Role createRole(Role role) throws VulpeApplicationException;
 
-	void updateRole(Role role) throws VulpeApplicationException;
+	Role updateRole(Role role) throws VulpeApplicationException;
 
 	Paging<Role> pagingRole(Role role, Integer integer1, Integer integer2)
 			throws VulpeApplicationException;
@@ -74,7 +74,7 @@ public interface SecurityService extends VulpeService {
 	SecureResource createSecureResource(SecureResource secureResource)
 			throws VulpeApplicationException;
 
-	void updateSecureResource(SecureResource secureResource) throws VulpeApplicationException;
+	SecureResource updateSecureResource(SecureResource secureResource) throws VulpeApplicationException;
 
 	Paging<SecureResource> pagingSecureResource(SecureResource secureResource, Integer integer1,
 			Integer integer2) throws VulpeApplicationException;

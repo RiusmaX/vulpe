@@ -1137,6 +1137,10 @@ var vulpe = {
 			}
 		},
 
+		controlDetailChecked: function(checked, prepareId) {
+			vulpe.util.get(prepareId + "selected").val(checked ? "false" : "true");
+		},
+
 		addRequiredField: function(field) {
 			var idField = field.attr("id");
 			var idRequiredField = idField + "FieldRequired";

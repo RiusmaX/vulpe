@@ -15,7 +15,7 @@
 			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}"><c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/></c:if>
 			<li title="${tabTitle}"><a id="vulpeMainBodyTabs0" href="#vulpeMainBody">${tabTitle}</a></li>
 			<c:forEach items="${controllerConfig.details}" var="detail" varStatus="status">
-				<c:if test="${empty detail.parentDetailConfig}">
+				<c:if test="${empty detail.parentDetailConfig && !detail.notControlView}">
 					<c:set var="tabTitle"><fmt:message key="${detail.titleKey}"/></c:set>
 					<c:if test="${not empty tabs || not empty tabs[detail.titleKey]}"><c:set var="tabTitle" value="${tabs[detail.titleKey].title}"/></c:if>
 					<li title="${tabTitle}"><a id="vulpeMainBodyTabs${status.count}" href="#vulpeDetail-${detail.baseName}">${tabTitle}</a></li>
@@ -31,7 +31,7 @@
 	</div>
 	<c:if test="${not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<c:forEach items="${controllerConfig.details}" var="detail">
-			<c:if test="${empty detail.parentDetailConfig}">
+			<c:if test="${empty detail.parentDetailConfig && !detail.notControlView}">
 				<c:set var="targetConfig" value="${detail}" scope="request"/>
 				<c:set var="targetConfigPropertyName" value="${detail.propertyName}" scope="request"/>
 				<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">

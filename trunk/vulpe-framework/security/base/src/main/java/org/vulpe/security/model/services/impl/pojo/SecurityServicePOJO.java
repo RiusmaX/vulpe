@@ -75,8 +75,8 @@ public class SecurityServicePOJO implements SecurityService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateUser(final User user) throws VulpeApplicationException {
-		userManager.update(user);
+	public User updateUser(final User user) throws VulpeApplicationException {
+		return userManager.update(user);
 	}
 
 	@Transactional(readOnly = true)
@@ -116,8 +116,8 @@ public class SecurityServicePOJO implements SecurityService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateRole(final Role role) throws VulpeApplicationException {
-		roleManager.update(role);
+	public Role updateRole(final Role role) throws VulpeApplicationException {
+		return roleManager.update(role);
 	}
 
 	@Transactional(readOnly = true)
@@ -161,9 +161,9 @@ public class SecurityServicePOJO implements SecurityService {
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	public void updateSecureResource(final SecureResource secureResource)
+	public SecureResource updateSecureResource(final SecureResource secureResource)
 			throws VulpeApplicationException {
-		secureResourceManager.update(secureResource);
+		return secureResourceManager.update(secureResource);
 	}
 
 	@Transactional(readOnly = true)

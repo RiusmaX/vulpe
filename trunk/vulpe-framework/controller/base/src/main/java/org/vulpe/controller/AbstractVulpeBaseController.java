@@ -496,8 +496,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 *
 	 * @since 1.0
 	 */
-	protected void despiseDetailItens(final Collection<VulpeEntity<?>> beans, final VulpeBaseDetailConfig detailConfig) {
-		controllerUtil.despiseItens(beans, detailConfig.getDespiseFields(), getControllerType().equals(
+	protected List<VulpeEntity<?>> despiseDetailItens(final Collection<VulpeEntity<?>> beans,
+			final VulpeBaseDetailConfig detailConfig) {
+		return controllerUtil.despiseItens(beans, detailConfig.getDespiseFields(), getControllerType().equals(
 				ControllerType.TABULAR));
 	}
 
@@ -1995,8 +1996,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		}
 		controlResultForward();
-		selectAfter();
 		if (isBack()) {
+			selectAfter();
 			return read();
 		} else {
 			getSession().removeAttribute(getSelectFormKey());
@@ -2006,6 +2007,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getControllerConfig().getController().select().readOnShow()) {
 			onRead();
 		}
+		selectAfter();
 		return getResultName();
 	}
 

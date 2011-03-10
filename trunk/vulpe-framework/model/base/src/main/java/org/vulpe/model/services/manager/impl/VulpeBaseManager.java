@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.GenerateSuffix;
 import org.vulpe.model.annotations.TransactionType;
@@ -95,8 +96,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	/**
 	 * Extension point to code rules after create.
 	 */
-	protected void createAfter(final ENTITY entity, final ENTITY persistentEntity)
-			throws VulpeApplicationException {
+	protected void createAfter(final ENTITY entity, final ENTITY persistentEntity) throws VulpeApplicationException {
 		// extension point
 	}
 
@@ -179,8 +179,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	/**
 	 * Extension point to code rules after read.
 	 */
-	protected void readAfter(final ENTITY entity, final List<ENTITY> entities)
-			throws VulpeApplicationException {
+	protected void readAfter(final ENTITY entity, final List<ENTITY> entities) throws VulpeApplicationException {
 		// extension point
 	}
 
@@ -193,6 +192,13 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	@GenerateSuffix
 	public ENTITY update(final ENTITY entity) throws VulpeApplicationException {
 		updateBefore(entity);
+		if (VulpeValidationUtil.isNotEmpty(entity.getDeletedDetails())) {
+			final List<ENTITY> details = new ArrayList<ENTITY>();
+			for (final VulpeEntity<?> detail : entity.getDeletedDetails()) {
+				details.add((ENTITY) detail);
+			}
+			delete(details);
+		}
 		final ENTITY entityUpdated = getDAO().update(entity);
 		updateAfter(entityUpdated);
 		return entityUpdated;
@@ -239,6 +245,34 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	protected void updateSomeAttributesAfter(final ENTITY entity) throws VulpeApplicationException {
 		// extension point
 	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.services.manager.VulpeManager#updateSomeAttributes(org
+	 * .vulpe.model.entity.VulpeEntity, java.util.List)
+	 */
+//	@GenerateSuffix
+//	public void updateSomeAttributes(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+//		updateSomeAttributesBefore(entity, ids);
+//		getDAO().updateSomeAttributes(entity, ids);
+//		updateSomeAttributesAfter(entity, ids);
+//	}
+//
+//	/**
+//	 * Extension point to code rules before update some attributes.
+//	 */
+//	protected void updateSomeAttributesBefore(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+//		// extension point
+//	}
+//
+//	/**
+//	 * Extension point to code rules after update some attributes.
+//	 */
+//	protected void updateSomeAttributesAfter(final ENTITY entity, final List<ID> ids) throws VulpeApplicationException {
+//		// extension point
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -296,8 +330,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	/**
 	 * Extension point to code rules after paging entity.
 	 */
-	protected void pagingAfter(final ENTITY entity, final Paging<ENTITY> paging)
-			throws VulpeApplicationException {
+	protected void pagingAfter(final ENTITY entity, final Paging<ENTITY> paging) throws VulpeApplicationException {
 		// extension point
 	}
 

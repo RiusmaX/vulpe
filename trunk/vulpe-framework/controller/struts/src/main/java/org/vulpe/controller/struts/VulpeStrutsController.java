@@ -569,10 +569,14 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		try {
 			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig.getPropertyName(),
 					context, parent);
-			despiseDetailItens(beans, detailConfig);
+			final ENTITY entity = (ENTITY) Ognl.getValue("entity", context, parent);
+			final List<VulpeEntity<?>> deleted = despiseDetailItens(beans, detailConfig);
+			if (VulpeValidationUtil.isNotEmpty(deleted)) {
+				entity.getDeletedDetails().addAll(deleted);
+			}
 			if (beans != null && !detailConfig.getSubDetails().isEmpty()) {
-				for (VulpeEntity<?> bean : beans) {
-					for (VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
+				for (final VulpeEntity<?> bean : beans) {
+					for (final VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
 						despiseDetail(bean, subDetailConfig);
 					}
 				}

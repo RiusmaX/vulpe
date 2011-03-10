@@ -147,12 +147,12 @@ public class ControllerUtil {
 	 *            indicate if marked items must be removed or ignored on model
 	 *            layer.
 	 */
-	public void despiseItens(final Collection<VulpeEntity<?>> beans, final String despiseFields[],
+	public List<VulpeEntity<?>> despiseItens(final Collection<VulpeEntity<?>> beans, final String despiseFields[],
 			final boolean ignoreExclud) {
 		if (beans == null) {
-			return;
+			return null;
 		}
-
+		final List<VulpeEntity<?>> excluded = new ArrayList<VulpeEntity<?>>();
 		for (final Iterator<VulpeEntity<?>> iterator = beans.iterator(); iterator.hasNext();) {
 			final VulpeEntity<?> bean = iterator.next();
 			if (bean == null) {
@@ -165,6 +165,7 @@ public class ControllerUtil {
 				// if item is selected to be delete, then ignore
 				if (entity.isSelected()) {
 					if (!ignoreExclud || entity.getId() == null) {
+						excluded.add(entity);
 						iterator.remove();
 						continue;
 					}
@@ -175,6 +176,7 @@ public class ControllerUtil {
 				iterator.remove();
 			}
 		}
+		return excluded;
 	}
 
 	/**

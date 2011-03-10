@@ -25,14 +25,14 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Default Manager interface to MAIN's
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable, DAO extends VulpeDAO<ENTITY, ID>> {
 	/**
 	 * Method used to add business rules on create entity.
-	 * 
+	 *
 	 * @param entity
 	 * @return Return id of created entity
 	 * @throws VulpeApplicationException
@@ -41,7 +41,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on delete entity.
-	 * 
+	 *
 	 * @param entity
 	 * @throws VulpeApplicationException
 	 */
@@ -49,7 +49,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on delete entities.
-	 * 
+	 *
 	 * @param entities
 	 * @throws VulpeApplicationException
 	 */
@@ -57,23 +57,31 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on update entity.
-	 * 
+	 *
 	 * @param entity
-	 * @return 
+	 * @return
 	 * @throws VulpeApplicationException
 	 */
 	ENTITY update(ENTITY entity) throws VulpeApplicationException;
 
 	/**
-	 * 
+	 *
 	 * @param entity
 	 * @throws VulpeApplicationException
 	 */
 	void updateSomeAttributes(ENTITY entity) throws VulpeApplicationException;
 
 	/**
+	 *
+	 * @param entity
+	 * @param ids
+	 * @throws VulpeApplicationException
+	 */
+	//void updateSomeAttributes(ENTITY entity, List<ID> ids) throws VulpeApplicationException;
+
+	/**
 	 * Method used to add business rules on read list of entities.
-	 * 
+	 *
 	 * @param entity
 	 * @return List of entities
 	 * @throws VulpeApplicationException
@@ -82,7 +90,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on paging entities.
-	 * 
+	 *
 	 * @param entity
 	 * @param pageSize
 	 * @param page
@@ -93,7 +101,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on find entity by id.
-	 * 
+	 *
 	 * @param entity
 	 * @return Entity
 	 * @throws VulpeApplicationException
@@ -102,7 +110,7 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/**
 	 * Method used to add business rules on persist list of entities.
-	 * 
+	 *
 	 * @param entities
 	 * @return List of persisted entities
 	 * @throws VulpeApplicationException

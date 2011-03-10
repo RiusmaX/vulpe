@@ -33,6 +33,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 	private String simpleName;
 	private String titleKey;
 	private boolean addNewDetailsOnTop;
+	private boolean notControlView;
 	private int pageSize;
 	private int newDetails;
 	private int startNewDetails;
@@ -159,6 +160,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
 		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
+		this.notControlView = detail.notControlView();
 		this.showAsAccordion = detail.showAsArccodion();
 		this.pageSize = detail.pageSize();
 	}
@@ -235,6 +237,14 @@ public class VulpeBaseDetailConfig implements Serializable {
 
 	public int getPageSize() {
 		return pageSize;
+	}
+
+	public void setNotControlView(boolean notControlView) {
+		this.notControlView = notControlView;
+	}
+
+	public boolean isNotControlView() {
+		return notControlView;
 	}
 
 }

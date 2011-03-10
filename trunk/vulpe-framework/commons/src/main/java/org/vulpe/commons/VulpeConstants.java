@@ -331,8 +331,13 @@ public class VulpeConstants {
 
 	public class Model {
 		public class Entity {
+			public static final String AUTOCOMPLETE = "autocomplete";
+			public static final String DELETED_DETAILS = "deletedDetails";
+			public static final String FAKE_ID = "fakeId";
+			public static final String SELECTED = "selected";
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
+			public static final String ORDER_BY = "orderBy";
 		}
 
 		public class DAO {

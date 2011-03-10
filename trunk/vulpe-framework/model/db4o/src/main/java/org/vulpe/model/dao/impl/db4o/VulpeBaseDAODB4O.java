@@ -480,6 +480,10 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	}
 
 	@Override
-	public void updateSomeAttributes(ENTITY entity) {
+	public void updateSomeAttributes(final ENTITY entity) {
+	}
+
+	@Override
+	public void updateSomeAttributes(final ENTITY entity, final List<ID> ids) {
 	}
 }

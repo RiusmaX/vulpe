@@ -16,6 +16,7 @@
 package org.vulpe.model.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,4 +64,8 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 	void setQueryConfigurationName(final String queryConfigurationName);
 
 	String getQueryConfigurationName();
+
+	List<VulpeEntity<?>> getDeletedDetails();
+
+	void setDeletedDetails(List<VulpeEntity<?>> deletedDetails);
 }

@@ -90,6 +90,7 @@
 		<c:if test="${empty width}"><c:set var="width" value="100%"/></c:if>
 		<c:if test="${empty border}"><c:set var="border" value="0"/></c:if>
 		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="0"/></c:if>
+		<c:set var="currentTableElementId" value="${elementId}" scope="request"/>
 		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
 		<thead>
 			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>

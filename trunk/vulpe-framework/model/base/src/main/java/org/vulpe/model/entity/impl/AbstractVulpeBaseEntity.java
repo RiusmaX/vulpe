@@ -17,8 +17,10 @@ package org.vulpe.model.entity.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.MappedSuperclass;
@@ -43,37 +45,25 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
 	@IgnoreAudit
-	private transient boolean fakeId;
-
-	@IgnoreAudit
-	private transient boolean selected;
-
-	@IgnoreAudit
-	private transient String orderBy;
-
-	@IgnoreAudit
-	private transient String autocomplete;
-
-	@IgnoreAudit
 	private transient Map<String, Object> map = new HashMap<String, Object>();
 
 	public AbstractVulpeBaseEntity() {
 	}
 
 	public boolean isSelected() {
-		return this.selected;
+		return this.map.containsKey(Entity.SELECTED) ? (Boolean) this.map.get(Entity.SELECTED) : false;
 	}
 
 	public void setSelected(final boolean selected) {
-		this.selected = selected;
+		this.map.put(Entity.SELECTED, selected);
 	}
 
 	public String getOrderBy() {
-		return orderBy;
+		return this.map.containsKey(Entity.ORDER_BY) ? (String) this.map.get(Entity.ORDER_BY) : null;
 	}
 
 	public void setOrderBy(final String orderBy) {
-		this.orderBy = orderBy;
+		this.map.put(Entity.ORDER_BY, orderBy);
 	}
 
 	@Override
@@ -158,15 +148,15 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		return (VulpeEntity<ID>) super.clone();
 	}
 
-	public void setAutocomplete(String autocomplete) {
-		this.autocomplete = autocomplete;
+	public void setAutocomplete(final String autocomplete) {
+		this.map.put(Entity.AUTOCOMPLETE, autocomplete);
 	}
 
 	public String getAutocomplete() {
-		return autocomplete;
+		return this.map.containsKey(Entity.AUTOCOMPLETE) ? (String) this.map.get(Entity.AUTOCOMPLETE) : null;
 	}
 
-	public void setMap(Map<String, Object> map) {
+	public void setMap(final Map<String, Object> map) {
 		this.map = map;
 	}
 
@@ -183,12 +173,26 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		this.map.put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
 	}
 
-	public void setFakeId(boolean fakeId) {
-		this.fakeId = fakeId;
+	public void setFakeId(final boolean fakeId) {
+		this.map.put(Entity.FAKE_ID, fakeId);
 	}
 
 	public boolean isFakeId() {
-		return fakeId;
+		return this.map.containsKey(Entity.FAKE_ID) ? (Boolean) this.map.get(Entity.FAKE_ID) : false;
+	}
+
+	public List<VulpeEntity<?>> getDeletedDetails() {
+		final List<VulpeEntity<?>> deleted = new ArrayList<VulpeEntity<?>>();
+		if (this.map.containsKey(Entity.DELETED_DETAILS)) {
+			deleted.addAll((List<VulpeEntity<?>>) this.map.get(Entity.DELETED_DETAILS));
+		} else {
+			setDeletedDetails(deleted);
+		}
+		return deleted;
+	}
+
+	public void setDeletedDetails(final List<VulpeEntity<?>> deletedDetails) {
+		this.map.put(Entity.DELETED_DETAILS, deletedDetails);
 	}
 
 }

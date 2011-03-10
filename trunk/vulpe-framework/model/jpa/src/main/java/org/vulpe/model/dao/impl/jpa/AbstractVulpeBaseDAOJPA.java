@@ -170,14 +170,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 		} else {
 			merged = entityManager.merge(entity);
-			((ENTITY) merged).setMap(((ENTITY) entity).getMap());
+			// ((ENTITY) merged).setMap(((ENTITY) entity).getMap());
 			// repairReference(merged, true);
-			VulpeReflectUtil.copyOnlyTransient(merged, entity);
+			// VulpeReflectUtil.copyOnlyTransient(merged, entity);
+			((ENTITY) entity).setId(((ENTITY) merged).getId());
 		}
 		entityManager.flush();
 		entityManager.clear();
-		loadEntityRelationships((ENTITY) merged);
-		return merged;
+		loadEntityRelationships((ENTITY) entity);
+		return entity;
 	}
 
 	/**
@@ -899,45 +900,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			LOG.debug(entity.getClass().getSimpleName() + " id not found");
 			return;
 		}
-		final StringBuilder sql = new StringBuilder();
-		sql.append("update ");
-		final Table table = entity.getClass().getAnnotation(Table.class);
-		if (table != null) {
-			sql.append(table.name());
-		} else {
-			sql.append(entity.getClass().getSimpleName());
-		}
-		sql.append(" set ");
-		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+		final StringBuilder sql = new StringBuilder(getUpdateSomeAttributtesSQL(entity));
 		try {
-			final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
-			for (final Field field : fields) {
-				if (field.getName().equals("id") || Modifier.isTransient(field.getModifiers())) {
-					continue;
-				}
-				final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
-				if (VulpeValidationUtil.isNotEmpty(value)) {
-					final Column column = field.getAnnotation(Column.class);
-					final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
-					if (column != null) {
-						map.put(column.name(), value);
-					} else if (joinColumn != null) {
-						map.put(StringUtils.isNotEmpty(joinColumn.referencedColumnName()) ? joinColumn
-								.referencedColumnName() : joinColumn.name(), value);
-					} else {
-						map.put(field.getName(), value);
-					}
-				}
-			}
-			int count = 0;
-			for (final String key : map.keySet()) {
-				if (count > 0) {
-					sql.append(", ");
-				}
-				sql.append(key).append(" = ").append(":").append(key);
-				++count;
-			}
-			sql.append(" where ");
+			final VulpeHashMap<String, Object> map = getUpdateSomeAttributesMap(entity);
 			final Field idField = VulpeReflectUtil.getField(entity.getClass(), "id");
 			final Column column = idField.getAnnotation(Column.class);
 			sql.append(column != null ? column.name() : "id").append(" = ").append(entity.getId());
@@ -957,5 +922,95 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		} catch (Exception e) {
 			LOG.error(e);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see
+	 * org.vulpe.model.dao.VulpeDAO#updateSomeAttributes(org.vulpe.model.entity
+	 * .VulpeEntity, java.util.List)
+	 */
+	@Override
+	public void updateSomeAttributes(final ENTITY entity, final List<ID> ids) {
+		if (VulpeValidationUtil.isEmpty(ids)) {
+			LOG.debug(entity.getClass().getSimpleName() + " id list not found");
+			return;
+		}
+		final StringBuilder sql = new StringBuilder(getUpdateSomeAttributtesSQL(entity));
+		try {
+			final VulpeHashMap<String, Object> map = getUpdateSomeAttributesMap(entity);
+			StringBuilder sqlIds = new StringBuilder();
+			for (final ID id : ids) {
+				if (sqlIds.length() > 0) {
+					sqlIds.append(",");
+				}
+				sqlIds.append(((Long) id).intValue());
+			}
+			final Field idField = VulpeReflectUtil.getField(entity.getClass(), "id");
+			final Column column = idField.getAnnotation(Column.class);
+			sql.append(column != null ? column.name() : "id").append(" in (").append(sqlIds).append(")");
+			final Query query = entityManager.createNativeQuery(sql.toString());
+			for (final String key : map.keySet()) {
+				final Object value = map.get(key);
+				if (value instanceof Enum) {
+					query.setParameter(key, value.toString());
+				} else if (value instanceof VulpeEntity) {
+					query.setParameter(key, ((VulpeEntity<ID>) value).getId());
+				} else {
+					query.setParameter(key, value);
+				}
+			}
+			query.executeUpdate();
+			entityManager.flush();
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+	}
+
+	private String getUpdateSomeAttributtesSQL(final ENTITY entity) {
+		final StringBuilder sql = new StringBuilder();
+		sql.append("update ");
+		final Table table = entity.getClass().getAnnotation(Table.class);
+		if (table != null) {
+			sql.append(table.name());
+		} else {
+			sql.append(entity.getClass().getSimpleName());
+		}
+		sql.append(" set ");
+		int count = 0;
+		for (final String key : getUpdateSomeAttributesMap(entity).keySet()) {
+			if (count > 0) {
+				sql.append(", ");
+			}
+			sql.append(key).append(" = ").append(":").append(key);
+			++count;
+		}
+		sql.append(" where ");
+		return sql.toString();
+	}
+
+	private VulpeHashMap<String, Object> getUpdateSomeAttributesMap(final ENTITY entity) {
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+		final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
+		for (final Field field : fields) {
+			if (field.getName().equals("id") || Modifier.isTransient(field.getModifiers())) {
+				continue;
+			}
+			final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
+			if (VulpeValidationUtil.isNotEmpty(value)) {
+				final Column column = field.getAnnotation(Column.class);
+				final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
+				if (column != null) {
+					map.put(column.name(), value);
+				} else if (joinColumn != null) {
+					map.put(StringUtils.isNotEmpty(joinColumn.referencedColumnName()) ? joinColumn
+							.referencedColumnName() : joinColumn.name(), value);
+				} else {
+					map.put(field.getName(), value);
+				}
+			}
+		}
+		return map;
 	}
 }
