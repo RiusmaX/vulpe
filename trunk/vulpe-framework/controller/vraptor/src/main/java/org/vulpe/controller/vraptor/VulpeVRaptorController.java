@@ -320,7 +320,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	}
 
 	@Override
-	protected void despiseDetail(Object parent, VulpeBaseDetailConfig detailConfig) {
+	protected void despiseDetail(Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
 	}
 
 	@Override

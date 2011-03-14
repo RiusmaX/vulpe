@@ -133,7 +133,7 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan">rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
-		<c:if test="${!isHeaderTableTag && not empty currentDetailConfig && renderId}"><td style="display: none"><v:hidden property="id"/></td></c:if>
+		<c:if test="${!isHeaderTableTag && not empty currentDetailConfig && renderId}"><td style="display: none"><v:hidden property="id"/><v:hidden property="fakeId"/></td></c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">

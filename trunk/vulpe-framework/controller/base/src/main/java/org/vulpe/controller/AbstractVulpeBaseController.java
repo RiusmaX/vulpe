@@ -502,7 +502,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				ControllerType.TABULAR));
 	}
 
-	protected abstract void despiseDetail(final Object parent, final VulpeBaseDetailConfig detailConfig);
+	protected abstract void despiseDetail(final Object parent, final ENTITY baseEntity, final VulpeBaseDetailConfig detailConfig);
 
 	/**
 	 * Method to remove detail despised.
@@ -512,7 +512,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void despiseDetails() {
 		for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 			if (detail.getParentDetailConfig() == null) {
-				despiseDetail(this, detail);
+				despiseDetail(this, getEntity(), detail);
 			}
 		}
 	}
