@@ -29,11 +29,11 @@
 
 			<!-- params interceptor -->
 			<interceptor name="params"
-				class="org.vulpe.controller.struts.interceptor.SessionParametersInterceptor" />
+				class="org.vulpe.controller.struts.interceptor.VulpeParametersInterceptor" />
 
 			<!-- params interceptor -->
 			<interceptor name="resetSessionParams"
-				class="org.vulpe.controller.struts.interceptor.ResetSessionParametersInterceptor" />
+				class="org.vulpe.controller.struts.interceptor.VulpeResetParametersInterceptor" />
 
 			<!-- Basic stack -->
 			<interceptor-stack name="basicStack">

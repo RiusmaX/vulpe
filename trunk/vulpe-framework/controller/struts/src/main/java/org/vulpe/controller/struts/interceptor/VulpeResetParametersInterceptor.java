@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 @SuppressWarnings("serial")
-public class ResetSessionParametersInterceptor extends MethodFilterInterceptor {
+public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 
 	/*
 	 * (non-Javadoc)

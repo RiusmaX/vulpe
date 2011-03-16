@@ -15,21 +15,27 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
+import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeSimpleController;
+import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.annotations.ResetSession;
+import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
@@ -41,19 +47,21 @@ import com.opensymphony.xwork2.util.OgnlContextState;
 import com.opensymphony.xwork2.util.ValueStack;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class SessionParametersInterceptor extends ParametersInterceptor {
+public class VulpeParametersInterceptor extends ParametersInterceptor {
+
+	private static final Logger LOG = Logger.getLogger(VulpeParametersInterceptor.class);
 
 	private ActionInvocation invocation;
 
 	@Override
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
-		if (invocation.getAction() instanceof VulpeSimpleController) {
+		if (action instanceof VulpeSimpleController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
-			if (invocation.getAction() instanceof VulpeController
+			if (action instanceof VulpeController
 					&& !mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
-				final VulpeController controller = (VulpeController) invocation.getAction();
+				final VulpeController controller = (VulpeController) action;
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
 					controller.manageButtons(controller.getOperation());
@@ -109,10 +117,24 @@ public class SessionParametersInterceptor extends ParametersInterceptor {
 				}
 			}
 		}
+		if (action instanceof VulpeStrutsController) {
+			final VulpeStrutsController controller = (VulpeStrutsController) action;
+			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			for (final Method method : methods) {
+				if (method.isAnnotationPresent(ExecuteAlways.class)) {
+					try {
+						method.invoke(controller, new Object[] {});
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
+		LOG.debug("Init intercept");
 		this.invocation = invocation;
 		return super.intercept(invocation);
 	}
