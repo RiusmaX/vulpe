@@ -502,7 +502,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				ControllerType.TABULAR));
 	}
 
-	protected abstract void despiseDetail(final Object parent, final ENTITY baseEntity, final VulpeBaseDetailConfig detailConfig);
+	protected abstract void despiseDetail(final Object parent, final ENTITY baseEntity,
+			final VulpeBaseDetailConfig detailConfig);
 
 	/**
 	 * Method to remove detail despised.
@@ -955,25 +956,68 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 	}
 
-	public String detail() {
-		final Paging<ENTITY> paging = ever.getSelf(getDetail() + Controller.DETAIL_PAGING_LIST);
-		final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, getDetail());
-		repairDetailPaging(values, paging);
-		if (!getDetail().startsWith("entity")) {
-			setDetail("entity." + getDetail());
-		}
-		configureDetail();
-		final VulpeBaseDetailConfig detailConfig = getDetailConfig();
-		mountDetailPaging(detailConfig, paging);
-		manageButtons(Operation.ADD_DETAIL);
-		if (isAjax()) {
-			if (detailConfig == null || detailConfig.getViewPath() == null) {
-				controlResultForward();
-			} else {
-				setResultForward(detailConfig.getViewPath());
+	public String paging() {
+		pagingBefore();
+		if (VulpeValidationUtil.isNotEmpty(getDetail())) {
+			final Paging<ENTITY> paging = ever.getSelf(getDetail() + Controller.DETAIL_PAGING_LIST);
+			final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, getDetail());
+			repairDetailPaging(values, paging);
+			if (!getDetail().startsWith("entity")) {
+				setDetail("entity." + getDetail());
+			}
+			configureDetail();
+			final VulpeBaseDetailConfig detailConfig = getDetailConfig();
+			mountDetailPaging(detailConfig, paging);
+			manageButtons(Operation.ADD_DETAIL);
+			if (isAjax()) {
+				if (detailConfig == null || detailConfig.getViewPath() == null) {
+					controlResultForward();
+				} else {
+					setResultForward(detailConfig.getViewPath());
+				}
 			}
 		}
+		pagingAfter();
 		return getResultName();
+	}
+
+	protected void pagingBefore() {
+	}
+
+	protected void pagingAfter() {
+	}
+
+	protected void prepareDetailPaging(final boolean create) {
+		if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
+			for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+				if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
+					final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, detailConfig.getName());
+					if (VulpeValidationUtil.isNotEmpty(values)) {
+						if (create) {
+							int id = 1;
+							for (final ENTITY entity : values) {
+								entity.setId((ID) new Long(id));
+								entity.setFakeId(true);
+								++id;
+							}
+						}
+						final List<ENTITY> list = new ArrayList<ENTITY>();
+						int count = 0;
+						for (final ENTITY entity : values) {
+							if (count == detailConfig.getPageSize()) {
+								break;
+							}
+							list.add(entity);
+							++count;
+						}
+						final Paging<ENTITY> paging = new Paging<ENTITY>(values.size(), detailConfig.getPageSize(), 0);
+						paging.setList(list);
+						paging.setRealList(values);
+						ever.putWeakRef(detailConfig.getName() + Controller.DETAIL_PAGING_LIST, paging);
+					}
+				}
+			}
+		}
 	}
 
 	/*
@@ -1078,34 +1122,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
 					createDetails(getControllerConfig().getDetails(), false);
 					setDetail("");
-					for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
-						if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
-							final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, detailConfig.getName());
-							if (VulpeValidationUtil.isNotEmpty(values)) {
-								int id = 1;
-								for (final ENTITY entity : values) {
-									entity.setId((ID) new Long(id));
-									entity.setFakeId(true);
-									++id;
-								}
-								final List<ENTITY> list = new ArrayList<ENTITY>();
-								int count = 0;
-								for (final ENTITY entity : values) {
-									if (count == detailConfig.getPageSize()) {
-										break;
-									}
-									list.add(entity);
-									++count;
-								}
-								final Paging<ENTITY> paging = new Paging<ENTITY>(values.size(), detailConfig
-										.getPageSize(), 0);
-								paging.setList(list);
-								paging.setRealList(values);
-								ever.putWeakRef(detailConfig.getName() + Controller.DETAIL_PAGING_LIST, paging);
-							}
-						}
-					}
 				}
+				prepareDetailPaging(true);
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
@@ -1325,29 +1343,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntity((ENTITY) invokeServices(Operation.FIND.getValue().concat(
 					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
 					.getEntityClass() }, new Object[] { prepareEntity(getOperation()) }));
-			if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
-				for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
-					if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
-						final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, detailConfig.getName());
-						if (VulpeValidationUtil.isNotEmpty(values)) {
-							final List<ENTITY> list = new ArrayList<ENTITY>();
-							int count = 0;
-							for (final ENTITY entity : values) {
-								if (count == detailConfig.getPageSize()) {
-									break;
-								}
-								list.add(entity);
-								++count;
-							}
-							final Paging<ENTITY> paging = new Paging<ENTITY>(values.size(), detailConfig.getPageSize(),
-									0);
-							paging.setList(list);
-							paging.setRealList(values);
-							ever.putWeakRef(detailConfig.getName() + Controller.DETAIL_PAGING_LIST, paging);
-						}
-					}
-				}
-			}
+			prepareDetailPaging(false);
 			setExecuted(false);
 		}
 	}

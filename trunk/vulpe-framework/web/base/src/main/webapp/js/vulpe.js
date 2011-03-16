@@ -319,12 +319,18 @@ var vulpe = {
 			fields.each(function(index) {
 				if ($(this).val() == "" && !focused) {
 					$(this).focus();
+					if (vulpe.config.browser.ie6) {
+						$(this).focus();
+					}
 					focused = true;
 				}
 			});
 			if (fields.length > 0) {
 				if (!focused) {
 					fields[0].focus();
+					if (vulpe.config.browser.ie6) {
+						fields[0].focus();
+					}
 				}
 			}
 		},
