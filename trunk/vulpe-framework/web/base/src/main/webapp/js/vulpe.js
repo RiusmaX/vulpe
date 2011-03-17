@@ -1839,7 +1839,7 @@ var vulpe = {
 					url: vulpe.util.completeURL(options.url),
 					data: options.queryString,
 					success: function (data, status) {
-						if (vulpe.util.isEmpty(options.afterJs)) {
+						if (vulpe.util.isEmpty(options.afterJs) || options.hideLoading) {
 							vulpe.view.hideLoading();
 						}
 						vulpe.config.showLoading = true;
@@ -1951,6 +1951,9 @@ var vulpe = {
 					options.layerFields = options.description;
 					var identifier = options.identifier;
 					var description = options.description;
+					if (vulpe.util.isEmpty(options.afterJs)) {
+						options.hideLoading = true;
+					}
 					var afterJs = options.afterJs;
 					options.afterJs = function() {
 						if (vulpe.util.get(description).val() == "") {
