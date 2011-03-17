@@ -412,9 +412,13 @@ var vulpe = {
 
 		trim: function(s) {
 			if (s) {
-				return s.replace(/^\s*/, "").replace(/\s*$/, "");
+				if (typeof s == "function") {
+					return s.toString();
+				} else if (typeof s == "string") {
+					return s.replace(/^\s*/, "").replace(/\s*$/, "");
+				}
 			} else {
-				return '';
+				return "";
 			}
 		},
 
@@ -1835,7 +1839,9 @@ var vulpe = {
 					url: vulpe.util.completeURL(options.url),
 					data: options.queryString,
 					success: function (data, status) {
-						vulpe.view.hideLoading();
+						if (vulpe.util.isEmpty(options.afterJs)) {
+							vulpe.view.hideLoading();
+						}
 						vulpe.config.showLoading = true;
 						var authenticator = options.url.indexOf("/j_spring_security_check") != -1;
 						var loginForm = data.indexOf("vulpeLoginForm") != -1;
