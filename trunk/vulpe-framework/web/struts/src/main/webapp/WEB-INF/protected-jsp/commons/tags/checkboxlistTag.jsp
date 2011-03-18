@@ -42,13 +42,22 @@
 								<c:when test="${not empty detailProperty}"><c:set var="detailProperty" value="${detailProperty}.${listKey}"/></c:when>
 								<c:otherwise><c:set var="detailProperty" value="${listKey}"/></c:otherwise>
 							</c:choose>
+							<c:forEach var="item" items="${listValueCheck}" varStatus="itemStatus">
 							<c:forEach var="detailItem" items="${propertyValue}" varStatus="detailStatus">
-								<c:set var="itemName" value="entity.${property}[${detailStatus.index}]"/>
+								<c:set var="detailItemId" value="${detailItem.id}"/>
+								<c:if test="${not empty detailProperty}">
+									<c:set var="detailItemIdEL" value="${'${'}detailItem.${detailProperty}${'}'}"/>
+									<c:set var="detailItemId" value="${util:eval(pageContext, detailItemIdEL)}"/>
+								</c:if>
+								<c:if test="${item.id == detailItemId}">
+								<c:set var="itemName" value="entity.${property}[${itemStatus.index}]"/>
 								<c:set var="itemId" value="${fn:replace(itemName, '[', '__')}"/>
 								<c:set var="itemId" value="${fn:replace(itemId, ']', '__')}"/>
 								<c:set var="itemId" value="${fn:replace(itemId, '.', '_')}"/>
 								<c:if test="${not empty detailProperty}"><input id="${itemId}id" type="hidden" value="${detailItem.id}" name="${itemName}.id"></c:if>
 								<input id="${itemId}selected" type="hidden" value="false" name="${itemName}.selected">
+								</c:if>
+							</c:forEach>
 							</c:forEach>
 							<c:forEach var="item" items="${listValueCheck}" varStatus="itemStatus">
 								<c:set var="checked" value=""/>

@@ -1743,7 +1743,8 @@ var vulpe = {
 						queryString: options.queryString,
 						layer: options.name,
 						beforeJs: options.beforeJs,
-						afterJs: options.afterJs
+						afterJs: options.afterJs,
+						hideLoading: true
 				})) {
 					popup.remove();
 					return false;
