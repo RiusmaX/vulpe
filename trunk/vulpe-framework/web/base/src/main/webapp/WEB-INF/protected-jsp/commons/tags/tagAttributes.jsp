@@ -2,6 +2,7 @@
 <%@ attribute name="breakLabel" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="disabled" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="elementId" required="false" rtexprvalue="true" %>
+<%@ attribute name="emptyLabel" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="expireInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="focused" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="labelKey" required="false" rtexprvalue="true" %>
@@ -30,6 +31,7 @@
 <%@ attribute name="saveInSession" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showAsText" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
+<%@ attribute name="showEmptyLabel" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="showRequiredIcon" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="style" required="false" rtexprvalue="true" %>

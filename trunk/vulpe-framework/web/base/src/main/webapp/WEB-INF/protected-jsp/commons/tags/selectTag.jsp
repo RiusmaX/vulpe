@@ -18,14 +18,16 @@
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}"><c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/></c:if>
 	<c:choose>
 	<c:when test="${showAsText}">
+		<c:set var="emptyValue" value="true"/>
 		<c:forEach items="${items}" var="item">
 			<c:set var="keyValueEL" value="${'${'}item.${itemKey}${'}'}"/>
 			<c:set var="keyValue" value="${util:eval(pageContext, keyValueEL)}"/>
 			<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
 			<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
-			<c:if test="${value eq keyValue}"><s:label theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" cssStyle="${style}" cssClass="vulpeSimpleLabel" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${util:toString(labelValue)}"/></c:if>
+			<c:if test="${value eq keyValue}"><c:set var="emptyValue" value="false"/><s:label theme="simple" name="${name}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" cssStyle="${style}" cssClass="vulpeSimpleLabel" id="${elementId}" tabindex="${tabindex}" title="${title}" value="${util:toString(labelValue)}"/></c:if>
 		</c:forEach>
 		<v:hidden property="${property}"/>
+		<c:if test="${showEmptyLabel && emptyValue}"><fmt:message key="${emptyLabel}" /></c:if>
 	</c:when>
 	<c:otherwise>
 	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}">

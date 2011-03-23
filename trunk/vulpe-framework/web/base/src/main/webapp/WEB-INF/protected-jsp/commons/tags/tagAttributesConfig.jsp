@@ -1,3 +1,5 @@
+<c:if test="${empty emptyLabel}"><c:set var="emptyLabel" value="label.vulpe.empty"/></c:if>
+<c:if test="${empty showEmptyLabel}"><c:set var="showEmptyLabel" value="${true}"/></c:if>
 <c:if test="${empty saveInSession}"><c:set var="saveInSession" value="${false}"/></c:if>
 <c:if test="${empty expireInSession}"><c:set var="expireInSession" value="${false}"/></c:if>
 <c:if test="${empty paragraph}"><c:set var="paragraph" value="true"/></c:if>
