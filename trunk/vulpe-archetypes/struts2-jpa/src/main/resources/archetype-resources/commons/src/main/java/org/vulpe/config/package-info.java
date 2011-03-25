@@ -5,9 +5,9 @@
 		name = "${rootArtifactId}",
 		projectPackage = "${package}",
 		view = @VulpeView(
-				showButtonAsImage = true,
-				showButtonIcon = false,
-				showButtonText = false
+				showButtonsAsImage = true,
+				showIconOfButton = false,
+				showTextOfButton = false
 		)
 )
 package org.vulpe.config;
