@@ -1961,6 +1961,7 @@ var vulpe = {
 							vulpe.util.get(identifier).val("");
 							vulpe.util.get(identifier).focus();
 						} else {
+							vulpe.exception.hideFieldError(vulpe.util.get(description));
 							afterJs();
 						}
 					};

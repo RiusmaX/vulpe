@@ -34,6 +34,7 @@ import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeSimpleController;
 import org.vulpe.controller.annotations.ExecuteAlways;
+import org.vulpe.controller.annotations.ExecuteOnce;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.controller.util.ControllerUtil;
@@ -82,10 +83,12 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 				}
 				if (StringUtils.isEmpty(currentControllerKey)) {
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					executeOnce(action);
 				} else if (!currentControllerKey.equals(controllerKey)
 						&& StringUtils.isEmpty(simpleController.getPopupKey()) && !autocomplete) {
 					simpleController.ever.removeWeakRef();
 					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					executeOnce(action);
 				}
 			}
 			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER,
@@ -117,19 +120,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 				}
 			}
 		}
-		if (action instanceof VulpeStrutsController) {
-			final VulpeStrutsController controller = (VulpeStrutsController) action;
-			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
-			for (final Method method : methods) {
-				if (method.isAnnotationPresent(ExecuteAlways.class)) {
-					try {
-						method.invoke(controller, new Object[] {});
-					} catch (Exception e) {
-						LOG.error(e);
-					}
-				}
-			}
-		}
+		executeAlways(action);
 	}
 
 	@Override
@@ -162,4 +153,37 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	public ControllerUtil getControllerUtil() {
 		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
+
+	private void executeAlways(final Object action) {
+		if (action instanceof VulpeStrutsController) {
+			final VulpeStrutsController controller = (VulpeStrutsController) action;
+			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			for (final Method method : methods) {
+				if (method.isAnnotationPresent(ExecuteAlways.class)) {
+					try {
+						method.invoke(controller, new Object[] {});
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+				}
+			}
+		}
+	}
+
+	private void executeOnce(final Object action) {
+		if (action instanceof VulpeStrutsController) {
+			final VulpeStrutsController controller = (VulpeStrutsController) action;
+			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			for (final Method method : methods) {
+				if (method.isAnnotationPresent(ExecuteOnce.class)) {
+					try {
+						method.invoke(controller, new Object[] {});
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+				}
+			}
+		}
+	}
+
 }

@@ -18,7 +18,7 @@
 	</c:when>
 	<c:when test="${maskUpper eq 'N' || maskUpper eq 'NUMBER' || maskUpper eq 'I' || maskUpper eq 'INTEGER'}">
 		<c:if test="${maskUpper == 'INTEGER' || maskUpper == 'I'}">
-		<c:set var="onblur" value="$(this).blur(function () {if (vulpe.validate.isNumber($(this).val())){${onblur}} else {$(this).val('');}});"/>
+		<c:set var="onblur" value="if (vulpe.validate.isNumber($(this).val())){${onblur}} else {$(this).val('')}"/>
 		</c:if>
 	<script type="text/javascript">
 		jQuery(function($){
