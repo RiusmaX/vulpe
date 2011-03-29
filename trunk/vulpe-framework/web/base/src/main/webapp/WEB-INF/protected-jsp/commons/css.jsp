@@ -14,7 +14,7 @@
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.rte.css";
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.ui.css";
 	<!--[if lt IE 7]>
-	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.simplemodal-ie.css?media=screen";
+	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.simplemodal_ie.css?media=screen";
 	<![endif]-->
 </style>
 <%@include file="/WEB-INF/protected-jsp/commons/cssExtended.jsp"%>
