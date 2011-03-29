@@ -27,7 +27,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.Like;
-import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Parameter.OperatorType;
@@ -36,7 +36,7 @@ import org.vulpe.model.annotations.Parameter.OperatorType;
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
-@NotExistEqual(parameters = { @QueryParameter(equals = @Parameter(name = "username", operator = OperatorType.EQUAL)) }, message = "vulpe.security.error.user.exists")
+@NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "username", operator = OperatorType.EQUAL)) }, message = "vulpe.security.error.user.exists")
 public class User extends BasicUser {
 
 	@Id

@@ -57,7 +57,7 @@ import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
@@ -738,8 +738,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public boolean validateEntity() {
 		if ((getOperation().equals(Operation.CREATE_POST) || getOperation().equals(Operation.UPDATE_POST))) {
 			if (validateExists()) {
-				final NotExistEqual notExistEqual = getControllerConfig().getEntityClass().getAnnotation(
-						NotExistEqual.class);
+				final NotExistEquals notExistEqual = getControllerConfig().getEntityClass().getAnnotation(
+						NotExistEquals.class);
 				String message = "{vulpe.error.entity.exists}";
 				if (StringUtils.isNotEmpty(notExistEqual.message())) {
 					message = notExistEqual.message();

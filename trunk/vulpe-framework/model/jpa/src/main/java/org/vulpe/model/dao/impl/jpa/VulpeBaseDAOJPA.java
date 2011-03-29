@@ -40,7 +40,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
-import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryConfiguration;
@@ -560,7 +560,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Exists object: ".concat(entity.toString()));
 		}
-		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
+		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
 		if (notExistEqual != null) {
 			final QueryParameter[] queryParameters = notExistEqual.parameters();
 			// getting total records

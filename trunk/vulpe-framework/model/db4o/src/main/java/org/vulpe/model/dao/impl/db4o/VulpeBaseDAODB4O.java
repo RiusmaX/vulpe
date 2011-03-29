@@ -37,7 +37,7 @@ import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
-import org.vulpe.model.annotations.NotExistEqual;
+import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.OrderBy.OrderType;
@@ -434,7 +434,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Exists object: ".concat(entity.toString()));
 		}
-		final NotExistEqual notExistEqual = entity.getClass().getAnnotation(NotExistEqual.class);
+		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
 		if (notExistEqual != null) {
 			final QueryParameter[] parameters = notExistEqual.parameters();
 			final Query query = getObjectContainer().query();
