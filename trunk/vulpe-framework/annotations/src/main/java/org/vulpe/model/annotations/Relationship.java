@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * Tells Vulpe to optimize lazy load on relationship.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
@@ -40,6 +40,8 @@ public @interface Relationship {
 	RelationshipScope scope() default RelationshipScope.ALL;
 
 	boolean forceLoad() default false;
+
+	String forceLoadQueryConfiguration() default "default";
 
 	public enum RelationshipScope {
 		ALL, SELECT, MAIN

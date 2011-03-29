@@ -26,7 +26,6 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeUtility;
 import javax.naming.InitialContext;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -46,7 +45,7 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send Mail to many recipients.
-	 * 
+	 *
 	 * @param recipients
 	 *            Recipients
 	 * @param subject
@@ -99,17 +98,19 @@ public final class VulpeEmailUtil {
 						mail.setSslSmtpPort(factoryPort);
 					}
 				}
-				String subjectEncode = "UTF-8";
-				if (bundle.containsKey("mail.subject.encode")) {
-					subjectEncode = bundle.getString("mail.subject.encode");
-				}
-				mail.setSubject(MimeUtility.encodeText(subject, subjectEncode, null));
-				if (bundle.containsKey("mail.body.htmlSpecials.encode")
-						&& Boolean.valueOf(bundle.getString("mail.body.htmlSpecials.encode"))) {
-					mail.setHtmlMsg(VulpeStringUtil.encodeHTMLSpecials(body));
-				} else {
-					mail.setHtmlMsg(body);
-				}
+//				String subjectEncode = "UTF-8";
+//				if (bundle.containsKey("mail.subject.encode")) {
+//					subjectEncode = bundle.getString("mail.subject.encode");
+//				}
+				//mail.setSubject(MimeUtility.encodeText(subject, subjectEncode, null));
+				mail.setSubject(VulpeStringUtil.encodeUTF(subject));
+//				if (bundle.containsKey("mail.body.htmlSpecials.encode")
+//						&& Boolean.valueOf(bundle.getString("mail.body.htmlSpecials.encode"))) {
+//					mail.setHtmlMsg(VulpeStringUtil.encodeHTMLSpecials(body));
+//				} else {
+//					mail.setHtmlMsg(body);
+//				}
+				mail.setHtmlMsg(VulpeStringUtil.encodeUTF(body));
 				mail.send();
 			} else {
 				LOG.error("Send Mail properties not setted");
@@ -125,11 +126,11 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Returns String Array of recipients.
-	 * 
+	 *
 	 * @param recipients
-	 * 
+	 *
 	 * @param property
-	 * 
+	 *
 	 * @return
 	 */
 	public static String[] getRecipients(final List recipients, final String property) {
@@ -150,13 +151,13 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send Mail to recipient.
-	 * 
+	 *
 	 * @param recipient
-	 * 
+	 *
 	 * @param subject
-	 * 
+	 *
 	 * @param body
-	 * 
+	 *
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
@@ -172,15 +173,15 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send mail to recipients by Web Service.
-	 * 
+	 *
 	 * @param recipients
-	 * 
+	 *
 	 * @param subject
-	 * 
+	 *
 	 * @param body
-	 * 
+	 *
 	 * @param mailerService
-	 * 
+	 *
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
@@ -237,7 +238,7 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Checks if the email format is valid
-	 * 
+	 *
 	 * @return true if valid
 	 */
 	private static boolean checkEmailFormat(final String email) {
@@ -247,7 +248,7 @@ public final class VulpeEmailUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param resource
 	 * @return
 	 */
