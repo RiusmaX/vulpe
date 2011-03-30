@@ -29,6 +29,9 @@ import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterDefs;
 import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
@@ -151,6 +154,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Retriving id: ".concat(entity.getId().toString()));
 		}
+		enableFilters();
 		final ENTITY newEntity = getEntityManager().find(getEntityClass(), entity.getId());
 		if (newEntity.getId() instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) newEntity;
@@ -160,6 +164,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		newEntity.setMap(entity.getMap());
 		loadEntityRelationships(newEntity);
+		disableFilters();
 		return newEntity;
 	}
 
@@ -173,6 +178,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Reading object: ".concat(entity.toString()));
 		}
+		enableFilters();
 		final Map<String, Object> params = new HashMap<String, Object>();
 		final String hql = getHQL(entity, params);
 		final List<ENTITY> entities = execute(hql, params);
@@ -180,6 +186,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			entity2.setMap(entity.getMap());
 		}
 		loadRelationships(entities, params, false);
+		disableFilters();
 		return entities;
 	}
 
@@ -195,6 +202,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Paging object: ".concat(entity.toString()));
 		}
+		enableFilters();
 		final Map<String, Object> params = new HashMap<String, Object>();
 		final String hql = getHQL(entity, params);
 
@@ -227,7 +235,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			loadRelationships(entities, params, false);
 			paging.setList(entities);
 		}
-
+		disableFilters();
 		return paging;
 	}
 
@@ -610,4 +618,35 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		return false;
 	}
 
+	private void enableFilters() {
+		final FilterDefs filterDefs = getEntityClass().getAnnotation(FilterDefs.class);
+		if (filterDefs != null && filterDefs.value().length > 0) {
+			final Session session = (Session) getEntityManager().getDelegate();
+			for (final FilterDef filterDef : filterDefs.value()) {
+				session.enableFilter(filterDef.name());
+			}
+		} else {
+			final FilterDef filterDef = getEntityClass().getAnnotation(FilterDef.class);
+			if (filterDef != null) {
+				final Session session = (Session) getEntityManager().getDelegate();
+				session.enableFilter(filterDef.name());
+			}
+		}
+	}
+
+	private void disableFilters() {
+		final FilterDefs filterDefs = getEntityClass().getAnnotation(FilterDefs.class);
+		if (filterDefs != null && filterDefs.value().length > 0) {
+			final Session session = (Session) getEntityManager().getDelegate();
+			for (final FilterDef filterDef : filterDefs.value()) {
+				session.disableFilter(filterDef.name());
+			}
+		} else {
+			final FilterDef filterDef = getEntityClass().getAnnotation(FilterDef.class);
+			if (filterDef != null) {
+				final Session session = (Session) getEntityManager().getDelegate();
+				session.disableFilter(filterDef.name());
+			}
+		}
+	}
 }

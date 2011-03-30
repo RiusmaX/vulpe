@@ -43,6 +43,8 @@ public @interface Relationship {
 
 	String forceLoadQueryConfiguration() default "default";
 
+	String condition() default "";
+
 	public enum RelationshipScope {
 		ALL, SELECT, MAIN
 	}
