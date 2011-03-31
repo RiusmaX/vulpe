@@ -332,9 +332,9 @@ public class VulpeStringUtil {
 	}
 
 	public static String encode(final String value, final String encode) {
-		byte[] bytes = value.getBytes();
 		String encoded = value;
 		try {
+			byte[] bytes = value.getBytes(encode);
 			encoded = new String(bytes, encode);
 		} catch (UnsupportedEncodingException e) {
 			LOG.error(e);
