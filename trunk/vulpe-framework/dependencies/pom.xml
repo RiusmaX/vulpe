@@ -410,6 +410,7 @@
 					<source>1.5</source>
 					<target>1.5</target>
 					<debug>true</debug>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
