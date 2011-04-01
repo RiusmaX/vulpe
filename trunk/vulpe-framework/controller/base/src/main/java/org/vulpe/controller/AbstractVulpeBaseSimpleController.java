@@ -16,7 +16,9 @@
 package org.vulpe.controller;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -70,6 +72,8 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 
 	@Autowired
 	protected ControllerUtil controllerUtil;
+
+	private Collection<String> actionInfoMessages = new ArrayList<String>();
 
 	/**
 	 * Global attributes map
@@ -274,6 +278,19 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	 */
 	public void addActionMessage(final String key, final Object... args) {
 		addActionMessage(getText(key, args));
+	}
+	
+	public void addActionInfoMessage(final String key, final Object... args) {
+		addActionInfoMessage(getText(key, args));
+	}
+	
+	public void addActionInfoMessage(final String aMessage) {
+		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
+			final String message = getText(aMessage.substring(1, aMessage.length() - 1));
+			getActionInfoMessages().add(message);
+		} else {
+			getActionInfoMessages().add(aMessage);
+		}
 	}
 
 	/**
@@ -808,6 +825,14 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 			path.append(page);
 		}
 		setResultForward(path.toString());
+	}
+
+	public void setActionInfoMessages(Collection<String> actionInfoMessages) {
+		this.actionInfoMessages = actionInfoMessages;
+	}
+
+	public Collection<String> getActionInfoMessages() {
+		return actionInfoMessages;
 	}
 
 }

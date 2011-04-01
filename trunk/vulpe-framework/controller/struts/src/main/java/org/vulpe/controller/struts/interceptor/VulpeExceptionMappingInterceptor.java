@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.Locale;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -36,7 +37,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 /**
  * Interceptor class to control exceptions.
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fï¿½bio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
@@ -111,7 +112,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 					message = messageFormat.format(null);
 					value = action.getText(message);
 					if (StringUtils.isBlank(value) || value.equals(message)) {
-						action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
+						//action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
+						translateException(invocation, newException);
 					} else {
 						action.addActionMessage(value);
 					}
@@ -148,4 +150,19 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		return new MessageFormat(pattern, locale);
 	}
 
+	protected void translateException(final ActionInvocation invocation, final Throwable exception) {
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
+		String message = exception.getMessage();
+		if (exception instanceof EntityNotFoundException) {
+			String token1 = "Unable to find ";
+			String token2 = " with id ";
+			if (message.contains(token1) && message.contains(token2)) {
+				String entity = message.substring(token1.length(), message.indexOf(token2));
+				String identifier = message.substring(message.indexOf(token2) + token2.length());
+				message = action.getText("vulpe.exception.translate.EntityNotFoundException", action.getText(entity),
+						identifier);
+			}
+		}
+		action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
+	}
 }

@@ -2205,6 +2205,7 @@ var vulpe = {
 			}
 			$(messageLayer).removeClass("vulpeMessageError");
 			$(messageLayer).removeClass("vulpeMessageSuccess");
+			$(messageLayer).removeClass("vulpeMessageInfo");
 			$(messageLayer).addClass("vulpeMessageValidation");
 			var messagesClose="<div id=\"closeMessages\"><a href=\"javascript:void(0);\" onclick=\"$('" + messageLayer + "').slideUp('slow')\">" +vulpe.config.messages.close + "</a></div>";
 			if (!complete) {
@@ -2240,6 +2241,7 @@ var vulpe = {
 				jQuery(vulpe.config.layers.messages).html(vulpe.config.messages.error.fatal + e);
 			}
 			if (data.indexOf("\"vulpeAlertError\"") == -1) {
+				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageInfo");
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageSuccess");
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageValidation");
 				jQuery(vulpe.config.layers.modalMessages).addClass("vulpeMessageError");

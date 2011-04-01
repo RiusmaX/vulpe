@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<c:if test="${not empty actionErrors || not empty actionMessages || not empty fieldErrors}">
+<c:if test="${not empty actionErrors || not empty actionMessages || not empty actionInfoMessages || not empty fieldErrors}">
 	<c:if test="${not empty fieldErrors}">
 		<script charset="utf-8">
 			$(document).ready(function() {
@@ -17,6 +17,7 @@
 				vulpe.exception.focusFirstError('${vulpeFormName}');
 				$("#messages").removeClass("vulpeMessageError");
 				$("#messages").removeClass("vulpeMessageSuccess");
+				$("#messages").removeClass("vulpeMessageInfo");
 				$("#messages").addClass("vulpeMessageValidation");
 				$("#messages").slideDown("slow");
 				<c:if test="${global['messageSlideUp']}">
@@ -38,6 +39,7 @@
 						<c:if test="${not empty fieldErrors}"><li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li></c:if>
 						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>
 						<c:if test="${not empty actionMessages}"><c:forEach items="${actionMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
+						<c:if test="${not empty actionInfoMessages}"><c:forEach items="${actionInfoMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
 					</ul>
 				</c:when>
 				<c:otherwise>
@@ -46,6 +48,7 @@
 						<c:if test="${not empty fieldErrors}"><li class="vulpeAlertError"><fmt:message key="vulpe.error.validate" /></li></c:if>
 						<c:if test="${not empty actionErrors}"><c:forEach items="${actionErrors}" var="msg"><li class="vulpeAlertError">${msg}</li></c:forEach></c:if>
 						<c:if test="${not empty actionMessages}"><c:forEach items="${actionMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
+						<c:if test="${not empty actionInfoMessages}"><c:forEach items="${actionInfoMessages}" var="msg"><li class="vulpeAlertMessage">${msg}</li></c:forEach></c:if>
 					</ul>
 					</div>
 				</c:otherwise>
@@ -57,6 +60,7 @@
 					var msg = '<ul>';
 					$("#messages").removeClass("vulpeMessageError");
 					$("#messages").removeClass("vulpeMessageSuccess");
+					$("#messages").removeClass("vulpeMessageInfo");
 					$("#messages").removeClass("vulpeMessageValidation");
 					<c:if test="${not empty actionErrors}">
 					$("#messages").addClass("vulpeMessageError");
@@ -67,6 +71,12 @@
 					<c:if test="${not empty actionMessages}">
 					$("#messages").addClass("vulpeMessageSuccess");
 						<c:forEach items="${actionMessages}" var="msg">
+					msg += '<li class="vulpeAlertMessage">${msg}</li>';
+						</c:forEach>
+					</c:if>
+					<c:if test="${not empty actionInfoMessages}">
+					$("#messages").addClass("vulpeMessageInfo");
+						<c:forEach items="${actionInfoMessages}" var="msg">
 					msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
 					</c:if>
