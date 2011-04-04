@@ -16,18 +16,15 @@
 	<c:choose>
 		<c:when test="${showIdentifier}">
 			<p class="vulpeField">
-			<c:set var="name" value="${targetName}.${property}.${identifier}"/>
+			<c:set var="name" value="${targetName}.${property}"/>
 			<c:set var="prepareName" value="${fn:replace(name, '[', '__')}"/>
 			<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
-			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}"/>
+			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}.${identifier}"/>
 			<c:set var="autocompleteId" value="${fn:replace(autocompleteId, '.', '_')}"/>
-			<c:set var="name" value="${targetName}.${property}.${description}"/>
-			<c:set var="prepareName" value="${fn:replace(name, '[', '__')}"/>
-			<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
-			<c:set var="autocompleteDescription" value="${vulpeFormName}-${prepareName}"/>
+			<c:set var="autocompleteDescription" value="${vulpeFormName}-${prepareName}.${description}"/>
 			<c:set var="autocompleteDescription" value="${fn:replace(autocompleteDescription, '.', '_')}"/>
 			<c:if test="${not empty afterJs}"><c:set var="autocompleteIdAfterJs">, afterJs: function(){${afterJs}}</c:set></c:if>
-			<c:if test="${empty identifierSize}"><c:set var="identifierSize" value="5"/></c:if>
+			<c:if test="${empty identifierSize}"><c:set var="identifierSize" value="8"/></c:if>
 			<c:if test="${not empty labelKey}"><v:label key="${labelKey}"/></c:if>
 			<c:set var="valueIdEL" value="${'${'}targetValue.${property}.${identifier}${'}'}"/>
 			<c:set var="valueId" value="${util:eval(pageContext, valueIdEL)}"/>

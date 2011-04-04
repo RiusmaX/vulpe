@@ -623,6 +623,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 							paging.getRealList().add(0, entity);
 						}
 					}
+					repairDetailPaging((List<ENTITY>) collection, paging);
 					paging.processPage();
 					final List<ENTITY> list = new ArrayList<ENTITY>();
 					int count = 0;

@@ -36,7 +36,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">F�bio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
@@ -44,7 +44,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -67,7 +67,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/**
 	 * Method responsible for handling exception.
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -102,7 +102,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			final VulpeApplicationException vae = (VulpeApplicationException) newException;
 			action.addActionMessage(newException.getMessage(), (Object[]) vae.getArgs());
 		} else {
-			final String key = newException.getClass().getName().toLowerCase();
+			final String key = newException.getClass().getName();
 			String value = action.getText(key);
 			if (StringUtils.isBlank(value) || value.equals(key)) {
 				String message = newException.getMessage();
@@ -112,11 +112,12 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 					message = messageFormat.format(null);
 					value = action.getText(message);
 					if (StringUtils.isBlank(value) || value.equals(message)) {
-						//action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
 						translateException(invocation, newException);
 					} else {
 						action.addActionMessage(value);
 					}
+				} else {
+					action.addActionMessage(VulpeConstants.GENERAL_ERROR, value);
 				}
 			} else {
 				action.addActionMessage(value);
@@ -129,7 +130,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
@@ -141,7 +142,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pattern
 	 * @param locale
 	 * @return

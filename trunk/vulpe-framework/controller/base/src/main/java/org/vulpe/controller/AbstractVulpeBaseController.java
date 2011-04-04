@@ -939,7 +939,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		paging.setList(list);
 	}
 
-	private void repairDetailPaging(final List<ENTITY> values, final Paging<ENTITY> paging) {
+	protected void repairDetailPaging(final List<ENTITY> values, final Paging<ENTITY> paging) {
 		if (VulpeValidationUtil.isNotEmpty(values)) {
 			int index = 0;
 			for (final ENTITY real : paging.getRealList()) {
@@ -987,15 +987,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void pagingAfter() {
 	}
 
-	protected void prepareDetailPaging(final boolean create) {
+	protected void prepareDetailPaging() {
 		if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())) {
 			for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
 				if (detailConfig.getPageSize() > 0 && detailConfig.getPropertyName().startsWith("entity.")) {
 					final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, detailConfig.getName());
 					if (VulpeValidationUtil.isNotEmpty(values)) {
-						if (create) {
-							int id = 1;
-							for (final ENTITY entity : values) {
+						int id = 1;
+						for (final ENTITY entity : values) {
+							if (entity.getId() == null) {
 								entity.setId((ID) new Long(id));
 								entity.setFakeId(true);
 								++id;
@@ -1123,7 +1123,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					createDetails(getControllerConfig().getDetails(), false);
 					setDetail("");
 				}
-				prepareDetailPaging(true);
+				prepareDetailPaging();
 			} catch (Exception e) {
 				throw new VulpeSystemException(e);
 			}
@@ -1249,6 +1249,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				onRead();
 			}
 		} else {
+			prepareDetailPaging();
 			manageButtons(Operation.CREATE);
 		}
 		return getControllerConfig().isNewOnPost() ? create() : getResultName();
@@ -1343,7 +1344,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntity((ENTITY) invokeServices(Operation.FIND.getValue().concat(
 					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
 					.getEntityClass() }, new Object[] { prepareEntity(getOperation()) }));
-			prepareDetailPaging(false);
+			prepareDetailPaging();
 			setExecuted(false);
 		}
 	}
@@ -1435,6 +1436,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				onRead();
 			}
 		} else {
+			prepareDetailPaging();
 			manageButtons(Operation.UPDATE);
 		}
 		return getResultName();
