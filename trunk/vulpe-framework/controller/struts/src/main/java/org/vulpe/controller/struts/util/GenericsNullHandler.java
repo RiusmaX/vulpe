@@ -38,7 +38,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  * Classe utilizada para corrigir problemas ao instanciar tipos genericos e
  * Set's.
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
@@ -85,7 +85,7 @@ public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Seri
 			}
 		} catch (Exception e) {
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("Não foi possível instanciar atributos declarados com Generics.", e);
+				LOG.debug("Nï¿½o foi possï¿½vel instanciar atributos declarados com Generics.", e);
 			}
 		}
 		return super.nullPropertyValue(context, target, property);

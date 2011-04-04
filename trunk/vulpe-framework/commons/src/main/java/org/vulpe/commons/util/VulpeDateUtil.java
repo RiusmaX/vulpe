@@ -32,7 +32,7 @@ import org.vulpe.commons.enumeration.DaysOfWeek;
 /**
  * Utility class to date format.
  *
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 public final class VulpeDateUtil {
 
@@ -139,8 +139,8 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Formata a data no formato padrão da aplicação (como sugerido no guia de
-	 * espeficicação suplementar).
+	 * Formata a data no formato padrï¿½o da aplicaï¿½ï¿½o (como sugerido no guia de
+	 * espeficicaï¿½ï¿½o suplementar).
 	 */
 	public static String getDateFormated(final Date data) {
 		final SimpleDateFormat sdf = new SimpleDateFormat(VulpeDateUtil.DDMMYYYY,
@@ -158,8 +158,8 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Formata a data e hora no formato padrão da aplicação (como sugerido no
-	 * guia de espeficicação suplementar).
+	 * Formata a data e hora no formato padrï¿½o da aplicaï¿½ï¿½o (como sugerido no
+	 * guia de espeficicaï¿½ï¿½o suplementar).
 	 */
 	public static String getDateTimeFormatted(final Date data) {
 		// cria o formato pelo pattern
@@ -203,7 +203,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica se é uma data valida.
+	 * Verifica se ï¿½ uma data valida.
 	 */
 	public static boolean isValidDate(final String date) {
 		final SimpleDateFormat dateFormat = new SimpleDateFormat(VulpeDateUtil.DDMMYYYY,
@@ -233,11 +233,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Este método recebe um numero que representa uma quantidade de minutos e
+	 * Este mï¿½todo recebe um numero que representa uma quantidade de minutos e
 	 * devolve uma string no formato hh:mm
 	 */
 	public static String getFormatedTime(final int minutes) {
-		// Converte a duração em minutos para a duração em horas e minutos.
+		// Converte a duraï¿½ï¿½o em minutos para a duraï¿½ï¿½o em horas e minutos.
 		final int hours = minutes / 60;
 		final int min = minutes % 60;
 		final StringBuilder hoursString = new StringBuilder();
@@ -253,7 +253,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Este método recebe um numero que representa uma quantidade de minutos e
+	 * Este mï¿½todo recebe um numero que representa uma quantidade de minutos e
 	 * devolve uma string no formato hh:mm
 	 */
 	public static String getFormatedTime(final Integer minutes) {
@@ -261,8 +261,8 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Este método recebe uma string no formato hh:mm e retorna o total de
-	 * minutos da duração passada.
+	 * Este mï¿½todo recebe uma string no formato hh:mm e retorna o total de
+	 * minutos da duraï¿½ï¿½o passada.
 	 */
 	public static Integer getTimeInMinutes(final String duration) {
 		Integer totalMinutes = null;
@@ -328,7 +328,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica se a string representa uma data válida
+	 * Verifica se a string representa uma data vï¿½lida
 	 */
 	public static boolean isDateValid(final String date) {
 		if (LOG.isDebugEnabled()) {
@@ -341,7 +341,7 @@ public final class VulpeDateUtil {
 			final String newDate = date.trim();
 
 			if (newDate.length() != DDMMYYYY.length()) {
-				throw new ParseException("Tamanho inválido para um campo data.", newDate.length());
+				throw new ParseException("Tamanho invï¿½lido para um campo data.", newDate.length());
 			}
 
 			try {
@@ -388,7 +388,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a diferença em dias das duas datas informadas
+	 * Retorna a diferenï¿½a em dias das duas datas informadas
 	 */
 	public static long getDaysDifference(final Date begin, final Date end) {
 
@@ -544,7 +544,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a diferença em milisegundos entre as duas datas
+	 * Retorna a diferenï¿½a em milisegundos entre as duas datas
 	 */
 	public static long getMillisecondDifference(final Date begin, final Date end) {
 		long milliseconds;
@@ -577,9 +577,9 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Determina a quantidade de minutos de uma atividade que ocorreram dentro
-	 * do período especificado. O período é delimitado pelos campos de hora e
-	 * minuto dos parâmetros "inicio" e "fim" - os campos de ano, mês e dia
-	 * destes dois parâmetros não são levados em consideração.
+	 * do perï¿½odo especificado. O perï¿½odo ï¿½ delimitado pelos campos de hora e
+	 * minuto dos parï¿½metros "inicio" e "fim" - os campos de ano, mï¿½s e dia
+	 * destes dois parï¿½metros nï¿½o sï¿½o levados em consideraï¿½ï¿½o.
 	 */
 	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd,
 			final Date begin, final Date end) {
@@ -609,15 +609,15 @@ public final class VulpeDateUtil {
 		startActivity.setTime(dateTimeBegin);
 
 		/**
-		 * Nos parâmetros "inicio" e "fim", o dia deve ser atualizado para ser o
-		 * mesmo dia do inicio da atividade, para se calcular as diferenças
+		 * Nos parï¿½metros "inicio" e "fim", o dia deve ser atualizado para ser o
+		 * mesmo dia do inicio da atividade, para se calcular as diferenï¿½as
 		 */
 		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
 				startActivity.get(Calendar.DATE));
 		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
 				startActivity.get(Calendar.DATE));
 
-		/** aplicando uma correção para periodo noturno */
+		/** aplicando uma correï¿½ï¿½o para periodo noturno */
 		if (periodBegin.getTime().compareTo(periodEnd.getTime()) > 0) {
 			periodEnd.add(Calendar.DATE, 1);
 		}
@@ -652,7 +652,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Verifica um periodo de horas.
 	 *
-	 * Verifica se a hora informada está dentro do periodo inicial e final
+	 * Verifica se a hora informada estï¿½ dentro do periodo inicial e final
 	 * informado ( desconsiderando o dia ).
 	 */
 	public static boolean checkTimePeriod(final Date beginHour, final Date endHour, final Date hour) {
@@ -712,9 +712,9 @@ public final class VulpeDateUtil {
 		final Date periodEnd = new Date(end.getTime());
 
 		if (startActivity.compareTo(endActivity) < 0) {
-			// normaliza as data para o período (início e fim). Deixam ambos no
-			// mesmo dia, mês e ano.
-			// O que importa são os horários
+			// normaliza as data para o perï¿½odo (inï¿½cio e fim). Deixam ambos no
+			// mesmo dia, mï¿½s e ano.
+			// O que importa sï¿½o os horï¿½rios
 			final Calendar calendarBegin = new GregorianCalendar();
 			calendarBegin.setTime(periodBegin);
 			final Date datePeriodStart = calendarBegin.getTime();
@@ -731,16 +731,16 @@ public final class VulpeDateUtil {
 			final Calendar dayEndStart = new GregorianCalendar();
 			final Calendar beginNextDay = new GregorianCalendar();
 			do {
-				// calcula o fim para o mesmo dia de início
+				// calcula o fim para o mesmo dia de inï¿½cio
 				dayEndStart.setTime(dtBeginActivity);
 				dayEndStart.set(Calendar.HOUR_OF_DAY, 23);
 				dayEndStart.set(Calendar.MINUTE, 59);
 				dayEndStart.set(Calendar.SECOND, 59);
 				dayEndStart.add(Calendar.SECOND, 1);
 				final Date dTimeEnd = dayEndStart.getTime();
-				// se fim real for maior que fim do dia de início, utiliza fim
-				// do dia de início,
-				// do contrário é último dia da atividade e deve ser o fim real
+				// se fim real for maior que fim do dia de inï¿½cio, utiliza fim
+				// do dia de inï¿½cio,
+				// do contrï¿½rio ï¿½ ï¿½ltimo dia da atividade e deve ser o fim real
 				if (endActivity.compareTo(dTimeEnd) > 0) {
 					dtEndActivity = dTimeEnd;
 				} else {
@@ -749,7 +749,7 @@ public final class VulpeDateUtil {
 				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity,
 						datePeriodStart, datePeriodEnd);
 				minutes += parcialMinutes;
-				// atualiza o próximo início
+				// atualiza o prï¿½ximo inï¿½cio
 				beginNextDay.setTime(dtEndActivity);
 				dtBeginActivity = beginNextDay.getTime();
 			} while (dtEndActivity.compareTo(endActivity) != 0);
@@ -793,7 +793,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Calcula a diferença entre os índices dos dias ao longo de um ano entre
+	 * Calcula a diferenï¿½a entre os ï¿½ndices dos dias ao longo de um ano entre
 	 * duas datas (dataMenor deve ser menor do que dataMaior)
 	 */
 	public static int getDifferencesBetweenIndicateDays(final Date minorDate, final Date majorDate) {

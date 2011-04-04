@@ -24,7 +24,7 @@ import org.vulpe.model.services.impl.ws.XMLType;
 
 /**
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 public class WSConvertFactory {
 
@@ -49,7 +49,7 @@ public class WSConvertFactory {
 	}
 
 	/**
-	 * Inicia o registro de tipos básicos
+	 * Inicia o registro de tipos bï¿½sicos
 	 */
 	protected void init() {
 		converts = new HashMap<String, WSConvert<?, ?>>();

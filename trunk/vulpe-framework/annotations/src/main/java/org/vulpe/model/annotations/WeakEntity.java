@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Indicates Weak Entity
  *
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

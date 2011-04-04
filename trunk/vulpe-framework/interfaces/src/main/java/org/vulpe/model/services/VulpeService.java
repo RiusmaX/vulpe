@@ -19,7 +19,7 @@ package org.vulpe.model.services;
  * Service Default Interface.
  * 
  * @since 1.0
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 public interface VulpeService {
 

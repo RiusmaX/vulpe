@@ -17,7 +17,7 @@ package org.vulpe.model.services.impl.ws;
 
 /**
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 public class XMLType {
 	private String type;

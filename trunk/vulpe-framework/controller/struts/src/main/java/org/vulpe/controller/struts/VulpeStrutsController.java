@@ -67,7 +67,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
  *            Entity
  * @param <ID>
  *            Identifier
- * @author <a href="mailto:fabio.viana@vulpe.org">F�bio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0

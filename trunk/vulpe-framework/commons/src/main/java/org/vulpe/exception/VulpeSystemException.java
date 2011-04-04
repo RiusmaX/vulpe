@@ -18,7 +18,7 @@ package org.vulpe.exception;
 /**
  * Exception to report infra error.
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @SuppressWarnings("serial")
 public class VulpeSystemException extends RuntimeException {

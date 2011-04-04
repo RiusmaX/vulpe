@@ -33,7 +33,7 @@ import org.vulpe.model.services.VulpeService;
 /**
  * Class to lookup VulpeService
  *
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class VulpeServiceLocator {
@@ -105,7 +105,7 @@ public class VulpeServiceLocator {
 	}
 
 	/**
-	 * Método auxiliar para obter a instancia do factory
+	 * Mï¿½todo auxiliar para obter a instancia do factory
 	 *
 	 * @param <T>
 	 * @param clazz

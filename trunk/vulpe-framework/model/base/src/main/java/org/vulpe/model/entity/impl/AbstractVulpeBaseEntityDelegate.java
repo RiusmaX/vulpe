@@ -24,7 +24,7 @@ import org.vulpe.model.entity.VulpeEntity;
 /**
  * Default class Entity Delegate to transmit data on WebServices-Client
  * 
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @SuppressWarnings({ "unchecked", "serial" })
 public abstract class AbstractVulpeBaseEntityDelegate<T extends VulpeEntity<ID>, ID extends Serializable & Comparable>

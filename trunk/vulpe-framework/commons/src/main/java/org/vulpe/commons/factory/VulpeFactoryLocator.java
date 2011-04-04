@@ -23,7 +23,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * Utility class to manager Factories intances
  *
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 public class VulpeFactoryLocator {
 	/**

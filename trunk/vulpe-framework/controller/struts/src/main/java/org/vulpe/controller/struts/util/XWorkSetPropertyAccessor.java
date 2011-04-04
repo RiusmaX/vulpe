@@ -34,7 +34,7 @@ import com.opensymphony.xwork2.util.XWorkConverter;
 /**
  * Utility class to fix bugs on Set data binding.
  *
- * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:fabio.viana@vulpe.org">FÃ¡bio Viana</a>
  */
 @SuppressWarnings("unchecked")
 public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
