@@ -63,7 +63,11 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		final ${method.returnType} list = (${method.returnType}) listByNamedQuery("${dao.name}.${method.name}");
 		</#if>
 		<#if method.returnType?index_of(dao.name) != -1>
+		<#if method.parameters?has_content>
 		loadRelationships(list, map, false);
+		<#else>
+		loadRelationships(list, null, false);
+		</#if>
 		</#if>
 		return list;
 		</#if>
