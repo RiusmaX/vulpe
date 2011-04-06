@@ -1960,6 +1960,7 @@ var vulpe = {
 						if (vulpe.util.get(description).val() == "") {
 							vulpe.util.get(identifier).val("");
 							vulpe.util.get(identifier).focus();
+							vulpe.view.hideLoading();
 						} else {
 							vulpe.exception.hideFieldError(vulpe.util.get(description));
 							afterJs();

@@ -44,6 +44,7 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		<#if method.parameters?has_content>
 		<#if method.returnType == dao.name>
 		final ${method.returnType} object = (${method.returnType}) findByNamedQueryAndNamedParams("${dao.name}.${method.name}", map);
+		object.setQueryConfigurationName("${method.name}");
 		loadEntityRelationships(object);
 		return object;
 		<#else>
@@ -52,6 +53,7 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		<#else>
 		final ${method.returnType} object = (${method.returnType}) findByNamedQuery("${dao.name}.${method.name}");
 		<#if method.returnType == dao.name>
+		object.setQueryConfigurationName("${method.name}");
 		loadEntityRelationships(object);
 		</#if>
 		return object;
@@ -63,6 +65,9 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 		final ${method.returnType} list = (${method.returnType}) listByNamedQuery("${dao.name}.${method.name}");
 		</#if>
 		<#if method.returnType?index_of(dao.name) != -1>
+		if (list != null && !list.isEmpty()) {
+			list.get(0).setQueryConfigurationName("${method.name}");
+		}
 		<#if method.parameters?has_content>
 		loadRelationships(list, map, false);
 		<#else>
