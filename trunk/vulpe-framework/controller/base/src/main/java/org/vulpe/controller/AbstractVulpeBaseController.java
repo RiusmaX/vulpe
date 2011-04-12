@@ -1528,7 +1528,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
 						final ENTITY entity = iterator.next();
 						if (getControllerType().equals(ControllerType.SELECT)) {
-							if (entity.getId().equals(getId())) {
+							if (VulpeValidationUtil.isNotEmpty(getSelected())) {
+								for (final ID id : getSelected()) {
+									if (entity.getId().equals(id)) {
+										iterator.remove();
+										break;
+									}
+								}
+							} else if (entity.getId().equals(getId())) {
 								iterator.remove();
 							}
 						} else {

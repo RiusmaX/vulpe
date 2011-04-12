@@ -37,7 +37,7 @@ var vulpe = {
 			fieldError: "vulpeFieldError"
 		},
 		elements: new Array(),
-		entity: "-entity.",
+		entity: "-entity_",
 		formName: "",
 		iPhone: {
 			popupTop: 0
@@ -2082,18 +2082,6 @@ var vulpe = {
 		setupError: function(fieldName, message) {
 			var messageSuffix = fieldName + vulpe.config.suffix.iconErrorMessage;
 			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
-			/*
-			vulpe.util.get(messageSuffix).attr("title", message);
-			vulpe.util.get(messageSuffix).tooltip({
-				onShow: function() {
-					this.getTip().css("zIndex", "100000");
-					var title = vulpe.util.get(messageSuffix).attr("title");
-					if (title) {
-						this.getTip().html(vulpe.util.get(messageSuffix).attr("title"));
-						vulpe.util.get(messageSuffix).attr("title", "");
-					}
-				}
-			});*/
 			vulpe.util.get(messageSuffix).show();
 			var errorMessage = vulpe.util.get(fieldName + vulpe.config.suffix.errorMessage);
 			errorMessage.html(message);
@@ -2144,6 +2132,13 @@ var vulpe = {
 								} else {
 									vulpe.exception.hideFieldError(this);
 								}
+							}
+						} else if (config.type == "DATE") {
+							if ($(this).val().replace(/\_/g, "").length == config.datePattern.length && vulpe.validate.validateDate({
+								field: $(this),
+								datePatternStrict: config.datePattern
+							})) {
+								vulpe.exception.hideFieldError(this);
 							}
 						} else {
 							if (config.min) {
