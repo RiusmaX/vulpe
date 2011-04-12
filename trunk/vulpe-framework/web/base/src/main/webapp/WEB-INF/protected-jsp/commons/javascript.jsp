@@ -29,7 +29,7 @@
 <script type="text/javascript" charset="utf-8">
 vulpe.config.buttons = {
 	ok: '<fmt:message key="label.vulpe.button.ok"/>',
-	cancel: '<fmt:message key="label.vulpe.button.cancel"/>'	
+	cancel: '<fmt:message key="label.vulpe.button.cancel"/>'
 }
 vulpe.config.contextPath = '${pageContext.request.contextPath}';
 vulpe.config.theme = '${global['theme']}';
@@ -70,11 +70,12 @@ vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
 	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>'
 }
-vulpe.config.messageSlideUp = '${global['messageSlideUp']}';
-vulpe.config.messageSlideUpTime = '${global['messageSlideUpTime']}';
+vulpe.config.messageSlideUp ="${global['messageSlideUp']}";
+vulpe.config.messageSlideUpTime = "${global['messageSlideUpTime']}";
 <c:if test="${global['showAsMobile']}">
 vulpe.config.popup.mobile = true;
 </c:if>
+vulpe.config.sortType = "${global['sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 vulpe.config.accentMap = {
 	"á": "a", "â": "a", "ã": "a", "à": "a",	"ä": "a",

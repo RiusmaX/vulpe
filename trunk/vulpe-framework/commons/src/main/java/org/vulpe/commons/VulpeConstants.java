@@ -103,6 +103,7 @@ public class VulpeConstants {
 			public static final String SHOW_WARNING_BEFORE_DELETE = "showWarningBeforeDelete";
 			public static final String SHOW_WARNING_BEFORE_UPDATE_POST = "showWarningBeforeUpdatePost";
 			public static final String SHOW_MODIFICATION_WARNING = "showModificationWarning";
+			public static final String SORT_TYPE = "sortType";
 			public static final String PAGING_STYLE = "pagingStyle";
 			public static final String PAGING_BUTTON_STYLE = "pagingButtonStyle";
 			public static final String USE_FRONTEND_LAYER = "useFrontendLayer";

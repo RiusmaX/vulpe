@@ -111,6 +111,7 @@ var vulpe = {
 			selectRow: false
 		},
 		showLoading: true,
+		sortType: "ALL",
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
 			iconErrorMessage: "-iconErrorMessage",
@@ -1262,11 +1263,18 @@ var vulpe = {
 				value = value.replace(property, property + " desc");
 			} else {
 				order = "vulpeOrderAsc";
-				value = (value == "") ? property : value + "," + property;
+				if (vulpe.config.sortType == "LAST_COLUMN") {
+					value = property;
+				} else {
+					value = (value == "") ? property : value + "," + property;
+				}
 			}
 			vulpe.util.get(sortPropertyInfo).val(value);
 			var propertyId = sortPropertyInfo + '-' + property.replace(".", "_");
 			vulpe.util.get(propertyId).addClass(order);
+			if (vulpe.config.sortType == "LAST_COLUMN") {
+				vulpe.config.order = new Array();
+			}
 			vulpe.config.order[propertyId] = {property: sortPropertyInfo, value: value, css: order};
 			var buttonRead = vulpe.util.getButton("Read");
 			if (buttonRead) {

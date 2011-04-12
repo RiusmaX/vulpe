@@ -52,7 +52,7 @@ public @interface VulpeView {
 	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
 
 	PagingStyle pagingStyle() default PagingStyle.NUMERIC;
-	
+
 	boolean showButtonsAsImage() default false;
 
 	boolean showIconOfButton() default false;
@@ -66,7 +66,7 @@ public @interface VulpeView {
 	boolean showButtonUpdate() default false;
 
 	boolean showButtonsDelete() default true;
-	
+
 	boolean showButtonClone() default true;
 
 	boolean showLine() default true;
@@ -81,9 +81,15 @@ public @interface VulpeView {
 
 	boolean showModificationWarning() default true;
 
+	SortType sortType() default SortType.ALL;
+
 	boolean useBackendLayer() default false;
 
 	boolean useFrontendLayer() default true;
+
+	public enum SortType {
+		ALL, LAST_COLUMN
+	}
 
 	public enum PagingStyle {
 		NUMERIC, PAGE_OF

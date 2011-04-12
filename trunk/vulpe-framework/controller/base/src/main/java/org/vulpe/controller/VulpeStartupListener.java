@@ -40,7 +40,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Class to manager startup of application.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
@@ -54,7 +54,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @seejavax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
 	 * ServletContextEvent)
 	 */
@@ -67,7 +67,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
 	 * .ServletContextEvent)
@@ -124,6 +124,7 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
 			global.put(Global.SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
 			global.put(Global.SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
+			global.put(Global.SORT_TYPE, vulpeProject.view().sortType());
 			global.put(Global.ICON_WIDTH, vulpeProject.view().iconWidth());
 			global.put(Global.MOBILE_ICON_WIDTH, vulpeProject.view().mobileIconWidth());
 			global.put(Global.USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
