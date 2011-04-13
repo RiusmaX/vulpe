@@ -93,6 +93,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
+		global.put(Global.DEBUG, vulpeProject.debug());
 		global.put(Global.I18N_MANAGER, vulpeProject.i18nManager());
 		global.put(Global.AUDIT_ENABLED, VulpeConfigHelper.isAuditEnabled());
 		global.put(Global.SECURITY_ENABLED, VulpeConfigHelper.isSecurityEnabled());

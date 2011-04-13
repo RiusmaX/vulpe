@@ -102,9 +102,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			final VulpeApplicationException vae = (VulpeApplicationException) newException;
 			action.addActionMessage(newException.getMessage(), (Object[]) vae.getArgs());
 		} else {
-			final String key = newException.getClass().getName();
-			String value = action.getText(key);
-			if (StringUtils.isBlank(value) || value.equals(key)) {
+			String value = treatExceptionMessage(invocation, newException);
+			if (StringUtils.isBlank(value)) {
 				String message = newException.getMessage();
 				if (StringUtils.isNotEmpty(message)) {
 					final MessageFormat messageFormat = buildMessageFormat(TextParseUtil.translateVariables(message,
@@ -151,6 +150,11 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		return new MessageFormat(pattern, locale);
 	}
 
+	/**
+	 *
+	 * @param invocation
+	 * @param exception
+	 */
 	protected void translateException(final ActionInvocation invocation, final Throwable exception) {
 		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
 		String message = exception.getMessage();
@@ -165,5 +169,31 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			}
 		}
 		action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
+	}
+
+	/**
+	 *
+	 * @param invocation
+	 * @param exception
+	 * @return
+	 */
+	protected String treatExceptionMessage(final ActionInvocation invocation, final Throwable exception) {
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
+		String message = "";
+		final String key = exception.getClass().getName();
+		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG);
+		final Boolean globalDebug = action.ever.getSelf(VulpeConstants.Configuration.Global.DEBUG);
+		if (sessionDebug || globalDebug) {
+			if (key.endsWith(NullPointerException.class.getName())) {
+				final StackTraceElement ste = exception.getStackTrace()[0];
+				final String fileName = ste.getFileName().replace(".java", "");
+				final String methodName = ste.getMethodName();
+				final int lineNumber = ste.getLineNumber();
+				message = action.getText(key, lineNumber, methodName, fileName);
+			}
+		} else {
+			message = action.getText(key);
+		}
+		return message;
 	}
 }

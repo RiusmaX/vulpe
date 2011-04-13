@@ -75,6 +75,7 @@ public class VulpeConstants {
 
 	public class Configuration {
 		public class Global {
+			public static final String DEBUG = "debug";
 			public static final String USE_DB4O = "useDB4O";
 			public static final String AUDIT_ENABLED = "auditEnabled";
 			public static final String SECURITY_ENABLED = "securityEnabled";
@@ -142,6 +143,7 @@ public class VulpeConstants {
 			public static final String CURRENT_CONTROLLER_KEY = "currentControllerKey";
 			public static final String CURRENT_PAGE = "currentPage";
 			public static final String TABULAR_SIZE = "tabularSize";
+			public static final String DEBUG = "debug";
 		}
 	}
 

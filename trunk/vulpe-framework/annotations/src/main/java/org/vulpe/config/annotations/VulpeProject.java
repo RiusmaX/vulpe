@@ -95,6 +95,11 @@ public @interface VulpeProject {
 	boolean security() default true;
 
 	/**
+	 * Debug mode enable/disable.
+	 */
+	boolean debug() default false;
+
+	/**
 	 * Menu Type to frontend.
 	 */
 	MenuType frontendMenuType() default MenuType.SUPERFISH;
