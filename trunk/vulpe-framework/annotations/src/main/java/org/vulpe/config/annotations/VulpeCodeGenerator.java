@@ -22,13 +22,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to configure Code Gerenarator.  
+ * Annotation to configure Code Gerenarator.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeCodeGenerator {
 
+	String prefixLabelOfView() default "View";
 	String prefixLabelOfSelection() default "Selection of";
 	String prefixLabelOfSelectionList() default "List of";
 	String prefixLabelOfMaintenance() default "Management of";

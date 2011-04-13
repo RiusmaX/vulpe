@@ -23,6 +23,7 @@ import java.util.Map;
 public class DecoratedView implements Serializable {
 
 	private String name;
+	private String prefixLabelOfView;
 	private String prefixLabelOfSelection;
 	private String prefixLabelOfSelectionList;
 	private String prefixLabelOfMaintenance;
@@ -165,6 +166,14 @@ public class DecoratedView implements Serializable {
 
 	public String getLabel() {
 		return label;
+	}
+
+	public void setPrefixLabelOfView(String prefixLabelOfView) {
+		this.prefixLabelOfView = prefixLabelOfView;
+	}
+
+	public String getPrefixLabelOfView() {
+		return prefixLabelOfView;
 	}
 
 }

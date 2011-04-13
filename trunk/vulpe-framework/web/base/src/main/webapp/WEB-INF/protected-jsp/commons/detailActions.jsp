@@ -11,7 +11,7 @@
 <c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" />
 <c:set var="style" value="display: none;" />
 <v:action
-	layerFields="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}"
+	layerFields="body"
 	validate="false" labelKey="addDetail"
 	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"

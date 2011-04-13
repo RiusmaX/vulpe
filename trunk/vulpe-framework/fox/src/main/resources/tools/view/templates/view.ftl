@@ -6,6 +6,7 @@
 # View Select: ${view.name}
 ################################################################################
 label.${view.projectName}.${view.moduleName}.${view.name}.select=${view.prefixLabelOfSelection} ${view.label}
+label.${view.projectName}.${view.moduleName}.${view.name}.select.view=${view.prefixLabelOfView} ${view.label}
 label.${view.projectName}.${view.moduleName}.${view.name}.select.header=${view.prefixLabelOfSelectionList} ${view.label}
 <#list view.labels?keys as label>
 label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view.labels[label]}
@@ -162,6 +163,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 # View MAIN: ${view.name}
 ################################################################################
 label.${view.projectName}.${view.moduleName}.${view.name}.main=${view.prefixLabelOfMaintenance} ${view.label}
+label.${view.projectName}.${view.moduleName}.${view.name}.main.view=${view.prefixLabelOfView} ${view.label}
 <#list view.fields as field>
 label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${field.label}
 </#list>

@@ -181,8 +181,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
 		String message = "";
 		final String key = exception.getClass().getName();
-		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG);
-		final Boolean globalDebug = action.ever.getSelf(VulpeConstants.Configuration.Global.DEBUG);
+		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG, Boolean.FALSE);
+		final Boolean globalDebug = action.ever.getSelf(VulpeConstants.Configuration.Global.DEBUG, Boolean.FALSE);
 		if (sessionDebug || globalDebug) {
 			if (key.endsWith(NullPointerException.class.getName())) {
 				final StackTraceElement ste = exception.getStackTrace()[0];

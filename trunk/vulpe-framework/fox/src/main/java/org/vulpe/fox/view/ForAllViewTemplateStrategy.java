@@ -59,7 +59,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * net.sf.jelly.apt.strategies.TemplateBlockStrategy#preProcess(net.sf.jelly
 	 * .apt.TemplateBlock, net.sf.jelly.apt.TemplateOutput,
@@ -424,6 +424,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		} else {
 			view.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil.upperCaseFirst(view.getName())));
 		}
+		view.setPrefixLabelOfView(VulpeConfigHelper.getProjectConfiguration().codeGenerator().prefixLabelOfView());
 		view.setPrefixLabelOfMaintenance(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
 				.prefixLabelOfMaintenance());
 		view.setPrefixLabelOfSelection(VulpeConfigHelper.getProjectConfiguration().codeGenerator()

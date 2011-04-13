@@ -33,8 +33,13 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T getSelf(KEY key) {
+	public <T> T getSelf(final KEY key) {
 		return (T) get(key);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getSelf(final KEY key, final T defaultValue) {
+		return containsKey(key) ? (T) get(key) : defaultValue;
 	}
 
 	/**
@@ -45,7 +50,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T removeSelf(KEY key) {
+	public <T> T removeSelf(final KEY key) {
 		return (T) remove(key);
 	}
 
@@ -58,7 +63,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T putSelf(KEY key, VALUE value) {
+	public <T> T putSelf(final KEY key, final VALUE value) {
 		return (T) super.put(key, value);
 	}
 
