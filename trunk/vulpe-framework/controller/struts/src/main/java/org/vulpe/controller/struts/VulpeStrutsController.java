@@ -216,9 +216,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					}
 				}
 			}
-			if (getDetail().contains("[")) {
-				Ognl.setValue(getDetail(), context, this, details);
-			}
+			Ognl.setValue(getDetail(), context, this, details);
 			if (!getControllerType().equals(ControllerType.TABULAR)) {
 				configureDetail();
 			}

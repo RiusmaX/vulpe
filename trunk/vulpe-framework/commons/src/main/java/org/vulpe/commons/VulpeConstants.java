@@ -317,7 +317,7 @@ public class VulpeConstants {
 		}
 
 		public class Report {
-			public static final String PATH = "/WEB-INF/reports/";
+			public static final String PATH = "/reports/";
 			public static final String JASPER = ".jasper";
 		}
 	}

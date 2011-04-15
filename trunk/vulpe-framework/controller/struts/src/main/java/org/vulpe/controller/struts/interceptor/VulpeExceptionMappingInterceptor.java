@@ -55,6 +55,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		try {
 			result = super.intercept(invocation);
 		} catch (Exception e) {
+			e.printStackTrace();
 			// if exception no mapped in struts, then do general handling
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				result = findResultFromException(invocation, e);
@@ -87,15 +88,24 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			if (vse.getArgs() != null && vse.getArgs().length > 0) {
 				action.addActionMessage(newException.getMessage(), (Object[]) vse.getArgs());
 			} else {
+				String message = action.getText("vulpe.error.unknown");
 				final String key = newException.getMessage();
 				if (key.startsWith("vulpe.error")) {
-					action.addActionError(key, (vse.getCause() == null
-							|| StringUtils.isEmpty(vse.getCause().getMessage()) ? "unknown" : vse.getCause()
-							.getMessage()));
+					if (vse.getCause() != null && StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+						message = vse.getCause().getMessage();
+						if (message.startsWith("vulpe.error")) {
+							message = action.getText(message);
+						}
+					}
+					action.addActionError(key, message);
 				} else {
-					action.addActionMessage(key, (vse.getCause() == null
-							|| StringUtils.isEmpty(vse.getCause().getMessage()) ? "unknown" : vse.getCause()
-							.getMessage()));
+					if (vse.getCause() != null && StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+						message = vse.getCause().getMessage();
+						if (message.startsWith("vulpe.error")) {
+							message = action.getText(message);
+						}
+					}
+					action.addActionMessage(key, message);
 				}
 			}
 		} else if (newException instanceof VulpeApplicationException) {
