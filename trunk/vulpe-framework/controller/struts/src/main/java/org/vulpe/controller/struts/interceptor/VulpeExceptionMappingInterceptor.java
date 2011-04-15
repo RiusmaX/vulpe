@@ -55,7 +55,6 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		try {
 			result = super.intercept(invocation);
 		} catch (Exception e) {
-			e.printStackTrace();
 			// if exception no mapped in struts, then do general handling
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				result = findResultFromException(invocation, e);
