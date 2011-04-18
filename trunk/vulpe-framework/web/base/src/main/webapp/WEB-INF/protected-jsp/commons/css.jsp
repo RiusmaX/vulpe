@@ -12,7 +12,7 @@
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.lightbox.css";
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.simplemodal.css";
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.rte.css";
-	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.ui.css";
+	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.ui.${global['jQueryUI']}.css";
 	<!--[if lt IE 7]>
 	@import "${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}jquery.simplemodal_ie.css?media=screen";
 	<![endif]-->

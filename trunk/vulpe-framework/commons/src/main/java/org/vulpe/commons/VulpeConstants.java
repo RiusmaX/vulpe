@@ -76,6 +76,7 @@ public class VulpeConstants {
 	public class Configuration {
 		public class Global {
 			public static final String DEBUG = "debug";
+			public static final String JQUERYUI = "jQueryUI";
 			public static final String USE_DB4O = "useDB4O";
 			public static final String AUDIT_ENABLED = "auditEnabled";
 			public static final String SECURITY_ENABLED = "securityEnabled";
@@ -268,11 +269,6 @@ public class VulpeConstants {
 		public static final String CURRENT_LAYOUT = "vulpeCurrentLayout";
 
 		public class Layout {
-			public class JQueryUI {
-				public static final String REDMOND = "redmond";
-				public static final String SMOOTHNESS = "smoothness";
-			}
-
 			public static final String MAIN = ".main";
 			public static final String BACKEND = "backend";
 			public static final String FRONTEND = "frontend";

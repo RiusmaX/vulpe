@@ -107,6 +107,7 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
 			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
 			global.put(Global.ICON_HEIGHT, vulpeProject.view().iconHeight());
+			global.put(Global.JQUERYUI, vulpeProject.view().jQueryUI());
 			global.put(Global.MOBILE_ICON_HEIGHT, vulpeProject.view().mobileIconHeight());
 			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
 			global.put(Global.MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());

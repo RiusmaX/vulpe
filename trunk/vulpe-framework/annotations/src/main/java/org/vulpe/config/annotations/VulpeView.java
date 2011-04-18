@@ -21,8 +21,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.vulpe.commons.VulpeConstants.View.Layout.JQueryUI;
-
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
@@ -39,7 +37,7 @@ public @interface VulpeView {
 
 	int globalPageSize() default 5;
 
-	String jQueryUI() default JQueryUI.SMOOTHNESS;
+	String jQueryUI() default JQUERYUI_SMOOTHNESS;
 
 	int iconHeight() default 32;
 
@@ -102,5 +100,9 @@ public @interface VulpeView {
 	public enum PagingButtonStyle {
 		CSS, JQUERY_UI
 	}
+
+	public final String JQUERYUI_SMOOTHNESS = "smoothness";
+	public final String JQUERYUI_REDMOND = "redmond";
+
 
 }
