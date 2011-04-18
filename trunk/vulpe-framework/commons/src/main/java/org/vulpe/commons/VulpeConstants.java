@@ -268,6 +268,11 @@ public class VulpeConstants {
 		public static final String CURRENT_LAYOUT = "vulpeCurrentLayout";
 
 		public class Layout {
+			public class JQueryUI {
+				public static final String REDMOND = "redmond";
+				public static final String SMOOTHNESS = "smoothness";
+			}
+
 			public static final String MAIN = ".main";
 			public static final String BACKEND = "backend";
 			public static final String FRONTEND = "frontend";

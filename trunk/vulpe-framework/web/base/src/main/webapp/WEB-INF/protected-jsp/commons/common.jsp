@@ -267,7 +267,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	vulpe.view.checkRequiredFields();
 <c:choose>
 	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>

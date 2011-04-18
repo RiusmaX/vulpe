@@ -1161,8 +1161,8 @@ var vulpe = {
 			vulpe.util.get(idRequiredField).show();
 		},
 
-		checkRequiredFields: function() {
-			jQuery("[class*='vulpeRequired']").each(function(index) {
+		checkRequiredFields: function(parent) {
+			jQuery("[class*='vulpeRequired']", parent).each(function(index) {
 				vulpe.view.addRequiredField($(this));
 			});
 		},
@@ -1884,6 +1884,7 @@ var vulpe = {
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
+										vulpe.view.checkRequiredFields(layerObject);
 									}
 									if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 										$("tr[id*='-row-']", layerObject).each(function(index) {

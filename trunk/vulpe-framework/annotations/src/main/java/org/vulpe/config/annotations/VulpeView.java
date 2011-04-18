@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.vulpe.commons.VulpeConstants.View.Layout.JQueryUI;
+
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
@@ -36,6 +38,8 @@ public @interface VulpeView {
 	boolean focusFirst() default true;
 
 	int globalPageSize() default 5;
+
+	String jQueryUI() default JQueryUI.SMOOTHNESS;
 
 	int iconHeight() default 32;
 
