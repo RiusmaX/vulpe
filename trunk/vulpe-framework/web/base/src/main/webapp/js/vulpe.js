@@ -1167,6 +1167,30 @@ var vulpe = {
 			});
 		},
 
+		checkRows: function(parent) {
+			$("tr[id*='-row-']", parent).each(function(index) {
+				var id = $(this).attr("id");
+				if (id.indexOf("header") == -1) {
+					$("#" + id).unbind("mouseenter mouseleave");
+					$("#" + id).bind("mouseenter mouseleave", function(event){
+						$(this).find('td').toggleClass("vulpeSelectedRow");
+					});
+					var onclick = $(this).attr("onclick");
+					if (typeof onclick == "function" || vulpe.util.isNotEmpty(onclick)) {
+						vulpe.util.addHotKey({
+							hotKey: "Ctrl+Shift+" + (index == 10 ? 0 : index),
+							command: function () {
+								vulpe.util.get(id).click();
+								return false;
+							}
+						});
+					} else {
+						$(this).find('td').css("cursor", "default");
+					}
+				}
+			});
+		},
+
 		validateSelectedToDelete: function(command) {
 			var selected = false;
 			jQuery(":checkbox[name$='selected']").each(function(index) {
@@ -1439,8 +1463,16 @@ var vulpe = {
 			},
 
 			submitReport: function(actionURL, width, height) {
-				var popupName = 'popup' + new Date().getTime();
-				return vulpe.view.request.openPopup(actionURL, width, height, popupName);
+				//var popupName = 'popup' + new Date().getTime();
+				//return vulpe.view.request.openPopup(actionURL, width, height, popupName);
+				$("#reportFrame").attr("src", actionURL);
+				$("#report").dialog({
+					autoOpen: true,
+					width: width,
+					height: height,
+					resizable: true,
+					modal: true
+				});
 			},
 
 			selectRowCallback: new Array(),
@@ -1639,7 +1671,7 @@ var vulpe = {
 					vulpe.command = function() {
 						$(this).dialog('close');
 						for (var i = 0; i < selectedIds.length; i++) {
-							if (selectedIds != "") {
+							if (selectedIds[i] != "") {
 								selections[i].checked;
 								selections[i].value = selectedIds[i];
 							}
@@ -1885,29 +1917,9 @@ var vulpe = {
 									} else {
 										layerObject.html(html);
 										vulpe.view.checkRequiredFields(layerObject);
-									}
-									if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
-										$("tr[id*='-row-']", layerObject).each(function(index) {
-											var id = $(this).attr("id");
-											if (id.indexOf("header") == -1) {
-												$("#" + id).unbind("mouseenter mouseleave");
-												$("#" + id).bind("mouseenter mouseleave", function(event){
-													$(this).find('td').toggleClass("vulpeSelectedRow");
-												});
-												var onclick = $(this).attr("onclick");
-												if (typeof onclick == "function" || vulpe.util.isNotEmpty(onclick)) {
-													vulpe.util.addHotKey({
-														hotKey: "Ctrl+Shift+" + (index == 10 ? 0 : index),
-														command: function () {
-															vulpe.util.get(id).click();
-															return false;
-														}
-													});
-												} else {
-													$(this).find('td').css("cursor", "default");
-												}
-											}
-										});
+										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
+											vulpe.view.checkRows(layerObject)
+										}
 									}
 									if (typeof options.afterJs == "function") {
 										try {

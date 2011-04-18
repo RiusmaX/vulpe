@@ -110,6 +110,7 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 		}
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
+		now.put(Now.REPORT_TITLE_KEY, getControllerConfig().getReportTitleKey());
 		now.put(Now.MASTER_TITLE_KEY, getControllerConfig().getMasterTitleKey());
 		now.put(Now.FORM_NAME, getControllerConfig().getFormName());
 		if (getControllerConfig().isRequireOneFilter()) {
@@ -279,11 +280,11 @@ public abstract class AbstractVulpeBaseSimpleController implements VulpeSimpleCo
 	public void addActionMessage(final String key, final Object... args) {
 		addActionMessage(getText(key, args));
 	}
-	
+
 	public void addActionInfoMessage(final String key, final Object... args) {
 		addActionInfoMessage(getText(key, args));
 	}
-	
+
 	public void addActionInfoMessage(final String aMessage) {
 		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
 			final String message = getText(aMessage.substring(1, aMessage.length() - 1));

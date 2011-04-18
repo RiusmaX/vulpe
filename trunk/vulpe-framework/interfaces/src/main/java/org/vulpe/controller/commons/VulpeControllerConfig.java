@@ -59,6 +59,8 @@ public interface VulpeControllerConfig {
 
 	String getTitleKey();
 
+	String getReportTitleKey();
+
 	boolean isSimple();
 
 	void setSimple(final boolean simple);
@@ -88,9 +90,9 @@ public interface VulpeControllerConfig {
 	String getViewSelectPath();
 
 	String getViewBaseName();
-	
+
 	boolean isOnlyUpdateDetails();
-	
+
 	boolean isNewOnPost();
 
 	/**

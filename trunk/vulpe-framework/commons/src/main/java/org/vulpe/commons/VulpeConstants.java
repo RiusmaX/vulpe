@@ -76,6 +76,7 @@ public class VulpeConstants {
 	public class Configuration {
 		public class Global {
 			public static final String DEBUG = "debug";
+			public static final String DATE_MASK = "dateMask";
 			public static final String JQUERYUI = "jQueryUI";
 			public static final String USE_DB4O = "useDB4O";
 			public static final String AUDIT_ENABLED = "auditEnabled";
@@ -138,6 +139,7 @@ public class VulpeConstants {
 			public static final String FORM_NAME = "formName";
 			public static final String FIELD_TO_FOCUS = "fieldToFocus";
 			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
+			public static final String REPORT_TITLE_KEY = "reportTitleKey";
 		}
 
 		public class Ever {

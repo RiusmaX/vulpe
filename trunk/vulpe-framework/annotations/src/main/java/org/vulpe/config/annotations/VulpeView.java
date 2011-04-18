@@ -33,6 +33,8 @@ public @interface VulpeView {
 
 	boolean breakLabel() default false;
 
+	String dateMask() default "99/99/9999";
+
 	boolean focusFirst() default true;
 
 	int globalPageSize() default 5;

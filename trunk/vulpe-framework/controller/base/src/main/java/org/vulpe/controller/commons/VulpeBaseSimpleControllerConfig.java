@@ -35,7 +35,7 @@ import org.vulpe.model.services.VulpeService;
 
 /**
  * Vulpe Simple Controller Config implementation.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -72,7 +72,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerType()
 	 */
@@ -85,7 +85,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerType(
 	 * org.vulpe.controller.commons.VulpeControllerConfig.ControllerType)
@@ -96,7 +96,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getServiceClass()
 	 */
 	public Class<? extends VulpeService> getServiceClass() {
@@ -105,7 +105,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getPageSize()
 	 */
 	public int getPageSize() {
@@ -116,7 +116,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getTabularPageSize()
 	 */
@@ -126,7 +126,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getOwnerController()
 	 */
@@ -139,7 +139,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMethod()
 	 */
 	public String getMethod() {
@@ -148,7 +148,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerName()
 	 */
@@ -158,7 +158,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportControllerName
 	 * ()
@@ -169,7 +169,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getSimpleControllerName
 	 * ()
@@ -186,7 +186,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getFormName()
 	 */
 	public String getFormName() {
@@ -204,7 +204,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMainFormName()
 	 */
 	public String getMainFormName() {
@@ -216,7 +216,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getSelectFormName()
 	 */
@@ -229,7 +229,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/**
 	 * Retrieves Configuration of Details.
-	 * 
+	 *
 	 * @return Array of DetailConfig
 	 */
 	public DetailConfig[] getDetailsConfig() {
@@ -238,7 +238,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isShowInTabs()
 	 */
 	public boolean isShowInTabs() {
@@ -247,7 +247,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFormat()
 	 */
 	public String getReportFormat() {
@@ -256,7 +256,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSourceName
 	 * ()
@@ -267,7 +267,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportName()
 	 */
 	public String getReportName() {
@@ -276,7 +276,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
 	 */
@@ -286,7 +286,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFile()
 	 */
 	public String getReportFile() {
@@ -302,7 +302,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getParentName(java
 	 * .lang .String)
@@ -314,7 +314,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/**
 	 * Retrieves Name of Project
-	 * 
+	 *
 	 * @return Name of Project
 	 */
 	protected String getProjectName() {
@@ -323,7 +323,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/**
 	 * Retrieves Controller Annotation.
-	 * 
+	 *
 	 * @return Controller Annotation
 	 */
 	public Controller getController() {
@@ -332,7 +332,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/**
 	 * Puts Controller Annotation.
-	 * 
+	 *
 	 * @param controller
 	 */
 	public void setController(final Controller controller) {
@@ -341,7 +341,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerName(
 	 * java.lang .String)
@@ -352,7 +352,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getTitleKey()
 	 */
 	public String getTitleKey() {
@@ -374,7 +374,27 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
+	 * @see
+	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportTitleKey()
+	 */
+	public String getReportTitleKey() {
+		final StringBuilder reportTitleKey = new StringBuilder();
+		reportTitleKey.append(View.LABEL);
+		final String controllerKey = getControllerUtil().getCurrentControllerKey();
+		if (StringUtils.isNotBlank(getController().viewBaseName())) {
+			reportTitleKey.append(controllerKey.substring(0, controllerKey.lastIndexOf(".") + 1)).append(
+					getController().viewBaseName());
+		} else {
+			reportTitleKey.append(controllerKey);
+		}
+		reportTitleKey.append(".report");
+		return reportTitleKey.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isSimple()
 	 */
 	public boolean isSimple() {
@@ -383,7 +403,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimple(boolean)
 	 */
@@ -393,7 +413,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
 	 */
@@ -403,7 +423,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewPath()
 	 */
 	public String getViewPath() {
@@ -455,7 +475,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSubReports()
 	 */
 	public String[] getSubReports() {
@@ -514,7 +534,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isTabularShowFilter()
 	 */
@@ -525,7 +545,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewBaseName()
 	 */
 	public String getViewBaseName() {
@@ -534,7 +554,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#requireOneOfFilters()
 	 */
@@ -544,7 +564,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isRequireOneFilter()
 	 */
@@ -554,7 +574,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isOnlyUpdateDetails()
 	 */
@@ -564,7 +584,7 @@ public class VulpeBaseSimpleControllerConfig implements VulpeControllerConfig, S
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isNewOnPost()
 	 */
 	public boolean isNewOnPost() {

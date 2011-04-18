@@ -105,6 +105,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 		if (vulpeProject.view() != null) {
 			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
+			global.put(Global.DATE_MASK, vulpeProject.view().dateMask());
 			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
 			global.put(Global.ICON_HEIGHT, vulpeProject.view().iconHeight());
 			global.put(Global.JQUERYUI, vulpeProject.view().jQueryUI());
