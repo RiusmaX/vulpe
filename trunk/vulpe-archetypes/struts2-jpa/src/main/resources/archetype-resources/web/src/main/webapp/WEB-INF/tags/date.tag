@@ -1,4 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributes.jsp" %>
+<%@ attribute name="mask" required="false" rtexprvalue="true" %>
 <%@ attribute name="maxlength" required="false" rtexprvalue="true" %>
 <%@ attribute name="onselect" required="false" rtexprvalue="true" %>
 <%@ attribute name="property" required="false" rtexprvalue="true" %>
