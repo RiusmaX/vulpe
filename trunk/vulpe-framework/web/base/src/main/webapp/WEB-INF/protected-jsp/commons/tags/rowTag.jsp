@@ -5,9 +5,9 @@
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 	<c:set var="recordId" value="${currentItem.id}"/>
 	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
-	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['showButtonsDelete']}"/></c:if>
-	<c:if test="${empty showButtonDeleteThis}"><c:set var="showButtonDeleteThis" value="${global['showButtonDeleteThis']}"/></c:if>
-	<c:if test="${empty showButtonUpdate}"><c:set var="showButtonUpdate" value="${global['showButtonUpdate']}"/></c:if>
+	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['project-view-showButtonsDelete']}"/></c:if>
+	<c:if test="${empty showButtonDeleteThis}"><c:set var="showButtonDeleteThis" value="${global['project-view-showButtonDeleteThis']}"/></c:if>
+	<c:if test="${empty showButtonUpdate}"><c:set var="showButtonUpdate" value="${global['project-view-showButtonUpdate']}"/></c:if>
 	<c:if test="${empty disableDelete}"><c:set var="disableDelete" value="${false}"/></c:if>
 	<c:if test="${empty styleClass && not empty currentStatus}">
 		<c:choose>

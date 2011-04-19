@@ -5,7 +5,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <%@ taglib uri="/WEB-INF/util" prefix="util"%>
 <%@include file="/WEB-INF/protected-jsp/commons/taglibsExtended.jsp"%>
-<fmt:setBundle basename="${global['i18nManager']}" />
+<fmt:setBundle basename="${global['project-i18nManager']}" />
 <c:choose>
 	<c:when test="${empty TABINDEX}">
 		<c:set var="TABINDEX" scope="request" value="0" />

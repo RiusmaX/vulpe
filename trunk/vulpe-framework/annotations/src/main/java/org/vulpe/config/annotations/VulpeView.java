@@ -31,11 +31,21 @@ public @interface VulpeView {
 	 */
 	boolean addNewDetailsOnTop() default false;
 
+	/**
+	 * Menu Type to backend.
+	 */
+	MenuType backendMenuType() default MenuType.SUPERFISH;
+
 	boolean breakLabel() default false;
 
 	String dateMask() default "99/99/9999";
 
 	boolean focusFirst() default true;
+
+	/**
+	 * Menu Type to frontend.
+	 */
+	MenuType frontendMenuType() default MenuType.SUPERFISH;
 
 	int globalPageSize() default 5;
 
@@ -48,10 +58,6 @@ public @interface VulpeView {
 	boolean messageSlideUp() default false;
 
 	int messageSlideUpTime() default 10000;
-
-	int mobileIconHeight() default 32;
-
-	int mobileIconWidth() default 32;
 
 	PagingButtonStyle pagingButtonStyle() default PagingButtonStyle.CSS;
 
@@ -74,6 +80,8 @@ public @interface VulpeView {
 	boolean showButtonClone() default true;
 
 	boolean showLine() default true;
+
+	boolean showReportInNewWindow() default false;
 
 	boolean showPoweredBy() default true;
 
@@ -103,8 +111,14 @@ public @interface VulpeView {
 		CSS, JQUERY_UI
 	}
 
+	/**
+	 * Menu Type.
+	 */
+	enum MenuType {
+		DROPPY, SUPERFISH, NONE
+	}
+
 	public final String JQUERYUI_SMOOTHNESS = "smoothness";
 	public final String JQUERYUI_REDMOND = "redmond";
-
 
 }

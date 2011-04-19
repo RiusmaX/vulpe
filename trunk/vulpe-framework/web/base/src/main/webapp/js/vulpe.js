@@ -111,6 +111,7 @@ var vulpe = {
 			selectRow: false
 		},
 		showLoading: true,
+		showReportInNewWindow: false,
 		sortType: "ALL",
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
@@ -1463,16 +1464,19 @@ var vulpe = {
 			},
 
 			submitReport: function(actionURL, width, height) {
-				//var popupName = 'popup' + new Date().getTime();
-				//return vulpe.view.request.openPopup(actionURL, width, height, popupName);
-				$("#reportFrame").attr("src", actionURL);
-				$("#report").dialog({
-					autoOpen: true,
-					width: width,
-					height: height,
-					resizable: true,
-					modal: true
-				});
+				if (vulpe.config.showReportInNewWindow) {
+					var popupName = 'popup' + new Date().getTime();
+					return vulpe.view.request.openPopup(actionURL, width, height, popupName);
+				} else {
+					$("#reportFrame").attr("src", actionURL);
+					$("#report").dialog({
+						autoOpen: true,
+						width: width,
+						height: height,
+						resizable: true,
+						modal: true
+					});
+				}
 			},
 
 			selectRowCallback: new Array(),

@@ -20,10 +20,10 @@
 				$("#messages").removeClass("vulpeMessageInfo");
 				$("#messages").addClass("vulpeMessageValidation");
 				$("#messages").slideDown("slow");
-				<c:if test="${global['messageSlideUp']}">
+				<c:if test="${global['project-view-messageSlideUp']}">
 				setTimeout(function() {
 				  $("#messages").slideUp("slow");
-				}, ${global['messageSlideUpTime']});
+				}, ${global['project-view-messageSlideUpTime']});
 				</c:if>
 			});
 		</script>
@@ -87,10 +87,10 @@
 					});
 					$("#messages").html(msg);
 					$("#messages").slideDown("slow");
-					<c:if test="${global['messageSlideUp']}">
+					<c:if test="${global['project-view-messageSlideUp']}">
 					setTimeout(function() {
 			          $("#messages").slideUp("slow");
-					}, ${global['messageSlideUpTime']});
+					}, ${global['project-view-messageSlideUpTime']});
 					</c:if>
 				});
 			</script>

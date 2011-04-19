@@ -27,7 +27,6 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.VulpeConstants.Configuration.Global;
-import org.vulpe.commons.VulpeConstants.Configuration.Global.Mobile;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
@@ -93,56 +92,59 @@ public class VulpeStartupListener implements ServletContextListener {
 
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
-		global.put(Global.DEBUG, vulpeProject.debug());
-		global.put(Global.I18N_MANAGER, vulpeProject.i18nManager());
-		global.put(Global.AUDIT_ENABLED, VulpeConfigHelper.isAuditEnabled());
-		global.put(Global.SECURITY_ENABLED, VulpeConfigHelper.isSecurityEnabled());
-		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
-
-		global.put(Global.THEME, VulpeConfigHelper.getTheme());
-		global.put(Global.FRONTEND_MENU_TYPE, vulpeProject.frontendMenuType());
-		global.put(Global.BACKEND_MENU_TYPE, vulpeProject.backendMenuType());
+		global.put(Global.PROJECT_DEBUG, vulpeProject.debug());
+		global.put(Global.PROJECT_I18N_MANAGER, vulpeProject.i18nManager());
+		global.put(Global.PROJECT_AUDIT, VulpeConfigHelper.isAuditEnabled());
+		global.put(Global.PROJECT_SECURITY, VulpeConfigHelper.isSecurityEnabled());
+		global.put(Global.PROJECT_USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
+		global.put(Global.PROJECT_THEME, VulpeConfigHelper.getTheme());
+		global.put(Global.PROJECT_DATE_PATTERN, vulpeProject.datePattern());
+		global.put(Global.PROJECT_DATE_TIME_PATTERN, vulpeProject.dateTimePattern());
+		global.put(Global.PROJECT_LOCALE_CODE, vulpeProject.localeCode());
 
 		if (vulpeProject.view() != null) {
-			global.put(Global.BREAK_LABEL, vulpeProject.view().breakLabel());
-			global.put(Global.DATE_MASK, vulpeProject.view().dateMask());
-			global.put(Global.FOCUS_FIRST, vulpeProject.view().focusFirst());
-			global.put(Global.ICON_HEIGHT, vulpeProject.view().iconHeight());
-			global.put(Global.JQUERYUI, vulpeProject.view().jQueryUI());
-			global.put(Global.MOBILE_ICON_HEIGHT, vulpeProject.view().mobileIconHeight());
-			global.put(Global.MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
-			global.put(Global.MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
-			global.put(Global.PAGING_STYLE, vulpeProject.view().pagingStyle());
-			global.put(Global.PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
-			global.put(Global.SHOW_BUTTONS_AS_IMAGE, vulpeProject.view().showButtonsAsImage());
-			global.put(Global.SHOW_ICON_OF_BUTTON, vulpeProject.view().showIconOfButton());
-			global.put(Global.SHOW_TEXT_OF_BUTTON, vulpeProject.view().showTextOfButton());
-			global.put(Global.SHOW_BUTTON_DELETE_THIS, vulpeProject.view().showButtonDeleteThis());
-			global.put(Global.SHOW_BUTTON_UPDATE, vulpeProject.view().showButtonUpdate());
-			global.put(Global.SHOW_BUTTONS_DELETE, vulpeProject.view().showButtonsDelete());
-			global.put(Global.SHOW_LINE, vulpeProject.view().showLine());
-			global.put(Global.SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
-			global.put(Global.SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
-			global.put(Global.SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
-			global.put(Global.SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
-			global.put(Global.SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
-			global.put(Global.SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
-			global.put(Global.SORT_TYPE, vulpeProject.view().sortType());
-			global.put(Global.ICON_WIDTH, vulpeProject.view().iconWidth());
-			global.put(Global.MOBILE_ICON_WIDTH, vulpeProject.view().mobileIconWidth());
-			global.put(Global.USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
-			global.put(Global.USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
+			global.put(Global.PROJECT_VIEW_FRONTEND_MENU_TYPE, vulpeProject.view().frontendMenuType());
+			global.put(Global.PROJECT_VIEW_BACKEND_MENU_TYPE, vulpeProject.view().backendMenuType());
+			global.put(Global.PROJECT_VIEW_BREAK_LABEL, vulpeProject.view().breakLabel());
+			global.put(Global.PROJECT_VIEW_DATE_MASK, vulpeProject.view().dateMask());
+			global.put(Global.PROJECT_VIEW_FOCUS_FIRST, vulpeProject.view().focusFirst());
+			global.put(Global.PROJECT_VIEW_ICON_HEIGHT, vulpeProject.view().iconHeight());
+			global.put(Global.PROJECT_VIEW_JQUERYUI, vulpeProject.view().jQueryUI());
+			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
+			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
+			global.put(Global.PROJECT_VIEW_PAGING_STYLE, vulpeProject.view().pagingStyle());
+			global.put(Global.PROJECT_VIEW_PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_AS_IMAGE, vulpeProject.view().showButtonsAsImage());
+			global.put(Global.PROJECT_VIEW_SHOW_ICON_OF_BUTTON, vulpeProject.view().showIconOfButton());
+			global.put(Global.PROJECT_VIEW_SHOW_TEXT_OF_BUTTON, vulpeProject.view().showTextOfButton());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTON_DELETE_THIS, vulpeProject.view().showButtonDeleteThis());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTON_UPDATE, vulpeProject.view().showButtonUpdate());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_DELETE, vulpeProject.view().showButtonsDelete());
+			global.put(Global.PROJECT_VIEW_SHOW_LINE, vulpeProject.view().showLine());
+			global.put(Global.PROJECT_VIEW_SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
+			global.put(Global.PROJECT_VIEW_SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
+			global.put(Global.PROJECT_VIEW_SHOW_REPORT_IN_NEW_WINDOW, vulpeProject.view().showReportInNewWindow());
+			global.put(Global.PROJECT_VIEW_SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
+			global.put(Global.PROJECT_VIEW_SORT_TYPE, vulpeProject.view().sortType());
+			global.put(Global.PROJECT_VIEW_ICON_WIDTH, vulpeProject.view().iconWidth());
+			global.put(Global.PROJECT_VIEW_USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
+			global.put(Global.PROJECT_VIEW_USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
 		}
-		global.put(Global.SHOW_AS_MOBILE, vulpeProject.mobileEnabled());
-		if (vulpeProject.mobileEnabled()) {
-			global.put(Mobile.VIEWPORT_WIDHT, vulpeProject.mobile().viewportWidth());
-			global.put(Mobile.VIEWPORT_HEIGHT, vulpeProject.mobile().viewportHeight());
-			global.put(Mobile.VIEWPORT_USER_SCALABLE, vulpeProject.mobile().viewportUserScalable());
-			global.put(Mobile.VIEWPORT_INITIAL_SCALE, vulpeProject.mobile().viewportInitialScale());
-			global.put(Mobile.VIEWPORT_MAXIMUM_SCALE, vulpeProject.mobile().viewportMaximumScale());
-			global.put(Mobile.VIEWPORT_MINIMUM_SCALE, vulpeProject.mobile().viewportMinimumScale());
+
+		if (vulpeProject.mobile().enabled()) {
+			global.put(Global.PROJECT_MOBILE_ENABLED, vulpeProject.mobile().enabled());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_WIDHT, vulpeProject.mobile().viewportWidth());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_HEIGHT, vulpeProject.mobile().viewportHeight());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_USER_SCALABLE, vulpeProject.mobile().viewportUserScalable());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_INITIAL_SCALE, vulpeProject.mobile().viewportInitialScale());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_MAXIMUM_SCALE, vulpeProject.mobile().viewportMaximumScale());
+			global.put(Global.PROJECT_MOBILE_VIEWPORT_MINIMUM_SCALE, vulpeProject.mobile().viewportMinimumScale());
+			global.put(Global.PROJECT_MOBILE_ICON_HEIGHT, vulpeProject.mobile().iconHeight());
+			global.put(Global.PROJECT_MOBILE_ICON_WIDTH, vulpeProject.mobile().iconWidth());
 		}
-		global.put(Global.USE_DB4O, VulpeConfigHelper.get(VulpeDomains.class).useDB4O());
 		evt.getServletContext().setAttribute(Context.GLOBAL, global);
 		VulpeCachedObjectsHelper.putAnnotedObjectsInCache(evt.getServletContext());
 		VulpeJobSchedulerHelper.schedulerAnnotedJobs(evt.getServletContext());

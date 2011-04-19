@@ -15,7 +15,6 @@
  */
 package org.vulpe.commons;
 
-import java.util.Locale;
 
 /**
  * Vulpe Constants
@@ -28,8 +27,6 @@ public class VulpeConstants {
 
 	public static final String MAPPING_REQUEST = "MAPPING_REQUEST";
 	public static final String FORM_REQUEST = "FORM_REQUEST";
-	public static final Locale ENGLISH_LOCALE = new Locale("en", "US");
-	public static final Locale PORTUGUESE_LOCALE = new Locale("pt", "BR");
 	public static final String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
 	public static final String STRING_NULL = "";
 	public static final String LITERAL_EMPTY_STRING = "0";
@@ -75,53 +72,58 @@ public class VulpeConstants {
 
 	public class Configuration {
 		public class Global {
-			public static final String DEBUG = "debug";
-			public static final String DATE_MASK = "dateMask";
-			public static final String JQUERYUI = "jQueryUI";
-			public static final String USE_DB4O = "useDB4O";
-			public static final String AUDIT_ENABLED = "auditEnabled";
-			public static final String SECURITY_ENABLED = "securityEnabled";
-			public static final String I18N_MANAGER = "i18nManager";
-			public static final String THEME = "theme";
-			public static final String FRONTEND_MENU_TYPE = "frontendMenuType";
-			public static final String BACKEND_MENU_TYPE = "backendMenuType";
-			public static final String FOCUS_FIRST = "focusFirst";
-			public static final String SHOW_BUTTONS_AS_IMAGE = "showButtonsAsImage";
-			public static final String SHOW_ICON_OF_BUTTON = "showIconOfButton";
-			public static final String SHOW_TEXT_OF_BUTTON = "showTextOfButton";
-			public static final String ICON_WIDTH = "iconWidth";
-			public static final String MOBILE_ICON_WIDTH = "mobileIconWidth";
-			public static final String ICON_HEIGHT = "iconHeight";
-			public static final String MOBILE_ICON_HEIGHT = "mobileIconHeight";
-			public static final String MESSAGE_SLIDE_UP = "messageSlideUp";
-			public static final String MESSAGE_SLIDE_UP_TIME = "messageSlideUpTime";
-			public static final String BREAK_LABEL = "breakLabel";
-			public static final String SHOW_BUTTON_DELETE_THIS = "showButtonDeleteThis";
-			public static final String SHOW_BUTTON_UPDATE = "showButtonUpdate";
-			public static final String SHOW_BUTTONS_DELETE = "showButtonsDelete";
-			public static final String SHOW_LINE = "showLine";
-			public static final String SHOW_COPYRIGHT = "showCopyright";
-			public static final String SHOW_POWERED_BY = "showPoweredBy";
-			public static final String SHOW_WARNING_BEFORE_CLEAR = "showWarningBeforeClear";
-			public static final String SHOW_WARNING_BEFORE_DELETE = "showWarningBeforeDelete";
-			public static final String SHOW_WARNING_BEFORE_UPDATE_POST = "showWarningBeforeUpdatePost";
-			public static final String SHOW_MODIFICATION_WARNING = "showModificationWarning";
-			public static final String SORT_TYPE = "sortType";
-			public static final String PAGING_STYLE = "pagingStyle";
-			public static final String PAGING_BUTTON_STYLE = "pagingButtonStyle";
-			public static final String USE_FRONTEND_LAYER = "useFrontendLayer";
-			public static final String USE_BACKEND_LAYER = "useBackendLayer";
+			//VulpeProject
+			public static final String PROJECT_DEBUG = "project-debug";
+			public static final String PROJECT_USE_DB4O = "project-useDB4O";
+			public static final String PROJECT_AUDIT = "project-audit";
+			public static final String PROJECT_SECURITY = "peoject-security";
+			public static final String PROJECT_I18N_MANAGER = "project-i18nManager";
+			public static final String PROJECT_THEME = "project-theme";
+			public static final String PROJECT_DATE_PATTERN = "project-datePattern";
+			public static final String PROJECT_DATE_TIME_PATTERN = "project-dateTimePattern";
+			public static final String PROJECT_LOCALE_CODE = "project-localeCode";
 
-			public static final String SHOW_AS_MOBILE = "showAsMobile";
+			//VulpeView
+			public static final String PROJECT_VIEW_DATE_MASK = "project-view-dateMask";
+			public static final String PROJECT_VIEW_JQUERYUI = "project-view-jQueryUI";
+			public static final String PROJECT_VIEW_FRONTEND_MENU_TYPE = "project-view-frontendMenuType";
+			public static final String PROJECT_VIEW_BACKEND_MENU_TYPE = "project-view-backendMenuType";
+			public static final String PROJECT_VIEW_FOCUS_FIRST = "project-view-focusFirst";
+			public static final String PROJECT_VIEW_SHOW_BUTTONS_AS_IMAGE = "project-view-showButtonsAsImage";
+			public static final String PROJECT_VIEW_SHOW_ICON_OF_BUTTON = "project-view-showIconOfButton";
+			public static final String PROJECT_VIEW_SHOW_TEXT_OF_BUTTON = "project-view-showTextOfButton";
+			public static final String PROJECT_VIEW_ICON_WIDTH = "project-view-iconWidth";
+			public static final String PROJECT_VIEW_ICON_HEIGHT = "project-view-iconHeight";
+			public static final String PROJECT_VIEW_MESSAGE_SLIDE_UP = "project-view-messageSlideUp";
+			public static final String PROJECT_VIEW_MESSAGE_SLIDE_UP_TIME = "project-view-messageSlideUpTime";
+			public static final String PROJECT_VIEW_BREAK_LABEL = "project-view-breakLabel";
+			public static final String PROJECT_VIEW_SHOW_BUTTON_DELETE_THIS = "project-view-showButtonDeleteThis";
+			public static final String PROJECT_VIEW_SHOW_BUTTON_UPDATE = "project-view-showButtonUpdate";
+			public static final String PROJECT_VIEW_SHOW_BUTTONS_DELETE = "project-view-showButtonsDelete";
+			public static final String PROJECT_VIEW_SHOW_LINE = "project-view-showLine";
+			public static final String PROJECT_VIEW_SHOW_COPYRIGHT = "project-view-showCopyright";
+			public static final String PROJECT_VIEW_SHOW_REPORT_IN_NEW_WINDOW = "project-view-showReportInNewWindow";
+			public static final String PROJECT_VIEW_SHOW_POWERED_BY = "project-view-showPoweredBy";
+			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_CLEAR = "project-view-showWarningBeforeClear";
+			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE = "project-view-showWarningBeforeDelete";
+			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST = "project-view-showWarningBeforeUpdatePost";
+			public static final String PROJECT_VIEW_SHOW_MODIFICATION_WARNING = "project-view-showModificationWarning";
+			public static final String PROJECT_VIEW_SORT_TYPE = "project-view-sortType";
+			public static final String PROJECT_VIEW_PAGING_STYLE = "project-view-pagingStyle";
+			public static final String PROJECT_VIEW_PAGING_BUTTON_STYLE = "project-view-pagingButtonStyle";
+			public static final String PROJECT_VIEW_USE_FRONTEND_LAYER = "project-view-useFrontendLayer";
+			public static final String PROJECT_VIEW_USE_BACKEND_LAYER = "project-view-useBackendLayer";
 
-			public class Mobile {
-				public static final String VIEWPORT_WIDHT = "viewportWidth";
-				public static final String VIEWPORT_HEIGHT = "viewportHeight";
-				public static final String VIEWPORT_USER_SCALABLE = "viewportUserScalable";
-				public static final String VIEWPORT_INITIAL_SCALE = "viewportInitialScale";
-				public static final String VIEWPORT_MAXIMUM_SCALE = "viewportMaximumScale";
-				public static final String VIEWPORT_MINIMUM_SCALE = "viewportMinimumScale";
-			}
+			//VulpeMobile
+			public static final String PROJECT_MOBILE_ENABLED = "project-mobile-enabled";
+			public static final String PROJECT_MOBILE_ICON_WIDTH = "project-mobile-iconWidth";
+			public static final String PROJECT_MOBILE_ICON_HEIGHT = "project-view-iconHeight";
+			public static final String PROJECT_MOBILE_VIEWPORT_WIDHT = "project-mobile-viewportWidth";
+			public static final String PROJECT_MOBILE_VIEWPORT_HEIGHT = "project-mobile-viewportHeight";
+			public static final String PROJECT_MOBILE_VIEWPORT_USER_SCALABLE = "project-mobile-viewportUserScalable";
+			public static final String PROJECT_MOBILE_VIEWPORT_INITIAL_SCALE = "project-mobile-viewportInitialScale";
+			public static final String PROJECT_MOBILE_VIEWPORT_MAXIMUM_SCALE = "project-mobile-viewportMaximumScale";
+			public static final String PROJECT_MOBILE_VIEWPORT_MINIMUM_SCALE = "project-mobile-viewportMinimumScale";
 		}
 
 		public class Now {

@@ -15,14 +15,15 @@
  */
 package org.vulpe.commons.helper;
 
+import java.util.Locale;
+
 import org.apache.log4j.Logger;
-import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Framework configuration helper.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @since 1.0
  */
@@ -39,7 +40,7 @@ public final class VulpeConfigHelper {
 	private static final String CONFIG_BASE_CLASS = "org.vulpe.config.base.package-info";
 
 	/**
-	 * 
+	 *
 	 * @param classPath
 	 */
 	private static void forceClassloader(final String classPath) {
@@ -54,7 +55,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for audit enabled e false to audit disabled.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -76,7 +77,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for security enabled e false to audit disabled.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -97,7 +98,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -120,7 +121,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method returns name of theme to application use.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -141,7 +142,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static VulpeProject getProjectConfiguration() {
@@ -158,7 +159,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getProjectName() {
@@ -177,7 +178,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getI18n() {
@@ -196,7 +197,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getI18nManager() {
@@ -215,7 +216,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getProjectPackage() {
@@ -234,7 +235,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Class getConfig() {
@@ -258,7 +259,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Class getDomainsConfig() {
@@ -280,4 +281,25 @@ public final class VulpeConfigHelper {
 		}
 		return domainsConfig;
 	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public static Locale getLocale() {
+		try {
+			final Class config = getConfig();
+			if (config != null) {
+				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+				if (project != null) {
+					String[] locale = project.localeCode().split("\\_");
+					return new Locale(locale[0], locale[1]);
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return new Locale("en", "US");
+	}
+
 }

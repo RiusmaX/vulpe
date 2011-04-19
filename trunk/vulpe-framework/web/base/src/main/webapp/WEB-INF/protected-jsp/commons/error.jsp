@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="layout" value="${vulpeCurrentLayout == 'FRONTEND' ? 'frontend/' : ''}"/>
-<fmt:setBundle basename="${global['i18nManager']}" />
+<fmt:setBundle basename="${global['project-i18nManager']}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,7 +13,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>
 <style media="all" type="text/css">
 @import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
-@import	"${pageContext.request.contextPath}/themes/${global['theme']}/css/${layout}${global['theme']}.css";
+@import	"${pageContext.request.contextPath}/themes/${global['project-theme']}/css/${layout}${global['project-theme']}.css";
 </style>
 </head>
 <body>

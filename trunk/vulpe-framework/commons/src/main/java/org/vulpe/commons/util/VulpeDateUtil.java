@@ -23,11 +23,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.enumeration.DaysOfWeek;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
  * Utility class to date format.
@@ -58,6 +60,10 @@ public final class VulpeDateUtil {
 
 	/** Date format: dd-MM-yyyy hh:mm:ss . */
 	public static final String DATE_TIME_AMPM = "dd-MM-yyyy hh:mm:ss";
+
+	public static final Locale locale = VulpeConfigHelper.getLocale();
+
+	public static SimpleDateFormat sdf = new SimpleDateFormat(DDMMYYYY, locale);
 
 	private VulpeDateUtil() {
 
@@ -127,8 +133,7 @@ public final class VulpeDateUtil {
 		final Calendar now = new GregorianCalendar();
 		now.setTimeInMillis(timestamp);
 
-		final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss",
-				VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern("yyyyMMddHHmmss");
 		final String ddmmaahhmmss = sdf.format(now.getTime());
 
 		if (LOG.isDebugEnabled()) {
@@ -139,78 +144,80 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Formata a data no formato padr�o da aplica��o (como sugerido no guia de
-	 * espeficica��o suplementar).
+	 * Format date with pattern dd/MM/yyyy.
+	 *
+	 * @return String
 	 */
 	public static String getDateFormated(final Date data) {
-		final SimpleDateFormat sdf = new SimpleDateFormat(VulpeDateUtil.DDMMYYYY,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
 		return sdf.format(data);
 	}
 
 	/**
-	 * Formata a data no formato ddmmYY sem barra.
+	 * Format date to pattern ddmmYY.
+	 *
+	 * @return String
 	 */
 	public static String getDateFormattedNoBar(final Date data) {
-		final SimpleDateFormat sdf = new SimpleDateFormat(VulpeDateUtil.DDMMYYNB,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYNB);
 		return sdf.format(data);
 	}
 
 	/**
-	 * Formata a data e hora no formato padr�o da aplica��o (como sugerido no
-	 * guia de espeficica��o suplementar).
+	 * Format date to pattern dd/MM/yyyy HH:mm:ss.
+	 *
+	 * @return String
 	 */
 	public static String getDateTimeFormatted(final Date data) {
-		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(VulpeDateUtil.DDMMYYYYHHMMSS,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYYHHMMSS);
 		return sdf.format(data);
 	}
 
 	/**
-	 * Obter o pattern de data especificado.
+	 * Format date with specific pattern.
+	 *
+	 * @return java.util.Date
 	 */
 	public static Date getDate(final String date, final String pattern) {
 		Date returnDate = null;
-
-		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(pattern, VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(pattern);
 		try {
 			returnDate = sdf.parse(date);
 		} catch (Exception e) {
-			LOG.debug("Data com formato incorreto: " + pattern);
+			LOG.debug("Invalid date pattern: " + pattern);
 		}
 
 		return returnDate;
 	}
 
 	/**
-	 * Retorna a data formatada com o patter especificado.
+	 * Format date with specific pattern.
+	 *
+	 * @return String
 	 */
 	public static String getDate(final Date date, final String pattern) {
 		String returnDate = null;
-
-		// cria o formato pelo pattern
-		final SimpleDateFormat sdf = new SimpleDateFormat(pattern, VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(pattern);
 		try {
 			returnDate = sdf.format(date);
 		} catch (Exception e) {
-			LOG.debug("Data com formato incorreto: " + pattern);
+			LOG.debug("Invalid date format: " + pattern);
 		}
 
 		return returnDate;
 	}
 
 	/**
-	 * Verifica se � uma data valida.
+	 * Checks if is a valid date.
+	 *
+	 * @param date
+	 * @return
 	 */
 	public static boolean isValidDate(final String date) {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat(VulpeDateUtil.DDMMYYYY,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
 		if (date != null) {
 			try {
-				return date.equals(dateFormat.format(dateFormat.parse(date)));
+				return date.equals(sdf.format(sdf.parse(date)));
 			} catch (Exception e) {
 				return false;
 			}
@@ -218,6 +225,11 @@ public final class VulpeDateUtil {
 		return false;
 	}
 
+	/**
+	 *
+	 * @param date
+	 * @return
+	 */
 	public static boolean isWeekend(final Date date) {
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
@@ -225,6 +237,13 @@ public final class VulpeDateUtil {
 				|| calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
 	}
 
+	/**
+	 *
+	 * @param date
+	 * @param field
+	 * @param value
+	 * @return
+	 */
 	public static Date overrideField(final Date date, final int field, final int value) {
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
@@ -233,16 +252,16 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Este m�todo recebe um numero que representa uma quantidade de minutos e
-	 * devolve uma string no formato hh:mm
+	 * Format Time in minutes to String.
+	 *
+	 * @param minutes
+	 * @return
 	 */
 	public static String getFormatedTime(final int minutes) {
-		// Converte a dura��o em minutos para a dura��o em horas e minutos.
 		final int hours = minutes / 60;
 		final int min = minutes % 60;
 		final StringBuilder hoursString = new StringBuilder();
 		final StringBuilder minutesString = new StringBuilder();
-		// Se a hora ou o minuto for menor que 10, colocar o zero a esquerda
 		if (hours < 10) {
 			hoursString.append("0").append(hours);
 		}
@@ -253,16 +272,20 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Este m�todo recebe um numero que representa uma quantidade de minutos e
-	 * devolve uma string no formato hh:mm
+	 * Format Time in minutes to String.
+	 *
+	 * @param minutes
+	 * @return
 	 */
 	public static String getFormatedTime(final Integer minutes) {
 		return minutes == null ? null : getFormatedTime(minutes.intValue());
 	}
 
 	/**
-	 * Este m�todo recebe uma string no formato hh:mm e retorna o total de
-	 * minutos da dura��o passada.
+	 * Calculate minutes of duration.
+	 *
+	 * @param duration
+	 * @return
 	 */
 	public static Integer getTimeInMinutes(final String duration) {
 		Integer totalMinutes = null;
@@ -279,7 +302,10 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * retorna a mesma data com os campos horas, minutos e segundos zerados.
+	 * Format Date to same date with first hour of day.
+	 *
+	 * @param date
+	 * @return
 	 */
 	public static Date truncateTime(final Date date) {
 		final Calendar calendar = new GregorianCalendar();
@@ -296,9 +322,15 @@ public final class VulpeDateUtil {
 		return isValidTime(time, false);
 	}
 
+	/**
+	 * Checks if is a valid Time.
+	 *
+	 * @param time
+	 * @param lenient
+	 * @return
+	 */
 	public static boolean isValidTime(final String time, final boolean lenient) {
 		boolean valid = false;
-		final SimpleDateFormat sdf = new SimpleDateFormat();
 		sdf.applyPattern(HHMM);
 		if (lenient) {
 			try {
@@ -328,7 +360,10 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica se a string representa uma data v�lida
+	 * Checks if is a valid Date.
+	 *
+	 * @param date
+	 * @return
 	 */
 	public static boolean isDateValid(final String date) {
 		if (LOG.isDebugEnabled()) {
@@ -355,10 +390,9 @@ public final class VulpeDateUtil {
 				return false;
 			}
 
-			final SimpleDateFormat dateFormat = new SimpleDateFormat(DDMMYYYY,
-					VulpeConstants.PORTUGUESE_LOCALE);
-			dateFormat.setLenient(false);
-			dateFormat.parse(newDate);
+			sdf.applyLocalizedPattern(DDMMYYYY);
+			sdf.setLenient(false);
+			sdf.parse(newDate);
 			valid = true;
 		} catch (ParseException pe) {
 			valid = false;
@@ -376,8 +410,7 @@ public final class VulpeDateUtil {
 	 * @return
 	 */
 	public String getExtensiveDate() {
-		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(
-				DateFormat.MEDIUM, VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, locale);
 		format.applyPattern("MMMM");
 		final Calendar calendar = Calendar.getInstance();
 		final String month = format.format(calendar.getTime());
@@ -388,7 +421,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a diferen�a em dias das duas datas informadas
+	 * Calculate diff in days between dates.
+	 *
+	 * @param begin
+	 * @param end
+	 * @return
 	 */
 	public static long getDaysDifference(final Date begin, final Date end) {
 
@@ -418,17 +455,19 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Converte uma string para data
+	 * Convert String to Date.
+	 *
+	 * @param date
+	 * @return
+	 * @throws ParseException
 	 */
 	public static Date convertStringToDate(final String date) throws ParseException {
-
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Entering in VulpeDateUtil.convertStringToDate(String date) - Start");
 			LOG.debug("date: " + date);
 		}
 
-		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY, locale);
 		format.setLenient(false);
 		final Date formatedDate = format.parse(date);
 
@@ -441,83 +480,106 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Converte uma string representando uma hora para um objeto data
+	 * Convert String to Time.
+	 *
+	 * @param time
+	 * @return
+	 * @throws ParseException
 	 */
 	public static Date convertStringToTime(final String time) throws ParseException {
-		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM, locale);
 		timeFormat.setLenient(false);
 		return timeFormat.parse(time);
 	}
 
 	/**
-	 * Converte uma string com data e hora para um objeto data
+	 * Convert String to Date Time.
+	 *
+	 * @param dateTime
+	 * @return
+	 * @throws ParseException
 	 */
 	public static Date convertStringToDateTime(final String dateTime) throws ParseException {
-		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
-				VulpeConstants.PORTUGUESE_LOCALE);
+		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY + " " + HHMM, locale);
 		dateTimeFormat.setLenient(false);
 		return dateTimeFormat.parse(dateTime);
 	}
 
+	/**
+	 *
+	 * @param dateTime
+	 * @return
+	 */
 	public static String convertDateTimeToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(formatedDateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
-					VulpeConstants.PORTUGUESE_LOCALE);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM, locale);
 			formatedDateTime = formatDateTime.format(formatedDateTime);
 		}
 		return formatedDateTime;
 	}
 
+	/**
+	 *
+	 * @param dateTime
+	 * @return
+	 */
 	public static String convertDateToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY,
-					VulpeConstants.PORTUGUESE_LOCALE);
-			formatedDateTime = formatDateTime.format(dateTime);
-		}
-		return formatedDateTime;
-	}
-
-	public static String convertDateTimeSecondToString(final Date dateTime) {
-		String formatedDateTime = null;
-		if (!VulpeValidationUtil.isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS,
-					VulpeConstants.PORTUGUESE_LOCALE);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY, locale);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
 	}
 
 	/**
-	 * Converte hora para string
+	 *
+	 * @param dateTime
+	 * @return
+	 */
+	public static String convertDateTimeSecondToString(final Date dateTime) {
+		String formatedDateTime = null;
+		if (!VulpeValidationUtil.isEmpty(dateTime)) {
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS, locale);
+			formatedDateTime = formatDateTime.format(dateTime);
+		}
+		return formatedDateTime;
+	}
+
+	/**
+	 * Convert time to String.
+	 *
+	 * @param time
+	 * @return
 	 */
 	public static String convertTimeToString(final Date time) {
 		String formatedTime = "";
 		if (time != null) {
-			final SimpleDateFormat dateFormat = new SimpleDateFormat(HHMM,
-					VulpeConstants.PORTUGUESE_LOCALE);
-			formatedTime = dateFormat.format(time);
+			sdf.applyLocalizedPattern(HHMM);
+			formatedTime = sdf.format(time);
 		}
 		return formatedTime;
 	}
 
 	/**
-	 * Converte um objeto date em uma String com o dia da semana que ele
-	 * representa abreviado (Seg/Ter/Qua/Qui/Sex).
+	 * Convert Date to String with day of week. Example: Date: 04/10/2005 Value
+	 * returned: Tue
 	 *
-	 * Ex: Data: 04/10/2005 Valor retornado: Ter
+	 * @param date
+	 * @return
 	 */
 	public static String getExtensiveAbbreviatedDate(final Date date) {
-		final SimpleDateFormat formatDate = new SimpleDateFormat(VulpeConstants.SIMPLE_DATE_FORMAT,
-				VulpeConstants.PORTUGUESE_LOCALE);
-		return formatDate.format(date);
+		sdf.applyLocalizedPattern(VulpeConstants.SIMPLE_DATE_FORMAT);
+		return sdf.format(date);
 	}
 
 	/**
-	 * Converte uma data para a mesma data contendo o ultimo minuto do dia. Ex:
-	 * Entrada: 01/01/2005 Retorno: 01/01/2005 23:59:59
+	 * Convert Date to same Date with last minute of day. Example: Input:
+	 * 01/01/2005 Output: 01/01/2005 23:59:59
+	 *
+	 * @param date
+	 * @return
 	 */
 	public static Date createFinalDateQuery(final Date date) {
 		final Calendar calendar = new GregorianCalendar();
@@ -530,8 +592,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Converte uma data para a mesma data contendo o primeiro minuto do dia.
-	 * Ex: Entrada: 01/01/2005 Retorno: 01/01/2005 00:00:00
+	 * Convert Date to same Date with first minute of day. Example: Input:
+	 * 01/01/2005 Output: 01/01/2005 00:00:00
+	 *
+	 * @param date
+	 * @return
 	 */
 	public static Date createInitialDateQuery(final Date date) {
 		final Calendar calendar = new GregorianCalendar();
@@ -544,7 +609,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a diferen�a em milisegundos entre as duas datas
+	 * Calculate diff in milliseconds between dates.
+	 *
+	 * @param begin
+	 * @param end
+	 * @return
 	 */
 	public static long getMillisecondDifference(final Date begin, final Date end) {
 		long milliseconds;
@@ -569,20 +638,27 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Retorna a diferenca, em minutos, entre as datas
+	 * Calculate diff in minutes between dates.
+	 *
+	 * @param begin
+	 * @param end
+	 * @return
 	 */
 	public static int getMinutesDifference(final Date begin, final Date end) {
 		return (int) getMillisecondDifference(begin, end) / 60000;
 	}
 
 	/**
-	 * Determina a quantidade de minutos de uma atividade que ocorreram dentro
-	 * do per�odo especificado. O per�odo � delimitado pelos campos de hora e
-	 * minuto dos par�metros "inicio" e "fim" - os campos de ano, m�s e dia
-	 * destes dois par�metros n�o s�o levados em considera��o.
+	 * Calculate quantity of minutes of task.
+	 *
+	 * @param dateTimeBegin
+	 * @param dateTimeEnd
+	 * @param begin
+	 * @param end
+	 * @return
 	 */
-	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd,
-			final Date begin, final Date end) {
+	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd, final Date begin,
+			final Date end) {
 
 		if (begin.compareTo(end) > 0) {
 			final Calendar calendarBegin1 = new GregorianCalendar();
@@ -596,8 +672,7 @@ public final class VulpeDateUtil {
 			calendarEnd2.add(Calendar.DAY_OF_YEAR, 1);
 
 			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd, calendarBegin1.getTime(), end)
-					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2
-							.getTime());
+					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2.getTime());
 		}
 
 		int returnedTime = 0;
@@ -608,16 +683,11 @@ public final class VulpeDateUtil {
 		final Calendar startActivity = new GregorianCalendar();
 		startActivity.setTime(dateTimeBegin);
 
-		/**
-		 * Nos par�metros "inicio" e "fim", o dia deve ser atualizado para ser o
-		 * mesmo dia do inicio da atividade, para se calcular as diferen�as
-		 */
-		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
-				startActivity.get(Calendar.DATE));
-		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
-				startActivity.get(Calendar.DATE));
+		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH), startActivity
+				.get(Calendar.DATE));
+		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH), startActivity
+				.get(Calendar.DATE));
 
-		/** aplicando uma corre��o para periodo noturno */
 		if (periodBegin.getTime().compareTo(periodEnd.getTime()) > 0) {
 			periodEnd.add(Calendar.DATE, 1);
 		}
@@ -633,8 +703,7 @@ public final class VulpeDateUtil {
 			// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
-			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
-					dateTimeEnd), period), 0); // d,
+			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(), dateTimeEnd), period), 0); // d,
 			// e
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
 			returnedTime = activityTime; // f
@@ -650,13 +719,14 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Verifica um periodo de horas.
+	 * Checks time period.
 	 *
-	 * Verifica se a hora informada est� dentro do periodo inicial e final
-	 * informado ( desconsiderando o dia ).
+	 * @param beginHour
+	 * @param endHour
+	 * @param hour
+	 * @return
 	 */
 	public static boolean checkTimePeriod(final Date beginHour, final Date endHour, final Date hour) {
-
 		final Calendar calendarBegin = Calendar.getInstance();
 		calendarBegin.setTime(beginHour);
 		final Calendar calendarEnd = Calendar.getInstance();
@@ -678,11 +748,9 @@ public final class VulpeDateUtil {
 		calendarTime.set(Calendar.MONTH, 1);
 		calendarTime.set(Calendar.YEAR, 1970);
 
-		// Verifica se esta dentro do periodo (no dia 1)
 		if (calendarTime.after(calendarBegin) && calendarTime.before(calendarEnd)) {
 			betweenPeriod = true;
 		} else {
-			// Se nao estiver, verifica se esta dentro do periodo no dia 2.
 			calendarTime.set(Calendar.DAY_OF_MONTH, 2);
 			if (calendarTime.after(calendarBegin) && calendarTime.before(calendarEnd)) {
 				betweenPeriod = true;
@@ -700,11 +768,9 @@ public final class VulpeDateUtil {
 	 * @param end
 	 * @return
 	 */
-	public static int calculateTruncatedTimeByDays(final Date dateTimeStart,
-			final Date dateTimeEnd, final Date start, final Date end) {
-
+	public static int calculateTruncatedTimeByDays(final Date dateTimeStart, final Date dateTimeEnd, final Date start,
+			final Date end) {
 		int minutes = 0;
-
 		final Date startActivity = new Date(dateTimeStart.getTime());
 		final Date endActivity = new Date(dateTimeEnd.getTime());
 
@@ -712,9 +778,6 @@ public final class VulpeDateUtil {
 		final Date periodEnd = new Date(end.getTime());
 
 		if (startActivity.compareTo(endActivity) < 0) {
-			// normaliza as data para o per�odo (in�cio e fim). Deixam ambos no
-			// mesmo dia, m�s e ano.
-			// O que importa s�o os hor�rios
 			final Calendar calendarBegin = new GregorianCalendar();
 			calendarBegin.setTime(periodBegin);
 			final Date datePeriodStart = calendarBegin.getTime();
@@ -731,25 +794,20 @@ public final class VulpeDateUtil {
 			final Calendar dayEndStart = new GregorianCalendar();
 			final Calendar beginNextDay = new GregorianCalendar();
 			do {
-				// calcula o fim para o mesmo dia de in�cio
 				dayEndStart.setTime(dtBeginActivity);
 				dayEndStart.set(Calendar.HOUR_OF_DAY, 23);
 				dayEndStart.set(Calendar.MINUTE, 59);
 				dayEndStart.set(Calendar.SECOND, 59);
 				dayEndStart.add(Calendar.SECOND, 1);
 				final Date dTimeEnd = dayEndStart.getTime();
-				// se fim real for maior que fim do dia de in�cio, utiliza fim
-				// do dia de in�cio,
-				// do contr�rio � �ltimo dia da atividade e deve ser o fim real
 				if (endActivity.compareTo(dTimeEnd) > 0) {
 					dtEndActivity = dTimeEnd;
 				} else {
 					dtEndActivity = endActivity;
 				}
-				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity,
-						datePeriodStart, datePeriodEnd);
+				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity, datePeriodStart,
+						datePeriodEnd);
 				minutes += parcialMinutes;
-				// atualiza o pr�ximo in�cio
 				beginNextDay.setTime(dtEndActivity);
 				dtBeginActivity = beginNextDay.getTime();
 			} while (dtEndActivity.compareTo(endActivity) != 0);
@@ -793,8 +851,11 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * Calcula a diferen�a entre os �ndices dos dias ao longo de um ano entre
-	 * duas datas (dataMenor deve ser menor do que dataMaior)
+	 * Calculate diff in days between dates.
+	 *
+	 * @param minorDate
+	 * @param majorDate
+	 * @return
 	 */
 	public static int getDifferencesBetweenIndicateDays(final Date minorDate, final Date majorDate) {
 		int numDiff = 0;
@@ -848,8 +909,7 @@ public final class VulpeDateUtil {
 	 * @param periodEnd
 	 * @return
 	 */
-	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart,
-			final Date periodEnd) {
+	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart, final Date periodEnd) {
 		return (date.after(periodStart) && (periodEnd == null || date.before(periodEnd)));
 	}
 

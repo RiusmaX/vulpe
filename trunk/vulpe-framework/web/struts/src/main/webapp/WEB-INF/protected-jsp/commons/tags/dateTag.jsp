@@ -1,5 +1,9 @@
 <c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
+	<c:if test="${empty mask}">
+		<c:set var="mask" value="${global['project-view-dateMask']}"/>
+		<c:set var="maxlength" value="${fn:length(mask)}"/>
+	</c:if>
 	<c:if test="${empty size && not empty maxlength}"><c:set var="size" value="${maxlength}"/></c:if>
 	<c:if test="${empty size}"><c:set var="size" value="10"/></c:if>
 	<c:if test="${empty maxlength}"><c:set var="maxlength" value="10"/></c:if>
@@ -17,15 +21,13 @@
 	<c:if test="${!showAsText}">
 	<script type="text/javascript">
 		jQuery(function($){
-			vulpe.util.get('${elementId}').mask("${globo['dateMask']}");
-			//if (!vulpe.config.browser.ie6) {
-				vulpe.util.get('${elementId}').datepicker({
-					showOn: 'button',
-					buttonImage: '${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/button-calendar-16x16.png',
-					buttonImageOnly: true
-				});
-				vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
-			//}
+			vulpe.util.get('${elementId}').mask("${mask}");
+			vulpe.util.get('${elementId}').datepicker({
+				showOn: 'button',
+				buttonImage: '${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/button-calendar-16x16.png',
+				buttonImageOnly: true
+			});
+			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
 		});
 	</script>
 	</c:if>

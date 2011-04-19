@@ -14,7 +14,7 @@
 		<c:if test="${sort && not empty sortPropertyInfoTableTag && not empty property}">
 			<c:if test="${empty alias}"><c:set var="alias" value="obj"/></c:if>
 			<c:choose>
-				<c:when test="${global['useDB4O']}">
+				<c:when test="${global['project-useDB4O']}">
 					<c:set var="elementId">id="${sortPropertyInfoTableTag}_${sortProperty}" </c:set>
 					<c:set var="label"><a href="javascript:void(0);" onclick="vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${sortProperty}');">${label}</a></c:set>
 				</c:when>

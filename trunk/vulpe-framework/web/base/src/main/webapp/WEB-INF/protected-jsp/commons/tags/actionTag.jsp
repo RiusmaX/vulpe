@@ -3,22 +3,22 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
-	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['showButtonsAsImage']}" /></c:if>
-	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['showIconOfButton']}" /></c:if>
-	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['showTextOfButton']}" /></c:if>
-	<c:if test="${global['showWarningBeforeDelete'] && action == 'delete'}">
+	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['project-view-showButtonsAsImage']}" /></c:if>
+	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['project-view-showIconOfButton']}" /></c:if>
+	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['project-view-showTextOfButton']}" /></c:if>
+	<c:if test="${global['project-view-showWarningBeforeDelete'] && action == 'delete'}">
 		<c:set var="showWarningBeforeDelete" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['showWarningBeforeUpdatePost'] && action == 'updatePost'}">
+	<c:if test="${global['project-view-showWarningBeforeUpdatePost'] && action == 'updatePost'}">
 		<c:set var="showWarningBeforeUpdatePost" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['showWarningBeforeClear'] && action == 'clear'}">
+	<c:if test="${global['project-view-showWarningBeforeClear'] && action == 'clear'}">
 		<c:set var="showWarningBeforeClear" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['showWarningBeforeDelete'] && action == 'tabularPost'}">
+	<c:if test="${global['project-view-showWarningBeforeDelete'] && action == 'tabularPost'}">
 		<c:set var="showDeleteWarningBeforeTabularPost" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
@@ -63,11 +63,11 @@
 		</c:when>
 		<c:otherwise>
 			<c:if test="${not empty icon}">
-				<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['showAsMobile'] ? global['mobileIconWidth'] : global['iconWidth']}" /></c:if>
-				<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['showAsMobile'] ? global['mobileIconHeight'] : global['iconHeight']}" /></c:if>
+				<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['project-mobile-enabled'] ? global['project-mobile-iconWidth'] : global['project-view-iconWidth']}" /></c:if>
+				<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['project-mobile-enabled'] ? global['project-mobile-iconHeight'] : global['project-view-iconHeight']}" /></c:if>
 				<c:if test="${empty iconBorder}"><c:set var="iconBorder" value="0" /></c:if>
 				<c:if test="${empty iconExtension}"><c:set var="iconExtension" value="png" /></c:if>
-				<c:set var="iconPrefix"	value="themes/${global['theme']}/images/icons/button" />
+				<c:set var="iconPrefix"	value="themes/${global['project-theme']}/images/icons/button" />
 				<c:set var="icon" value="${iconPrefix}-${icon}-${iconWidth}x${iconHeight}.${iconExtension}" />
 				<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}"><c:set var="icon" value="${pageContext.request.contextPath}/${icon}" /></c:if>
 			</c:if>

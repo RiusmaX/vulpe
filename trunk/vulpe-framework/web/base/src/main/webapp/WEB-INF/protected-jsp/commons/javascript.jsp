@@ -3,8 +3,8 @@
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.charcounter.js" type="text/javascript" charset="utf-8"></script>
 <!--[if IE]><script src="${pageContext.request.contextPath}/js/jquery.bgiframe.js" type="text/javascript" charset="utf-8"></script><![endif]-->
-<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
-<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['frontendMenuType'] == 'SUPERFISH') || (vulpeCurrentLayout == 'BACKEND' && global['backendMenuType'] == 'SUPERFISH')}">
+<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['project-view-frontendMenuType'] == 'DROPPY') || (vulpeCurrentLayout == 'BACKEND' && global['project-view-backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
+<c:if test="${(vulpeCurrentLayout == 'FRONTEND' && global['project-view-frontendMenuType'] == 'SUPERFISH') || (vulpeCurrentLayout == 'BACKEND' && global['project-view-backendMenuType'] == 'SUPERFISH')}">
 <script src="${pageContext.request.contextPath}/js/jquery.hover.intent.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.superfish.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.supersubs.js" type="text/javascript" charset="utf-8"></script>
@@ -25,14 +25,14 @@
 <script src="${pageContext.request.contextPath}/js/vulpe.webtoolkit.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/vulpe.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
-<script src="${pageContext.request.contextPath}/themes/${global['theme']}/js/frontend/${global['theme']}.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/themes/${global['project-theme']}/js/frontend/${global['project-theme']}.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
 vulpe.config.buttons = {
 	ok: '<fmt:message key="label.vulpe.button.ok"/>',
 	cancel: '<fmt:message key="label.vulpe.button.cancel"/>'
 }
 vulpe.config.contextPath = '${pageContext.request.contextPath}';
-vulpe.config.theme = '${global['theme']}';
+vulpe.config.theme = '${global['project-theme']}';
 vulpe.config.messages = {
 	error: {
 		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>',
@@ -70,12 +70,13 @@ vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
 	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>'
 }
-vulpe.config.messageSlideUp ="${global['messageSlideUp']}";
-vulpe.config.messageSlideUpTime = "${global['messageSlideUpTime']}";
-<c:if test="${global['showAsMobile']}">
+vulpe.config.messageSlideUp ="${global['project-view-messageSlideUp']}";
+vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}";
+<c:if test="${global['project-mobile-enabled']}">
 vulpe.config.popup.mobile = true;
 </c:if>
-vulpe.config.sortType = "${global['sortType']}";
+vulpe.config.showReportInNewWindow = "${global['project-view-showReportInNewWindow']}"
+vulpe.config.sortType = "${global['project-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 vulpe.config.accentMap = {
 	"á": "a", "â": "a", "ã": "a", "à": "a",	"ä": "a",

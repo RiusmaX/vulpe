@@ -36,7 +36,7 @@
 	</c:otherwise>
 	</c:choose>
 	<c:choose>
-	<c:when test="${global['pagingStyle'] == 'NUMERIC'}">
+	<c:when test="${global['project-view-pagingStyle'] == 'NUMERIC'}">
 	<c:set var="begin" value="${list.page - 5 <= 0 ? 1 : list.page - 5}"/>
 	<c:set var="end" value="${list.page + 5 <= begin + 9 ? begin + 9 : list.page + 4}"/>
 	<c:if test="${begin < 0}"><c:set var="begin" value="1"/></c:if>

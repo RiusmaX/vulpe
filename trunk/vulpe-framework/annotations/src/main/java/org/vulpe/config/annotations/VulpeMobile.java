@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeMobile {
 
+	boolean enabled() default false;
+
 	String viewportWidth() default "320";
 
 	String viewportHeight() default "480";
@@ -37,4 +39,9 @@ public @interface VulpeMobile {
 	String viewportMaximumScale() default "5.0";
 
 	String viewportMinimumScale() default "1.0";
+
+	int iconHeight() default 32;
+
+	int iconWidth() default 32;
+
 }

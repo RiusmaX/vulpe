@@ -1,6 +1,6 @@
 <c:if test="${(!showAsText || !onlyToSee) && showRequiredIcon}">
-<img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/ajax/field-loader.gif" alt="<fmt:message key="label.vulpe.image.loading"/>" />
-<img id="${elementId}-iconErrorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['theme']}/images/icons/field-error-stop.png" alt="<fmt:message key="label.vulpe.image.field.error"/>" />
+<img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['project-theme']}/images/ajax/field-loader.gif" alt="<fmt:message key="label.vulpe.image.loading"/>" />
+<img id="${elementId}-iconErrorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/field-error-stop.png" alt="<fmt:message key="label.vulpe.image.field.error"/>" />
 <span id="${elementId}-errorMessage" class="vulpeErrorMessage" style="display: none">&nbsp;</span>
 </c:if>
 <c:if test="${!showAsText && not empty validateMaxLength}"><span id="${elementId}-charcount" class="vulpeCharCount"></span></c:if>

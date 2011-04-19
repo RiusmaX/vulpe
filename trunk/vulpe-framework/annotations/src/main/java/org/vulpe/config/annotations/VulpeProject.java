@@ -45,6 +45,21 @@ public @interface VulpeProject {
 	String characterEncoding() default "UTF-8";
 
 	/**
+	 * Default Date pattern.
+	 */
+	String datePattern() default "dd/MM/yyyy";
+
+	/**
+	 * Default Date Time pattern.
+	 */
+	String dateTimePattern() default "dd/MM/yyyy HH:mm:ss";
+
+	/**
+	 * Default Locale Code.
+	 */
+	String localeCode() default "en_US";
+
+	/**
 	 * I18N message files name.
 	 */
 	String[] i18n() default { "VulpeResources", "VulpeSecurityResources", "ApplicationResources" };
@@ -63,11 +78,6 @@ public @interface VulpeProject {
 	 * Configure File Upload properties.
 	 */
 	VulpeUpload upload() default @VulpeUpload;
-
-	/**
-	 * Enable Mobile adapter access.
-	 */
-	boolean mobileEnabled() default false;
 
 	/**
 	 * Configure Mobile properties.
@@ -99,20 +109,4 @@ public @interface VulpeProject {
 	 */
 	boolean debug() default false;
 
-	/**
-	 * Menu Type to frontend.
-	 */
-	MenuType frontendMenuType() default MenuType.SUPERFISH;
-
-	/**
-	 * Menu Type to backend.
-	 */
-	MenuType backendMenuType() default MenuType.SUPERFISH;
-
-	/**
-	 * Menu Type.
-	 */
-	enum MenuType {
-		DROPPY, SUPERFISH, NONE
-	}
 }

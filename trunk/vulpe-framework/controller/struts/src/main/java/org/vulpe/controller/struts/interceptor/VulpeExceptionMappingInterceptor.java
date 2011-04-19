@@ -18,6 +18,7 @@ package org.vulpe.controller.struts.interceptor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeAuthenticationException;
 import org.vulpe.exception.VulpeAuthorizationException;
@@ -191,7 +194,12 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		String message = "";
 		final String key = exception.getClass().getName();
 		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG, Boolean.FALSE);
-		final Boolean globalDebug = action.ever.getSelf(VulpeConstants.Configuration.Global.DEBUG, Boolean.FALSE);
+		final Map<String, Object> global = (Map<String, Object>) ControllerUtil.getServletContext().getAttribute(
+				Context.GLOBAL);
+		Boolean globalDebug = (Boolean) global.get(VulpeConstants.Configuration.Global.PROJECT_DEBUG);
+		if (globalDebug == null) {
+			globalDebug = Boolean.FALSE;
+		}
 		if (sessionDebug || globalDebug) {
 			if (key.endsWith(NullPointerException.class.getName())) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
