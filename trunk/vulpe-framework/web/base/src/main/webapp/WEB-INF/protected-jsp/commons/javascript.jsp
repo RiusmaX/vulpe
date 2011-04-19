@@ -75,7 +75,9 @@ vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}"
 <c:if test="${global['project-mobile-enabled']}">
 vulpe.config.popup.mobile = true;
 </c:if>
-vulpe.config.showReportInNewWindow = "${global['project-view-showReportInNewWindow']}"
+<c:if test="${global['project-view-showReportInNewWindow']}">
+vulpe.config.showReportInNewWindow = true;
+</c:if>
 vulpe.config.sortType = "${global['project-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 vulpe.config.accentMap = {
