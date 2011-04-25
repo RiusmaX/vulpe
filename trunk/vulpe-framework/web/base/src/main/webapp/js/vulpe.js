@@ -42,6 +42,7 @@ var vulpe = {
 		iPhone: {
 			popupTop: 0
 		},
+		javascript: false,
 		layers: {
 			alertDialog: "#alertDialog",
 			vulpeAlertMessage: "#vulpeAlertMessage",
@@ -1895,6 +1896,8 @@ var vulpe = {
 							vulpe.exception.handlerError(data, status);
 						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
+						} else if (data.indexOf('/*[JSON]*/') != -1) {
+							eval(data);
 						} else {
 							try {
 								vulpe.config.redirectToIndex = true;

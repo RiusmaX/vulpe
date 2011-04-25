@@ -272,6 +272,7 @@ $(document).ready(function() {
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
 </c:choose>
 	<c:if test="${not empty now['fieldToFocus']}">vulpe.util.getElementField("${now['fieldToFocus']}").focus();</c:if>
+	<c:if test="${!ajax}">vulpe.view.checkRequiredFields();</c:if>
 });
 </script>
 </c:if>

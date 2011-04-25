@@ -23,8 +23,11 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.ServletRedirectResult;
+import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -36,7 +39,6 @@ import org.vulpe.controller.VulpeSimpleController;
 import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.annotations.ExecuteOnce;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
@@ -127,7 +129,21 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	public String intercept(ActionInvocation invocation) throws Exception {
 		LOG.debug("Init intercept");
 		this.invocation = invocation;
-		return super.intercept(invocation);
+		String result = super.intercept(invocation);
+		if (invocation.getAction() instanceof VulpeSimpleController && !result.equals(Forward.REDIRECT)) {
+			final VulpeSimpleController controller = (VulpeSimpleController) invocation.getAction();
+			if (StringUtils.isNotBlank(controller.getUrlRedirect())) {
+				result = Forward.REDIRECT;
+				VulpeReflectUtil.setFieldValue(invocation, "executed", false);
+				final ServletRedirectResult srr = new ServletRedirectResult("${urlRedirect}");
+				srr.setPrependServletContext(true);
+				srr.setActionMapper(new DefaultActionMapper());
+				VulpeReflectUtil.setFieldValue(srr, "lastFinalLocation", controller.getUrlRedirect());
+				VulpeReflectUtil.setFieldValue(invocation, "result", srr);
+				invocation.setResultCode(result);
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -155,8 +171,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	private void executeAlways(final Object action) {
-		if (action instanceof VulpeStrutsController) {
-			final VulpeStrutsController controller = (VulpeStrutsController) action;
+		if (action instanceof VulpeSimpleController) {
+			final VulpeSimpleController controller = (VulpeSimpleController) action;
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (final Method method : methods) {
 				if (method.isAnnotationPresent(ExecuteAlways.class)) {
@@ -171,8 +187,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	private void executeOnce(final Object action) {
-		if (action instanceof VulpeStrutsController) {
-			final VulpeStrutsController controller = (VulpeStrutsController) action;
+		if (action instanceof VulpeSimpleController) {
+			final VulpeSimpleController controller = (VulpeSimpleController) action;
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (final Method method : methods) {
 				if (method.isAnnotationPresent(ExecuteOnce.class)) {

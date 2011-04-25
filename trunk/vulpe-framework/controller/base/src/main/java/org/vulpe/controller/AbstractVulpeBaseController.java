@@ -816,10 +816,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		List<VulpeHashMap<String, Object>> values = autocompleteValueList();
 		if (VulpeValidationUtil.isEmpty(values)) {
 			List<ENTITY> autocompleteList = autocompleteList();
+			final ENTITY autocompleteEntity = (ENTITY) prepareEntity(Operation.READ).clone();
+			autocompleteEntity.setQueryConfigurationName("autocomplete");
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
 				autocompleteList = (List<ENTITY>) invokeServices(Operation.READ.getValue().concat(
 						getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
-						.getEntityClass() }, new Object[] { prepareEntity(Operation.READ).clone() });
+						.getEntityClass() }, new Object[] { autocompleteEntity });
 			}
 			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
@@ -829,7 +831,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 					try {
 						map.put("id", entity.getId());
-						map.put("value", PropertyUtils.getProperty(entity, getEntitySelect().getAutocomplete()));
+						final String[] autocompleteParts = getEntitySelect().getAutocomplete().split(",");
+						map.put("value", PropertyUtils.getProperty(entity, autocompleteParts[0]));
 						if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
 							for (final Field field : autocompleteFields) {
 								if (!field.getName().equals(getEntitySelect().getAutocomplete())) {
@@ -945,7 +948,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			for (final ENTITY real : paging.getRealList()) {
 				for (final ENTITY modified : values) {
 					if (VulpeValidationUtil.isNotEmpty(modified)) {
-						if (real.getId().equals(modified.getId())) {
+						if (real.getId() != null && real.getId().equals(modified.getId())) {
 							paging.getRealList().set(index, modified);
 							break;
 						}

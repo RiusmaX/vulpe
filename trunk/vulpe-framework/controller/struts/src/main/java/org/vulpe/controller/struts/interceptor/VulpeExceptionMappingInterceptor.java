@@ -88,13 +88,15 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		} else if (newException instanceof VulpeSystemException) {
 			final VulpeSystemException vse = (VulpeSystemException) newException;
 			if (vse.getArgs() != null && vse.getArgs().length > 0) {
-				action.addActionMessage(newException.getMessage(), (Object[]) vse.getArgs());
+				action.addActionMessage(vse.getMessage(), (Object[]) vse.getArgs());
 			} else {
 				String message = action.getText("vulpe.error.unknown");
-				final String key = newException.getMessage();
+				final String key = vse.getMessage();
 				if (key.startsWith("vulpe.error")) {
 					if (vse.getCause() != null && StringUtils.isNotEmpty(vse.getCause().getMessage())) {
-						message = vse.getCause().getMessage();
+						if (!key.equals(vse.getCause().getMessage())) {
+							message = vse.getCause().getMessage();
+						}
 						if (message.startsWith("vulpe.error")) {
 							message = action.getText(message);
 						}

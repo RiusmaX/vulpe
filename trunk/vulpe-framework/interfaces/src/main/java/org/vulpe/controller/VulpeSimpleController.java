@@ -270,6 +270,10 @@ public interface VulpeSimpleController extends Serializable {
 	 */
 	String redirectTo(final String url, final boolean ajax);
 
+	void setUrlRedirect(String urlRedirect);
+
+	String getUrlRedirect();
+
 	public enum Operation {
 
 		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE("delete"), DELETE_DETAIL(
