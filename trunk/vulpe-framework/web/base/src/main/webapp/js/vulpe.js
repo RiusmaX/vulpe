@@ -22,6 +22,7 @@ var vulpe = {
 				redirect: ''
 			}
 		},
+		autocomplete: false,
 		browser: {
 			firefox: (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla"),
 			ie: (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer"),
@@ -1896,7 +1897,7 @@ var vulpe = {
 							vulpe.exception.handlerError(data, status);
 						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
-						} else if (data.indexOf('/*[JSON]*/') != -1) {
+						} else if (!vulpe.config.autocomplete && data.indexOf('/*[JSON]*/') != -1) {
 							eval(data);
 						} else {
 							try {
@@ -1920,6 +1921,8 @@ var vulpe = {
 									var layerObject = vulpe.util.get(options.layer);
 									var layerObjectType = layerObject.attr("type");
 									if (layerObjectType && layerObjectType == "text") {
+										html = html.replace("/*[JSON]*/", "");
+										html = html.replace(/\s/g,"");
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
@@ -1968,6 +1971,7 @@ var vulpe = {
 					vulpe.config.popup.selectRow = false;
 					return;
 				}
+				vulpe.config.autocomplete = true;
 				if (options.value && options.value != "") {
 					var id = vulpe.view.selectPopupIds[options.identifier];
 					if (typeof id == "undefined" || id != options.value || vulpe.util.get(options.description).val() == "") {
@@ -1985,6 +1989,7 @@ var vulpe = {
 					}
 					var afterJs = options.afterJs;
 					options.afterJs = function() {
+						vulpe.config.autocomplete = false;
 						if (vulpe.util.get(description).val() == "") {
 							vulpe.util.get(identifier).val("");
 							vulpe.util.get(identifier).focus();
