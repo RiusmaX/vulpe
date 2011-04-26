@@ -21,14 +21,17 @@ import java.util.Map;
 
 /**
  * Default entity Interface
- *
+ * 
  * @param <ID>
  *            Type of entity identifier
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
-public interface VulpeEntity<ID extends Serializable & Comparable> extends VulpeSimpleEntity {
+public interface VulpeEntity<ID extends Serializable & Comparable> extends Serializable, Comparable<VulpeEntity<ID>> {
+
+	Object clone();
+	
 	ID getId();
 
 	void setId(final ID id);
@@ -54,8 +57,6 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Vulpe
 	String getAutocomplete();
 
 	void setAutocomplete(final String autoComplete);
-
-	VulpeEntity<ID> clone();
 
 	Map<String, Object> getMap();
 

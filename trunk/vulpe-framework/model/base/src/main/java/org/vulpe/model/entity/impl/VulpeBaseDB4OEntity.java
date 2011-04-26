@@ -15,4 +15,5 @@ public class VulpeBaseDB4OEntity<ID extends Serializable & Comparable> extends
 	public void setId(ID id) {
 		this.id = id;
 	}
+
 }

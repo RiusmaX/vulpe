@@ -33,9 +33,7 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
-import org.vulpe.controller.AbstractVulpeBaseSimpleController;
 import org.vulpe.controller.VulpeController;
-import org.vulpe.controller.VulpeSimpleController;
 import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.annotations.ExecuteOnce;
 import org.vulpe.controller.annotations.ResetSession;
@@ -59,7 +57,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	@Override
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
-		if (action instanceof VulpeSimpleController) {
+		if (action instanceof VulpeController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
 			if (action instanceof VulpeController
@@ -70,32 +68,27 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 					controller.manageButtons(controller.getOperation());
 				}
 			}
-			final AbstractVulpeBaseSimpleController simpleController = (AbstractVulpeBaseSimpleController) invocation
-					.getAction();
-			if (simpleController.ever != null) {
-				final String currentControllerKey = simpleController.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation.getAction();
+			if (controller.ever != null) {
+				final String currentControllerKey = controller.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = getControllerUtil().getCurrentControllerKey();
 				boolean autocomplete = false;
-				if (simpleController instanceof AbstractVulpeBaseController) {
-					final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) simpleController;
-					if (controller.getEntitySelect() != null
-							&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
-						autocomplete = true;
-					}
+				if (controller.getEntitySelect() != null
+						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
+					autocomplete = true;
 				}
 				if (StringUtils.isEmpty(currentControllerKey)) {
-					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					executeOnce(action);
-				} else if (!currentControllerKey.equals(controllerKey)
-						&& StringUtils.isEmpty(simpleController.getPopupKey()) && !autocomplete) {
-					simpleController.ever.removeWeakRef();
-					simpleController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+				} else if (!currentControllerKey.equals(controllerKey) && StringUtils.isEmpty(controller.getPopupKey())
+						&& !autocomplete) {
+					controller.ever.removeWeakRef();
+					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					executeOnce(action);
 				}
 			}
-			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER,
-					simpleController.ever);
-			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, simpleController.now);
+			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER, controller.ever);
+			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
 		}
 		final String key = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		if (isMethodReset(this.invocation)) {
@@ -130,8 +123,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 		LOG.debug("Init intercept");
 		this.invocation = invocation;
 		String result = super.intercept(invocation);
-		if (invocation.getAction() instanceof VulpeSimpleController && !result.equals(Forward.REDIRECT)) {
-			final VulpeSimpleController controller = (VulpeSimpleController) invocation.getAction();
+		if (invocation.getAction() instanceof VulpeController && !result.equals(Forward.REDIRECT)) {
+			final VulpeController controller = (VulpeController) invocation.getAction();
 			if (StringUtils.isNotBlank(controller.getUrlRedirect())) {
 				result = Forward.REDIRECT;
 				VulpeReflectUtil.setFieldValue(invocation, "executed", false);
@@ -147,7 +140,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -171,8 +164,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	private void executeAlways(final Object action) {
-		if (action instanceof VulpeSimpleController) {
-			final VulpeSimpleController controller = (VulpeSimpleController) action;
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (final Method method : methods) {
 				if (method.isAnnotationPresent(ExecuteAlways.class)) {
@@ -187,8 +180,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	private void executeOnce(final Object action) {
-		if (action instanceof VulpeSimpleController) {
-			final VulpeSimpleController controller = (VulpeSimpleController) action;
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (final Method method : methods) {
 				if (method.isAnnotationPresent(ExecuteOnce.class)) {

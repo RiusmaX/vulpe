@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.vulpe.controller.VulpeController;
-import org.vulpe.controller.VulpeSimpleController.Operation;
+import org.vulpe.controller.VulpeController.Operation;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;

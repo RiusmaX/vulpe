@@ -15,32 +15,125 @@
  */
 package org.vulpe.model.entity.impl;
 
-import org.apache.log4j.Logger;
-import org.vulpe.model.entity.VulpeSimpleEntity;
+import java.util.List;
+import java.util.Map;
+
+import org.jfree.util.Log;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
-@SuppressWarnings("serial")
-public class VulpeBaseSimpleEntity implements VulpeSimpleEntity {
-
-	private static final Logger LOG = Logger.getLogger(VulpeBaseSimpleEntity.class);
+@SuppressWarnings( { "serial" })
+public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 
 	@Override
-	public int compareTo(VulpeSimpleEntity entity) {
-		return 0;
+	public String getAutocomplete() {
+		return null;
 	}
 
 	@Override
-	public VulpeSimpleEntity clone() {
-		VulpeSimpleEntity entity = null;
+	public List<VulpeEntity<?>> getDeletedDetails() {
+		return null;
+	}
+
+	@Override
+	public Long getId() {
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> getMap() {
+		return null;
+	}
+
+	@Override
+	public String getOrderBy() {
+		return null;
+	}
+
+	@Override
+	public String getQueryConfigurationName() {
+		return null;
+	}
+
+	@Override
+	public boolean isAuditable() {
+		return false;
+	}
+
+	@Override
+	public boolean isFakeId() {
+		return false;
+	}
+
+	@Override
+	public boolean isHistoryAuditable() {
+		return false;
+	}
+
+	@Override
+	public boolean isSelected() {
+		return false;
+	}
+
+	@Override
+	public void setAutocomplete(String autoComplete) {
+
+	}
+
+	@Override
+	public void setDeletedDetails(List<VulpeEntity<?>> deletedDetails) {
+
+	}
+
+	@Override
+	public void setFakeId(boolean fakeId) {
+
+	}
+
+	@Override
+	public void setMap(Map<String, Object> map) {
+
+	}
+
+	@Override
+	public void setOrderBy(String orderBy) {
+	}
+
+	@Override
+	public void setQueryConfigurationName(String queryConfigurationName) {
+
+	}
+
+	@Override
+	public void setSelected(boolean selected) {
+
+	}
+
+	@Override
+	public String toXMLAudit() {
+		return null;
+	}
+
+	@Override
+	public void setId(Long id) {
+	}
+
+	@Override
+	public Object clone() {
 		try {
-			entity = (VulpeSimpleEntity) super.clone();
+			return super.clone();
 		} catch (CloneNotSupportedException e) {
-			LOG.error(e);
+			Log.error(e);
 		}
-		return entity;
+		return null;
+	}
+
+	@Override
+	public int compareTo(VulpeEntity<Long> o) {
+		return 0;
 	}
 }

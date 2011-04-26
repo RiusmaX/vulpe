@@ -18,7 +18,6 @@ public abstract class AbstractVulpeBaseAuditEntity<ID extends Serializable & Com
 	@IgnoreAutoFilter
 	private Date dateOfLastUpdate;
 
-
 	public AbstractVulpeBaseAuditEntity() {
 		super();
 	}

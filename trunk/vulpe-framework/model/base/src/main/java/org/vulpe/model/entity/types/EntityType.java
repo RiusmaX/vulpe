@@ -30,7 +30,7 @@ import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.util.VulpeReflectUtil;
-import org.vulpe.controller.VulpeSimpleController.Operation;
+import org.vulpe.controller.VulpeController.Operation;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.services.VulpeService;

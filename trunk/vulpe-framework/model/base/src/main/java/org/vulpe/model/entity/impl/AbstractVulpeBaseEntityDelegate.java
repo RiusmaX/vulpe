@@ -27,7 +27,7 @@ import org.vulpe.model.entity.VulpeEntity;
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings({ "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntityDelegate<T extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public abstract class AbstractVulpeBaseEntityDelegate<T extends VulpeEntity<ID>, ID extends Serializable & Comparable<VulpeEntity<ID>>>
 		implements Serializable {
 
 	private T bean;

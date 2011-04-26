@@ -34,14 +34,13 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.model.annotations.db4o.IgnoreEmpty;
 import org.vulpe.model.entity.VulpeEntity;
-import org.vulpe.model.entity.VulpeSimpleEntity;
 
 import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> extends VulpeBaseSimpleEntity
-		implements VulpeEntity<ID> {
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements VulpeEntity<ID>,
+		Cloneable {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -83,7 +82,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		return getClass().getSimpleName().concat(this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
-	public int compareTo(final VulpeSimpleEntity entity) {
+	public int compareTo(final VulpeEntity<ID> entity) {
 		if (this.equals(entity)) {
 			return 0;
 		}
@@ -92,15 +91,11 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 			return 999999999;
 		}
 
-		if (entity instanceof VulpeEntity) {
-			final VulpeEntity persistentEntity = (VulpeEntity) entity;
-			if (persistentEntity.getId() == null) {
-				return -999999999;
-			}
-
-			return getId().compareTo(persistentEntity.getId());
+		if (entity.getId() == null) {
+			return -999999999;
 		}
-		return 0;
+
+		return getId().compareTo(entity.getId());
 	}
 
 	@Transient
@@ -147,7 +142,12 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Override
 	public VulpeEntity<ID> clone() {
-		return (VulpeEntity<ID>) super.clone();
+		try {
+			return (VulpeEntity<ID>) super.clone();
+		} catch (CloneNotSupportedException e) {
+			LOG.error(e);
+		}
+		return null;
 	}
 
 	public void setAutocomplete(final String autocomplete) {

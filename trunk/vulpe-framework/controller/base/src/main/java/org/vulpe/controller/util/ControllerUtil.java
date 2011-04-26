@@ -37,20 +37,18 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.VulpeController;
-import org.vulpe.controller.VulpeSimpleController;
-import org.vulpe.controller.VulpeSimpleController.Operation;
+import org.vulpe.controller.VulpeController.Operation;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
-import org.vulpe.controller.commons.VulpeBaseSimpleControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to controller
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 @Component
 @SuppressWarnings("unchecked")
@@ -63,7 +61,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 *
+	 * 
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -107,7 +105,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 *
+	 * 
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
@@ -141,7 +139,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 *
+	 * 
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
@@ -181,7 +179,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 *
+	 * 
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
@@ -208,7 +206,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getCurrentControllerKey() {
@@ -216,7 +214,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public String getCurrentControllerName() {
@@ -275,7 +273,7 @@ public class ControllerUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
@@ -302,29 +300,12 @@ public class ControllerUtil {
 		return config;
 	}
 
-	/**
-	 *
-	 * @param controller
-	 * @return
-	 */
-	public VulpeBaseSimpleControllerConfig getControllerConfig(final VulpeSimpleController controller) {
-		final String key = getCurrentControllerKey();
-		if (VulpeCacheHelper.getInstance().contains(key)) {
-			return VulpeCacheHelper.getInstance().get(key);
-		}
-
-		final VulpeBaseSimpleControllerConfig config = new VulpeBaseSimpleControllerConfig(controller.getClass());
-		VulpeCacheHelper.getInstance().put(key, config);
-
-		return config;
-	}
-
 	private transient final ThreadLocal<String> currentController = new ThreadLocal<String>();
 
 	private transient final ThreadLocal<String> currentControllerURI = new ThreadLocal<String>();
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static ServletContext getServletContext() {
