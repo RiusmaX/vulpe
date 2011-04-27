@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +40,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
@@ -47,7 +48,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -70,7 +71,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/**
 	 * Method responsible for handling exception.
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -143,7 +144,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param exception
 	 * @return
 	 */
@@ -155,7 +156,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return
@@ -165,7 +166,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 */
@@ -181,12 +182,16 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 				message = action.getText("vulpe.exception.translate.EntityNotFoundException", action.getText(entity),
 						identifier);
 			}
+		} else if (exception instanceof ServletException) {
+			if (exception.getCause() != null) {
+				message = exception.getCause().getMessage();
+			}
 		}
 		action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
 	}
 
 	/**
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -208,7 +213,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 				final String fileName = ste.getFileName().replace(".java", "");
 				final String methodName = ste.getMethodName();
 				final int lineNumber = ste.getLineNumber();
-				message = action.getText(key, lineNumber, methodName, fileName);
+				message = action.getText(key);
+				message += action.getText(key + ".debug", fileName, methodName, lineNumber);
 			}
 		} else {
 			message = action.getText(key);

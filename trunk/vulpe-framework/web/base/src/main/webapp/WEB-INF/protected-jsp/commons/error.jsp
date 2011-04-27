@@ -27,7 +27,7 @@
 		<strong><fmt:message key="label.vulpe.statusCode" />:</strong> ${pageContext.errorData.statusCode}<br/>
 		<strong><fmt:message key="label.vulpe.message" />:</strong> ${empty pageContext.errorData.throwable.message ? pageContext.errorData.throwable : pageContext.errorData.throwable.message}<br/>
 		<strong><a href="javascript:void(0)" onclick="vulpe.view.showHideElement('stackTrace');"><fmt:message key="label.vulpe.stackTrace" />:</a></strong>
-		<div id="stackTrace" style="display: none; height: 300px; overflow: auto">
+		<div id="stackTrace" style="display: none; width: 100%; height: 300px; overflow: auto">
 			<c:forEach var="stackTrace" items="${pageContext.errorData.throwable.stackTrace}">
 			${stackTrace}
 			</c:forEach>

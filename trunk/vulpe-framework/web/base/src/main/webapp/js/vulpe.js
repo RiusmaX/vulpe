@@ -281,6 +281,7 @@ var vulpe = {
 		},
 
 		getElementField: function(name, element) {
+			name = name.replace(/\./g,"_");
 			var prefix = element ? vulpe.util.getPrefixIdByElement(element) : vulpe.util.getPrefixId();
 			var field = vulpe.util.get(name.indexOf(prefix) != -1 ? name : prefix + name);
 			if (field.length == 0 && vulpe.util.isNotEmpty(element)) {
@@ -2260,18 +2261,23 @@ var vulpe = {
 
 		handlerError: function(data, status, e) {
 			vulpe.view.hideLoading();
-			if (typeof e == "undefined") {
-				if (typeof data != "string" && data.responseText) {
-					data = data.responseText;
-				}
+			if (typeof data != "string" && data.responseText) {
+				data = data.responseText;
+			}
+			//if (typeof e == "undefined") {
 				if (data.indexOf("\"vulpeAlertError\"") != -1) {
 					vulpe.exception.showMessageError(data, true);
 				} else {
-					jQuery(vulpe.config.layers.modalMessages).html(data);
+					var message = data;
+					if (message.indexOf("<body>") != -1) {
+						message.substring(message.indexOf("<body>"));
+						message = message.substring(0, message.indexOf("</body>"));
+					}
+					jQuery(vulpe.config.layers.modalMessages).html(message);
 				}
-			} else {
-				jQuery(vulpe.config.layers.messages).html(vulpe.config.messages.error.fatal + e);
-			}
+			//} else {
+			//	jQuery(vulpe.config.layers.messages).html(vulpe.config.messages.error.fatal + e);
+			//}
 			if (data.indexOf("\"vulpeAlertError\"") == -1) {
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageInfo");
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageSuccess");
