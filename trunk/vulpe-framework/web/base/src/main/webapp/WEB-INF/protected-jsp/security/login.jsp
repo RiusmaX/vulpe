@@ -28,7 +28,6 @@
 	</p>
 <script type="text/javascript">
 $(document).ready(function() {
-	vulpe.login.executeBefore();
 	vulpe.config.authenticator.url.redirect = "${SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl}";
 	if (vulpe.config.authenticator.url.redirect == "") {
 		vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
@@ -45,11 +44,12 @@ $(document).ready(function() {
 			formName: 'vulpeLoginForm',
 			layerFields: 'vulpeLoginForm',
 			layer: 'body',
-			validate: false
+			validate: false,
+			beforeJs: function() {vulpe.login.executeBefore();},
+			afterJs: function() {vulpe.login.executeAfter();}
 		});
 		return false;
 	});
-	vulpe.login.executeAfter();
 });
 </script>
 </div>

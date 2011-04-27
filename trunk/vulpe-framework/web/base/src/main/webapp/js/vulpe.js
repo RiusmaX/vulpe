@@ -1886,9 +1886,6 @@ var vulpe = {
 					url: vulpe.util.completeURL(options.url),
 					data: options.queryString,
 					success: function (data, status) {
-						if (vulpe.util.isEmpty(options.afterJs) || options.hideLoading) {
-							vulpe.view.hideLoading();
-						}
 						vulpe.config.showLoading = true;
 						var authenticator = options.url.indexOf("/j_spring_security_check") != -1;
 						var loginForm = data.indexOf("vulpeLoginForm") != -1;
@@ -1905,6 +1902,12 @@ var vulpe = {
 								if (authenticator && !loginForm && validUrlRedirect) {
 									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 								} else {
+									if (vulpe.util.isEmpty(options.afterJs) && vulpe.util.isEmpty(options.hideLoading)) {
+										options.hideLoading = true;
+									}
+									if (options.hideLoading) {
+										vulpe.view.hideLoading();
+									}
 									if (loginForm) {
 										var userAuthenticatedLayer = vulpe.util.get("userAuthenticated");
 										if (userAuthenticatedLayer.length == 1) {
@@ -1922,7 +1925,6 @@ var vulpe = {
 									var layerObjectType = layerObject.attr("type");
 									if (layerObjectType && layerObjectType == "text") {
 										html = html.replace("/*[JSON]*/", "");
-										html = html.replace(/\s/g,"");
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
@@ -2257,6 +2259,7 @@ var vulpe = {
 		},
 
 		handlerError: function(data, status, e) {
+			vulpe.view.hideLoading();
 			if (typeof e == "undefined") {
 				if (typeof data != "string" && data.responseText) {
 					data = data.responseText;

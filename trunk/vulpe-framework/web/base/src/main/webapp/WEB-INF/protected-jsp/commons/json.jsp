@@ -1,2 +1,1 @@
-/*[JSON]*/
-${now['JSON']}
+/*[JSON]*/${now['JSON']}

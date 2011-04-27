@@ -505,19 +505,33 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	/**
+	 * Method to check duplicated details.
+	 * 
+	 * @param parent
+	 *            Parent
+	 * @param baseEntity
+	 * @param detailConfig
+	 *            Configuration of detail.
+	 * 
+	 * @since 1.0
+	 */
+	protected abstract boolean duplicatedDetail(final Object parent, final ENTITY baseEntity,
+			final VulpeBaseDetailConfig detailConfig);
+
+	/**
 	 * Method to validate duplicated details.
 	 * 
 	 * @param beans
 	 * @param detailConfig
 	 * @return
 	 */
-	protected boolean validateDuplicatedDetailItens(final Collection<VulpeEntity<?>> beans,
+	protected boolean duplicatedDetailItens(final Collection<VulpeEntity<?>> beans,
 			final VulpeBaseDetailConfig detailConfig) {
 		final String[] despiseFields = detailConfig.getDespiseFields();
 		final Collection<DuplicatedBean> duplicatedBeans = controllerUtil.duplicatedItens(beans, despiseFields);
 		if (duplicatedBeans != null && !duplicatedBeans.isEmpty()) {
 			if (getControllerType().equals(ControllerType.TABULAR) && duplicatedBeans.size() == 1) {
-				return true;
+				return false;
 			}
 			final StringBuilder lines = new StringBuilder();
 			int count = 1;
@@ -535,11 +549,19 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else {
 				final String tabName = getTabs().containsKey(detailConfig.getTitleKey()) ? ((Tab) getTabs().get(
 						detailConfig.getTitleKey())).getTitle() : getText(detailConfig.getTitleKey());
-				addActionError("vulpe.error.details.duplicated", tabName, lines.toString());
+				if (detailConfig.getParentDetailConfig() != null) {
+					final String parentTabName = getTabs().containsKey(
+							detailConfig.getParentDetailConfig().getTitleKey()) ? ((Tab) getTabs().get(
+							detailConfig.getParentDetailConfig().getTitleKey())).getTitle() : getText(detailConfig
+							.getParentDetailConfig().getTitleKey());
+					addActionError("vulpe.error.subdetails.duplicated.tab", tabName, parentTabName, lines.toString());
+				} else {
+					addActionError("vulpe.error.details.duplicated.tab", tabName, lines.toString());
+				}
 			}
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -578,21 +600,18 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				ControllerType.TABULAR));
 	}
 
-	protected abstract void despiseDetail(final Object parent, final ENTITY baseEntity,
-			final VulpeBaseDetailConfig detailConfig);
-
 	/**
 	 * Method to remove detail despised.
 	 * 
+	 * @param parent
+	 *            Parent
+	 * @param detailConfig
+	 *            Configuration of detail.
+	 * 
 	 * @since 1.0
 	 */
-	protected void despiseDetails() {
-		for (VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
-			if (detail.getParentDetailConfig() == null) {
-				despiseDetail(this, getEntity(), detail);
-			}
-		}
-	}
+	protected abstract void despiseDetail(final Object parent, final ENTITY baseEntity,
+			final VulpeBaseDetailConfig detailConfig);
 
 	/**
 	 * Validate if entity already exists
@@ -1949,22 +1968,20 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			tabularPostBefore();
 			controlResultForward();
 			manageButtons();
-			if (validateDetails()) {
-				if (onTabularPost()) {
-					addActionMessage(getDefaultMessage());
-					if (!getEntities().isEmpty()) {
-						final ENTITY entityTabular = getEntities().get(0);
-						if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
-							final String entityName = entityTabular.getClass().getSimpleName();
-							final List<ENTITY> list = new ArrayList<ENTITY>();
-							for (final ENTITY entity : getEntities()) {
-								if (validateCacheClass(entity)) {
-									list.add(entity);
-								}
+			if (validateDetails() && onTabularPost()) {
+				addActionMessage(getDefaultMessage());
+				if (!getEntities().isEmpty()) {
+					final ENTITY entityTabular = getEntities().get(0);
+					if (entityTabular.getClass().isAnnotationPresent(CachedClass.class)) {
+						final String entityName = entityTabular.getClass().getSimpleName();
+						final List<ENTITY> list = new ArrayList<ENTITY>();
+						for (final ENTITY entity : getEntities()) {
+							if (validateCacheClass(entity)) {
+								list.add(entity);
 							}
-							Collections.sort(list);
-							getCachedClasses().put(entityName, list);
 						}
+						Collections.sort(list);
+						getCachedClasses().put(entityName, list);
 					}
 				}
 			}
@@ -1980,7 +1997,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected boolean onTabularPost() {
 		final int size = getEntities().size();
-		despiseDetails();
 		final int sizeDespise = getEntities().size();
 		if (getControllerConfig().getTabularPageSize() > 0) {
 			setTabularSize(getTabularSize() - (size - sizeDespise));
@@ -2968,7 +2984,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							break;
 						}
 					}
-					
+
 				}
 			}
 		}

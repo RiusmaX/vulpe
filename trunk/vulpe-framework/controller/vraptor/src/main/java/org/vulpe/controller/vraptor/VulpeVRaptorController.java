@@ -314,7 +314,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	}
 
 	@Override
-	protected void despiseDetail(Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
+	protected void despiseDetail(final Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
+	}
+
+	@Override
+	protected boolean duplicatedDetail(final Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
+		return false;
 	}
 
 	@Override
