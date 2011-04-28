@@ -157,6 +157,15 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/**
 	 * 
+	 * @param exception
+	 * @return
+	 */
+	protected Throwable getCause(final Throwable exception) {
+		return exception.getCause() != null ? getCause(exception.getCause()) : exception;
+	}
+
+	/**
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return
@@ -174,8 +183,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
 		String message = exception.getMessage();
 		if (exception instanceof EntityNotFoundException) {
-			String token1 = "Unable to find ";
-			String token2 = " with id ";
+			final String token1 = "Unable to find ";
+			final String token2 = " with id ";
 			if (message.contains(token1) && message.contains(token2)) {
 				String entity = message.substring(token1.length(), message.indexOf(token2));
 				String identifier = message.substring(message.indexOf(token2) + token2.length());
@@ -183,9 +192,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 						identifier);
 			}
 		} else if (exception instanceof ServletException) {
-			if (exception.getCause() != null) {
-				message = exception.getCause().getMessage();
-			}
+			message = getCause(exception).getMessage();
 		}
 		action.addActionMessage(VulpeConstants.GENERAL_ERROR, message);
 	}
@@ -208,7 +215,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			globalDebug = Boolean.FALSE;
 		}
 		if (sessionDebug || globalDebug) {
-			if (key.endsWith(NullPointerException.class.getName())) {
+			if (exception instanceof NullPointerException) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
 				final String fileName = ste.getFileName().replace(".java", "");
 				final String methodName = ste.getMethodName();
