@@ -78,6 +78,7 @@ vulpe.config.popup.mobile = true;
 <c:if test="${global['project-view-showReportInNewWindow']}">
 vulpe.config.showReportInNewWindow = true;
 </c:if>
+vulpe.config.hotKeys = eval("${global['project-hotKeys']}");
 vulpe.config.sortType = "${global['project-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 vulpe.config.accentMap = {

@@ -85,9 +85,14 @@ public @interface VulpeProject {
 	VulpeMobile mobile() default @VulpeMobile;
 
 	/**
-	 * Configure Code Generator Properties
+	 * Configure Code Generator properties
 	 */
 	VulpeCodeGenerator codeGenerator() default @VulpeCodeGenerator;
+	
+	/**
+	 * Configure Hot Keys properties
+	 */
+	VulpeHotKeys hotKeys() default @VulpeHotKeys;
 
 	/**
 	 * Project Theme.

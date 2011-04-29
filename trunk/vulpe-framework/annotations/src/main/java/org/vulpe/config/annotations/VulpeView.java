@@ -36,7 +36,7 @@ public @interface VulpeView {
 	 */
 	MenuType backendMenuType() default MenuType.SUPERFISH;
 
-	boolean breakLabel() default false;
+	boolean breakLabel() default true;
 
 	String dateMask() default "99/99/9999";
 

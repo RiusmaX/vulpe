@@ -82,6 +82,7 @@ public class VulpeConstants {
 			public static final String PROJECT_DATE_PATTERN = "project-datePattern";
 			public static final String PROJECT_DATE_TIME_PATTERN = "project-dateTimePattern";
 			public static final String PROJECT_LOCALE_CODE = "project-localeCode";
+			public static final String PROJECT_HOT_KEYS = "project-hotKeys";
 
 			//VulpeView
 			public static final String PROJECT_VIEW_DATE_MASK = "project-view-dateMask";

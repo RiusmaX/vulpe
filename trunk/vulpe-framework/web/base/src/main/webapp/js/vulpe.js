@@ -40,6 +40,20 @@ var vulpe = {
 		elements: new Array(),
 		entity: "-entity_",
 		formName: "",
+		hotKeys: [ 
+		          ["AddDetail", "Alt+f8", ""],
+		          ["Clear", "Alt+Ctrl+Shift+del", ""],
+		          ["Create", "Ctrl+f8", ""],
+		          ["CreatePost", "Ctrl+f10,return", "dontFireInText,putSameOnReturnKey"],
+		          ["Prepare", "Ctrl+backspace", ""],
+		          ["Read", "Ctrl+f9", "putSameOnReturnKey"],
+		          ["Report", "Ctrl+f12", ""],
+		          ["Update", "Ctrl+Shift+[numbers]", ""],
+		          ["UpdatePost", "Ctrl+f10", "dontFireInText,putSameOnReturnKey"],
+		          ["TabularFilter", "Ctrl+f7", ""],
+		          ["TabularPost", "Ctrl+f10", "putSameOnReturnKey"],
+		          ["[tabs]", "Alt+Shift+left,Alt+Shift+right", ""]
+		],
 		iPhone: {
 			popupTop: 0
 		},
@@ -104,6 +118,7 @@ var vulpe = {
 		prefix: {
 			button: "vulpeButton",
 			detail: "#vulpeDetail-",
+			detailTab: "#vulpeMainBodyTabs",
 			popup: "Popup-",
 			selectForm: "vulpeSelectForm-",
 			selectTable: "vulpeSelectTable-"
@@ -125,6 +140,8 @@ var vulpe = {
 		},
 		redirectToIndex: true,
 		requireOneFilter: false,
+		tabIndex: 0,
+		tabsCount: 0,
 		theme: 'default',
 		token: {
 			fieldIndex: "__",
@@ -184,9 +201,55 @@ var vulpe = {
 			}
 			return equalChars;
 		},
+		
+		checkHotKeys: function(parent) {
+			for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
+				var hotkey = vulpe.config.hotKeys[i];
+				if (hotkey[0] == "[tabs]") {
+					var keys = hotkey[1].split(",");
+					vulpe.util.addHotKey({
+						hotKey: keys[0],
+						command: function () {
+							vulpe.util.tabControl(-1);
+	    	                return false;
+						}
+	                });
+					vulpe.util.addHotKey({
+						hotKey: keys[1],
+						command: function () {
+							vulpe.util.tabControl(1);
+	    	                return false;
+						}
+	                });
+				} else {
+					var button = vulpe.util.getButton(hotkey[0]);
+					if (button.length > 0) {
+						var keys = hotkey[1].split(",");
+						var additionals = hotkey[2].split(",");
+						var options = {
+							button: button,
+							override: true
+						};
+						for (var j = 0; j < additionals.length; j++) {
+							if (additionals[j] == "dontFireInText") {
+								options.dontFireInText = true;
+							} else if (additionals[j] == "returnKeyDontFireInText") {
+								options.returnKeyDontFireInText = true;
+							} else if (additionals[j] == "putSameOnReturnKey") {
+								options.putSameOnReturnKey = true;
+							}
+						}
+						for (var j = 0; j < keys.length; j++) {
+							options.hotKey = keys[j];
+							vulpe.util.addHotKey(options);
+						}
+					}
+				}
+			}
+		},
 
 		checkHotKeyExists: function(hotKey) {
-			var elemData = jQuery.data(document);
+			var elemData = jQuery.data(jQuery.data(document));
 			if (elemData.events) {
 				var keydown = elemData.events['keydown'];
 				for (var i = 0; i < keydown.length; i++) {
@@ -200,7 +263,7 @@ var vulpe = {
 
 		/**
 		 *
-		 * @param options {hotKey, command, override, dontFireInText}
+		 * @param options {hotKey, command, override, dontFireInText, returnKeyDontFireInText}
 		 */
 		addHotKey: function(options) {
 			var position = vulpe.util.checkHotKeyExists(options.hotKey);
@@ -212,6 +275,9 @@ var vulpe = {
 				}
 			}
 			if (position == -1 || (position != -1 && options.override)) {
+				if (options.button) {
+					options.command = function() {options.button.click(); return false;};
+				}
 				jQuery(document).bind("keydown", options.hotKey, options.command);
 				var dontFire = function(hotKey) {
 					var dontFireInText = jQuery(document).attr("dontFireInText");
@@ -236,18 +302,23 @@ var vulpe = {
 		removeHotKey: function(hotKey) {
 			var position = vulpe.util.checkHotKeyExists(hotKey);
 			if (position != -1){
-				var elemData = jQuery.data(document);
-				if (elemData.events && elemData.events['keydown']) {
-					var keydown = elemData.events['keydown'];
+				var elemData = jQuery.data(jQuery.data(document));
+				if (elemData.events && elemData.events["keydown"]) {
+					var keydown = elemData.events["keydown"];
 					vulpe.util.removeArray(keydown, position);
 				}
 			}
 			return position;
 		},
 
-		removeHotKeys: function(hotKeys) {
-			for (var i = 0; i < hotKeys.length; i++) {
-				vulpe.util.removeHotKey(hotKeys[i]);
+		removeHotKeys: function() {
+			vulpe.util.removeHotKey("return");
+			for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
+				var hotkey = vulpe.config.hotKeys[i];
+				var keys = hotkey[1].split(",");
+				for (var j = 0; j < keys.length; j++) {
+					vulpe.util.removeHotKey(keys[j]);
+				}
 			}
 		},
 
@@ -494,6 +565,24 @@ var vulpe = {
 
 		getLastVulpePopup: function() {
 			return vulpe.view.popups[vulpe.view.popups.length-1];
+		},
+		
+		tabControl: function(index) {
+			if (index == -1) {
+				if (vulpe.config.tabIndex == 0) {
+					vulpe.config.tabIndex = vulpe.config.tabsCount;
+				} else {
+					vulpe.config.tabIndex = vulpe.config.tabIndex - 1;
+				}
+			} else {
+				if (vulpe.config.tabIndex == vulpe.config.tabsCount) {
+					vulpe.config.tabIndex = 0;
+				} else {
+					vulpe.config.tabIndex = vulpe.config.tabIndex + 1;
+				}
+			}
+			var parent = jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).attr("href");
+			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).click();
 		}
 	},
 	// vulpe.validate
@@ -1933,6 +2022,8 @@ var vulpe = {
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
 										}
+										vulpe.util.removeHotKeys(layerObject);
+										vulpe.util.checkHotKeys(layerObject);
 									}
 									if (typeof options.afterJs == "function") {
 										try {

@@ -52,6 +52,7 @@
 				    show: function(event, ui) {
 				    	var selected = ui.panel.id;
 				        vulpe.util.selectTab("${vulpeFormName}", selected);
+				        vulpe.util.focusFirst(selected);
 				        return true;
 			    	}
 				});
@@ -59,58 +60,7 @@
 				if (selectedTab && selectedTab != "") {
 					$(tabsName).tabs("select", "#" + selectedTab);
 				}
-				var tabs = "${fn:length(controllerConfig.details)}";
-				var tabIndex = 0;
-				var count = 0;
-				var tabControl = function(index) {
-					if (index == -1) {
-						if (tabIndex == 0) {
-							tabIndex = tabs;
-						} else {
-							tabIndex = tabIndex - 1;
-						}
-					} else {
-						if (tabIndex == tabs) {
-							tabIndex = 0;
-						} else {
-							tabIndex = tabIndex + 1;
-						}
-					}
-					var parent = jQuery("#vulpeMainBodyTabs" + tabIndex).attr("href");
-					jQuery("#vulpeMainBodyTabs" + tabIndex).click();
-					vulpe.util.focusFirst(parent);
-					count = 1;
-				}
-				vulpe.util.addHotKey({
-					hotKey: "left",
-					command: function () {
-						tabControl(-1);
-    	                return false;
-					},
-					dontFireInText: true
-                });
-				vulpe.util.addHotKey({
-					hotKey: "Alt+Shift+left",
-					command: function () {
-						tabControl(-1);
-    	                return false;
-					}
-                });
-				vulpe.util.addHotKey({
-					hotKey: "right",
-					command: function () {
-						tabControl(1);
-    	                return false;
-					},
-					dontFireInText: true
-                });
-				vulpe.util.addHotKey({
-					hotKey: "Alt+Shift+right",
-					command: function () {
-                    	tabControl(1);
-                    	return false;
-					}
-                });
+				vulpe.config.tabsCount = "${fn:length(controllerConfig.details)}";
 			});
 		</script>
 	</c:if>

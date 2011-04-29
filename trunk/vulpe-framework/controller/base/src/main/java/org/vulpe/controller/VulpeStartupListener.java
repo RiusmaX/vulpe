@@ -31,7 +31,10 @@ import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeDB4OUtil;
+import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.config.annotations.VulpeDomains;
+import org.vulpe.config.annotations.VulpeHotKey;
+import org.vulpe.config.annotations.VulpeHotKeys;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.helper.VulpeCachedObjectsHelper;
 import org.vulpe.controller.helper.VulpeJobSchedulerHelper;
@@ -39,7 +42,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Class to manager startup of application.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 public class VulpeStartupListener implements ServletContextListener {
@@ -53,7 +56,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seejavax.servlet.ServletContextListener#contextDestroyed(javax.servlet.
 	 * ServletContextEvent)
 	 */
@@ -66,7 +69,7 @@ public class VulpeStartupListener implements ServletContextListener {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
 	 * .ServletContextEvent)
@@ -101,7 +104,7 @@ public class VulpeStartupListener implements ServletContextListener {
 		global.put(Global.PROJECT_DATE_PATTERN, vulpeProject.datePattern());
 		global.put(Global.PROJECT_DATE_TIME_PATTERN, vulpeProject.dateTimePattern());
 		global.put(Global.PROJECT_LOCALE_CODE, vulpeProject.localeCode());
-
+		global.put(Global.PROJECT_HOT_KEYS, mountHotKeys(vulpeProject.hotKeys()));
 		if (vulpeProject.view() != null) {
 			global.put(Global.PROJECT_VIEW_FRONTEND_MENU_TYPE, vulpeProject.view().frontendMenuType());
 			global.put(Global.PROJECT_VIEW_BACKEND_MENU_TYPE, vulpeProject.view().backendMenuType());
@@ -127,7 +130,8 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.PROJECT_VIEW_SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
 			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
 			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
-			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().showWarningBeforeUpdatePost());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view()
+					.showWarningBeforeUpdatePost());
 			global.put(Global.PROJECT_VIEW_SORT_TYPE, vulpeProject.view().sortType());
 			global.put(Global.PROJECT_VIEW_ICON_WIDTH, vulpeProject.view().iconWidth());
 			global.put(Global.PROJECT_VIEW_USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
@@ -151,12 +155,93 @@ public class VulpeStartupListener implements ServletContextListener {
 		loadControllerMethods();
 	}
 
+	/**
+	 * 
+	 */
 	private void loadControllerMethods() {
 		final Map<String, String> mapControllerMethods = new HashMap<String, String>();
 		for (Method method : VulpeController.class.getMethods()) {
 			mapControllerMethods.put(method.getName(), method.getName());
 		}
 		VulpeCacheHelper.getInstance().put(VulpeConstants.CONTROLLER_METHODS, mapControllerMethods);
+	}
+
+	/**
+	 * 
+	 * @param vulpeHotKeys
+	 * @return
+	 */
+	private String mountHotKeys(final VulpeHotKeys vulpeHotKeys) {
+		final StringBuilder hotKeys = new StringBuilder("[");
+		final VulpeHashMap<String, String> mapKeys = new VulpeHashMap<String, String>();
+		for (final VulpeHotKey hotKey : vulpeHotKeys.defaultKeys()) {
+			final StringBuilder hotKeyValue = new StringBuilder("[");
+			final StringBuilder keys = new StringBuilder();
+			for (final String key : hotKey.keys()) {
+				if (keys.length() > 0) {
+					keys.append(",");
+				}
+				keys.append(key);
+			}
+			final StringBuilder additionals = new StringBuilder();
+			if (hotKey.dontFireOnText()) {
+				additionals.append("dontFireOnText");
+			}
+			if (hotKey.returnKeyDontFireInText()) {
+				if (additionals.length() > 0) {
+					additionals.append(",");
+				}
+				additionals.append("returnKeyDontFireInText");
+			}
+			if (hotKey.putSameOnReturnKey()) {
+				if (additionals.length() > 0) {
+					additionals.append(",");
+				}
+				additionals.append("putSameOnReturnKey");
+			}
+			hotKeyValue.append("'").append(hotKey.name()).append("','").append(keys.toString()).append("',")
+					.append("'").append(additionals.toString()).append("'");
+			hotKeyValue.append("]");
+			mapKeys.put(hotKey.name(), hotKeyValue.toString());
+		}
+		for (final VulpeHotKey hotKey : vulpeHotKeys.value()) {
+			final StringBuilder hotKeyValue = new StringBuilder("[");
+			final StringBuilder keys = new StringBuilder();
+			for (final String key : hotKey.keys()) {
+				if (keys.length() > 0) {
+					keys.append(",");
+				}
+				keys.append(key);
+			}
+			final StringBuilder additionals = new StringBuilder();
+			if (hotKey.dontFireOnText()) {
+				additionals.append("dontFireOnText");
+			}
+			if (hotKey.returnKeyDontFireInText()) {
+				if (additionals.length() > 0) {
+					additionals.append(",");
+				}
+				additionals.append("returnKeyDontFireInText");
+			}
+			if (hotKey.putSameOnReturnKey()) {
+				if (additionals.length() > 0) {
+					additionals.append(",");
+				}
+				additionals.append("putSameOnReturnKey");
+			}
+			hotKeyValue.append("'").append(hotKey.name()).append("','").append(keys.toString()).append("',")
+					.append("'").append(additionals.toString()).append("'");
+			hotKeyValue.append("]");
+			mapKeys.put(hotKey.name(), hotKeyValue.toString());
+		}
+		for (final String hotKey : mapKeys.values()) {
+			if (hotKeys.length() > 1) {
+				hotKeys.append(",");
+			}
+			hotKeys.append(hotKey);
+		}
+		hotKeys.append("];");
+		return hotKeys.toString();
 	}
 
 }
