@@ -602,10 +602,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (beans != null && beans.size() > 1) {
 				has = duplicatedDetailItens(beans, detailConfig);
 			}
-			if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
-				for (final VulpeEntity<?> bean : beans) {
-					for (final VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
-						has = duplicatedDetail(bean, baseEntity, subDetailConfig);
+			if (!has) {
+				if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
+					for (final VulpeEntity<?> bean : beans) {
+						for (final VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
+							has = duplicatedDetail(bean, baseEntity, subDetailConfig);
+						}
 					}
 				}
 			}

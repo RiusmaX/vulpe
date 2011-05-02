@@ -81,7 +81,7 @@ public @interface VulpeView {
 
 	boolean showLine() default true;
 
-	boolean showReportInNewWindow() default false;
+	boolean showReportInNewWindow() default true;
 
 	boolean showPoweredBy() default true;
 
