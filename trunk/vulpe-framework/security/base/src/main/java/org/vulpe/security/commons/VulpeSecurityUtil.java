@@ -17,66 +17,20 @@ package org.vulpe.security.commons;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeServiceLocator;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
-import org.vulpe.commons.helper.VulpeCacheHelper;
-import org.vulpe.commons.util.VulpeHashMap;
-import org.vulpe.model.services.VulpeService;
+import org.vulpe.commons.VulpeBaseUtil;
 
 /**
  * Vulpe Security Callback utility class.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("unchecked")
-public class VulpeSecurityUtil {
-
-	/**
-	 * Method find specific service returns POJO or EJB implementation.
-	 *
-	 * @param serviceClass
-	 * @return Service Implementation.
-	 * @since 1.0
-	 * @see VulpeService
-	 */
-	public <T extends VulpeService> T getService(final Class<T> serviceClass) {
-		return VulpeServiceLocator.getInstance().getService(serviceClass);
-	}
-
-	/**
-	 * Retrieves a Spring Bean by name.
-	 *
-	 * @param <T>
-	 *            Class type to return
-	 * @param beanName
-	 *            Name of Component/Service/Repository
-	 * @return Bean converted to Class type
-	 * @since 1.0
-	 */
-	public <T> T getBean(final String beanName) {
-		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
-	}
-
-	/**
-	 * Retrieves a Spring Bean by class.
-	 *
-	 * @param <T>
-	 *            Class type to return
-	 * @param clazz
-	 *            Component/Service/Repository class
-	 * @return Bean converted to Class type
-	 * @since 1.0
-	 */
-	public <T> T getBean(final Class<T> clazz) {
-		return (T) getBean(clazz.getSimpleName());
-	}
+public class VulpeSecurityUtil extends VulpeBaseUtil {
 
 	/**
 	 * Retrieves Spring Security Authentication.
-	 *
+	 * 
 	 * @return Authentication Interface
 	 * @since 1.0
 	 */
@@ -84,15 +38,4 @@ public class VulpeSecurityUtil {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
-	public VulpeHashMap<String, Object> getCachedClass() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASSES);
-	}
-
-	public VulpeHashMap<String, Object> getCachedEnum() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS);
-	}
-
-	public VulpeHashMap<String, Object> getCachedEnumArray() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS_ARRAY);
-	}
 }

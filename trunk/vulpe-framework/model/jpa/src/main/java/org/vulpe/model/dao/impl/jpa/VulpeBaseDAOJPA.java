@@ -36,6 +36,7 @@ import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
@@ -56,7 +57,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
 
 /**
  * Default implementation of DAO with JPA.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
@@ -66,7 +67,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#create(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -87,7 +88,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#delete(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -128,7 +129,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#update(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -146,7 +147,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -170,7 +171,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#read(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -192,7 +193,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#paging(org.vulpe.model.entity.VulpeEntity,
 	 * java.lang.Integer, java.lang.Integer)
@@ -334,7 +335,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Retrieves HQL select string to current entity.
-	 *
+	 * 
 	 * @param entity
 	 * @param params
 	 * @return
@@ -406,15 +407,35 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(entity.getClass().getSimpleName());
 				hql.append(" obj ");
 			}
-			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().join())) {
-				hql.append(queryConfiguration.replace().join());
-			} else if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().join())) {
-				hql.append(queryConfiguration.complement().join());
+			StringBuilder hqlJoin = new StringBuilder();
+			if (!params.isEmpty()) {
+				for (final String name : params.keySet()) {
+					if (name.contains(".")) {
+						final String paramName = name.substring(0, name.lastIndexOf("."));
+						final String[] joins = paramName.split("\\.");
+						if (joins.length > 0) {
+							String parent = "obj";
+							for (final String join : joins) {
+								final StringBuilder joinString = new StringBuilder("join ");
+								joinString.append(parent).append(".").append(join).append(" ").append(join).append(" ");
+								if (!hql.toString().contains(joinString.toString())) {
+									hqlJoin.append(joinString.toString());
+								}
+								parent = join;
+							}
+						}
+					}
+				}
 			}
+			if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().join())) {
+				hqlJoin = new StringBuilder(queryConfiguration.replace().join());
+			} else if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().join())) {
+				hqlJoin.append(queryConfiguration.complement().join());	
+			}
+			hql.append(hqlJoin.toString());
 		} else {
 			hql.append(namedQuery.query());
 		}
-
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().where())) {
 			hql.append(" where ");
 			hql.append(queryConfiguration.replace().where());
@@ -432,6 +453,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					if (queryParameter == null || StringUtils.isEmpty(queryParameter.equals().name())) {
 						String hqlAttributeName = name.startsWith("_") ? name.replace("_", "") : "obj." + name;
 						String hqlParamName = name.replace("_", "").replaceAll("\\.", "_");
+						if (VulpeStringUtil.count(name, ".") > 1) {
+							final String attributeName = name.substring(name.lastIndexOf("."));
+							final String paramName = name.substring(0, name.lastIndexOf("."));
+							final String[] joins = paramName.split("\\.");
+							hqlAttributeName = joins[joins.length - 1] + attributeName;
+						}
 						if (value instanceof String) {
 							final String valueString = (String) value;
 							final boolean useLike = valueString.startsWith("[like]");
@@ -567,7 +594,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/**
 	 * Checks if value is not empty.
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -586,7 +613,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -675,5 +702,24 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				session.disableFilter(filterDef.name());
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		StringBuilder hql = new StringBuilder();
+		final Map<String, Object> params = new HashMap<String, Object>();
+		params.put("obj.normaExternaRCI.rci.id", "1");
+		for (final String name : params.keySet()) {
+			String paramName = name.replace("obj.", "");
+			paramName = paramName.substring(0, paramName.lastIndexOf("."));
+			String[] joins = paramName.split("\\.");
+			if (joins.length > 1) {
+				String parent = "obj";
+				for (String join : joins) {
+					hql.append(" join ").append(parent).append(".").append(join);
+					parent = join;
+				}
+			}
+		}
+		System.out.println(hql.toString());
 	}
 }

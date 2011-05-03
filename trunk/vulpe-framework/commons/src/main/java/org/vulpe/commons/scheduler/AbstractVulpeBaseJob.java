@@ -15,10 +15,15 @@
  */
 package org.vulpe.commons.scheduler;
 
+import org.apache.log4j.Logger;
+import org.vulpe.commons.VulpeBaseUtil;
+
 /**
  * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
-public abstract class AbstractVulpeBaseJob implements VulpeJob {
+public abstract class AbstractVulpeBaseJob extends VulpeBaseUtil implements VulpeJob {
 
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseJob.class);
+	
 }

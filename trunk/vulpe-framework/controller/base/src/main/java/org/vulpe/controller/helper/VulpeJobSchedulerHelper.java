@@ -23,6 +23,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -76,13 +77,12 @@ public final class VulpeJobSchedulerHelper {
 			final List<URL> urls = new ArrayList<URL>();
 			for (URL url : urlsWebInfLib) {
 				final String jarName = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
-				if (!VulpeConfigHelper.isSecurityEnabled()
-						&& jarName.contains(VulpeConstants.VULPE_SECURITY)) {
+				if (!VulpeConfigHelper.isSecurityEnabled() && jarName.contains(VulpeConstants.VULPE_SECURITY)) {
 					continue;
 				}
-				if (jarName.contains(VulpeConstants.VULPE)
-						|| jarName.contains(VulpeConstants.COMMONS)
-						|| jarName.contains(VulpeConstants.CONTROLLER)) {
+				if (jarName.contains(VulpeConstants.VULPE) || jarName.contains(VulpeConstants.COMMONS)
+						|| jarName.contains(VulpeConstants.CONTROLLER)
+						|| jarName.contains(VulpeConfigHelper.getProjectName())) {
 					urls.add(url);
 				}
 			}
@@ -142,9 +142,11 @@ public final class VulpeJobSchedulerHelper {
 	public static void jobScheduler(final Scheduler scheduler, final VulpeJob job) {
 		final Job jobAnnotation = job.getClass().getAnnotation(Job.class);
 		try {
-			JobDetail jobDetail = new JobDetail(job.getClass().getName(), "group1", job.getClass());
-			CronTrigger trigger = new CronTrigger("trigger1", "group1", job.getClass().getName(),
-					"group1", jobAnnotation.value());
+			final JobDetail jobDetail = new JobDetail(job.getClass().getName(), jobAnnotation.group(), job.getClass());
+			final String triggerName = StringUtils.isNotBlank(jobAnnotation.trigger()) ? jobAnnotation.trigger() : job
+					.getClass().getSimpleName().concat("Trigger");
+			final CronTrigger trigger = new CronTrigger(triggerName, jobAnnotation.group(), job.getClass().getName(),
+					jobAnnotation.group(), jobAnnotation.value());
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (Exception e) {
 			LOG.error(e);

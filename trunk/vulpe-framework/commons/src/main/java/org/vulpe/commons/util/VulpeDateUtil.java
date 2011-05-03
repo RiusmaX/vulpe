@@ -33,7 +33,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
  * Utility class to date format.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public final class VulpeDateUtil {
@@ -71,7 +71,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date.
-	 *
+	 * 
 	 * @author <a href="mailto:smendes@cit.com.br">Silvio Mendes</a>
 	 * @since 12/04/2006
 	 * @return VulpeDate Data corrente
@@ -84,7 +84,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date plus one millisecond more.
-	 *
+	 * 
 	 * @return
 	 */
 	public static Date getCurrentDatePlusOne() {
@@ -95,7 +95,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date decrease one millisecond.
-	 *
+	 * 
 	 * @return
 	 */
 	public static Date getCurrentDateMinusOne() {
@@ -106,7 +106,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves yesterday date.
-	 *
+	 * 
 	 * @return
 	 */
 	public static Date getYesterdayDate() {
@@ -124,7 +124,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on TimeStamp format: ddmmaahhmmss.
-	 *
+	 * 
 	 * @param timestamp
 	 * @return
 	 */
@@ -145,7 +145,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with pattern dd/MM/yyyy.
-	 *
+	 * 
 	 * @return String
 	 */
 	public static String getDateFormated(final Date data) {
@@ -155,7 +155,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date to pattern ddmmYY.
-	 *
+	 * 
 	 * @return String
 	 */
 	public static String getDateFormattedNoBar(final Date data) {
@@ -165,7 +165,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date to pattern dd/MM/yyyy HH:mm:ss.
-	 *
+	 * 
 	 * @return String
 	 */
 	public static String getDateTimeFormatted(final Date data) {
@@ -175,7 +175,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with specific pattern.
-	 *
+	 * 
 	 * @return java.util.Date
 	 */
 	public static Date getDate(final String date, final String pattern) {
@@ -192,7 +192,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with specific pattern.
-	 *
+	 * 
 	 * @return String
 	 */
 	public static String getDate(final Date date, final String pattern) {
@@ -209,7 +209,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid date.
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -226,7 +226,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -238,7 +238,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param date
 	 * @param field
 	 * @param value
@@ -253,7 +253,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Time in minutes to String.
-	 *
+	 * 
 	 * @param minutes
 	 * @return
 	 */
@@ -273,7 +273,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Time in minutes to String.
-	 *
+	 * 
 	 * @param minutes
 	 * @return
 	 */
@@ -283,7 +283,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate minutes of duration.
-	 *
+	 * 
 	 * @param duration
 	 * @return
 	 */
@@ -303,7 +303,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Date to same date with first hour of day.
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -324,7 +324,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid Time.
-	 *
+	 * 
 	 * @param time
 	 * @param lenient
 	 * @return
@@ -361,7 +361,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid Date.
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -406,7 +406,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on extensive format. Example: 01 of Jully of 2010.
-	 *
+	 * 
 	 * @return
 	 */
 	public String getExtensiveDate() {
@@ -422,7 +422,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in days between dates.
-	 *
+	 * 
 	 * @param begin
 	 * @param end
 	 * @return
@@ -456,7 +456,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Date.
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 * @throws ParseException
@@ -481,7 +481,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Time.
-	 *
+	 * 
 	 * @param time
 	 * @return
 	 * @throws ParseException
@@ -494,7 +494,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Date Time.
-	 *
+	 * 
 	 * @param dateTime
 	 * @return
 	 * @throws ParseException
@@ -506,7 +506,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param dateTime
 	 * @return
 	 */
@@ -520,7 +520,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param dateTime
 	 * @return
 	 */
@@ -534,7 +534,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param dateTime
 	 * @return
 	 */
@@ -549,7 +549,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert time to String.
-	 *
+	 * 
 	 * @param time
 	 * @return
 	 */
@@ -565,7 +565,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to String with day of week. Example: Date: 04/10/2005 Value
 	 * returned: Tue
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -577,7 +577,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to same Date with last minute of day. Example: Input:
 	 * 01/01/2005 Output: 01/01/2005 23:59:59
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -594,7 +594,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to same Date with first minute of day. Example: Input:
 	 * 01/01/2005 Output: 01/01/2005 00:00:00
-	 *
+	 * 
 	 * @param date
 	 * @return
 	 */
@@ -610,7 +610,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in milliseconds between dates.
-	 *
+	 * 
 	 * @param begin
 	 * @param end
 	 * @return
@@ -639,7 +639,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in minutes between dates.
-	 *
+	 * 
 	 * @param begin
 	 * @param end
 	 * @return
@@ -650,7 +650,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate quantity of minutes of task.
-	 *
+	 * 
 	 * @param dateTimeBegin
 	 * @param dateTimeEnd
 	 * @param begin
@@ -720,7 +720,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks time period.
-	 *
+	 * 
 	 * @param beginHour
 	 * @param endHour
 	 * @param hour
@@ -761,7 +761,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves time of activity on period.
-	 *
+	 * 
 	 * @param dateTimeStart
 	 * @param dateTimeEnd
 	 * @param start
@@ -817,7 +817,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Adds days on Date.
-	 *
+	 * 
 	 * @param date
 	 * @param numberOfDays
 	 * @return
@@ -835,7 +835,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves Time Zone (GTM)
-	 *
+	 * 
 	 * @return
 	 */
 	public static String getOffSetTimeZone() {
@@ -852,7 +852,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in days between dates.
-	 *
+	 * 
 	 * @param minorDate
 	 * @param majorDate
 	 * @return
@@ -889,7 +889,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks whether the dates are on the same day.
-	 *
+	 * 
 	 * @param date1
 	 * @param date2
 	 * @return
@@ -903,7 +903,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if data is between period.
-	 *
+	 * 
 	 * @param date
 	 * @param periodStart
 	 * @param periodEnd
@@ -915,7 +915,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves dates by days of week on month
-	 *
+	 * 
 	 * @param days
 	 * @return
 	 */
@@ -942,7 +942,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves the first date of the month.
-	 *
+	 * 
 	 * @return
 	 */
 	public static Date getFirstDateOfTheMonth() {
@@ -957,7 +957,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves the last date of the month.
-	 *
+	 * 
 	 * @return
 	 */
 	public static Date getLastDateOfTheMonth() {
@@ -969,4 +969,28 @@ public final class VulpeDateUtil {
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar.getTime();
 	}
+
+	public static Date getDateOfBusinessDay(int addDays) {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		if (addDays > 0) {
+			int count = 0;
+			for (int i = 0; i < addDays; i++) {
+				calendar.add(Calendar.DAY_OF_MONTH, 1);
+				if (isWeekend(calendar.getTime())) {
+					++count;
+				}
+			}
+			calendar.add(Calendar.DAY_OF_MONTH, count);
+		} else {
+			while (isWeekend(calendar.getTime())) {
+				calendar.add(Calendar.DAY_OF_MONTH, 1);
+			}
+		}
+		return calendar.getTime();
+	}
+
 }
