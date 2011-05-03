@@ -12,12 +12,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
+import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
 @Controller(type = ControllerType.FRONTEND)
-public class IndexController extends ApplicationBaseSimpleController {
+public class IndexController extends ApplicationBaseSimpleController<VulpeBaseSimpleEntity, Long> {
 
 	protected final Logger LOG = Logger.getLogger(IndexController.class);
 

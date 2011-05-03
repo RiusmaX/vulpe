@@ -2,7 +2,7 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 <?xml version='1.0' encoding='utf-8'?>
-<Context path="/${rootArtifactId}" privileged="true" swallowOutput="true">
+<Context path="/${rootArtifactId}" privileged="true">
 	<Resource name="jdbc/${rootArtifactId}" auth="Container" type="javax.sql.DataSource"
 		driverClassName="org.apache.derby.jdbc.EmbeddedDriver" url="jdbc:derby:../../Database/derby/${rootArtifactId};create=true" username=""
 		password="" maxActive="20" maxIdle="10" maxWait="-1" />
