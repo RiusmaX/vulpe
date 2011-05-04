@@ -32,10 +32,10 @@ public @interface VulpeHotKeys {
 			@VulpeHotKey(name = "Delete", keys = "Ctrl+del"), @VulpeHotKey(name = "Prepare", keys = "Ctrl+backspace"),
 			@VulpeHotKey(name = "Read", keys = "Ctrl+f9", putSameOnReturnKey = true),
 			@VulpeHotKey(name = "Report", keys = "Ctrl+f12"),
-			@VulpeHotKey(name = "Update", keys = "Ctrl+Shift+[numbers]"),
 			@VulpeHotKey(name = "UpdatePost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
 			@VulpeHotKey(name = "TabularFilter", keys = "Ctrl+f7"),
 			@VulpeHotKey(name = "TabularPost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
+			@VulpeHotKey(name = "[items]", keys = "Ctrl+Shift+[numbers]"),
 			@VulpeHotKey(name = "[tabs]", keys = { "Alt+Shift+left", "Alt+Shift+right" }) };
 
 	VulpeHotKey[] value() default {};

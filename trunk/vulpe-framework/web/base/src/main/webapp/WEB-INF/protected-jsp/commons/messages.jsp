@@ -3,6 +3,10 @@
 	<c:if test="${not empty fieldErrors}">
 		<script charset="utf-8">
 			$(document).ready(function() {
+				var messages = "#messages";
+				if (vulpe.util.existsVulpePopups()) {
+					messages = "#messagesPopup";
+				}
 				<c:forEach items="${fieldErrors}" var="entry">
 					<c:set var="msgs" value="<em></em>"/>
 					<c:forEach items="${entry.value}" var="msg">
@@ -15,14 +19,14 @@
 					vulpe.exception.setupError('${fieldName}', '${msgs}');
 				</c:forEach>
 				vulpe.exception.focusFirstError('${vulpeFormName}');
-				$("#messages").removeClass("vulpeMessageError");
-				$("#messages").removeClass("vulpeMessageSuccess");
-				$("#messages").removeClass("vulpeMessageInfo");
-				$("#messages").addClass("vulpeMessageValidation");
-				$("#messages").slideDown("slow");
+				$(messages).removeClass("vulpeMessageError");
+				$(messages).removeClass("vulpeMessageSuccess");
+				$(messages).removeClass("vulpeMessageInfo");
+				$(messages).addClass("vulpeMessageValidation");
+				$(messages).slideDown("slow");
 				<c:if test="${global['project-view-messageSlideUp']}">
 				setTimeout(function() {
-				  $("#messages").slideUp("slow");
+				  	$(messages).slideUp("slow");
 				}, ${global['project-view-messageSlideUpTime']});
 				</c:if>
 			});
@@ -58,38 +62,42 @@
 			<script charset="utf-8" type="text/javascript">
 				$(document).ready(function() {
 					var msg = '<ul>';
-					$("#messages").removeClass("vulpeMessageError");
-					$("#messages").removeClass("vulpeMessageSuccess");
-					$("#messages").removeClass("vulpeMessageInfo");
-					$("#messages").removeClass("vulpeMessageValidation");
+					var messages = "#messages";
+					if (vulpe.util.existsVulpePopups()) {
+						messages = "#messagesPopup";
+					}
+					$(messages).removeClass("vulpeMessageError");
+					$(messages).removeClass("vulpeMessageSuccess");
+					$(messages).removeClass("vulpeMessageInfo");
+					$(messages).removeClass("vulpeMessageValidation");
 					<c:if test="${not empty actionErrors}">
-					$("#messages").addClass("vulpeMessageError");
+					$(messages).addClass("vulpeMessageError");
 						<c:forEach items="${actionErrors}" var="msg">
 					msg += '<li class="vulpeAlertError">${msg}</li>';
 						</c:forEach>
 					</c:if>
 					<c:if test="${not empty actionMessages}">
-					$("#messages").addClass("vulpeMessageSuccess");
+					$(messages).addClass("vulpeMessageSuccess");
 						<c:forEach items="${actionMessages}" var="msg">
 					msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
 					</c:if>
 					<c:if test="${not empty actionInfoMessages}">
-					$("#messages").addClass("vulpeMessageInfo");
+					$(messages).addClass("vulpeMessageInfo");
 						<c:forEach items="${actionInfoMessages}" var="msg">
 					msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
 					</c:if>
-					msg += '</ul><div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'#messages\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
+					msg += '</ul><div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'' + messages + '\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
 					jQuery(document).bind("keydown", "Esc", function(evt) {
-						$('#messages').slideUp('slow');
+						$(messages).slideUp('slow');
 						return false;
 					});
-					$("#messages").html(msg);
-					$("#messages").slideDown("slow");
+					$(messages).html(msg);
+					$(messages).slideDown("slow");
 					<c:if test="${global['project-view-messageSlideUp']}">
 					setTimeout(function() {
-			          $("#messages").slideUp("slow");
+			          	$(messages).slideUp("slow");
 					}, ${global['project-view-messageSlideUpTime']});
 					</c:if>
 				});

@@ -48,10 +48,10 @@ var vulpe = {
 		          ["Prepare", "Ctrl+backspace", ""],
 		          ["Read", "Ctrl+f9", "putSameOnReturnKey"],
 		          ["Report", "Ctrl+f12", ""],
-		          ["Update", "Ctrl+Shift+[numbers]", ""],
 		          ["UpdatePost", "Ctrl+f10", "dontFireInText,putSameOnReturnKey"],
 		          ["TabularFilter", "Ctrl+f7", ""],
 		          ["TabularPost", "Ctrl+f10", "putSameOnReturnKey"],
+		          ["[items]", "Ctrl+Shift+[numbers]", ""],
 		          ["[tabs]", "Alt+Shift+left,Alt+Shift+right", ""]
 		],
 		iPhone: {
@@ -203,6 +203,7 @@ var vulpe = {
 		},
 		
 		checkHotKeys: function(parent) {
+			var form = vulpe.util.getForm({parent: parent});
 			for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
 				var hotkey = vulpe.config.hotKeys[i];
 				if (hotkey[0] == "[tabs]") {
@@ -222,7 +223,7 @@ var vulpe = {
 						}
 	                });
 				} else {
-					var button = vulpe.util.getButton(hotkey[0]);
+					var button = vulpe.util.getButton(hotkey[0], $(form).attr("id"));
 					if (button.length > 0) {
 						var keys = hotkey[1].split(",");
 						var additionals = hotkey[2].split(",");
@@ -370,13 +371,20 @@ var vulpe = {
 			return vulpe.config.elements[id];
 		},
 
-		getButton: function(name) {
-			return vulpe.util.get("vulpeButton" + name + "-" + vulpe.config.formName);
+		getButton: function(name, formName) {
+			if (!formName) {
+				formName = vulpe.config.formName;
+			}
+			return vulpe.util.get("vulpeButton" + name + "-" + formName);
 		},
 
-		getForm: function(formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
+		getForm: function(options) {
+			if (options.formName) {
+				vulpe.config.formName = options.formName;
+			} else if (options.parent && $("form", options.parent).length > 0) {
+				vulpe.config.formName = $($("form", options.parent)[0]).attr("id");
+			} else {
+				vulpe.config.formName = $("form").attr("id");
 			}
 			return vulpe.util.get(vulpe.config.formName);
 		},
@@ -1270,8 +1278,16 @@ var vulpe = {
 					});
 					var onclick = $(this).attr("onclick");
 					if (typeof onclick == "function" || vulpe.util.isNotEmpty(onclick)) {
+						var key = "";
+						for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
+							var hotkey = vulpe.config.hotKeys[i];
+							if (hotkey[0] == "[items]") {
+								key = hotkey[1];
+								break;
+							}
+						}
 						vulpe.util.addHotKey({
-							hotKey: "Ctrl+Shift+" + (index == 10 ? 0 : index),
+							hotKey: key.replace("[numbers]", "") + (index == 10 ? 0 : index),
 							command: function () {
 								vulpe.util.get(id).click();
 								return false;
@@ -1416,7 +1432,6 @@ var vulpe = {
 			vulpe.view.isSelection = select;
 		},
 
-
 		markOnlyOne: function(controller, name, parent) {
 			if (!parent) {
 				parent = "#body";
@@ -1427,6 +1442,23 @@ var vulpe = {
 			controller.checked = true;
 		},
 
+		controlMarkUnmarkAll: function(select, name, parent) {
+			var selected = false;
+			if (select.checked) {
+				var items = jQuery(":checkbox[name$='"+ name +"']", parent).length;
+				var count = 0;
+				jQuery(":checkbox[name$='"+ name +"']", parent).each(function(index) {
+					if (eval($(this).attr("checked"))) {
+						++count;
+					}
+				});
+				if (count == items) {
+					selected = true;
+				}
+			}
+			vulpe.util.get("selectAll", parent).attr("checked", selected);
+		},
+		
 		markUnmarkAll: function(controller, name, parent) {
 			if (!parent) {
 				parent = "#body";
@@ -1539,6 +1571,8 @@ var vulpe = {
 					modal: true,
 					close: function(event, ui) { 
 						$(this).remove(); 
+						vulpe.util.removeHotKeys();
+						vulpe.util.checkHotKeys();
 					}
 			});
 			$('#' + options.id).css("padding", "0px");
@@ -1799,7 +1833,7 @@ var vulpe = {
 				if (options.url.indexOf(vulpe.config.contextPath) == -1) {
 					options.url = vulpe.config.contextPath + '/' + options.url;
 				}
-				vulpe.util.getForm(options.formName).attr("action", options.url);
+				vulpe.util.getForm(options).attr("action", options.url);
 				options.isFile = false;
 				vulpe.view.request.submitAjax(options);
 			},
@@ -1813,7 +1847,7 @@ var vulpe = {
 					if (vulpe.util.existsVulpePopups()) {
 						options.layer = vulpe.util.getLastVulpePopup();
 					}
-					vulpe.util.getForm(options.formName).attr("action", vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck);
+					vulpe.util.getForm(options).attr("action", vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck);
 					options.isFile = false;
 					vulpe.view.request.submitAjax(options);
 				}
@@ -2009,7 +2043,7 @@ var vulpe = {
 									}
 									var html = "";
 									if (vulpe.util.existsVulpePopups(options.layer)) {
-										var messagePopup = "<div id=\"messagesPopup_" + options.layer + "\" style=\"display: none;\" class=\"vulpeMessages\"></div>";
+										var messagePopup = "<div id=\"messagesPopup\" style=\"display: none;\" class=\"vulpeMessages\"></div>";
 										html = messagePopup + data;
 									} else {
 										html = data;
@@ -2021,6 +2055,12 @@ var vulpe = {
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
+										if (vulpe.util.existsVulpePopups(options.layer)) {
+											var popupTitle = jQuery("#contentTitle", layerObject);
+											if (popupTitle) {
+												popupTitle.hide();
+											}
+										}
 										vulpe.view.checkRequiredFields(layerObject);
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
@@ -2187,7 +2227,7 @@ var vulpe = {
 					input.attr('defaultValue', input.val());
 				});
 				if (!options.url) {
-					options.url = vulpe.util.getForm(options.formName).attr("action");
+					options.url = vulpe.util.getForm(options).attr("action");
 				}
 				options.afterCallback = function() {
 					vulpe.view.request.invokeGlobalsAfterJs(options.layerFields);
@@ -2263,11 +2303,13 @@ var vulpe = {
 								}
 							}
 						} else if (config.type == "DATE") {
-							if ($(this).val().replace(/\_/g, "").length == config.datePattern.length && vulpe.validate.validateDate({
-								field: $(this),
-								datePatternStrict: config.datePattern
-							})) {
+							if ($(this).val().replace(/\_/g, "").length == config.datePattern.length) {
+								if (vulpe.validate.validateDate({
+									field: $(this),
+									datePatternStrict: config.datePattern
+								})) {
 								vulpe.exception.hideFieldError(this);
+								}
 							}
 						} else {
 							if (config.min) {
