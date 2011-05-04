@@ -20,6 +20,11 @@
 		</c:when>
 	</c:choose>
 	</p>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		vulpe.view.hideLoading();
+	});
+	</script>
 	</c:if>
 	<v:text elementId="j_username" name="j_username" targetName="" maxlength="20" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" style="width: 150px;" />
 	<v:password elementId="j_password" name="j_password" targetName="" maxlength="20" labelKey="label.vulpe.security.login.password" style="width: 150px;" />
