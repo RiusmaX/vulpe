@@ -1841,6 +1841,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (VulpeValidationUtil.isNotEmpty(getControllerConfig().getDetails())
 						&& VulpeValidationUtil.isEmpty(getEntities()) && !isTabularFilter()) {
 					createDetails(getControllerConfig().getDetails(), false);
+				} else if (VulpeValidationUtil.isEmpty(getEntities())) {
+					addActionInfoMessage("{vulpe.message.empty.list}");
 				}
 			}
 			controlResultForward();
@@ -1905,6 +1907,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					}
 				}
 			}
+			if (VulpeValidationUtil.isEmpty(getEntities())) {
+				addActionInfoMessage("{vulpe.message.empty.list}");
+			}
 		} else {
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.READ.getValue().concat(
 					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { getControllerConfig()
@@ -1919,9 +1924,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getEntities() != null && !getEntities().isEmpty()) {
 				setSessionAttribute(getSelectTableKey(), getEntities());
 			}
-		}
-		if (VulpeValidationUtil.isEmpty(getEntities())) {
-			addActionInfoMessage("{vulpe.message.empty.list}");
 		}
 		setExecuted(true);
 	}
@@ -2004,13 +2006,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getControllerConfig().getTabularPageSize() > 0) {
 			setTabularSize(getTabularSize() - (size - sizeDespise));
 		}
-		for (final ENTITY entity : getEntities()) {
-			updateAuditInformation(entity);
+		if (!VulpeValidationUtil.isEmpty(getEntities())) {
+			for (final ENTITY entity : getEntities()) {
+				updateAuditInformation(entity);
+			}
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.PERSIST.getValue().concat(
+					getControllerConfig().getEntityClass().getSimpleName()), new Class[] { List.class },
+					new Object[] { getEntities() });
+			setEntities(list);
 		}
-		final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.PERSIST.getValue().concat(
-				getControllerConfig().getEntityClass().getSimpleName()), new Class[] { List.class },
-				new Object[] { getEntities() });
-		setEntities(list);
 		tabularPagingMount(false);
 		setExecuted(true);
 		return true;

@@ -568,7 +568,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig.getPropertyName(),
 					context, parent);
 			final List<VulpeEntity<?>> deleted = despiseDetailItens(beans, detailConfig);
-			if (VulpeValidationUtil.isNotEmpty(deleted)) {
+			if (VulpeValidationUtil.isNotEmpty(deleted) && VulpeValidationUtil.isNotEmpty(baseEntity)) {
 				baseEntity.getDeletedDetails().addAll(deleted);
 			}
 			if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
