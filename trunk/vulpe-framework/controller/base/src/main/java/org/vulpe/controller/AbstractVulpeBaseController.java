@@ -1920,6 +1920,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				setSessionAttribute(getSelectTableKey(), getEntities());
 			}
 		}
+		if (VulpeValidationUtil.isEmpty(getEntities())) {
+			addActionInfoMessage("{vulpe.message.empty.list}");
+		}
 		setExecuted(true);
 	}
 
