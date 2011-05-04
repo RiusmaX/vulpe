@@ -520,6 +520,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
 	 */
 	public String getViewItemsPath() {
+		getViewPath();
 		return viewItemsPath;
 	}
 
@@ -612,6 +613,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	public String getViewSelectItemsPath() {
+		getViewPath();
 		return viewSelectItemsPath;
 	}
 
@@ -620,6 +622,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	public String getViewMainPath() {
+		getViewPath();
 		return viewMainPath;
 	}
 
@@ -628,9 +631,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	public String getViewSelectPath() {
-		if (StringUtils.isEmpty(this.viewSelectPath)) {
-			getViewPath();
-		}
+		getViewPath();
 		return viewSelectPath;
 	}
 
