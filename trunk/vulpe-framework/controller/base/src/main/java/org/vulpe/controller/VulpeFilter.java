@@ -65,7 +65,7 @@ public class VulpeFilter extends CharacterEncodingFilter {
 
 	@Override
 	protected void initFilterBean() throws ServletException {
-		VulpeCacheHelper.getInstance().put(VulpeConstants.CURRENT_SERVLET_CONTEXT,
+		VulpeCacheHelper.getInstance().put(VulpeConstants.SERVLET_CONTEXT,
 				getFilterConfig().getServletContext());
 		super.initFilterBean();
 	}

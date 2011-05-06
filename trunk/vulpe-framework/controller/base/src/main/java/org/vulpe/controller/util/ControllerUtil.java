@@ -36,6 +36,7 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeController.Operation;
 import org.vulpe.controller.commons.DuplicatedBean;
@@ -279,13 +280,14 @@ public class ControllerUtil {
 	 */
 	public VulpeBaseControllerConfig getControllerConfig(final VulpeController controller) {
 		final String key = getCurrentControllerKey();
-		if (VulpeCacheHelper.getInstance().contains(key)) {
-			return VulpeCacheHelper.getInstance().get(key);
+		final AbstractVulpeBaseController<?,?> baseController = (AbstractVulpeBaseController<?, ?>)controller;
+		if (baseController.ever.containsKey(key)) {
+			return baseController.ever.getSelf(key);
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
 		final VulpeBaseControllerConfig config = new VulpeBaseControllerConfig(controller.getClass(), details);
-		VulpeCacheHelper.getInstance().put(key, config);
+		baseController.ever.put(key, config);
 
 		int count = 0;
 		for (final DetailConfig detail : config.getDetailsConfig()) {
@@ -309,7 +311,7 @@ public class ControllerUtil {
 	 * @return
 	 */
 	public static ServletContext getServletContext() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.CURRENT_SERVLET_CONTEXT);
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.SERVLET_CONTEXT);
 	}
 
 	public ThreadLocal<String> getCurrentController() {
