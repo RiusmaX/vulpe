@@ -50,8 +50,8 @@ $(document).ready(function() {
 			layerFields: 'vulpeLoginForm',
 			layer: 'body',
 			validate: false,
-			beforeJs: "vulpe.login.executeBefore",
-			afterJs: "vulpe.login.executeAfter"
+			beforeJs: "vulpe.login.executeBefore()",
+			afterJs: function() {vulpe.login.executeAfter()}
 		});
 		return false;
 	});

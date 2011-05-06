@@ -110,6 +110,7 @@ var vulpe = {
 		},
 		messageSlideUp: true,
 		messageSlideUpTime: 10000,
+		onlyToSee: false,
 		os: {
 			iPhone: (BrowserDetect.OS == "iPhone/iPod")
 		},
@@ -154,8 +155,12 @@ var vulpe = {
 	RTEs: new Array(),
 
 	login: {
-		executeBefore: function(){},
-		executeAfter: function(){}
+		executeBefore: function() { 
+			return true; 
+		},
+		executeAfter: function() { 
+			$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
+		}
 	},
 
 	// vulpe.util
@@ -397,23 +402,25 @@ var vulpe = {
 		},
 
 		focusFirst: function(layer) {
-			var token = "input.focused,select.focused,textarea.focused";
-			var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
-			var focused = false;
-			fields.each(function(index) {
-				if ($(this).val() == "" && !focused) {
-					$(this).focus();
-					if (vulpe.config.browser.ie6) {
+			if (!vulpe.config.onlyToSee) {
+				var token = "input.focused,select.focused,textarea.focused";
+				var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
+				var focused = false;
+				fields.each(function(index) {
+					if ($(this).val() == "" && !focused) {
 						$(this).focus();
+						if (vulpe.config.browser.ie6) {
+							$(this).focus();
+						}
+						focused = true;
 					}
-					focused = true;
-				}
-			});
-			if (fields.length > 0) {
-				if (!focused) {
-					fields[0].focus();
-					if (vulpe.config.browser.ie6) {
+				});
+				if (fields.length > 0) {
+					if (!focused) {
 						fields[0].focus();
+						if (vulpe.config.browser.ie6) {
+							fields[0].focus();
+						}
 					}
 				}
 			}
@@ -2027,7 +2034,7 @@ var vulpe = {
 							try {
 								vulpe.config.redirectToIndex = true;
 								if (authenticator && !loginForm && validUrlRedirect) {
-									$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
+									vulpe.login.executeAfter();
 								} else {
 									if (vulpe.util.isEmpty(options.afterJs) && vulpe.util.isEmpty(options.hideLoading)) {
 										options.hideLoading = true;
