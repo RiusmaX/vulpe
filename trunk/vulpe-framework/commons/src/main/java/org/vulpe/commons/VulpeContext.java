@@ -30,7 +30,7 @@ public class VulpeContext {
 
 	public static final String LOCALE = "locale";
 	public static final String HTTP_REQUEST = "httpRequest";
-	public static final String HTTP_RESPONSE = "httpSession";
+	public static final String HTTP_RESPONSE = "httpResponse";
 	public static final String HTTP_SESSION = "httpSession";
 	public static final String CURRENT_CONTROLLER = "currentController";
 

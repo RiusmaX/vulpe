@@ -1572,10 +1572,14 @@ var vulpe = {
 				}
 				return "";
 			});
-			var popup = $('#' + options.id).dialog({
+			var popup = $("#" + options.id).dialog({
 					autoOpen: true,
 					width: options.width,
 					modal: true,
+					open: function(event, ui) {
+						vulpe.util.removeHotKeys($("#" + options.id));
+						vulpe.util.checkHotKeys($("#" + options.id));
+					},
 					close: function(event, ui) { 
 						$(this).remove(); 
 						vulpe.util.removeHotKeys();
@@ -2072,8 +2076,10 @@ var vulpe = {
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
 										}
-										vulpe.util.removeHotKeys(layerObject);
-										vulpe.util.checkHotKeys(layerObject);
+										if (!vulpe.util.existsVulpePopups()) {
+											vulpe.util.removeHotKeys(layerObject);
+											vulpe.util.checkHotKeys(layerObject);
+										}
 									}
 									if (typeof options.afterJs == "function") {
 										try {

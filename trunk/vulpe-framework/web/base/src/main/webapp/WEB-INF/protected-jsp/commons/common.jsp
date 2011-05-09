@@ -58,9 +58,13 @@ $(document).ready(function() {
 		autoOpen: false,
 		bgiframe: true,
 		modal: true,
+		open: function(event, ui) {
+			vulpe.util.removeHotKeys();
+		},
 		buttons: {
 			'<fmt:message key="label.vulpe.button.ok"/>': function() {
 				$(this).dialog('close');
+				vulpe.util.checkHotKeys();
 			}
 		}
 	});
@@ -70,6 +74,9 @@ $(document).ready(function() {
 		resizable: false,
 		height: 140,
 		modal: true,
+		open: function(event, ui) {
+			vulpe.util.removeHotKeys();
+		},
 		overlay: {
 			backgroundColor: '#000',
 			opacity: 0.5
@@ -79,10 +86,12 @@ $(document).ready(function() {
 				$(this).dialog('close');
 				if (vulpe.command) {
 					vulpe.command();
+					vulpe.util.checkHotKeys();
 				}
 			},
 			'<fmt:message key="label.vulpe.button.cancel"/>': function() {
 				$(this).dialog('close');
+				vulpe.util.checkHotKeys();
 			}
 		}
 	});
