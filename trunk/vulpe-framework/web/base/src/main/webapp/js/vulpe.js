@@ -41,7 +41,6 @@ var vulpe = {
 		entity: "-entity_",
 		formName: "",
 		hotKeys: [ 
-		          ["AddDetail", "Alt+f8", ""],
 		          ["Clear", "Alt+Ctrl+Shift+del", ""],
 		          ["Create", "Ctrl+f8", ""],
 		          ["CreatePost", "Ctrl+f10,return", "dontFireInText,putSameOnReturnKey"],
@@ -51,6 +50,8 @@ var vulpe = {
 		          ["UpdatePost", "Ctrl+f10", "dontFireInText,putSameOnReturnKey"],
 		          ["TabularFilter", "Ctrl+f7", ""],
 		          ["TabularPost", "Ctrl+f10", "putSameOnReturnKey"],
+		          ["[addDetail]", "Alt+f8", ""],
+		          ["[deleteDetail]", "Alt+del", ""],
 		          ["[items]", "Ctrl+Shift+[numbers]", ""],
 		          ["[tabs]", "Alt+Shift+left,Alt+Shift+right", ""]
 		],
@@ -253,6 +254,31 @@ var vulpe = {
 				}
 			}
 		},
+		
+		checkDetailHotKeys: function(parent) {
+			parent = "#" + parent;
+			var key = "";
+			for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
+				var hotkey = vulpe.config.hotKeys[i];
+				if (hotkey[0] == "[addDetail]") {
+					var key = hotkey[1];
+					break;
+				}
+			}
+			if (key != "") {
+				var buttonName = vulpe.config.prefix.button + "AddDetail-" + parent.replace(vulpe.config.prefix.detail, "") + "-" + vulpe.config.formName;
+				vulpe.util.removeHotKey(key);
+				if (vulpe.util.get(buttonName).length == 1) {
+					vulpe.util.addHotKey({
+						hotKey: key,
+						command: function () {
+							vulpe.util.get(buttonName).click();
+							return false;
+						}
+					});
+				}
+			}
+		},
 
 		checkHotKeyExists: function(hotKey) {
 			var elemData = jQuery.data(jQuery.data(document));
@@ -266,7 +292,14 @@ var vulpe = {
 			}
 			return -1;
 		},
-
+		
+		renewHotKeys: function(parent) {
+			if (!vulpe.util.existsVulpePopups()) {
+				vulpe.util.removeHotKeys(parent);
+				vulpe.util.checkHotKeys(parent);
+			}
+		},
+		
 		/**
 		 *
 		 * @param options {hotKey, command, override, dontFireInText, returnKeyDontFireInText}
@@ -439,8 +472,8 @@ var vulpe = {
 			}
 		},
 
-		selectTab: function(formName, name) {
-			var selectedTab = vulpe.util.get(formName + vulpe.config.suffix.selectedTab);
+		selectTab: function(name) {
+			var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
 			selectedTab.val(name);
 		},
 
@@ -596,7 +629,6 @@ var vulpe = {
 					vulpe.config.tabIndex = vulpe.config.tabIndex + 1;
 				}
 			}
-			var parent = jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).attr("href");
 			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).click();
 		}
 	},
@@ -1577,12 +1609,12 @@ var vulpe = {
 					width: options.width,
 					modal: true,
 					open: function(event, ui) {
-						vulpe.util.removeHotKeys($("#" + options.id));
+						vulpe.util.removeHotKeys();
 						vulpe.util.checkHotKeys($("#" + options.id));
 					},
 					close: function(event, ui) { 
+						vulpe.util.removeHotKeys($("#" + options.id));
 						$(this).remove(); 
-						vulpe.util.removeHotKeys();
 						vulpe.util.checkHotKeys();
 					}
 			});
@@ -2076,9 +2108,8 @@ var vulpe = {
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
 										}
-										if (!vulpe.util.existsVulpePopups()) {
-											vulpe.util.removeHotKeys(layerObject);
-											vulpe.util.checkHotKeys(layerObject);
+										if (options.url.indexOf("addDetail") == -1 && options.url.indexOf("deleteDetail") == -1) {
+											vulpe.util.renewHotKeys(layerObject);
 										}
 									}
 									if (typeof options.afterJs == "function") {

@@ -51,8 +51,9 @@
 				$(tabsName).tabs({
 				    show: function(event, ui) {
 				    	var selected = ui.panel.id;
-				        vulpe.util.selectTab("${vulpeFormName}", selected);
+				        vulpe.util.selectTab(selected);
 				        vulpe.util.focusFirst(selected);
+				        vulpe.util.checkDetailHotKeys(selected);
 				        return true;
 			    	}
 				});

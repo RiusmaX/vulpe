@@ -26,8 +26,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface VulpeHotKeys {
 
-	VulpeHotKey[] defaultKeys() default { @VulpeHotKey(name = "AddDetail", keys = "Alt+f8"),
-			@VulpeHotKey(name = "Clear", keys = "Alt+Ctrl+Shift+del"), @VulpeHotKey(name = "Create", keys = "Ctrl+f8"),
+	VulpeHotKey[] defaultKeys() default { @VulpeHotKey(name = "Clear", keys = "Alt+Ctrl+Shift+del"),
+			@VulpeHotKey(name = "Create", keys = "Ctrl+f8"),
 			@VulpeHotKey(name = "CreatePost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
 			@VulpeHotKey(name = "Delete", keys = "Ctrl+del"), @VulpeHotKey(name = "Prepare", keys = "Ctrl+backspace"),
 			@VulpeHotKey(name = "Read", keys = "Ctrl+f9", putSameOnReturnKey = true),
@@ -35,6 +35,8 @@ public @interface VulpeHotKeys {
 			@VulpeHotKey(name = "UpdatePost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
 			@VulpeHotKey(name = "TabularFilter", keys = "Ctrl+f7"),
 			@VulpeHotKey(name = "TabularPost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
+			@VulpeHotKey(name = "[addDetail]", keys = "Alt+f8"),
+			@VulpeHotKey(name = "[deleteDetail]", keys = "Alt+del"),
 			@VulpeHotKey(name = "[items]", keys = "Ctrl+Shift+[numbers]"),
 			@VulpeHotKey(name = "[tabs]", keys = { "Alt+Shift+left", "Alt+Shift+right" }) };
 
