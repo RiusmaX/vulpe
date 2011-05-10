@@ -37,10 +37,11 @@ var vulpe = {
 		css: {
 			fieldError: "vulpeFieldError"
 		},
+		defaultActions: ["create", "createPost", "select", "read", "report", "update", "updatePost", "tabular", "tabularPost", "tabularFilter"],
 		elements: new Array(),
 		entity: "-entity_",
 		formName: "",
-		hotKeys: [ 
+		hotKeys: [
 		          ["Clear", "Alt+Ctrl+Shift+del", ""],
 		          ["Create", "Ctrl+f8", ""],
 		          ["CreatePost", "Ctrl+f10,return", "dontFireInText,putSameOnReturnKey"],
@@ -156,10 +157,10 @@ var vulpe = {
 	RTEs: new Array(),
 
 	login: {
-		executeBefore: function() { 
-			return true; 
+		executeBefore: function() {
+			return true;
 		},
-		executeAfter: function() { 
+		executeAfter: function() {
 			$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 		}
 	},
@@ -207,7 +208,7 @@ var vulpe = {
 			}
 			return equalChars;
 		},
-		
+
 		checkHotKeys: function(parent) {
 			var form = vulpe.util.getForm({parent: parent});
 			for (var i = 0; i < vulpe.config.hotKeys.length; i++) {
@@ -254,7 +255,7 @@ var vulpe = {
 				}
 			}
 		},
-		
+
 		checkDetailHotKeys: function(parent) {
 			parent = "#" + parent;
 			var key = "";
@@ -292,14 +293,23 @@ var vulpe = {
 			}
 			return -1;
 		},
-		
-		renewHotKeys: function(parent) {
-			if (!vulpe.util.existsVulpePopups()) {
+
+		renewHotKeys: function(options) {
+			var parent = vulpe.util.get(options.layer);
+			var renew = false;
+			for (var i = 0; i < vulpe.config.defaultActions.length; i++) {
+				var action = vulpe.config.defaultActions[i];
+				if (options.url.indexOf(action) != -1) {
+					renew = true;
+					break;
+				}
+			}
+			if (renew && !vulpe.util.existsVulpePopups()) {
 				vulpe.util.removeHotKeys(parent);
 				vulpe.util.checkHotKeys(parent);
 			}
 		},
-		
+
 		/**
 		 *
 		 * @param options {hotKey, command, override, dontFireInText, returnKeyDontFireInText}
@@ -614,7 +624,7 @@ var vulpe = {
 		getLastVulpePopup: function() {
 			return vulpe.view.popups[vulpe.view.popups.length-1];
 		},
-		
+
 		tabControl: function(index) {
 			if (index == -1) {
 				if (vulpe.config.tabIndex == 0) {
@@ -1497,7 +1507,7 @@ var vulpe = {
 			}
 			vulpe.util.get("selectAll", parent).attr("checked", selected);
 		},
-		
+
 		markUnmarkAll: function(controller, name, parent) {
 			if (!parent) {
 				parent = "#body";
@@ -1612,9 +1622,9 @@ var vulpe = {
 						vulpe.util.removeHotKeys();
 						vulpe.util.checkHotKeys($("#" + options.id));
 					},
-					close: function(event, ui) { 
+					close: function(event, ui) {
 						vulpe.util.removeHotKeys($("#" + options.id));
-						$(this).remove(); 
+						$(this).remove();
 						vulpe.util.checkHotKeys();
 					}
 			});
@@ -2108,9 +2118,7 @@ var vulpe = {
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
 										}
-										if (options.url.indexOf("addDetail") == -1 && options.url.indexOf("deleteDetail") == -1) {
-											vulpe.util.renewHotKeys(layerObject);
-										}
+										vulpe.util.renewHotKeys(options);
 									}
 									if (typeof options.afterJs == "function") {
 										try {
