@@ -31,27 +31,22 @@ $(document).ready(function() {
 		vulpe.util.removeHotKeys($(this));
 		vulpe.util.checkHotKeys($(this));
 		</c:if>
-		vulpe.util.get('${vulpeFormName}-operation').each(function(){
-			$(this).val('${operation}');
-			$(this).attr('defaultValue', $(this).val());
-		});
-		vulpe.util.get('${vulpeFormName}-paging.page').each(function(){
-			$(this).val('${paging.page}');
-			$(this).attr('defaultValue', $(this).val());
-		});
-		vulpe.util.get('${vulpeFormName}-id').each(function(){
-			$(this).val('${id}');
-			$(this).attr('defaultValue', $(this).val());
-		});
-		vulpe.util.get('${vulpeFormName}-executed').each(function(){
-			$(this).val('${executed}');
-			$(this).attr('defaultValue', $(this).val());
-		});
+		var operation = vulpe.util.get("${vulpeFormName}-operation");
+		operation.val("${operation}");
+		operation.attr("defaultValue", "${operation}");
+		var pagingPage = vulpe.util.get('${vulpeFormName}-paging.page');
+		pagingPage.val("${paging.page}");
+		pagingPage.attr("defaultValue", "${paging.page}");
+		var id = vulpe.util.get("${vulpeFormName}-id");
+		id.val("${id}");
+		id.attr("defaultValue", "${id}");
+		var executed = vulpe.util.get("${vulpeFormName}-executed");
+		executed.val("${executed}");
+		executed.attr("defaultValue", "${executed}");
 		<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
-		vulpe.util.get('${vulpeFormName}-entity_orderBy').each(function(){
-			$(this).val('${entity.orderBy}');
-			$(this).attr('defaultValue', $(this).val());
-		});
+		var orderBy = vulpe.util.get('${vulpeFormName}-entity_orderBy');
+		orderBy.val("${entity.orderBy}");
+		orderBy.attr("defaultValue", "${entity.orderBy}");
 		</c:if>
 	}
 	$("#alertDialog").dialog({

@@ -2119,6 +2119,7 @@ var vulpe = {
 											vulpe.view.checkRows(layerObject)
 										}
 										vulpe.util.renewHotKeys(options);
+										vulpe.util.focusFirst(options.layer);
 									}
 									if (typeof options.afterJs == "function") {
 										try {
@@ -2355,7 +2356,8 @@ var vulpe = {
 								}
 							}
 						} else if (config.type == "DATE") {
-							if ($(this).val().replace(/\_/g, "").length == config.datePattern.length) {
+							var value = $(this).val();
+							if (value.indexOf("_") == -1 && value.length == config.datePattern.length) {
 								if (vulpe.validate.validateDate({
 									field: $(this),
 									datePatternStrict: config.datePattern
@@ -2451,20 +2453,16 @@ var vulpe = {
 			if (typeof data != "string" && data.responseText) {
 				data = data.responseText;
 			}
-			//if (typeof e == "undefined") {
-				if (data.indexOf("\"vulpeAlertError\"") != -1) {
-					vulpe.exception.showMessageError(data, true);
-				} else {
-					var message = data;
-					if (message.indexOf("<body>") != -1) {
-						message.substring(message.indexOf("<body>"));
-						message = message.substring(0, message.indexOf("</body>"));
-					}
-					jQuery(vulpe.config.layers.modalMessages).html(message);
+			if (data.indexOf("\"vulpeAlertError\"") != -1) {
+				vulpe.exception.showMessageError(data, true);
+			} else {
+				var message = data;
+				if (message.indexOf("<body>") != -1) {
+					message.substring(message.indexOf("<body>"));
+					message = message.substring(0, message.indexOf("</body>"));
 				}
-			//} else {
-			//	jQuery(vulpe.config.layers.messages).html(vulpe.config.messages.error.fatal + e);
-			//}
+				jQuery(vulpe.config.layers.modalMessages).html(message);
+			}
 			if (data.indexOf("\"vulpeAlertError\"") == -1) {
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageInfo");
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageSuccess");
