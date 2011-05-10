@@ -11,7 +11,9 @@ import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.Status;
@@ -19,7 +21,13 @@ import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.controller.PortalController;
 import org.vulpe.portal.core.model.entity.BasePortal;
+import org.vulpe.portal.core.model.entity.Community;
+import org.vulpe.portal.core.model.entity.Download;
+import org.vulpe.portal.core.model.entity.Link;
+import org.vulpe.portal.core.model.entity.Menu;
 import org.vulpe.portal.core.model.entity.Portal;
+import org.vulpe.portal.core.model.entity.Social;
+import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
@@ -36,6 +44,22 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 				if (portal.getStatus().equals(Status.ACTIVE)) {
 					setSessionAttribute(Core.VULPE_PORTAL, portal);
 				}
+			}
+		}
+		if (getControllerType().equals(ControllerType.FRONTEND) || getControllerType().equals(ControllerType.BACKEND)) {
+			try {
+				final List<Menu> menus = getService(CoreService.class).readMenu(new Menu());
+				ever.put(Core.VULPE_PORTAL_MENUS, menus);
+				final List<Download> downloads = getService(CoreService.class).readDownload(new Download());
+				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+				final List<Link> links = getService(CoreService.class).readLink(new Link());
+				ever.put(Core.VULPE_PORTAL_LINKS, links);
+				final List<Social> social = getService(CoreService.class).readSocial(new Social());
+				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+				final List<Community> communities = getService(CoreService.class).readCommunity(new Community());
+				ever.put(Core.VULPE_PORTAL_COMMUNITIES, communities);
+			} catch (VulpeApplicationException e) {
+				LOG.error(e);
 			}
 		}
 	}

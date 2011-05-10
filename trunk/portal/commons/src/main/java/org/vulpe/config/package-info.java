@@ -4,11 +4,11 @@
 		view = @VulpeView(
 				showButtonsAsImage = true,
 				showIconOfButton = false,
-				showTextOfButton = false
+				showTextOfButton = false,
+				frontendMenuType = org.vulpe.config.annotations.VulpeView.MenuType.NONE,
+				backendMenuType = org.vulpe.config.annotations.VulpeView.MenuType.DROPPY
 		),
-		theme = "portal",
-		frontendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.NONE,
-		backendMenuType = org.vulpe.config.annotations.VulpeProject.MenuType.DROPPY
+		theme = "portal"
 )
 package org.vulpe.config;
 

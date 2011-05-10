@@ -2,7 +2,6 @@ package org.vulpe.portal.frontend.controller;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -11,8 +10,9 @@ import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.portal.commons.model.entity.Status;
-import org.vulpe.portal.controller.ApplicationBaseSimpleController;
+import org.vulpe.portal.controller.ApplicationBaseController;
 import org.vulpe.portal.core.model.entity.Content;
 import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.entity.Section;
@@ -22,9 +22,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
 @Controller(type = ControllerType.FRONTEND)
-public class IndexController extends ApplicationBaseSimpleController {
-
-	protected final Logger LOG = Logger.getLogger(IndexController.class);
+public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEntity, Long> {
 
 	private Long id;
 
