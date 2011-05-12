@@ -1508,12 +1508,33 @@ var vulpe = {
 			vulpe.util.get("selectAll", parent).attr("checked", selected);
 		},
 
+		enableMarkUnmarkAll: function(name, parent) {
+			disabled = false;
+			var items = jQuery(":checkbox[name$='"+ name +"']", parent).length;
+			var count = 0;
+			jQuery(":checkbox[name$='"+ name +"']", parent).each(function(index) {
+				if (eval($(this).attr("disabled"))) {
+					++count;
+				}
+			});
+			if (count == items) {
+				disabled = true;
+			}
+			if (disabled) {
+				vulpe.util.get("selectAll", parent).attr("disabled", disabled);
+			} else {
+				vulpe.util.get("selectAll", parent).removeAttr("disabled");
+			}
+		},
+
 		markUnmarkAll: function(controller, name, parent) {
 			if (!parent) {
 				parent = "#body";
 			}
 			jQuery(":checkbox[name$='" + name + "']", parent).each(function(index) {
-				$(this).attr("checked", controller.checked);
+				if (!$(this).attr("disabled")) {
+					$(this).attr("checked", controller.checked);
+				}
 			});
 		},
 
@@ -2117,6 +2138,7 @@ var vulpe = {
 										vulpe.view.checkRequiredFields(layerObject);
 										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
 											vulpe.view.checkRows(layerObject)
+											vulpe.view.enableMarkUnmarkAll("selected", layerObject);
 										}
 										vulpe.util.renewHotKeys(options);
 										vulpe.util.focusFirst(options.layer);

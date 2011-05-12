@@ -61,34 +61,35 @@
 		<c:otherwise>
 			<script charset="utf-8" type="text/javascript">
 				$(document).ready(function() {
-					var msg = '<ul>';
+					var msg = "";
 					var messages = "#messages";
 					if (vulpe.util.existsVulpePopups()) {
 						messages = "#messagesPopup";
 					}
-					$(messages).removeClass("vulpeMessageError");
-					$(messages).removeClass("vulpeMessageSuccess");
-					$(messages).removeClass("vulpeMessageInfo");
-					$(messages).removeClass("vulpeMessageValidation");
+					var closeButton = function(name) {
+						return '<div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'' + name + '\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
+					}
 					<c:if test="${not empty actionErrors}">
-					$(messages).addClass("vulpeMessageError");
+						msg += "<div id='errorMessages' class='vulpeMessageError'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionErrors}" var="msg">
-					msg += '<li class="vulpeAlertError">${msg}</li>';
+						msg += '<li class="vulpeAlertError">${msg}</li>';
 						</c:forEach>
+						msg += "</ul>" + closeButton("#errorMessages") + "</div>";
 					</c:if>
 					<c:if test="${not empty actionMessages}">
-					$(messages).addClass("vulpeMessageSuccess");
+						msg += "<div id='successMessages' class='vulpeMessageSuccess'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionMessages}" var="msg">
-					msg += '<li class="vulpeAlertMessage">${msg}</li>';
+							msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
+						msg += "</ul>" + closeButton("#successMessages") + "</div>";
 					</c:if>
 					<c:if test="${not empty actionInfoMessages}">
-					$(messages).addClass("vulpeMessageInfo");
+						msg += "<div id='infoMessages' class='vulpeMessageInfo'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionInfoMessages}" var="msg">
-					msg += '<li class="vulpeAlertMessage">${msg}</li>';
+						msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
+						msg += "</ul>" + closeButton("#infoMessages") + "</div>";
 					</c:if>
-					msg += '</ul><div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'' + messages + '\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
 					jQuery(document).bind("keydown", "Esc", function(evt) {
 						$(messages).slideUp('slow');
 						return false;

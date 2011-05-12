@@ -42,7 +42,7 @@
 .vulpeErrorMessage {
 	color: red;
 	font-size: 9px;
-	padding: 3px; 
+	padding: 3px;
 }
 
 .vulpeMessageError {
@@ -133,7 +133,6 @@
 }
 
 .vulpeMessages {
-	background-color: #fff;
 	overflow: auto;
 }
 
