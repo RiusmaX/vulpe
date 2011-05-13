@@ -36,7 +36,6 @@ import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.annotations.ExecuteOnce;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -70,7 +69,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation.getAction();
 			if (controller.ever != null) {
 				final String currentControllerKey = controller.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = new ControllerUtil().getCurrentControllerKey(controller);
+				final String controllerKey = controller.getCurrentControllerKey();
 				boolean autocomplete = false;
 				if (controller.getEntitySelect() != null
 						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
@@ -88,9 +87,9 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			}
 			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER, controller.ever);
 			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
-			key = new ControllerUtil().getCurrentControllerKey(controller).concat(VulpeConstants.PARAMS_SESSION_KEY);
+			key = controller.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		}
-		
+
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
@@ -140,7 +139,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */

@@ -17,7 +17,6 @@ package org.vulpe.view.vraptor.tags;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,6 @@ import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.view.tags.Functions;
 
 import br.com.caelum.vraptor.core.RequestInfo;
@@ -46,7 +44,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -76,7 +74,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -111,7 +109,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -120,15 +118,16 @@ public final class VRaptorFunctions extends Functions {
 	 */
 	public static String linkKey(final String key, final String contentType, final String contentDisposition)
 			throws JspException {
-		final String link = getRequestInfo().getRequest().getContextPath().concat("/").concat(
-				new ControllerUtil().getCurrentControllerName(null)).concat("/download?downloadKey=").concat(urlEncode(key))
-				.concat("&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=").concat(
-						contentDisposition).concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
-		return link;
+//		final String link = getRequestInfo().getRequest().getContextPath().concat("/").concat(
+//				new ControllerUtil().getCurrentControllerName(null)).concat("/download?downloadKey=").concat(urlEncode(key))
+//				.concat("&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=").concat(
+//						contentDisposition).concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
+//		return link;
+		return "";
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -151,33 +150,34 @@ public final class VRaptorFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(
-					VulpeConstants.PARAMS_SESSION_KEY);
-			final Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
-			if (formParams == null || !formParams.containsKey(key)) {
-				saveInSession(key, value, false);
-			}
+//			final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(
+//					VulpeConstants.PARAMS_SESSION_KEY);
+//			final Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
+//			if (formParams == null || !formParams.containsKey(key)) {
+//				saveInSession(key, value, false);
+//			}
 		}
 
 		return linkKey(key, contentType, contentDisposition);
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
-		if (formParams == null) {
-			formParams = new HashMap();
-			getRequestInfo().getRequest().getSession().setAttribute(keyForm, formParams);
-		}
-		return formParams;
+//		final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(VulpeConstants.PARAMS_SESSION_KEY);
+//		Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
+//		if (formParams == null) {
+//			formParams = new HashMap();
+//			getRequestInfo().getRequest().getSession().setAttribute(keyForm, formParams);
+//		}
+//		return formParams;
+		return null;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -201,7 +201,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -218,7 +218,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -246,7 +246,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -256,7 +256,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return

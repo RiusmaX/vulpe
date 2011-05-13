@@ -18,7 +18,6 @@ package org.vulpe.controller.struts.interceptor;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -31,7 +30,7 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.MethodFilterInterceptor#doIntercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -40,7 +39,7 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		if (invocation.getAction() instanceof VulpeController) {
 			final VulpeController controller = (VulpeController) invocation.getAction();
-			final String key = new ControllerUtil().getCurrentControllerKey(controller).concat(
+			final String key = controller.getCurrentControllerKey().concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
 			if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
 				ActionContext.getContext().getSession().remove(key);
@@ -50,7 +49,7 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */

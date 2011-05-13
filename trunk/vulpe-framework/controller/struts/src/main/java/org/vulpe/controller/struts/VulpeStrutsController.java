@@ -62,7 +62,7 @@ import com.opensymphony.xwork2.util.OgnlUtil;
 
 /**
  * Vulpe Base Controller to Struts2
- * 
+ *
  * @param <ENTITY>
  *            Entity
  * @param <ID>
@@ -101,7 +101,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Make visualization read only.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return
 	 */
@@ -113,7 +113,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.AbstractVulpeBaseController#updatePost()
 	 */
 	@ResetSession
@@ -133,7 +133,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to delete detail items.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return number of items affected
 	 */
@@ -235,7 +235,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#addDetail()
 	 */
 	@SkipValidation
@@ -245,7 +245,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
 	@SkipValidation
@@ -280,7 +280,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.AbstractVulpeBaseController#doReportLoad()
 	 */
 	protected DownloadInfo doReportLoad() {
@@ -330,7 +330,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to prepare download.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	@SuppressWarnings("static-access")
@@ -371,11 +371,11 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Retrieves form parameters
-	 * 
+	 *
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = controllerUtil.getCurrentControllerKey(this).concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -464,7 +464,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * Subclasses should override this method to provide their business logic.
 	 * <p/>
 	 * See also {@link com.opensymphony.xwork2.Action#execute()}.
-	 * 
+	 *
 	 * @return returns {@link #SUCCESS}
 	 * @throws Exception
 	 *             can be thrown by subclasses.
@@ -508,15 +508,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * invocation to return the specified result, such as {@link #SUCCESS},
 	 * {@link #INPUT}, etc.
 	 * <p/>
-	 * 
+	 *
 	 * The next time this action is invoked (and using the same continuation
 	 * ID), the method will resume immediately after where this method was
 	 * called, with the entire call stack in the execute method restored.
 	 * <p/>
-	 * 
+	 *
 	 * Note: this method can <b>only</b> be called within the {@link #execute()}
 	 * method. <!-- END SNIPPET: pause-method -->
-	 * 
+	 *
 	 * @param result
 	 *            the result to return - the same type of return value in the
 	 *            {@link #execute()} method.
@@ -527,7 +527,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Method to validate detail.
-	 * 
+	 *
 	 * @since 1.0
 	 */
 	protected boolean validateDetails() {
@@ -555,7 +555,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.AbstractVulpeBaseController#despiseDetail(java.lang
 	 * .Object, org.vulpe.model.entity.VulpeEntity,
@@ -585,7 +585,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.AbstractVulpeBaseController#duplicatedDetail(java
 	 * .lang.Object, org.vulpe.model.entity.VulpeEntity,
@@ -619,7 +619,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Extension point to add detail.
-	 * 
+	 *
 	 * @since 1.0
 	 * @param start
 	 *            indicates if use <code>startNewDetails</code> or
@@ -712,7 +712,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	/**
 	 * Method to add detail.
-	 * 
+	 *
 	 * @param collection
 	 * @since 1.0
 	 * @throws OgnlException

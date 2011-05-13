@@ -30,14 +30,13 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.Controller;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.services.VulpeService;
 import org.vulpe.view.tags.Functions;
 
 /**
  * Vulpe Controller Config implementation.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -46,7 +45,6 @@ import org.vulpe.view.tags.Functions;
 public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> implements
 		VulpeControllerConfig, Serializable {
 
-	private ControllerUtil controllerUtil = new ControllerUtil();
 	private boolean simple = true;
 	private VulpeController controller;
 	private Controller controllerAnnotation;
@@ -67,7 +65,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	private final Class<ENTITY> entityClass;
 
 	/**
-	 * 
+	 *
 	 * @param controllerClass
 	 * @param details
 	 */
@@ -75,14 +73,14 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		setSimple(false);
 		this.controller = controller;
 		setControllerAnnotation(VulpeReflectUtil.getAnnotationInClass(Controller.class, controller.getClass()));
-		setControllerName(controllerUtil.getCurrentControllerName(controller));
+		setControllerName(controller.getCurrentControllerName());
 		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getIndexClass(controller.getClass(), 0);
 		this.idClass = (Class<ID>) VulpeReflectUtil.getIndexClass(controller.getClass(), 1);
 		this.details = details;
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public List<VulpeBaseDetailConfig> getDetails() {
@@ -94,7 +92,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public VulpeBaseDetailConfig getTabularConfig() {
@@ -119,7 +117,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Class<ENTITY> getEntityClass() {
@@ -127,7 +125,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public Class<ID> getIdClass() {
@@ -135,7 +133,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -149,7 +147,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	}
 
 	/**
-	 * 
+	 *
 	 * @param detail
 	 * @return
 	 */
@@ -174,7 +172,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerType()
 	 */
@@ -187,7 +185,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerType(
 	 * org.vulpe.controller.commons.VulpeControllerConfig.ControllerType)
@@ -198,7 +196,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getServiceClass()
 	 */
 	public Class<? extends VulpeService> getServiceClass() {
@@ -207,7 +205,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getPageSize()
 	 */
 	public int getPageSize() {
@@ -218,7 +216,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getTabularPageSize()
 	 */
@@ -228,7 +226,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getOwnerController()
 	 */
@@ -241,7 +239,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getControllerName()
 	 */
@@ -251,7 +249,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportControllerName
 	 * ()
@@ -262,7 +260,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getSimpleControllerName
 	 * ()
@@ -280,7 +278,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getFormName()
 	 */
 	public String getFormName() {
@@ -298,7 +296,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getMainFormName()
 	 */
 	public String getMainFormName() {
@@ -310,7 +308,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getSelectFormName()
 	 */
@@ -323,7 +321,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/**
 	 * Retrieves Configuration of Details.
-	 * 
+	 *
 	 * @return Array of DetailConfig
 	 */
 	public DetailConfig[] getDetailsConfig() {
@@ -332,7 +330,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isShowInTabs()
 	 */
 	public boolean isShowInTabs() {
@@ -341,7 +339,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFormat()
 	 */
 	public String getReportFormat() {
@@ -350,7 +348,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportDataSourceName
 	 * ()
@@ -361,7 +359,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportName()
 	 */
 	public String getReportName() {
@@ -370,7 +368,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isReportDownload()
 	 */
@@ -380,7 +378,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getReportFile()
 	 */
 	public String getReportFile() {
@@ -396,7 +394,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getParentName(java
 	 * .lang .String)
@@ -408,7 +406,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/**
 	 * Retrieves Name of Project
-	 * 
+	 *
 	 * @return Name of Project
 	 */
 	protected String getProjectName() {
@@ -417,7 +415,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/**
 	 * Retrieves Controller Annotation.
-	 * 
+	 *
 	 * @return Controller Annotation
 	 */
 	public Controller getControllerAnnotation() {
@@ -426,7 +424,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/**
 	 * Puts Controller Annotation.
-	 * 
+	 *
 	 * @param controller
 	 */
 	public void setControllerAnnotation(final Controller controllerAnnotation) {
@@ -435,7 +433,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setControllerName(
 	 * java.lang .String)
@@ -446,13 +444,13 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getTitleKey()
 	 */
 	public String getTitleKey() {
 		final StringBuilder titleKey = new StringBuilder();
 		titleKey.append(View.LABEL);
-		final String controllerKey = controllerUtil.getCurrentControllerKey(getController());
+		final String controllerKey = getController().getCurrentControllerKey();
 		if (StringUtils.isNotBlank(getControllerAnnotation().viewBaseName())) {
 			titleKey.append(controllerKey.substring(0, controllerKey.lastIndexOf(".") + 1)).append(
 					getControllerAnnotation().viewBaseName());
@@ -468,14 +466,14 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getReportTitleKey()
 	 */
 	public String getReportTitleKey() {
 		final StringBuilder reportTitleKey = new StringBuilder();
 		reportTitleKey.append(View.LABEL);
-		final String controllerKey = controllerUtil.getCurrentControllerKey(getController());
+		final String controllerKey = getController().getCurrentControllerKey();
 		if (StringUtils.isNotBlank(getControllerAnnotation().viewBaseName())) {
 			reportTitleKey.append(controllerKey.substring(0, controllerKey.lastIndexOf(".") + 1)).append(
 					getControllerAnnotation().viewBaseName());
@@ -488,7 +486,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isSimple()
 	 */
 	public boolean isSimple() {
@@ -497,7 +495,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#setSimple(boolean)
 	 */
@@ -507,7 +505,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#getViewItemsPath()
 	 */
@@ -518,7 +516,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewPath()
 	 */
 	public String getViewPath() {
@@ -566,7 +564,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getSubReports()
 	 */
 	public String[] getSubReports() {
@@ -625,7 +623,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isTabularShowFilter()
 	 */
@@ -636,7 +634,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewBaseName()
 	 */
 	public String getViewBaseName() {
@@ -645,7 +643,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#requireOneOfFilters()
 	 */
@@ -655,7 +653,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isRequireOneFilter()
 	 */
@@ -665,7 +663,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.vulpe.controller.commons.VulpeControllerConfig#isOnlyUpdateDetails()
 	 */
@@ -675,7 +673,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#isNewOnPost()
 	 */
 	public boolean isNewOnPost() {
