@@ -375,7 +375,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = controllerUtil.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = controllerUtil.getCurrentControllerKey(this).concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();

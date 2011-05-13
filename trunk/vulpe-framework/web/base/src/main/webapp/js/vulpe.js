@@ -1647,6 +1647,7 @@ var vulpe = {
 						vulpe.util.removeHotKeys($("#" + options.id));
 						$(this).remove();
 						vulpe.util.checkHotKeys();
+						vulpe.util.removeArray(vulpe.view.popups, options.id);
 					}
 			});
 			$('#' + options.id).css("padding", "0px");

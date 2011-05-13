@@ -32,7 +32,6 @@ public class VulpeContext {
 	public static final String HTTP_REQUEST = "httpRequest";
 	public static final String HTTP_RESPONSE = "httpResponse";
 	public static final String HTTP_SESSION = "httpSession";
-	public static final String CURRENT_CONTROLLER = "currentController";
 
 	private Map<String, Object> map = new HashMap<String, Object>();
 
@@ -66,14 +65,6 @@ public class VulpeContext {
 
 	public void setSession(final HttpSession session) {
 		map.put(HTTP_SESSION, session);
-	}
-
-	public String getCurrentController() {
-		return (String) map.get(CURRENT_CONTROLLER);
-	}
-
-	public void setCurrentController(final String currentController) {
-		map.put(CURRENT_CONTROLLER, currentController);
 	}
 
 	public Object get(final String key) {

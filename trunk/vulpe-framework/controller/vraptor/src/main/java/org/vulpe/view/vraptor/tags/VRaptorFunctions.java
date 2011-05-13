@@ -121,7 +121,7 @@ public final class VRaptorFunctions extends Functions {
 	public static String linkKey(final String key, final String contentType, final String contentDisposition)
 			throws JspException {
 		final String link = getRequestInfo().getRequest().getContextPath().concat("/").concat(
-				getControllerUtil().getCurrentControllerName()).concat("/download?downloadKey=").concat(urlEncode(key))
+				new ControllerUtil().getCurrentControllerName(null)).concat("/download?downloadKey=").concat(urlEncode(key))
 				.concat("&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=").concat(
 						contentDisposition).concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
 		return link;
@@ -151,7 +151,7 @@ public final class VRaptorFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = getControllerUtil().getCurrentControllerKey().concat(
+			final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
 			final Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
 			if (formParams == null || !formParams.containsKey(key)) {
@@ -167,7 +167,7 @@ public final class VRaptorFunctions extends Functions {
 	 * @return
 	 */
 	private static Map getFormParams() {
-		final String keyForm = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = new ControllerUtil().getCurrentControllerKey(null).concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = (Map) getRequestInfo().getRequest().getSession().getAttribute(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -276,7 +276,4 @@ public final class VRaptorFunctions extends Functions {
 		return requestInfo;
 	}
 
-	public static ControllerUtil getControllerUtil() {
-		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
-	}
 }

@@ -16,7 +16,7 @@
 package org.vulpe.controller.struts.interceptor;
 
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
+import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeSystemException;
@@ -38,9 +38,13 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 	 */
 	@Override
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
-		final String key = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
-		if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
-			ActionContext.getContext().getSession().remove(key);
+		if (invocation.getAction() instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) invocation.getAction();
+			final String key = new ControllerUtil().getCurrentControllerKey(controller).concat(
+					VulpeConstants.PARAMS_SESSION_KEY);
+			if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
+				ActionContext.getContext().getSession().remove(key);
+			}
 		}
 		return invocation.invoke();
 	}
@@ -65,7 +69,4 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 		}
 	}
 
-	public ControllerUtil getControllerUtil() {
-		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
-	}
 }

@@ -28,7 +28,6 @@ import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Controller.Forward;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -57,11 +56,11 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	@Override
 	protected void setParameters(final Object action, final ValueStack stack, final Map parameters) {
 		super.setParameters(action, stack, parameters);
+		String key = "";
 		if (action instanceof VulpeController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
-			if (action instanceof VulpeController
-					&& !mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
+			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
 				final VulpeController controller = (VulpeController) action;
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
@@ -71,7 +70,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation.getAction();
 			if (controller.ever != null) {
 				final String currentControllerKey = controller.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = getControllerUtil().getCurrentControllerKey();
+				final String controllerKey = new ControllerUtil().getCurrentControllerKey(controller);
 				boolean autocomplete = false;
 				if (controller.getEntitySelect() != null
 						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
@@ -89,8 +88,9 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			}
 			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER, controller.ever);
 			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
+			key = new ControllerUtil().getCurrentControllerKey(controller).concat(VulpeConstants.PARAMS_SESSION_KEY);
 		}
-		final String key = getControllerUtil().getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		
 		if (isMethodReset(this.invocation)) {
 			ActionContext.getContext().getSession().remove(key);
 		} else {
@@ -157,10 +157,6 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
-	}
-
-	public ControllerUtil getControllerUtil() {
-		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTROLLER_UTIL);
 	}
 
 	private void executeAlways(final Object action) {

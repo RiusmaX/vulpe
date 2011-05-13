@@ -102,8 +102,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@Autowired
 	protected VulpeContext vulpeContext;
 
-	@Autowired
-	protected ControllerUtil controllerUtil;
+	protected ControllerUtil controllerUtil = new ControllerUtil();
 
 	private Collection<String> actionInfoMessages = new ArrayList<String>();
 
@@ -757,7 +756,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
 			showButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE, Button.DELETE);
-			if (getControllerConfig().getController().select().showReport()) {
+			if (getControllerConfig().getControllerAnnotation().select().showReport()) {
 				showButton(Button.REPORT);
 			}
 			if (isPopup()) {
@@ -886,7 +885,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void tabularPagingMount(final boolean add) {
 		if (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig().getTabularPageSize() > 0) {
 			if (add) {
-				setTabularSize(getTabularSize() + getControllerConfig().getController().tabular().newRecords());
+				setTabularSize(getTabularSize() + getControllerConfig().getControllerAnnotation().tabular().newRecords());
 			} else {
 				setTabularSize(getEntities().size());
 			}
@@ -1004,7 +1003,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		if (StringUtils.isEmpty(entity.getQueryConfigurationName())
 				|| "default".equals(entity.getQueryConfigurationName())) {
-			entity.setQueryConfigurationName(getControllerConfig().getController().queryConfigurationName());
+			entity.setQueryConfigurationName(getControllerConfig().getControllerAnnotation().queryConfigurationName());
 		}
 		return entity;
 	}
@@ -2125,7 +2124,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			getSession().removeAttribute(getSelectTableKey());
 			getSession().removeAttribute(getSelectPagingKey());
 		}
-		if (getControllerConfig().getController().select().readOnShow()) {
+		if (getControllerConfig().getControllerAnnotation().select().readOnShow()) {
 			onRead();
 		}
 		selectAfter();
@@ -3121,7 +3120,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	private String getControllerKey() {
-		String key = controllerUtil.getCurrentControllerKey();
+		String key = controllerUtil.getCurrentControllerKey(this);
 		if (StringUtils.isNotEmpty(getControllerConfig().getViewBaseName())) {
 			key = key.substring(0, key.lastIndexOf(".") + 1) + getControllerConfig().getViewBaseName();
 		}

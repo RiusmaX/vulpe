@@ -55,7 +55,6 @@ public class VulpeFilter extends CharacterEncodingFilter {
 				vulpeContext.setRequest(httpRequest);
 				vulpeContext.setResponse((HttpServletResponse) response);
 				vulpeContext.setSession(httpRequest.getSession());
-				vulpeContext.setCurrentController(url);
 			}
 		}
 		setEncoding(VulpeConfigHelper.get(VulpeProject.class).characterEncoding());

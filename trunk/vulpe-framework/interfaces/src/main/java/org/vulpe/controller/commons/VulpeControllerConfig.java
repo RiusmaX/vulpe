@@ -29,8 +29,6 @@ public interface VulpeControllerConfig {
 
 	String getOwnerController();
 
-	String getMethod();
-
 	String getControllerName();
 
 	String getSimpleControllerName();
