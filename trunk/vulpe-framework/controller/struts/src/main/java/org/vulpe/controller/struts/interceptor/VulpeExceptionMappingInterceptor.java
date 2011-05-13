@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,8 +29,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.controller.struts.VulpeStrutsController;
-import org.vulpe.controller.util.ControllerUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeAuthenticationException;
 import org.vulpe.exception.VulpeAuthorizationException;
@@ -40,7 +41,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
@@ -48,7 +49,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -71,7 +72,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/**
 	 * Method responsible for handling exception.
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -144,7 +145,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
@@ -156,7 +157,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
@@ -165,7 +166,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pattern
 	 * @param locale
 	 * @return
@@ -175,7 +176,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 */
@@ -198,7 +199,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -208,8 +209,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		String message = "";
 		final String key = exception.getClass().getName();
 		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG, Boolean.FALSE);
-		final Map<String, Object> global = (Map<String, Object>) ControllerUtil.getServletContext().getAttribute(
-				Context.GLOBAL);
+		final Map<String, Object> global = (Map<String, Object>) getServletContext().getAttribute(Context.GLOBAL);
 		Boolean globalDebug = (Boolean) global.get(VulpeConstants.Configuration.Global.PROJECT_DEBUG);
 		if (globalDebug == null) {
 			globalDebug = Boolean.FALSE;
@@ -227,5 +227,13 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			message = action.getText(key);
 		}
 		return message;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public ServletContext getServletContext() {
+		return VulpeCacheHelper.getInstance().get(VulpeConstants.SERVLET_CONTEXT);
 	}
 }

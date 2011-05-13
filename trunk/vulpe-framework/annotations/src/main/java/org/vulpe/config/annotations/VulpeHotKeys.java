@@ -29,6 +29,7 @@ public @interface VulpeHotKeys {
 	VulpeHotKey[] defaultKeys() default { @VulpeHotKey(name = "Clear", keys = "Alt+Ctrl+Shift+del"),
 			@VulpeHotKey(name = "Create", keys = "Ctrl+f8"),
 			@VulpeHotKey(name = "CreatePost", keys = "Ctrl+f10", putSameOnReturnKey = true, dontFireOnText = true),
+			@VulpeHotKey(name = "Clone", keys = "Ctrl+f11"),
 			@VulpeHotKey(name = "Delete", keys = "Ctrl+del"), @VulpeHotKey(name = "Prepare", keys = "Ctrl+backspace"),
 			@VulpeHotKey(name = "Read", keys = "Ctrl+f9", putSameOnReturnKey = true),
 			@VulpeHotKey(name = "Report", keys = "Ctrl+f12"),

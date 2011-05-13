@@ -45,6 +45,7 @@ var vulpe = {
 		          ["Clear", "Alt+Ctrl+Shift+del", ""],
 		          ["Create", "Ctrl+f8", ""],
 		          ["CreatePost", "Ctrl+f10,return", "dontFireInText,putSameOnReturnKey"],
+		          ["Clone", "Ctrl+f11", ""],
 		          ["Prepare", "Ctrl+backspace", ""],
 		          ["Read", "Ctrl+f9", "putSameOnReturnKey"],
 		          ["Report", "Ctrl+f12", ""],

@@ -20,13 +20,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
@@ -194,7 +190,6 @@ public class ControllerUtil {
 		return duplicatedBeans;
 	}
 
-
 	/**
 	 *
 	 * @param controller
@@ -222,14 +217,6 @@ public class ControllerUtil {
 			count++;
 		}
 		return config;
-	}
-
-	/**
-	 *
-	 * @return
-	 */
-	public static ServletContext getServletContext() {
-		return VulpeCacheHelper.getInstance().get(VulpeConstants.SERVLET_CONTEXT);
 	}
 
 }

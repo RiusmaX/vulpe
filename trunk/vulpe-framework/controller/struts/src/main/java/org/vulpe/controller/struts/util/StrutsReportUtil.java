@@ -60,10 +60,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 	public byte[] getJasperReport(final String fileName, final String[] subReports, final Collection<?> collection,
 			final VulpeHashMap<String, Object> parameters, final String format) {
 		try {
-			String fullFileName = fileName;
-			if (ControllerUtil.getServletContext() != null) {
-				fullFileName = getRealPath(fileName);
-			}
+			String fullFileName = getRealPath(fileName);
 			if (StringUtils.isBlank(fullFileName)) {
 				throw new VulpeSystemException("vulpe.error.report");
 			}

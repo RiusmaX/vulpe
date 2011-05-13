@@ -9,8 +9,7 @@
 	</div>
 	<c:if test="${controllerConfig.showInTabs && not empty controllerConfig.details && fn:length(controllerConfig.details) > 0}">
 		<div id="vulpeMainBodyTabs">
-		<fmt:message key="label.vulpe.tabs.navigation" var="tabNavigationTitle"/>
-		<ul title="${tabNavigationTitle}">
+		<ul>
 			<c:set var="tabTitle"><fmt:message key="${now['masterTitleKey']}"/></c:set>
 			<c:if test="${not empty tabs || not empty tabs[now['masterTitleKey']]}"><c:set var="tabTitle" value="${tabs[now['masterTitleKey']].title}"/></c:if>
 			<li title="${tabTitle}"><a id="vulpeMainBodyTabs0" href="#vulpeMainBody">${tabTitle}</a></li>
