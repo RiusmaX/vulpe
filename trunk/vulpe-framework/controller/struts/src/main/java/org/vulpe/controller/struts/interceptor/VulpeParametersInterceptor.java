@@ -68,6 +68,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			}
 			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation.getAction();
 			if (controller.ever != null) {
+				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller.getCurrentControllerName());
 				final String currentControllerKey = controller.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = controller.getCurrentControllerKey();
 				boolean autocomplete = false;

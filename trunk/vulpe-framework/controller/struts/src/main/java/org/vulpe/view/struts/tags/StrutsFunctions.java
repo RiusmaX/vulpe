@@ -47,7 +47,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -58,8 +58,7 @@ public final class StrutsFunctions extends Functions {
 			throws JspException {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
-				ServletActionContext.getRequest().getRequestURI()).append("/download?downloadKey=").append(
-				urlEncode(key));
+				getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_NAME)).append("/download?downloadKey=").append(urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
 			link.append("&downloadContentType=").append(contentType);
 		}
@@ -71,7 +70,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -106,7 +105,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Map getFormParams() {
@@ -121,7 +120,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -145,7 +144,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -162,7 +161,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -190,7 +189,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param pagingName
 	 * @param pageSize
@@ -208,7 +207,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -219,7 +218,7 @@ public final class StrutsFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return

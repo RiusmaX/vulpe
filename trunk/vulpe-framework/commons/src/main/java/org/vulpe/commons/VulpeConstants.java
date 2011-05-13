@@ -146,6 +146,7 @@ public class VulpeConstants {
 
 		public class Ever {
 			public static final String CURRENT_CONTROLLER_KEY = "currentControllerKey";
+			public static final String CURRENT_CONTROLLER_NAME = "currentControllerName";
 			public static final String CURRENT_PAGE = "currentPage";
 			public static final String TABULAR_SIZE = "tabularSize";
 			public static final String DEBUG = "debug";
