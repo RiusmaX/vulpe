@@ -5,7 +5,7 @@
 		<th colspan="9"><fmt:message key="label.vulpe.security.User.select.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="9"><fmt:message key="vulpe.total.records"/> ${paging.size}</th>
+		<th colspan="9"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row popupProperties="id,name,username">

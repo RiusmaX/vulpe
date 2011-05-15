@@ -4,7 +4,7 @@
 		<th colspan="6"><fmt:message key="label.vulpe.security.Role.select.header" /></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
-		<th colspan="6"><fmt:message key="vulpe.total.records" /> <v:paging showSize="true"/></th>
+		<th colspan="6"><fmt:message key="vulpe.total.records" />&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row>
