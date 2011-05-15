@@ -75,7 +75,7 @@ public class VulpeConstants {
 			public static final String PROJECT_DEBUG = "project-debug";
 			public static final String PROJECT_USE_DB4O = "project-useDB4O";
 			public static final String PROJECT_AUDIT = "project-audit";
-			public static final String PROJECT_SECURITY = "peoject-security";
+			public static final String PROJECT_SECURITY = "project-security";
 			public static final String PROJECT_I18N_MANAGER = "project-i18nManager";
 			public static final String PROJECT_THEME = "project-theme";
 			public static final String PROJECT_DATE_PATTERN = "project-datePattern";
