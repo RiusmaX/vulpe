@@ -28,6 +28,7 @@
 				buttonImageOnly: true
 			});
 			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
+			vulpe.util.get('ui-datepicker-div').hide();
 		});
 	</script>
 	</c:if>

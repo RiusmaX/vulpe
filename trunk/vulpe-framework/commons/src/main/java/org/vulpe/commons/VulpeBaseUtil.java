@@ -21,7 +21,7 @@ import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.model.services.VulpeService;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
@@ -29,7 +29,7 @@ public class VulpeBaseUtil {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 * 
+	 *
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -41,7 +41,7 @@ public class VulpeBaseUtil {
 
 	/**
 	 * Retrieves a Spring Bean by name.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param beanName
@@ -55,7 +55,7 @@ public class VulpeBaseUtil {
 
 	/**
 	 * Retrieves a Spring Bean by class.
-	 * 
+	 *
 	 * @param <T>
 	 *            Class type to return
 	 * @param clazz
@@ -75,7 +75,7 @@ public class VulpeBaseUtil {
 		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS);
 	}
 
-	public VulpeHashMap<String, Object> getCachedEnumArray() {
+	public VulpeHashMap<String, Object> getCachedEnumsArray() {
 		return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS_ARRAY);
 	}
 }

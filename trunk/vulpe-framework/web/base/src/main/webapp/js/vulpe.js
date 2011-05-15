@@ -158,11 +158,15 @@ var vulpe = {
 	RTEs: new Array(),
 
 	login: {
+		logged: false,
+
 		executeBefore: function() {
 			return true;
 		},
 		executeAfter: function() {
-			$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
+			if (vulpe.login.logged) {
+				$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
+			}
 		}
 	},
 
@@ -2103,6 +2107,7 @@ var vulpe = {
 							try {
 								vulpe.config.redirectToIndex = true;
 								if (authenticator && !loginForm && validUrlRedirect) {
+									vulpe.login.logged = true;
 									vulpe.login.executeAfter();
 								} else {
 									if (vulpe.util.isEmpty(options.afterJs) && vulpe.util.isEmpty(options.hideLoading)) {

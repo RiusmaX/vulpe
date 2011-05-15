@@ -1,7 +1,7 @@
 <c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${not empty enumeration}">
-		<c:set var="enumerationEL" value="${'${'}cachedEnumArray['${enumeration}']${'}'}"/>
+		<c:set var="enumerationEL" value="${'${'}cachedEnumsArray['${enumeration}']${'}'}"/>
 		<c:set var="enumeration" value="${util:eval(pageContext, enumerationEL)}"/>
 		<c:set var="items" value="${fn:replace(enumeration, '#{', '')}"/>
 		<c:set var="items" value="${fn:replace(items, '}', '')}"/>

@@ -66,6 +66,10 @@
 					if (vulpe.util.existsVulpePopups()) {
 						messages = "#messagesPopup";
 					}
+					$(messages).removeClass("vulpeMessageError");
+					$(messages).removeClass("vulpeMessageSuccess");
+					$(messages).removeClass("vulpeMessageInfo");
+					$(messages).removeClass("vulpeMessageValidation");
 					var closeButton = function(name) {
 						return '<div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'' + name + '\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
 					}
