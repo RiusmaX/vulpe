@@ -103,6 +103,6 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		hideButtons(Button.CLEAR, Button.CREATE, Button.DELETE, Button.BACK);
+		hideButtons(Button.CLEAR, Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
 	}
 }
