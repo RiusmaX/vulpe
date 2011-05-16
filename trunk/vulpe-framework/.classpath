@@ -59,7 +59,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/3.2.1.ga/hibernate-entitymanager-3.2.1.ga.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.0/itext-2.1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/3.7.4/jasperreports-3.7.4.jar" sourcepath="M2_REPO/net/sf/jasperreports/jasperreports/3.7.4/jasperreports-3.7.4-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/jboss/javassist/3.3.ga/javassist-3.3.ga.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javassist/javassist/3.9.0.GA/javassist-3.9.0.GA.jar" sourcepath="M2_REPO/javassist/javassist/3.9.0.GA/javassist-3.9.0.GA-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/xml/bind/jaxb-api/2.1/jaxb-api-2.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.1.3/jaxb-impl-2.1.3.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar"/>

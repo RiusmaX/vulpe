@@ -46,20 +46,19 @@
 		</div>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				var tabsName = '#vulpeMainBodyTabs';
-				$(tabsName).tabs({
+				$(vulpe.config.prefix.detailTab).tabs({
 				    show: function(event, ui) {
 				    	var selected = ui.panel.id;
-				        vulpe.util.selectTab(selected);
 				        vulpe.util.focusFirst(selected);
 				        vulpe.util.checkDetailHotKeys(selected);
 				        return true;
+			    	},
+			    	select: function(event, ui) {
+				    	var selected = ui.panel.id;
+				        vulpe.util.selectTab(selected);
+				        return true;
 			    	}
 				});
-				var selectedTab = "${selectedTab}";
-				if (selectedTab && selectedTab != "") {
-					$(tabsName).tabs("select", "#" + selectedTab);
-				}
 				vulpe.config.tabsCount = "${fn:length(controllerConfig.details)}";
 			});
 		</script>

@@ -13,7 +13,7 @@
 </c:if>
 <c:if test="${now['buttons']['back'] || now['buttons']['Main_back']}">
 	<c:set var="action"	value="${controllerConfig.ownerController}/select/ajax${operation == 'UPDATE' || operation == 'UPDATE_POST' ? '?back=true' : ''}" />
-	<v:action validate="false" labelKey="back" elementId="Prepare" action="${not empty urlBack ? urlBack : action}"	layer="${not empty layerUrlBack ? layerUrlBack : ''}" helpKey="back" icon="back" iconClass="Back" />
+	<v:action validate="false" labelKey="back" elementId="Prepare" action="${not empty urlBack ? urlBack : action}"	layer="${not empty layerUrlBack ? layerUrlBack : ''}" layerFields="this" helpKey="back" icon="back" iconClass="Back" />
 	<c:remove var="urlBack" scope="session" />
 	<c:remove var="layerUrlBack" scope="session" />
 </c:if>

@@ -20,7 +20,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	<c:if test="${onlyToSee}">vulpe.config.onlyToSee = true;</c:if>
-	<c:if test="${global['project-view-focusFirst']}">vulpe.util.focusFirst("${now['controllerType'] == 'TABULAR' ? 'entities' : ''}");</c:if>
+	<c:if test="${global['project-view-focusFirst']&& !ajax}">vulpe.util.focusFirst("${now['controllerType'] == 'TABULAR' ? 'entities' : ''}");</c:if>
 	<c:if test="${(global['project-view-frontendMenuType'] == 'DROPPY' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['project-view-backendMenuType'] == 'DROPPY' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">$("#nav").droppy();</c:if>
 	<c:if test="${(global['project-view-frontendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['project-view-backendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">if (vulpe.config.browser.ie) { $("#nav").superfish().find("ul").bgIframe({opacity: false}); } else { $("#nav").superfish(); }</c:if>
 	<c:if test="${pageContext.request.locale ne 'en_US'}">$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);</c:if>

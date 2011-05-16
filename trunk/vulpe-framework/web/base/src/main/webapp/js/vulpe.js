@@ -457,18 +457,12 @@ var vulpe = {
 				fields.each(function(index) {
 					if ($(this).val() == "" && !focused) {
 						$(this).focus();
-						if (vulpe.config.browser.ie6) {
-							$(this).focus();
-						}
 						focused = true;
 					}
 				});
 				if (fields.length > 0) {
 					if (!focused) {
 						fields[0].focus();
-						if (vulpe.config.browser.ie6) {
-							fields[0].focus();
-						}
 					}
 				}
 			}
@@ -1016,14 +1010,18 @@ var vulpe = {
 							dateRegexp = new RegExp("^(\\d{2})[" + delim1 + "](\\d{2})[" + delim2 + "](\\d{4})$");
 						}
 						var matched = dateRegexp.exec(value);
-						if(matched != null) {
+						if (matched != null) {
 							if (!vulpe.validate.isValidDate(matched[2], matched[1], matched[3])) {
-								bValid =  false;
-								vulpe.exception.setupError(idField, message);
+								bValid = false;
+								if (!config.setupErrorOff) {
+									vulpe.exception.setupError(idField, message);
+								}
 							}
 						} else {
-							bValid =  false;
-							vulpe.exception.setupError(idField, message);
+							bValid = false;
+							if (!config.setupErrorOff) {
+								vulpe.exception.setupError(idField, message);
+							}
 						}
 					} else if ((orderMonth < orderYear && orderMonth > orderDay)) {
 						var iDelim1 = orderDay + DAY.length;
@@ -1040,14 +1038,18 @@ var vulpe = {
 							dateRegexp = new RegExp("^(\\d{2})[" + delim1 + "](\\d{2})[" + delim2 + "](\\d{4})$");
 						}
 						var matched = dateRegexp.exec(value);
-						if(matched != null) {
+						if (matched != null) {
 							if (!vulpe.validate.isValidDate(matched[1], matched[2], matched[3])) {
-								bValid =  false;
-								vulpe.exception.setupError(idField, message);
+								bValid = false;
+								if (!config.setupErrorOff) {
+									vulpe.exception.setupError(idField, message);
+								}
 							}
 						} else {
-							bValid =  false;
-							vulpe.exception.setupError(idField, message);
+							bValid = false;
+							if (!config.setupErrorOff) {
+								vulpe.exception.setupError(idField, message);
+							}
 						}
 					} else if ((orderMonth > orderYear && orderMonth < orderDay)) {
 						var iDelim1 = orderYear + YEAR.length;
@@ -1066,21 +1068,24 @@ var vulpe = {
 						var matched = dateRegexp.exec(value);
 						if(matched != null) {
 							if (!vulpe.validate.isValidDate(matched[3], matched[2], matched[1])) {
-								bValid =  false;
-								vulpe.exception.setupError(idField, message);
+								bValid = false;
+								if (!config.setupErrorOff) {
+									vulpe.exception.setupError(idField, message);
+								}
 							}
 						} else {
-							bValid =  false;
-							vulpe.exception.setupError(idField, message);
+							bValid = false;
+							if (!config.setupErrorOff) {
+								vulpe.exception.setupError(idField, message);
+							}
 						}
 					} else {
-						bValid =  false;
-						vulpe.exception.setupError(idField, message);
+						bValid = false;
+						if (!config.setupErrorOff) {
+							vulpe.exception.setupError(idField, message);
+						}
 					}
 				}
-			}
-			if (!bValid) {
-				config.field.val("");
 			}
 			return bValid;
 		},
@@ -2148,7 +2153,12 @@ var vulpe = {
 											vulpe.view.enableMarkUnmarkAll("selected", layerObject);
 										}
 										vulpe.util.renewHotKeys(options);
-										vulpe.util.focusFirst(options.layer);
+										var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
+										if (selectedTab.val() != "") {
+											$(vulpe.config.prefix.detailTab, layerObject).tabs("select", "#" + selectedTab.val());
+										} else {
+											vulpe.util.focusFirst(options.layer);
+										}
 									}
 									if (typeof options.afterJs == "function") {
 										try {
@@ -2389,9 +2399,14 @@ var vulpe = {
 							if (value.indexOf("_") == -1 && value.length == config.datePattern.length) {
 								if (vulpe.validate.validateDate({
 									field: $(this),
-									datePatternStrict: config.datePattern
+									datePatternStrict: config.datePattern,
+									setupErrorOff: true
 								})) {
-								vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError(this);
+								} else {
+									errorMessage.html(vulpe.config.messages.error.validate.date);
+									errorMessage.css("display", "block");
+									vulpe.exception.showFieldError(this);
 								}
 							}
 						} else {
