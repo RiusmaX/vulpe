@@ -869,7 +869,6 @@ var vulpe = {
 						value = config.field.val();
 					}
 				}
-
 				if (vulpe.util.trim(value).length == 0) {
 					isValid = false;
 					vulpe.exception.setupError(idField, message);
@@ -917,8 +916,10 @@ var vulpe = {
 			if (typeField == 'text' || typeField == 'textarea') {
 				if (!vulpe.validate.matchPattern(config.field.val(), config.mask)) {
 					isValid = false;
-					vulpe.exception.setupError(idField, message);
 				}
+			}
+			if (!config.setupErrorOff && !bValid) {
+				vulpe.exception.setupError(idField, message);
 			}
 			return isValid;
 		},
@@ -934,15 +935,16 @@ var vulpe = {
 					value = vulpe.util.replaceAll(value, ',', '.');
 					if (!vulpe.validate.isAllDigits(value)) {
 						bValid = false;
-						vulpe.exception.setupError(idField, message);
 					} else {
 						var iValue = parseInt(value);
 						if (isNaN(iValue) || !(iValue >= -2147483648 && iValue <= 2147483647)) {
 							bValid = false;
-							vulpe.exception.setupError(idField, message);
 						}
 					}
 				}
+			}
+			if (!config.setupErrorOff && !bValid) {
+				vulpe.exception.setupError(idField, message);
 			}
 			return bValid;
 		},
@@ -962,15 +964,16 @@ var vulpe = {
 					value = vulpe.util.replaceAll(value, ',', '.');
 					if (!vulpe.validate.isAllDigits(value)) {
 						bValid = false;
-						vulpe.exception.setupError(idField, message);
 					} else {
 						var iValue = parseFloat(value);
 						if (isNaN(iValue)) {
 							bValid = false;
-							vulpe.exception.setupError(idField, message);
 						}
 					}
 				}
+			}
+			if (!config.setupErrorOff && !bValid) {
+				vulpe.exception.setupError(idField, message);
 			}
 			return bValid;
 		},
@@ -1010,18 +1013,10 @@ var vulpe = {
 							dateRegexp = new RegExp("^(\\d{2})[" + delim1 + "](\\d{2})[" + delim2 + "](\\d{4})$");
 						}
 						var matched = dateRegexp.exec(value);
-						if (matched != null) {
-							if (!vulpe.validate.isValidDate(matched[2], matched[1], matched[3])) {
-								bValid = false;
-								if (!config.setupErrorOff) {
-									vulpe.exception.setupError(idField, message);
-								}
-							}
+						if (matched != null && !vulpe.validate.isValidDate(matched[2], matched[1], matched[3])) {
+							bValid = false;
 						} else {
 							bValid = false;
-							if (!config.setupErrorOff) {
-								vulpe.exception.setupError(idField, message);
-							}
 						}
 					} else if ((orderMonth < orderYear && orderMonth > orderDay)) {
 						var iDelim1 = orderDay + DAY.length;
@@ -1041,15 +1036,9 @@ var vulpe = {
 						if (matched != null) {
 							if (!vulpe.validate.isValidDate(matched[1], matched[2], matched[3])) {
 								bValid = false;
-								if (!config.setupErrorOff) {
-									vulpe.exception.setupError(idField, message);
-								}
 							}
 						} else {
 							bValid = false;
-							if (!config.setupErrorOff) {
-								vulpe.exception.setupError(idField, message);
-							}
 						}
 					} else if ((orderMonth > orderYear && orderMonth < orderDay)) {
 						var iDelim1 = orderYear + YEAR.length;
@@ -1069,23 +1058,17 @@ var vulpe = {
 						if(matched != null) {
 							if (!vulpe.validate.isValidDate(matched[3], matched[2], matched[1])) {
 								bValid = false;
-								if (!config.setupErrorOff) {
-									vulpe.exception.setupError(idField, message);
-								}
 							}
 						} else {
 							bValid = false;
-							if (!config.setupErrorOff) {
-								vulpe.exception.setupError(idField, message);
-							}
 						}
 					} else {
 						bValid = false;
-						if (!config.setupErrorOff) {
-							vulpe.exception.setupError(idField, message);
-						}
 					}
 				}
+			}
+			if (!config.setupErrorOff && !bValid) {
+				vulpe.exception.setupError(idField, message);
 			}
 			return bValid;
 		},
@@ -1214,9 +1197,6 @@ var vulpe = {
 
 		validateAttribute: function(field) {
 			var valid = true;
-			//if (field.val() == "%" && vulpe.config.formName.indexOf("Select") != -1) {
-			//	return valid;
-			//}
 			var idField = field.attr("id");
 			var config = vulpe.util.getElementConfig(idField);
 			if (config) {
