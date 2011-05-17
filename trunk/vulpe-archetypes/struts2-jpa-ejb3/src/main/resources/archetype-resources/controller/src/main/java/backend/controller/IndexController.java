@@ -3,9 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.backend.controller;
 
-import org.apache.log4j.Logger;
-
-import ${package}.controller.ApplicationBaseSimpleController;
+import ${package}.controller.ApplicationBaseController;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -18,8 +16,6 @@ import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("backend.IndexController")
 @Controller(type = ControllerType.BACKEND)
-public class IndexController extends ApplicationBaseSimpleController<VulpeBaseSimpleEntity, Long> {
-
-	protected static final Logger LOG = Logger.getLogger(IndexController.class);
+public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEntity, Long> {
 
 }
