@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -57,12 +58,17 @@ public class MultipleResourceBundle extends ResourceBundle {
 	 * @return list of bundles in application
 	 */
 	protected List<ResourceBundle> getBundles() {
-		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
-		VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
+		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
+				VulpeConstants.CONTEXT);
+		final VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
 		final String modules[] = project.i18n();
-		List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
-		for (String module : modules) {
-			final ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext.getLocale());
+		final List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
+		for (final String module : modules) {
+			ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
+					.getLocale());
+			if (!resourceBundle.getLocale().equals(vulpeContext.getLocale())) {
+				resourceBundle = ResourceBundle.getBundle(module, new Locale(""));
+			}
 			list.add(resourceBundle);
 		}
 		Collections.reverse(list);
@@ -79,7 +85,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 		final List<ResourceBundle> list = getBundles();
 		if (list != null) {
 			final Vector<String> listKeys = new Vector<String>();
-			for (ResourceBundle resourceBundle : list) {
+			for (final ResourceBundle resourceBundle : list) {
 				final Enumeration<String> enume = resourceBundle.getKeys();
 				while (enume.hasMoreElements()) {
 					listKeys.add(enume.nextElement());
@@ -99,19 +105,21 @@ public class MultipleResourceBundle extends ResourceBundle {
 	protected Object handleGetObject(final String key) {
 		final List<ResourceBundle> list = getBundles();
 		if (list != null) {
-			for (ResourceBundle resourceBundle : list) {
+			for (final ResourceBundle resourceBundle : list) {
 				try {
 					final Object value = resourceBundle.getObject(key);
 					if (value != null) {
 						if (value instanceof String) {
-							if (!value.toString().startsWith("???") && !value.toString().endsWith("???")) {
+							if (!value.toString().startsWith("???")
+									&& !value.toString().endsWith("???")) {
 								return value;
 							}
 						}
 						return value;
 					}
 				} catch (MissingResourceException e) {
-					LOG.debug(resourceBundle.getLocale().getDisplayName() + " - missing key: " + key);
+					LOG.debug(resourceBundle.getLocale().getDisplayName() + " - missing key: "
+							+ key);
 				}
 			}
 		}
