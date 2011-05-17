@@ -315,6 +315,12 @@
 	cursor: wait
 }
 
+#menu {
+	background-color: #ccc;
+	height: 29px;
+	width: auto;
+}
+
 #paging {
 
 }
