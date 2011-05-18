@@ -9,5 +9,5 @@ map|1=web/src/main/webapp|TOMCAT_HOME/webapps/${rootArtifactId}|,|,|,
 map|2=commons/target/classes|,|,|,|,
 map|3=core/target/classes|,|,|,|,
 map|4=controller/target/classes|,|,|,|,
-map|5=web/target/classes|,|,|,|,
+map|5=web/src/main/resources|,|,|,|,
 useCurrentDateForDestinationFiles=false
