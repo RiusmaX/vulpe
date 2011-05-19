@@ -26,7 +26,7 @@
 				$(messages).slideDown("slow");
 				<c:if test="${global['project-view-messageSlideUp']}">
 				setTimeout(function() {
-				  	$(messages).slideUp("slow");
+				  	$(messages).slideUp("slow", function(){ $(this).html(""); });
 				}, ${global['project-view-messageSlideUpTime']});
 				</c:if>
 			});
@@ -95,14 +95,14 @@
 						msg += "</ul>" + closeButton("#infoMessages") + "</div>";
 					</c:if>
 					jQuery(document).bind("keydown", "Esc", function(evt) {
-						$(messages).slideUp('slow');
+						$(messages).slideUp('slow', function(){ $(this).html(""); });
 						return false;
 					});
 					$(messages).html(msg);
 					$(messages).slideDown("slow");
 					<c:if test="${global['project-view-messageSlideUp']}">
 					setTimeout(function() {
-			          	$(messages).slideUp("slow");
+			          	$(messages).slideUp("slow", function(){ $(this).html(""); });
 					}, ${global['project-view-messageSlideUpTime']});
 					</c:if>
 				});

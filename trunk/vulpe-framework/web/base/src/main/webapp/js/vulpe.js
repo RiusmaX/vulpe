@@ -2464,7 +2464,7 @@ var vulpe = {
 			$(messageLayer).slideDown("slow");
 			if (!vulpe.util.existsVulpePopups()) {
 				jQuery(document).bind("keydown", "Esc", function(evt) {
-					$('#messages').slideUp('slow');
+					$('#messages').slideUp('slow', function(){ $(this).html(""); });
 					return false;
 				});
 			}
