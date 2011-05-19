@@ -40,9 +40,9 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		super.postConstruct();
 		final List<Portal> portalList = getCachedClasses().getSelf(Portal.class.getSimpleName());
 		if (portalList != null) {
-			for (Portal portal : portalList) {
+			for (final Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
-					setSessionAttribute(Core.VULPE_PORTAL, portal);
+					ever.put(Core.VULPE_PORTAL, portal);
 				}
 			}
 		}
