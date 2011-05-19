@@ -45,16 +45,16 @@ public class VulpeControllerInterceptor implements Interceptor {
 		LOG.debug("Intercepting " + request.getRequestURI());
 		if (resourceInstance != null && resourceInstance instanceof VulpeVRaptorController) {
 			VulpeVRaptorController controller = (VulpeVRaptorController) resourceInstance;
-			List<Field> fields = VulpeReflectUtil.getFields(controller.getClass());
-			for (Field field : fields) {
+			final List<Field> fields = VulpeReflectUtil.getFields(controller.getClass());
+			for (final Field field : fields) {
 				try {
 					result.include(field.getName(), PropertyUtils.getProperty(controller, field.getName()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}
 			}
-			List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
-			for (Method method2 : methods) {
+			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			for (final Method method2 : methods) {
 				String methodName = method2.getName();
 				if (methodName.contains("get")
 						&& (method2.getParameterTypes() == null || method2.getParameterTypes().length == 0)) {
