@@ -1484,10 +1484,13 @@ var vulpe = {
 		controlMarkUnmarkAll: function(select, name, parent) {
 			var selected = false;
 			if (select.checked) {
+				if (parent.indexOf("#") != 0) {
+					parent = "#" + parent;
+				}
 				var items = jQuery(":checkbox[name$='"+ name +"']", parent).length;
 				var count = 0;
 				jQuery(":checkbox[name$='"+ name +"']", parent).each(function(index) {
-					if (eval($(this).attr("checked"))) {
+					if (this.checked) {
 						++count;
 					}
 				});

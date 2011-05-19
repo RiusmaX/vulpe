@@ -455,7 +455,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @param detailConfig
 	 * @return
 	 */
-	protected boolean validateQuantity(final Collection<VulpeEntity<?>> beans, final VulpeBaseDetailConfig detailConfig) {
+	protected boolean validateQuantity(final List<ENTITY> beans, final VulpeBaseDetailConfig detailConfig) {
 		if (detailConfig.getQuantity() != null) {
 			final String tabName = getTabs().containsKey(detailConfig.getTitleKey()) ? ((Tab) getTabs().get(
 					detailConfig.getTitleKey())).getTitle() : getText(detailConfig.getTitleKey());
@@ -1030,7 +1030,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setRequestAttribute(Layout.TARGET_CONFIG_PROPERTY_NAME, getDetail());
 	}
 
-	private void mountDetailPaging(final VulpeBaseDetailConfig detailConfig, final Paging<ENTITY> paging) {
+	protected void mountDetailPaging(final VulpeBaseDetailConfig detailConfig, final Paging<ENTITY> paging) {
 		final List<ENTITY> list = new ArrayList<ENTITY>();
 		if (getPaging() != null && getPaging().getPage() != null) {
 			paging.setPage(getPaging().getPage());

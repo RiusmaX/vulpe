@@ -139,11 +139,12 @@
 			<c:when test="${!isHeaderTableTag}">
 				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
 					<c:if test="${disableDelete}"><c:set var="disableSelect" value="disabled=\"true\""/></c:if>
-					<input type="checkbox" name="${!disableDelete ? deleteName : ''}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${!disableDelete ? deleteName : ''}', '#${deleteLayer}');" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>" ${disableSelect}/>
+					<c:set var="checkboxName" value="${!disableDelete ? deleteName : ''}"/>
+					<input type="checkbox" name="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${checkboxName}', '${deleteLayer}');" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>" ${disableSelect}/>
 				</td>
 			</c:when>
 			<c:otherwise>
-				<th id="vulpeSelectAll" style="text-align: center; width: 10px">
+				<th id="vulpeSelectAll" style="text-align: center;">
 					<fmt:message key='label.vulpe.delete'/><br/>
 					<input type="checkbox" id="selectAll" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
 				</th>
@@ -152,14 +153,15 @@
 		</c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
-				<th id="vulpeSelectAll" ${styleClass} style="text-align: center; width: 10px">
+				<th id="vulpeSelectAll" ${styleClass} style="text-align: center;">
 					<fmt:message key='label.vulpe.delete'/><br/>
 					<input type="checkbox" id="selectAll" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
 				</th>
 			</c:if>
 			<c:if test="${!isHeaderTableTag}">
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}">
-					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${!disableDelete ? deleteName : 'unselected'}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${!disableDelete ? deleteName : 'unselected'}', '#${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
+					<c:set var="checkboxName" value="${!disableDelete ? deleteName : 'unselected'}"/>
+					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
 				</v:column>
 			</c:if>
 		</c:if>
