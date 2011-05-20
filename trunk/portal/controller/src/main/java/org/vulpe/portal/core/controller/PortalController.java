@@ -3,6 +3,7 @@ package org.vulpe.portal.core.controller;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
@@ -17,12 +18,12 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Component("core.PortalController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = CoreService.class, select = @Select(pageSize = 1))
+@Controller(serviceClass = CoreService.class, select = @Select(pageSize = 1, readOnShow = true))
 public class PortalController extends ApplicationBaseController<Portal, Long> {
 
 	@Override
 	public String update() {
-		final Portal portal = getSessionAttribute(Core.VULPE_PORTAL);
+		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
 		if (portal != null) {
 			setId(portal.getId());
 			setEntity(portal);
@@ -34,8 +35,13 @@ public class PortalController extends ApplicationBaseController<Portal, Long> {
 	protected void updatePostAfter() {
 		super.updatePostAfter();
 		if (getEntity().getStatus().equals(Status.ACTIVE)) {
-			setSessionAttribute(Core.VULPE_PORTAL, getEntity());
+			ever.put(Core.VULPE_PORTAL, getEntity());
 		}
 	}
 
+	@Override
+	public void manageButtons(Operation operation) {
+		super.manageButtons(operation);
+		hideButtons(Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
+	}
 }
