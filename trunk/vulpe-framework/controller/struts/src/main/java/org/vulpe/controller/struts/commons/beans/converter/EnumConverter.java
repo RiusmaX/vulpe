@@ -23,7 +23,7 @@ import ognl.TypeConverter;
 
 import org.apache.log4j.Logger;
 
-import com.opensymphony.xwork2.util.TypeConversionException;
+import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 @SuppressWarnings("unchecked")
 public class EnumConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {

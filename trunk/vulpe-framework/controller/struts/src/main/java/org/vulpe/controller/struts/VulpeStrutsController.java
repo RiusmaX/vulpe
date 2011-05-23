@@ -57,8 +57,8 @@ import com.opensymphony.xwork2.LocaleProvider;
 import com.opensymphony.xwork2.Validateable;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.ValidationAwareSupport;
-import com.opensymphony.xwork2.util.OgnlContextState;
-import com.opensymphony.xwork2.util.OgnlUtil;
+import com.opensymphony.xwork2.ognl.OgnlUtil;
+import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
 
 /**
  * Vulpe Base Controller to Struts2
@@ -84,19 +84,19 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String create() {
-		return super.create();
+	public void create() {
+		super.create();
 	}
 
 	@ResetSession
-	public String createPost() {
-		return super.createPost();
+	public void createPost() {
+		super.createPost();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String update() {
-		return super.update();
+	public void update() {
+		super.update();
 	}
 
 	/**
@@ -107,8 +107,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
-	public String view() {
-		return super.view();
+	public void view() {
+		super.view();
 	}
 
 	/*
@@ -117,18 +117,18 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @see org.vulpe.controller.AbstractVulpeBaseController#updatePost()
 	 */
 	@ResetSession
-	public String updatePost() {
-		return super.updatePost();
+	public void updatePost() {
+		super.updatePost();
 	}
 
 	@SkipValidation
-	public String delete() {
-		return super.delete();
+	public void delete() {
+		super.delete();
 	}
 
 	@SkipValidation
-	public String deleteDetail() {
-		return super.deleteDetail();
+	public void deleteDetail() {
+		super.deleteDetail();
 	}
 
 	/**
@@ -244,8 +244,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @see org.vulpe.controller.VulpeController#addDetail()
 	 */
 	@SkipValidation
-	public String addDetail() {
-		return super.addDetail();
+	public void addDetail() {
+		super.addDetail();
 	}
 
 	/*
@@ -255,32 +255,32 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	@SkipValidation
 	@ResetSession(before = true)
-	public String prepare() {
-		return super.prepare();
+	public void prepare() {
+		super.prepare();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String twice() {
-		return super.twice();
+	public void twice() {
+		super.twice();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String select() {
-		return super.select();
+	public void select() {
+		super.select();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String report() {
-		return super.report();
+	public void report() {
+		super.report();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
-	public String tabular() {
-		return super.tabular();
+	public void tabular() {
+		super.tabular();
 	}
 
 	/*
@@ -314,27 +314,27 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	@SkipValidation
 	@ResetSession(before = true)
 	@Override
-	public String backend() {
-		return super.backend();
+	public void backend() {
+		super.backend();
 	}
 
 	@SkipValidation
 	@ResetSession(before = true)
 	@Override
-	public String frontend() {
-		return super.frontend();
+	public void frontend() {
+		super.frontend();
 	}
 
 	@SkipValidation
 	@Override
-	public String upload() {
-		return super.upload();
+	public void upload() {
+		super.upload();
 	}
 
 	@SkipValidation
 	@Override
-	public String download() {
-		return super.download();
+	public void download() {
+		super.download();
 	}
 
 	/**
@@ -342,7 +342,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * 
 	 * @since 1.0
 	 */
-	@SuppressWarnings("static-access")
 	protected DownloadInfo prepareDownloadInfo() {
 		try {
 			Object value = null;
@@ -643,8 +642,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		boolean createNullObjects = false;
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			if (!OgnlContextState.isCreatingNullObjects(context)) {
-				OgnlContextState.setCreatingNullObjects(context, true);
+			if (!ReflectionContextState.isCreatingNullObjects(context)) {
+				ReflectionContextState.setCreatingNullObjects(context, true);
 				createNullObjects = true;
 			}
 			int newDetails = 1;
@@ -721,7 +720,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			throw new VulpeSystemException(e);
 		} finally {
 			if (createNullObjects) {
-				OgnlContextState.setCreatingNullObjects(context, false);
+				ReflectionContextState.setCreatingNullObjects(context, false);
 			}
 		}
 	}

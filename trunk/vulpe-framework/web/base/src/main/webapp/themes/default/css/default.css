@@ -493,3 +493,7 @@ thead th,.vulpeTableHeader {
 	margin-bottom: 5px;
 	font-size: 9px;
 }
+
+#vulpeSelectAll {
+	width: 40px;
+}

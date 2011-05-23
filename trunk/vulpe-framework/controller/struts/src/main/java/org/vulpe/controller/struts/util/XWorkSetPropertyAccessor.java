@@ -25,19 +25,31 @@ import java.util.Set;
 import ognl.NoSuchPropertyException;
 import ognl.OgnlException;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.XWorkException;
-import com.opensymphony.xwork2.util.OgnlContextState;
-import com.opensymphony.xwork2.util.XWorkCollectionPropertyAccessor;
-import com.opensymphony.xwork2.util.XWorkConverter;
+import com.opensymphony.xwork2.conversion.ObjectTypeDeterminer;
+import com.opensymphony.xwork2.conversion.impl.XWorkConverter;
+import com.opensymphony.xwork2.inject.Inject;
+import com.opensymphony.xwork2.ognl.accessor.XWorkCollectionPropertyAccessor;
+import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
 
 /**
  * Utility class to fix bugs on Set data binding.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
 public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
+
+	private ObjectTypeDeterminer objectTypeDeterminer;
+
+	@Inject
+	@Override
+	public void setObjectTypeDeterminer(ObjectTypeDeterminer ot) {
+		objectTypeDeterminer = ot;
+	}
 
 	@Override
 	public Object getProperty(final Map context, final Object target, final Object name)
@@ -46,7 +58,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			final Set set = (Set) target;
 			final List list = getList(set);
 			final int index = ((Number) name).intValue();
-			OgnlContextState.updateCurrentPropertyPath(context, name);
+			ReflectionContextState.updateCurrentPropertyPath(context, name);
 			final Class lastClass = (Class) context.get(XWorkConverter.LAST_BEAN_CLASS_ACCESSED);
 			final String lastProperty = (String) context
 					.get(XWorkConverter.LAST_BEAN_PROPERTY_ACCESSED);
@@ -56,19 +68,20 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			}
 
 			Object result = null;
-			final Class beanClass = XWorkConverter.getInstance().getObjectTypeDeterminer()
-					.getElementClass(lastClass, lastProperty, name);
-			if (OgnlContextState.isCreatingNullObjects(context)
-					&& XWorkConverter.getInstance().getObjectTypeDeterminer().shouldCreateIfNew(
-							lastClass, lastProperty, target, null, true)) {
+			final Class beanClass = objectTypeDeterminer.getElementClass(lastClass, lastProperty,
+					name);
+			if (ReflectionContextState.isCreatingNullObjects(context)
+					&& objectTypeDeterminer.shouldCreateIfNew(lastClass, lastProperty, target,
+							null, true)) {
 				boolean seted = false;
 				if (list.size() <= index) {
 					for (int i = list.size(); i < index; i++) {
 						list.add(null);
 					}
 					try {
-						final boolean added = set.add(result = ObjectFactory.getObjectFactory()
-								.buildBean(beanClass, context));
+						final boolean added = set.add(result = ActionContext.getContext()
+								.getContainer().getInstance(ObjectFactory.class).buildBean(
+										beanClass, context));
 						if (added) {
 							list.add(index, result);
 							seted = true;
@@ -78,8 +91,8 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 					}
 				} else if (list.get(index) == null) {
 					try {
-						list.set(index, (result = ObjectFactory.getObjectFactory().buildBean(
-								beanClass, context)));
+						list.set(index, (result = ActionContext.getContext().getContainer()
+								.getInstance(ObjectFactory.class).buildBean(beanClass, context)));
 						seted = true;
 					} catch (Exception exc) {
 						throw new XWorkException(exc);

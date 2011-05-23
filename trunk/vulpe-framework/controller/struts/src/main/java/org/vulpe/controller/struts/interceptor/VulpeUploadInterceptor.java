@@ -229,7 +229,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 				// validation.addFieldError(inputName, message);
 				validation.addActionError(message);
 			}
-			log.error(message);
+			LOG.error(message);
 		} else if (maximumSize != null && maximumSize.longValue() < file.length()) {
 			final VulpeUpload upload = VulpeConfigHelper.getProjectConfiguration().upload();
 			// String errMsg = getText("vulpe.error.file.too.large", new
@@ -241,7 +241,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 				validation.addActionError(message);
 			}
 
-			log.error(message);
+			LOG.error(message);
 		} else if ((!allowedTypesSet.isEmpty()) && (!containsItem(allowedTypesSet, contentType))) {
 			// String errMsg = getText("vulpe.error.content.type.not.allowed",
 			// new Object[] { inputName, file.getName(),
@@ -253,7 +253,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 				validation.addActionError(message);
 			}
 
-			log.error(message);
+			LOG.error(message);
 		} else {
 			fileIsAcceptable = true;
 		}

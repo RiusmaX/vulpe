@@ -19,19 +19,30 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
+import org.vulpe.commons.VulpeConstants.View.Struts;
+import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 
-import com.opensymphony.xwork2.util.DefaultObjectTypeDeterminer;
+import com.opensymphony.xwork2.conversion.impl.DefaultObjectTypeDeterminer;
+import com.opensymphony.xwork2.conversion.impl.XWorkConverter;
+import com.opensymphony.xwork2.inject.Inject;
+import com.opensymphony.xwork2.util.reflection.ReflectionProvider;
 
 /**
- * Classe utilizada para corrigir problemas ao determinar a classe de tipos
- * genericos.
+ * Utility class to solve problems on determine generic types.
  * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsObjectTypeDeterminer extends DefaultObjectTypeDeterminer {
+
+	@Inject
+	public GenericsObjectTypeDeterminer(XWorkConverter conv, ReflectionProvider prov) {
+		super(conv, prov);
+		VulpeCacheHelper.getInstance().put(Struts.XWORK_CONVERTER, conv);
+	}
 
 	@Override
 	public Class getElementClass(final Class parentClass, final String property, final Object key) {
@@ -40,10 +51,10 @@ public class GenericsObjectTypeDeterminer extends DefaultObjectTypeDeterminer {
 			final Field field = VulpeReflectUtil.getField(parentClass, property);
 			if (field.getGenericType() instanceof ParameterizedType) {
 				final ParameterizedType type = (ParameterizedType) field.getGenericType();
-				final int index = (Map.class.isAssignableFrom(VulpeReflectUtil
-						.getDeclaredType(clazz, type.getRawType()).getType()) ? 1 : 0);
-				final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(
-						parentClass, type);
+				final int index = (Map.class.isAssignableFrom(VulpeReflectUtil.getDeclaredType(
+						clazz, type.getRawType()).getType()) ? 1 : 0);
+				final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(parentClass,
+						type);
 				clazz = declaredType.getItems().get(index).getType();
 			}
 		}

@@ -326,6 +326,10 @@ public class VulpeConstants {
 			public static final String PATH = "/reports/";
 			public static final String JASPER = ".jasper";
 		}
+		
+		public class Struts {
+			public static final String XWORK_CONVERTER = "xworkConverter";
+		}
 	}
 
 	public class Security {

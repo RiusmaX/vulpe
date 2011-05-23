@@ -23,10 +23,6 @@
 		<url>http://www.activethread.com.br</url>
 	</organization>
 
-	<properties>
-		<struts.version>2.0.14</struts.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>

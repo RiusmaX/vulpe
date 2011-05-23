@@ -23,20 +23,21 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 
-import org.vulpe.commons.util.VulpeReflectUtil;
-import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
-
 import ognl.NoSuchPropertyException;
 import ognl.OgnlContext;
 import ognl.OgnlException;
 import ognl.OgnlRuntime;
 
-import com.opensymphony.xwork2.util.OgnlValueStack.ObjectAccessor;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
+
+import com.opensymphony.xwork2.ognl.accessor.ObjectAccessor;
 
 /**
  * Utility class to solve problems on set generic types.
  * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings("unchecked")
 public class GenericsPropertyAccessor extends ObjectAccessor {
@@ -45,7 +46,7 @@ public class GenericsPropertyAccessor extends ObjectAccessor {
 	public void setProperty(final Map context, final Object target, final Object oname,
 			final Object value) throws OgnlException {
 		Object newValue = value;
-		if (oname instanceof String && target != null) {
+		if (oname instanceof String && target != null && !oname.equals("excludeParams")) {
 			final OgnlContext ognlContext = (OgnlContext) context;
 
 			Method method = null;

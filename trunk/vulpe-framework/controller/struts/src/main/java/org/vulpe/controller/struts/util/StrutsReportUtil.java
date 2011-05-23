@@ -40,6 +40,11 @@ import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.controller.util.ReportUtil;
 import org.vulpe.exception.VulpeSystemException;
 
+/**
+ * 
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
+ *
+ */
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
 	 * Returns StrutsReportUtil instance

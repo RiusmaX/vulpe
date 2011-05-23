@@ -24,7 +24,7 @@ import ognl.TypeConverter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.opensymphony.xwork2.util.TypeConversionException;
+import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 @SuppressWarnings("unchecked")
 public class DecimalConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {

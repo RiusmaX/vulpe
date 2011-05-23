@@ -40,64 +40,56 @@ public interface VulpeController extends Serializable {
 	 * Method to control add detail.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String addDetail();
+	void addDetail();
 
 	/**
 	 * Method to control paging.
 	 *
-	 * @return Navigation.
 	 */
-	String paging();
+	void paging();
 
 	/**
 	 * Method to clear screen.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String clear();
+	void clear();
 
 	/**
 	 * Method to create new record.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String create();
+	void create();
 
 	/**
 	 * Method to confirm create.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String createPost();
+	void createPost();
 
 	/**
 	 * Method to clone record.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String cloneIt();
+	void cloneIt();
 
 	/**
 	 * Method to delete record.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String delete();
+	void delete();
 
 	/**
 	 * Method to delete detail items.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String deleteDetail();
+	void deleteDetail();
 
 	/**
 	 * Method to prepare to show.
@@ -105,31 +97,28 @@ public interface VulpeController extends Serializable {
 	 * @since 1.0
 	 * @return Navigation
 	 */
-	String prepare();
+	void prepare();
 
 	/**
 	 * Method to confirm logic tabulate.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String tabularPost();
+	void tabularPost();
 
 	/**
 	 * Method to update.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String update();
+	void update();
 
 	/**
 	 * Method to confirm update.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String updatePost();
+	void updatePost();
 
 	/**
 	 * Checks if entity is valid.
@@ -138,7 +127,7 @@ public interface VulpeController extends Serializable {
 	 */
 	boolean validateEntity();
 
-	String autocomplete();
+	void autocomplete();
 
 	void showButton(final String button);
 
@@ -152,7 +141,7 @@ public interface VulpeController extends Serializable {
 
 	void hideButtons(final String... buttons);
 
-	String json();
+	void json();
 
 	void deleteDetailHide(final String detail);
 
@@ -168,11 +157,11 @@ public interface VulpeController extends Serializable {
 
 	boolean isAddDetailShow();
 
-	String select();
+	void select();
 
-	String tabular();
+	void tabular();
 
-	String tabularFilter();
+	void tabularFilter();
 
 	boolean isUploaded();
 
@@ -194,17 +183,15 @@ public interface VulpeController extends Serializable {
 	 * Method to download file.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String download();
+	void download();
 
 	/**
 	 * Method to upload file.
 	 *
 	 * @since 1.0
-	 * @return Navigation.
 	 */
-	String upload();
+	void upload();
 
 	/**
 	 * Return current action configuration.
@@ -254,7 +241,7 @@ public interface VulpeController extends Serializable {
 	 * @since 1.0
 	 * @return Navigation
 	 */
-	String backend();
+	void backend();
 
 	/**
 	 * Method to prepare front-end show.
@@ -262,7 +249,7 @@ public interface VulpeController extends Serializable {
 	 * @since 1.0
 	 * @return Navigation
 	 */
-	String frontend();
+	void frontend();
 
 	boolean isAjax();
 
@@ -419,28 +406,39 @@ public interface VulpeController extends Serializable {
 	void setResultForward(final String resultForward);
 
 	/**
+	 * Method retrieve result.
+	 *
+	 * @since 1.0
+	 * @return Result Name.
+	 */
+	String getResultName();
+
+	void setResultName(final String resultName);
+
+	
+	/**
 	 * Mount return to view by simple page name or full path.
 	 *
 	 * @param page
 	 */
 	void returnToPage(final String page);
 
+	void read();
+	
 	/**
 	 * Redirect to URL.
 	 *
 	 * @param url
-	 * @return
 	 */
-	String redirectTo(final String url);
+	void redirectTo(final String url);
 
 	/**
 	 * Redirect to URL using AJAX.
 	 *
 	 * @param url
 	 * @param ajax
-	 * @return
 	 */
-	String redirectTo(final String url, final boolean ajax);
+	void redirectTo(final String url, final boolean ajax);
 
 	void setUrlRedirect(String urlRedirect);
 

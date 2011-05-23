@@ -22,7 +22,7 @@ import ognl.TypeConverter;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeDateUtil;
 
-import com.opensymphony.xwork2.util.TypeConversionException;
+import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 @SuppressWarnings("unchecked")
 public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {

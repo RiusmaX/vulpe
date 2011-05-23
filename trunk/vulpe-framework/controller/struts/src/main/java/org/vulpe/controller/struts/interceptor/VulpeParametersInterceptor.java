@@ -42,8 +42,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
-import com.opensymphony.xwork2.util.OgnlContextState;
 import com.opensymphony.xwork2.util.ValueStack;
+import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
 
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeParametersInterceptor extends ParametersInterceptor {
@@ -96,14 +96,14 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 		} else {
 			final Map params = (Map) ActionContext.getContext().getSession().get(key);
 			if (params != null) {
-				final boolean createNullObjects = OgnlContextState.isCreatingNullObjects(stack.getContext());
+				final boolean createNullObjects = ReflectionContextState.isCreatingNullObjects(stack.getContext());
 				try {
 					for (final Iterator iterator = params.keySet().iterator(); iterator.hasNext();) {
 						final String name = (String) iterator.next();
 						final Object[] value = (Object[]) params.get(name);
-						OgnlContextState.setCreatingNullObjects(stack.getContext(), false);
+						ReflectionContextState.setCreatingNullObjects(stack.getContext(), false);
 						if (VulpeValidationUtil.isEmpty(stack.findValue(name))) {
-							OgnlContextState.setCreatingNullObjects(stack.getContext(), true);
+							ReflectionContextState.setCreatingNullObjects(stack.getContext(), true);
 							stack.setValue(name, value[1]);
 						}
 						if (Boolean.TRUE.equals(value[0])) {
@@ -111,7 +111,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 						}
 					}
 				} finally {
-					OgnlContextState.setCreatingNullObjects(stack.getContext(), createNullObjects);
+					ReflectionContextState.setCreatingNullObjects(stack.getContext(), createNullObjects);
 				}
 			}
 		}

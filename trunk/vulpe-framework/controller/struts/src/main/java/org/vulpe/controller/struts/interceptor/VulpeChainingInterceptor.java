@@ -28,8 +28,8 @@ import org.vulpe.controller.VulpeController.Operation;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.interceptor.ChainingInterceptor;
+import com.opensymphony.xwork2.ognl.OgnlUtil;
 import com.opensymphony.xwork2.util.CompoundRoot;
-import com.opensymphony.xwork2.util.OgnlUtil;
 import com.opensymphony.xwork2.util.ValueStack;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -42,7 +42,6 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 	 * com.opensymphony.xwork2.interceptor.ChainingInterceptor#intercept(com
 	 * .opensymphony.xwork2.ActionInvocation)
 	 */
-	@SuppressWarnings("static-access")
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
 		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeController) {

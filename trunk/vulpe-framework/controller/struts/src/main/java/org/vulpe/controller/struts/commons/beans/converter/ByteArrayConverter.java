@@ -22,7 +22,7 @@ import ognl.TypeConverter;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import com.opensymphony.xwork2.util.TypeConversionException;
+import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 @SuppressWarnings("unchecked")
 public class ByteArrayConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {

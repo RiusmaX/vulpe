@@ -36,9 +36,9 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	public static final String PASSWORD = "vulpeUserPassword";
 
 	@Override
-	public String createPost() {
+	public void createPost() {
 		setPassword(getEntity().getPassword());
-		return super.createPost();
+		super.createPost();
 	}
 
 	@Override
