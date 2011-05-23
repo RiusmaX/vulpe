@@ -18,10 +18,10 @@
 	<select id="${elementId}-languageIdFlag" style="width: 45px;" name="${name}.languageId">
 		<c:forEach var="language" items="${cachedClasses['Language']}" varStatus="status">
 			<c:set var="selected" value="" />
-			<c:if test="${language.id == languageIdValue}">
+			<c:if test="${util:toString(language.id) == languageIdValue}">
 				<c:set var="selected"> selected="selected"</c:set>
 			</c:if>
-			<option ${selected} value="${language.id}"
+			<option ${selected} value="${util:toString(language.id)}"
 				title="${pageContext.request.contextPath}/images/flags/${language.localeCode}.png">&nbsp;</option>
 		</c:forEach>
 	</select>
