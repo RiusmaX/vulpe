@@ -22,13 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -36,26 +37,27 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
 	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-			throws IOException, ServletException {
-		setLoginFormUrl(URI.AUTHENTICATOR + (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException {
+		setLoginFormUrl(URI.AUTHENTICATOR
+				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
 		super.commence(request, response, authException);
 	}
 
 	/**
-	 *
+	 * 
 	 * @param request
 	 */
 	public void changeSavedRequest(final HttpServletRequest request) {
-		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession().getAttribute(
-				DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY);
+		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
+				.getAttribute(WebAttributes.SAVED_REQUEST);
 		if (savedRequest != null && !savedRequest.getRequestURI().contains(URI.AUTHENTICATOR)) {
 			String requestURI = savedRequest.getRequestURI();
 			if (!requestURI.endsWith(URI.AJAX)) {
 				requestURI += URI.AJAX;
 			}
 			VulpeReflectUtil.setFieldValue(savedRequest, "requestURI", requestURI);
-			request.getSession().setAttribute(DefaultSavedRequest.SPRING_SECURITY_SAVED_REQUEST_KEY, savedRequest);
+			request.getSession().setAttribute(WebAttributes.SAVED_REQUEST, savedRequest);
 		}
 	}
 }
