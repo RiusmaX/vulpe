@@ -761,3 +761,7 @@ ol, ul {
 	color: #ddd;
 	font-size: 9px;
 }
+
+#vulpeSelectAll {
+	width: 40px;
+}

@@ -22,13 +22,13 @@ import org.vulpe.portal.core.model.services.CoreService;
 public class PortalController extends ApplicationBaseController<Portal, Long> {
 
 	@Override
-	public String update() {
+	public void update() {
 		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
 		if (portal != null) {
 			setId(portal.getId());
 			setEntity(portal);
 		}
-		return super.update();
+		super.update();
 	}
 
 	@Override

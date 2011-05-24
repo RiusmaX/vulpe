@@ -109,8 +109,8 @@
 }
 
 .vulpeMessages {
-	background-color: #fff;
-	border: 1px solid #333;
+	background: none;
+	border: none;
 	overflow: auto;
 	padding: 1px;
 }
@@ -513,4 +513,8 @@ thead th,.vulpeTableHeader {
 	margin-right: 5px;
 	margin-bottom: 5px;
 	font-size: 9px;
+}
+
+#vulpeSelectAll {
+	width: 40px;
 }

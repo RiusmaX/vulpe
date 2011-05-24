@@ -60,16 +60,15 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 		return Forward.SUCCESS;
 	}
 
-	public String download() {
+	public void download() {
 		try {
 			final Download download = getService(CoreService.class).findDownload(new Download(getId()));
 			download.increaseDownload();
 			getService(CoreService.class).updateDownload(download);
-			return redirectTo(download.getUrl(), false);
+			redirectTo(download.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		return null;
 	}
 
 	public void setId(Long id) {
