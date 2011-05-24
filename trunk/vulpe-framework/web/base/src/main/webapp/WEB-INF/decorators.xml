@@ -5,15 +5,15 @@
 		<pattern>/accessDenied.jsp*</pattern>
 		<pattern>*/errors/*</pattern>
 		<pattern>*/j_spring_security_check*</pattern>
-		<pattern>*/authenticator?loginError=*</pattern>
+		<pattern>*/authenticator/error/*</pattern>
 	</excludes>
-	<decorator name="default" page="backend.jsp">
+	<decorator name="default" page="backendLayout.jsp">
 		<pattern>/*</pattern>
 	</decorator>
-	<decorator name="frontend" page="frontend.jsp">
+	<decorator name="frontend" page="frontendLayout.jsp">
 		<pattern>*/frontend*</pattern>
 	</decorator>
-	<decorator name="authenticator" page="authenticator.jsp">
+	<decorator name="authenticator" page="authenticatorLayout.jsp">
 		<pattern>*/authenticator</pattern>
 	</decorator>
 </decorators>

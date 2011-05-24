@@ -164,6 +164,7 @@ var vulpe = {
 			return true;
 		},
 		executeAfter: function() {
+			vulpe.view.hideLoading();
 			if (vulpe.login.logged) {
 				$(window.location).attr("href", vulpe.config.authenticator.url.redirect);
 			}

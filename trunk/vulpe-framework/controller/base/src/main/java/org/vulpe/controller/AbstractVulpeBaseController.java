@@ -155,7 +155,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (view != null) {
 			now.put(Now.FIELD_TO_FOCUS, view.fieldToFocus());
 		}
-		// now.put(VulpeConstants.SECURITY_CONTEXT, getSecurityContext());
 	}
 
 	/**
@@ -1222,9 +1221,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntitySelect(prepareEntity(Operation.CREATE));
 			create();
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
-			getSession().removeAttribute(getSelectFormKey());
-			getSession().removeAttribute(getSelectTableKey());
-			getSession().removeAttribute(getSelectPagingKey());
+			ever.remove(getSelectFormKey());
+			ever.remove(getSelectTableKey());
+			ever.remove(getSelectPagingKey());
 			setEntitySelect(prepareEntity(Operation.SELECT));
 			select();
 		}
@@ -1571,7 +1570,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				getCachedClasses().put(entityName, list);
 			}
 			if (!getControllerConfig().isOnlyUpdateDetails()) {
-				final List<ENTITY> entities = getSessionAttribute(getSelectTableKey());
+				final List<ENTITY> entities = ever.getSelf(getSelectTableKey());
 				if (entities != null && !entities.isEmpty()) {
 					final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
 					int index = 0;
@@ -1584,7 +1583,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						}
 						++index;
 					}
-					setSessionAttribute(getSelectTableKey(), entities);
+					ever.put(getSelectTableKey(), entities);
 				}
 			}
 			updatePostAfter();
@@ -1924,8 +1923,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			return;
 		}
 		if (getControllerType().equals(ControllerType.TWICE)) {
-			if (getSessionAttribute(getSelectFormKey()) != null && getEntitySelect() == null) {
-				setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
+			if (ever.containsKey(getSelectFormKey()) && getEntitySelect() == null) {
+				setEntitySelect(ever.<ENTITY> getSelf(getSelectFormKey()));
 			}
 			if (getEntitySelect() == null) {
 				setEntitySelect(getEntity());
@@ -1964,7 +1963,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							Integer.class }, new Object[] { entity.clone(), pageSize, page });
 			setPaging(paging);
 			setEntities(paging.getList());
-			setSessionAttribute(getSelectPagingKey(), paging);
+			ever.put(getSelectPagingKey(), paging);
 			if (getControllerType().equals(ControllerType.TABULAR)) {
 				setTabularSize(paging.getSize());
 				if (paging.getList() == null || paging.getList().isEmpty()) {
@@ -1988,9 +1987,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			final DownloadInfo downloadInfo = doReportLoad();
 			setDownloadInfo(downloadInfo);
 		} else {
-			setSessionAttribute(getSelectFormKey(), entity.clone());
+			ever.put(getSelectFormKey(), entity.clone());
 			if (getEntities() != null && !getEntities().isEmpty()) {
-				setSessionAttribute(getSelectTableKey(), getEntities());
+				ever.put(getSelectTableKey(), getEntities());
 			}
 		}
 		setExecuted(true);
@@ -2121,12 +2120,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getControllerType().equals(ControllerType.SELECT)
 				|| getControllerType().equals(ControllerType.REPORT)) {
 			if (isBack()) {
-				setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
-				setEntities((List<ENTITY>) getSessionAttribute(getSelectTableKey()));
+				setEntitySelect(ever.<ENTITY> getSelf(getSelectFormKey()));
+				setEntities(ever.<List<ENTITY>> getSelf(getSelectTableKey()));
 				read();
 			} else {
-				getSession().removeAttribute(getSelectFormKey());
-				getSession().removeAttribute(getSelectTableKey());
+				ever.remove(getSelectFormKey());
+				ever.remove(getSelectTableKey());
 			}
 			controlResultForward();
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
@@ -2162,9 +2161,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		onPrepare();
 		manageButtons(Operation.PREPARE);
 		if (isBack()) {
-			setEntitySelect((ENTITY) getSessionAttribute(getSelectFormKey()));
-			setEntities((List<ENTITY>) getSessionAttribute(getSelectTableKey()));
-			setPaging((Paging<ENTITY>) getSessionAttribute(getSelectPagingKey()));
+			setEntitySelect(ever.<ENTITY> getSelf(getSelectFormKey()));
+			setEntities(ever.<List<ENTITY>> getSelf(getSelectTableKey()));
+			setPaging(ever.<Paging<ENTITY>> getSelf(getSelectPagingKey()));
 			if (getPaging() != null) {
 				getPaging().setList(getEntities());
 			}
@@ -2175,9 +2174,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			read();
 			return;
 		} else {
-			getSession().removeAttribute(getSelectFormKey());
-			getSession().removeAttribute(getSelectTableKey());
-			getSession().removeAttribute(getSelectPagingKey());
+			ever.remove(getSelectFormKey());
+			ever.remove(getSelectTableKey());
+			ever.remove(getSelectPagingKey());
 		}
 		if (getControllerConfig().getControllerAnnotation().select().readOnShow()) {
 			onRead();
@@ -3022,10 +3021,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @see org.vulpe.controller.VulpeSimpleController#getSecurityContext()
 	 */
 	public VulpeSecurityContext getSecurityContext() {
-		VulpeSecurityContext securityContext = getSessionAttribute(Security.SECURITY_CONTEXT);
+		VulpeSecurityContext securityContext = ever.getSelf(Security.SECURITY_CONTEXT);
 		if (securityContext == null) {
 			securityContext = getBean(VulpeSecurityContext.class);
-			setSessionAttribute(Security.SECURITY_CONTEXT, securityContext);
+			ever.put(Security.SECURITY_CONTEXT, securityContext);
 			if (securityContext != null) {
 				securityContext.afterUserAuthenticationCallback();
 			}

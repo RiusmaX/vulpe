@@ -47,7 +47,7 @@
 
 	<bean id="authenticationFailureHandler"
 		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<constructor-arg type="java.lang.String" name="defaultFailureUrl" value="/authenticator?loginError=1" />
+		<constructor-arg type="java.lang.String" name="defaultFailureUrl" value="/authenticator/error/1" />
 	</bean>
 
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
