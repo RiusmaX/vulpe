@@ -85,6 +85,8 @@ import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
 import org.vulpe.view.annotations.View;
 
+import com.google.gson.Gson;
+
 /**
  * Base Controller
  * 
@@ -986,6 +988,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		}
 		if (getEntitySelect().getId() == null) {
+			new Gson().toJson(values);
 			now.put("JSON", new JSONArray(values));
 		}
 		setResultName(Forward.JSON);
@@ -2538,7 +2541,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		getControllerConfig().setControllerType(ControllerType.BACKEND);
 		backendBefore();
 		onBackend();
-		setResultName(Forward.SUCCESS);
 		controlResultForward();
 		backendAfter();
 	}
@@ -2575,7 +2577,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		getControllerConfig().setControllerType(ControllerType.FRONTEND);
 		frontendBefore();
 		onFrontend();
-		setResultName(Forward.SUCCESS);
 		controlResultForward();
 		frontendAfter();
 	}

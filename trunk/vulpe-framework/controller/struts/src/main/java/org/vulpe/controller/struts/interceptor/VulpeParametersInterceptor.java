@@ -23,11 +23,8 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.dispatcher.ServletRedirectResult;
-import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -122,21 +119,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	public String intercept(ActionInvocation invocation) throws Exception {
 		LOG.debug("Init intercept");
 		this.invocation = invocation;
-		String result = super.intercept(invocation);
-		if (invocation.getAction() instanceof VulpeController && !result.equals(Forward.REDIRECT)) {
-			final VulpeController controller = (VulpeController) invocation.getAction();
-			if (StringUtils.isNotBlank(controller.getUrlRedirect())) {
-				result = Forward.REDIRECT;
-				VulpeReflectUtil.setFieldValue(invocation, "executed", false);
-				final ServletRedirectResult srr = new ServletRedirectResult("${urlRedirect}");
-				srr.setPrependServletContext(true);
-				srr.setActionMapper(new DefaultActionMapper());
-				VulpeReflectUtil.setFieldValue(srr, "lastFinalLocation", controller.getUrlRedirect());
-				VulpeReflectUtil.setFieldValue(invocation, "result", srr);
-				invocation.setResultCode(result);
-			}
-		}
-		return result;
+		return super.intercept(invocation);
 	}
 
 	/**

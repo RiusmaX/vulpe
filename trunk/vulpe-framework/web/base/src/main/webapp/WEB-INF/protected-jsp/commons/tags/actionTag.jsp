@@ -97,14 +97,15 @@
 		</c:otherwise>
 	</c:choose>
 	<c:if test="${not empty hotKey}">
-	<script type="text/javascript">
+	<script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		vulpe.util.addHotKey({
 			hotKey: "${hotKey}",
 			command: function (evt) {
 				vulpe.util.get("${elementId}").click();
 				return false;
-			}
+			},
+			override: true
 		});
 	});
 	</script>

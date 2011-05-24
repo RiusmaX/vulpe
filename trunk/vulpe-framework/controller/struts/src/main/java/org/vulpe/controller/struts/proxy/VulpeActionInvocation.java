@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.dispatcher.ServletRedirectResult;
+import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.Action;
@@ -186,7 +190,16 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	public Result createResult() throws Exception {
-
+		if (getAction() instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) getAction();
+			if (controller.getResultName().equals(Forward.REDIRECT)
+					&& StringUtils.isNotBlank(controller.getUrlRedirect())) {
+				final ServletRedirectResult srr = new ServletRedirectResult("${urlRedirect}");
+				srr.setPrependServletContext(true);
+				srr.setActionMapper(new DefaultActionMapper());
+				return srr;
+			}
+		}
 		if (explicitResult != null) {
 			Result ret = explicitResult;
 			explicitResult = null;
