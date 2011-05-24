@@ -6,7 +6,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
@@ -26,7 +25,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 
 	private Long id;
 
-	public String section() {
+	public void section() {
 		try {
 			final Section section = getService(CoreService.class).findSection(new Section(getId()));
 			now.put(Now.CONTENT_TITLE, section.getName());
@@ -41,10 +40,9 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			LOG.error(e);
 		}
 		controlResultForward();
-		return Forward.SUCCESS;
 	}
 
-	public String content() {
+	public void content() {
 		try {
 			final Content content = getService(CoreService.class).findContent(new Content(getId()));
 			content.increaseView();
@@ -57,7 +55,6 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			LOG.error(e);
 		}
 		controlResultForward();
-		return Forward.SUCCESS;
 	}
 
 	public void download() {
