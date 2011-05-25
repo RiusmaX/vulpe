@@ -3,6 +3,10 @@
         "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
 <urlrewrite>
 	<rule>
+		<from>/authenticator/error/([0-9]+)</from>
+		<to>/authenticator?loginError=$1</to>
+	</rule>
+	<rule>
 		<from>^/([a-z]+)/([a-z]+)/([a-z]+)/([0-9]+)</from>
 		<to>/$1/$2/$3?id=$4</to>
 	</rule>
@@ -53,9 +57,5 @@
 	<rule>
 		<from>^/([a-z]+)/([a-z]+)/detail/([a-z]+)/page/ajax/([0-9]+)</from>
 		<to>/$1/$2/paging/ajax?detail=$3&amp;paging.page=$4</to>
-	</rule>
-	<rule>
-		<from>/authenticator/error/([0-9]+)</from>
-		<to>/authenticator?loginError=$1</to>
 	</rule>
 </urlrewrite>
