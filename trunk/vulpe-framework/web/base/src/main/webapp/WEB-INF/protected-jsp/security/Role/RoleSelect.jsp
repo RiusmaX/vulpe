@@ -1,4 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:choose>
 	<c:when test="${now['controllerType'] == 'TABULAR'}">
 		<table>

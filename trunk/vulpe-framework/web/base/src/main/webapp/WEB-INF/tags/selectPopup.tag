@@ -5,6 +5,7 @@
 <%@ attribute name="autocompleteMinLength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="autocompleteProperties" required="false" rtexprvalue="true" %>
 <%@ attribute name="autocompleteValueList" required="false" rtexprvalue="true" type="java.lang.Object" %>
+<%@ attribute name="autocompleteNotFoundMessage" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="beforeJs" required="false" rtexprvalue="true" %>
 <%@ attribute name="description" required="true" rtexprvalue="true" %>
 <%@ attribute name="icon" required="false" rtexprvalue="true" type="java.lang.String" %>

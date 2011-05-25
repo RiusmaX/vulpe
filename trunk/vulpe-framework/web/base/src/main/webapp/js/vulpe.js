@@ -530,7 +530,7 @@ var vulpe = {
 				var elementId = value[0];
 				var element = vulpe.util.getElement(elementId);
 				if (element != null && element.className.indexOf(vulpe.config.css.fieldError) != -1) {
-					vulpe.exception.hideFieldError(element);
+					vulpe.exception.hideFieldError({element: element});
 				}
 				var returnedValue = null;
 				if (value.length == 1) {
@@ -2177,7 +2177,7 @@ var vulpe = {
 
 			/**
 			 *
-			 * @param options {url, autocomplete, value, identifier, description}
+			 * @param options {url, autocomplete, value, identifier, description, notFoundMessage}
 			 */
 			submitAutocompleteIdentifier: function(options) {
 				if (vulpe.config.popup.selectRow) {
@@ -2206,8 +2206,15 @@ var vulpe = {
 						if (vulpe.util.get(description).val() == "") {
 							vulpe.util.get(identifier).val("");
 							vulpe.util.get(identifier).focus();
+							if (options.notFoundMessage) {
+								var idField = vulpe.util.get(description).attr("id");
+								var errorMessage = vulpe.util.get(idField + vulpe.config.suffix.errorMessage);
+								errorMessage.html(options.notFoundMessage);
+								errorMessage.css("display", "block");
+								vulpe.exception.showFieldError({element: vulpe.util.get(description), highlight: false});
+							}
 						} else {
-							vulpe.exception.hideFieldError(vulpe.util.get(description));
+							vulpe.exception.hideFieldError({element: vulpe.util.get(description)});
 						}
 						afterJs();
 					};
@@ -2335,11 +2342,11 @@ var vulpe = {
 				var config = vulpe.util.getElementConfig(fieldName);
 				if (!config) {
 					if (this.value.length == 0) {
-						vulpe.exception.showFieldError(this);
+						vulpe.exception.showFieldError({element: this});
 					} else {
 						errorMessage.hide();
 						if (this.value != "__/__/_____") {
-							vulpe.exception.hideFieldError(this);
+							vulpe.exception.hideFieldError({element: this});
 						}
 					}
 				} else {
@@ -2348,34 +2355,34 @@ var vulpe = {
 					var length = field.val().length;
 					if (required && length == 0) {
 						errorMessage.html(vulpe.config.messages.error.validate.required);
-						vulpe.exception.showFieldError(this);
+						vulpe.exception.showFieldError({element: this});
 					} else {
 						if (config.type == "STRING") {
 							var value = field.val();
 							if (config.minlength) {
 								if (vulpe.util.trim(value).length >= config.minlength || length == 0) {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								} else {
 									errorMessage.html(vulpe.config.messages.error.validate.minlength.replace("{0}", config.minlength));
 									errorMessage.css("display", "block");
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								}
 							} else if (config.maxlength) {
 								if (vulpe.util.trim(value).length <= config.maxlength || length == 0) {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								} else {
 									errorMessage.html(vulpe.config.messages.error.validate.maxlength.replace("{0}", config.maxlength));
 									errorMessage.css("display", "block");
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								}
 							}
 							if (value.length > 1) {
 								if (vulpe.util.checkRepeatedCharacters(value)) {
 									errorMessage.html(vulpe.config.messages.error.validate.repeatedCharacters);
 									errorMessage.css("display", "block");
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								} else {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								}
 							}
 						} else if (config.type == "DATE") {
@@ -2386,26 +2393,26 @@ var vulpe = {
 									datePatternStrict: config.datePattern,
 									setupErrorOff: true
 								})) {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								} else {
 									errorMessage.html(vulpe.config.messages.error.validate.date);
 									errorMessage.css("display", "block");
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								}
 							}
 						} else {
 							if (config.min) {
 								if (field.val() >= config.min) {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								} else {
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								}
 							}
 							if (config.max) {
 								if (field.val() <= config.max) {
-									vulpe.exception.hideFieldError(this);
+									vulpe.exception.hideFieldError({element: this});
 								} else {
-									vulpe.exception.showFieldError(this);
+									vulpe.exception.showFieldError({element: this});
 								}
 							}
 						}
@@ -2418,23 +2425,35 @@ var vulpe = {
 			vulpe.util.get(fieldName).keyup(errorController);
 		},
 
-		showFieldError: function(element) {
-			if (element) {
-				jQuery(element).addClass(vulpe.config.css.fieldError);
-				var error = vulpe.util.get(element.id + vulpe.config.suffix.iconErrorMessage);
+		showFieldError: function(options) {
+			if (options.element) {
+				if (options.highlight == "undefined") {
+					options.highlight = true;
+				}
+				if (element.highlight) {
+					var idField = jQuery(options.element).attr("id");
+					var idParent = idField.substring(0, idField.lastIndexOf(vulpe.config.token.dot));
+					var idSelectPopup = idParent + "-selectPopup";
+					var selectPopup = vulpe.util.get(idSelectPopup);
+					if (selectPopup.length == 1) {
+						jQuery("#" + idParent + "_id").addClass(vulpe.config.css.fieldError);
+					}
+					jQuery(options.element).addClass(vulpe.config.css.fieldError);
+				}
+				var error = vulpe.util.get(options.element.id + vulpe.config.suffix.iconErrorMessage);
 				if (error.length == 1) {
 					error.show();
 				}
 			}
 		},
 
-		hideFieldError: function(element) {
-			if (element) {
-				jQuery(element).removeClass(vulpe.config.css.fieldError);
-				var error = vulpe.util.get(element.id + vulpe.config.suffix.iconErrorMessage);
+		hideFieldError: function(options) {
+			if (options.element) {
+				jQuery(options.element).removeClass(vulpe.config.css.fieldError);
+				var error = vulpe.util.get(options.element.id + vulpe.config.suffix.iconErrorMessage);
 				if (error.length == 1) {
 					error.hide();
-					vulpe.util.get(element.id + vulpe.config.suffix.errorMessage).hide();
+					vulpe.util.get(options.element.id + vulpe.config.suffix.errorMessage).hide();
 				}
 			}
 		},
