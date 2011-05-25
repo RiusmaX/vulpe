@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.util.EverParameter;
 
 public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 
@@ -50,4 +52,11 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 		return ServletActionContext.getResponse();
 	}
 
+	/**
+	 * Returns global attributes map.
+	 * @return
+	 */
+	public EverParameter getEver() {
+		return (EverParameter) getSession().getAttribute(VulpeConstants.Session.EVER);
+	}
 }
