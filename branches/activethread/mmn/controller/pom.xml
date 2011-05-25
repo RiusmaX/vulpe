@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.jw.mmn</groupId>
+	<artifactId>mmn-controller</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>Ministerial Manager - Controller</name>
+
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-parent-struts-db4o</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-notices</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-ministry</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jw.mmn</groupId>
+			<artifactId>mmn-publications</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+</project>

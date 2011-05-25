@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MemberReports" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="member" class="org.jw.mmn.core.model.entity.Member"/>
+	<field name="hours" class="java.lang.Integer"/>
+	<field name="magazines" class="java.lang.Integer"/>
+	<field name="books" class="java.lang.Integer"/>
+	<field name="brochures" class="java.lang.Integer"/>
+	<field name="revisits" class="java.lang.Integer"/>
+	<field name="studies" class="java.lang.Integer"/>
+	<field name="ministryType" class="org.jw.mmn.commons.model.entity.MinistryType"/>
+	<variable name="totalHours" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{hours}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalMagazines" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{magazines}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalBooks" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{books}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalBrochures" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{brochures}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalRevisits" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{revisits}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalStudies" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Sum">
+		<variableExpression><![CDATA[$F{studies}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="booksAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{books})]]></variableExpression>
+	</variable>
+	<variable name="brochuresAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{brochures})]]></variableExpression>
+	</variable>
+	<variable name="hoursAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{hours})]]></variableExpression>
+	</variable>
+	<variable name="magazinesAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{magazines})]]></variableExpression>
+	</variable>
+	<variable name="revisitsAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{revisits})]]></variableExpression>
+	</variable>
+	<variable name="studiesAverage" class="java.lang.Double" resetType="Group" resetGroup="group" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{studies})]]></variableExpression>
+	</variable>
+	<variable name="totalMember" class="java.lang.Integer" resetType="Group" resetGroup="group" calculation="Count">
+		<variableExpression><![CDATA[$F{member}]]></variableExpression>
+	</variable>
+	<variable name="totalMembers" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{member}]]></variableExpression>
+	</variable>
+	<variable name="totalHours_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{hours}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalMagazines_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{magazines}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalBooks_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{books}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalBrochures_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{brochures}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalRevisits_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{revisits}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalStudies_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{studies}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="booksAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{books})]]></variableExpression>
+	</variable>
+	<variable name="brochuresAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{brochures})]]></variableExpression>
+	</variable>
+	<variable name="hoursAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{hours})]]></variableExpression>
+	</variable>
+	<variable name="magazinesAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{magazines})]]></variableExpression>
+	</variable>
+	<variable name="revisitsAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{revisits})]]></variableExpression>
+	</variable>
+	<variable name="studiesAverage_1" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[new Double($F{studies})]]></variableExpression>
+	</variable>
+	<group name="group">
+		<groupExpression><![CDATA[$F{member}.getGroup()]]></groupExpression>
+		<groupHeader>
+			<band height="35">
+				<printWhenExpression><![CDATA[$F{ministryType} == org.jw.mmn.commons.model.entity.MinistryType.PUBLISHER]]></printWhenExpression>
+				<textField>
+					<reportElement x="0" y="5" width="555" height="16"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Grupo [" + $F{member}.getGroup().getName() + "]"]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="20" width="555" height="15" backcolor="#EEEEEE"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="20" width="178" height="14"/>
+					<textElement>
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Nome]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="304" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Horas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="366" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Revistas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="428" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Revisitas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Livros]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="242" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Brochuras]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="490" y="20" width="62" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Estudos]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="35">
+				<printWhenExpression><![CDATA[$F{ministryType} == org.jw.mmn.commons.model.entity.MinistryType.PUBLISHER]]></printWhenExpression>
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="15" backcolor="#EEEEEE"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="15" width="555" height="15" backcolor="#EEEEEE"/>
+					<graphicElement>
+						<pen lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="490" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalStudies} == null ? 0 : $V{totalStudies}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="428" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalRevisits} == null ? 0 : $V{totalRevisits}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="242" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalBrochures} == null ? 0 : $V{totalBrochures}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalBooks} == null ? 0 : $V{totalBooks}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="180" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{booksAverage} == null ? 0 : $V{booksAverage}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="242" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{brochuresAverage} == null ? 0 : $V{brochuresAverage}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="304" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{hoursAverage} == null ? 0 : $V{hoursAverage}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="304" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalHours} == null ? 0 : $V{totalHours}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="366" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{magazinesAverage} == null ? 0 : $V{magazinesAverage}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="428" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{revisitsAverage} == null ? 0 : $V{revisitsAverage}]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.##">
+					<reportElement x="490" y="16" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{studiesAverage} == null ? 0 : $V{studiesAverage}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="2" y="1" width="178" height="14"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA["Total = " + $V{totalMember}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="16" width="178" height="14"/>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Média]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="366" y="1" width="61" height="14"/>
+					<textElement textAlignment="Right">
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalMagazines} == null ? 0 : $V{totalMagazines}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<columnHeader>
+		<band height="25">
+			<printWhenExpression><![CDATA[$F{ministryType} != org.jw.mmn.commons.model.entity.MinistryType.PUBLISHER]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="10" width="555" height="15" backcolor="#EEEEEE"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="10" width="178" height="14"/>
+				<textElement>
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="304" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Horas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Revistas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Revisitas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Livros]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Brochuras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="10" width="62" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Estudos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="14" backcolor="#FFFFFF"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="1" width="178" height="13"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{member}.getName()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{magazines} == null ? 0 : $F{magazines}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{hours} == null ? 0 : $F{hours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{books} == null ? 0 : $F{books}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{brochures} == null ? 0 : $F{brochures}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{revisits} == null ? 0 : $F{revisits}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="1" width="61" height="13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{studies} == null ? 0 : $F{studies}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="40">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="15" backcolor="#EEEEEE"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="15" width="555" height="15" backcolor="#EEEEEE"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="490" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalStudies_1} == null ? 0 : $V{totalStudies_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalRevisits_1} == null ? 0 : $V{totalRevisits_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="242" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalBrochures_1} == null ? 0 : $V{totalBrochures_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalBooks_1} == null ? 0 : $V{totalBooks_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="180" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{booksAverage_1} == null ? 0 : $V{booksAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="242" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{brochuresAverage_1} == null ? 0 : $V{brochuresAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="304" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{hoursAverage_1} == null ? 0 : $V{hoursAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalHours_1} == null ? 0 : $V{totalHours_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="366" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{magazinesAverage_1} == null ? 0 : $V{magazinesAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="428" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{revisitsAverage_1} == null ? 0 : $V{revisitsAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.##">
+				<reportElement x="490" y="16" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{studiesAverage_1} == null ? 0 : $V{studiesAverage_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="1" width="178" height="14"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{ministryType} == org.jw.mmn.commons.model.entity.MinistryType.PUBLISHER ? "Total Geral = " : "Total = ") + $V{totalMembers}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="1" width="61" height="14"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{totalMagazines_1} == null ? 0 : $V{totalMagazines_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="16" width="178" height="14"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{ministryType} == org.jw.mmn.commons.model.entity.MinistryType.PUBLISHER ? "Média Geral" : "Média")]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>
