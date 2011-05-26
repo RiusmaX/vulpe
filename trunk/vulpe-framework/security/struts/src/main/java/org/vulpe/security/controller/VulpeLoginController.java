@@ -18,7 +18,7 @@ package org.vulpe.security.controller;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
@@ -35,17 +35,15 @@ public class VulpeLoginController extends VulpeStrutsController<VulpeBaseSimpleE
 	private boolean accessDenied;
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public String define() {
+	public void define() {
 		if (accessDenied) {
-			return VulpeConstants.Controller.Forward.ACCESS_DENIED;
+			setResultName(Forward.ACCESS_DENIED);
+		} else if (loginError != null && loginError == 1) {
+			setResultName(Forward.ERRORS);
 		}
-		if (loginError != null && loginError == 1) {
-			return VulpeConstants.Controller.Forward.ERRORS;
-		}
-		return VulpeConstants.Controller.Forward.SUCCESS;
 	}
 
 	public Integer getLoginError() {

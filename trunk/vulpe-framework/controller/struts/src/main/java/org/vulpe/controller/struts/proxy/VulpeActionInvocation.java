@@ -258,7 +258,9 @@ public class VulpeActionInvocation implements ActionInvocation {
 				UtilTimerStack.push(interceptorMsg);
 				try {
 					resultCode = interceptor.getInterceptor().intercept(VulpeActionInvocation.this);
-					if (getAction() instanceof VulpeController) {
+					if (getAction() instanceof VulpeController
+							&& !resultCode.equals(Forward.MESSAGES)
+							&& resultCode.equals(Forward.ERRORS)) {
 						resultCode = ((VulpeController) getAction()).getResultName();
 					}
 				} finally {

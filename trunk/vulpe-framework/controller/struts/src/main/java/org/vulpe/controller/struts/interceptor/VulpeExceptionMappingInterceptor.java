@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
+import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
@@ -81,6 +82,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
+		action.setResultName(Forward.MESSAGES);
 		// gets real exception
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {
@@ -141,7 +143,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		if (!action.isAjax()) {
 			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
 		}
-		return VulpeConstants.Controller.Forward.MESSAGES;
+		return action.getResultName();
 	}
 
 	/**
