@@ -1,4 +1,3 @@
-<c:if test="${empty tabindex}"><c:set var="tabindex" value="${TABINDEX}"/></c:if>
 <c:if test="${not empty titleKey}"><fmt:message key="${titleKey}" var="title"/></c:if>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagAttributesConfig.jsp" %>
 <c:if test="${not empty style}"><c:set var="pStyle"> style="${style}"</c:set></c:if>
