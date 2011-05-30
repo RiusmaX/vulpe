@@ -766,7 +766,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					|| ((Operation.UPDATE.equals(getOperation()) || Operation.UPDATE_POST
 							.equals(getOperation())) && Operation.ADD_DETAIL.equals(operation))) {
 				showButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
-				if (VulpeConfigHelper.getProjectConfiguration().view().showButtonClone()) {
+				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
 					showButton(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
@@ -794,7 +794,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				showButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)) {
 				showButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
-				if (VulpeConfigHelper.getProjectConfiguration().view().showButtonClone()) {
+				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
 					showButton(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {

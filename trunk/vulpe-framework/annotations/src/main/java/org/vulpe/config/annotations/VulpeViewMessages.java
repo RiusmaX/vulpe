@@ -24,27 +24,18 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface VulpeView {
+public @interface VulpeViewMessages {
 
-	/**
-	 * Add news details on top of list.
-	 */
-	boolean addNewDetailsOnTop() default false;
+	boolean slideUp() default false;
 
-	String dateMask() default "99/99/9999";
+	int slideUpTime() default 10000;
 
-	boolean focusFirst() default true;
+	boolean showWarningBeforeClear() default false;
 
-	VulpeViewLayout layout() default @VulpeViewLayout;
+	boolean showWarningBeforeDelete() default true;
 
-	VulpeViewMessages messages() default @VulpeViewMessages;
-	
-	VulpeViewPaging paging() default @VulpeViewPaging;
-	
-	SortType sortType() default SortType.ALL;
+	boolean showWarningBeforeUpdatePost() default false;
 
-	public enum SortType {
-		ALL, LAST_COLUMN
-	}
+	boolean showModificationWarning() default true;
 
 }

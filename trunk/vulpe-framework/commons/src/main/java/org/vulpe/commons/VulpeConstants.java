@@ -109,8 +109,9 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST = "project-view-showWarningBeforeUpdatePost";
 			public static final String PROJECT_VIEW_SHOW_MODIFICATION_WARNING = "project-view-showModificationWarning";
 			public static final String PROJECT_VIEW_SORT_TYPE = "project-view-sortType";
-			public static final String PROJECT_VIEW_PAGING_STYLE = "project-view-pagingStyle";
-			public static final String PROJECT_VIEW_PAGING_BUTTON_STYLE = "project-view-pagingButtonStyle";
+			public static final String PROJECT_VIEW_PAGING_STYLE = "project-view-paging-style";
+			public static final String PROJECT_VIEW_PAGING_BUTTON_STYLE = "project-view-paging-buttonStyle";
+			public static final String PROJECT_VIEW_PAGING_SHOW_BUTTON_AS_LINK = "project-view-paging-showButtonAsLink";
 			public static final String PROJECT_VIEW_USE_FRONTEND_LAYER = "project-view-useFrontendLayer";
 			public static final String PROJECT_VIEW_USE_BACKEND_LAYER = "project-view-useBackendLayer";
 

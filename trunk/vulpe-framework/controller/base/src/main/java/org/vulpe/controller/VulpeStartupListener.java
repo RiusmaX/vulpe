@@ -106,36 +106,43 @@ public class VulpeStartupListener implements ServletContextListener {
 		global.put(Global.PROJECT_LOCALE_CODE, vulpeProject.localeCode());
 		global.put(Global.PROJECT_HOT_KEYS, mountHotKeys(vulpeProject.hotKeys()));
 		if (vulpeProject.view() != null) {
-			global.put(Global.PROJECT_VIEW_FRONTEND_MENU_TYPE, vulpeProject.view().frontendMenuType());
-			global.put(Global.PROJECT_VIEW_BACKEND_MENU_TYPE, vulpeProject.view().backendMenuType());
-			global.put(Global.PROJECT_VIEW_BREAK_LABEL, vulpeProject.view().breakLabel());
+			global.put(Global.PROJECT_VIEW_FRONTEND_MENU_TYPE, vulpeProject.view().layout().frontendMenuType());
+			global.put(Global.PROJECT_VIEW_BACKEND_MENU_TYPE, vulpeProject.view().layout().backendMenuType());
+			global.put(Global.PROJECT_VIEW_BREAK_LABEL, vulpeProject.view().layout().breakLabel());
 			global.put(Global.PROJECT_VIEW_DATE_MASK, vulpeProject.view().dateMask());
 			global.put(Global.PROJECT_VIEW_FOCUS_FIRST, vulpeProject.view().focusFirst());
-			global.put(Global.PROJECT_VIEW_ICON_HEIGHT, vulpeProject.view().iconHeight());
-			global.put(Global.PROJECT_VIEW_JQUERYUI, vulpeProject.view().jQueryUI());
-			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP, vulpeProject.view().messageSlideUp());
-			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messageSlideUpTime());
-			global.put(Global.PROJECT_VIEW_PAGING_STYLE, vulpeProject.view().pagingStyle());
-			global.put(Global.PROJECT_VIEW_PAGING_BUTTON_STYLE, vulpeProject.view().pagingButtonStyle());
-			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_AS_IMAGE, vulpeProject.view().showButtonsAsImage());
-			global.put(Global.PROJECT_VIEW_SHOW_ICON_OF_BUTTON, vulpeProject.view().showIconOfButton());
-			global.put(Global.PROJECT_VIEW_SHOW_TEXT_OF_BUTTON, vulpeProject.view().showTextOfButton());
-			global.put(Global.PROJECT_VIEW_SHOW_BUTTON_DELETE_THIS, vulpeProject.view().showButtonDeleteThis());
-			global.put(Global.PROJECT_VIEW_SHOW_BUTTON_UPDATE, vulpeProject.view().showButtonUpdate());
-			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_DELETE, vulpeProject.view().showButtonsDelete());
-			global.put(Global.PROJECT_VIEW_SHOW_LINE, vulpeProject.view().showLine());
-			global.put(Global.PROJECT_VIEW_SHOW_COPYRIGHT, vulpeProject.view().showCopyright());
-			global.put(Global.PROJECT_VIEW_SHOW_MODIFICATION_WARNING, vulpeProject.view().showModificationWarning());
-			global.put(Global.PROJECT_VIEW_SHOW_REPORT_IN_NEW_WINDOW, vulpeProject.view().showReportInNewWindow());
-			global.put(Global.PROJECT_VIEW_SHOW_POWERED_BY, vulpeProject.view().showPoweredBy());
-			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().showWarningBeforeClear());
-			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().showWarningBeforeDelete());
-			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view()
+			global.put(Global.PROJECT_VIEW_ICON_HEIGHT, vulpeProject.view().layout().iconHeight());
+			global.put(Global.PROJECT_VIEW_JQUERYUI, vulpeProject.view().layout().jQueryUI());
+			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP, vulpeProject.view().messages().slideUp());
+			global.put(Global.PROJECT_VIEW_MESSAGE_SLIDE_UP_TIME, vulpeProject.view().messages().slideUpTime());
+			global.put(Global.PROJECT_VIEW_PAGING_STYLE, vulpeProject.view().paging().style());
+			global.put(Global.PROJECT_VIEW_PAGING_BUTTON_STYLE, vulpeProject.view().paging().buttonStyle());
+			global.put(Global.PROJECT_VIEW_PAGING_SHOW_BUTTON_AS_LINK, vulpeProject.view().paging().showButtonAsLink());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_AS_IMAGE, vulpeProject.view().layout().showButtonsAsImage());
+			global.put(Global.PROJECT_VIEW_SHOW_ICON_OF_BUTTON, vulpeProject.view().layout().showIconOfButton());
+			global.put(Global.PROJECT_VIEW_SHOW_TEXT_OF_BUTTON, vulpeProject.view().layout().showTextOfButton());
+			global
+					.put(Global.PROJECT_VIEW_SHOW_BUTTON_DELETE_THIS, vulpeProject.view().layout()
+							.showButtonDeleteThis());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTON_UPDATE, vulpeProject.view().layout().showButtonUpdate());
+			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_DELETE, vulpeProject.view().layout().showButtonsDelete());
+			global.put(Global.PROJECT_VIEW_SHOW_LINE, vulpeProject.view().layout().showLine());
+			global.put(Global.PROJECT_VIEW_SHOW_COPYRIGHT, vulpeProject.view().layout().showCopyright());
+			global.put(Global.PROJECT_VIEW_SHOW_MODIFICATION_WARNING, vulpeProject.view().messages()
+					.showModificationWarning());
+			global.put(Global.PROJECT_VIEW_SHOW_REPORT_IN_NEW_WINDOW, vulpeProject.view().layout()
+					.showReportInNewWindow());
+			global.put(Global.PROJECT_VIEW_SHOW_POWERED_BY, vulpeProject.view().layout().showPoweredBy());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_CLEAR, vulpeProject.view().messages()
+					.showWarningBeforeClear());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE, vulpeProject.view().messages()
+					.showWarningBeforeDelete());
+			global.put(Global.PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST, vulpeProject.view().messages()
 					.showWarningBeforeUpdatePost());
 			global.put(Global.PROJECT_VIEW_SORT_TYPE, vulpeProject.view().sortType());
-			global.put(Global.PROJECT_VIEW_ICON_WIDTH, vulpeProject.view().iconWidth());
-			global.put(Global.PROJECT_VIEW_USE_BACKEND_LAYER, vulpeProject.view().useBackendLayer());
-			global.put(Global.PROJECT_VIEW_USE_FRONTEND_LAYER, vulpeProject.view().useFrontendLayer());
+			global.put(Global.PROJECT_VIEW_ICON_WIDTH, vulpeProject.view().layout().iconWidth());
+			global.put(Global.PROJECT_VIEW_USE_BACKEND_LAYER, vulpeProject.view().layout().useBackendLayer());
+			global.put(Global.PROJECT_VIEW_USE_FRONTEND_LAYER, vulpeProject.view().layout().useFrontendLayer());
 		}
 
 		if (vulpeProject.mobile().enabled()) {
