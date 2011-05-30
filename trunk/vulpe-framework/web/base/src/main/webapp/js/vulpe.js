@@ -2247,6 +2247,11 @@ var vulpe = {
 			 * @param options {url, uri, formName, layer, layerFields, beforeJs, afterJs, individualLoading, validate, isFile}
 			 */
 			submitAjax: function(options) {
+				// verifier if exists validations before submit
+				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
+					return false;
+				}
+				options.beforeJs = ''; // set empty do not validate on submitPage
 				for (var i = 0; i < vulpe.RTEs.length; i++) {
 					var rteId = vulpe.RTEs[i];
 					var rte = vulpe.util.get(rteId).contents();
@@ -2279,11 +2284,6 @@ var vulpe = {
 						}
 					});
 				}
-				// verifier if exists validations before submit
-				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
-					return false;
-				}
-				options.beforeJs = ''; // set empty do not validate on submitPage
 				try {
 					vulpe.view.request.invokeGlobalsBeforeJs(options.layerFields);
 				} catch(e) {

@@ -236,6 +236,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.message.update.post}");
 		defaultMessage.put(Operation.TABULAR_POST, "{vulpe.message.tabular.post}");
 		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
+		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
 	}
 
 	public String getDefaultMessage(final Operation operation) {
@@ -244,6 +245,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public String getDefaultMessage() {
 		return getDefaultMessage(getOperation());
+	}
+
+	public void setDefaultMessage(final String message) {
+		defaultMessage.put(getOperation(), message);
+	}
+
+	public void setDefaultMessage(final Operation operation, final String message) {
+		defaultMessage.put(operation, message);
 	}
 
 	public ID getId() {
@@ -1905,7 +1914,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						&& VulpeValidationUtil.isEmpty(getEntities()) && !isTabularFilter()) {
 					createDetails(getControllerConfig().getDetails(), false);
 				} else if (VulpeValidationUtil.isEmpty(getEntities())) {
-					addActionInfoMessage("{vulpe.message.empty.list}");
+					addActionInfoMessage(getDefaultMessage());
 				}
 			}
 			controlResultForward();
@@ -1974,7 +1983,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
-				addActionInfoMessage("{vulpe.message.empty.list}");
+				addActionInfoMessage(getDefaultMessage());
 			}
 		} else {
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.READ.getValue()
