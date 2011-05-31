@@ -5,7 +5,6 @@
 <span id="${elementId}-errorMessage" class="vulpeErrorMessage" style="display: none">&nbsp;</span>
 </c:if>
 <c:if test="${showAsText && empty value}">&nbsp;</c:if>
-<c:if test="${paragraph}"></p></c:if>
 <script type="text/javascript">
 vulpe.util.get('${elementId}-loading').hide();
 vulpe.util.get('${elementId}-iconErrorMessage').hide();
@@ -52,3 +51,4 @@ vulpe.config.elements["${elementId}"] = {
 </c:if>
 </script>
 </span>
+<c:if test="${paragraph}"></p></c:if>

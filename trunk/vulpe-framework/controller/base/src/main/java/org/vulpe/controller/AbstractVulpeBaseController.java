@@ -1601,7 +1601,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					ever.put(getSelectTableKey(), entities);
 				}
 			}
-			ever.remove(getSelectFormKey());
+			try {
+				ever.put(getSelectFormKey(), getControllerConfig().getEntityClass().newInstance());
+			} catch (Exception e) {
+				LOG.error(e);
+			}
 			updatePostAfter();
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				onRead();
@@ -1986,7 +1990,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						&& VulpeValidationUtil.isEmpty(getEntities()) && !isTabularFilter()) {
 					createDetails(getControllerConfig().getDetails(), false);
 				} else if (VulpeValidationUtil.isEmpty(getEntities())) {
-					addActionInfoMessage(getDefaultMessage());
+					addActionInfoMessage(getDefaultMessage(Operation.READ));
 				}
 			}
 			controlResultForward();
@@ -2055,7 +2059,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
-				addActionInfoMessage(getDefaultMessage());
+				addActionInfoMessage(getDefaultMessage(Operation.READ));
 			}
 		} else {
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.READ.getValue()
@@ -2771,11 +2775,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public void addActionInfoMessage(final String aMessage) {
-		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
-			final String message = getText(aMessage.substring(1, aMessage.length() - 1));
-			getActionInfoMessages().add(message);
-		} else {
-			getActionInfoMessages().add(aMessage);
+		if (StringUtils.isNotBlank(aMessage)) {
+			if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
+				final String message = getText(aMessage.substring(1, aMessage.length() - 1));
+				getActionInfoMessages().add(message);
+			} else {
+				getActionInfoMessages().add(aMessage);
+			}
 		}
 	}
 
