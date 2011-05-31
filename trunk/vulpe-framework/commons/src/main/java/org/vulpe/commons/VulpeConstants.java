@@ -161,6 +161,11 @@ public class VulpeConstants {
 	public class Upload {
 		public static final String FILES = "org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor.files";
 
+		public class File {
+			public static final String SUFFIX_CONTENT_TYPE = "ContentType";
+			public static final String SUFFIX_FILE_NAME = "FileName";
+		}
+		
 		public class Image {
 			public static final String THUMB = "_thumb";
 		}

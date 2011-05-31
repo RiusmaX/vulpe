@@ -57,6 +57,7 @@ vulpe.config.messages = {
 	clear: '<fmt:message key="vulpe.message.confirm.clear"/>',
 	charCount: '<fmt:message key="vulpe.message.charCount"/>',
 	deleteThis: '<fmt:message key="vulpe.message.confirm.delete"/>',
+	deleteFile: '<fmt:message key="vulpe.message.confirm.delete.file"/>',
 	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	deleteSelected: '<fmt:message key="vulpe.message.confirm.delete.selected"/>',

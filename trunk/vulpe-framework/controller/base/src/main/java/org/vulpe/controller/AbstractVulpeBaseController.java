@@ -53,6 +53,7 @@ import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
+import org.vulpe.commons.VulpeConstants.Upload.File;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -222,6 +223,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	private DownloadInfo downloadInfo;
 	/**
+	 * 
+	 */
+	private String propertyName;
+	/**
 	 *
 	 */
 	private boolean uploaded;
@@ -236,6 +241,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.message.update.post}");
 		defaultMessage.put(Operation.TABULAR_POST, "{vulpe.message.tabular.post}");
 		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
+		defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
 		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
 	}
 
@@ -1595,13 +1601,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					ever.put(getSelectTableKey(), entities);
 				}
 			}
+			ever.remove(getSelectFormKey());
 			updatePostAfter();
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				onRead();
 			}
 		} else {
 			prepareDetailPaging();
-			manageButtons(Operation.UPDATE);
 		}
 	}
 
@@ -1799,6 +1805,72 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void deleteAfter() {
+		// extension point
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeController#deleteFile()
+	 */
+	public void deleteFile() {
+		if (getControllerType() == null || !getControllerType().equals(ControllerType.TWICE)) {
+			changeControllerType(ControllerType.MAIN);
+		}
+		setOperation(Operation.DELETE_FILE);
+		deleteFileBefore();
+		controlResultForward();
+		manageButtons(Operation.UPDATE);
+		if (validateEntity() && onDeleteFile()) {
+			addActionMessage(getDefaultMessage());
+			deleteFileAfter();
+			if (getControllerType().equals(ControllerType.TWICE)) {
+				onRead();
+			}
+		} else {
+			prepareDetailPaging();
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean onDeleteFile() {
+		boolean valid = true;
+		if (StringUtils.isNotBlank(getPropertyName())) {
+			if (VulpeReflectUtil.fieldExists(getEntity().getClass(), getPropertyName())) {
+				VulpeReflectUtil.setFieldValue(getEntity(), getPropertyName(), null);
+				final String contentType = getPropertyName().concat(File.SUFFIX_CONTENT_TYPE);
+				if (VulpeReflectUtil.fieldExists(getEntity().getClass(), contentType)) {
+					VulpeReflectUtil.setFieldValue(getEntity(), contentType, null);
+				}
+				final String fileName = getPropertyName().concat(File.SUFFIX_FILE_NAME);
+				if (VulpeReflectUtil.fieldExists(getEntity().getClass(), fileName)) {
+					VulpeReflectUtil.setFieldValue(getEntity(), fileName, null);
+				}
+				valid = onUpdatePost();
+			}
+		}
+
+		return valid;
+	}
+
+	/**
+	 * Extension point to code before delete file.
+	 * 
+	 * @since 1.0
+	 */
+	protected void deleteFileBefore() {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code after delete file.
+	 * 
+	 * @since 1.0
+	 */
+	protected void deleteFileAfter() {
 		// extension point
 	}
 
@@ -2187,10 +2259,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			ever.remove(getSelectTableKey());
 			ever.remove(getSelectPagingKey());
 		}
+		selectAfter();
 		if (getControllerConfig().getControllerAnnotation().select().readOnShow()) {
 			onRead();
 		}
-		selectAfter();
 	}
 
 	/**
@@ -2354,7 +2426,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void download() {
 		downloadBefore();
 		onDownload();
-
 		downloadAfter();
 		setResultName(Forward.DOWNLOAD);
 	}
@@ -3281,6 +3352,14 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public Collection<String> getActionInfoMessages() {
 		return actionInfoMessages;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
 	}
 
 }

@@ -103,6 +103,7 @@ var vulpe = {
 			clear: "vulpe.message.confirm.clear",
 			charCount: "vulpe.message.charCount",
 			deleteThis: "vulpe.message.confirm.delete",
+			deleteFile: "vulpe.message.confirm.delete.file",
 			fieldRequired: "vulpe.js.error.required",
 			keyRequired: "vulpe.js.error.key.required",
 			deleteSelected: "vulpe.message.confirm.delete.selected",
@@ -1372,6 +1373,8 @@ var vulpe = {
 				message = vulpe.config.messages.clear;
 			} else if (type == "delete") {
 				message = vulpe.config.messages.deleteThis;
+			} else if (type == "deleteFile") {
+				message = vulpe.config.messages.deleteFile;
 			} else if (type == "deleteSelected") {
 				message = vulpe.config.messages.deleteSelected;
 			} else if (type == "updatePost") {
@@ -1557,6 +1560,7 @@ var vulpe = {
 		 * returnFieldNameA=fieldNameA,returnFieldNameB=fieldNameB,returnFieldNameC=fieldNameC
 		 */
 		selectRow: function(row, values) {
+			vulpe.view.selectPopupIds = new Array();
 			vulpe.config.popup.selectRow = true;
 			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
 			var popup = vulpe.util.get(popupName);

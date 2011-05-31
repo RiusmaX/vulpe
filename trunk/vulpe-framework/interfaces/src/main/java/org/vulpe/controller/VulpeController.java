@@ -28,7 +28,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Controller Interface.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -38,62 +38,69 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method to control add detail.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void addDetail();
 
 	/**
 	 * Method to control paging.
-	 *
+	 * 
 	 */
 	void paging();
 
 	/**
 	 * Method to clear screen.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void clear();
 
 	/**
 	 * Method to create new record.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void create();
 
 	/**
 	 * Method to confirm create.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void createPost();
 
 	/**
 	 * Method to clone record.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void cloneIt();
 
 	/**
 	 * Method to delete record.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void delete();
 
 	/**
 	 * Method to delete detail items.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void deleteDetail();
+	
+	/**
+	 * Method to delete file uploaded.
+	 * 
+	 * @since 1.0
+	 */
+	void deleteFile();
 
 	/**
 	 * Method to prepare to show.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -101,28 +108,28 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method to confirm logic tabulate.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void tabularPost();
 
 	/**
 	 * Method to update.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void update();
 
 	/**
 	 * Method to confirm update.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void updatePost();
 
 	/**
 	 * Checks if entity is valid.
-	 *
+	 * 
 	 * @return
 	 */
 	boolean validateEntity();
@@ -181,21 +188,21 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method to download file.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void download();
 
 	/**
 	 * Method to upload file.
-	 *
+	 * 
 	 * @since 1.0
 	 */
 	void upload();
 
 	/**
 	 * Return current action configuration.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return ActionConfig object for current action.
 	 */
@@ -203,7 +210,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method find specific service returns POJO or EJB implementation.
-	 *
+	 * 
 	 * @param serviceClass
 	 * @return Service Implementation.
 	 * @since 1.0
@@ -213,7 +220,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves current action service configured.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Service Implementation.
 	 * @see VulpeService
@@ -222,7 +229,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves current security context.
-	 *
+	 * 
 	 * @return VulpeSecurityContext Interface
 	 * @since 1.0
 	 */
@@ -230,14 +237,14 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves user authenticated.
-	 *
+	 * 
 	 * @return
 	 */
 	String getUserAuthenticated();
 
 	/**
 	 * Method to prepare back-end show.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -245,7 +252,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method to prepare front-end show.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Navigation
 	 */
@@ -283,7 +290,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves a Spring Bean by name.
-	 *
+	 * 
 	 * @param <T>
 	 *            Class type to return
 	 * @param beanName
@@ -295,7 +302,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves a Spring Bean by class.
-	 *
+	 * 
 	 * @param <T>
 	 *            Class type to return
 	 * @param clazz
@@ -307,7 +314,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves a Session Attribute.
-	 *
+	 * 
 	 * @param <T>
 	 *            Class type to return
 	 * @param attributeName
@@ -319,7 +326,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Sets attribute on session scope.
-	 *
+	 * 
 	 * @param attributeName
 	 * @param attributeValue
 	 */
@@ -327,7 +334,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Retrieves a attribute on request scope.
-	 *
+	 * 
 	 * @param <T>
 	 *            Class type to return
 	 * @param attributeName
@@ -339,7 +346,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Sets attribute on request scope.
-	 *
+	 * 
 	 * @param attributeName
 	 * @param attributeValue
 	 */
@@ -348,7 +355,7 @@ public interface VulpeController extends Serializable {
 	/**
 	 * Retrieves key of select form object (entitySelect) attribute on session
 	 * scope.
-	 *
+	 * 
 	 * @return
 	 */
 	String getSelectFormKey();
@@ -356,7 +363,7 @@ public interface VulpeController extends Serializable {
 	/**
 	 * Retrieves key of select table object (entities) attribute on session
 	 * scope.
-	 *
+	 * 
 	 * @return
 	 */
 	String getSelectTableKey();
@@ -364,28 +371,28 @@ public interface VulpeController extends Serializable {
 	/**
 	 * Retrieves key of select paging object (paging) attribute on session
 	 * scope.
-	 *
+	 * 
 	 * @return
 	 */
 	String getSelectPagingKey();
 
 	/**
 	 * Retrieves current HTTP Request.
-	 *
+	 * 
 	 * @return Http Servlet Request
 	 */
 	HttpServletRequest getRequest();
 
 	/**
 	 * Retrieves current HTTP Response.
-	 *
+	 * 
 	 * @return Http Servlet Reponse
 	 */
 	HttpServletResponse getResponse();
 
 	/**
 	 * Retrieves current HTTP Session.
-	 *
+	 * 
 	 * @return Http Session
 	 */
 	HttpSession getSession();
@@ -397,7 +404,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method retrieve forward.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Result Forward.
 	 */
@@ -407,7 +414,7 @@ public interface VulpeController extends Serializable {
 
 	/**
 	 * Method retrieve result.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Result Name.
 	 */
@@ -415,26 +422,25 @@ public interface VulpeController extends Serializable {
 
 	void setResultName(final String resultName);
 
-	
 	/**
 	 * Mount return to view by simple page name or full path.
-	 *
+	 * 
 	 * @param page
 	 */
 	void returnToPage(final String page);
 
 	void read();
-	
+
 	/**
 	 * Redirect to URL.
-	 *
+	 * 
 	 * @param url
 	 */
 	void redirectTo(final String url);
 
 	/**
 	 * Redirect to URL using AJAX.
-	 *
+	 * 
 	 * @param url
 	 * @param ajax
 	 */
@@ -450,11 +456,13 @@ public interface VulpeController extends Serializable {
 
 	public enum Operation {
 
-		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE("delete"), DELETE_DETAIL(
-				"deleteDetail"), UPDATE("update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR("tabular"), TABULAR_POST(
-				"tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT("select"), REPORT("report"), VIEW("view"), READ(
-				"read"), FIND("find"), PAGING("paging"), BACKEND("backend"), FRONTEND("frontend"), DEFINE("define"), DOWNLOAD(
-				"download"), UPLOAD("upload");
+		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE(
+				"delete"), DELETE_DETAIL("deleteDetail"), DELETE_FILE("deleteFile"), UPDATE(
+				"update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR("tabular"), TABULAR_POST(
+				"tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT("select"), REPORT(
+				"report"), VIEW("view"), READ("read"), FIND("find"), PAGING("paging"), BACKEND(
+				"backend"), FRONTEND("frontend"), DEFINE("define"), DOWNLOAD("download"), UPLOAD(
+				"upload");
 		private String value;
 
 		private Operation(final String value) {

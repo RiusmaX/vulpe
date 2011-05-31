@@ -51,3 +51,4 @@ vulpe.config.elements["${elementId}"] = {
 </c:if>
 </c:if>
 </script>
+</span>
