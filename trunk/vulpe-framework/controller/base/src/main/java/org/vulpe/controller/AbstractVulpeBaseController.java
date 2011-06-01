@@ -24,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +54,7 @@ import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.VulpeConstants.Upload.File;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
+import org.vulpe.commons.beans.ButtonConfig;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.Tab;
@@ -651,96 +650,192 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return getService(GenericService.class).exists(getEntity());
 	}
 
-	public Map<String, Object> getButtons() {
-		if (now.containsKey("buttons")) {
-			return now.getSelf("buttons");
+	public VulpeHashMap<String, ButtonConfig> getButtons() {
+		if (now.containsKey(Now.BUTTONS)) {
+			return now.getSelf(Now.BUTTONS);
 		}
-		final Map<String, Object> buttons = new HashMap<String, Object>();
-		now.put("buttons", buttons);
+		final VulpeHashMap<String, ButtonConfig> buttons = new VulpeHashMap<String, ButtonConfig>();
+		now.put(Now.BUTTONS, buttons);
 		return buttons;
 	}
 
-	public boolean isAddDetailShow() {
-		return (Boolean) getButtons().get(
-				Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName()));
+	public void renderDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true));
 	}
 
-	public boolean isAddDetailShow(final String detail) {
-		return (Boolean) getButtons().get(Button.ADD_DETAIL.concat(detail));
+	public void notRenderDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true));
 	}
 
-	public void addDetailShow(final String detail) {
-		getButtons().put(Button.ADD_DETAIL.concat(detail), Boolean.TRUE);
+	public void showDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true, true));
 	}
 
-	public void addDetailHide(final String detail) {
-		getButtons().put(Button.ADD_DETAIL.concat(detail), Boolean.FALSE);
+	public void hideDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true, false));
 	}
 
-	public boolean isDeleteDetailShow(final String detail) {
-		return (Boolean) getButtons().get(Button.DELETE.concat(detail));
+	public void enableDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true, true, false));
 	}
 
-	public void deleteDetailShow(final String detail) {
-		getButtons().put(Button.DELETE.concat(detail), Boolean.TRUE);
+	public void disableDetailButton(final String detail, final String button) {
+		getButtons().put(button.concat(detail), new ButtonConfig(true, true, true));
 	}
 
-	public void deleteDetailHide(final String detail) {
-		getButtons().put(Button.DELETE.concat(detail), Boolean.FALSE);
-	}
-
-	/**
-	 * Method to manage button.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param button
-	 *            Button
-	 * @param show
-	 *            Show (true|false)
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#configButton(java.lang.String,
+	 * boolean[])
 	 */
-	private void manageButton(final String button, final boolean show) {
+	public void configButton(final String button, final boolean... values) {
+		ButtonConfig buttonConfig = new ButtonConfig();
+		String key = button;
 		if (getControllerType().equals(ControllerType.TABULAR)) {
-			getButtons().put(
-					Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName()),
-					(Boolean) show);
+			key = Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName());
+			if (getButtons().containsKey(key)) {
+				buttonConfig = getButtons().getSelf(key);
+			}
+			switch (values.length) {
+			case 1:
+				buttonConfig = new ButtonConfig(values[0]);
+				break;
+			case 2:
+				buttonConfig = new ButtonConfig(values[0], values[1]);
+				break;
+			case 3:
+				buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
+				break;
+			}
+			getButtons().put(key, buttonConfig);
 		}
 		if (Button.ADD_DETAIL.equals(button)) {
-			getButtons().put(
-					Button.ADD_DETAIL
-							.concat(getControllerConfig().getTabularConfig().getBaseName()),
-					(Boolean) show);
-		} else {
-			getButtons().put(button, show);
+			key = Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName());
 		}
+		if (getButtons().containsKey(key)) {
+			buttonConfig = getButtons().getSelf(key);
+		}
+		switch (values.length) {
+		case 1:
+			buttonConfig = new ButtonConfig(values[0]);
+			break;
+		case 2:
+			buttonConfig = new ButtonConfig(values[0], values[1]);
+			break;
+		case 3:
+			buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
+			break;
+		}
+		getButtons().put(key, buttonConfig);
 	}
 
-	/**
-	 * Method to show button.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param button
-	 *            Button.
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#configButton(java.lang.String,
+	 * java.lang.String, boolean)
 	 */
-	public void showButton(final String button) {
-		manageButton(button, true);
+	public void configButton(final String button, final String config, final boolean value) {
+		ButtonConfig buttonConfig = new ButtonConfig();
+		String key = button;
+		if (getControllerType().equals(ControllerType.TABULAR)) {
+			key = Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName());
+			if (getButtons().containsKey(key)) {
+				buttonConfig = getButtons().getSelf(key);
+			}
+			if (StringUtils.isNotBlank(config)) {
+				if (config.equals(ButtonConfig.RENDER)) {
+					buttonConfig.setRender(value);
+					if (buttonConfig.getShow() == null) {
+						buttonConfig.setShow(true);
+					}
+				} else if (config.equals(ButtonConfig.SHOW)) {
+					buttonConfig.setShow(value);
+				} else if (config.equals(ButtonConfig.DISABLED)) {
+					buttonConfig.setDisabled(value);
+				}
+			}
+			getButtons().put(key, buttonConfig);
+		}
+		if (Button.ADD_DETAIL.equals(button)) {
+			key = Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName());
+		}
+		if (getButtons().containsKey(key)) {
+			buttonConfig = getButtons().getSelf(key);
+		}
+		if (StringUtils.isNotBlank(config)) {
+			if (config.equals(ButtonConfig.RENDER)) {
+				buttonConfig.setRender(value);
+				if (buttonConfig.getShow() == null) {
+					buttonConfig.setShow(true);
+				}
+			} else if (config.equals(ButtonConfig.SHOW)) {
+				buttonConfig.setShow(value);
+			} else if (config.equals(ButtonConfig.DISABLED)) {
+				buttonConfig.setDisabled(value);
+			}
+		}
+		getButtons().put(key, buttonConfig);
 	}
 
-	/**
-	 * Method to show buttons.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String[])
 	 */
 	public void showButtons(final String... buttons) {
 		for (final String button : buttons) {
-			showButton(button);
+			configButton(button, ButtonConfig.SHOW, true);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String[])
+	 */
+	public void renderButtons(final String... buttons) {
+		for (final String button : buttons) {
+			configButton(button, ButtonConfig.RENDER, true);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeController#renderButtons(org.vulpe.controller
+	 * .commons.VulpeControllerConfig.ControllerType, java.lang.String[])
+	 */
+	public void renderButtons(final ControllerType controllerType, final String... buttons) {
+		for (final String button : buttons) {
+			renderButtons(controllerType + "_" + button);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeController#enableButtons(java.lang.String[])
+	 */
+	public void enableButtons(final String... buttons) {
+		for (final String button : buttons) {
+			configButton(button, ButtonConfig.DISABLED, false);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeController#showButtons(org.vulpe.controller
+	 * .commons.VulpeControllerConfig.ControllerType, java.lang.String[])
+	 */
 	public void showButtons(final ControllerType controllerType, final String... buttons) {
 		for (final String button : buttons) {
-			showButton(controllerType + "_" + button);
+			showButtons(controllerType + "_" + button);
 		}
 	}
 
@@ -764,11 +859,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (getControllerConfig().getDetails() != null) {
 				for (final VulpeBaseDetailConfig detail : getControllerConfig().getDetails()) {
 					if (Operation.VIEW.equals(operation)) {
-						addDetailHide(detail.getBaseName());
-						deleteDetailHide(detail.getBaseName());
+						notRenderDetailButton(detail.getBaseName(), Button.ADD_DETAIL);
+						notRenderDetailButton(detail.getBaseName(), Button.DELETE);
 					} else {
-						addDetailShow(detail.getBaseName());
-						deleteDetailShow(detail.getBaseName());
+						renderDetailButton(detail.getBaseName(), Button.ADD_DETAIL);
+						renderDetailButton(detail.getBaseName(), Button.DELETE);
 					}
 				}
 			}
@@ -776,71 +871,84 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					.equals(operation))
 					|| ((Operation.CREATE.equals(getOperation()) || Operation.CREATE_POST
 							.equals(getOperation())) && Operation.ADD_DETAIL.equals(operation))) {
-				showButtons(Button.BACK, Button.CREATE_POST, Button.CLEAR);
+				renderButtons(Button.BACK, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)
 					|| ((Operation.UPDATE.equals(getOperation()) || Operation.UPDATE_POST
 							.equals(getOperation())) && Operation.ADD_DETAIL.equals(operation))) {
-				showButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
+				renderButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
 				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
-					showButton(Button.CLONE);
+					renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
-				showButtons();
+				renderButtons();
 			}
 		} else if (getControllerType().equals(ControllerType.SELECT)) {
-			showButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE, Button.DELETE);
+			renderButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE, Button.DELETE);
 			if (getControllerConfig().getControllerAnnotation().select().showReport()) {
-				showButton(Button.REPORT);
+				renderButtons(Button.REPORT);
+			} else {
+				notRenderButtons(Button.REPORT);
 			}
 			if (isPopup()) {
-				hideButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
+				notRenderButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
 			}
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
-			showButtons(Button.READ, Button.CLEAR);
+			renderButtons(Button.READ, Button.CLEAR);
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
-			showButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
+			renderButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
 			if (getControllerConfig().isTabularShowFilter()) {
-				showButton(Button.TABULAR_FILTER);
+				renderButtons(Button.TABULAR_FILTER);
 			}
 		} else if (getControllerType().equals(ControllerType.TWICE)) {
 			if (Operation.DELETE.equals(operation) || Operation.CREATE.equals(operation)
 					|| Operation.TWICE.equals(operation)) {
-				showButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
+				renderButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)) {
-				showButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
+				renderButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
 				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
-					showButton(Button.CLONE);
+					renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
-				showButtons();
+				renderButtons();
 			}
-			showButtons(ControllerType.SELECT, Button.READ, Button.BACK, Button.UPDATE,
+			renderButtons(ControllerType.SELECT, Button.READ, Button.BACK, Button.UPDATE,
 					Button.DELETE);
 		}
 	}
 
-	/**
-	 * Method to hide button.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param button
-	 *            Button.
-	 * @since 1.0
-	 */
-	public void hideButton(final String button) {
-		manageButton(button, false);
-	}
-
-	/**
-	 * Method to hide buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
+	 * @see org.vulpe.controller.VulpeController#hideButtons(java.lang.String[])
 	 */
 	public void hideButtons(final String... buttons) {
-		for (String button : buttons) {
-			hideButton(button);
+		for (final String button : buttons) {
+			configButton(button, ButtonConfig.SHOW, false);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeController#notRenderButtons(java.lang.String[])
+	 */
+	public void notRenderButtons(final String... buttons) {
+		for (final String button : buttons) {
+			configButton(button, ButtonConfig.RENDER, false);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.controller.VulpeController#disableButtons(java.lang.String[])
+	 */
+	public void disableButtons(final String... buttons) {
+		for (final String button : buttons) {
+			configButton(button, ButtonConfig.DISABLED, true);
 		}
 	}
 

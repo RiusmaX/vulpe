@@ -39,7 +39,10 @@ import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.VulpeConstants.Request;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.Configuration.Now;
+import org.vulpe.commons.beans.ButtonConfig;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -83,7 +86,8 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static Object eval(final PageContext pageContext, final String expression) throws JspException {
+	public static Object eval(final PageContext pageContext, final String expression)
+			throws JspException {
 		try {
 			return ExpressionEvaluatorManager.evaluate(null, expression, Object.class, pageContext);
 		} catch (Exception e) {
@@ -102,7 +106,8 @@ public class Functions {
 		final PropertyDescriptor pDescriptor[] = PropertyUtils.getPropertyDescriptors(bean);
 		final List list = new ArrayList();
 		for (PropertyDescriptor propertyDescriptor : pDescriptor) {
-			if (propertyDescriptor.getReadMethod() == null || propertyDescriptor.getWriteMethod() == null) {
+			if (propertyDescriptor.getReadMethod() == null
+					|| propertyDescriptor.getWriteMethod() == null) {
 				continue;
 			}
 
@@ -151,7 +156,8 @@ public class Functions {
 	 * @param scope
 	 * @return
 	 */
-	public static Object put(final PageContext pageContext, final String key, final Object value, final Integer scope) {
+	public static Object put(final PageContext pageContext, final String key, final Object value,
+			final Integer scope) {
 		pageContext.setAttribute(key, value, scope);
 		return value;
 	}
@@ -164,7 +170,8 @@ public class Functions {
 	 * @param replace
 	 * @return
 	 */
-	public static String replaceSequence(final String string, final String begin, final String end, final String replace) {
+	public static String replaceSequence(final String string, final String begin, final String end,
+			final String replace) {
 		String aux = "";
 		String name = string;
 		while (name.indexOf(begin) >= 0 && name.indexOf(end) >= 0) {
@@ -182,15 +189,18 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static Object getProperty(final PageContext pageContext, final String property) throws JspException {
+	public static Object getProperty(final PageContext pageContext, final String property)
+			throws JspException {
 		String baseName = "entity.";
-		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext, "${targetConfig}");
+		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext,
+				"${targetConfig}");
 		if (detailConfig != null) {
 			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("_item");
 		}
 		return eval(pageContext, "${".concat(
-				(property.contains("entity.") || property.contains("entities") || property.contains("].") ? property
-						: baseName.concat(property))).concat("}"));
+				(property.contains("entity.") || property.contains("entities")
+						|| property.contains("].") ? property : baseName.concat(property))).concat(
+				"}"));
 	}
 
 	/**
@@ -207,7 +217,8 @@ public class Functions {
 	 * @throws IOException
 	 *             if the image could not be manipulated correctly.
 	 */
-	public static byte[] resizeImageAsJPG(final byte[] imageData, final int maxWidth) throws IOException {
+	public static byte[] resizeImageAsJPG(final byte[] imageData, final int maxWidth)
+			throws IOException {
 		// Create an ImageIcon from the image data
 		final ImageIcon imageIcon = new ImageIcon(imageData);
 		int width = imageIcon.getIconWidth();
@@ -226,10 +237,12 @@ public class Functions {
 			LOG.debug("imageIcon post scale width: " + width + "  height: " + height);
 		}
 		// Create a new empty image buffer to "draw" the resized image into
-		final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		final BufferedImage bufferedImage = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
 		// Create a Graphics object to do the "drawing"
 		final Graphics2D g2d = bufferedImage.createGraphics();
-		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
 		// Draw the resized image
@@ -250,19 +263,23 @@ public class Functions {
 	 */
 	public static Boolean hasRole(final String requestedRoles) {
 		final VulpeContext vulpeContext = getVulpeContext();
-		final Object springSecurity = vulpeContext.getSession().getAttribute(Security.SPRING_SECURITY_CONTEXT);
+		final Object springSecurity = vulpeContext.getSession().getAttribute(
+				Security.SPRING_SECURITY_CONTEXT);
 		boolean has = false;
 		if (springSecurity != null) {
-			final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity, "authentication");
+			final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(
+					springSecurity, "authentication");
 			if (VulpeValidationUtil.isNotEmpty(springSecurityAutentication)) {
-				final Collection<?> authorities = VulpeReflectUtil.getFieldValue(springSecurityAutentication,
-						"authorities");
+				final Collection<?> authorities = VulpeReflectUtil.getFieldValue(
+						springSecurityAutentication, "authorities");
 				final String[] roles = requestedRoles.split(",");
 				for (final String role : roles) {
-					final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role : Security.ROLE_PREFIX + role;
+					final String fullRole = role.startsWith(Security.ROLE_PREFIX) ? role
+							: Security.ROLE_PREFIX + role;
 					if (VulpeValidationUtil.isNotEmpty(authorities)) {
 						for (Object grantedAuthority : authorities) {
-							final String authority = VulpeReflectUtil.getFieldValue(grantedAuthority, "authority");
+							final String authority = VulpeReflectUtil.getFieldValue(
+									grantedAuthority, "authority");
 							if (authority.equals(fullRole)) {
 								has = true;
 								break;
@@ -277,13 +294,116 @@ public class Functions {
 
 	/**
 	 * 
+	 * @param button
+	 * @param controllerType
+	 * @return
+	 */
+	public static String buttonConfig(final String button, final String controllerType) {
+		final VulpeContext vulpeContext = getVulpeContext();
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+				.getRequest().getAttribute(Request.NOW);
+		final StringBuilder config = new StringBuilder();
+		if (now != null) {
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			if (button != null && buttons.containsKey(button)) {
+				final ButtonConfig buttonInfo = buttons.get(button);
+				if (buttonInfo.getDisabled() != null && buttonInfo.getDisabled()) {
+					config.append("[disabled]");
+				} else {
+					config.append("[enabled]");
+				}
+				if (buttonInfo.getRender() != null && buttonInfo.getRender()) {
+					config.append("[render]");
+				} else {
+					config.append("[notRender]");
+				}
+				if (buttonInfo.getShow() != null && buttonInfo.getShow()) {
+					config.append("[show]");
+				} else {
+					config.append("[hide]");
+				}
+			} else {
+				config.append("[notRender]");
+			}
+		}
+		return config.toString();
+	}
+
+	/**
+	 * 
+	 * @param button
+	 * @param controllerType
+	 * @return
+	 */
+	public static Boolean isButtonRender(final String button, final String controllerType) {
+		final VulpeContext vulpeContext = getVulpeContext();
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+				.getRequest().getAttribute(Request.NOW);
+		boolean render = false;
+		if (now != null) {
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			if (button != null && buttons.containsKey(button)) {
+				final ButtonConfig buttonInfo = buttons.get(button);
+				render = buttonInfo.getRender() != null && buttonInfo.getRender();
+			}
+		}
+		return render;
+	}
+
+	/**
+	 * 
+	 * @param button
+	 * @param controllerType
+	 * @return
+	 */
+	public static Boolean isButtonShow(final String button, final String controllerType) {
+		final VulpeContext vulpeContext = getVulpeContext();
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+				.getRequest().getAttribute(Request.NOW);
+		boolean show = false;
+		if (now != null) {
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			if (button != null && buttons.containsKey(button)) {
+				final ButtonConfig buttonInfo = buttons.get(button);
+				show = buttonInfo.getShow() != null && buttonInfo.getShow();
+			}
+		}
+		return show;
+	}
+
+	/**
+	 * 
+	 * @param button
+	 * @param controllerType
+	 * @return
+	 */
+	public static Boolean isButtonDisabled(final String button, final String controllerType) {
+		final VulpeContext vulpeContext = getVulpeContext();
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+				.getRequest().getAttribute(Request.NOW);
+		boolean disabled = false;
+		if (now != null) {
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			if (button != null && buttons.containsKey(button)) {
+				final ButtonConfig buttonInfo = buttons.get(button);
+				disabled = buttonInfo.getDisabled() != null && buttonInfo.getDisabled();
+			}
+		}
+		return disabled;
+	}
+
+	/**
+	 * 
 	 * @return
 	 */
 	public static Boolean isAuthenticated() {
 		final VulpeContext vulpeContext = getVulpeContext();
-		final Object springSecurity = vulpeContext.getSession().getAttribute(Security.SPRING_SECURITY_CONTEXT);
-		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity, "authentication");
-		final Boolean authenticated = VulpeReflectUtil.getFieldValue(springSecurityAutentication, "authenticated");
+		final Object springSecurity = vulpeContext.getSession().getAttribute(
+				Security.SPRING_SECURITY_CONTEXT);
+		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity,
+				"authentication");
+		final Boolean authenticated = VulpeReflectUtil.getFieldValue(springSecurityAutentication,
+				"authenticated");
 		if (authenticated != null && authenticated.booleanValue()) {
 			return true;
 		}
@@ -307,10 +427,12 @@ public class Functions {
 		String valueFalse = values.nextToken();
 		char openBrace = "{".charAt(0);
 		char closeBrace = "}".charAt(0);
-		if (valueTrue.charAt(0) == openBrace && valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
+		if (valueTrue.charAt(0) == openBrace
+				&& valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
 			valueTrue = findText(valueTrue.substring(1, valueTrue.length() - 1));
 		}
-		if (valueFalse.charAt(0) == openBrace && valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
+		if (valueFalse.charAt(0) == openBrace
+				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
 			valueFalse = findText(valueFalse.substring(1, valueFalse.length() - 1));
 		}
 		if (value) {
@@ -327,8 +449,8 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static List listInField(final Object bean, final String field, final String removeEnumItems)
-			throws JspException {
+	public static List listInField(final Object bean, final String field,
+			final String removeEnumItems) throws JspException {
 		try {
 			if (bean == null) {
 				return null;
@@ -337,7 +459,8 @@ public class Functions {
 			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
+				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
+						fieldParts[0]);
 				fieldClass = VulpeReflectUtil.getFieldClass(parentClass, fieldParts[1]);
 			} else {
 				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
@@ -388,7 +511,8 @@ public class Functions {
 			String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
+				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
+						fieldParts[0]);
 				fieldClass = VulpeReflectUtil.getFieldClass(parentClass, fieldParts[1]);
 			} else {
 				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
@@ -420,9 +544,11 @@ public class Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String enumListInField(final String type, final Object fieldValue) throws JspException {
+	public static String enumListInField(final String type, final Object fieldValue)
+			throws JspException {
 		try {
-			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_ENUMS);
+			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(
+					VulpeConstants.CACHED_ENUMS);
 			final List<ValueBean> enumeration = map.getSelf(type);
 			final StringBuilder list = new StringBuilder();
 			if (fieldValue instanceof Collection<?>) {
@@ -457,4 +583,10 @@ public class Functions {
 	public static VulpeContext getVulpeContext() {
 		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
 	}
+
+	public static VulpeHashMap<String, Object> getEver() {
+		return (VulpeHashMap<String, Object>) getVulpeContext().getRequest().getSession()
+				.getAttribute(VulpeConstants.Session.EVER);
+	}
+
 }

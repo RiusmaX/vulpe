@@ -90,7 +90,7 @@ public interface VulpeController extends Serializable {
 	 * @since 1.0
 	 */
 	void deleteDetail();
-	
+
 	/**
 	 * Method to delete file uploaded.
 	 * 
@@ -136,33 +136,103 @@ public interface VulpeController extends Serializable {
 
 	void autocomplete();
 
-	void showButton(final String button);
+	/**
+	 * Method to config button.
+	 * 
+	 * @param button
+	 *            Button
+	 * @param values
+	 *            Array values (1st=render 2nd=show 3th=disabled) (true|false)
+	 * @since 1.0
+	 */
+	void configButton(final String button, final boolean... values);
+
+	/**
+	 * Method to config button.
+	 * 
+	 * @param button
+	 *            Button
+	 * @param config
+	 *            Config
+	 * @param value
+	 *            Value (true|false)
+	 * @since 1.0
+	 */
+	void configButton(final String button, final String config, final boolean value);
 
 	void manageButtons(final Operation operation);
 
+	/**
+	 * Method to render buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
+	void renderButtons(final String... buttons);
+
+	void renderButtons(final ControllerType controllerType, final String... buttons);
+
+	/**
+	 * Method to not render buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
+	void notRenderButtons(final String... buttons);
+
+	/**
+	 * Method to show buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
 	void showButtons(final String... buttons);
+
+	/**
+	 * Method to enable buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
+	void enableButtons(final String... buttons);
 
 	void showButtons(final ControllerType controllerType, final String... buttons);
 
-	void hideButton(final String button);
-
+	/**
+	 * Method to hide buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
 	void hideButtons(final String... buttons);
+
+	/**
+	 * Method to disable buttons.
+	 * 
+	 * @param buttons
+	 *            Buttons.
+	 * @since 1.0
+	 */
+	void disableButtons(final String... buttons);
 
 	void json();
 
-	void deleteDetailHide(final String detail);
+	void renderDetailButton(final String detail, final String button);
 
-	void deleteDetailShow(final String detail);
+	void notRenderDetailButton(final String detail, final String button);
 
-	boolean isDeleteDetailShow(final String detail);
+	void showDetailButton(final String detail, final String button);
 
-	void addDetailHide(final String detail);
+	void hideDetailButton(final String detail, final String button);
 
-	void addDetailShow(final String detail);
+	void enableDetailButton(final String detail, final String button);
 
-	boolean isAddDetailShow(final String detail);
-
-	boolean isAddDetailShow();
+	void disableDetailButton(final String detail, final String button);
 
 	void select();
 

@@ -40,7 +40,7 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	@Override
 	protected void updateAfter() {
 		super.updateAfter();
-		hideButtons(Button.CREATE, Button.UPDATE_POST, Button.DELETE, Button.CLEAR);
+		setOnlyToSee(true);
 	}
 
 	@Override
@@ -62,19 +62,13 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 		this.childOccurrences = childOccurrences;
 	}
 
-	@Override
-	protected void prepareAfter() {
-		hideButton(Button.CREATE);
-		super.prepareAfter();
-	}
-
-	@Override
-	protected void readAfter() {
-		hideButton(Button.CREATE);
-		super.readAfter();
-	}
-
 	public AuditOccurrenceType[] getListOccurrenceType() {
 		return AuditOccurrenceType.values();
+	}
+
+	@Override
+	public void manageButtons(Operation operation) {
+		super.manageButtons(operation);
+		hideButtons(Button.CREATE);
 	}
 }

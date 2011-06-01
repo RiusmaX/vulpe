@@ -137,4 +137,28 @@
 		<function-signature>java.lang.Object saveImageInSession(java.lang.String,java.lang.Object,java.lang.Boolean,java.lang.Integer)</function-signature>
 	</function>
 
+	<function>
+		<name>buttonConfig</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String buttonConfig(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonRender</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonRender(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonShow</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonShow(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonDisabled</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonDisabled(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
 </taglib>

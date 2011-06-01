@@ -26,14 +26,10 @@ import javax.servlet.jsp.PageContext;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.beans.ValueBean;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
-import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.view.tags.Functions;
-
-import br.com.caelum.vraptor.core.RequestInfo;
 
 @SuppressWarnings( { "unchecked" })
 public final class VRaptorFunctions extends Functions {
@@ -58,7 +54,8 @@ public final class VRaptorFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field
+					.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
 				String value = null;
@@ -88,7 +85,8 @@ public final class VRaptorFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field
+					.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;
 			}
@@ -117,8 +115,8 @@ public final class VRaptorFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkKey(final String key, final String contentType, final String contentDisposition)
-			throws JspException {
+	public static String linkKey(final String key, final String contentType,
+			final String contentDisposition) throws JspException {
 		// final String link =
 		// getRequestInfo().getRequest().getContextPath().concat("/").concat(
 		// new
@@ -138,15 +136,16 @@ public final class VRaptorFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkProperty(final PageContext pageContext, final String property, final String contentType,
-			final String contentDisposition) throws JspException {
+	public static String linkProperty(final PageContext pageContext, final String property,
+			final String contentType, final String contentDisposition) throws JspException {
 		String baseName = "entity.";
-		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext, "${targetConfig}");
+		final VulpeBaseDetailConfig detailConfig = (VulpeBaseDetailConfig) eval(pageContext,
+				"${targetConfig}");
 		if (detailConfig != null) {
-			final Number index = (Number) eval(pageContext, "${".concat(detailConfig.getBaseName()).concat(
-					"_status.index}"));
-			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("[").concat(index.toString())
-					.concat("].");
+			final Number index = (Number) eval(pageContext, "${".concat(detailConfig.getBaseName())
+					.concat("_status.index}"));
+			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("[")
+					.concat(index.toString()).concat("].");
 		}
 
 		final String key = (property.contains(baseName)) ? property : baseName.concat(property);
@@ -195,14 +194,16 @@ public final class VRaptorFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String linkImage(final PageContext pageContext, final String key, final String contentType,
-			final String contentDisposition, final Integer width, final Integer thumbWidth) throws JspException {
+	public static String linkImage(final PageContext pageContext, final String key,
+			final String contentType, final String contentDisposition, final Integer width,
+			final Integer thumbWidth) throws JspException {
 		Object value = getProperty(pageContext, key);
 		if (value != null) {
 			value = saveImageInSession(key, value, false, thumbWidth);
 			saveInSession(key, value, false);
 			if (thumbWidth != null && thumbWidth > 0) {
-				saveImageInSession(key.concat(VulpeConstants.Upload.Image.THUMB), value, false, thumbWidth);
+				saveImageInSession(key.concat(VulpeConstants.Upload.Image.THUMB), value, false,
+						thumbWidth);
 			}
 		}
 		return linkKey(key, contentType, contentDisposition);
@@ -233,8 +234,8 @@ public final class VRaptorFunctions extends Functions {
 	 * @param width
 	 * @return
 	 */
-	public static Object saveImageInSession(final String key, final Object value, final Boolean expire,
-			final Integer width) {
+	public static Object saveImageInSession(final String key, final Object value,
+			final Boolean expire, final Integer width) {
 		final Object newValue = value;
 		if (VulpeValidationUtil.isNotEmpty(newValue)) {
 			final Byte[] bytes = (Byte[]) newValue;
@@ -243,7 +244,8 @@ public final class VRaptorFunctions extends Functions {
 				imageData[i] = bytes[i].byteValue();
 			}
 			try {
-				getFormParams().put(key, new Object[] { expire, resizeImageAsJPG(imageData, width) });
+				getFormParams().put(key,
+						new Object[] { expire, resizeImageAsJPG(imageData, width) });
 			} catch (IOException e) {
 				LOG.error(e);
 			}
@@ -270,7 +272,8 @@ public final class VRaptorFunctions extends Functions {
 	 * @return
 	 * @throws JspException
 	 */
-	public static String evalString(final PageContext pageContext, final String expression) throws JspException {
+	public static String evalString(final PageContext pageContext, final String expression)
+			throws JspException {
 		try {
 			final Object value = eval(pageContext, expression);
 			return toString(value);
@@ -279,13 +282,4 @@ public final class VRaptorFunctions extends Functions {
 		}
 	}
 
-	private static RequestInfo getRequestInfo() {
-		final RequestInfo requestInfo = AbstractVulpeBeanFactory.getInstance().getBean("requestInfo");
-		return requestInfo;
-	}
-
-	public static VulpeHashMap<String, Object> getEver() {
-		return (VulpeHashMap<String, Object>) getRequestInfo().getRequest().getSession().getAttribute(
-				VulpeConstants.Session.EVER);
-	}
 }

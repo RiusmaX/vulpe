@@ -19,16 +19,16 @@
 	<c:choose>
 	<c:when test="${global['project-view-paging-buttonStyle'] == 'JQUERY_UI'}">
 	<ul id="icons" class="ui-widget ui-helper-clearfix">
-	<li class="ui-state-default ui-corner-all${empty list.firstPage ? ' vulpeIconOff' : ''}" title="<fmt:message key='label.vulpe.first'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.firstPage ? 0 : list.firstPage}'${formName}, layersFields: '${layerFields}'${layer}, beforeJs: '${not empty list.firstPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-first"></span></li>
-	<li class="ui-state-default ui-corner-all${empty list.previousPage ? ' vulpeIconOff' : ''}" title="<fmt:message key='label.vulpe.previous'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.previousPage ? 0 : list.previousPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.previousPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-prev"></span></li>
+	<li class="ui-state-default ui-corner-all${empty list.firstPage ? ' vulpeItemOff' : ''}" title="<fmt:message key='label.vulpe.first'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.firstPage ? 0 : list.firstPage}'${formName}, layersFields: '${layerFields}'${layer}, beforeJs: '${not empty list.firstPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-first"></span></li>
+	<li class="ui-state-default ui-corner-all${empty list.previousPage ? ' vulpeItemOff' : ''}" title="<fmt:message key='label.vulpe.previous'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.previousPage ? 0 : list.previousPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.previousPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-prev"></span></li>
 	</c:when>
 	<c:otherwise>
 	<v:action elementId="vulpeButtonPagingFirstPage"
-		styleClass="${empty list.firstPage ? 'vulpeIconOff' : ''}"
+		disabled="${empty list.firstPage}"
 		labelKey="label.vulpe.first" icon="go-first" iconWidth="16" iconHeight="16" iconExtension="png" showButtonAsLink="${global['project-view-paging-showButtonAsLink']}"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.firstPage ? 0 : list.firstPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.firstPage ? beforeJs : 'false'}'${afterJs}});" />
 	<v:action elementId="vulpeButtonPagingPreviousPage"
-		styleClass="${empty list.previousPage ? 'vulpeIconOff' : ''}"
+		disabled="${empty list.previousPage}"
 		labelKey="label.vulpe.previous" icon="go-previous" iconWidth="16" iconHeight="16" iconExtension="png" showButtonAsLink="${global['project-view-paging-showButtonAsLink']}"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.previousPage ? 0 : list.previousPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.previousPage ? beforeJs : 'false'}'${afterJs}});" />
 	&nbsp;
@@ -61,8 +61,8 @@
 	</c:choose>
 	<c:choose>
 	<c:when test="${global['project-view-paging-buttonStyle'] == 'JQUERY_UI'}">
-	<li class="ui-state-default ui-corner-all${empty list.nextPage ? ' vulpeIconOff' : ''}" title="<fmt:message key='label.vulpe.next'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.nextPage ? 0 : list.nextPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.nextPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-next"></span></li>
-	<li class="ui-state-default ui-corner-all${empty list.lastPage ? ' vulpeIconOff' : ''}" title="<fmt:message key='label.vulpe.last'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.lastPage ? 0 : list.lastPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.lastPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-end"></span></li>
+	<li class="ui-state-default ui-corner-all${empty list.nextPage ? ' vulpeItemOff' : ''}" title="<fmt:message key='label.vulpe.next'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.nextPage ? 0 : list.nextPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.nextPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-next"></span></li>
+	<li class="ui-state-default ui-corner-all${empty list.lastPage ? ' vulpeItemOff' : ''}" title="<fmt:message key='label.vulpe.last'/>" onclick="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.lastPage ? 0 : list.lastPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.lastPage ? beforeJs : 'false'}'${afterJs}});"><span class="ui-icon ui-icon-seek-end"></span></li>
 	</ul>
 	<script type="text/javascript">
 		$('#dialog_link, ul#icons li').hover(
@@ -73,10 +73,10 @@
 	</c:when>
 	<c:otherwise>
 	&nbsp;
-	<v:action elementId="vulpeButtonPagingNextPage" styleClass="${empty list.nextPage ? 'vulpeIconOff' : ''}"
+	<v:action elementId="vulpeButtonPagingNextPage" disabled="${empty list.nextPage}"
 		labelKey="label.vulpe.next" icon="go-next" iconWidth="16" iconHeight="16" iconExtension="png" showButtonAsLink="${global['project-view-paging-showButtonAsLink']}"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.nextPage ? 0 : list.nextPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.nextPage ? beforeJs : 'false'}'${afterJs}});" />
-	<v:action elementId="vulpeButtonPagingLastPage" styleClass="${empty list.lastPage ? 'vulpeIconOff' : ''}"
+	<v:action elementId="vulpeButtonPagingLastPage" disabled="${empty list.lastPage}"
 		labelKey="label.vulpe.last" icon="go-last" iconWidth="16" iconHeight="16" iconExtension="png" showButtonAsLink="${global['project-view-paging-showButtonAsLink']}"
 		javascript="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.lastPage ? 0 : list.lastPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.lastPage ? beforeJs : 'false'}'${afterJs}});" />
 	</c:otherwise>

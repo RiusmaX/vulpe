@@ -64,13 +64,13 @@ public class OccurrenceController extends VulpeVRaptorController<AuditOccurrence
 
 	@Override
 	protected void prepareAfter() {
-		hideButton(Button.CREATE);
+		hideButtons(Button.CREATE);
 		super.prepareAfter();
 	}
 
 	@Override
 	protected void readAfter() {
-		hideButton(Button.CREATE);
+		hideButtons(Button.CREATE);
 		super.readAfter();
 	}
 

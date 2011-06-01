@@ -128,6 +128,7 @@ public class VulpeConstants {
 		}
 
 		public class Now {
+			public static final String BUTTONS = "buttons";
 			public static final String SHOW_CONTENT_TITLE = "showContentTitle";
 			public static final String CONTENT_TITLE = "contentTitle";
 			public static final String SHOW_CONTENT_SUBTITLE = "showContentSubtitle";

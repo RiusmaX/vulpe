@@ -30,7 +30,6 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.View.Struts;
 import org.vulpe.commons.helper.VulpeCacheHelper;
-import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.view.struts.form.beans.SessionPaging;
@@ -242,11 +241,6 @@ public final class StrutsFunctions extends Functions {
 		}
 	}
 
-	public static VulpeHashMap<String, Object> getEver() {
-		return (VulpeHashMap<String, Object>) ServletActionContext.getRequest().getSession()
-				.getAttribute(VulpeConstants.Session.EVER);
-	}
-	
 	private static XWorkConverter getXWorkConverter() {
 		return VulpeCacheHelper.getInstance().get(Struts.XWORK_CONVERTER);
 	}

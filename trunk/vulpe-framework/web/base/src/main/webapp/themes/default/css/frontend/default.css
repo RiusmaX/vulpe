@@ -129,7 +129,7 @@
 	background-image: url('../../images/icons/message-info.png');
 }
 
-.vulpeIconOff {
+.vulpeItemOff {
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
 	-moz-opacity: 0.4;
 	opacity: 0.4;
