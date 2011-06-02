@@ -77,7 +77,10 @@ vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}"
 vulpe.config.popup.mobile = true;
 </c:if>
 <c:if test="${global['project-view-showReportInNewWindow']}">
-vulpe.config.showReportInNewWindow = true;
+vulpe.config.layout.showReportInNewWindow = true;
+</c:if>
+<c:if test="${!global['project-view-showIconErrorMessage']}">
+vulpe.config.layout.showIconErrorMessage = false;
 </c:if>
 vulpe.config.hotKeys = eval("${global['project-hotKeys']}");
 vulpe.config.sortType = "${global['project-view-sortType']}";

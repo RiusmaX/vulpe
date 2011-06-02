@@ -89,6 +89,7 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_FRONTEND_MENU_TYPE = "project-view-frontendMenuType";
 			public static final String PROJECT_VIEW_BACKEND_MENU_TYPE = "project-view-backendMenuType";
 			public static final String PROJECT_VIEW_FOCUS_FIRST = "project-view-focusFirst";
+			public static final String PROJECT_VIEW_SHOW_ICON_ERROR_MESSAGE = "project-view-showIconErrorMessage";
 			public static final String PROJECT_VIEW_SHOW_BUTTONS_AS_IMAGE = "project-view-showButtonsAsImage";
 			public static final String PROJECT_VIEW_SHOW_ICON_OF_BUTTON = "project-view-showIconOfButton";
 			public static final String PROJECT_VIEW_SHOW_TEXT_OF_BUTTON = "project-view-showTextOfButton";

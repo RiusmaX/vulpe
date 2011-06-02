@@ -47,6 +47,8 @@ public @interface VulpeViewLayout {
 	int iconWidth() default 32;
 
 	boolean showButtonsAsImage() default false;
+	
+	boolean showIconErrorMessage() default true;
 
 	boolean showIconOfButton() default false;
 

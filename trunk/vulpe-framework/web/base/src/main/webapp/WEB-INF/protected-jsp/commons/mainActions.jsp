@@ -11,7 +11,7 @@
 	<v:action labelKey="updatePost"	elementId="UpdatePost" action="updatePost" helpKey="updatePost" icon="save" iconClass="UpdatePost" config="${util:buttonConfig('updatePost', 'MAIN')}" />
 	<v:action labelKey="clone" elementId="Clone" action="cloneIt" helpKey="clone" icon="clone" iconClass="Clone" config="${util:buttonConfig('clone', 'MAIN')}" />
 </c:if>
-<c:if test="${now['buttons']['back'].render || now['buttons']['Main_back'].render}">
+<c:if test="${util:isButtonRender('back', 'MAIN')}">
 	<c:set var="action"	value="${controllerConfig.ownerController}/select/ajax${operation == 'UPDATE' || operation == 'UPDATE_POST' ? '?back=true' : ''}" />
 	<v:action validate="false" labelKey="back" elementId="Prepare" action="${not empty urlBack ? urlBack : action}"	layer="${not empty layerUrlBack ? layerUrlBack : ''}" layerFields="this" helpKey="back" icon="back" iconClass="Back" config="${util:buttonConfig('back', 'MAIN')}" />
 	<c:remove var="urlBack" scope="session" />

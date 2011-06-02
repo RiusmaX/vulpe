@@ -7,8 +7,8 @@
 </c:if>
 <p>
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsPrepend.jsp"%>
-<c:set var="buttonDetailEL" value="${'${'}now['buttons']['addDetail${targetConfig.baseName}']${'}'}" />
-<c:set var="buttonDetail" value="${util:eval(pageContext, buttonDetailEL)}" />
+<c:set var="buttonDetailName" value="addDetail${targetConfig.baseName}" />
+<c:set var="buttonDetail" value="${util:isButtonRender(buttonDetailName, '')}" />
 <c:set var="style" value="display: none;" />
 <v:action
 	layerFields="body"

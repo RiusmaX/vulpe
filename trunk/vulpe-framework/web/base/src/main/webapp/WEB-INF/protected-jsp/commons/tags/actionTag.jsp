@@ -11,9 +11,10 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${empty disabled}"><c:set var="disabled" value="${false}"/></c:if>
+	<c:set var="buttonPrefix" value="vulpeButton" />
 	<c:choose>
 		<c:when test="${empty elementId}"><c:set var="elementId" value="${labelKey}" /></c:when>
-		<c:when test="${!fn:contains(elementId, 'vulpeButton')}"><c:set var="elementId" value="${buttonPrefix}${elementId}-${vulpeFormName}" /></c:when>
+		<c:when test="${!fn:contains(elementId, buttonPrefix)}"><c:set var="elementId" value="${buttonPrefix}${elementId}-${vulpeFormName}" /></c:when>
 	</c:choose>
 	<span id="${elementId}-button" style="${!show ? 'display:none;' : ''}" class="${disabled ? 'vulpeItemOff' : ''}">
 	<c:if test="${disabled}">
@@ -38,7 +39,6 @@
 		<c:set var="showDeleteWarningBeforeTabularPost" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:set var="buttonPrefix" value="vulpeButton" />
 	<c:set var="labelKeyPrefix" value="label.vulpe." />
 	<c:if test="${not empty labelKey && !fn:contains(labelKey, '.')}"><c:set var="labelKey" value="${labelKeyPrefix}${labelKey}" /></c:if>
 	<c:set var="helpKeyPrefix" value="help.vulpe." />

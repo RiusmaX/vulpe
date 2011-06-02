@@ -16,7 +16,7 @@
 		</c:choose>
 	</c:if>
 	<c:if test="${isHeaderTableTag}"><c:set var="styleClass" value="vulpeRowHeader"/></c:if>
-	<c:if test="${empty updateValue && isSelectTableTag && (now['buttons']['update'] || now['buttons']['SELECT_update'])}">
+	<c:if test="${empty updateValue && isSelectTableTag && (util:isButtonRender('update', 'SELECT'))}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -29,13 +29,13 @@
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<c:when test="${isSelectTableTag && (now['buttons']['delete'] || now['buttons']['SELECT_delete'])}">
+			<c:when test="${isSelectTableTag && (util:isButtonRender('delete', 'SELECT'))}">
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="${now['controllerType'] == 'TABULAR' ? 'detail' : 'select'}"/>
 			</c:when>
 			<c:when test="${not empty targetConfig}">
-				<c:set var="deleteShowEL" value="${'${'}now['buttons']['delete${targetConfig.baseName}']${'}'}"/>
-				<c:if test="${util:eval(pageContext, deleteShowEL)}">
+				<c:set var="deleteShowName" value="delete${targetConfig.baseName}"/>
+				<c:if test="${util:isButtonRender(deleteShowName, '')}">
 					<c:set var="deleteValue" value="selected"/>
 					<c:set var="deleteType" value="detail"/>
 				</c:if>

@@ -1709,11 +1709,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					ever.put(getSelectTableKey(), entities);
 				}
 			}
-			try {
-				ever.put(getSelectFormKey(), getControllerConfig().getEntityClass().newInstance());
-			} catch (Exception e) {
-				LOG.error(e);
-			}
 			updatePostAfter();
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				onRead();

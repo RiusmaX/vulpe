@@ -70,6 +70,11 @@ var vulpe = {
 			messagesPopup: "#messagesPopup",
 			modalMessages: "#modalMessages"
 		},
+		layout:{
+			showLoading: true,
+			showReportInNewWindow: false,
+			showIconErrorMessage: true
+		},
 		lightbox: {
 			imageText: "vulpe.lightbox.image.text",
 			ofText: "vulpe.lightbox.of.text"
@@ -133,8 +138,6 @@ var vulpe = {
 			mobile: false,
 			selectRow: false
 		},
-		showLoading: true,
-		showReportInNewWindow: false,
 		sortType: "ALL",
 		springSecurityCheck: "j_spring_security_check",
 		suffix: {
@@ -1591,7 +1594,7 @@ var vulpe = {
 
 		showLoading: function() {
 			var visible = vulpe.util.get('loading').css("display") != "none";
-			if (vulpe.config.showLoading && !visible) {
+			if (vulpe.config.layout.showLoading && !visible) {
 				vulpe.view.loading = jQuery('#loading').modal({
 					overlayId: 'overlayLoading',
 					containerId: 'containerLoading',
@@ -1675,7 +1678,7 @@ var vulpe = {
 			},
 
 			submitReport: function(actionURL, width, height) {
-				if (vulpe.config.showReportInNewWindow) {
+				if (vulpe.config.layout.showReportInNewWindow) {
 					var popupName = 'popup' + new Date().getTime();
 					return vulpe.view.request.openPopup(actionURL, width, height, popupName);
 				} else {
@@ -2099,7 +2102,7 @@ var vulpe = {
 					url: vulpe.util.completeURL(options.url),
 					data: options.queryString,
 					success: function (data, status) {
-						vulpe.config.showLoading = true;
+						vulpe.config.layout.showLoading = true;
 						var authenticator = options.url.indexOf("/j_spring_security_check") != -1;
 						var loginForm = data.indexOf("vulpeLoginForm") != -1;
 						var validUrlRedirect = vulpe.config.authenticator.url.redirect.indexOf("/ajax") == -1;
@@ -2289,7 +2292,7 @@ var vulpe = {
 					options.layerFields = vulpe.config.formName;
 				}
 				if (options.individualLoading) {
-					vulpe.config.showLoading = false;
+					vulpe.config.layout.showLoading = false;
 					jQuery("select,input", "#" + options.layer).each(function(index) {
 						var elementId = $(this).attr("id");
 						var elementType = $(this).attr("type");
@@ -2370,9 +2373,11 @@ var vulpe = {
 		},
 
 		setupError: function(fieldName, message) {
-			var messageSuffix = fieldName + vulpe.config.suffix.iconErrorMessage;
+			if (vulpe.config.layout.showIconErrorMessage) {
+				var messageSuffix = fieldName + vulpe.config.suffix.iconErrorMessage;
+				vulpe.util.get(messageSuffix).show();
+			}
 			vulpe.util.get(fieldName).addClass(vulpe.config.css.fieldError);
-			vulpe.util.get(messageSuffix).show();
 			var errorMessage = vulpe.util.get(fieldName + vulpe.config.suffix.errorMessage);
 			errorMessage.html(message);
 			errorMessage.css("display", "block");
@@ -2478,9 +2483,11 @@ var vulpe = {
 					}
 					jQuery(options.element).addClass(vulpe.config.css.fieldError);
 				}
-				var error = vulpe.util.get(idField + vulpe.config.suffix.iconErrorMessage);
-				if (error.length == 1) {
-					error.show();
+				if (vulpe.config.layout.showIconErrorMessage) {
+					var error = vulpe.util.get(idField + vulpe.config.suffix.iconErrorMessage);
+					if (error.length == 1) {
+						error.show();
+					}
 				}
 			}
 		},
