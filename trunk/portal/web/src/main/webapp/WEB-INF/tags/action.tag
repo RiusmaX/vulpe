@@ -2,6 +2,8 @@
 <%@ attribute name="action" required="false" rtexprvalue="true"%>
 <%@ attribute name="afterJs" required="false" rtexprvalue="true"%>
 <%@ attribute name="beforeJs" required="false" rtexprvalue="true"%>
+<%@ attribute name="config" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="disabled" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="iconBorder" required="false" rtexprvalue="true"%>
 <%@ attribute name="elementId" required="false" rtexprvalue="true"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true"%>
@@ -21,6 +23,7 @@
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="showButtonAsImage" required="false" rtexprvalue="true"%>
+<%@ attribute name="showButtonAsLink" required="false" rtexprvalue="true"%>
 <%@ attribute name="showIconOfButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="showTextOfButton" required="false" rtexprvalue="true"%>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
