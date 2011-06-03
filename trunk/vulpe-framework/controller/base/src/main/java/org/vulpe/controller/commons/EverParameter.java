@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.commons.util;
+package org.vulpe.controller.commons;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.util.VulpeHashMap;
 
 /**
  * Utility class to access and control global parameters.
@@ -97,5 +102,19 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 			contains = super.containsKey(key);
 		}
 		return contains;
+	}
+	
+	/**
+	 * 
+	 * @param session
+	 * @return
+	 */
+	public static EverParameter getSelf(final HttpSession session) {
+		EverParameter ever = (EverParameter) session.getAttribute(VulpeConstants.Session.EVER);
+		if (ever == null) {
+			ever = new EverParameter();
+			session.setAttribute(VulpeConstants.Session.EVER, ever);
+		}
+		return ever;
 	}
 }

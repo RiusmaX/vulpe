@@ -61,12 +61,12 @@ import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.commons.util.EverParameter;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.commons.DuplicatedBean;
+import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.I18NService;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
@@ -139,10 +139,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	@PostConstruct
 	protected void postConstruct() {
-		ever = getSessionAttribute(VulpeConstants.Session.EVER);
-		if (ever == null) {
-			ever = new EverParameter();
-		}
+		ever = EverParameter.getSelf(getSession());
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.REPORT_TITLE_KEY, getControllerConfig().getReportTitleKey());
