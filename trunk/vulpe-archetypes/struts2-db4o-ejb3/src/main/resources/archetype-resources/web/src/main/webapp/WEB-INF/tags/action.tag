@@ -2,6 +2,8 @@
 <%@ attribute name="action" required="false" rtexprvalue="true"%>
 <%@ attribute name="afterJs" required="false" rtexprvalue="true"%>
 <%@ attribute name="beforeJs" required="false" rtexprvalue="true"%>
+<%@ attribute name="config" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="disabled" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="iconBorder" required="false" rtexprvalue="true"%>
 <%@ attribute name="elementId" required="false" rtexprvalue="true"%>
 <%@ attribute name="helpKey" required="false" rtexprvalue="true"%>
