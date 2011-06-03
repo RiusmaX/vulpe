@@ -286,7 +286,7 @@ var vulpe = {
 					vulpe.util.addHotKey({
 						hotKey: key,
 						command: function () {
-							vulpe.util.get(buttonName).click();
+							vulpe.util.get(buttonName).trigger('click');
 							return false;
 						}
 					});
@@ -338,7 +338,7 @@ var vulpe = {
 			}
 			if (position == -1 || (position != -1 && options.override)) {
 				if (options.button) {
-					options.command = function() {options.button.click(); return false;};
+					options.command = function() {$(options.button).trigger('click'); return false;};
 				}
 				jQuery(document).bind("keydown", options.hotKey, options.command);
 				var dontFire = function(hotKey) {
@@ -458,27 +458,31 @@ var vulpe = {
 		},
 
 		focusFirst: function(layer) {
-			if (!vulpe.config.onlyToSee) {
-				var token = "input.focused,select.focused,textarea.focused";
-				var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
-				var focused = false;
-				fields.each(function(index) {
-					if ($(this).val() == "" && !focused) {
-						$(this).focus();
-						if (vulpe.config.browser.ie6) {
+			try {
+				if (!vulpe.config.onlyToSee) {
+					var token = "input.focused,select.focused,textarea.focused";
+					var fields = layer ? jQuery(token, layer.indexOf("#") == -1 ? vulpe.util.get(layer) : jQuery(layer)) : jQuery(token);
+					var focused = false;
+					fields.each(function(index) {
+						if ($(this).val() == "" && !focused) {
 							$(this).focus();
+							if (!$(this).is(":focus")) {
+								$(this).focus();
+							}
+							focused = true;
 						}
-						focused = true;
-					}
-				});
-				if (fields.length > 0) {
-					if (!focused) {
-						fields[0].focus();
-						if (vulpe.config.browser.ie6) {
+					});
+					if (fields.length > 0) {
+						if (!focused) {
 							fields[0].focus();
+							if (!$(fields[0]).is(":focus")) {
+								fields[0].focus();
+							}
 						}
 					}
 				}
+			} catch(e) {
+				//do nothing
 			}
 		},
 
@@ -652,7 +656,7 @@ var vulpe = {
 					vulpe.config.tabIndex = vulpe.config.tabIndex + 1;
 				}
 			}
-			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).click();
+			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).trigger('click');
 		}
 	},
 	// vulpe.validate
@@ -1142,9 +1146,9 @@ var vulpe = {
 						if (invalidCount == 0 && !vulpe.util.existsVulpePopups()) {
 							if (idField.indexOf(vulpe.config.entity) != -1 && idField.indexOf(vulpe.config.token.fieldIndex) != -1) {
 								var detail = vulpe.config.prefix.detail + vulpe.util.getDetailByElementId(idField);
-								$("a[href='" + detail + "']").click();
+								$("a[href='" + detail + "']").trigger('click');
 							} else if ($("a[href='" + vulpe.config.masterTabId + "']").length == 1) {
-								$("a[href='" + vulpe.config.masterTabId + "']").click();
+								$("a[href='" + vulpe.config.masterTabId + "']").trigger('click');
 							}
 						}
 						valid = false;
@@ -1342,7 +1346,7 @@ var vulpe = {
 						vulpe.util.addHotKey({
 							hotKey: key.replace("[numbers]", "") + (index == 10 ? 0 : index),
 							command: function () {
-								vulpe.util.get(id).click();
+								vulpe.util.get(id).trigger('click');
 								return false;
 							}
 						});
@@ -1466,7 +1470,7 @@ var vulpe = {
 			vulpe.config.order[propertyId] = {property: sortPropertyInfo, value: value, css: order};
 			var buttonRead = vulpe.util.getButton("Read");
 			if (buttonRead) {
-				buttonRead.click();
+				buttonRead.trigger('click');
 			}
 			if (value == "") {
 				value = "obj.id";
@@ -2161,7 +2165,8 @@ var vulpe = {
 										var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
 										if (selectedTab.val() != "") {
 											$(vulpe.config.prefix.detailTab, layerObject).tabs("select", "#" + selectedTab.val());
-										} else {
+										}
+										if (html.indexOf("vulpeMainBodyTabs") == -1) {
 											vulpe.util.focusFirst(options.layer);
 										}
 									}

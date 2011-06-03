@@ -18,6 +18,7 @@
 	</c:choose>
 	<span id="${elementId}-button" style="${!show ? 'display:none;' : ''}" class="${disabled ? 'vulpeItemOff' : ''}">
 	<c:if test="${disabled}">
+		<c:set var="styleClass" value="vulpeItemOff" />
 		<c:set var="disabledButton">disabled="disabled"</c:set>
 	</c:if>
 	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['project-view-showButtonsAsImage']}" /></c:if>

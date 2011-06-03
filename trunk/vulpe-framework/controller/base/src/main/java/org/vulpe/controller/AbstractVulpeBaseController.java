@@ -242,6 +242,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
 		defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
 		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
+		defaultMessage.put(Operation.REPORT, "{vulpe.message.empty.report.data}");
 	}
 
 	public String getDefaultMessage(final Operation operation) {
@@ -1701,8 +1702,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						if (entity.getId().equals(getEntity().getId())) {
 							entities.remove(index);
 							entities.add(index, getEntity());
-							// entities.add(index,
-							// repairCachedClasses(getEntity()));
 						}
 						++index;
 					}
@@ -2107,9 +2106,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void onRead() {
-		if (isBack() && !isExecuted()) {
-			return;
-		}
+		// if (isBack() && !isExecuted()) {
+		// return;
+		// }
 		if (getControllerType().equals(ControllerType.TWICE)) {
 			if (ever.containsKey(getSelectFormKey()) && getEntitySelect() == null) {
 				setEntitySelect(ever.<ENTITY> getSelf(getSelectFormKey()));
@@ -2123,7 +2122,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			final StringBuilder filters = new StringBuilder();
 			final String orLabel = getText("label.vulpe.or");
 			int filterCount = 0;
-			for (String attribute : getControllerConfig().requireOneOfFilters()) {
+			for (final String attribute : getControllerConfig().requireOneOfFilters()) {
 				if (filterCount > 0) {
 					filters.append(" ").append(orLabel).append(" ");
 				}
@@ -2174,6 +2173,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (getControllerType().equals(ControllerType.REPORT)) {
 			final DownloadInfo downloadInfo = doReportLoad();
 			setDownloadInfo(downloadInfo);
+			if (VulpeValidationUtil.isEmpty(getEntities())) {
+				addActionInfoMessage(getDefaultMessage(Operation.REPORT));
+			}
 		} else {
 			ever.put(getSelectFormKey(), entity.clone());
 			if (getEntities() != null && !getEntities().isEmpty()) {

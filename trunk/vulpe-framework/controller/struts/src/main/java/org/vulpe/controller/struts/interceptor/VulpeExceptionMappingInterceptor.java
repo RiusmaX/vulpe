@@ -42,15 +42,16 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- *
+ * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
-public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
+public class VulpeExceptionMappingInterceptor extends
+		com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -73,13 +74,15 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 
 	/**
 	 * Method responsible for handling exception.
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
 	 */
-	protected String findResultFromException(final ActionInvocation invocation, final Throwable exception) {
-		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
+	protected String findResultFromException(final ActionInvocation invocation,
+			final Throwable exception) {
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
+				.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
 		action.setResultName(Forward.MESSAGES);
@@ -97,7 +100,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 				String message = action.getText("vulpe.error.unknown");
 				final String key = vse.getMessage();
 				if (key.startsWith("vulpe.error")) {
-					if (vse.getCause() != null && StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+					if (vse.getCause() != null
+							&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
 						if (!key.equals(vse.getCause().getMessage())) {
 							message = vse.getCause().getMessage();
 						}
@@ -107,7 +111,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 					}
 					action.addActionError(key, message);
 				} else {
-					if (vse.getCause() != null && StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+					if (vse.getCause() != null
+							&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
 						message = vse.getCause().getMessage();
 						if (message.startsWith("vulpe.error")) {
 							message = action.getText(message);
@@ -124,8 +129,9 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			if (StringUtils.isBlank(value)) {
 				String message = newException.getMessage();
 				if (StringUtils.isNotEmpty(message)) {
-					final MessageFormat messageFormat = buildMessageFormat(TextParseUtil.translateVariables(message,
-							invocation.getStack()), invocation.getInvocationContext().getLocale());
+					final MessageFormat messageFormat = buildMessageFormat(TextParseUtil
+							.translateVariables(message, invocation.getStack()), invocation
+							.getInvocationContext().getLocale());
 					message = messageFormat.format(null);
 					value = action.getText(message);
 					if (StringUtils.isBlank(value) || value.equals(message)) {
@@ -143,11 +149,33 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 		if (!action.isAjax()) {
 			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
 		}
+		if (isDebug(action)) {
+			exception.printStackTrace();
+		}
 		return action.getResultName();
 	}
 
 	/**
-	 *
+	 * Checks if debug is enabled.
+	 * 
+	 * @param action
+	 * @return
+	 */
+	protected boolean isDebug(final VulpeStrutsController<?, ?> action) {
+		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG,
+				Boolean.FALSE);
+		final Map<String, Object> global = (Map<String, Object>) getServletContext().getAttribute(
+				Context.GLOBAL);
+		Boolean globalDebug = (Boolean) global
+				.get(VulpeConstants.Configuration.Global.PROJECT_DEBUG);
+		if (globalDebug == null) {
+			globalDebug = Boolean.FALSE;
+		}
+		return sessionDebug || globalDebug;
+	}
+
+	/**
+	 * 
 	 * @param exception
 	 * @return
 	 */
@@ -159,7 +187,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param exception
 	 * @return
 	 */
@@ -168,7 +196,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param pattern
 	 * @param locale
 	 * @return
@@ -178,12 +206,13 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 */
 	protected void translateException(final ActionInvocation invocation, final Throwable exception) {
-		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
+				.getAction();
 		String message = exception.getMessage();
 		if (exception instanceof EntityNotFoundException) {
 			final String token1 = "Unable to find ";
@@ -191,8 +220,8 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 			if (message.contains(token1) && message.contains(token2)) {
 				String entity = message.substring(token1.length(), message.indexOf(token2));
 				String identifier = message.substring(message.indexOf(token2) + token2.length());
-				message = action.getText("vulpe.exception.translate.EntityNotFoundException", action.getText(entity),
-						identifier);
+				message = action.getText("vulpe.exception.translate.EntityNotFoundException",
+						action.getText(entity), identifier);
 			}
 		} else if (exception instanceof ServletException) {
 			message = getCause(exception).getMessage();
@@ -201,22 +230,18 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @param invocation
 	 * @param exception
 	 * @return
 	 */
-	protected String treatExceptionMessage(final ActionInvocation invocation, final Throwable exception) {
-		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation.getAction();
+	protected String treatExceptionMessage(final ActionInvocation invocation,
+			final Throwable exception) {
+		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
+				.getAction();
 		String message = "";
 		final String key = exception.getClass().getName();
-		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG, Boolean.FALSE);
-		final Map<String, Object> global = (Map<String, Object>) getServletContext().getAttribute(Context.GLOBAL);
-		Boolean globalDebug = (Boolean) global.get(VulpeConstants.Configuration.Global.PROJECT_DEBUG);
-		if (globalDebug == null) {
-			globalDebug = Boolean.FALSE;
-		}
-		if (sessionDebug || globalDebug) {
+		if (isDebug(action)) {
 			if (exception instanceof NullPointerException) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
 				final String fileName = ste.getFileName().replace(".java", "");
@@ -232,7 +257,7 @@ public class VulpeExceptionMappingInterceptor extends com.opensymphony.xwork2.in
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public ServletContext getServletContext() {
