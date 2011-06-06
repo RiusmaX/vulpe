@@ -16,21 +16,21 @@
 package org.vulpe.controller.struts.interceptor;
 
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.exception.VulpeSystemException;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ValidationAware;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.MethodFilterInterceptor#doIntercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -38,18 +38,19 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 	@Override
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		if (invocation.getAction() instanceof VulpeController) {
-			final VulpeController controller = (VulpeController) invocation.getAction();
+			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+					.getAction();
 			final String key = controller.getCurrentControllerKey().concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
-			if (ActionContext.getContext().getSession().containsKey(key) && isMethodReset(invocation)) {
-				ActionContext.getContext().getSession().remove(key);
+			if (controller.ever.containsKey(key) && isMethodReset(invocation)) {
+				controller.ever.remove(key);
 			}
 		}
 		return invocation.invoke();
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -59,8 +60,8 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 			if (invocation.getAction() instanceof ValidationAware) {
 				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
 				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
-						: validationAware.getClass().getMethod(invocation.getProxy().getMethod()).isAnnotationPresent(
-								ResetSession.class));
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
+								.isAnnotationPresent(ResetSession.class));
 			}
 			return reset;
 		} catch (Exception e) {

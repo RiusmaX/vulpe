@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%--<jsp:include page="${controllerConfig.viewItemsPath}" />--%>
 <c:if test="${not empty downloadInfo}">
 	<p><fmt:message key="vulpe.message.report.generated.successfully" /></p>

@@ -19,6 +19,7 @@
 	<span id="${elementId}-button" style="${!show ? 'display:none;' : ''}" class="${disabled ? 'vulpeItemOff' : ''}">
 	<c:if test="${disabled}">
 		<c:set var="styleClass" value="vulpeItemOff" />
+		<c:set var="buttonDisabled" value="Off" />
 		<c:set var="disabledButton">disabled="disabled"</c:set>
 	</c:if>
 	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['project-view-showButtonsAsImage']}" /></c:if>
@@ -82,7 +83,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<c:set var="styleClass" value="${styleClass} vulpeSubmit" />
+					<c:set var="styleClass" value="vulpeSubmit${buttonDisabled}" />
 					<input style="${style}" ${disabledButton} id="${elementId}" type="button" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 				</c:otherwise>
 			</c:choose>
@@ -123,7 +124,7 @@
 					<c:choose>
 						<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
 						<c:otherwise>
-							<c:set var="styleClass" value="${styleClass} vulpeSubmit" />
+							<c:set var="styleClass" value="vulpeSubmit${buttonDisabled}" />
 							<input style="${style}" ${disabledButton} id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 						</c:otherwise>
 					</c:choose>

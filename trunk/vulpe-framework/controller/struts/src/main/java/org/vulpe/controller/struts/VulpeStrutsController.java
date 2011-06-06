@@ -31,7 +31,6 @@ import ognl.PropertyAccessor;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Controller;
@@ -385,10 +384,10 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	public Map getFormParams() {
 		final String keyForm = getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
+		Map formParams = ever.getSelf(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(keyForm, formParams);
+			ever.put(keyForm, formParams);
 		}
 		return formParams;
 	}

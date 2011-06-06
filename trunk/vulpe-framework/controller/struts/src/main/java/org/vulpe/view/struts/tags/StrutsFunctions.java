@@ -115,10 +115,10 @@ public final class StrutsFunctions extends Functions {
 	private static Map getFormParams() {
 		final String keyForm = getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_KEY).concat(
 				VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = (Map) ServletActionContext.getRequest().getSession().getAttribute(keyForm);
+		Map formParams = getEver().getSelf(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
-			ServletActionContext.getRequest().getSession().setAttribute(keyForm, formParams);
+			getEver().put(keyForm, formParams);
 		}
 		return formParams;
 	}
@@ -220,8 +220,8 @@ public final class StrutsFunctions extends Functions {
 	 * @throws JspException
 	 */
 	public static String toString(final Object value) throws JspException {
-		return (String) getXWorkConverter().convertValue(ActionContext.getContext()
-				.getContextMap(), value, String.class);
+		return (String) getXWorkConverter().convertValue(
+				ActionContext.getContext().getContextMap(), value, String.class);
 	}
 
 	/**

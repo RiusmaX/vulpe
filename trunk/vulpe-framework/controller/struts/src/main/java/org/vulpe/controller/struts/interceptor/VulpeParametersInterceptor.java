@@ -63,10 +63,13 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 					controller.manageButtons(controller.getOperation());
 				}
 			}
-			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation.getAction();
+			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+					.getAction();
 			if (controller.ever != null) {
-				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller.getCurrentControllerName());
-				final String currentControllerKey = controller.ever.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller
+						.getCurrentControllerName());
+				final String currentControllerKey = controller.ever
+						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = controller.getCurrentControllerKey();
 				boolean autocomplete = false;
 				if (controller.getEntitySelect() != null
@@ -76,24 +79,31 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 				if (StringUtils.isEmpty(currentControllerKey)) {
 					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					executeOnce(action);
-				} else if (!currentControllerKey.equals(controllerKey) && StringUtils.isEmpty(controller.getPopupKey())
-						&& !autocomplete) {
+				} else if (!currentControllerKey.equals(controllerKey)
+						&& StringUtils.isEmpty(controller.getPopupKey()) && !autocomplete) {
 					controller.ever.removeWeakRef();
 					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					executeOnce(action);
 				}
 			}
-			ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER, controller.ever);
-			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
+			ServletActionContext.getRequest().getSession().setAttribute(
+					VulpeConstants.Session.EVER, controller.ever);
+			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW,
+					controller.now);
 			key = controller.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		}
 
 		if (isMethodReset(this.invocation)) {
-			ActionContext.getContext().getSession().remove(key);
+			if (action instanceof VulpeController) {
+				final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+						.getAction();
+				controller.ever.remove(key);
+			}
 		} else {
 			final Map params = (Map) ActionContext.getContext().getSession().get(key);
 			if (params != null) {
-				final boolean createNullObjects = ReflectionContextState.isCreatingNullObjects(stack.getContext());
+				final boolean createNullObjects = ReflectionContextState
+						.isCreatingNullObjects(stack.getContext());
 				try {
 					for (final Iterator iterator = params.keySet().iterator(); iterator.hasNext();) {
 						final String name = (String) iterator.next();
@@ -108,7 +118,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 						}
 					}
 				} finally {
-					ReflectionContextState.setCreatingNullObjects(stack.getContext(), createNullObjects);
+					ReflectionContextState.setCreatingNullObjects(stack.getContext(),
+							createNullObjects);
 				}
 			}
 		}
@@ -123,7 +134,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 	}
 
 	/**
-	 *
+	 * 
 	 * @param action
 	 * @return
 	 */
@@ -133,8 +144,8 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			if (invocation.getAction() instanceof ValidationAware) {
 				final ValidationAware validationAware = (ValidationAware) invocation.getAction();
 				reset = (validationAware.hasActionErrors() || validationAware.hasFieldErrors() ? false
-						: validationAware.getClass().getMethod(invocation.getProxy().getMethod()).isAnnotationPresent(
-								ResetSession.class));
+						: validationAware.getClass().getMethod(invocation.getProxy().getMethod())
+								.isAnnotationPresent(ResetSession.class));
 			}
 			return reset;
 		} catch (Exception e) {

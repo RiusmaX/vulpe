@@ -43,7 +43,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 public class StrutsReportUtil extends ReportUtil implements JasperReportConstants {
 	/**
@@ -61,8 +61,9 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		// default constructor
 	}
 
-	public byte[] getJasperReport(final String fileName, final String[] subReports, final Collection<?> collection,
-			final VulpeHashMap<String, Object> parameters, final String format) {
+	public byte[] getJasperReport(final String fileName, final String[] subReports,
+			final Collection<?> collection, final VulpeHashMap<String, Object> parameters,
+			final String format) {
 		try {
 			String fullFileName = getRealPath(fileName);
 			if (StringUtils.isBlank(fullFileName)) {
@@ -71,16 +72,18 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
 			final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
 
-			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(fileName, "/",
-					File.separator), ""));
+			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(
+					fileName, "/", File.separator), ""));
 			if (subReports != null && subReports.length > 0) {
 				int count = 0;
 				for (String subReport : subReports) {
-					parameters.put("SUBREPORT_".concat(String.valueOf(count)), getRealPath(subReport));
+					parameters.put("SUBREPORT_".concat(String.valueOf(count)),
+							getRealPath(subReport));
 					count++;
 				}
 			}
-			final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+			final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
+					dataSource);
 			if (jasperPrint == null || jasperPrint.getPages().isEmpty()) {
 				return null;
 			}
@@ -109,8 +112,9 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		}
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<?> collection, final VulpeHashMap<String, Object> parameters,
-			final String fileName, final String[] subReports, final String format) {
+	public DownloadInfo getDownloadInfo(final Collection<?> collection,
+			final VulpeHashMap<String, Object> parameters, final String fileName,
+			final String[] subReports, final String format) {
 		String contentType = null;
 		if (format.equals(StrutsReportUtil.FORMAT_CSV)) {
 			contentType = "text/plain";
@@ -129,14 +133,18 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 		return data == null ? null : new DownloadInfo(data, contentType);
 	}
 
-	public DownloadInfo getDownloadInfo(final Collection<?> collection, final VulpeHashMap<String, Object> parameters,
-			final String fileName, final String[] subReports, final String format, final String reportName,
+	public DownloadInfo getDownloadInfo(final Collection<?> collection,
+			final VulpeHashMap<String, Object> parameters, final String fileName,
+			final String[] subReports, final String format, final String reportName,
 			final boolean reportDownload) {
-		final DownloadInfo downloadInfo = getDownloadInfo(collection, parameters, fileName, subReports, format);
-		downloadInfo.setName(reportName.concat(".").concat(format.toLowerCase()));
-		String contentDisposition = reportDownload ? "attachment; " : "inline; ";
-		downloadInfo.setContentDisposition(contentDisposition.concat("filename=\"").concat(downloadInfo.getName())
-				.concat("\""));
+		final DownloadInfo downloadInfo = getDownloadInfo(collection, parameters, fileName,
+				subReports, format);
+		if (downloadInfo != null) {
+			downloadInfo.setName(reportName.concat(".").concat(format.toLowerCase()));
+			String contentDisposition = reportDownload ? "attachment; " : "inline; ";
+			downloadInfo.setContentDisposition(contentDisposition.concat("filename=\"").concat(
+					downloadInfo.getName()).concat("\""));
+		}
 		return downloadInfo;
 	}
 
