@@ -34,5 +34,7 @@ public interface GenericService extends VulpeService {
 	<T extends VulpeEntity<?>> List<T> getList(final T entity);
 
 	<T extends VulpeEntity<?>> boolean exists(final T entity);
+	
+	<T extends VulpeEntity<?>> boolean notExistEquals(final T entity);
 
 }

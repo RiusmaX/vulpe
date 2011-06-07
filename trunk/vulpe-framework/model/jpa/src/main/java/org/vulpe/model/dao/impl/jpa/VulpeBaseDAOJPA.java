@@ -649,20 +649,39 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 		final StringBuilder hql = new StringBuilder();
 		Long size = 0L;
-		hql.append("select count(*) from ");
-		hql.append(entity.getClass().getSimpleName()).append(" obj where ");
-		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
 		if (entity.getId() != null) {
-			hql.append(" obj.id <> :id ");
+			hql.append("select count(*) from ");
+			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
+			hql.append(" obj.id = :id ");
 			final Query query = getEntityManager().createQuery(hql.toString());
 			query.setParameter("id", entity.getId());
 			size = (Long) query.getSingleResult();
-		} else if (notExistEqual != null) {
+		}
+		return size == 1;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.vulpe.model.dao.VulpeDAO#notExistEquals(org.vulpe.model.entity.
+	 * VulpeEntity)
+	 */
+	@Override
+	public boolean notExistEquals(final ENTITY entity) throws VulpeApplicationException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Not Exists object: ".concat(entity.toString()));
+		}
+		final StringBuilder hql = new StringBuilder();
+		Long size = 0L;
+		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
+		if (notExistEqual != null) {
+			hql.append("select count(*) from ");
+			hql.append(entity.getClass().getSimpleName()).append(" obj where ");
 			final QueryParameter[] queryParameters = notExistEqual.parameters();
 			// getting total records
 			final Map<String, Object> values = new HashMap<String, Object>();
 			int count = 0;
-			for (QueryParameter queryParameter : queryParameters) {
+			for (final QueryParameter queryParameter : queryParameters) {
 				if (count > 0) {
 					hql.append(" and ");
 				}

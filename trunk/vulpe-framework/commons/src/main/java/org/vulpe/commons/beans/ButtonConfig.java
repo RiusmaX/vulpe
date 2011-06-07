@@ -38,7 +38,7 @@ public class ButtonConfig {
 	}
 
 	public ButtonConfig(final Boolean render) {
-		this.show = render;
+		this.render = render;
 	}
 
 	public ButtonConfig(final Boolean render, final Boolean show) {

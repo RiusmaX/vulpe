@@ -54,16 +54,16 @@ import com.db4o.query.Query;
 
 /**
  * Default implementation of DAO for MAIN's with DB4O.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
-public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
-		AbstractVulpeBaseDAODB4O<ENTITY, ID> {
+public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends AbstractVulpeBaseDAODB4O<ENTITY, ID> {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#create(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -82,7 +82,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#delete(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -112,7 +112,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#delete(java.util. List)
 	 */
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {
@@ -123,7 +123,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#update(br.com.
 	 * activethread.framework.model.entity.BaseEntity)
 	 */
@@ -141,7 +141,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.impl.AbstractVulpeBaseDAO#find(java
 	 * .io.Serializable)
 	 */
@@ -173,7 +173,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#read(br.com.activethread
 	 * .framework.model.entity.BaseEntity)
 	 */
@@ -196,7 +196,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @seeorg.vulpe.model.dao.VulpeBaseCRUDDAO#paging(br.com.
 	 * activethread.framework.model.entity.BaseEntity, java.lang.Integer,
 	 * java.lang.Integer)
@@ -245,8 +245,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 */
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(), getClass()
-					.getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
@@ -260,7 +260,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	}
 
 	/**
-	 *
+	 * 
 	 * @param value
 	 * @return
 	 */
@@ -277,7 +277,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	}
 
 	/**
-	 *
+	 * 
 	 * @param entity
 	 * @return
 	 */
@@ -319,7 +319,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 				continue;
 			}
 			final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
-			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass()) && field.getName().equals(DB4O.STATUS)) {
+			if (VulpeLogicEntity.class.isAssignableFrom(entity.getClass())
+					&& field.getName().equals(DB4O.STATUS)) {
 				query.descend(field.getName()).constrain(Status.D).not();
 			}
 			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
@@ -354,11 +355,14 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 							query.descend(paramName).constrain(value).equal();
 						} else if (OperatorType.SMALLER.equals(queryParameter.equals().operator())) {
 							query.descend(paramName).constrain(value).smaller();
-						} else if (OperatorType.GREATER.equals(queryParameter.equals().operator().getValue())) {
+						} else if (OperatorType.GREATER.equals(queryParameter.equals().operator()
+								.getValue())) {
 							query.descend(paramName).constrain(value).greater();
-						} else if (OperatorType.SMALLER_OR_EQUAL.equals(queryParameter.equals().operator())) {
+						} else if (OperatorType.SMALLER_OR_EQUAL.equals(queryParameter.equals()
+								.operator())) {
 							query.descend(paramName).constrain(value).smaller().equal();
-						} else if (OperatorType.GREATER_OR_EQUAL.equals(queryParameter.equals().operator())) {
+						} else if (OperatorType.GREATER_OR_EQUAL.equals(queryParameter.equals()
+								.operator())) {
 							query.descend(paramName).constrain(value).greater().equal();
 						}
 					}
@@ -414,18 +418,19 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeProcedure(java.lang.String,
 	 * java.util.List)
 	 */
 	@Override
-	public CallableStatement executeProcedure(String name, List<Parameter> parameters) throws VulpeApplicationException {
+	public CallableStatement executeProcedure(String name, List<Parameter> parameters)
+			throws VulpeApplicationException {
 		return null;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#exists(org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -456,7 +461,38 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
+	 * @seeorg.vulpe.model.dao.VulpeDAO#notExistEquals(org.vulpe.model.entity.
+	 * VulpeEntity)
+	 */
+	@Override
+	public boolean notExistEquals(ENTITY entity) throws VulpeApplicationException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Not Exists object: ".concat(entity.toString()));
+		}
+		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
+		if (notExistEqual != null) {
+			final QueryParameter[] parameters = notExistEqual.parameters();
+			final Query query = getObjectContainer().query();
+			query.constrain(entity.getClass());
+			for (QueryParameter queryParameter : parameters) {
+				try {
+					query.descend(queryParameter.equals().name()).constrain(
+							PropertyUtils.getProperty(entity, queryParameter.equals().name()));
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+			// getting total records
+			final int size = query.execute().size();
+			return size > 0;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.vulpe.model.dao.VulpeDAO#executeFunction(java.lang.String, int,
 	 * java.util.List)
 	 */
@@ -468,14 +504,14 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.vulpe.model.dao.VulpeDAO#executeCallableStatement(java.lang.String,
 	 * java.lang.Integer, java.util.List)
 	 */
 	@Override
-	public CallableStatement executeCallableStatement(String name, Integer returnType, List<Parameter> parameters)
-			throws VulpeApplicationException {
+	public CallableStatement executeCallableStatement(String name, Integer returnType,
+			List<Parameter> parameters) throws VulpeApplicationException {
 		return null;
 	}
 

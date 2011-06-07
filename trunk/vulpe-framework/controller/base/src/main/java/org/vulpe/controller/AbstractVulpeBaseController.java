@@ -644,8 +644,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @return
 	 */
-	protected boolean validateExists() {
-		return getService(GenericService.class).exists(getEntity());
+	protected boolean validateNotExistEquals() {
+		return getService(GenericService.class).notExistEquals(getEntity());
 	}
 
 	public VulpeHashMap<String, ButtonConfig> getButtons() {
@@ -658,11 +658,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public void renderDetailButton(final String detail, final String button) {
-		getButtons().put(button.concat(detail), new ButtonConfig(true));
+		getButtons().put(button.concat(detail), new ButtonConfig(true, true, false));
 	}
 
 	public void notRenderDetailButton(final String detail, final String button) {
-		getButtons().put(button.concat(detail), new ButtonConfig(true));
+		getButtons().put(button.concat(detail), new ButtonConfig(false));
 	}
 
 	public void showDetailButton(final String detail, final String button) {
@@ -973,7 +973,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public boolean validateEntity() {
 		if ((getOperation().equals(Operation.CREATE_POST) || getOperation().equals(
 				Operation.UPDATE_POST))) {
-			if (validateExists()) {
+			if (validateNotExistEquals()) {
 				final NotExistEquals notExistEqual = getControllerConfig().getEntityClass()
 						.getAnnotation(NotExistEquals.class);
 				String message = "{vulpe.error.entity.exists}";

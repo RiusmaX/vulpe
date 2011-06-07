@@ -8,14 +8,12 @@
 <p>
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsPrepend.jsp"%>
 <c:set var="buttonDetailName" value="addDetail${targetConfig.baseName}" />
-<c:set var="buttonDetail" value="${util:isButtonRender(buttonDetailName, '')}" />
-<c:set var="style" value="display: none;" />
 <v:action
 	layerFields="body"
 	validate="false" labelKey="addDetail"
 	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"
 	queryString="detail=${targetConfigPropertyName}&detailLayer=vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" showButtonAsImage="false"
-	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" render="${buttonDetail}" />
+	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" config="${util:buttonConfig(buttonDetailName, '')}" />
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsAppend.jsp"%>
 </p>

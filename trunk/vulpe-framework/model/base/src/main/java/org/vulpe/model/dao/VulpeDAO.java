@@ -152,6 +152,14 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @throws VulpeApplicationException
 	 */
 	boolean exists(final ENTITY entity) throws VulpeApplicationException;
+	
+	/**
+	 *
+	 * @param entity
+	 * @return
+	 * @throws VulpeApplicationException
+	 */
+	boolean notExistEquals(final ENTITY entity) throws VulpeApplicationException;
 
 	/**
 	 *

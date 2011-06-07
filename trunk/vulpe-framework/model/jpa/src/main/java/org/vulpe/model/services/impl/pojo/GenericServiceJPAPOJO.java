@@ -32,7 +32,7 @@ import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 import org.vulpe.model.services.GenericService;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked" })
@@ -55,7 +55,7 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.model.services.GenericService#getList(
 	 * org.vulpe.model.entity.VulpeEntity)
 	 */
@@ -70,11 +70,36 @@ public class GenericServiceJPAPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, I
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.model.services.GenericService#exists(org.vulpe.model.entity
+	 * .VulpeEntity)
+	 */
 	@Override
 	public <T extends VulpeEntity<?>> boolean exists(T entity) {
 		try {
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			return dao.exists((ENTITY) entity);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vulpe.model.services.GenericService#notExistEquals(org.vulpe.model
+	 * .entity.VulpeEntity)
+	 */
+	@Override
+	public <T extends VulpeEntity<?>> boolean notExistEquals(T entity) {
+		try {
+			dao.setEntityClass((Class<ENTITY>) entity.getClass());
+			return dao.notExistEquals((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
