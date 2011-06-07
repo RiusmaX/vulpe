@@ -202,8 +202,8 @@
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">
 					<c:choose>
-						<c:when test="${deleteType eq 'detail'}"><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" /></c:when>
-						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" /></c:otherwise>
+						<c:when test="${deleteType eq 'detail'}"><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow('delete', 'MAIN')}" disabled="${util:isButtonDisabled('delete', 'MAIN')}" /></c:when>
+						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow('delete', 'SELECT')}" disabled="${util:isButtonDisabled('delete', 'SELECT')}" /></c:otherwise>
 					</c:choose>
 				</v:column>
 			</c:if>

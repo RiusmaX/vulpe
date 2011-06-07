@@ -1568,6 +1568,7 @@ var vulpe = {
 		 */
 		selectRow: function(row, values) {
 			vulpe.view.selectPopupCache = new Array();
+			vulpe.config.valid = true;
 			vulpe.config.popup.selectRow = true;
 			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
 			var popup = vulpe.util.get(popupName);
@@ -2214,25 +2215,27 @@ var vulpe = {
 				var description = options.description;
 				vulpe.config.autocomplete = true;
 				if (options.value && options.value != "") {
-					var data = vulpe.view.selectPopupCache[options.identifier];
+					var data = vulpe.view.selectPopupCache[identifier];
 					var id = data ? data[0] : "";
 					if (typeof id == "undefined" || id != options.value || (vulpe.util.get(options.identifier).val() == "" && vulpe.util.get(options.description).val() == "")) {
 						vulpe.view.selectPopupCache[options.identifier] = [options.value, ""];
 					} else if (id == options.value) {
-						vulpe.util.get(description).val(vulpe.view.selectPopupCache[options.identifier][1]);
-						if (typeof options.afterJs == "function") {
-							try {
-								options.afterJs();
-							} catch(e) {
-								// do nothing
+						vulpe.util.get(description).val(vulpe.view.selectPopupCache[identifier][1]);
+						if (vulpe.util.isNotEmpty(vulpe.util.get(description).val())) {
+							if (typeof options.afterJs == "function") {
+								try {
+									options.afterJs();
+								} catch(e) {
+									// do nothing
+								}
+							} else if (vulpe.util.isNotEmpty(options.afterJs)) {
+								try {
+									eval(webtoolkit.url.decode(options.afterJs));
+								} catch(e) {
+									// do nothing
+								}
 							}
-						} else if (vulpe.util.isNotEmpty(options.afterJs)) {
-							try {
-								eval(webtoolkit.url.decode(options.afterJs));
-							} catch(e) {
-								// do nothing
-							}
-						}						
+						}
 						return;
 					}
 					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
@@ -2246,7 +2249,7 @@ var vulpe = {
 						vulpe.config.autocomplete = false;
 						if (vulpe.util.get(description).val() == "") {
 							vulpe.util.get(identifier).focus();
-							vulpe.view.selectPopupCache[options.identifier] = vulpe.util.get(identifier).val();
+							vulpe.view.selectPopupCache[identifier][0] = vulpe.util.get(identifier).val();
 							if (options.notFoundMessage) {
 								var idField = vulpe.util.get(description).attr("id");
 								var errorMessage = vulpe.util.get(idField + vulpe.config.suffix.errorMessage);
@@ -2256,7 +2259,7 @@ var vulpe = {
 							}
 							vulpe.config.valid = false;
 						} else {
-							vulpe.view.selectPopupCache[options.identifier][1] = vulpe.util.get(description).val();
+							vulpe.view.selectPopupCache[identifier][1] = vulpe.util.get(description).val();
 							vulpe.exception.hideFieldError({element: vulpe.util.get(description)});
 							vulpe.config.valid = true;
 						}
