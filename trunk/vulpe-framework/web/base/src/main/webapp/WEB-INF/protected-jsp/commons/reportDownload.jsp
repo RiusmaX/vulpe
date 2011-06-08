@@ -1,7 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%--<jsp:include page="${controllerConfig.viewItemsPath}" />--%>
 <c:if test="${not empty downloadInfo}">
-	<p><fmt:message key="vulpe.message.report.generated.successfully" /></p>
 	<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true"
 		render="false" />
 	<div id="report" title="<fmt:message key="${now['reportTitleKey']}" />" style="display:none">

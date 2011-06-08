@@ -239,7 +239,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
 		defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
 		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
-		defaultMessage.put(Operation.REPORT, "{vulpe.message.empty.report.data}");
+		defaultMessage.put(Operation.REPORT_EMPTY, "{vulpe.message.empty.report.data}");
+		defaultMessage.put(Operation.REPORT_SUCCESS, "{vulpe.message.report.generated.successfully}");
 	}
 
 	public String getDefaultMessage(final Operation operation) {
@@ -2171,7 +2172,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			final DownloadInfo downloadInfo = doReportLoad();
 			setDownloadInfo(downloadInfo);
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
-				addActionInfoMessage(getDefaultMessage(Operation.REPORT));
+				addActionInfoMessage(getDefaultMessage(Operation.REPORT_EMPTY));
+			}else {
+				addActionMessage(getDefaultMessage(Operation.REPORT_SUCCESS));
 			}
 		} else {
 			ever.put(getSelectFormKey(), entity.clone());

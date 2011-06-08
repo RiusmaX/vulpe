@@ -25,7 +25,17 @@
 			vulpe.util.get('${elementId}').datepicker({
 				showOn: 'button',
 				buttonImage: '${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/button-calendar-16x16.png',
-				buttonImageOnly: true
+				buttonImageOnly: true,
+				beforeShow: function(input, inst) {
+					if (vulpe.config.browser.ie6) {
+						$("select").hide();
+					}
+				},
+				onClose: function(dateText, inst) {
+					if (vulpe.config.browser.ie6) {
+						$("select").show();
+					}
+				}
 			});
 			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
 			vulpe.util.get('ui-datepicker-div').hide();
