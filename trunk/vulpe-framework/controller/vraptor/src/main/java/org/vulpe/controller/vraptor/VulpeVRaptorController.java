@@ -22,6 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import ognl.Ognl;
 import ognl.OgnlException;
 import ognl.OgnlRuntime;
@@ -325,5 +329,20 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	@Override
 	protected boolean validateDetails() {
 		return false;
+	}
+
+	@Override
+	public HttpServletRequest getRequest() {
+		return requestInfo.getRequest();
+	}
+
+	@Override
+	public HttpServletResponse getResponse() {
+		return requestInfo.getResponse();
+	}
+
+	@Override
+	public HttpSession getSession() {
+		return requestInfo.getRequest().getSession();
 	}
 }

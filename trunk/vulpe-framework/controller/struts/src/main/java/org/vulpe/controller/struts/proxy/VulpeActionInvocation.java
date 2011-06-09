@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.Action;
@@ -192,7 +192,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	public Result createResult() throws Exception {
 		if (getAction() instanceof VulpeController) {
 			final VulpeController controller = (VulpeController) getAction();
-			if (controller.getResultName().equals(Forward.REDIRECT)
+			if (controller.getResultName().equals(Controller.Result.REDIRECT)
 					&& StringUtils.isNotBlank(controller.getUrlRedirect())) {
 				final ServletRedirectResult srr = new ServletRedirectResult("${urlRedirect}");
 				srr.setPrependServletContext(true);
@@ -259,8 +259,8 @@ public class VulpeActionInvocation implements ActionInvocation {
 				try {
 					resultCode = interceptor.getInterceptor().intercept(VulpeActionInvocation.this);
 					if (getAction() instanceof VulpeController
-							&& !resultCode.equals(Forward.MESSAGES)
-							&& resultCode.equals(Forward.ERRORS)) {
+							&& !resultCode.equals(Controller.Result.MESSAGES)
+							&& resultCode.equals(Controller.Result.ERRORS)) {
 						resultCode = ((VulpeController) getAction()).getResultName();
 					}
 				} finally {

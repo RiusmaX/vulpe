@@ -2115,7 +2115,8 @@ var vulpe = {
 							vulpe.exception.handlerError(data, status);
 						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
-						} else if (!vulpe.config.autocomplete && data.indexOf('/*[JSON]*/') != -1) {
+						} else if (!vulpe.config.autocomplete && data.indexOf('/*[JS]*/') != -1) {
+							data = data.replace("/*[JS]*/", "");
 							eval(data);
 						} else {
 							try {
@@ -2147,7 +2148,7 @@ var vulpe = {
 									var layerObject = vulpe.util.get(options.layer);
 									var layerObjectType = layerObject.attr("type");
 									if (layerObjectType && layerObjectType == "text") {
-										html = html.replace("/*[JSON]*/", "");
+										html = html.replace("/*[PLAINTEXT]*/", "");
 										layerObject.val(html);
 									} else {
 										layerObject.html(html);
@@ -2222,6 +2223,7 @@ var vulpe = {
 					} else if (id == options.value) {
 						vulpe.util.get(description).val(vulpe.view.selectPopupCache[identifier][1]);
 						if (vulpe.util.isNotEmpty(vulpe.util.get(description).val())) {
+							vulpe.config.valid = true;
 							if (typeof options.afterJs == "function") {
 								try {
 									options.afterJs();

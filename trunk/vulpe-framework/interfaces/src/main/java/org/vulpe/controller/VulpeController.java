@@ -468,7 +468,7 @@ public interface VulpeController extends Serializable {
 	HttpSession getSession();
 
 	/**
-	 * Define Result Forward to render normal or AJAX request
+	 * Define Result Result to render normal or AJAX request
 	 */
 	void controlResultForward();
 
@@ -476,7 +476,7 @@ public interface VulpeController extends Serializable {
 	 * Method retrieve forward.
 	 * 
 	 * @since 1.0
-	 * @return Result Forward.
+	 * @return Result Result.
 	 */
 	String getResultForward();
 

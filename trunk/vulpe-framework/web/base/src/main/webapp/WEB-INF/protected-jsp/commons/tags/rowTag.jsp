@@ -16,7 +16,7 @@
 		</c:choose>
 	</c:if>
 	<c:if test="${isHeaderTableTag}"><c:set var="styleClass" value="vulpeRowHeader"/></c:if>
-	<c:if test="${empty updateValue && isSelectTableTag && (util:isButtonRender('update', 'SELECT'))}">
+	<c:if test="${empty updateValue && isSelectTableTag && (util:isButtonRender(pageContext, 'update', 'SELECT'))}">
 		<c:set var="updateValue" value="id"/>
 	</c:if>
 	<c:if test="${not empty updateValue && updateValue ne 'false'}">
@@ -29,13 +29,13 @@
 	<c:set var="deleteType" value=""/>
 	<c:if test="${empty deleteValue}">
 		<c:choose>
-			<c:when test="${isSelectTableTag && (util:isButtonRender('delete', 'SELECT'))}">
+			<c:when test="${isSelectTableTag && (util:isButtonRender(pageContext, 'delete', 'SELECT'))}">
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="${now['controllerType'] == 'TABULAR' ? 'detail' : 'select'}"/>
 			</c:when>
 			<c:when test="${not empty targetConfig}">
 				<c:set var="deleteShowName" value="delete${targetConfig.baseName}"/>
-				<c:if test="${util:isButtonRender(deleteShowName, '')}">
+				<c:if test="${util:isButtonRender(pageContext, deleteShowName, '')}">
 					<c:set var="deleteValue" value="selected"/>
 					<c:set var="deleteType" value="detail"/>
 				</c:if>
@@ -202,8 +202,8 @@
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">
 					<c:choose>
-						<c:when test="${deleteType eq 'detail'}"><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow('delete', 'MAIN')}" disabled="${util:isButtonDisabled('delete', 'MAIN')}" /></c:when>
-						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow('delete', 'SELECT')}" disabled="${util:isButtonDisabled('delete', 'SELECT')}" /></c:otherwise>
+						<c:when test="${deleteType eq 'detail'}"><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, 'delete', 'MAIN')}" disabled="${util:isButtonDisabled(pageContext, 'delete', 'MAIN')}" /></c:when>
+						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, 'delete', 'SELECT')}" disabled="${util:isButtonDisabled(pageContext, 'delete', 'SELECT')}" /></c:otherwise>
 					</c:choose>
 				</v:column>
 			</c:if>

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
@@ -47,15 +46,6 @@ public class VulpeFilter extends CharacterEncodingFilter {
 		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
-			final HttpServletRequest httpRequest = (HttpServletRequest) request;
-			final String url = buildRequestUrl(httpRequest);
-			if (!url.contains(Layout.JS_CONTEXT) && !url.contains(Layout.THEMES_CONTEXT)
-					&& !url.contains(Layout.CSS_CONTEXT) && !url.contains(Layout.IMAGES_CONTEXT)
-					&& !url.contains(Layout.SUFFIX_JSP)) {
-				vulpeContext.setRequest(httpRequest);
-				vulpeContext.setResponse((HttpServletResponse) response);
-				vulpeContext.setSession(httpRequest.getSession());
-			}
 		}
 		setEncoding(VulpeConfigHelper.get(VulpeProject.class).characterEncoding());
 		setForceEncoding(true);

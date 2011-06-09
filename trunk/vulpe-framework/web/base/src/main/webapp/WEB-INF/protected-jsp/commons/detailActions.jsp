@@ -14,6 +14,6 @@
 	elementId="AddDetail-${targetConfig.baseName}"
 	action="addDetail"
 	queryString="detail=${targetConfigPropertyName}&detailLayer=vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" showButtonAsImage="false"
-	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" config="${util:buttonConfig(buttonDetailName, '')}" />
+	layer="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}" config="${util:buttonConfig(pageContext, buttonDetailName, '')}" />
 <%@include file="/WEB-INF/protected-jsp/commons/detailActionsAppend.jsp"%>
 </p>

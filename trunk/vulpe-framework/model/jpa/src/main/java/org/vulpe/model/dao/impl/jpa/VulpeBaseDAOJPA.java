@@ -272,19 +272,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				} else {
 					final String[] autocompleteParts = entity.getAutocomplete().split(",");
 					if (autocompleteParts.length > 1) {
-						int count = 0;
 						for (final String autocomplete : autocompleteParts) {
-							++count;
-							if (count == 1) {
-								continue;
-							}
-							final String value = "[like]%"
-									+ PropertyUtils.getProperty(entity, autocomplete) + "%";
+							final String value = "[like]%" + entity.getAutocompleteTerm() + "%";
 							params.put(autocomplete, value);
 						}
 					} else {
-						final String value = "[like]%"
-								+ PropertyUtils.getProperty(entity, entity.getAutocomplete()) + "%";
+						final String value = "[like]%" + entity.getAutocompleteTerm() + "%";
 						params.put(entity.getAutocomplete(), value);
 					}
 				}
@@ -389,12 +382,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append("(obj.id");
 					final String[] autocompleteParts = entity.getAutocomplete().split(",");
 					if (autocompleteParts.length > 1) {
-						int count = 0;
 						for (final String autocomplete : autocompleteParts) {
-							++count;
-							if (count == 1) {
-								continue;
-							}
 							hql.append(", obj.").append(autocomplete);
 						}
 					} else {
@@ -504,7 +492,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						}
 					}
 					if (count < params.size()) {
-						hql.append(" and ");
+						if (StringUtils.isNotBlank(entity.getAutocompleteTerm())) {
+							hql.append(" or ");
+						} else {
+							hql.append(" and ");
+						}
 					}
 				}
 			}

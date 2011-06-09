@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.swing.ImageIcon;
@@ -38,13 +40,11 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.Request;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.beans.ButtonConfig;
 import org.vulpe.commons.beans.ValueBean;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -261,9 +261,8 @@ public class Functions {
 	 * @param requestedRoles
 	 * @return
 	 */
-	public static Boolean hasRole(final String requestedRoles) {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final Object springSecurity = vulpeContext.getSession().getAttribute(
+	public static Boolean hasRole(final PageContext pageContext, final String requestedRoles) {
+		final Object springSecurity = getSession(pageContext).getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
 		boolean has = false;
 		if (springSecurity != null) {
@@ -298,9 +297,9 @@ public class Functions {
 	 * @param controllerType
 	 * @return
 	 */
-	public static String buttonConfig(final String button, final String controllerType) {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+	public static String buttonConfig(final PageContext pageContext, final String button,
+			final String controllerType) {
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) pageContext
 				.getRequest().getAttribute(Request.NOW);
 		final StringBuilder config = new StringBuilder();
 		if (now != null) {
@@ -335,9 +334,9 @@ public class Functions {
 	 * @param controllerType
 	 * @return
 	 */
-	public static Boolean isButtonRender(final String button, final String controllerType) {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+	public static Boolean isButtonRender(final PageContext pageContext, final String button,
+			final String controllerType) {
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) pageContext
 				.getRequest().getAttribute(Request.NOW);
 		boolean render = false;
 		if (now != null) {
@@ -356,9 +355,9 @@ public class Functions {
 	 * @param controllerType
 	 * @return
 	 */
-	public static Boolean isButtonShow(final String button, final String controllerType) {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+	public static Boolean isButtonShow(final PageContext pageContext, final String button,
+			final String controllerType) {
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) pageContext
 				.getRequest().getAttribute(Request.NOW);
 		boolean show = false;
 		if (now != null) {
@@ -377,9 +376,9 @@ public class Functions {
 	 * @param controllerType
 	 * @return
 	 */
-	public static Boolean isButtonDisabled(final String button, final String controllerType) {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) vulpeContext
+	public static Boolean isButtonDisabled(final PageContext pageContext, final String button,
+			final String controllerType) {
+		final VulpeHashMap<String, Object> now = (VulpeHashMap<String, Object>) pageContext
 				.getRequest().getAttribute(Request.NOW);
 		boolean disabled = false;
 		if (now != null) {
@@ -396,9 +395,8 @@ public class Functions {
 	 * 
 	 * @return
 	 */
-	public static Boolean isAuthenticated() {
-		final VulpeContext vulpeContext = getVulpeContext();
-		final Object springSecurity = vulpeContext.getSession().getAttribute(
+	public static Boolean isAuthenticated(final PageContext pageContext) {
+		final Object springSecurity = pageContext.getSession().getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
 		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity,
 				"authentication");
@@ -407,7 +405,7 @@ public class Functions {
 		if (authenticated != null && authenticated.booleanValue()) {
 			return true;
 		}
-		return vulpeContext.getRequest().getUserPrincipal() != null;
+		return ((HttpServletRequest) pageContext.getRequest()).getUserPrincipal() != null;
 	}
 
 	protected static String findText(final String key) {
@@ -576,17 +574,13 @@ public class Functions {
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public static VulpeContext getVulpeContext() {
-		return AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
+	public static VulpeHashMap<String, Object> getEver(final PageContext pageContext) {
+		return (VulpeHashMap<String, Object>) getSession(pageContext).getAttribute(
+				VulpeConstants.Session.EVER);
 	}
 
-	public static VulpeHashMap<String, Object> getEver() {
-		return (VulpeHashMap<String, Object>) getVulpeContext().getRequest().getSession()
-				.getAttribute(VulpeConstants.Session.EVER);
+	public static HttpSession getSession(final PageContext pageContext) {
+		return pageContext.getSession();
 	}
 
 }

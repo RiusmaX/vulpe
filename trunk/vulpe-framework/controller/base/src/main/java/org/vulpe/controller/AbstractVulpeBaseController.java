@@ -28,15 +28,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
@@ -49,7 +44,7 @@ import org.vulpe.commons.VulpeConstants.Code.Generator;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.VulpeConstants.Upload.File;
 import org.vulpe.commons.VulpeConstants.View.Layout;
@@ -229,6 +224,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	private boolean tabularFilter;
 
+	private Object jsonRoot;
+
+	private String autocompleteTerm;
+
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
 	{
@@ -240,7 +239,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
 		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
 		defaultMessage.put(Operation.REPORT_EMPTY, "{vulpe.message.empty.report.data}");
-		defaultMessage.put(Operation.REPORT_SUCCESS, "{vulpe.message.report.generated.successfully}");
+		defaultMessage.put(Operation.REPORT_SUCCESS,
+				"{vulpe.message.report.generated.successfully}");
 	}
 
 	public String getDefaultMessage(final Operation operation) {
@@ -957,11 +957,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @param message
 	 * @return
 	 */
-	protected String showError(final String message) {
+	protected void showError(final String message) {
 		manageButtons(getOperation());
-		addActionError(getText(message));
+		addActionError(message);
 		controlResultForward();
-		return Forward.SUCCESS;
 	}
 
 	protected abstract boolean validateDetails();
@@ -1052,14 +1051,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void json() {
 		final Object object = onJson();
 		if (VulpeValidationUtil.isNotEmpty(object)) {
-			try {
-				JSONArray jsonArray = new JSONArray(object);
-				now.put("JSON", jsonArray.toString());
-			} catch (JSONException e) {
-				LOG.error(e);
-			}
+			renderJSON(object);
 		}
-		setResultPage(Forward.JSON);
 	}
 
 	protected Object onJson() {
@@ -1067,10 +1060,17 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public void autocomplete() {
+		String value = "";
 		List<VulpeHashMap<String, Object>> values = autocompleteValueList();
 		if (VulpeValidationUtil.isEmpty(values)) {
 			List<ENTITY> autocompleteList = autocompleteList();
 			final ENTITY autocompleteEntity = (ENTITY) prepareEntity(Operation.READ).clone();
+			String description = autocompleteEntity.getAutocomplete();
+			if (description.contains(",")) {
+				autocompleteEntity.setAutocomplete(description
+						.substring(description.indexOf(",") + 1));
+				description = description.substring(0, description.indexOf(","));
+			}
 			autocompleteEntity.setQueryConfigurationName("autocomplete");
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
 				autocompleteList = (List<ENTITY>) invokeServices(Operation.READ.getValue().concat(
@@ -1086,9 +1086,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 					try {
 						map.put("id", entity.getId());
-						final String[] autocompleteParts = getEntitySelect().getAutocomplete()
-								.split(",");
-						map.put("value", PropertyUtils.getProperty(entity, autocompleteParts[0]));
+						map.put("value", PropertyUtils.getProperty(entity, description));
 						if (VulpeValidationUtil.isNotEmpty(autocompleteFields)) {
 							for (final Field field : autocompleteFields) {
 								if (!field.getName().equals(getEntitySelect().getAutocomplete())) {
@@ -1098,7 +1096,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							}
 						}
 						if (getEntitySelect().getId() != null) {
-							now.put("JSON", map.get("value"));
+							value = map.getSelf("value");
 							break;
 						}
 					} catch (Exception e) {
@@ -1106,13 +1104,23 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					}
 					values.add(map);
 				}
+			} else {
+				renderPlainText("");
+			}
+		} else if (getEntitySelect().getId() != null) {
+			for (final VulpeHashMap<String, Object> map : values) {
+				final Long id = map.getSelf("id");
+				if (id.equals(getEntitySelect().getId())) {
+					value = map.getSelf("value");
+					break;
+				}
 			}
 		}
 		if (getEntitySelect().getId() == null) {
-			new Gson().toJson(values);
-			now.put("JSON", new JSONArray(values));
+			renderJSON(values);
+		} else {
+			renderPlainText(value);
 		}
-		setResultName(Forward.JSON);
 	}
 
 	protected List<ENTITY> autocompleteList() {
@@ -2071,7 +2079,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				controlResultForward();
 			}
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
-			setResultName(Forward.REPORT);
+			setResultName(Result.REPORT);
 			if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
@@ -2173,7 +2181,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setDownloadInfo(downloadInfo);
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
 				addActionInfoMessage(getDefaultMessage(Operation.REPORT_EMPTY));
-			}else {
+			} else {
 				addActionMessage(getDefaultMessage(Operation.REPORT_SUCCESS));
 			}
 		} else {
@@ -2497,7 +2505,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		uploadBefore();
 		onUpload();
 		uploadAfter();
-		setResultName(Forward.UPLOAD);
+		setResultName(Result.UPLOAD);
 	}
 
 	/**
@@ -2536,7 +2544,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		downloadBefore();
 		onDownload();
 		downloadAfter();
-		setResultName(Forward.DOWNLOAD);
+		setResultName(Result.DOWNLOAD);
 	}
 
 	/**
@@ -2926,13 +2934,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private String urlRedirect;
 
 	/**
-	 * Result Forward.
+	 * Result Result.
 	 */
 	private String resultForward;
 	/**
 	 * Result Name.
 	 */
-	private String resultName = Forward.SUCCESS;
+	private String resultName = Result.SUCCESS;
 	/**
 	 * Operation
 	 */
@@ -3124,33 +3132,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		}
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getSession()
-	 */
-	public HttpSession getSession() {
-		return vulpeContext.getSession();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getRequest()
-	 */
-	public HttpServletRequest getRequest() {
-		return vulpeContext.getRequest();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getResponse()
-	 */
-	public HttpServletResponse getResponse() {
-		return vulpeContext.getResponse();
 	}
 
 	/*
@@ -3419,7 +3400,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void redirectTo(final String url, final boolean ajax) {
 		setUrlRedirect(url + (ajax ? "/ajax" : ""));
-		setResultName(Forward.REDIRECT);
+		setResultName(Result.REDIRECT);
 	}
 
 	/*
@@ -3473,4 +3454,58 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return propertyName;
 	}
 
+	public void setJsonRoot(Object jsonRoot) {
+		this.jsonRoot = jsonRoot;
+	}
+
+	public Object getJsonRoot() {
+		return jsonRoot;
+	}
+
+	protected void renderError() {
+		setResultName(Result.ERRORS);
+	}
+
+	protected void renderMessages() {
+		setResultName(Result.MESSAGES);
+	}
+
+	protected void renderSuccess() {
+		setResultName(Result.SUCCESS);
+	}
+
+	protected void renderJSON(final Object jsonElement) {
+		setJsonRoot(jsonElement);
+		setResultName(Result.JSON);
+	}
+
+	protected void renderSimpleJSON(final Object jsonElement) {
+		// now.put("RESULT_TYPE", "/*[JSON]*/");
+		now.put("PLAIN_TEXT", new Gson().toJson(jsonElement));
+		setResultName(Result.PLAIN_TEXT);
+	}
+
+	protected void renderJavascript(final Object object) {
+		now.put("RESULT_TYPE", "/*[JS]*/");
+		now.put("PLAIN_TEXT", object);
+		setResultName(Result.PLAIN_TEXT);
+	}
+
+	protected void renderPlainText(final Object object) {
+		now.put("RESULT_TYPE", "/*[PLAINTEXT]*/");
+		now.put("PLAIN_TEXT", object);
+		setResultName(Result.PLAIN_TEXT);
+	}
+
+	public void setAutocompleteTerm(String autocompleteTerm) {
+		this.autocompleteTerm = autocompleteTerm;
+	}
+
+	public String getAutocompleteTerm() {
+		return autocompleteTerm;
+	}
+
+	protected String toJson(final Object jsonElement) {
+		return new Gson().toJson(jsonElement);
+	}
 }

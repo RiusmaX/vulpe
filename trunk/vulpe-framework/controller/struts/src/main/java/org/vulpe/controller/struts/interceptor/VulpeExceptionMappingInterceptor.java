@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.exception.VulpeApplicationException;
@@ -85,7 +85,7 @@ public class VulpeExceptionMappingInterceptor extends
 				.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
-		action.setResultName(Forward.MESSAGES);
+		action.setResultName(Result.MESSAGES);
 		// gets real exception
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {

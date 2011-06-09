@@ -157,6 +157,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	public String getAutocomplete() {
 		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(Entity.AUTOCOMPLETE) : null;
 	}
+	
+	public void setAutocompleteTerm(final String autocompleteTerm) {
+		getMap().put(Entity.AUTOCOMPLETE_TERM, autocompleteTerm);
+	}
+
+	public String getAutocompleteTerm() {
+		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(Entity.AUTOCOMPLETE_TERM) : null;
+	}
 
 	public void setMap(final Map<String, Object> map) {
 		this.map = map;

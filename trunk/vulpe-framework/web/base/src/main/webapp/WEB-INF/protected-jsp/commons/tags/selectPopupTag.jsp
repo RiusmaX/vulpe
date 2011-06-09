@@ -12,6 +12,12 @@
 	<c:if test="${autocomplete && empty autocompleteMinLength}"><c:set var="autocompleteMinLength" value="3"/></c:if>
 	<c:set var="autocompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
 	<c:choose>
+		<c:when test="${empty autocompleteProperties}"><c:set var="autocompleteProperties" value="${description}"/></c:when>
+	<c:otherwise>
+		<c:set var="autocompleteProperties" value="${description},${autocompleteProperties}"/>
+	</c:otherwise>
+	</c:choose>
+	<c:choose>
 		<c:when test="${showIdentifier}">
 			<p class="vulpeField">
 			<c:set var="name" value="${targetName}.${property}"/>
@@ -31,15 +37,15 @@
 			<c:set var="valueDescriptionEL" value="${'${'}targetValue.${property}.${description}${'}'}"/>
 			<c:set var="valueDescription" value="${util:eval(pageContext, valueDescriptionEL)}"/>
 			<c:if test="${not empty valueId && not empty valueDescription}"><script type="text/javascript">vulpe.view.selectPopupCache["${autocompleteId}"] = ["${valueId}", "${valueDescription}"];</script></c:if>
-			<c:choose><c:when test="${!showAsText}"><v:text property="${property}.${identifier}" size="${identifierSize}" maxlength="${identifierSize}" mask="INTEGER" paragraph="false" onblur="${readonly?'return false;':''}vulpe.view.request.submitAutocompleteIdentifier({url: '${autocompleteAction}', autocomplete: '${description}${not empty autocompleteProperties ? ',' : ''}${autocompleteProperties}', value: $(this).val(), identifier: '${autocompleteId}', description: '${autocompleteDescription}'${autocompleteNotFoundMessage}${autocompleteIdAfterJs}})" readonly="${readonly}" showRequiredIcon="false" required="${required}" requiredFields="${requiredFields}" showAsText="${showAsText}"/></c:when><c:otherwise><v:hidden property="${property}.${identifier}"/></c:otherwise></c:choose>
-			<v:text property="${property}.${description}" readonly="${empty readonly ? !autocomplete : readonly}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" autocompleteCallback="${afterJs}" paragraph="false" requiredFields="${requiredFields}">
+			<c:choose><c:when test="${!showAsText}"><v:text property="${property}.${identifier}" size="${identifierSize}" maxlength="${identifierSize}" mask="INTEGER" paragraph="false" onblur="${readonly?'return false;':''}vulpe.view.request.submitAutocompleteIdentifier({url: '${autocompleteAction}', autocomplete: '${autocompleteProperties}', value: $(this).val(), identifier: '${autocompleteId}', description: '${autocompleteDescription}'${autocompleteNotFoundMessage}${autocompleteIdAfterJs}})" readonly="${readonly}" showRequiredIcon="false" required="${required}" requiredFields="${requiredFields}" showAsText="${showAsText}"/></c:when><c:otherwise><v:hidden property="${property}.${identifier}"/></c:otherwise></c:choose>
+			<v:text property="${property}.${description}" readonly="${empty readonly ? !autocomplete : readonly}" size="${size}" showAsText="${showAsText}" autocomplete="${autocompleteProperties}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" autocompleteCallback="${afterJs}" paragraph="false" requiredFields="${requiredFields}">
 				<c:if test="${showBrowseButton && !showAsText && !readonly}"><script type="text/javascript">jQuery(document).ready(function() {vulpe.view.request.registerSelectRowCallback(function (){${afterJs}}, '${popupId}', '${popupId}');});</script><v:popup action="${action}" labelKey="label.vulpe.browse" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}" /></c:if>
 			</v:text>
 			</p>
 		</c:when>
 		<c:otherwise>
 			<v:hidden property="${property}.${identifier}"/>
-			<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${empty readonly ? !autocomplete : readonly}" size="${size}" showAsText="${showAsText}" autocomplete="${description}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" autocompleteCallback="${afterJs}" requiredFields="${requiredFields}">
+			<v:text labelKey="${labelKey}" property="${property}.${description}" readonly="${empty readonly ? !autocomplete : readonly}" size="${size}" showAsText="${showAsText}" autocomplete="${autocompleteProperties}" autocompleteURL="${autocompleteAction}" autocompleteSelect="true" autocompleteMinLength="${autocompleteMinLength}" required="${required}" targetValue="${targetValue}" targetName="${targetName}" autocompleteValueList="${autocompleteValueList}" autocompleteProperties="${autocompleteProperties}" autocompleteCallback="${afterJs}" requiredFields="${requiredFields}">
 				<c:if test="${showBrowseButton && !showAsText && !readonly}"><script type="text/javascript">jQuery(document).ready(function() {vulpe.view.request.registerSelectRowCallback(function (){${afterJs}}, '${popupId}', '${popupId}');});</script><v:popup action="${action}" labelKey="label.vulpe.browse" popupId="${popupId}" popupProperties="${popupProperties}" popupWidth="${popupWidth}"/></c:if>
 			</v:text>
 		</c:otherwise>

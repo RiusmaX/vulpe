@@ -33,6 +33,11 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	public String getAutocomplete() {
 		return null;
 	}
+	
+	@Override
+	public String getAutocompleteTerm() {
+		return null;
+	}
 
 	@Override
 	public List<VulpeEntity<?>> getDeletedDetails() {
@@ -81,6 +86,11 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 
 	@Override
 	public void setAutocomplete(String autoComplete) {
+
+	}
+	
+	@Override
+	public void setAutocompleteTerm(String autoCompleteTerm) {
 
 	}
 

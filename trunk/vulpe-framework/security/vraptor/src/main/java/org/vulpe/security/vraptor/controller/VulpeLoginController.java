@@ -15,7 +15,7 @@
  */
 package org.vulpe.security.vraptor.controller;
 
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
+import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.vraptor.VulpeVRaptorController;
@@ -40,9 +40,9 @@ public class VulpeLoginController extends VulpeVRaptorController<VulpeBaseSimple
 	 */
 	public void define() {
 		if (accessDenied) {
-			setResultName(Forward.ACCESS_DENIED);
+			setResultName(Result.ACCESS_DENIED);
 		} else if (loginError != null && loginError == 1) {
-			setResultName(Forward.ERRORS);
+			setResultName(Result.ERRORS);
 		}
 	}
 

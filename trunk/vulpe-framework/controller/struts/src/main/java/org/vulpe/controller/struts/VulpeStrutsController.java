@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import ognl.Ognl;
 import ognl.OgnlException;
 import ognl.OgnlRuntime;
@@ -31,6 +35,7 @@ import ognl.PropertyAccessor;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Controller;
@@ -784,6 +789,21 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				createDetails(detail.getSubDetails(), true);
 			}
 		}
+	}
+
+	@Override
+	public HttpServletRequest getRequest() {
+		return ServletActionContext.getRequest();
+	}
+
+	@Override
+	public HttpServletResponse getResponse() {
+		return ServletActionContext.getResponse();
+	}
+
+	@Override
+	public HttpSession getSession() {
+		return ServletActionContext.getRequest().getSession();
 	}
 
 }

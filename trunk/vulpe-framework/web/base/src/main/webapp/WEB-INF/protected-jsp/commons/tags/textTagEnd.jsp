@@ -20,13 +20,14 @@
 				if (new RegExp(cache.term).test(request.term) && cache.content && cache.content.length < 13) {
 					var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
 					response($.grep(cache.content, function(value) {
-	    				return matcher.test(vulpe.util.normalize(value.${autocomplete}))
+	    				//return matcher.test(vulpe.util.normalize(value.${fn:substring(autocomplete, 0, fn:indexOf(autocomplete, ','))}))
+	    				return matcher.test(vulpe.util.normalize(value));
 					}));
 				}
 				<c:choose>
 				<c:when test="${empty autocompleteValueList}">
 				var urlAutoComplete = vulpe.util.completeURL("${autocompleteURL}");
-				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.${autocomplete}=" + request.term;
+				var queryString = "entitySelect.autocomplete=${autocomplete}&entitySelect.autocompleteTerm=" + request.term;
 				$.ajax({
 					type: "POST",
 					url: urlAutoComplete,
@@ -63,10 +64,15 @@
 				<c:if test="${not empty autocompleteProperties}">
 				var autocompleteProperties = "${autocompleteProperties}".split(",");
 				for (var i = 0; i < autocompleteProperties.length; i++) {
-					vulpe.util.get("${elementId}".replace("${fn:replace(property, '.', '_')}", "") + autocompleteProperties[i]).val(eval("ui.item." + autocompleteProperties[i]));
+					var field = vulpe.util.get("${elementId}".replace("${fn:replace(property, '.', '_')}", "") + autocompleteProperties[i]);
+					if (field.length == 1) {
+						field.val(eval("ui.item." + autocompleteProperties[i]));
+					}
 				}
 				</c:if>
-				vulpe.util.get("${elementId}").blur();
+				vulpe.view.selectPopupCache[idProperty] = [ui.item.id, ui.item.value];
+				vulpe.exception.hideFieldError({element: vulpe.util.get(idValue)});
+				//vulpe.util.get(idProperty).blur();
 				<c:if test="${not empty autocompleteCallback}">
 				var autocompleteCallback = "${autocompleteCallback}";
 				if (vulpe.util.isNotEmpty(autocompleteCallback)) {

@@ -55,9 +55,13 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Seria
 	String toXMLAudit();
 
 	String getAutocomplete();
-
+	
 	void setAutocomplete(final String autoComplete);
 
+	String getAutocompleteTerm();
+
+	void setAutocompleteTerm(final String autoCompleteTerm);
+	
 	Map<String, Object> getMap();
 
 	void setMap(final Map<String, Object> map);

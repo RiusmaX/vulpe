@@ -239,8 +239,9 @@ public class VulpeConstants {
 			public static final String DOWNLOAD = "/download";
 		}
 
-		public class Forward {
+		public class Result {
 			public static final String SUCCESS = "success";
+			public static final String PLAIN_TEXT = "plaintext";
 			public static final String JSON = "json";
 			public static final String ACCESS_DENIED = "accessDenied";
 			public static final String REPORT = "report";
@@ -353,6 +354,7 @@ public class VulpeConstants {
 	public class Model {
 		public class Entity {
 			public static final String AUTOCOMPLETE = "autocomplete";
+			public static final String AUTOCOMPLETE_TERM = "autocompleteTerm";
 			public static final String DELETED_DETAILS = "deletedDetails";
 			public static final String FAKE_ID = "fakeId";
 			public static final String SELECTED = "selected";
