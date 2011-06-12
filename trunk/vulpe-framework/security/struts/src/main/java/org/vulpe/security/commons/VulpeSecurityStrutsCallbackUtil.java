@@ -56,6 +56,6 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 	 * @return
 	 */
 	public EverParameter getEver() {
-		return EverParameter.getSelf(getSession());
+		return EverParameter.getInstance(getSession());
 	}
 }

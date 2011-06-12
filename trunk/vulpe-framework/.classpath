@@ -103,7 +103,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/3.0.5.RELEASE/spring-context-3.0.5.RELEASE.jar" sourcepath="/M2_REPO/org/springframework/spring-context/3.0.5.RELEASE/spring-context-3.0.5.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.0.5.RELEASE/spring-orm-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/3.0.5.RELEASE/spring-tx-3.0.5.RELEASE.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-web/3.0.5.RELEASE/spring-web-3.0.5.RELEASE-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.0.5.RELEASE/spring-jdbc-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/1.7.1/gson-1.7.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jboss/ejb3/jboss-ejb3-ext-api/1.1.1/jboss-ejb3-ext-api-1.1.1.jar"/>
@@ -116,5 +116,8 @@
 	<classpathentry kind="var" path="M2_REPO/org/tuckey/urlrewritefilter/3.2.0/urlrewritefilter-3.2.0.jar" sourcepath="/URLREWRITE_SRC"/>
 	<classpathentry kind="var" path="M2_REPO/org/quartz-scheduler/quartz/1.8.4/quartz-1.8.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-email/1.2/commons-email-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/jtidy/jtidy/r938/jtidy-r938.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/core-renderer/R8/core-renderer-R8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-json-plugin/2.2.3/struts2-json-plugin-2.2.3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

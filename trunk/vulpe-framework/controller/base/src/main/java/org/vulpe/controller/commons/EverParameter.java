@@ -109,7 +109,7 @@ public class EverParameter extends VulpeHashMap<String, Object> {
 	 * @param session
 	 * @return
 	 */
-	public static EverParameter getSelf(final HttpSession session) {
+	public static EverParameter getInstance(final HttpSession session) {
 		EverParameter ever = (EverParameter) session.getAttribute(VulpeConstants.Session.EVER);
 		if (ever == null) {
 			ever = new EverParameter();

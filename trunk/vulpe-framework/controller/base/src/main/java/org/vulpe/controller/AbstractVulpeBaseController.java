@@ -134,7 +134,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	@PostConstruct
 	protected void postConstruct() {
-		ever = EverParameter.getSelf(getSession());
+		ever = EverParameter.getInstance(getSession());
 		now.put(Now.CONTROLLER_TYPE, getControllerType());
 		now.put(Now.TITLE_KEY, getControllerConfig().getTitleKey());
 		now.put(Now.REPORT_TITLE_KEY, getControllerConfig().getReportTitleKey());
@@ -226,7 +226,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	private Object jsonRoot;
 
-	private String autocompleteTerm;
+	private boolean cleaned = false;
+
+	private boolean exported = false;
 
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
@@ -999,8 +1001,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					.getName() : detailConfig.getName());
 			if (detailConfig.getPageSize() > 0
 					&& detailConfig.getPropertyName().startsWith("entity.")) {
-				final Paging<ENTITY> paging = ever.getSelf(detailConfig.getName()
-						+ Controller.DETAIL_PAGING_LIST);
+				final Paging<ENTITY> paging = getDetailPaging(detailConfig.getName());
 				if (persisted) {
 					paging.setRealList(details);
 				} else {
@@ -1059,19 +1060,31 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return null;
 	}
 
+	protected void autocompleteBefore() {
+		// extension point
+	}
+
+	protected void autocompleteAfter() {
+		// extension point
+	}
+
 	public void autocomplete() {
+		autocompleteBefore();
 		String value = "";
+		final ENTITY autocompleteEntity = (ENTITY) prepareEntity(Operation.READ).clone();
+		if (StringUtils.isBlank(autocompleteEntity.getQueryConfigurationName())) {
+			autocompleteEntity.setQueryConfigurationName("autocomplete");
+		}
 		List<VulpeHashMap<String, Object>> values = autocompleteValueList();
 		if (VulpeValidationUtil.isEmpty(values)) {
 			List<ENTITY> autocompleteList = autocompleteList();
-			final ENTITY autocompleteEntity = (ENTITY) prepareEntity(Operation.READ).clone();
 			String description = autocompleteEntity.getAutocomplete();
 			if (description.contains(",")) {
 				autocompleteEntity.setAutocomplete(description
 						.substring(description.indexOf(",") + 1));
 				description = description.substring(0, description.indexOf(","));
 			}
-			autocompleteEntity.setQueryConfigurationName("autocomplete");
+
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
 				autocompleteList = (List<ENTITY>) invokeServices(Operation.READ.getValue().concat(
 						getControllerConfig().getEntityClass().getSimpleName()),
@@ -1116,6 +1129,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 		}
+		autocompleteAfter();
 		if (getEntitySelect().getId() == null) {
 			renderJSON(values);
 		} else {
@@ -1229,10 +1243,22 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 	}
 
+	protected <T> T getDetailPaging(final String detail) {
+		return ever.<T> getSelf(detail + Controller.DETAIL_PAGING_LIST);
+	}
+
+	protected <T> T getDetailPaging() {
+		return (T) getDetailPaging(getDetail());
+	}
+
+	protected void setDetailPaging(final String detail, final Paging<ENTITY> paging) {
+		ever.putWeakRef(detail + Controller.DETAIL_PAGING_LIST, paging);
+	}
+
 	public void paging() {
 		pagingBefore();
 		if (VulpeValidationUtil.isNotEmpty(getDetail())) {
-			final Paging<ENTITY> paging = ever.getSelf(getDetail() + Controller.DETAIL_PAGING_LIST);
+			final Paging<ENTITY> paging = getDetailPaging();
 			final List<ENTITY> values = VulpeReflectUtil.getFieldValue(entity, getDetail());
 			repairDetailPaging(values, paging);
 			if (!getDetail().startsWith("entity")) {
@@ -1288,8 +1314,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 								detailConfig.getPageSize(), 0);
 						paging.setList(list);
 						paging.setRealList(values);
-						ever.putWeakRef(detailConfig.getName() + Controller.DETAIL_PAGING_LIST,
-								paging);
+						setDetailPaging(detailConfig.getName(), paging);
 					}
 				}
 			}
@@ -1347,6 +1372,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	@ResetSession(before = true)
 	public void clear() {
+		// setCleaned(true);
 		if (getControllerType().equals(ControllerType.MAIN)) {
 			setEntitySelect(prepareEntity(Operation.CREATE));
 			create();
@@ -2177,8 +2203,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			setEntities(list);
 		}
 		if (getControllerType().equals(ControllerType.REPORT)) {
-			final DownloadInfo downloadInfo = doReportLoad();
-			setDownloadInfo(downloadInfo);
+			setDownloadInfo(doReportLoad());
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
 				addActionInfoMessage(getDefaultMessage(Operation.REPORT_EMPTY));
 			} else {
@@ -2347,12 +2372,24 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		prepareAfter();
 	}
 
+	@ResetSession(before = true)
+	public void export() {
+		setControllerType(ControllerType.SELECT);
+		setOnlyToSee(true);
+		setExported(true);
+		onRead();
+		setResultForward(getControllerConfig().getViewItemsPath());
+		// setResultName(Result.EXPORT);
+		ever.put(Ever.EXPORT_CONTENT, "PDF");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.vulpe.controller.VulpeController#select()
 	 */
 	@ResetSession(before = true)
+	@Override
 	public void select() {
 		changeControllerType(ControllerType.SELECT);
 		selectBefore();
@@ -2377,7 +2414,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			ever.remove(getSelectPagingKey());
 		}
 		selectAfter();
-		if (getControllerConfig().getControllerAnnotation().select().readOnShow()) {
+		if (getControllerConfig().getControllerAnnotation().select().readOnShow() && !isCleaned()) {
 			onRead();
 		}
 	}
@@ -3497,15 +3534,23 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setResultName(Result.PLAIN_TEXT);
 	}
 
-	public void setAutocompleteTerm(String autocompleteTerm) {
-		this.autocompleteTerm = autocompleteTerm;
-	}
-
-	public String getAutocompleteTerm() {
-		return autocompleteTerm;
-	}
-
 	protected String toJson(final Object jsonElement) {
 		return new Gson().toJson(jsonElement);
+	}
+
+	public void setCleaned(boolean cleaned) {
+		this.cleaned = cleaned;
+	}
+
+	public boolean isCleaned() {
+		return cleaned;
+	}
+
+	public void setExported(boolean exported) {
+		this.exported = exported;
+	}
+
+	public boolean isExported() {
+		return exported;
 	}
 }

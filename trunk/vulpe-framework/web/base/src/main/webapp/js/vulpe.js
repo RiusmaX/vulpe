@@ -2090,6 +2090,9 @@ var vulpe = {
 			 * @param options {url, queryString, layer, beforeJs, afterJs, afterCallback}
 			 */
 			submitPage: function(options) {
+				if (vulpe.config.autocomplete) {
+					vulpe.view.selectPopupCache = new Array();
+				}
 				jQuery(vulpe.config.layers.messages).hide();
 				var messagesPopup = jQuery(vulpe.config.layers.messagesPopup);
 				if (messagesPopup.length == 1) {
@@ -2115,7 +2118,7 @@ var vulpe = {
 							vulpe.exception.handlerError(data, status);
 						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
 							$(window.location).attr("href", vulpe.config.contextPath);
-						} else if (!vulpe.config.autocomplete && data.indexOf('/*[JS]*/') != -1) {
+						} else if (data.indexOf('/*[JS]*/') != -1) {
 							data = data.replace("/*[JS]*/", "");
 							eval(data);
 						} else {
@@ -2222,22 +2225,7 @@ var vulpe = {
 						vulpe.view.selectPopupCache[options.identifier] = [options.value, ""];
 					} else if (id == options.value) {
 						vulpe.util.get(description).val(vulpe.view.selectPopupCache[identifier][1]);
-						if (vulpe.util.isNotEmpty(vulpe.util.get(description).val())) {
-							vulpe.config.valid = true;
-							if (typeof options.afterJs == "function") {
-								try {
-									options.afterJs();
-								} catch(e) {
-									// do nothing
-								}
-							} else if (vulpe.util.isNotEmpty(options.afterJs)) {
-								try {
-									eval(webtoolkit.url.decode(options.afterJs));
-								} catch(e) {
-									// do nothing
-								}
-							}
-						}
+						vulpe.config.valid = true;
 						return;
 					}
 					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
@@ -2260,6 +2248,8 @@ var vulpe = {
 								vulpe.exception.showFieldError({element: vulpe.util.get(description)});
 							}
 							vulpe.config.valid = false;
+							vulpe.view.hideLoading();
+							return;
 						} else {
 							vulpe.view.selectPopupCache[identifier][1] = vulpe.util.get(description).val();
 							vulpe.exception.hideFieldError({element: vulpe.util.get(description)});
@@ -2269,8 +2259,9 @@ var vulpe = {
 					};
 					vulpe.view.request.submitAjax(options);
 				} else {
-					vulpe.util.get(options.identifier).val("");
-					vulpe.util.get(options.description).val("");
+					vulpe.view.selectPopupCache[identifier] = ["", ""];
+					vulpe.util.get(identifier).val("");
+					vulpe.util.get(description).val("");
 					vulpe.exception.hideFieldError({element: vulpe.util.get(description)});
 					vulpe.config.valid = true;
 				}

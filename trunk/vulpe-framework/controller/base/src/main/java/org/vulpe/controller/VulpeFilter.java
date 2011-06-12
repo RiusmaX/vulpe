@@ -25,11 +25,21 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
+import org.vulpe.controller.commons.EverParameter;
+import org.vulpe.controller.commons.ExportDelegate;
 
+/**
+ * Vulpe Filter
+ * 
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
+ * @version 1.0
+ * @since 1.0
+ */
 public class VulpeFilter extends CharacterEncodingFilter {
 
 	/*
@@ -41,15 +51,24 @@ public class VulpeFilter extends CharacterEncodingFilter {
 	 * javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
-		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(VulpeConstants.CONTEXT);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
+		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
+				VulpeConstants.CONTEXT);
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 		}
-		setEncoding(VulpeConfigHelper.get(VulpeProject.class).characterEncoding());
+		final String encoding = VulpeConfigHelper.get(VulpeProject.class).characterEncoding();
+		response.setCharacterEncoding(encoding);
+		setEncoding(encoding);
 		setForceEncoding(true);
-		super.doFilterInternal(request, response, filterChain);
+		if (EverParameter.getInstance(request.getSession()).containsKey(Ever.EXPORT_CONTENT)) {
+			final ContentResponseWrapper wrapper = new ContentResponseWrapper(response);
+			super.doFilterInternal(request, wrapper, filterChain);
+			ExportDelegate.export(request, response, wrapper);
+		} else {
+			super.doFilterInternal(request, response, filterChain);
+		}
 	}
 
 	@Override
@@ -81,15 +100,15 @@ public class VulpeFilter extends CharacterEncodingFilter {
 	 * 
 	 */
 	public static String buildRequestUrl(final HttpServletRequest request) {
-		return buildRequestUrl(request.getServletPath(), request.getRequestURI(), request.getContextPath(), request
-				.getPathInfo(), request.getQueryString());
+		return buildRequestUrl(request.getServletPath(), request.getRequestURI(), request
+				.getContextPath(), request.getPathInfo(), request.getQueryString());
 	}
 
 	/**
 	 * Obtains the web application-specific fragment of the URL.
 	 */
-	private static String buildRequestUrl(final String servletPath, final String requestURI, final String contextPath,
-			final String pathInfo, final String queryString) {
+	private static String buildRequestUrl(final String servletPath, final String requestURI,
+			final String contextPath, final String pathInfo, final String queryString) {
 		final StringBuilder url = new StringBuilder();
 		if (servletPath != null) {
 			url.append(servletPath);

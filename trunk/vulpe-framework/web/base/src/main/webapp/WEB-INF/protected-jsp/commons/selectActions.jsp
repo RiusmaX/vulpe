@@ -10,7 +10,7 @@
 <v:action labelKey="read" elementId="Read" layer="vulpeSelectTable-${vulpeFormName}" action="read" beforeJs="vulpe.view.prepareRead(%27${vulpeFormName}%27)" helpKey="read" icon="search" iconClass="Read" config="${util:buttonConfig(pageContext, 'read', 'SELECT')}" />
 <v:action labelKey="report" elementId="Report" layer="vulpeSelectTable-${vulpeFormName}" action="${controllerConfig.reportControllerName}/report/ajax" helpKey="report" icon="report" iconClass="Report" config="${util:buttonConfig(pageContext, 'report', 'SELECT')}" />
 <c:if test="${not empty urlBack}">
-	<v:action validate="false" labelKey="back" elementId="Back" action="${urlBack}"	helpKey="back" icon="back" iconClass="Back" config="${util:buttonConfig(pageContext, 'back', 'SELECT')}" />
+	<v:action validate="false" labelKey="back" elementId="Back" action="${urlBack}"	helpKey="back" icon="back" iconClass="Back" />
 	<c:remove var="urlBack" scope="session" />
 	<c:remove var="layerUrlBack" scope="session" />
 </c:if>

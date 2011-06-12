@@ -21,6 +21,7 @@
 	<package name="default" extends="struts-default">
 		<result-types>
 			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />
+			<result-type name="export" class="org.vulpe.view.struts.result.ExportResult" />
 			<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
 			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
 			<result-type name="plaintext" class="org.apache.struts2.dispatcher.PlainTextResult" />
@@ -116,6 +117,7 @@
 				<param name="contentDisposition">${downloadInfo.contentDisposition}</param>
 				<param name="inputName">downloadInfo.inputStream</param>
 			</result>
+			<result name="export" type="export"/>
 			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp</result>
 			<result name="errors">/WEB-INF/protected-jsp/commons/errors.jsp</result>
 		</global-results>

@@ -41,125 +41,92 @@ public class VulpeStringUtil {
 	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
 
 	static {
-		accentMap.put("·".charAt(0), "a");
-		accentMap.put("‡".charAt(0), "a");
-		accentMap.put("‰".charAt(0), "a");
-		accentMap.put("‚".charAt(0), "a");
-		accentMap.put("„".charAt(0), "a");
+		accentMap.put("√°".charAt(0), "a");
+		accentMap.put("√¢".charAt(0), "a");
+		accentMap.put("√£".charAt(0), "a");
+		accentMap.put("√†".charAt(0), "a");
+		accentMap.put("√§".charAt(0), "a");
 
-		accentMap.put("¡".charAt(0), "A");
-		accentMap.put("¿".charAt(0), "A");
-		accentMap.put("ƒ".charAt(0), "A");
-		accentMap.put("¬".charAt(0), "A");
-		accentMap.put("√".charAt(0), "A");
+		accentMap.put("√Å".charAt(0), "A");
+		accentMap.put("√Ç".charAt(0), "A");
+		accentMap.put("√É".charAt(0), "A");
+		accentMap.put("√Ä".charAt(0), "A");
+		accentMap.put("√Ñ".charAt(0), "A");
 
-		accentMap.put("È".charAt(0), "e");
-		accentMap.put("Ë".charAt(0), "e");
-		accentMap.put("Î".charAt(0), "e");
-		accentMap.put("Í".charAt(0), "e");
+		accentMap.put("√©".charAt(0), "e");
+		accentMap.put("√®".charAt(0), "e");
+		accentMap.put("√´".charAt(0), "e");
+		accentMap.put("√™".charAt(0), "e");
 
-		accentMap.put("…".charAt(0), "E");
-		accentMap.put("»".charAt(0), "E");
-		accentMap.put("À".charAt(0), "E");
-		accentMap.put(" ".charAt(0), "E");
+		accentMap.put("√â".charAt(0), "E");
+		accentMap.put("√ä".charAt(0), "E");
+		accentMap.put("√à".charAt(0), "E");
+		accentMap.put("√ã".charAt(0), "E");
 
-		accentMap.put("Ì".charAt(0), "i");
-		accentMap.put("Ï".charAt(0), "i");
-		accentMap.put("Ô".charAt(0), "i");
-		accentMap.put("Ó".charAt(0), "i");
+		accentMap.put("√≠".charAt(0), "i");
+		accentMap.put("√¨".charAt(0), "i");
+		accentMap.put("√Æ".charAt(0), "i");
+		accentMap.put("√Ø".charAt(0), "i");
 
-		accentMap.put("Õ".charAt(0), "I");
-		accentMap.put("Ã".charAt(0), "I");
-		accentMap.put("œ".charAt(0), "I");
-		accentMap.put("Œ".charAt(0), "I");
+		accentMap.put("√ç".charAt(0), "I");
+		accentMap.put("√å".charAt(0), "I");
+		accentMap.put("√é".charAt(0), "I");
+		accentMap.put("√è".charAt(0), "I");
 
-		accentMap.put("Û".charAt(0), "o");
-		accentMap.put("Ú".charAt(0), "o");
-		accentMap.put("ˆ".charAt(0), "o");
-		accentMap.put("Ù".charAt(0), "o");
-		accentMap.put("ı".charAt(0), "o");
+		accentMap.put("√≥".charAt(0), "o");
+		accentMap.put("√≤".charAt(0), "o");
+		accentMap.put("√µ".charAt(0), "o");
+		accentMap.put("√¥".charAt(0), "o");
+		accentMap.put("√∂".charAt(0), "o");
 
-		accentMap.put("”".charAt(0), "O");
-		accentMap.put("“".charAt(0), "O");
-		accentMap.put("÷".charAt(0), "O");
-		accentMap.put("‘".charAt(0), "O");
-		accentMap.put("’".charAt(0), "O");
+		accentMap.put("√ì".charAt(0), "O");
+		accentMap.put("√í".charAt(0), "O");
+		accentMap.put("√ï".charAt(0), "O");
+		accentMap.put("√î".charAt(0), "O");
+		accentMap.put("√ñ".charAt(0), "O");
 
-		accentMap.put("˙".charAt(0), "u");
-		accentMap.put("˘".charAt(0), "u");
-		accentMap.put("¸".charAt(0), "u");
-		accentMap.put("˚".charAt(0), "u");
+		accentMap.put("√∫".charAt(0), "u");
+		accentMap.put("√π".charAt(0), "u");
+		accentMap.put("√º".charAt(0), "u");
+		accentMap.put("√º".charAt(0), "u");
 
-		accentMap.put("⁄".charAt(0), "U");
-		accentMap.put("Ÿ".charAt(0), "U");
-		accentMap.put("‹".charAt(0), "U");
-		accentMap.put("€".charAt(0), "U");
+		accentMap.put("√ö".charAt(0), "U");
+		accentMap.put("√ô".charAt(0), "U");
+		accentMap.put("√õ".charAt(0), "U");
+		accentMap.put("√ú".charAt(0), "U");
 
-		// (¥)
-		specialChars.put("·".charAt(0), "&aacute;");
-		specialChars.put("È".charAt(0), "&eacute;");
-		specialChars.put("Ì".charAt(0), "&iacute;");
-		specialChars.put("Û".charAt(0), "&oacute;");
-		specialChars.put("˙".charAt(0), "&uacute;");
-		specialChars.put("¡".charAt(0), "&Aacute;");
-		specialChars.put("…".charAt(0), "&Eacute;");
-		specialChars.put("Õ".charAt(0), "&Iacute;");
-		specialChars.put("”".charAt(0), "&Oacute;");
-		specialChars.put("⁄".charAt(0), "&Uacute;");
+		// (')
+		specialChars.put("√°".charAt(0), "&aacute;");
+		specialChars.put("√©".charAt(0), "&eacute;");
+		specialChars.put("√≠".charAt(0), "&iacute;");
+		specialChars.put("√≥".charAt(0), "&oacute;");
+		specialChars.put("√∫".charAt(0), "&uacute;");
+		specialChars.put("√Å".charAt(0), "&Aacute;");
+		specialChars.put("√â".charAt(0), "&Eacute;");
+		specialChars.put("√ç".charAt(0), "&Iacute;");
+		specialChars.put("√ì".charAt(0), "&Oacute;");
+		specialChars.put("√ö".charAt(0), "&Uacute;");
 		// (~)
-		specialChars.put("„".charAt(0), "&atilde;");
-		specialChars.put("Ò".charAt(0), "&ntilde;");
-		specialChars.put("ı".charAt(0), "&otilde;");
-		specialChars.put("√".charAt(0), "&Atilde;");
-		specialChars.put("—".charAt(0), "&Ntilde;");
-		specialChars.put("’".charAt(0), "&Otilde;");
+		specialChars.put("√£".charAt(0), "&atilde;");
+		specialChars.put("√±".charAt(0), "&ntilde;");
+		specialChars.put("√µ".charAt(0), "&otilde;");
+		specialChars.put("√É".charAt(0), "&Atilde;");
+		specialChars.put("√ë".charAt(0), "&Ntilde;");
+		specialChars.put("√ï".charAt(0), "&Otilde;");
 		// (^)
-		specialChars.put("‚".charAt(0), "&acirc;");
-		specialChars.put("Í".charAt(0), "&ecirc;");
-		specialChars.put("Ó".charAt(0), "&icirc;");
-		specialChars.put("Ù".charAt(0), "&ocirc;");
-		specialChars.put("˚".charAt(0), "&ucirc;");
-		specialChars.put("¬".charAt(0), "&Acirc;");
-		specialChars.put(" ".charAt(0), "&Ecirc;");
-		specialChars.put("Œ".charAt(0), "&Icirc;");
-		specialChars.put("‘".charAt(0), "&Ocirc;");
-		specialChars.put("€".charAt(0), "&Ucirc;");
-		// (Á «)
-		specialChars.put("Á".charAt(0), "&ccedil;");
-		specialChars.put("«".charAt(0), "&Ccedil;");
-
-		// (¥)
-		utfChars.put("·".charAt(0), "=E1");
-		utfChars.put("È".charAt(0), "=E9");
-		utfChars.put("Ì".charAt(0), "=ED");
-		utfChars.put("Û".charAt(0), "=F3");
-		utfChars.put("˙".charAt(0), "=FA");
-		utfChars.put("¡".charAt(0), "=C1");
-		utfChars.put("…".charAt(0), "=C9");
-		utfChars.put("Õ".charAt(0), "=CD");
-		utfChars.put("”".charAt(0), "=D3");
-		utfChars.put("⁄".charAt(0), "=DA");
-		// (~)
-		utfChars.put("„".charAt(0), "=E3");
-		utfChars.put("Ò".charAt(0), "=F1");
-		utfChars.put("ı".charAt(0), "=F5");
-		utfChars.put("√".charAt(0), "=C3");
-		utfChars.put("—".charAt(0), "=D1");
-		utfChars.put("’".charAt(0), "=D5");
-		// (^)
-		utfChars.put("‚".charAt(0), "=E2");
-		utfChars.put("Í".charAt(0), "=EA");
-		utfChars.put("Ó".charAt(0), "=EE");
-		utfChars.put("Ù".charAt(0), "=F4");
-		utfChars.put("˚".charAt(0), "=FB");
-		utfChars.put("¬".charAt(0), "=C2");
-		utfChars.put(" ".charAt(0), "=CA");
-		utfChars.put("Œ".charAt(0), "=CE");
-		utfChars.put("‘".charAt(0), "=D4");
-		utfChars.put("€".charAt(0), "=DB");
-		// (Á «)
-		utfChars.put("Á".charAt(0), "=E7");
-		utfChars.put("«".charAt(0), "=C7");
+		specialChars.put("√¢".charAt(0), "&acirc;");
+		specialChars.put("√™".charAt(0), "&ecirc;");
+		specialChars.put("√Æ".charAt(0), "&icirc;");
+		specialChars.put("√¥".charAt(0), "&ocirc;");
+		specialChars.put("√ª".charAt(0), "&ucirc;");
+		specialChars.put("√Ç".charAt(0), "&Acirc;");
+		specialChars.put("√ä".charAt(0), "&Ecirc;");
+		specialChars.put("√é".charAt(0), "&Icirc;");
+		specialChars.put("√î".charAt(0), "&Ocirc;");
+		specialChars.put("√õ".charAt(0), "&Ucirc;");
+		// (√ß √á)
+		specialChars.put("√ß".charAt(0), "&ccedil;");
+		specialChars.put("√á".charAt(0), "&Ccedil;");
 	}
 
 	/**

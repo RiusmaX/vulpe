@@ -11,7 +11,7 @@
 		<c:if test="${not empty labelKey}"><fmt:message key="${labelKey}" var="label"/></c:if>
 		<c:if test="${not empty width}"><c:set var="width">width="${width}" </c:set></c:if>
 		<c:if test="${not empty labelAlign}"><c:set var="labelStyle" value="text-align: ${labelAlign};${labelStyle}"/></c:if>
-		<c:if test="${sort && not empty sortPropertyInfoTableTag && not empty property}">
+		<c:if test="${sort && not empty sortPropertyInfoTableTag && not empty property && !exported}">
 			<c:if test="${empty alias}"><c:set var="alias" value="obj"/></c:if>
 			<c:choose>
 				<c:when test="${global['project-useDB4O']}">

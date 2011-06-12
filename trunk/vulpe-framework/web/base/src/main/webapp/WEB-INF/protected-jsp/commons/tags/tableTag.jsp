@@ -28,8 +28,10 @@
 	<c:set var="selectCheckOff" scope="request" value=""/>
 	<c:if test="${not empty pagingList || not empty items}">
 		<c:set var="isSelectTableTag" value="${true}" scope="request"/>
+		<c:if test="${!exported}">
 		<c:set var="selectCheckOn" scope="request" value="vulpe.view.setSelectCheckbox(true);"/>
 		<c:set var="selectCheckOff" scope="request" value="vulpe.view.setSelectCheckbox(false);"/>
+		</c:if>
 		<c:set var="sortPropertyInfoTableTag" value="${sortPropertyInfo}" scope="request"/>
 	</c:if>
 	<c:if test="${not empty detailConfig}">
@@ -135,7 +137,7 @@
 		</c:forEach>
 		</tbody>
 		</table>
-		<v:paging list="${pagingList}" actionName="${pagingActionName}" formName="${pagingFormName}" layer="${pagingLayer}" layerFields="${pagingLayerFields}" beforeJs="${pagingBeforeJs}" afterJs="${pagingAfterJs}"/>
+		<c:if test="${!exported}"><v:paging list="${pagingList}" actionName="${pagingActionName}" formName="${pagingFormName}" layer="${pagingLayer}" layerFields="${pagingLayerFields}" beforeJs="${pagingBeforeJs}" afterJs="${pagingAfterJs}"/></c:if>
 	</c:if>
 	<c:if test="${not empty sortPropertyInfoTableTag}">
 		<script type="text/javascript">

@@ -5,6 +5,7 @@
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 	<c:set var="recordId" value="${currentItem.id}"/>
 	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
+	<c:if test="${exported}"><c:set var="showLine" value="${false}"/></c:if>
 	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['project-view-showButtonsDelete']}"/></c:if>
 	<c:if test="${empty showButtonDeleteThis}"><c:set var="showButtonDeleteThis" value="${global['project-view-showButtonDeleteThis']}"/></c:if>
 	<c:if test="${empty showButtonUpdate}"><c:set var="showButtonUpdate" value="${global['project-view-showButtonUpdate']}"/></c:if>
@@ -122,10 +123,12 @@
 				<c:otherwise><c:set var="valueSelectRow" value="${valueSelectRow},${propName}=${valueRow}"/></c:otherwise>
 			</c:choose>
 		</c:forEach>
+		<c:if test="${!exported}">
 		<c:choose>
 			<c:when test="${empty onclick}"><c:set var="onclick" value="vulpe.view.selectRow(this, '${valueSelectRow}');"/></c:when>
 			<c:otherwise><c:set var="onclick" value="${onclick}; vulpe.view.selectRow('${valueSelectRow}');"/></c:otherwise>
 		</c:choose>
+		</c:if>
 	</c:if>
 	<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}"</c:set></c:if>
 	<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
@@ -202,7 +205,7 @@
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">
 					<c:choose>
-						<c:when test="${deleteType eq 'detail'}"><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, 'delete', 'MAIN')}" disabled="${util:isButtonDisabled(pageContext, 'delete', 'MAIN')}" /></c:when>
+						<c:when test="${deleteType eq 'detail'}"><c:set var="deleteDetailButton" value="delete${targetConfig.name}"/><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, deleteDetailButton, 'MAIN')}" disabled="${util:isButtonDisabled(pageContext, deleteDetailButton, 'MAIN')}" /></c:when>
 						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, 'delete', 'SELECT')}" disabled="${util:isButtonDisabled(pageContext, 'delete', 'SELECT')}" /></c:otherwise>
 					</c:choose>
 				</v:column>
