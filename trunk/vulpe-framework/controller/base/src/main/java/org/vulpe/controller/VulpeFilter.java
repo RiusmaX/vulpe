@@ -25,12 +25,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeProject;
-import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.ExportDelegate;
 
 /**
@@ -62,7 +60,10 @@ public class VulpeFilter extends CharacterEncodingFilter {
 		response.setCharacterEncoding(encoding);
 		setEncoding(encoding);
 		setForceEncoding(true);
-		if (EverParameter.getInstance(request.getSession()).containsKey(Ever.EXPORT_CONTENT)) {
+		final String url = buildRequestUrl(request);
+		// EverParameter.getInstance(request.getSession()).containsKey(Ever.EXPORT_CONTENT)
+		// final String exportType = request.getParameter("exportType");
+		if (url.contains("/export/") && (url.endsWith("pdf") || url.endsWith("xls"))) {
 			final ContentResponseWrapper wrapper = new ContentResponseWrapper(response);
 			super.doFilterInternal(request, wrapper, filterChain);
 			ExportDelegate.export(request, response, wrapper);

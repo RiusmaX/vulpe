@@ -16,4 +16,7 @@
 	<decorator name="authenticator" page="authenticatorLayout.jsp">
 		<pattern>*/authenticator</pattern>
 	</decorator>
+	<decorator name="export" page="exportLayout.jsp">
+		<pattern>*/export*</pattern>
+	</decorator>
 </decorators>

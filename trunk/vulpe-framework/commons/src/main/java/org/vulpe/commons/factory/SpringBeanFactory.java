@@ -19,7 +19,6 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.access.BeanFactoryReference;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 
 /**
  *

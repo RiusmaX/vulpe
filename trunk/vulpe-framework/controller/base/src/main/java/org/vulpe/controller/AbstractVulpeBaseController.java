@@ -2099,7 +2099,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (isBack()) {
 				controlResultForward();
 				setBack(false);
-			} else if (isAjax()) {
+			} else if (isAjax() || isExported()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
 			} else {
 				controlResultForward();
@@ -2166,8 +2166,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			return;
 		}
 		final ENTITY entity = prepareEntity(Operation.READ);
-		if (((getControllerType().equals(ControllerType.SELECT) || getControllerType().equals(
-				ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
+		if (!isExported()
+				&& ((getControllerType().equals(ControllerType.SELECT) || getControllerType()
+						.equals(ControllerType.TWICE)) && getControllerConfig().getPageSize() > 0)
 				|| (getControllerType().equals(ControllerType.TABULAR) && getControllerConfig()
 						.getTabularPageSize() > 0)) {
 			final Integer page = getPaging() == null || getPaging().getPage() == null ? 1
@@ -2201,6 +2202,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
 							.clone() });
 			setEntities(list);
+			if (isExported()) {
+				final int size = VulpeValidationUtil.isNotEmpty(list) ? list.size() : 0;
+				final Paging<ENTITY> paging = new Paging<ENTITY>();
+				paging.setSize(size);
+				paging.setList(list);
+				setPaging(paging);
+			}
 		}
 		if (getControllerType().equals(ControllerType.REPORT)) {
 			setDownloadInfo(doReportLoad());
@@ -2377,8 +2385,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		setControllerType(ControllerType.SELECT);
 		setOnlyToSee(true);
 		setExported(true);
-		onRead();
-		setResultForward(getControllerConfig().getViewItemsPath());
+		read();
+		// setResultForward(getControllerConfig().getViewItemsPath());
 		// setResultName(Result.EXPORT);
 		ever.put(Ever.EXPORT_CONTENT, "PDF");
 	}

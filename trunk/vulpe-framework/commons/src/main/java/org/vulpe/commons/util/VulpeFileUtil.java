@@ -23,7 +23,6 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.helper.VulpeCacheHelper;
-import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.exception.VulpeSystemException;
 
 /**

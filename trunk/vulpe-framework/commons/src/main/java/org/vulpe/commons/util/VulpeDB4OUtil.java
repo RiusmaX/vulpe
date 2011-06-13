@@ -19,7 +19,6 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.vulpe.commons.util.VulpeDB4OUtil;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
