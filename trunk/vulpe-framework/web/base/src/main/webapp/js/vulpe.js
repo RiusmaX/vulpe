@@ -1316,6 +1316,7 @@ var vulpe = {
 			vulpe.util.get(showContentId).hide();
 			vulpe.util.get(valueId).hide();
 			vulpe.util.get(contentId).slideDown('slow');
+			vulpe.view.isSelection = true;
 		},
 		
 		hideContent: function(id) {

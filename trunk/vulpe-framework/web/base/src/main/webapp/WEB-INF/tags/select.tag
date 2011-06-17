@@ -9,6 +9,6 @@
 <%@ attribute name="property" required="true" rtexprvalue="true" %>
 <%@ attribute name="removeEnumItems" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="size" required="false" rtexprvalue="true" %>
-<%@ attribute name="maxlength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@ attribute name="limitContent" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="showBlank" required="false" rtexprvalue="true" %>
 <%@include file="/WEB-INF/protected-jsp/commons/tags/selectTag.jsp" %>

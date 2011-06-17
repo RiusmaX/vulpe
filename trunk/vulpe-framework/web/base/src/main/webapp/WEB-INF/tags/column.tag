@@ -11,7 +11,7 @@
 <%@ attribute name="labelAlign" required="false" rtexprvalue="true" %>
 <%@ attribute name="labelStyle" required="false" rtexprvalue="true" %>
 <%@ attribute name="listName" required="false" rtexprvalue="true" %>
-<%@ attribute name="maxlength" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@ attribute name="limitContent" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 <%@ attribute name="onmouseover" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="onmouseout" required="false" rtexprvalue="true" type="java.lang.String" %>
 <%@ attribute name="onclick" required="false" rtexprvalue="true" type="java.lang.String" %>

@@ -11,4 +11,4 @@
 	<c:if test="${breakLabel}"><br/></c:if>
 </c:if>
 <c:set var="fieldId" value="${elementId}-field" scope="request"/>
-<span id="${fieldId}" class="vulpeField${showAsText ? ' vulpeShowAsText' : ''}">
+<span id="${fieldId}" class="vulpeField${showAsText ? ' vulpeShowAsText' : ''}" style="${!show ? 'display:none' : ''}">

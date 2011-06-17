@@ -5,7 +5,6 @@
 <c:if test="${empty paragraph}"><c:set var="paragraph" value="true"/></c:if>
 <c:if test="${empty style}"><c:set var="style" value=""/></c:if>
 <c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
-<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 <c:if test="${empty focused}"><c:set var="focused" value="true"/></c:if>
 <c:set var="styleClass" value="${styleClass}${focused ? ' focused' : ''}"/>
 <c:if test="${required && !showAsText}"><c:set var="styleClass" value="${styleClass} vulpeRequired"/></c:if>

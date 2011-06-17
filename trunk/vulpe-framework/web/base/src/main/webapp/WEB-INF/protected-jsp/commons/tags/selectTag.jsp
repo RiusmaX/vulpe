@@ -37,10 +37,10 @@
 			<c:set var="keyValue" value="${util:eval(pageContext, keyValueEL)}"/>
 			<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
 			<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
-			<c:if test="${not empty maxlength}">
+			<c:if test="${not empty limitContent}">
 			<c:set var="fullLabelValue" value="${labelValue}"/>
-			<c:if test="${fn:length(labelValue) > maxlength}">
-				<c:set var="labelValue" value="${fn:substring(labelValue, 0, maxlength)}..."/>
+			<c:if test="${fn:length(labelValue) > limitContent}">
+				<c:set var="labelValue" value="${fn:substring(labelValue, 0, limitContent)}..."/>
 			</c:if>
 			</c:if>
 			<c:choose>
@@ -49,12 +49,12 @@
 			</c:choose>
 		</c:forEach>
 	</select>
-	<c:if test="${not empty maxlength}"><span id="${elementId}_showContent" class="vulpeShowContent" style="display: none"><a href="javascript:void(0);" onclick="vulpe.view.selectShowContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span></c:if>
+	<c:if test="${not empty limitContent}"><span id="${elementId}_showContent" class="vulpeShowContent" style="display: none"><a href="javascript:void(0);" onclick="vulpe.view.selectShowContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span></c:if>
 	</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
-	<c:if test="${not empty maxlength}">
+	<c:if test="${not empty limitContent}">
 	<span style="display: block">
 	<c:forEach items="${items}" var="item">
 		<c:set var="keyValueEL" value="${'${'}item.${itemKey}${'}'}"/>
