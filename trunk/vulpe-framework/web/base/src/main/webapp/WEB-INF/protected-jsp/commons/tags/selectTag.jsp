@@ -30,21 +30,42 @@
 		<c:if test="${showEmptyLabel && emptyValue}"><fmt:message key="${emptyLabel}" /></c:if>
 	</c:when>
 	<c:otherwise>
-	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}">
+	<select name="${name}" <c:if test="${disabled}">disabled="${disabled}" </c:if><c:if test="${multiple}">multiple="${multiple}" </c:if>onblur="${onblur}" onchange="vulpe.view.selectShowContent('${elementId}');${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" id="${elementId}" style="${style}" class="${styleClass}" tabindex="${tabindex}" size="${size}" title="${title}">
 		<c:if test="${not empty headerLabel}"><option value="${headerValue}">${headerLabel}</option></c:if>
 		<c:forEach items="${items}" var="item">
 			<c:set var="keyValueEL" value="${'${'}item.${itemKey}${'}'}"/>
 			<c:set var="keyValue" value="${util:eval(pageContext, keyValueEL)}"/>
 			<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
 			<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
+			<c:if test="${not empty maxlength}">
+			<c:set var="fullLabelValue" value="${labelValue}"/>
+			<c:if test="${fn:length(labelValue) > maxlength}">
+				<c:set var="labelValue" value="${fn:substring(labelValue, 0, maxlength)}..."/>
+			</c:if>
+			</c:if>
 			<c:choose>
 				<c:when test="${value eq keyValue}"><option selected="selected" value="${util:toString(keyValue)}">${util:toString(labelValue)}</option></c:when>
 				<c:otherwise><option value="${util:toString(keyValue)}">${util:toString(labelValue)}</option></c:otherwise>
 			</c:choose>
 		</c:forEach>
 	</select>
+	<c:if test="${not empty maxlength}"><span id="${elementId}_showContent" class="vulpeShowContent" style="display: none"><a href="javascript:void(0);" onclick="vulpe.view.selectShowContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span></c:if>
 	</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagEnd.jsp" %>
+	<c:if test="${not empty maxlength}">
+	<span style="display: block">
+	<c:forEach items="${items}" var="item">
+		<c:set var="keyValueEL" value="${'${'}item.${itemKey}${'}'}"/>
+		<c:set var="keyValue" value="${util:eval(pageContext, keyValueEL)}"/>
+		<c:set var="labelValueEL" value="${'${'}item.${itemLabel}${'}'}"/>
+		<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
+		<c:set var="fullLabelValue" value="${labelValue}"/>
+		<c:if test="${fn:length(labelValue) > 100}">
+			<div id="${elementId}_${keyValue}" class="vulpeSelectContentOverflow" style="display: none">${fullLabelValue}<div id="${elementId}-${keyValue}-closeContent" class="vulpeSelectCloseContentOverflow"><a href="javascript:void(0);" onclick="vulpe.view.selectHideContent('${elementId}');"><fmt:message key="vulpe.messages.close"/></a></div></div>
+		</c:if>
+	</c:forEach>
+	</span>
+	</c:if>
 </c:if>

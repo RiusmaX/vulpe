@@ -1292,6 +1292,41 @@ var vulpe = {
 	},
 	// vulpe.view
 	view: {
+		
+		selectShowContent: function(id) {
+			var selectId = id + "_" + vulpe.util.get(id).val();
+			var selectShowContentId = id + "_showContent";
+			$("div[id*=" + id + "_]").hide();
+			vulpe.util.get(selectShowContentId).hide();
+			vulpe.util.get(selectId).css('width', vulpe.util.get(id).css('width'));
+			vulpe.util.get(selectId).slideDown('slow');
+		},
+		
+		selectHideContent: function(id) {
+			var selectId = id + "_" + vulpe.util.get(id).val();
+			var selectShowContentId = id + "_showContent";
+			vulpe.util.get(selectId).slideUp('slow');
+			vulpe.util.get(selectShowContentId).show();
+		},
+		
+		showContent: function(id) {
+			var contentId = id + "_content";
+			var showContentId = id + "_showContent";
+			var valueId = id + "_value";
+			vulpe.util.get(showContentId).hide();
+			vulpe.util.get(valueId).hide();
+			vulpe.util.get(contentId).slideDown('slow');
+		},
+		
+		hideContent: function(id) {
+			var contentId = id + "_content";
+			var showContentId = id + "_showContent";
+			var valueId = id + "_value";
+			vulpe.util.get(contentId).slideUp('slow');
+			vulpe.util.get(showContentId).show();
+			vulpe.util.get(valueId).show();
+		},
+		
 		setRequired: function(name, enabled) {
 			var field = vulpe.util.getElementField(name);
 			if (enabled) {
@@ -2090,7 +2125,7 @@ var vulpe = {
 			 * @param options {url, queryString, layer, beforeJs, afterJs, afterCallback}
 			 */
 			submitPage: function(options) {
-				if (vulpe.config.autocomplete) {
+				if (!vulpe.config.autocomplete) {
 					vulpe.view.selectPopupCache = new Array();
 				}
 				jQuery(vulpe.config.layers.messages).hide();
@@ -2219,18 +2254,6 @@ var vulpe = {
 				var description = options.description;
 				vulpe.config.autocomplete = true;
 				if (options.value && options.value != "") {
-					var data = vulpe.view.selectPopupCache[identifier];
-					var id = data ? data[0] : "";
-					if (typeof id == "undefined" || id != options.value || (vulpe.util.get(options.identifier).val() == "" && vulpe.util.get(options.description).val() == "")) {
-						vulpe.view.selectPopupCache[options.identifier] = [options.value, ""];
-					} else if (id == options.value) {
-						vulpe.util.get(description).val(vulpe.view.selectPopupCache[identifier][1]);
-						vulpe.config.valid = true;
-						return;
-					}
-					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
-					options.layer = options.description;
-					options.layerFields = options.description;
 					if (vulpe.util.isEmpty(options.afterJs)) {
 						options.hideLoading = true;
 					}
@@ -2257,6 +2280,22 @@ var vulpe = {
 						}
 						afterJs();
 					};
+					var data = vulpe.view.selectPopupCache[identifier];
+					var id = data ? data[0] : "";
+					if (typeof id == "undefined" || id != options.value || (vulpe.util.get(options.identifier).val() == "" && vulpe.util.get(options.description).val() == "")) {
+						vulpe.view.selectPopupCache[options.identifier] = [options.value, ""];
+					} else if (id == options.value) {
+						vulpe.util.get(description).val(vulpe.view.selectPopupCache[identifier][1]);
+						if (vulpe.util.isNotEmpty(vulpe.util.get(description).val())) {
+							vulpe.config.valid = true;
+						} else {
+							options.afterJs();
+						}
+						return;
+					}
+					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
+					options.layer = options.description;
+					options.layerFields = options.description;
 					vulpe.view.request.submitAjax(options);
 				} else {
 					vulpe.view.selectPopupCache[identifier] = ["", ""];
@@ -2368,7 +2407,15 @@ var vulpe = {
 			if (fields && fields.length > 0) {
 				var field = jQuery(fields[0]);
 				if (field) {
-					field.focus();
+					var idField = field.attr("id");
+					var idParent = idField.substring(0, idField.lastIndexOf(vulpe.config.token.dot));
+					var idSelectPopup = idParent + vulpe.config.suffix.selectPopup;
+					var selectPopup = vulpe.util.get(idSelectPopup);
+					if (selectPopup != null && selectPopup.length == 1) {
+						vulpe.util.get(idParent + "_id").focus();
+					} else {
+						field.focus();
+					}
 				}
 			}
 		},

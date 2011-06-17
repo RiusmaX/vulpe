@@ -63,6 +63,7 @@
 				$(document).ready(function() {
 					var msg = "";
 					var messages = "#messages";
+					var token = "";
 					if (vulpe.util.existsVulpePopups()) {
 						messages = "#messagesPopup";
 					}
@@ -85,14 +86,14 @@
 						<c:forEach items="${actionMessages}" var="msg">
 							msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
-						msg += "</ul>" + closeButton("#successMessages") + "</div>";
+						msg += "</ul>" + closeButton("#successMessages", messages) + "</div>";
 					</c:if>
 					<c:if test="${not empty actionInfoMessages}">
 						msg += "<div id='infoMessages' class='vulpeMessageInfo'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionInfoMessages}" var="msg">
 						msg += '<li class="vulpeAlertMessage">${msg}</li>';
 						</c:forEach>
-						msg += "</ul>" + closeButton("#infoMessages") + "</div>";
+						msg += "</ul>" + closeButton("#infoMessages", messages) + "</div>";
 					</c:if>
 					jQuery(document).bind("keydown", "Esc", function(evt) {
 						$(messages).slideUp('slow', function(){ $(this).html(""); });

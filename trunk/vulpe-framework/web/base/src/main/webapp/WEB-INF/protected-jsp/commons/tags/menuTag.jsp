@@ -19,12 +19,13 @@
 </c:choose>
 </c:if>
 <c:if test="${not empty accesskey}"><c:set var="accesskey">accesskey="${accesskey}"</c:set></c:if>
+<c:if test="${not empty onclick}"><c:set var="accesskey">onclick="${onclick}"</c:set></c:if>
 <c:if test="${current}"><c:set var="currentClass">class="vulpeCurrentMenu"</c:set></c:if>
 <c:choose>
 <c:when test="${not empty action}">
 	<c:if test="${!fn:startsWith(action, '/')}"><c:set var="action" value="/${action}"/></c:if>
 	<c:if test="${!fn:contains(action, '/ajax')}"><c:set var="action" value="${action}/ajax"/></c:if>
-	<c:set var="onclick">onclick="vulpe.view.request.submitLink('${action}');"</c:set>
+	<c:set var="onclick">onclick="${onclick};vulpe.view.request.submitLink('${action}');"</c:set>
 </c:when>
 <c:when test="${not empty url}"><c:set var="onclick">onclick="$(window.location).attr('href', '${url}');"</c:set></c:when>
 </c:choose>

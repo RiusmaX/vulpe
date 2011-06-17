@@ -3,7 +3,6 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
-	<c:if test="${not empty elementId}"><c:set var="elementId">id="${elementId}"</c:set></c:if>
 	<c:if test="${empty sortProperty}"><c:set var="sortProperty" value="${property}"/></c:if>
 	<c:if test="${not empty styleClass}"><c:set var="styleClass">class="${styleClass}"</c:set></c:if>
 	<c:choose>
@@ -44,17 +43,31 @@
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
 		<c:if test="${not empty selectCheckOff && empty onclick}"><c:set var="onclick">onclick="${selectCheckOff}"</c:set></c:if>
+		<c:if test="${not empty maxlength && fn:length(value) > maxlength}"><c:set var="onclick">onclick="${selectCheckOn}"</c:set></c:if>
 		<c:if test="${not empty colspan}"><c:set var="colspan">colspan="${colspan}"</c:set></c:if>
 		<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
 		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
-		<td ${elementId} ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
+		<c:if test="${empty elementId}"><c:set var="elementId" value="${labelKey}_${currentStatus.index}"/></c:if>
+		<td id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
 			<c:if test="${not empty value}">
 				<c:choose>
 					<c:when test="${!isImage}">
 						<c:choose>
 							<c:when test="${not empty booleanTo}">${util:booleanTo(value, booleanTo)}</c:when>
 							<c:when test="${not empty enumType}">${util:enumListInField(enumType, value)}</c:when>
-							<c:otherwise>${util:toString(value)}</c:otherwise>
+							<c:otherwise>
+								<c:choose>
+								<c:when test="${not empty maxlength && fn:length(value) > maxlength}">
+									<c:set var="fullValue" value="${value}"/>
+									<c:if test="${fn:length(value) > maxlength}">
+										<c:set var="value" value="${fn:substring(value, 0, maxlength)}..."/>
+									</c:if>
+									<span id="${elementId}_value">${util:toString(value)}&nbsp;</span><span id="${elementId}_showContent" class="vulpeShowContent"><a href="javascript:void(0);" onclick="vulpe.view.showContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span>
+									<div id="${elementId}_content" class="vulpeContentOverflow" style="display: none">${fullValue}<div id="${elementId}-closeContent" class="vulpeCloseContentOverflow"><a href="javascript:void(0);" onclick="vulpe.view.hideContent('${elementId}');"><fmt:message key="vulpe.messages.close"/></a></div></div>
+								</c:when>
+								<c:otherwise>${util:toString(value)}</c:otherwise>
+								</c:choose>
+							</c:otherwise>
 						</c:choose>
 					</c:when>
 					<c:otherwise>

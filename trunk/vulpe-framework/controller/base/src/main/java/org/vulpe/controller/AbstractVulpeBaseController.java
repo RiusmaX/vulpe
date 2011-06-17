@@ -694,7 +694,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		ButtonConfig buttonConfig = new ButtonConfig();
 		String key = button;
 		if (getControllerType().equals(ControllerType.TABULAR)) {
-			key = Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName());
+			String deleteButtonKey = Button.DELETE.concat(getControllerConfig().getTabularConfig()
+					.getBaseName());
 			if (getButtons().containsKey(key)) {
 				buttonConfig = getButtons().getSelf(key);
 			}
@@ -709,7 +710,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
 				break;
 			}
-			getButtons().put(key, buttonConfig);
+			getButtons().put(deleteButtonKey, buttonConfig);
 		}
 		if (Button.ADD_DETAIL.equals(button)) {
 			key = Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName());
@@ -741,7 +742,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		ButtonConfig buttonConfig = new ButtonConfig();
 		String key = button;
 		if (getControllerType().equals(ControllerType.TABULAR)) {
-			key = Button.DELETE.concat(getControllerConfig().getTabularConfig().getBaseName());
+			String deleteButtonKey = Button.DELETE.concat(getControllerConfig().getTabularConfig()
+					.getBaseName());
 			if (getButtons().containsKey(key)) {
 				buttonConfig = getButtons().getSelf(key);
 			}
@@ -757,7 +759,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					buttonConfig.setDisabled(value);
 				}
 			}
-			getButtons().put(key, buttonConfig);
+			getButtons().put(deleteButtonKey, buttonConfig);
 		}
 		if (Button.ADD_DETAIL.equals(button)) {
 			key = Button.ADD_DETAIL.concat(getControllerConfig().getTabularConfig().getBaseName());
@@ -2096,6 +2098,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		onRead();
 		manageButtons();
 		if (getControllerType().equals(ControllerType.SELECT)) {
+			setRequestAttribute(Layout.TARGET_NAME, "entitySelect");
 			if (isBack()) {
 				controlResultForward();
 				setBack(false);
@@ -2105,6 +2108,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				controlResultForward();
 			}
 		} else if (getControllerType().equals(ControllerType.REPORT)) {
+			setRequestAttribute(Layout.TARGET_NAME, "entitySelect");
 			setResultName(Result.REPORT);
 			if (isAjax()) {
 				setResultForward(getControllerConfig().getViewItemsPath());
@@ -2383,12 +2387,26 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@ResetSession(before = true)
 	public void export() {
 		setControllerType(ControllerType.SELECT);
+		exportBefore();
 		setOnlyToSee(true);
 		setExported(true);
-		read();
+		onExport();
 		// setResultForward(getControllerConfig().getViewItemsPath());
 		// setResultName(Result.EXPORT);
 		ever.put(Ever.EXPORT_CONTENT, "PDF");
+		exportAfter();
+	}
+
+	protected void onExport() {
+		read();
+	}
+
+	protected void exportBefore() {
+		// extension point
+	}
+
+	protected void exportAfter() {
+		// extension point
 	}
 
 	/*

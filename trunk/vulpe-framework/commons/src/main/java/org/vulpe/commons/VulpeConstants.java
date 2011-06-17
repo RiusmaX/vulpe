@@ -320,6 +320,7 @@ public class VulpeConstants {
 			public static final String BODY_TABULAR_JSP = "tabular.jsp";
 			public static final String BODY_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
 
+			public static final String TARGET_NAME = "vulpeTargetName";
 			public static final String TARGET_CONFIG = "targetConfig";
 			public static final String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
 			public static final String DETAIL_ITEM = "_item";
