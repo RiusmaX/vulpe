@@ -303,13 +303,13 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					.getInstance().getDownloadInfo(collection, getReportParameters(),
 							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
-							getControllerConfig().getReportFormat(),
+							getReportFormat(),
 							getControllerConfig().getReportName(),
 							getControllerConfig().isReportDownload()) : StrutsReportUtil
 					.getInstance().getDownloadInfo(collection, getReportParameters(),
 							getControllerConfig().getReportFile(),
 							getControllerConfig().getSubReports(),
-							getControllerConfig().getReportFormat());
+							getReportFormat());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}

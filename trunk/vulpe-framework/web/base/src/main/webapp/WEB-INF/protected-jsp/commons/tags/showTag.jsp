@@ -47,7 +47,7 @@
 	<c:when test="${not empty booleanTo}">${util:booleanTo(value, booleanTo)}</c:when>
 	<c:otherwise>
 		<c:choose>
-		<c:when test="${not empty limitContent && fn:length(value) > limitContent}">
+		<c:when test="${not empty limitContent && limitContent > 0 && fn:length(value) > limitContent}">
 			<c:set var="fullValue" value="${value}"/>
 			<c:if test="${fn:length(value) > limitContent}">
 				<c:set var="value" value="${fn:substring(value, 0, limitContent)}..."/>

@@ -229,6 +229,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private boolean cleaned = false;
 
 	private boolean exported = false;
+	
+	private String reportFormat = "PDF";
 
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
@@ -3578,5 +3580,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public boolean isExported() {
 		return exported;
+	}
+
+	public void setReportFormat(String reportFormat) {
+		this.reportFormat = reportFormat;
+	}
+
+	public String getReportFormat() {
+		return reportFormat;
 	}
 }

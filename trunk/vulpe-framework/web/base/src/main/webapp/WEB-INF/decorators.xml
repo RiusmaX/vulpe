@@ -1,6 +1,7 @@
 <decorators defaultdir="/WEB-INF/decorators">
 	<excludes>
 		<pattern>*/ajax*</pattern>
+		<pattern>*/reportExport/*</pattern>
 		<pattern>/login.jsp*</pattern>
 		<pattern>/accessDenied.jsp*</pattern>
 		<pattern>*/errors/*</pattern>

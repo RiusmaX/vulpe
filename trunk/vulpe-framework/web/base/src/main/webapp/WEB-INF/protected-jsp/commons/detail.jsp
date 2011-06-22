@@ -31,6 +31,9 @@
 		</c:if>
 		<div id="vulpeDetailBody-${targetConfigLocal.baseName}${currentDetailIndex}">
 			<jsp:include page="${param.detailViewPath}" />
+			<c:remove var="currentDetailConfig" scope="request"/>
+			<c:remove var="currentItem" scope="request"/>
+			<c:remove var="currentStatus" scope="request"/>
 			<c:set var="targetConfig" value="${targetConfigLocal}" scope="request"/>
 			<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 		</div>

@@ -31,6 +31,10 @@
 		<to>/$1/$2/update/ajax?id=$3</to>
 	</rule>
 	<rule>
+		<from>^/([a-z]+)/([a-z]+)/reportExport/([a-z]+)</from>
+		<to>/$1/$2/report/ajax?reportFormat=$3</to>
+	</rule>
+	<rule>
 		<from>^/([a-z]+)/([a-z]+)/export/([a-z]+)</from>
 		<to>/$1/$2/export?exportType=$3</to>
 	</rule>
