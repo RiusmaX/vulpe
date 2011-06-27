@@ -1202,7 +1202,7 @@ var vulpe = {
 					invalidFields++;
 				}
 			});
-			if (!vulpe.config.valid) {
+			if (!vulpe.config.valid && !vulpe.util.existsVulpePopups()) {
 				valid = vulpe.config.valid;
 			}
 			if (!valid) {
