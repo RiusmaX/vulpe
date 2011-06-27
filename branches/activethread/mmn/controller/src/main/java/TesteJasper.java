@@ -14,8 +14,6 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-import org.json.JSONArray;
-import org.jw.mmn.core.model.entity.Congregation;
 import org.jw.mmn.ministry.model.entity.MemberReport;
 import org.jw.mmn.publications.model.entity.OrderPublication;
 import org.jw.mmn.report.model.entity.SimpleOrder;
@@ -37,10 +35,10 @@ public class TesteJasper {
 		// Thread.currentThread().getContextClassLoader()
 		// .getResourceAsStream("pedidos.jasper");
 
-		// compila o relatório
+		// compila o relatï¿½rio
 		JasperReport relatorio = JasperCompileManager.compileReport(desenho);
 
-		// executa o relatório
+		// executa o relatï¿½rio
 		Map parametros = new HashMap();
 		List<SimpleOrder> lista = new ArrayList<SimpleOrder>();
 		lista.add(new SimpleOrder());

@@ -10,6 +10,7 @@
 <%@ attribute name="hotKey" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="render" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="roles" required="false" rtexprvalue="true" type="java.lang.String"%>
+<%@ attribute name="onclick" required="false" rtexprvalue="true" type="java.lang.String"%>
 <%@ attribute name="show" required="false" rtexprvalue="true" type="java.lang.Boolean"%>
 <%@ attribute name="showOnlyIfAuthenticated" required="false" rtexprvalue="true" type="java.lang.Boolean" %>
 <%@ attribute name="url" required="false" rtexprvalue="true" type="java.lang.String"%>

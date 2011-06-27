@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 
 <v:selectPopup
-	labelKey="label.mmn.notices.MeetingServico.select.president"
+	labelKey="label.mmn.notices.Meeting.select.president"
 	property="president"
 	identifier="id" description="name"
 	action="/core/Member/select" popupId="presidentSelectPopup"

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.View;
-import org.vulpe.commons.VulpeConstants.Controller.Forward;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
@@ -24,9 +23,8 @@ import org.vulpe.exception.VulpeApplicationException;
 @Controller(type = ControllerType.FRONTEND)
 public class IndexController extends ApplicationBaseController<Index, Long> {
 
-	public String teste() {
+	public void teste() {
 		controlResultForward();
-		return Forward.SUCCESS;
 	}
 
 	protected final List<Congregation> congregations = (List<Congregation>) getCachedClasses().get(

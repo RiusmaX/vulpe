@@ -5,24 +5,34 @@ import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 @SuppressWarnings("serial")
 public class CharacteristicOratory extends VulpeBaseDB4OEntity<Long> {
 
-	private String nome;
+	private Integer number;
 
-	private String descricao;
+	private String name;
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	private String description;
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
-	public String getNome() {
-		return nome;
+	public Integer getNumber() {
+		return number;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getName() {
+		return name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 }

@@ -19,7 +19,7 @@ import org.jw.mmn.notices.model.entity.Meeting;
 @Component("notices.MeetingController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = NoticesService.class, detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", newDetails = 3) }, select = @Select(pageSize = 5))
+@Controller(serviceClass = NoticesService.class, detailsConfig = { @DetailConfig(name = "discourses", propertyName = "entity.discourses", despiseFields = "topic", newDetails = 3) }, select = @Select(pageSize = 5))
 public class MeetingController extends ApplicationBaseController<Meeting, java.lang.Long> {
 
 	@Override

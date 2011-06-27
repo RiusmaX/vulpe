@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
 import org.jw.mmn.commons.ApplicationConstants.Core;
 import org.jw.mmn.commons.ApplicationConstants.Publications;
 import org.jw.mmn.core.model.entity.Congregation;
@@ -23,6 +22,8 @@ import org.vulpe.security.authentication.callback.AfterUserAuthenticationCallbac
 import org.vulpe.security.commons.VulpeSecurityStrutsCallbackUtil;
 import org.vulpe.security.context.VulpeSecurityContext;
 import org.vulpe.security.model.entity.User;
+
+import com.google.gson.Gson;
 
 @Component(Security.AFTER_USER_AUTHENTICATION_CALLBACK)
 public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCallbackUtil implements
@@ -70,7 +71,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 						map.put("ministryType", member.getMinistryType().name());
 						values.add(map);
 					}
-					getEver().put(Core.MEMBERS_AUTOCOMPLETE_VALUE_LIST, new JSONArray(values));
+					getEver().put(Core.MEMBERS_AUTOCOMPLETE_VALUE_LIST, new Gson().toJson(values));
 					getEver().put(Core.GROUPS_OF_SELECTED_CONGREGATION, groups);
 				}
 				getEver().put(Core.CONGREGATIONS_OF_USER, congregations);
@@ -83,7 +84,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 					map.put("value", publication.getName());
 					values.add(map);
 				}
-				getEver().put(Publications.PUBLICATIONS_AUTOCOMPLETE_VALUE_LIST, new JSONArray(values));
+				getEver().put(Publications.PUBLICATIONS_AUTOCOMPLETE_VALUE_LIST, new Gson().toJson(values));
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
 			}

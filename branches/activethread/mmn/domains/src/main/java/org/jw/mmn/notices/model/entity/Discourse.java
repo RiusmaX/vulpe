@@ -9,9 +9,12 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 
 import org.jw.mmn.notices.model.entity.DiscourseType;
+import org.jw.mmn.core.model.entity.CharacteristicOratory;
 import org.jw.mmn.core.model.entity.Member;
 import org.jw.mmn.notices.model.entity.Meeting;
 
+//@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 3) }), manager = true, view = @View(viewType = {
+//ViewType.SELECT, ViewType.MAIN }))
 @SuppressWarnings("serial")
 public class Discourse extends VulpeBaseDB4OEntity<Long> {
 
@@ -22,6 +25,9 @@ public class Discourse extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Member/select", popupWidth = 420, argument = true, required = true, autocomplete = true)
 	private Member speaker;
+
+	@VulpeSelectPopup(identifier = "id", description = "nome", action = "/core/Member/select", popupWidth = 420, argument = true, required = true, autocomplete = true)
+	private Member assistant;
 
 	@VulpeText(required = true, size = 40, maxlength = 100)
 	private String guestSpeaker;
@@ -40,6 +46,8 @@ public class Discourse extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeSelect
 	private DiscourseType type;
+	
+	private CharacteristicOratory characteristicOratory;
 
 	public Meeting getMeeting() {
 		return meeting;
@@ -111,6 +119,22 @@ public class Discourse extends VulpeBaseDB4OEntity<Long> {
 
 	public void setType(DiscourseType type) {
 		this.type = type;
+	}
+
+	public void setAssistant(Member assistant) {
+		this.assistant = assistant;
+	}
+
+	public Member getAssistant() {
+		return assistant;
+	}
+
+	public void setCharacteristicOratory(CharacteristicOratory characteristicOratory) {
+		this.characteristicOratory = characteristicOratory;
+	}
+
+	public CharacteristicOratory getCharacteristicOratory() {
+		return characteristicOratory;
 	}
 
 }

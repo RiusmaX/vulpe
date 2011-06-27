@@ -5,19 +5,14 @@ import java.util.List;
 
 import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.core.model.entity.Member;
-import org.vulpe.commons.annotations.DetailConfig;
-import org.vulpe.controller.annotations.Controller;
-import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
-import org.vulpe.view.annotations.View;
-import org.vulpe.view.annotations.View.ViewType;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.logic.main.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@CodeGenerator(controller = @Controller(detailsConfig = @DetailConfig(name = "reports", despiseFields = "hours", propertyName = "entity.reports")), view = @View(viewType = ViewType.MAIN))
+//@CodeGenerator(controller = @Controller(detailsConfig = @DetailConfig(name = "reports", despiseFields = "hours", propertyName = "entity.reports")), view = @View(viewType = ViewType.MAIN))
 @SuppressWarnings("serial")
 public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 

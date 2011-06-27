@@ -9,12 +9,16 @@
 				viewportMaximumScale = "1.0"
 		),
 		view = @VulpeView(
-				showButtonsAsImage = true,
-				showIconOfButton = false,
-				showTextOfButton = false,
-				messageSlideUp = false,
-				frontendMenuType = MenuType.DROPPY,
-				backendMenuType = MenuType.DROPPY
+				layout = @VulpeViewLayout(
+						showButtonsAsImage = true,
+						showIconOfButton = false,
+						showTextOfButton = false,
+						frontendMenuType = MenuType.DROPPY,
+						backendMenuType = MenuType.DROPPY
+						),
+				messages = @VulpeViewMessages(
+						slideUp = false
+				)
 		),
 		theme = "mmn",
 		security = true
@@ -25,5 +29,7 @@ package org.vulpe.config;
 import org.vulpe.config.annotations.VulpeMobile;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.config.annotations.VulpeView;
-import org.vulpe.config.annotations.VulpeView.MenuType;
+import org.vulpe.config.annotations.VulpeViewLayout;
+import org.vulpe.config.annotations.VulpeViewLayout.MenuType;
+import org.vulpe.config.annotations.VulpeViewMessages;
 

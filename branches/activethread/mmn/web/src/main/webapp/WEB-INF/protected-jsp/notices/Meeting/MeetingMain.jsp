@@ -2,7 +2,7 @@
 
 <v:hidden property="id"/>
 <v:selectPopup
-	labelKey="label.mmn.notices.MeetingServico.main.president"
+	labelKey="label.mmn.notices.Meeting.main.president"
 	property="president"
 	identifier="id" description="name"
 	action="/core/Member/select" popupId="presidentSelectPopup"
@@ -12,7 +12,7 @@
 	required="true"
 />
 <v:date
-	labelKey="label.mmn.notices.MeetingServico.main.date"
+	labelKey="label.mmn.notices.Meeting.main.date"
 	property="date"
 	required="true"
 />

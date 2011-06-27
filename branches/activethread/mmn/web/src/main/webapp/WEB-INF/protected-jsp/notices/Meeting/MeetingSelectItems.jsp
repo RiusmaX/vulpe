@@ -2,17 +2,17 @@
 
 <v:table>
 	<jsp:attribute name="tableHeader">
-		<th colspan="7"><fmt:message key="label.mmn.notices.MeetingServico.select.header"/></th>
+		<th colspan="7"><fmt:message key="label.mmn.notices.Meeting.select.header"/></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<v:column
-				labelKey="label.mmn.notices.MeetingServico.select.president"
+				labelKey="label.mmn.notices.Meeting.select.president"
 				property="president.name"
 				sort="true"
 			/>
 			<v:column
-				labelKey="label.mmn.notices.MeetingServico.select.date"
+				labelKey="label.mmn.notices.Meeting.select.date"
 				property="date"
 			/>
 		</v:row>
