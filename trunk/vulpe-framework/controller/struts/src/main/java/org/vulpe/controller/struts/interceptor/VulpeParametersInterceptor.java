@@ -15,23 +15,16 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
-import java.lang.reflect.Method;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.helper.VulpeCacheHelper;
-import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
-import org.vulpe.controller.annotations.ExecuteAlways;
-import org.vulpe.controller.annotations.ExecuteOnce;
 import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.exception.VulpeSystemException;
 
@@ -56,40 +49,14 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 		if (action instanceof VulpeController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
+			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+					.getAction();
 			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
-				final VulpeController controller = (VulpeController) action;
 				if (StringUtils.isEmpty(controller.getResultForward())) {
 					controller.controlResultForward();
 					controller.manageButtons(controller.getOperation());
 				}
 			}
-			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
-					.getAction();
-			if (controller.ever != null) {
-				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller
-						.getCurrentControllerName());
-				final String currentControllerKey = controller.ever
-						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = controller.getCurrentControllerKey();
-				boolean autocomplete = false;
-				if (controller.getEntitySelect() != null
-						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
-					autocomplete = true;
-				}
-				if (StringUtils.isEmpty(currentControllerKey)) {
-					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
-					executeOnce(action);
-				} else if (!currentControllerKey.equals(controllerKey)
-						&& StringUtils.isEmpty(controller.getPopupKey()) && !autocomplete) {
-					controller.ever.removeWeakRef();
-					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
-					executeOnce(action);
-				}
-			}
-			ServletActionContext.getRequest().getSession().setAttribute(
-					VulpeConstants.Session.EVER, controller.ever);
-			ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW,
-					controller.now);
 			key = controller.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		}
 
@@ -123,7 +90,6 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 				}
 			}
 		}
-		executeAlways(action);
 	}
 
 	@Override
@@ -150,38 +116,6 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			return reset;
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
-		}
-	}
-
-	private void executeAlways(final Object action) {
-		if (action instanceof VulpeController) {
-			final VulpeController controller = (VulpeController) action;
-			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
-			for (final Method method : methods) {
-				if (method.isAnnotationPresent(ExecuteAlways.class)) {
-					try {
-						method.invoke(controller, new Object[] {});
-					} catch (Exception e) {
-						LOG.error(e);
-					}
-				}
-			}
-		}
-	}
-
-	private void executeOnce(final Object action) {
-		if (action instanceof VulpeController) {
-			final VulpeController controller = (VulpeController) action;
-			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
-			for (final Method method : methods) {
-				if (method.isAnnotationPresent(ExecuteOnce.class)) {
-					try {
-						method.invoke(controller, new Object[] {});
-					} catch (Exception e) {
-						LOG.error(e);
-					}
-				}
-			}
 		}
 	}
 

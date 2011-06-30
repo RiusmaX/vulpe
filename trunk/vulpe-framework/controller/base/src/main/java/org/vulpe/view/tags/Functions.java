@@ -398,6 +398,9 @@ public class Functions {
 	public static Boolean isAuthenticated(final PageContext pageContext) {
 		final Object springSecurity = pageContext.getSession().getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
+		if (springSecurity == null) {
+			return false;
+		}
 		final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(springSecurity,
 				"authentication");
 		final Boolean authenticated = VulpeReflectUtil.getFieldValue(springSecurityAutentication,

@@ -1,3 +1,4 @@
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
@@ -12,6 +13,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery.form.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.growl.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.hotkeys.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.idle.timer.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.lightbox.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.maskedinput.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.simplemodal.js" type="text/javascript" charset="utf-8"></script>
@@ -32,6 +34,11 @@ vulpe.config.buttons = {
 	cancel: '<fmt:message key="label.vulpe.button.cancel"/>'
 }
 vulpe.config.contextPath = '${pageContext.request.contextPath}';
+vulpe.config.dialogs = {
+	alertTitle: "<fmt:message key='vulpe.dialog.warning.title'/>",
+	confirmationTitle: "<fmt:message key='vulpe.dialog.confirmation.title'/>",
+	successTitle: "<fmt:message key='vulpe.dialog.success.title'/>"
+}
 vulpe.config.theme = '${global['project-theme']}';
 vulpe.config.messages = {
 	error: {
@@ -71,7 +78,7 @@ vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
 	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>'
 }
-vulpe.config.messageSlideUp ="${global['project-view-messageSlideUp']}";
+vulpe.config.messageSlideUp = "${global['project-view-messageSlideUp']}";
 vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}";
 <c:if test="${global['project-mobile-enabled']}">
 vulpe.config.popup.mobile = true;
@@ -99,5 +106,95 @@ vulpe.config.accentMap = {
 	"ç": "c",
 	"Ç": "C"
 }
+<c:if test="${util:isAuthenticated(pageContext)}">
+vulpe.config.session = {
+	idleTime: ${global['project-view-session-idleTime']},
+	initialSessionTimeoutMessage: "<fmt:message key='vulpe.message.session.initialSessionTimeoutMessage'/>",
+	timeoutCountdownId: "sessionTimeoutCountdown",
+	redirectAfter: ${global['project-view-session-redirectAfter']},
+	redirectTo: eval("${global['project-view-session-redirectTo']}"),
+	keepAliveURL: eval("${global['project-view-session-keepAliveURL']}"),
+	expireSessionMessageTitle: "<fmt:message key='vulpe.message.session.expireSessionMessageTitle'/>",
+	expiredMessageTitle: "<fmt:message key='vulpe.message.session.expiredMessageTitle'/>",
+	expiredMessage: "<fmt:message key='vulpe.message.session.expiredMessage'/>",
+	running: false,
+	timer: function(){}
+}
+$(document).ready(function() {
+	$(vulpe.config.layers.informationMessage).html(vulpe.config.session.initialSessionTimeoutMessage);
+	$(vulpe.config.layers.informationDialog).dialog({
+		title: vulpe.config.session.expireSessionMessageTitle,
+		autoOpen: false,
+		closeOnEscape: false,
+		draggable: false,
+		width: 460,
+		minHeight: 50,
+		modal: true,
+		beforeclose: function() {
+			clearInterval(vulpe.config.session.timer);
+			vulpe.config.session.running = false;
+			$.ajax({
+			  url: vulpe.config.session.keepAliveURL,
+			  async: false
+			});
+		},
+		buttons: {
+			Ok: function() {
+				$(this).dialog("close");
+			}
+		},
+		resizable: false,
+		open: function() {
+			$("body").css("overflow", "hidden");
+		},
+		close: function() {
+			$("body").css("overflow", "auto");
+		}
+	});
+	$.idleTimer(vulpe.config.session.idleTime);
+	$(document).bind("idle.idleTimer", function(){
+		if ($.data(document, "idleTimer") === "idle" && !vulpe.config.session.running){
+			var counter = vulpe.config.session.redirectAfter;
+			vulpe.config.session.running = true;
+			$('#' + vulpe.config.session.timeoutCountdownId).html(vulpe.config.session.redirectAfter);
+			$(vulpe.config.layers.informationDialog).dialog("open");
+			vulpe.config.session.timer = setInterval(function(){
+				counter -= 1;
+				if (counter === 0) {
+					$(vulpe.config.layers.informationMessage).html(vulpe.config.session.expiredMessage);
+					//$(vulpe.config.layers.informationDialog).dialog("disable");
+					$(vulpe.config.layers.informationDialog).dialog({
+						title: vulpe.config.session.expiredMessageTitle,
+						autoOpen: false,
+						closeOnEscape: false,
+						draggable: false,
+						width: 460,
+						minHeight: 50,
+						modal: true,
+						beforeclose: function() {
+							window.location = vulpe.config.session.redirectTo;
+						},
+						buttons: {
+							Ok: function() {
+								window.location = vulpe.config.session.redirectTo;
+							}
+						},
+						resizable: false,
+						open: function() {
+							$("body").css("overflow", "hidden");
+						},
+						close: function() {
+							$("body").css("overflow", "auto");
+						}
+					});
+					$(vulpe.config.layers.informationDialog).dialog("open");
+				} else {
+					$('#' + vulpe.config.session.timeoutCountdownId).html(counter);
+				};
+			}, 1000);
+		};
+	});
+});
+</c:if>
 </script>
 <%@include file="/WEB-INF/protected-jsp/commons/javascriptExtended.jsp"%>

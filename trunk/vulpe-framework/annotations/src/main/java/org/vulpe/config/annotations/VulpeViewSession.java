@@ -24,29 +24,14 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
-public @interface VulpeView {
+public @interface VulpeViewSession {
 
-	/**
-	 * Add news details on top of list.
-	 */
-	boolean addNewDetailsOnTop() default false;
+	int idleTime() default 29 * 60 * 1000;
 
-	String dateMask() default "99/99/9999";
-
-	boolean focusFirst() default true;
-
-	VulpeViewLayout layout() default @VulpeViewLayout;
+	int redirectAfter() default 60;
 	
-	VulpeViewSession session() default @VulpeViewSession;
-
-	VulpeViewMessages messages() default @VulpeViewMessages;
+	String redirectTo() default "vulpe.config.contextPath + '/j_spring_security_logout'";
 	
-	VulpeViewPaging paging() default @VulpeViewPaging;
-	
-	SortType sortType() default SortType.ALL;
-
-	public enum SortType {
-		ALL, LAST_COLUMN
-	}
+	String keepAliveURL() default "vulpe.config.contextPath + '/frontend/Index/json'";
 
 }

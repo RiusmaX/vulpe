@@ -3,22 +3,28 @@
 <div id="container">
 	<div id="loading" style="display: none;"></div>
 	<div id="modalMessages" style="display: none;" class="vulpeMessages"></div>
-	<div id="confirmationDialog" title="<fmt:message key='vulpe.dialog.confirmation.title'/>" style="display: none">
+	<div id="confirmationDialog" style="display: none">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 			<span id="confirmationMessage"></span>
 		</p>
 	</div>
-	<div id="alertDialog" title="<fmt:message key='vulpe.dialog.warning.title'/>" style="display: none;">
+	<div id="alertDialog" style="display: none;">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-			<span id="vulpeAlertMessage"></span>
+			<span id="alertMessage"></span>
 		</p>
 	</div>
-	<div id="successDialog" title="<fmt:message key='vulpe.dialog.success.title'/>" style="display: none;">
+	<div id="successDialog" style="display: none;">
 		<p>
 			<span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
 			<span id="successMessage"></span>
+		</p>
+	</div>
+	<div id="informationDialog" style="display: none;">
+		<p>
+			<span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 50px 0;"></span>
+			<span id="informationMessage"></span>
 		</p>
 	</div>
 	<c:if test="${(global['project-view-useBackendLayer'] && vulpeCurrentLayout == 'BACKEND') || (global['project-view-useFrontendLayer'] && vulpeCurrentLayout == 'FRONTEND')}"><div id="${vulpeCurrentLayout == 'FRONTEND' ? 'frontend' : 'backend'}"></c:if>

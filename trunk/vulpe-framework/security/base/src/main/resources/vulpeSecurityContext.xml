@@ -29,10 +29,14 @@
 			<security:filter-chain pattern="/j_spring_security_check*"
 				filters="securityContextPersistenceFilter,usernamePasswordAuthenticationFilter" />
 			<security:filter-chain pattern="/**"
-				filters="concurrentSessionFilter,securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+				filters="vulpeSessionExpirationFilter,concurrentSessionFilter,securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
 		</security:filter-chain-map>
 	</bean>
 
+	<bean id="vulpeSessionExpirationFilter" class="org.vulpe.security.web.authentication.VulpeSessionExpirationFilter">
+		<property name="expiredUrl" value="/authenticator" />
+	</bean>
+	
 	<bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
 		<property name="sessionRegistry" ref="sessionRegistry" />
 		<property name="expiredUrl" value="/authenticator" />

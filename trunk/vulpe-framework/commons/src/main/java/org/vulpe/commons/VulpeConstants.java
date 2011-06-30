@@ -115,6 +115,10 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_PAGING_SHOW_BUTTON_AS_LINK = "project-view-paging-showButtonAsLink";
 			public static final String PROJECT_VIEW_USE_FRONTEND_LAYER = "project-view-useFrontendLayer";
 			public static final String PROJECT_VIEW_USE_BACKEND_LAYER = "project-view-useBackendLayer";
+			public static final String PROJECT_VIEW_SESSION_IDLE_TIME = "project-view-session-idleTime";
+			public static final String PROJECT_VIEW_SESSION_REDIRECT_AFTER = "project-view-session-redirectAfter";
+			public static final String PROJECT_VIEW_SESSION_REDIRECT_TO = "project-view-session-redirectTo";
+			public static final String PROJECT_VIEW_SESSION_KEEP_ALIVE_URL = "project-view-session-keepAliveURL";
 
 			//VulpeMobile
 			public static final String PROJECT_MOBILE_ENABLED = "project-mobile-enabled";

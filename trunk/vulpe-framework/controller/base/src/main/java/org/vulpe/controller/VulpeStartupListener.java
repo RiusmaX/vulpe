@@ -86,7 +86,6 @@ public class VulpeStartupListener implements ServletContextListener {
 				}
 			}
 		}
-
 		// sets scopes as attributes to use in tags and JSPs
 		evt.getServletContext().setAttribute(Context.APPLICATION_SCOPE, Integer.valueOf(PageContext.APPLICATION_SCOPE));
 		evt.getServletContext().setAttribute(Context.PAGE_SCOPE, Integer.valueOf(PageContext.PAGE_SCOPE));
@@ -143,6 +142,10 @@ public class VulpeStartupListener implements ServletContextListener {
 			global.put(Global.PROJECT_VIEW_ICON_WIDTH, vulpeProject.view().layout().iconWidth());
 			global.put(Global.PROJECT_VIEW_USE_BACKEND_LAYER, vulpeProject.view().layout().useBackendLayer());
 			global.put(Global.PROJECT_VIEW_USE_FRONTEND_LAYER, vulpeProject.view().layout().useFrontendLayer());
+			global.put(Global.PROJECT_VIEW_SESSION_IDLE_TIME, vulpeProject.view().session().idleTime());
+			global.put(Global.PROJECT_VIEW_SESSION_KEEP_ALIVE_URL, vulpeProject.view().session().keepAliveURL());
+			global.put(Global.PROJECT_VIEW_SESSION_REDIRECT_AFTER, vulpeProject.view().session().redirectAfter());
+			global.put(Global.PROJECT_VIEW_SESSION_REDIRECT_TO, vulpeProject.view().session().redirectTo());
 		}
 
 		if (vulpeProject.mobile().enabled()) {

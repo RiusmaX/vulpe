@@ -50,10 +50,15 @@ $(document).ready(function() {
 		</c:if>
 	}
 	$("#alertDialog").dialog({
+		title: vulpe.config.dialogs.alertTitle,
 		autoOpen: false,
 		bgiframe: true,
 		modal: true,
+		close: function() {
+			$("body").css("overflow", "auto");
+		},
 		open: function(event, ui) {
+			$("body").css("overflow", "hidden");
 			vulpe.util.removeHotKeys();
 		},
 		buttons: {
@@ -64,12 +69,17 @@ $(document).ready(function() {
 		}
 	});
 	$("#confirmationDialog").dialog({
+		title: vulpe.config.dialogs.confirmationTitle,
 		autoOpen: false,
 		bgiframe: true,
 		resizable: false,
 		height: 140,
 		modal: true,
+		close: function() {
+			$("body").css("overflow", "auto");
+		},
 		open: function(event, ui) {
+			$("body").css("overflow", "hidden");
 			vulpe.util.removeHotKeys();
 		},
 		overlay: {

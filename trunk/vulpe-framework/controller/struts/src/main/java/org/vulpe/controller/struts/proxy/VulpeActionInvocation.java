@@ -8,10 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Controller;
+import org.vulpe.commons.VulpeConstants.Configuration.Ever;
+import org.vulpe.commons.util.VulpeHashMap;
+import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.annotations.ExecuteAlways;
+import org.vulpe.controller.annotations.ExecuteOnce;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionChainResult;
@@ -19,7 +28,6 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionEventListener;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionProxy;
-import com.opensymphony.xwork2.DefaultActionInvocation;
 import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.Result;
 import com.opensymphony.xwork2.UnknownHandlerManager;
@@ -34,8 +42,6 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.interceptor.PreResultListener;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.ValueStackFactory;
-import com.opensymphony.xwork2.util.logging.Logger;
-import com.opensymphony.xwork2.util.logging.LoggerFactory;
 import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
 
 /**
@@ -44,12 +50,11 @@ import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeActionInvocation implements ActionInvocation {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DefaultActionInvocation.class);
+	private static final Logger LOG = Logger.getLogger(VulpeActionInvocation.class);
 
-	@SuppressWarnings("unchecked")
 	private static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
 
 	protected Object action;
@@ -71,6 +76,14 @@ public class VulpeActionInvocation implements ActionInvocation {
 	@SuppressWarnings("unused")
 	private Configuration configuration;
 	protected UnknownHandlerManager unknownHandlerManager;
+
+	private final VulpeHashMap<String, Method> methodsToExecuteAlwaysBefore = new VulpeHashMap<String, Method>();
+
+	private final VulpeHashMap<String, Method> methodsToExecuteOnceBefore = new VulpeHashMap<String, Method>();
+
+	private final VulpeHashMap<String, Method> methodsToExecuteAlwaysAfter = new VulpeHashMap<String, Method>();
+
+	private final VulpeHashMap<String, Method> methodsToExecuteOnceAfter = new VulpeHashMap<String, Method>();
 
 	public VulpeActionInvocation(final Map<String, Object> extraContext, final boolean pushAction) {
 		VulpeActionInvocation.this.extraContext = extraContext;
@@ -481,7 +494,17 @@ public class VulpeActionInvocation implements ActionInvocation {
 			}
 
 			if (!methodCalled) {
+				executeMethods(action);
+				executeAlwaysBefore(action);
+				final boolean same = sameController(action);
+				if (same) {
+					executeOnceBefore(action);
+				}
 				methodResult = method.invoke(action, new Object[0]);
+				if (same) {
+					executeOnceAfter(action);
+				}
+				executeAlwaysAfter(action);
 			}
 
 			if (methodResult instanceof Result) {
@@ -516,4 +539,145 @@ public class VulpeActionInvocation implements ActionInvocation {
 		}
 	}
 
+	/**
+	 * 
+	 * @param action
+	 */
+	private void executeMethods(final Object action) {
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
+			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			for (final Method method : methods) {
+				final ExecuteAlways executeAlways = method.getAnnotation(ExecuteAlways.class);
+				if (executeAlways != null) {
+					if (executeAlways.before()) {
+						methodsToExecuteAlwaysBefore.put(method.getName(), method);
+					} else {
+						methodsToExecuteAlwaysAfter.put(method.getName(), method);
+					}
+				}
+				final ExecuteOnce executeOnce = method.getAnnotation(ExecuteOnce.class);
+				if (executeOnce != null) {
+					if (executeOnce.before()) {
+						methodsToExecuteOnceBefore.put(method.getName(), method);
+					} else {
+						methodsToExecuteOnceAfter.put(method.getName(), method);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param action
+	 */
+	private void executeAlwaysBefore(final Object action) {
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
+			for (final Method method : methodsToExecuteAlwaysBefore.values()) {
+				try {
+					method.invoke(controller, new Object[] {});
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param action
+	 */
+	private void executeAlwaysAfter(final Object action) {
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
+			for (final Method method : methodsToExecuteAlwaysAfter.values()) {
+				try {
+					method.invoke(controller, new Object[] {});
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param action
+	 */
+	private void executeOnceBefore(final Object action) {
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
+			for (final Method method : methodsToExecuteOnceBefore.values()) {
+				try {
+					method.invoke(controller, new Object[] {});
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param action
+	 */
+	private void executeOnceAfter(final Object action) {
+		if (action instanceof VulpeController) {
+			final VulpeController controller = (VulpeController) action;
+			for (final Method method : methodsToExecuteOnceAfter.values()) {
+				try {
+					method.invoke(controller, new Object[] {});
+				} catch (Exception e) {
+					LOG.error(e);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param action
+	 * @return
+	 */
+	private boolean sameController(final Object action) {
+		boolean same = false;
+		if (action instanceof VulpeController) {
+			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) action;
+			if (controller.ever != null) {
+				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller
+						.getCurrentControllerName());
+				final String currentControllerKey = controller.ever
+						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+				final String controllerKey = controller.getCurrentControllerKey();
+				boolean autocomplete = false;
+				if (controller.getEntitySelect() != null
+						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
+					autocomplete = true;
+				}
+				if (StringUtils.isEmpty(currentControllerKey)) {
+					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					same = true;
+				} else if (!currentControllerKey.equals(controllerKey)
+						&& StringUtils.isEmpty(controller.getPopupKey()) && !autocomplete) {
+					controller.ever.removeWeakRef();
+					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					same = true;
+				}
+			}
+			updateParameters(controller);
+		}
+		return same;
+	}
+
+	/**
+	 * 
+	 * @param controller
+	 */
+	private void updateParameters(final AbstractVulpeBaseController controller) {
+		ServletActionContext.getRequest().getSession().setAttribute(VulpeConstants.Session.EVER,
+				controller.ever);
+		ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
+	}
 }
