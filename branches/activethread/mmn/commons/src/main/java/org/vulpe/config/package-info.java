@@ -18,6 +18,10 @@
 						),
 				messages = @VulpeViewMessages(
 						slideUp = false
+				),
+				session = @VulpeViewSession(
+						idleTime = 5000,
+						redirectAfter = 10
 				)
 		),
 		theme = "mmn",
@@ -32,4 +36,5 @@ import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.config.annotations.VulpeViewLayout;
 import org.vulpe.config.annotations.VulpeViewLayout.MenuType;
 import org.vulpe.config.annotations.VulpeViewMessages;
+import org.vulpe.config.annotations.VulpeViewSession;
 
