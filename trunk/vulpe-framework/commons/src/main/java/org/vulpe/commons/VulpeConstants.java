@@ -109,6 +109,8 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_DELETE = "project-view-showWarningBeforeDelete";
 			public static final String PROJECT_VIEW_SHOW_WARNING_BEFORE_UPDATE_POST = "project-view-showWarningBeforeUpdatePost";
 			public static final String PROJECT_VIEW_SHOW_MODIFICATION_WARNING = "project-view-showModificationWarning";
+			public static final String PROJECT_VIEW_LAYOUT_SHOW_SLIDER_PANEL = "project-view-layout-showSliderPanel";
+			public static final String PROJECT_VIEW_LAYOUT_SHOW_SLIDER_PANEL_ONLY_IF_AUTHENTICATED = "project-view-layout-showSliderPanelOnlyIfAuthenticated";
 			public static final String PROJECT_VIEW_SORT_TYPE = "project-view-sortType";
 			public static final String PROJECT_VIEW_PAGING_STYLE = "project-view-paging-style";
 			public static final String PROJECT_VIEW_PAGING_BUTTON_STYLE = "project-view-paging-buttonStyle";
@@ -116,6 +118,7 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_USE_FRONTEND_LAYER = "project-view-useFrontendLayer";
 			public static final String PROJECT_VIEW_USE_BACKEND_LAYER = "project-view-useBackendLayer";
 			public static final String PROJECT_VIEW_SESSION_IDLE_TIME = "project-view-session-idleTime";
+			public static final String PROJECT_VIEW_SESSION_TIME = "project-view-session-time";
 			public static final String PROJECT_VIEW_SESSION_REDIRECT_AFTER = "project-view-session-redirectAfter";
 			public static final String PROJECT_VIEW_SESSION_REDIRECT_TO = "project-view-session-redirectTo";
 			public static final String PROJECT_VIEW_SESSION_KEEP_ALIVE_URL = "project-view-session-keepAliveURL";
@@ -159,6 +162,7 @@ public class VulpeConstants {
 			public static final String CURRENT_PAGE = "currentPage";
 			public static final String TABULAR_SIZE = "tabularSize";
 			public static final String DEBUG = "debug";
+			public static final String MAX_INACTIVE_INTERVAL = "maxInactiveInterval";
 		}
 	}
 

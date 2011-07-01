@@ -24,9 +24,11 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.QueryException;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
@@ -239,19 +241,26 @@ public class VulpeExceptionMappingInterceptor extends
 			final Throwable exception) {
 		final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 				.getAction();
-		String message = "";
-		final String key = exception.getClass().getName();
+		final Throwable cause = getCause(exception);
+		String message = cause.getMessage();
+		String key = exception.getClass().getName();
+		if (cause instanceof JspException) {
+			key = cause.getClass().getName();
+			message = action.getText(key);
+		} else if (exception instanceof NullPointerException) {
+		} else if (exception instanceof QueryException) {
+		} else if (exception instanceof QueryException) {
+		} else {
+		}
+		message = action.getText(key);
 		if (isDebug(action)) {
 			if (exception instanceof NullPointerException) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
 				final String fileName = ste.getFileName().replace(".java", "");
 				final String methodName = ste.getMethodName();
 				final int lineNumber = ste.getLineNumber();
-				message = action.getText(key);
 				message += action.getText(key + ".debug", fileName, methodName, lineNumber);
 			}
-		} else {
-			message = action.getText(key);
 		}
 		return message;
 	}

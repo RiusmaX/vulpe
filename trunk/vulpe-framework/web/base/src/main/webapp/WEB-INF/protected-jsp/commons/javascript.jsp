@@ -110,86 +110,31 @@ vulpe.config.accentMap = {
 vulpe.config.session = {
 	idleTime: ${global['project-view-session-idleTime']},
 	initialSessionTimeoutMessage: "<fmt:message key='vulpe.message.session.initialSessionTimeoutMessage'/>",
-	timeoutCountdownId: "sessionTimeoutCountdown",
+	timeoutCountdownId: "#sessionTimeoutCountdown",
 	redirectAfter: ${global['project-view-session-redirectAfter']},
 	redirectTo: eval("${global['project-view-session-redirectTo']}"),
 	keepAliveURL: eval("${global['project-view-session-keepAliveURL']}"),
 	expireSessionMessageTitle: "<fmt:message key='vulpe.message.session.expireSessionMessageTitle'/>",
 	expiredMessageTitle: "<fmt:message key='vulpe.message.session.expiredMessageTitle'/>",
 	expiredMessage: "<fmt:message key='vulpe.message.session.expiredMessage'/>",
-	running: false,
-	timer: function(){}
+	time: ${ever['maxInactiveInterval']}
 }
 $(document).ready(function() {
-	$(vulpe.config.layers.informationMessage).html(vulpe.config.session.initialSessionTimeoutMessage);
-	$(vulpe.config.layers.informationDialog).dialog({
-		title: vulpe.config.session.expireSessionMessageTitle,
-		autoOpen: false,
-		closeOnEscape: false,
-		draggable: false,
-		width: 460,
-		minHeight: 50,
-		modal: true,
-		beforeclose: function() {
-			clearInterval(vulpe.config.session.timer);
-			vulpe.config.session.running = false;
-			$.ajax({
-			  url: vulpe.config.session.keepAliveURL,
-			  async: false
-			});
-		},
-		buttons: {
-			Ok: function() {
-				$(this).dialog("close");
-			}
-		},
-		resizable: false,
-		open: function() {
-			$("body").css("overflow", "hidden");
-		},
-		close: function() {
-			$("body").css("overflow", "auto");
-		}
-	});
+	vulpe.view.configureSliderAction();
+	vulpe.view.sessionExpirationAlert();
 	$.idleTimer(vulpe.config.session.idleTime);
 	$(document).bind("idle.idleTimer", function(){
 		if ($.data(document, "idleTimer") === "idle" && !vulpe.config.session.running){
 			var counter = vulpe.config.session.redirectAfter;
 			vulpe.config.session.running = true;
-			$('#' + vulpe.config.session.timeoutCountdownId).html(vulpe.config.session.redirectAfter);
-			$(vulpe.config.layers.informationDialog).dialog("open");
+			$(vulpe.config.session.timeoutCountdownId).html(vulpe.config.session.redirectAfter);
+			vulpe.view.sessionExpirationAlert("open");
 			vulpe.config.session.timer = setInterval(function(){
 				counter -= 1;
 				if (counter === 0) {
-					$(vulpe.config.layers.informationMessage).html(vulpe.config.session.expiredMessage);
-					//$(vulpe.config.layers.informationDialog).dialog("disable");
-					$(vulpe.config.layers.informationDialog).dialog({
-						title: vulpe.config.session.expiredMessageTitle,
-						autoOpen: false,
-						closeOnEscape: false,
-						draggable: false,
-						width: 460,
-						minHeight: 50,
-						modal: true,
-						beforeclose: function() {
-							window.location = vulpe.config.session.redirectTo;
-						},
-						buttons: {
-							Ok: function() {
-								window.location = vulpe.config.session.redirectTo;
-							}
-						},
-						resizable: false,
-						open: function() {
-							$("body").css("overflow", "hidden");
-						},
-						close: function() {
-							$("body").css("overflow", "auto");
-						}
-					});
-					$(vulpe.config.layers.informationDialog).dialog("open");
+					vulpe.view.sessionExpiredInformation();
 				} else {
-					$('#' + vulpe.config.session.timeoutCountdownId).html(counter);
+					$(vulpe.config.session.timeoutCountdownId).html(counter);
 				};
 			}, 1000);
 		};

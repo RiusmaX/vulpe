@@ -65,6 +65,10 @@ public @interface VulpeViewLayout {
 	boolean showButtonClone() default true;
 
 	boolean showLine() default true;
+	
+	boolean showSliderPanel() default false;
+	
+	boolean showSliderPanelOnlyIfAuthenticated() default true;
 
 	boolean showReportInNewWindow() default true;
 

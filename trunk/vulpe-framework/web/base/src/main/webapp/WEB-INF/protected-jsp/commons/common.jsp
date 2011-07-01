@@ -19,6 +19,7 @@
 <c:set var="vulpeShowActions" value="true" scope="request"/>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
+	vulpe.view.checkTimeToSessionExpire(${ever['maxInactiveInterval']});
 	vulpe.config.onlyToSee = ${onlyToSee};
 	<c:if test="${global['project-view-focusFirst']&& !ajax}">vulpe.util.focusFirst("${now['controllerType'] == 'TABULAR' ? 'entities' : ''}");</c:if>
 	<c:if test="${(global['project-view-frontendMenuType'] == 'DROPPY' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['project-view-backendMenuType'] == 'DROPPY' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">$("#nav").droppy();</c:if>
@@ -53,6 +54,7 @@ $(document).ready(function() {
 		title: vulpe.config.dialogs.alertTitle,
 		autoOpen: false,
 		bgiframe: true,
+		minHeight: 50,
 		modal: true,
 		close: function() {
 			$("body").css("overflow", "auto");
@@ -73,7 +75,7 @@ $(document).ready(function() {
 		autoOpen: false,
 		bgiframe: true,
 		resizable: false,
-		height: 140,
+		minHeight: 50,
 		modal: true,
 		close: function() {
 			$("body").css("overflow", "auto");
@@ -106,6 +108,7 @@ $(document).ready(function() {
 </c:choose>
 	<c:if test="${not empty now['fieldToFocus']}">vulpe.util.getElementField("${now['fieldToFocus']}").focus();</c:if>
 	<c:if test="${!ajax}">vulpe.view.checkRequiredFields();</c:if>
+	vulpe.view.initTimerToSessionExpire();
 });
 </script>
 </c:if>

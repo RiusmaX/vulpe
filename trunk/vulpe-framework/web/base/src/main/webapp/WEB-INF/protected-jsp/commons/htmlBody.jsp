@@ -1,5 +1,6 @@
 <%@taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
+<c:if test="${global['project-view-layout-showSliderPanel']}"><%@include file="/WEB-INF/protected-jsp/commons/sliderPanel.jsp" %></c:if>
 <div id="container">
 	<div id="loading" style="display: none;"></div>
 	<div id="modalMessages" style="display: none;" class="vulpeMessages"></div>

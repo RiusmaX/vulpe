@@ -147,6 +147,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (view != null) {
 			now.put(Now.FIELD_TO_FOCUS, view.fieldToFocus());
 		}
+		ever.put(Ever.MAX_INACTIVE_INTERVAL, getSession().getMaxInactiveInterval());
 	}
 
 	/**
@@ -229,7 +230,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private boolean cleaned = false;
 
 	private boolean exported = false;
-	
+
 	private String reportFormat = "PDF";
 
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();

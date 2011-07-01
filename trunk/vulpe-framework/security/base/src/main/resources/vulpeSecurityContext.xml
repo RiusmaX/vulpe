@@ -29,7 +29,8 @@
 			<security:filter-chain pattern="/j_spring_security_check*"
 				filters="securityContextPersistenceFilter,usernamePasswordAuthenticationFilter" />
 			<security:filter-chain pattern="/**"
-				filters="vulpeSessionExpirationFilter,concurrentSessionFilter,securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+				filters="concurrentSessionFilter,securityContextPersistenceFilter,logoutFilter,usernamePasswordAuthenticationFilter,securityContextHolderAwareRequestFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor" />
+			<!-- vulpeSessionExpirationFilter, -->
 		</security:filter-chain-map>
 	</bean>
 

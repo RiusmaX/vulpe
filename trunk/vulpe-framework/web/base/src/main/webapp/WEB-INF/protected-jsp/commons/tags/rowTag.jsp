@@ -173,7 +173,7 @@
 			<c:set var="detailPagingListEL" value="${'${'}ever['${detailPagingList}']${'}'}"/>
 			<c:set var="detailPagingList" value="${util:eval(pageContext, detailPagingListEL)}"/>
 		</c:if>
-		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${xstyleClass}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}">${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}</c:when><c:otherwise>${currentStatus.count}</c:otherwise></c:choose>.</c:if></v:column></c:if>
+		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${!isHeaderTableTag ? xstyleClass : ''}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}">${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}</c:when><c:otherwise>${currentStatus.count}</c:otherwise></c:choose>.</c:if></v:column></c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showButtonUpdate}">
 			<c:choose>

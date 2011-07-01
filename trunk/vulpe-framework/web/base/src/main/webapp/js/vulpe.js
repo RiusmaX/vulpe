@@ -148,7 +148,7 @@ var vulpe = {
 		session: {
 			idleTime: (30*60*1000),
 			initialSessionTimeoutMessage: "vulpe.message.session.initialSessionTimeoutMessage",
-			timeoutCountdownId: "sessionTimeoutCountdown",
+			timeoutCountdownId: "#sessionTimeoutCountdown",
 			redirectAfter: 60,
 			redirectTo: "",
 			keepAliveURL: "Index/json",
@@ -156,7 +156,9 @@ var vulpe = {
 			expiredMessageTitle: "vulpe.message.session.expiredMessageTitle",
 			expiredMessage: "vulpe.message.session.expiredMessage",
 			running: false,
-			timer: function(){}
+			timer: function(){},
+			time: 1800,
+			expireTimer: function(){}
 		},
 		sortType: "ALL",
 		springSecurityCheck: "j_spring_security_check",
@@ -1467,6 +1469,120 @@ var vulpe = {
 			$(vulpe.config.layers.confirmationMessage).html(message);
 			$(vulpe.config.layers.confirmationDialog).dialog('open');
 		},
+		
+		configureSliderAction: function() {
+			$("#sliderPanelAction").click( function() {
+				return vulpe.view.sliderActionAnimate(this);
+		    });
+		},
+		
+		sliderActionAnimate: function(action) {
+			if ($(action).find('span').hasClass('ui-icon-triangle-1-n')) {
+	            $('#slider').animate({
+	            	marginTop: $("#sliderClose").css("marginTop")
+	            }, {
+	                queue: false
+	            });
+	            $(action).find('span').removeClass('ui-icon-triangle-1-n');
+	            $(action).find('span').addClass('ui-icon-triangle-1-s');
+	        } else {
+	            $('#slider').animate({
+	            	marginTop: 0
+	            }, {
+	                queue: false
+	            });
+	            $(action).find('span').removeClass('ui-icon-triangle-1-s');
+	            $(action).find('span').addClass('ui-icon-triangle-1-n');
+	        }	
+		},
+		
+		initTimerToSessionExpire: function() {
+			clearInterval(vulpe.config.session.expireTimer);
+			vulpe.config.session.expireTimer = setInterval(function() {
+				if (vulpe.view.checkTimeToSessionExpire(vulpe.config.session.time) === 0) {
+					clearInterval(vulpe.config.session.expireTimer);
+					$.idleTimer("destroy");
+					vulpe.view.sessionExpiredInformation();
+				}
+			}, 1000); 
+		},
+		
+		checkTimeToSessionExpire: function(time) {
+			vulpe.config.session.time = time;
+			var secondsLeft = (vulpe.config.session.time--);
+			var sessionTime = $("#sessionTime");
+			if (sessionTime.length == 1) {
+				var currentMinutes = Math.floor(secondsLeft / 60);
+				var currentSeconds = secondsLeft % 60;
+				sessionTime.html((currentMinutes < 10 ? "0" + currentMinutes : currentMinutes) + ":" + (currentSeconds < 10 ? "0" + currentSeconds : currentSeconds));
+			}
+			return secondsLeft;
+		},
+		
+		sessionExpirationAlert: function(option) {
+			$(vulpe.config.layers.informationMessage).html(vulpe.config.session.initialSessionTimeoutMessage);
+			$(vulpe.config.layers.informationDialog).dialog({
+				title: vulpe.config.session.expireSessionMessageTitle,
+				autoOpen: false,
+				closeOnEscape: false,
+				draggable: false,
+				width: 460,
+				minHeight: 50,
+				modal: true,
+				beforeclose: function() {
+					clearInterval(vulpe.config.session.timer);
+					vulpe.config.session.running = false;
+					$.ajax({
+					  url: vulpe.config.session.keepAliveURL,
+					  async: false
+					});
+				},
+				buttons: {
+					Ok: function() {
+						$(this).dialog("close");
+					}
+				},
+				resizable: false,
+				open: function() {
+					$("body").css("overflow", "hidden");
+				},
+				close: function() {
+					$("body").css("overflow", "auto");
+				}
+			});
+			if (option === "open") {
+				$(vulpe.config.layers.informationDialog).dialog("open");
+			}
+		},
+		
+		sessionExpiredInformation: function() {
+			$(vulpe.config.layers.informationMessage).html(vulpe.config.session.expiredMessage);
+			$(vulpe.config.layers.informationDialog).dialog({
+				title: vulpe.config.session.expiredMessageTitle,
+				autoOpen: false,
+				closeOnEscape: false,
+				draggable: false,
+				width: 460,
+				minHeight: 50,
+				modal: true,
+				beforeclose: function() {
+					window.location = vulpe.config.session.redirectTo;
+				},
+				buttons: {
+					Ok: function() {
+						window.location = vulpe.config.session.redirectTo;
+					}
+				},
+				resizable: false,
+				open: function() {
+					$("body").css("overflow", "hidden");
+				},
+				close: function() {
+					$("body").css("overflow", "auto");
+				}
+			});
+			$(vulpe.config.layers.informationDialog).dialog("open");
+		},
 
 		prepareRead: function(formName) {
 			vulpe.util.setPagingPage('', formName);
@@ -2648,6 +2764,7 @@ var vulpe = {
 					message = message.substring(0, message.indexOf("</body>"));
 				}
 				jQuery(vulpe.config.layers.modalMessages).html(message);
+				jQuery(vulpe.config.layers.modalMessages).find("h1").hide();
 			}
 			if (data.indexOf("\"vulpeAlertError\"") == -1) {
 				jQuery(vulpe.config.layers.modalMessages).removeClass("vulpeMessageInfo");
