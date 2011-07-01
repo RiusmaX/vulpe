@@ -14,14 +14,15 @@
 						showIconOfButton = false,
 						showTextOfButton = false,
 						frontendMenuType = MenuType.DROPPY,
-						backendMenuType = MenuType.DROPPY
+						backendMenuType = MenuType.DROPPY,
+						showSliderPanel = true
 						),
 				messages = @VulpeViewMessages(
 						slideUp = false
 				),
 				session = @VulpeViewSession(
-						idleTime = 5000,
-						redirectAfter = 10
+						idleTime = 29 * 60 * 1000,
+						redirectAfter = 60
 				)
 		),
 		theme = "mmn",
