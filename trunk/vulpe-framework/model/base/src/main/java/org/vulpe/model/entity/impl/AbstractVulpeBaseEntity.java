@@ -39,8 +39,8 @@ import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements VulpeEntity<ID>,
-		Cloneable {
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
+		VulpeEntity<ID>, Cloneable {
 
 	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -52,15 +52,33 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isSelected() {
-		return getMap().containsKey(Entity.SELECTED) ? (Boolean) getMap().get(Entity.SELECTED) : false;
+		return getMap().containsKey(Entity.SELECTED) ? (Boolean) getMap().get(Entity.SELECTED)
+				: false;
 	}
 
 	public void setSelected(final boolean selected) {
 		getMap().put(Entity.SELECTED, selected);
 	}
 
+	public boolean isUsed() {
+		return getMap().containsKey(Entity.USED) ? (Boolean) getMap().get(Entity.USED) : false;
+	}
+
+	public void setUsed(final boolean used) {
+		getMap().put(Entity.USED, used);
+	}
+
+	public Integer getRowNumber() {
+		return getMap().containsKey(Entity.ROW) ? (Integer) getMap().get(Entity.ROW) : 0;
+	}
+
+	public void setRowNumber(final Integer row) {
+		getMap().put(Entity.ROW, row);
+	}
+
 	public String getOrderBy() {
-		return getMap().containsKey(Entity.ORDER_BY) ? (String) getMap().get(Entity.ORDER_BY) : null;
+		return getMap().containsKey(Entity.ORDER_BY) ? (String) getMap().get(Entity.ORDER_BY)
+				: null;
 	}
 
 	public void setOrderBy(final String orderBy) {
@@ -70,7 +88,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@Override
 	public boolean equals(final Object obj) {
 		final AbstractVulpeBaseEntity<ID> entity = (AbstractVulpeBaseEntity<ID>) obj;
-		if ((obj == null || obj.getClass() != this.getClass()) || (entity.getId() == null || getId() == null)) {
+		if ((obj == null || obj.getClass() != this.getClass())
+				|| (entity.getId() == null || getId() == null)) {
 			return false;
 		}
 
@@ -79,7 +98,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName().concat(this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
+		return getClass().getSimpleName().concat(
+				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
 	public int compareTo(final VulpeEntity<ID> entity) {
@@ -134,7 +154,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				|| attribute.getType() == Character.class || attribute.getType() == Integer.class
 				|| attribute.getType() == Short.class || attribute.getType() == Long.class
 				|| attribute.getType() == Double.class || attribute.getType() == Date.class
-				|| attribute.getType() == java.sql.Date.class || attribute.getType() == java.sql.Timestamp.class) {
+				|| attribute.getType() == java.sql.Date.class
+				|| attribute.getType() == java.sql.Timestamp.class) {
 			return true;
 		}
 		return false;
@@ -155,15 +176,17 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getAutocomplete() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(Entity.AUTOCOMPLETE) : null;
+		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(
+				Entity.AUTOCOMPLETE) : null;
 	}
-	
+
 	public void setAutocompleteTerm(final String autocompleteTerm) {
 		getMap().put(Entity.AUTOCOMPLETE_TERM, autocompleteTerm);
 	}
 
 	public String getAutocompleteTerm() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(Entity.AUTOCOMPLETE_TERM) : null;
+		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(
+				Entity.AUTOCOMPLETE_TERM) : null;
 	}
 
 	public void setMap(final Map<String, Object> map) {
@@ -191,7 +214,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isFakeId() {
-		return getMap().containsKey(Entity.FAKE_ID) ? (Boolean) getMap().get(Entity.FAKE_ID) : false;
+		return getMap().containsKey(Entity.FAKE_ID) ? (Boolean) getMap().get(Entity.FAKE_ID)
+				: false;
 	}
 
 	public List<VulpeEntity<?>> getDeletedDetails() {

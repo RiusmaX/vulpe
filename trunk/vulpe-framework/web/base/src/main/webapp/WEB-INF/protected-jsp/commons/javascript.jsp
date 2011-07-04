@@ -68,6 +68,7 @@ vulpe.config.messages = {
 	fieldRequired: '<fmt:message key="vulpe.js.error.required"/>',
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	deleteSelected: '<fmt:message key="vulpe.message.confirm.delete.selected"/>',
+	deleteSelecteds: '<fmt:message key="vulpe.message.confirm.delete.selecteds"/>',
 	loading: '<fmt:message key="vulpe.message.loading"/>',
 	selectRecordsToDelete: '<fmt:message key="vulpe.message.select.records.to.delete"/>',
 	updatePost: '<fmt:message key="vulpe.message.confirm.updatePost"/>',

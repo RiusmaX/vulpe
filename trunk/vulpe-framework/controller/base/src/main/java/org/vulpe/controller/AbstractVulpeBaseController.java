@@ -71,6 +71,7 @@ import org.vulpe.controller.validator.EntityValidator;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CachedClass;
+import org.vulpe.model.annotations.NotDeleteIf;
 import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.VulpeEntity;
@@ -167,10 +168,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	private ID id;
 	/**
-	 * List of selected identifiers
-	 */
-	private List<ID> selected;
-	/**
 	 * Paginated Bean
 	 */
 	private Paging<ENTITY> paging;
@@ -243,6 +240,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
 		defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
 		defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
+		defaultMessage.put(Operation.READ_DELETED, "{vulpe.message.empty.list.deleted}");
 		defaultMessage.put(Operation.REPORT_EMPTY, "{vulpe.message.empty.report.data}");
 		defaultMessage.put(Operation.REPORT_SUCCESS,
 				"{vulpe.message.report.generated.successfully}");
@@ -273,11 +271,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public List<ID> getSelected() {
+		final List<ID> selected = new ArrayList<ID>();
+		if (VulpeValidationUtil.isNotEmpty(getEntities())) {
+			for (final ENTITY entity : getEntities()) {
+				if (entity.isSelected()) {
+					selected.add(entity.getId());
+				}
+			}
+		}
 		return selected;
-	}
-
-	public void setSelected(final List<ID> selected) {
-		this.selected = selected;
 	}
 
 	public List<ENTITY> getEntities() {
@@ -1091,10 +1093,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {
-				autocompleteList = (List<ENTITY>) invokeServices(Operation.READ.getValue().concat(
-						getControllerConfig().getEntityClass().getSimpleName()),
-						new Class[] { getControllerConfig().getEntityClass() },
-						new Object[] { autocompleteEntity });
+				autocompleteList = (List<ENTITY>) invokeServices(
+						getServiceMethodName(Operation.READ), new Class[] { getControllerConfig()
+								.getEntityClass() }, new Object[] { autocompleteEntity });
 			}
 			values = new ArrayList<VulpeHashMap<String, Object>>();
 			if (VulpeValidationUtil.isNotEmpty(autocompleteList)) {
@@ -1573,8 +1574,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return Entity created.
 	 */
 	protected boolean onCreatePost() {
-		setEntity((ENTITY) invokeServices(Operation.CREATE.getValue().concat(
-				getControllerConfig().getEntityClass().getSimpleName()),
+		setEntity((ENTITY) invokeServices(getServiceMethodName(Operation.CREATE),
 				new Class[] { getControllerConfig().getEntityClass() },
 				new Object[] { prepareEntity(Operation.CREATE_POST) }));
 		setId(getEntity().getId());
@@ -1655,8 +1655,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onUpdate() {
 		if (getControllerType().equals(ControllerType.MAIN)
 				|| getControllerType().equals(ControllerType.TWICE)) {
-			setEntity((ENTITY) invokeServices(Operation.FIND.getValue().concat(
-					getControllerConfig().getEntityClass().getSimpleName()),
+			setEntity((ENTITY) invokeServices(getServiceMethodName(Operation.FIND),
 					new Class[] { getControllerConfig().getEntityClass() },
 					new Object[] { prepareEntity(getOperation()) }));
 			prepareDetailPaging();
@@ -1795,8 +1794,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 		}
-		setEntity((ENTITY) invokeServices(Operation.UPDATE.getValue().concat(
-				getControllerConfig().getEntityClass().getSimpleName()),
+		setEntity((ENTITY) invokeServices(getServiceMethodName(Operation.UPDATE),
 				new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity }));
 		managePaging(true);
 		setExecuted(true);
@@ -1868,14 +1866,18 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				throw new VulpeSystemException(e);
 			}
 			deleteAfter();
-		}
-		if (getControllerType().equals(ControllerType.MAIN)) {
-			controlResultForward();
-		} else if (getControllerType().equals(ControllerType.TWICE) && getEntity().getId() != null) {
-			onRead();
-			controlResultForward();
+			setDeleted(true);
+			if (getControllerType().equals(ControllerType.MAIN)) {
+				controlResultForward();
+			} else if (getControllerType().equals(ControllerType.TWICE)
+					&& getEntity().getId() != null) {
+				onRead();
+				controlResultForward();
+			} else {
+				read();
+			}
 		} else {
-			read();
+			setResultForward(getControllerConfig().getViewItemsPath());
 		}
 	}
 
@@ -1885,27 +1887,68 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected boolean onDelete() {
+		boolean valid = true;
 		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final List<ENTITY> entities = new ArrayList<ENTITY>();
 		if (VulpeValidationUtil.isNotEmpty(getSelected())) {
 			if (!onDeleteMany(entities)) {
-				return false;
+				valid = false;
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			setTabularSize(getTabularSize() - 1);
 		} else {
 			if (!onDeleteOne()) {
-				return false;
+				valid = false;
 			}
 		}
-		invokeServices(Operation.DELETE.getValue().concat(
-				getControllerConfig().getEntityClass().getSimpleName()),
-				new Class[] { VulpeValidationUtil.isEmpty(entities) ? getControllerConfig()
-						.getEntityClass() : List.class }, new Object[] { VulpeValidationUtil
-						.isEmpty(entities) ? entity : entities });
-
+		if (valid) {
+			final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
+			if (VulpeValidationUtil.isNotEmpty(entities)) {
+				invokeServices(getServiceMethodName(Operation.DELETE), new Class[] { List.class },
+						new Object[] { entities });
+				if (notDeleteIf != null) {
+					final List<Integer> rows = new ArrayList<Integer>();
+					for (final ENTITY entity2 : entities) {
+						if (entity2.isUsed()) {
+							for (final ENTITY entity3 : getEntities()) {
+								if (entity2.getId().equals(entity3.getId())) {
+									rows.add(entity3.getRowNumber());
+								}
+							}
+						}
+					}
+					if (rows.size() > 0) {
+						final StringBuilder affectedRows = new StringBuilder();
+						int count = 1;
+						for (final Integer line : rows) {
+							if (affectedRows.length() > 0) {
+								affectedRows.append(count == rows.size() ? " "
+										+ getText("label.vulpe.and") + " " : ", ");
+							}
+							affectedRows.append(line);
+							++count;
+						}
+						if (rows.size() == 1) {
+							addActionError(notDeleteIf.messageToOneRecord());
+						} else {
+							addActionError(notDeleteIf.messageToManyRecords(), affectedRows
+									.toString());
+						}
+						valid = false;
+					}
+				}
+			} else {
+				invokeServices(getServiceMethodName(Operation.DELETE),
+						new Class[] { getControllerConfig().getEntityClass() },
+						new Object[] { entity });
+				if (notDeleteIf != null && entity.isUsed()) {
+					addActionError(notDeleteIf.messageToOneRecord());
+					valid = false;
+				}
+			}
+		}
 		setExecuted(true);
-		return true;
+		return valid;
 	}
 
 	protected boolean onDeleteOne() {
@@ -2184,10 +2227,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			final Integer pageSize = getControllerType().equals(ControllerType.TABULAR) ? getControllerConfig()
 					.getTabularPageSize()
 					: getControllerConfig().getPageSize();
-			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(Operation.PAGING
-					.getValue().concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass(), Integer.class,
-							Integer.class }, new Object[] { entity.clone(), pageSize, page });
+			final Paging<ENTITY> paging = (Paging<ENTITY>) invokeServices(
+					getServiceMethodName(Operation.PAGING), new Class[] {
+							getControllerConfig().getEntityClass(), Integer.class, Integer.class },
+					new Object[] { entity.clone(), pageSize, page });
 			setPaging(paging);
 			setEntities(paging.getList());
 			ever.put(getSelectPagingKey(), paging);
@@ -2201,13 +2244,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 			if (VulpeValidationUtil.isEmpty(getEntities())) {
-				addActionInfoMessage(getDefaultMessage(Operation.READ));
+				addActionInfoMessage(getDefaultMessage(isDeleted() ? Operation.READ_DELETED
+						: Operation.READ));
 			}
 		} else {
-			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.READ.getValue()
-					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity
-							.clone() });
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(
+					getServiceMethodName(Operation.READ), new Class[] { getControllerConfig()
+							.getEntityClass() }, new Object[] { entity.clone() });
 			setEntities(list);
 			if (isExported()) {
 				final int size = VulpeValidationUtil.isNotEmpty(list) ? list.size() : 0;
@@ -2315,9 +2358,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			for (final ENTITY entity : getEntities()) {
 				updateAuditInformation(entity);
 			}
-			final List<ENTITY> list = (List<ENTITY>) invokeServices(Operation.PERSIST.getValue()
-					.concat(getControllerConfig().getEntityClass().getSimpleName()),
-					new Class[] { List.class }, new Object[] { getEntities() });
+			final List<ENTITY> list = (List<ENTITY>) invokeServices(
+					getServiceMethodName(Operation.PERSIST), new Class[] { List.class },
+					new Object[] { getEntities() });
 			setEntities(list);
 		}
 		tabularPagingMount(false);
@@ -2890,6 +2933,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 	}
 
+	protected String getServiceMethodName(final Operation operation) {
+		return operation.getValue().concat(getControllerConfig().getEntityClass().getSimpleName());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -3014,6 +3061,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	private boolean ajax = false;
 	private boolean back = false;
 	private boolean executed = false;
+	private boolean deleted = false;
 	/**
 	 * Popup Key
 	 */
@@ -3369,11 +3417,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	public String getText(final String key) {
-		return i18nService.getText(key);
+		final String validKey = key.replace("{", "").replace("}", "");
+		return i18nService.getText(validKey);
 	}
 
 	public String getText(final String key, final Object... args) {
-		return i18nService.getText(key, args);
+		final String validKey = key.replace("{", "").replace("}", "");
+		return i18nService.getText(validKey, args);
 	}
 
 	public abstract void addActionMessage(final String message);
@@ -3589,5 +3639,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public String getReportFormat() {
 		return reportFormat;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
 	}
 }

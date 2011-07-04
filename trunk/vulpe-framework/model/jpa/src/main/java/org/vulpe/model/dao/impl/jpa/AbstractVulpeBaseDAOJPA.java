@@ -75,6 +75,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	protected static final String CGLIB_CALLBACK_0 = "CGLIB$CALLBACK_0";
 	protected static final String CGLIB_CALLBACK_0_TARGET = "target";
 
+
 	@PersistenceContext
 	private EntityManager entityManager;
 

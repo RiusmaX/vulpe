@@ -530,7 +530,7 @@ public interface VulpeController extends Serializable {
 				"delete"), DELETE_DETAIL("deleteDetail"), DELETE_FILE("deleteFile"), UPDATE(
 				"update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR("tabular"), TABULAR_POST(
 				"tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT("select"), REPORT_EMPTY(
-				"report"), REPORT_SUCCESS("report"), VIEW("view"), READ("read"), FIND("find"), PAGING(
+				"report"), REPORT_SUCCESS("report"), VIEW("view"), READ("read"), READ_DELETED("read"), FIND("find"), PAGING(
 				"paging"), BACKEND("backend"), FRONTEND("frontend"), DEFINE("define"), DOWNLOAD(
 				"download"), UPLOAD("upload");
 		private String value;

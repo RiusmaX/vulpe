@@ -64,7 +64,7 @@ public @interface VulpeViewLayout {
 
 	boolean showButtonClone() default true;
 
-	boolean showLine() default true;
+	boolean showRows() default true;
 	
 	boolean showSliderPanel() default false;
 	

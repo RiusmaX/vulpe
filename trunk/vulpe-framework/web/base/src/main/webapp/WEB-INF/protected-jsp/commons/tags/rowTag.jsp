@@ -4,8 +4,8 @@
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
 	<c:set var="recordId" value="${currentItem.id}"/>
-	<c:if test="${empty showLine}"><c:set var="showLine" value="${true}"/></c:if>
-	<c:if test="${exported}"><c:set var="showLine" value="${false}"/></c:if>
+	<c:if test="${empty showRowNumber}"><c:set var="showRowNumber" value="${true}"/></c:if>
+	<c:if test="${exported}"><c:set var="showRowNumber" value="${false}"/></c:if>
 	<c:if test="${empty showButtonsDelete}"><c:set var="showButtonsDelete" value="${global['project-view-showButtonsDelete']}"/></c:if>
 	<c:if test="${empty showButtonDeleteThis}"><c:set var="showButtonDeleteThis" value="${global['project-view-showButtonDeleteThis']}"/></c:if>
 	<c:if test="${empty showButtonUpdate}"><c:set var="showButtonUpdate" value="${global['project-view-showButtonUpdate']}"/></c:if>
@@ -136,15 +136,15 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan">rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
-		<c:if test="${!isHeaderTableTag && not empty currentDetailConfig && renderId}"><td style="display: none"><v:hidden property="id"/><v:hidden property="fakeId"/></td></c:if>
-		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'select'}">
+		<c:if test="${!isHeaderTableTag && renderId}"><td style="display: none"><v:hidden property="id" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]"/><v:hidden property="fakeId" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]"/></td></c:if>
+		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
-				<td onclick="${selectCheckOn}" class="vulpeSelect ${xstyleClass}">
-					<c:if test="${disableDelete}"><c:set var="disableSelect" value="disabled=\"true\""/></c:if>
+				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}" onclick="${selectCheckOn}">
 					<c:set var="checkboxName" value="${!disableDelete ? deleteName : ''}"/>
-					<input type="checkbox" name="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${checkboxName}', '${deleteLayer}');" value="${recordId}" tabindex="100000" title="<fmt:message key='help.vulpe.delete.selected'/>" ${disableSelect}/>
-				</td>
+					<c:if test="${deleteType eq 'detail'}"><c:set var="checkboxName" value="${!disableDelete ? deleteName : 'unselected'}"/></c:if>
+					<v:checkbox targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" property="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll('${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
+				</v:column>
 			</c:when>
 			<c:otherwise>
 				<th id="vulpeSelectAll" style="text-align: center;">
@@ -154,26 +154,12 @@
 			</c:otherwise>
 		</c:choose>
 		</c:if>
-		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && deleteType eq 'detail'}">
-			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
-				<th id="vulpeSelectAll" ${styleClass} style="text-align: center;">
-					<fmt:message key='label.vulpe.delete'/><br/>
-					<input type="checkbox" id="selectAll" name="selectAll" onclick="vulpe.view.markUnmarkAll(this, 'selected', '#${deleteLayer}');" tabindex="100000" title="<fmt:message key='help.vulpe.delete.all.selected'/>"/>
-				</th>
-			</c:if>
-			<c:if test="${!isHeaderTableTag}">
-				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}">
-					<c:set var="checkboxName" value="${!disableDelete ? deleteName : 'unselected'}"/>
-					<v:checkbox name="${targetConfigPropertyName}[${currentStatus.index}].${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll(this, '${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
-				</v:column>
-			</c:if>
-		</c:if>
 		<c:if test="${not empty currentDetailConfig && empty targetConfig.parentDetailConfig}">
 			<c:set var="detailPagingList" value="${currentDetailConfig.name}_pagingList"/>
 			<c:set var="detailPagingListEL" value="${'${'}ever['${detailPagingList}']${'}'}"/>
 			<c:set var="detailPagingList" value="${util:eval(pageContext, detailPagingListEL)}"/>
 		</c:if>
-		<c:if test="${showLine}"><v:column labelKey="label.vulpe.line" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${!isHeaderTableTag ? xstyleClass : ''}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}">${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}</c:when><c:otherwise>${currentStatus.count}</c:otherwise></c:choose>.</c:if></v:column></c:if>
+		<c:if test="${showRowNumber}"><v:column labelKey="label.vulpe.row" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${!isHeaderTableTag ? xstyleClass : ''}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}"><c:set var="rowNumber" value="${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}"/></c:when><c:otherwise><c:set var="rowNumber" value="${currentStatus.count}"/></c:otherwise></c:choose>${rowNumber}.</c:if><v:hidden property="rowNumber" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" value="${rowNumber}"/></v:column></c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showButtonUpdate}">
 			<c:choose>

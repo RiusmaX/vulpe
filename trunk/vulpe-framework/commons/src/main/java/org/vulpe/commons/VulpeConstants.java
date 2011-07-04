@@ -101,7 +101,7 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_SHOW_BUTTON_DELETE_THIS = "project-view-showButtonDeleteThis";
 			public static final String PROJECT_VIEW_SHOW_BUTTON_UPDATE = "project-view-showButtonUpdate";
 			public static final String PROJECT_VIEW_SHOW_BUTTONS_DELETE = "project-view-showButtonsDelete";
-			public static final String PROJECT_VIEW_SHOW_LINE = "project-view-showLine";
+			public static final String PROJECT_VIEW_SHOW_ROWS = "project-view-showRows";
 			public static final String PROJECT_VIEW_SHOW_COPYRIGHT = "project-view-showCopyright";
 			public static final String PROJECT_VIEW_SHOW_REPORT_IN_NEW_WINDOW = "project-view-showReportInNewWindow";
 			public static final String PROJECT_VIEW_SHOW_POWERED_BY = "project-view-showPoweredBy";
@@ -370,6 +370,8 @@ public class VulpeConstants {
 			public static final String DELETED_DETAILS = "deletedDetails";
 			public static final String FAKE_ID = "fakeId";
 			public static final String SELECTED = "selected";
+			public static final String USED = "used";
+			public static final String ROW = "row";
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 			public static final String ORDER_BY = "orderBy";

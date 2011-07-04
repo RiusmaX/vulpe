@@ -16,6 +16,7 @@
 package org.vulpe.controller.struts.interceptor;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
@@ -28,7 +29,6 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
-import org.hibernate.QueryException;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
@@ -246,20 +246,23 @@ public class VulpeExceptionMappingInterceptor extends
 		String key = exception.getClass().getName();
 		if (cause instanceof JspException) {
 			key = cause.getClass().getName();
-			message = action.getText(key);
-		} else if (exception instanceof NullPointerException) {
-		} else if (exception instanceof QueryException) {
-		} else if (exception instanceof QueryException) {
-		} else {
+		} else if (cause instanceof SQLException) {
+			key = cause.getClass().getName();
 		}
 		message = action.getText(key);
+		final String contactAdministratorMessageKey = "vulpe.error.contact.system.administrator";
+		message += action.getText(contactAdministratorMessageKey);
 		if (isDebug(action)) {
+			final String errorOccurrenceDebugKey = "vulpe.error.occurrence.debug";
+			message += action.getText(errorOccurrenceDebugKey);
 			if (exception instanceof NullPointerException) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
 				final String fileName = ste.getFileName().replace(".java", "");
 				final String methodName = ste.getMethodName();
 				final int lineNumber = ste.getLineNumber();
 				message += action.getText(key + ".debug", fileName, methodName, lineNumber);
+			} else {
+				message += "<i>" + cause.getMessage() + "</i>";
 			}
 		}
 		return message;

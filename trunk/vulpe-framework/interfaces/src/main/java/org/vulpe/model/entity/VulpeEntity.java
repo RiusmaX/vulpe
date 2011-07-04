@@ -44,6 +44,14 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Seria
 
 	void setSelected(final boolean selected);
 
+	boolean isUsed();
+
+	void setUsed(final boolean used);
+
+	Integer getRowNumber();
+
+	void setRowNumber(final Integer row);
+
 	String getOrderBy();
 
 	void setOrderBy(final String orderBy);

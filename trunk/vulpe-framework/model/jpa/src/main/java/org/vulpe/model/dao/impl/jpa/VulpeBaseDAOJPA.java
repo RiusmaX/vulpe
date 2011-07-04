@@ -44,6 +44,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.NotDeleteIf;
 import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.annotations.Parameter;
@@ -96,6 +97,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Deleting object: ".concat(entity.toString()));
 		}
+		if (checkNotDeleteIf(entity)) {
+			simpleDelete(entity);
+		}
+	}
+
+	private void simpleDelete(final ENTITY entity) throws VulpeApplicationException {
 		// persistent entity
 		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
 				entity.getId());
@@ -111,22 +118,40 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	}
 
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {
-		for (ENTITY entity : entities) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Deleting object: ".concat(entity.toString()));
-			}
-			// persistent entity
-			final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(
-					entity.getClass(), entity.getId());
-			if (entity instanceof VulpeLogicEntity) {
-				final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
-				logicEntity.setStatus(Status.D);
-				// make merge of entity
-				merge(entityDeleted);
-			} else {
-				getEntityManager().remove(entityDeleted);
+		boolean used = false;
+		for (final ENTITY entity : entities) {
+			if (!checkNotDeleteIf(entity)) {
+				used = true;
 			}
 		}
+		if (!used) {
+			for (final ENTITY entity : entities) {
+				simpleDelete(entity);
+			}
+		}
+	}
+
+	private boolean checkNotDeleteIf(final ENTITY entity) {
+		boolean valid = true;
+		final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
+		if (notDeleteIf != null) {
+			final String propertyName = VulpeStringUtil.lowerCaseFirst(entity.getClass()
+					.getSimpleName());
+			final StringBuilder hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ");
+			for (final Class<? extends VulpeEntity<?>> entityClass : notDeleteIf.usedBy()) {
+				hqlNotDeleteIf.append(entityClass.getSimpleName()).append(" obj where obj.")
+						.append(propertyName).append(".id = :").append(propertyName);
+				final Query query = getEntityManager().createQuery(hqlNotDeleteIf.toString());
+				query.setParameter(propertyName, entity.getId());
+				final Long size = (Long) query.getSingleResult();
+				if (size > 0) {
+					entity.setUsed(true);
+					valid = false;
+					break;
+				}
+			}
+		}
+		return valid;
 	}
 
 	/*

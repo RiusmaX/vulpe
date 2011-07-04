@@ -139,7 +139,7 @@ public class VulpeStartupListener implements ServletContextListener {
 					.showButtonUpdate());
 			global.put(Global.PROJECT_VIEW_SHOW_BUTTONS_DELETE, vulpeProject.view().layout()
 					.showButtonsDelete());
-			global.put(Global.PROJECT_VIEW_SHOW_LINE, vulpeProject.view().layout().showLine());
+			global.put(Global.PROJECT_VIEW_SHOW_ROWS, vulpeProject.view().layout().showRows());
 			global.put(Global.PROJECT_VIEW_SHOW_COPYRIGHT, vulpeProject.view().layout()
 					.showCopyright());
 			global.put(Global.PROJECT_VIEW_SHOW_MODIFICATION_WARNING, vulpeProject.view()

@@ -146,4 +146,22 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	public int compareTo(VulpeEntity<Long> o) {
 		return 0;
 	}
+
+	@Override
+	public Integer getRowNumber() {
+		return null;
+	}
+
+	@Override
+	public void setRowNumber(Integer row) {
+	}
+
+	@Override
+	public boolean isUsed() {
+		return false;
+	}
+
+	@Override
+	public void setUsed(boolean used) {
+	}
 }
