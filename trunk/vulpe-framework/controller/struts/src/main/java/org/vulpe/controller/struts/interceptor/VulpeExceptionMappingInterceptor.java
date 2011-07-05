@@ -38,6 +38,7 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeAuthenticationException;
 import org.vulpe.exception.VulpeAuthorizationException;
 import org.vulpe.exception.VulpeSystemException;
+import org.vulpe.exception.VulpeValidationException;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.util.TextParseUtil;
@@ -262,7 +263,7 @@ public class VulpeExceptionMappingInterceptor extends
 				final int lineNumber = ste.getLineNumber();
 				message += action.getText(key + ".debug", fileName, methodName, lineNumber);
 			} else {
-				message += "<i>" + cause.getMessage() + "</i>";
+				message += "<i>" + (exception instanceof VulpeValidationException ? "entity" : cause.getMessage()) + "</i>";
 			}
 		}
 		return message;

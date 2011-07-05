@@ -48,7 +48,7 @@
 		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
 		<c:if test="${empty elementId}"><c:set var="elementId" value="${labelKey}_${currentStatus.index}"/></c:if>
 		<td id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
-			<v:hidden property="${property}" targetName="entities[${currentStatus.index}]" render="${not empty entities}"/>
+			<v:hidden property="${property}" targetName="entities[${currentStatus.index}]" render="${not empty entities && property != 'id'}"/>
 			<c:if test="${not empty value}">
 				<c:choose>
 					<c:when test="${!isImage}">
