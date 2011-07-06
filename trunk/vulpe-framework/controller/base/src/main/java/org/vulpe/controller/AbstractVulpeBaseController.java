@@ -1914,59 +1914,58 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (VulpeValidationUtil.isNotEmpty(getSelected())) {
 			if (!onDeleteMany(entities)) {
 				valid = false;
+			} else {
+				final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
+				if (VulpeValidationUtil.isNotEmpty(entities)) {
+					invokeServices(getServiceMethodName(Operation.DELETE), new Class[] { List.class },
+							new Object[] { entities });
+					if (notDeleteIf != null) {
+						final List<Integer> rows = new ArrayList<Integer>();
+						for (final ENTITY entity2 : entities) {
+							if (entity2.isUsed()) {
+								for (final ENTITY entity3 : getEntities()) {
+									if (entity2.getId().equals(entity3.getId())) {
+										rows.add(entity3.getRowNumber());
+									}
+								}
+							}
+						}
+						if (rows.size() > 0) {
+							final StringBuilder affectedRows = new StringBuilder();
+							int count = 1;
+							for (final Integer line : rows) {
+								if (affectedRows.length() > 0) {
+									affectedRows.append(count == rows.size() ? " "
+											+ getText("label.vulpe.and") + " " : ", ");
+								}
+								affectedRows.append(line);
+								++count;
+							}
+							if (rows.size() == 1) {
+								addActionError(notDeleteIf.messageToOneRecord(), affectedRows
+										.toString());
+							} else {
+								addActionError(notDeleteIf.messageToManyRecords(), affectedRows
+										.toString());
+							}
+							valid = false;
+						}
+					}
+				} else {
+					invokeServices(getServiceMethodName(Operation.DELETE),
+							new Class[] { getControllerConfig().getEntityClass() },
+							new Object[] { entity });
+					if (notDeleteIf != null && entity.isUsed()) {
+						addActionError(notDeleteIf.messageToOneRecord());
+						valid = false;
+					}
+				}
 			}
 		} else if (getControllerType().equals(ControllerType.TABULAR)) {
 			setTabularSize(getTabularSize() - 1);
 		} else {
 			if (!onDeleteOne()) {
 				valid = false;
-			}
-		}
-		if (valid) {
-			final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
-			if (VulpeValidationUtil.isNotEmpty(entities)) {
-				invokeServices(getServiceMethodName(Operation.DELETE), new Class[] { List.class },
-						new Object[] { entities });
-				if (notDeleteIf != null) {
-					final List<Integer> rows = new ArrayList<Integer>();
-					for (final ENTITY entity2 : entities) {
-						if (entity2.isUsed()) {
-							for (final ENTITY entity3 : getEntities()) {
-								if (entity2.getId().equals(entity3.getId())) {
-									rows.add(entity3.getRowNumber());
-								}
-							}
-						}
-					}
-					if (rows.size() > 0) {
-						final StringBuilder affectedRows = new StringBuilder();
-						int count = 1;
-						for (final Integer line : rows) {
-							if (affectedRows.length() > 0) {
-								affectedRows.append(count == rows.size() ? " "
-										+ getText("label.vulpe.and") + " " : ", ");
-							}
-							affectedRows.append(line);
-							++count;
-						}
-						if (rows.size() == 1) {
-							addActionError(notDeleteIf.messageToOneRecord(), affectedRows
-									.toString());
-						} else {
-							addActionError(notDeleteIf.messageToManyRecords(), affectedRows
-									.toString());
-						}
-						valid = false;
-					}
-				}
-			} else {
-				invokeServices(getServiceMethodName(Operation.DELETE),
-						new Class[] { getControllerConfig().getEntityClass() },
-						new Object[] { entity });
-				if (notDeleteIf != null && entity.isUsed()) {
-					addActionError(notDeleteIf.messageToOneRecord());
-					valid = false;
-				}
 			}
 		}
 		setExecuted(true);
