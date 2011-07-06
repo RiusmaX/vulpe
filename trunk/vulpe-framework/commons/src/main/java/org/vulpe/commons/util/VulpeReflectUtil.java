@@ -405,9 +405,9 @@ public class VulpeReflectUtil {
 	 */
 	private static int getIndexTypeVariable(final TypeVariable<?> typeVariable) {
 		int index = -1;
-		for (TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration()
+		for (final TypeVariable<?> typeVariable2 : typeVariable.getGenericDeclaration()
 				.getTypeParameters()) {
-			index++;
+			++index;
 			if (typeVariable.getName().equals(typeVariable2.getName())) {
 				break;
 			}

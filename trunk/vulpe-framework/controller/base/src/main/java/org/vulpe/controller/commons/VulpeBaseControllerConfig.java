@@ -29,6 +29,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.controller.VulpeController;
+import org.vulpe.controller.VulpeController.Operation;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.services.VulpeService;
@@ -527,7 +528,12 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 				: getSimpleControllerName();
 		if (getControllerType().equals(ControllerType.BACKEND) || getControllerType().equals(ControllerType.FRONTEND)) {
 			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/");
-			this.viewPath += viewBaseName;
+			final String method = controller.getCurrentMethodName();
+			if (!Operation.FRONTEND.getValue().equals(method) && !Operation.BACKEND.getValue().equals(method)) {
+				this.viewPath += method;
+			} else {
+				this.viewPath += viewBaseName;
+			}
 			this.viewPath += Layout.SUFFIX_JSP;
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
@@ -575,7 +581,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 				for (String subReport : this.subReports) {
 					this.subReports[count] = Report.PATH.concat(this.controllerName).concat("/").concat(subReport)
 							.concat(Report.JASPER);
-					count++;
+					++count;
 				}
 			}
 		}

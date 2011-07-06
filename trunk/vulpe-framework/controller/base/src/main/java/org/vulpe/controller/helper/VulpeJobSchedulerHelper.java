@@ -75,7 +75,7 @@ public final class VulpeJobSchedulerHelper {
 			final URL urlWebInfClasses = WarUrlFinder.findWebInfClassesPath(servletContext);
 			final URL[] urlsWebInfLib = WarUrlFinder.findWebInfLibClasspaths(servletContext);
 			final List<URL> urls = new ArrayList<URL>();
-			for (URL url : urlsWebInfLib) {
+			for (final URL url : urlsWebInfLib) {
 				final String jarName = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
 				if (!VulpeConfigHelper.isSecurityEnabled() && jarName.contains(VulpeConstants.VULPE_SECURITY)) {
 					continue;
@@ -88,9 +88,9 @@ public final class VulpeJobSchedulerHelper {
 			}
 			final URL[] urlsFrameworkApplication = new URL[urls.size()];
 			int count = 0;
-			for (URL url : urls) {
+			for (final URL url : urls) {
 				urlsFrameworkApplication[count] = url;
-				count++;
+				++count;
 			}
 			annotationDB = new AnnotationDB();
 			try {

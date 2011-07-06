@@ -117,7 +117,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 							removedDetails.add(detail);
 						}
 						iterator.remove();
-						removed++;
+						++removed;
 					}
 				}
 			} else {
@@ -126,7 +126,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 					removedDetails.add(detail);
 				}
 				details.remove(getDetailIndex().intValue());
-				removed++;
+				++removed;
 			}
 			boolean save = false;
 			for (VulpeEntity<?> baseEntity : removedDetails) {

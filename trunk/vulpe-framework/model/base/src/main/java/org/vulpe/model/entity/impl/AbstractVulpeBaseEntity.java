@@ -69,11 +69,11 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public Integer getRowNumber() {
-		return getMap().containsKey(Entity.ROW) ? (Integer) getMap().get(Entity.ROW) : 0;
+		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER) : 0;
 	}
 
-	public void setRowNumber(final Integer row) {
-		getMap().put(Entity.ROW, row);
+	public void setRowNumber(final Integer rowNumber) {
+		getMap().put(Entity.ROW_NUMBER, rowNumber);
 	}
 
 	public String getOrderBy() {

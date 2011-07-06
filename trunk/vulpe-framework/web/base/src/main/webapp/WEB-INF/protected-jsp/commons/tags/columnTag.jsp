@@ -28,7 +28,7 @@
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
 		<c:if test="${not empty labelStyle}"><c:set var="labelStyle">style="${labelStyle}"</c:set></c:if>
 		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeRowHeader"</c:set></c:if>
-		<th ${elementId} ${onclick} ${onmouseover} ${onmouseout} colspan="${colspan}" ${width} scope="col" ${labelStyle} ${styleClass}>${label}<c:if test="${showBodyInHeader}"><jsp:doBody/></c:if></th>
+		<th id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} colspan="${colspan}" ${width} scope="col" ${labelStyle} ${styleClass}>${label}<c:if test="${showBodyInHeader}"><jsp:doBody/></c:if></th>
 	</c:when>
 	<c:otherwise>
 		<c:if test="${empty listName}"><c:set var="listName" value="entities"/></c:if>
@@ -48,7 +48,7 @@
 		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
 		<c:if test="${empty elementId}"><c:set var="elementId" value="${labelKey}_${currentStatus.index}"/></c:if>
 		<td id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
-			<v:hidden property="${property}" targetName="entities[${currentStatus.index}]" render="${not empty entities && property != 'id'}"/>
+			<v:hidden property="${property}" targetName="${listName}[${currentStatus.index}]" render="${not empty enableHooks && not empty property && property != 'id'}" targetValue="${currentItem}"/>
 			<c:if test="${not empty value}">
 				<c:choose>
 					<c:when test="${!isImage}">

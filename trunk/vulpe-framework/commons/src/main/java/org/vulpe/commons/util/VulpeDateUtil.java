@@ -876,7 +876,7 @@ public final class VulpeDateUtil {
 				final Calendar calendarAux = calendarMinor;
 				while (auxYear < yearMaior) {
 					dayYearMaior += calendarAux.getActualMaximum(Calendar.DAY_OF_YEAR);
-					auxYear++;
+					++auxYear;
 					calendarAux.set(Calendar.YEAR, auxYear);
 				}
 			}

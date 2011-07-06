@@ -67,7 +67,7 @@ public class EnumConverter extends AbstractVulpeBaseTypeConverter implements Typ
 				int count = 0;
 				for (Object object : list) {
 					values[count] = object.toString();
-					count++;
+					++count;
 				}
 				return values;
 			}

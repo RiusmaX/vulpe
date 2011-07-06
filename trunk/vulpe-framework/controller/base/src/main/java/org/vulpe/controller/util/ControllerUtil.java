@@ -35,9 +35,9 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to controller
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 @SuppressWarnings("unchecked")
 public class ControllerUtil {
@@ -46,7 +46,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if detail must be despised
-	 *
+	 * 
 	 * @return returns true if despised
 	 */
 	public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -74,7 +74,8 @@ public class ControllerUtil {
 							}
 						}
 					} else {
-						partBean = VulpeReflectUtil.getFieldValue(partBean == null ? bean : partBean, part);
+						partBean = VulpeReflectUtil.getFieldValue(partBean == null ? bean
+								: partBean, part);
 					}
 					++count;
 				}
@@ -90,31 +91,33 @@ public class ControllerUtil {
 
 	/**
 	 * Checks for duplicated detail
-	 *
+	 * 
 	 * @param beans
 	 * @param bean
 	 * @param fieldName
 	 * @param duplicatedBeans
 	 * @return if duplicated, returns true
 	 */
-	public boolean duplicatedItem(final Collection<VulpeEntity<?>> beans, final VulpeEntity<?> bean,
-			final String[] fieldNames, final Collection<DuplicatedBean> duplicatedBeans) {
+	public boolean duplicatedItem(final Collection<VulpeEntity<?>> beans,
+			final VulpeEntity<?> bean, final String[] fieldNames,
+			final Collection<DuplicatedBean> duplicatedBeans) {
 		int items = 0;
-		for (String fieldName : fieldNames) {
+		for (final String fieldName : fieldNames) {
 			final Object value = VulpeReflectUtil.getFieldValue(bean, fieldName);
 			if (value != null && StringUtils.isNotBlank(value.toString())) {
 				int count = 0;
 				for (VulpeEntity<?> realBean : beans) {
-					final Object valueRealBean = VulpeReflectUtil.getFieldValue(realBean, fieldName);
-					if (((realBean.getId() != null && realBean.getId().equals(bean.getId())) || (realBean.getId() == null && valueRealBean
-							.equals(value)))
+					final Object valueRealBean = VulpeReflectUtil
+							.getFieldValue(realBean, fieldName);
+					if (((realBean.getId() != null && realBean.getId().equals(bean.getId())) || (realBean
+							.getId() == null && valueRealBean.equals(value)))
 							&& count == 0) {
-						count++;
+						++count;
 						continue;
 					}
 					if (valueRealBean != null && StringUtils.isNotBlank(valueRealBean.toString())
 							&& valueRealBean.equals(value)) {
-						items++;
+						++items;
 					}
 				}
 			}
@@ -124,14 +127,14 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists details for despise.
-	 *
+	 * 
 	 * @param ignoreExclud
 	 *            (true = add on list [tabular cases], false = remove of list)
 	 *            indicate if marked items must be removed or ignored on model
 	 *            layer.
 	 */
-	public List<VulpeEntity<?>> despiseItens(final Collection<VulpeEntity<?>> beans, final String despiseFields[],
-			final boolean ignoreExclud) {
+	public List<VulpeEntity<?>> despiseItens(final Collection<VulpeEntity<?>> beans,
+			final String despiseFields[], final boolean ignoreExclud) {
 		if (beans == null) {
 			return null;
 		}
@@ -164,7 +167,7 @@ public class ControllerUtil {
 
 	/**
 	 * Checks if exists duplicated details.
-	 *
+	 * 
 	 * @param beans
 	 * @param despiseFields
 	 * @return Collection of duplicated beans
@@ -176,22 +179,22 @@ public class ControllerUtil {
 			return null;
 		}
 
-		int line = 1;
-		for (VulpeEntity<?> bean : beans) {
+		int row = 1;
+		for (final VulpeEntity<?> bean : beans) {
 			if (bean == null) {
 				continue;
 			}
 
 			if (duplicatedItem(beans, bean, despiseFields, duplicatedBeans)) {
-				duplicatedBeans.add(new DuplicatedBean(bean, line));
+				duplicatedBeans.add(new DuplicatedBean(bean, row));
 			}
-			line++;
+			++row;
 		}
 		return duplicatedBeans;
 	}
 
 	/**
-	 *
+	 * 
 	 * @param controller
 	 * @return
 	 */
@@ -199,7 +202,9 @@ public class ControllerUtil {
 		final String key = controller.getCurrentControllerKey();
 		final AbstractVulpeBaseController<?, ?> baseController = (AbstractVulpeBaseController<?, ?>) controller;
 		if (baseController.ever.containsKey(key)) {
-			return baseController.ever.getSelf(key);
+			final VulpeBaseControllerConfig config = baseController.ever.getSelf(key);
+			config.setController(baseController);
+			return config;
 		}
 
 		final List<VulpeBaseDetailConfig> details = new ArrayList<VulpeBaseDetailConfig>();
@@ -214,7 +219,7 @@ public class ControllerUtil {
 			final VulpeBaseDetailConfig detailConfig = details.get(count);
 			config.setControllerType(ControllerType.MAIN);
 			detailConfig.setupDetail(config, detail);
-			count++;
+			++count;
 		}
 		return config;
 	}

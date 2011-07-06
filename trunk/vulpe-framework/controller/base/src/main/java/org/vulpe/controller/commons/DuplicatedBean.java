@@ -19,23 +19,23 @@ public class DuplicatedBean {
 
 	private Object bean;
 
-	private Integer line;
+	private Integer rowNumber;
 
 	public DuplicatedBean() {
 		// default constructor
 	}
 
-	public DuplicatedBean(final Object bean, final Integer line) {
+	public DuplicatedBean(final Object bean, final Integer rowNumber) {
 		this.bean = bean;
-		this.line = line;
+		this.rowNumber = rowNumber;
 	}
 
-	public Integer getLine() {
-		return line;
+	public Integer getRowNumber() {
+		return rowNumber;
 	}
 
-	public void setLine(final Integer line) {
-		this.line = line;
+	public void setRowNumber(final Integer rowNumber) {
+		this.rowNumber = rowNumber;
 	}
 
 	public void setBean(final Object bean) {

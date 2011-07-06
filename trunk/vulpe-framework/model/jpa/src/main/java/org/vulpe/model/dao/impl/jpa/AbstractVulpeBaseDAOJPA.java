@@ -254,7 +254,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						call.append(",");
 					}
 					call.append("?");
-					count++;
+					++count;
 				} while (count < parameters.size());
 				call.append(")");
 			}
@@ -270,7 +270,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					}
 				}
 				for (Parameter parameter : parameters) {
-					count++;
+					++count;
 					if (parameter.getType() == Types.ARRAY) {
 						// Connection nativeConnection =
 						// cstmt.getConnection().getMetaData().getConnection();

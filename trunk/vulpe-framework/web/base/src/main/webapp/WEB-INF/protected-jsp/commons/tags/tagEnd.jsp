@@ -1,4 +1,5 @@
-<c:if test="${(!showAsText || !onlyToSee) && showRequiredIcon}">
+<c:if test="${!showAsText && !onlyToSee}">
+<c:if test="${showRequiredIcon}">
 <img id="${elementId}-loading" class="vulpeImageFieldLoading" src="${pageContext.request.contextPath}/themes/${global['project-theme']}/images/ajax/field-loader.gif" alt="<fmt:message key="label.vulpe.image.loading"/>" />
 <img id="${elementId}-iconErrorMessage" class="vulpeImageErrorMessage" src="${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/field-error-stop.png" alt="<fmt:message key="label.vulpe.image.field.error"/>" />
 <c:if test="${!showAsText && not empty validateMaxLength}"><span id="${elementId}-charcount" class="vulpeCharCount"></span></c:if>
@@ -18,8 +19,6 @@ vulpe.util.get('${elementId}').blur(function() {
 	var value = $(this).val();
 	var checkRequired = function(prepareName, property, requiredField) {
 		var requiredFieldId = formName + prepareName.replace(property, requiredField).replace(/\./g, "_").replace(/-/g, "_");
-		//var requiredFieldValue = vulpe.util.get(requiredFieldId).val();
-		//vulpe.view.setRequired(requiredFieldId, (value != "" && requiredFieldValue == ""));
 		vulpe.view.setRequired(requiredFieldId, (value != ""));
 	}
 	<c:forTokens var="requiredField" items="${requiredFields}" delims=",">
@@ -50,5 +49,6 @@ vulpe.config.elements["${elementId}"] = {
 </c:if>
 </c:if>
 </script>
+</c:if>
 </span>
 <c:if test="${paragraph}"></p></c:if>

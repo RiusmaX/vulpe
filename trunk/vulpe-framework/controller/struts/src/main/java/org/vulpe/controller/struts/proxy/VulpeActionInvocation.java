@@ -546,6 +546,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	private void executeMethods(final Object action) {
 		if (action instanceof VulpeController) {
 			final VulpeController controller = (VulpeController) action;
+			controller.setCurrentMethodName(proxy.getConfig().getMethodName());
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
 			for (final Method method : methods) {
 				final ExecuteAlways executeAlways = method.getAnnotation(ExecuteAlways.class);

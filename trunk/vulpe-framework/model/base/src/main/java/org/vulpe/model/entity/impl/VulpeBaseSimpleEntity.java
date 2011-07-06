@@ -153,7 +153,7 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	}
 
 	@Override
-	public void setRowNumber(Integer row) {
+	public void setRowNumber(Integer rowNumber) {
 	}
 
 	@Override

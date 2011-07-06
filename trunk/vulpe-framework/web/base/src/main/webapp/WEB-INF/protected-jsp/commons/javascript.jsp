@@ -1,4 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
+<c:set var="noCache" value="?no-cache=${now['no-cache']}"/>
 <script src="${pageContext.request.contextPath}/js/bodyoverlay.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>

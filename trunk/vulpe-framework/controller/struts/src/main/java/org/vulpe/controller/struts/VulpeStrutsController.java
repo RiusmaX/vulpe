@@ -158,7 +158,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 							removedDetails.add(detail);
 						}
 						iterator.remove();
-						removed++;
+						++removed;
 					}
 				}
 			} else {
@@ -167,7 +167,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					removedDetails.add(detail);
 				}
 				details.remove(getDetailIndex().intValue());
-				removed++;
+				++removed;
 			}
 			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
 					getDetail());
@@ -199,20 +199,18 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					}
 					if (save) {
 						if (getControllerType().equals(ControllerType.TABULAR)) {
-							invokeServices(Operation.DELETE.getValue().concat(
-									getControllerConfig().getEntityClass().getSimpleName()),
+							invokeServices(getServiceMethodName(Operation.DELETE),
 									new Class[] { List.class }, new Object[] { removedDetails });
 							if (getControllerConfig().getTabularPageSize() > 0) {
 								setTabularSize(getTabularSize() - removedDetails.size());
 							}
 						} else {
 							if (entity.getId() != null && size > details.size()) {
-								invokeServices(Operation.UPDATE.getValue().concat(
-										getControllerConfig().getEntityClass().getSimpleName()),
-										new Class[] { getControllerConfig().getEntityClass() },
-										new Object[] { entity });
-								invokeServices(Operation.DELETE.getValue().concat(
-										getControllerConfig().getEntityClass().getSimpleName()),
+								// invokeServices(getServiceMethodName(Operation.UPDATE),
+								// new Class[] {
+								// getControllerConfig().getEntityClass() },
+								// new Object[] { entity });
+								invokeServices(getServiceMethodName(Operation.DELETE),
 										new Class[] { List.class }, new Object[] { removedDetails });
 							}
 						}
@@ -302,14 +300,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
 					.getInstance().getDownloadInfo(collection, getReportParameters(),
 							getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(),
-							getReportFormat(),
+							getControllerConfig().getSubReports(), getReportFormat(),
 							getControllerConfig().getReportName(),
 							getControllerConfig().isReportDownload()) : StrutsReportUtil
 					.getInstance().getDownloadInfo(collection, getReportParameters(),
 							getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(),
-							getReportFormat());
+							getControllerConfig().getSubReports(), getReportFormat());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}

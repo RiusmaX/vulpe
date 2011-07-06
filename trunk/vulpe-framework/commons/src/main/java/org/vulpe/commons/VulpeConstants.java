@@ -145,10 +145,12 @@ public class VulpeConstants {
 			public static final String CURRENT_YEAR = "currentYear";
 			public static final String CURRENT_MONTH = "currentMonth";
 			public static final String CURRENT_DAY = "currentDay";
+			public static final String CURRENT_METHOD_NAME = "currentMethodName";
 			public static final String CONTROLLER_TYPE = "controllerType";
 			public static final String MASTER_TITLE_KEY = "masterTitleKey";
 			public static final String TITLE_KEY = "titleKey";
 			public static final String FORM_NAME = "formName";
+			public static final String NO_CACHE = "noCache";
 			public static final String FIELD_TO_FOCUS = "fieldToFocus";
 			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
 			public static final String REPORT_TITLE_KEY = "reportTitleKey";
@@ -371,7 +373,7 @@ public class VulpeConstants {
 			public static final String FAKE_ID = "fakeId";
 			public static final String SELECTED = "selected";
 			public static final String USED = "used";
-			public static final String ROW = "row";
+			public static final String ROW_NUMBER = "rowNumber";
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 			public static final String ORDER_BY = "orderBy";

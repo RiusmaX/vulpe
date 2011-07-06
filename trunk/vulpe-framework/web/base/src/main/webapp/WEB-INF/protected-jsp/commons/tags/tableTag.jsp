@@ -104,6 +104,7 @@
 				<tr class="vulpeTableFooter">${tableFooter}</tr>
 			</tfoot>
 		</c:if>
+		<c:if test="${name == 'entities'}"><c:set var="enableHooks" value="${true}" scope="request"/></c:if>
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
@@ -137,6 +138,7 @@
 		</c:forEach>
 		</tbody>
 		</table>
+		<c:remove var="enableHooks" scope="request"/>
 		<c:if test="${!exported}"><v:paging list="${pagingList}" actionName="${pagingActionName}" formName="${pagingFormName}" layer="${pagingLayer}" layerFields="${pagingLayerFields}" beforeJs="${pagingBeforeJs}" afterJs="${pagingAfterJs}"/></c:if>
 	</c:if>
 	<c:if test="${not empty sortPropertyInfoTableTag}">

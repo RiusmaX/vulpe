@@ -523,6 +523,10 @@ public interface VulpeController extends Serializable {
 	String getCurrentControllerKey();
 
 	String getCurrentControllerName();
+	
+	String getCurrentMethodName();
+	
+	void setCurrentMethodName(final String methodName);
 
 	public enum Operation {
 

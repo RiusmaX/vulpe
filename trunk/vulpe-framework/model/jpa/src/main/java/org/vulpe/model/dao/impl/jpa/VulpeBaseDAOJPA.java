@@ -478,7 +478,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				int count = 0;
 				for (final String name : params.keySet()) {
 					final Object value = params.get(name);
-					count++;
+					++count;
 					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(
 							QueryParameter.class, entity.getClass(), name);
 					if (queryParameter == null

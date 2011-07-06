@@ -56,11 +56,7 @@ $(document).ready(function() {
 		bgiframe: true,
 		minHeight: 50,
 		modal: true,
-		close: function() {
-			$("body").css("overflow", "auto");
-		},
 		open: function(event, ui) {
-			$("body").css("overflow", "hidden");
 			vulpe.util.removeHotKeys();
 		},
 		buttons: {
@@ -77,11 +73,7 @@ $(document).ready(function() {
 		resizable: false,
 		minHeight: 50,
 		modal: true,
-		close: function() {
-			$("body").css("overflow", "auto");
-		},
 		open: function(event, ui) {
-			$("body").css("overflow", "hidden");
 			vulpe.util.removeHotKeys();
 		},
 		overlay: {

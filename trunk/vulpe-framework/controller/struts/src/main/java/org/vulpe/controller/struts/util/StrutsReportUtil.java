@@ -79,7 +79,7 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 				for (String subReport : subReports) {
 					parameters.put("SUBREPORT_".concat(String.valueOf(count)),
 							getRealPath(subReport));
-					count++;
+					++count;
 				}
 			}
 			final JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,
