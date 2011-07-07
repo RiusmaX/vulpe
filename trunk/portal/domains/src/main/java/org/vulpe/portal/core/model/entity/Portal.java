@@ -36,6 +36,8 @@ public class Portal extends BasePortal {
 
 	@VulpeText(size = 40, maxlength = 100, required = true)
 	private TextTranslate offlineMessage;
+	
+	private Section homeSection;
 
 	public TextTranslate getName() {
 		return name;
@@ -83,6 +85,14 @@ public class Portal extends BasePortal {
 
 	public void setOfflineMessage(TextTranslate offlineMessage) {
 		this.offlineMessage = offlineMessage;
+	}
+
+	public void setHomeSection(Section homeSection) {
+		this.homeSection = homeSection;
+	}
+
+	public Section getHomeSection() {
+		return homeSection;
 	}
 
 

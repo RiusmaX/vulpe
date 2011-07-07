@@ -1,7 +1,5 @@
 package org.vulpe.portal.core.model.entity;
 
-import java.util.List;
-
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.Position;
 import org.vulpe.portal.commons.model.entity.Target;
@@ -43,7 +41,14 @@ public class Link extends BasePortal {
 	@VulpeSelect
 	private Target target;
 
-	private List<Position> positions;
+	private Position position;
+	
+	public Link() {
+	}
+
+	public Link(final Long id) {
+		setId(id);
+	}
 
 	public void setName(TextTranslate name) {
 		this.name = name;
@@ -117,19 +122,19 @@ public class Link extends BasePortal {
 		return target;
 	}
 
-	public void setPositions(List<Position> positions) {
-		this.positions = positions;
-	}
-
-	public List<Position> getPositions() {
-		return positions;
-	}
-
 	public void setContent(Content content) {
 		this.content = content;
 	}
 
 	public Content getContent() {
 		return content;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	public Position getPosition() {
+		return position;
 	}
 }

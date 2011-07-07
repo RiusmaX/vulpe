@@ -41,7 +41,7 @@
 	labelKey="label.portal.core.Content.main.fullText"
 	property="fullText"
 	cols="120" rows="15"
-	required="true"
+	required="false"
 	editor="true"
 />
 <v:checkbox

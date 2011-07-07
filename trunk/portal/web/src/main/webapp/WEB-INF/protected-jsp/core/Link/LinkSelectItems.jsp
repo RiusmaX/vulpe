@@ -25,7 +25,7 @@
 			/>
 			<v:column
 				labelKey="label.portal.core.Link.select.positions"
-				property="positions" enumType="Position"
+				property="position"
 			/>
 			<v:column
 				labelKey="label.portal.core.Link.select.clicks"

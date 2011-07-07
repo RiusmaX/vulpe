@@ -40,10 +40,7 @@
 	property="target"
 	required="true"
 />
-<fieldset id="positions">
-	<legend><v:label key="label.portal.core.Link.main.positions" /></legend>
-	<v:checkboxlist property="positions" enumeration="Position" />
-</fieldset>
+<v:select property="position" labelKey="label.portal.core.Link.main.positions" required="true" />
 <v:select
 	labelKey="label.portal.core.Link.main.status"
 	property="status"

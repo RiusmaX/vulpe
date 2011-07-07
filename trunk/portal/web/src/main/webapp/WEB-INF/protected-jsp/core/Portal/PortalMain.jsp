@@ -42,6 +42,14 @@
 	required="true"
 />
 <v:select
+	labelKey="label.portal.core.Portal.main.homeSection"
+	property="homeSection.id"
+	items="Section"
+	itemKey="id"
+	itemLabel="name"
+	showBlank="true" autoLoad="true"
+/>
+<v:select
 	labelKey="label.portal.core.Portal.main.status"
 	property="status"
 	showBlank="true" autoLoad="false"
