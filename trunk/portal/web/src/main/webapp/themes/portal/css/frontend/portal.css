@@ -275,6 +275,14 @@
 	margin-top: 18px;
 }
 
+#contentSubtitle {
+	color: #143D55;
+    font-size: 20px;
+    line-height: 1.3em;
+    margin: 0;
+    padding: 0;	
+}
+
 /* DOM Objects */
 * {
 	margin: 0;

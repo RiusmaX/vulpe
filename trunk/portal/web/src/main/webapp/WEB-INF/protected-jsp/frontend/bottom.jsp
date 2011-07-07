@@ -29,7 +29,7 @@
 	<h1><fmt:message key='label.portal.Community' /></h1>
 	</li>
 	<c:forEach var="community" items="${ever['vulpePortalLinks']}">
-	<c:if test="community.category.name='Community'">
+	<c:if test="${community.category.name == 'Community'}">
 	<c:if test="${community.target.value == '_blank'}"><c:set var="onclick">onclick="window.open(this.href); return false;"</c:set></c:if>
 	<li><a href="${community.url}" ${onclick}>${community.name}</a></li>
 	</c:if>

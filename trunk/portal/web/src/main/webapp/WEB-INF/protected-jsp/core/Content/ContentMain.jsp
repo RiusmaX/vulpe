@@ -20,6 +20,37 @@
 	showBlank="true" autoLoad="true"
 	required="true"
 />
+<fieldset>
+<table>
+<tr>
+<td colspan="2">
+<v:text
+	labelKey="label.portal.core.Content.main.videoURL"
+	property="videoURL"
+	size="40"
+/>
+</td>
+</tr>
+<tr>
+<td>
+<v:text
+	labelKey="label.portal.core.Content.main.videoWidth"
+	property="videoWidth"
+	size="5"
+	mask="INTEGER"
+/>
+</td>
+<td>
+<v:text
+	labelKey="label.portal.core.Content.main.videoHeight"
+	property="videoHeight"
+	size="5"
+	mask="INTEGER"
+/>
+</td>
+</tr>
+</table>
+</fieldset>
 <v:textTranslate
 	labelKey="label.portal.core.Content.main.title"
 	property="title"

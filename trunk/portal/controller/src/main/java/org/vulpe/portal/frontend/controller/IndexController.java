@@ -34,6 +34,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			final Section section = getService(CoreService.class).findSection(new Section(getId()));
 			now.put(Now.CONTENT_TITLE, section.getName());
 			now.put(Now.SHOW_CONTENT_TITLE, true);
+			now.put(Now.SHOW_CONTENT_SUBTITLE, true);
 			now.put(Now.CONTENT_SUBTITLE, section.getDescription());
 			final Content content = new Content();
 			content.setSection(section);
@@ -102,6 +103,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 						portal.getHomeSection());
 				now.put(Now.CONTENT_TITLE, section.getName());
 				now.put(Now.SHOW_CONTENT_TITLE, true);
+				now.put(Now.SHOW_CONTENT_SUBTITLE, true);
 				now.put(Now.CONTENT_SUBTITLE, section.getDescription());
 				final Content content = new Content();
 				content.setSection(section);

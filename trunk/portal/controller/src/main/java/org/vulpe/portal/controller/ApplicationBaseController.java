@@ -21,7 +21,6 @@ import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.model.entity.BasePortal;
-import org.vulpe.portal.core.model.entity.Community;
 import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Menu;
@@ -58,9 +57,6 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 				ever.put(Core.VULPE_PORTAL_LINKS, links);
 				final List<Social> social = getService(CoreService.class).readSocial(new Social());
 				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
-				final List<Community> communities = getService(CoreService.class).readCommunity(
-						new Community());
-				ever.put(Core.VULPE_PORTAL_COMMUNITIES, communities);
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
 			}

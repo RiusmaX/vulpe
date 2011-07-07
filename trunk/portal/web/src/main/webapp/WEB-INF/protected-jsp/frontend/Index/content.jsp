@@ -3,6 +3,14 @@
 <div id="contentPortal">
 	<c:set var="content" value="${now['content']}"/>
 	<div id="content_${content.id}">
+		<c:if test="${not empty content.videoURL}">
+		<object width="${content.videoWidth}" height="${content.videoHeight}">
+			<param name="movie"	value="${content.videoURL}"></param>
+			<param name="allowFullScreen" value="true"></param>
+			<param name="allowscriptaccess" value="always"></param>
+			<embed src="${content.videoURL}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="${content.videoWidth}" height="${content.videoHeight}"></embed>
+		</object><br/>
+		</c:if>
 		<c:out value="${content.fullText}" escapeXml="${content.escapeXml}" />
 		<br/><br/>
 		<a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/section/ajax/${content.section.id}');"><strong><fmt:message key="label.portal.back"/></strong></a><br/>

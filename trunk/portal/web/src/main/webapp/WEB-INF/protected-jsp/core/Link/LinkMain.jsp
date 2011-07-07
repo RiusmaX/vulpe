@@ -40,7 +40,7 @@
 	property="target"
 	required="true"
 />
-<v:select property="position" labelKey="label.portal.core.Link.main.positions" required="true" />
+<v:select property="position" labelKey="label.portal.core.Link.main.positions" showBlank="true" />
 <v:select
 	labelKey="label.portal.core.Link.main.status"
 	property="status"

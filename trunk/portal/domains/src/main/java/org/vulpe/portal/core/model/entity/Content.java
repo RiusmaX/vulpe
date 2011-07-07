@@ -33,6 +33,12 @@ public class Content extends BasePortal {
 	@VulpeText(size = 100, required = true)
 	private TextTranslate miniText;
 
+	private String videoURL;
+
+	private Integer videoWidth;
+
+	private Integer videoHeight;
+
 	@VulpeTextArea(rows = 5, cols = 80, required = true)
 	private TextTranslate fullText;
 
@@ -143,6 +149,30 @@ public class Content extends BasePortal {
 
 	public Boolean getShowComplete() {
 		return showComplete;
+	}
+
+	public void setVideoURL(String videoURL) {
+		this.videoURL = videoURL;
+	}
+
+	public String getVideoURL() {
+		return videoURL;
+	}
+
+	public void setVideoWidth(Integer videoWidth) {
+		this.videoWidth = videoWidth;
+	}
+
+	public Integer getVideoWidth() {
+		return videoWidth;
+	}
+
+	public void setVideoHeight(Integer videoHeight) {
+		this.videoHeight = videoHeight;
+	}
+
+	public Integer getVideoHeight() {
+		return videoHeight;
 	}
 
 }
