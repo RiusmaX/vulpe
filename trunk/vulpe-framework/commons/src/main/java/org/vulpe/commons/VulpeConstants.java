@@ -136,24 +136,33 @@ public class VulpeConstants {
 		}
 
 		public class Now {
-			public static final String BUTTONS = "buttons";
-			public static final String SHOW_CONTENT_TITLE = "showContentTitle";
-			public static final String CONTENT_TITLE = "contentTitle";
-			public static final String SHOW_CONTENT_SUBTITLE = "showContentSubtitle";
-			public static final String CONTENT_SUBTITLE = "contentSubtitle";
+			//Commons
 			public static final String SYSTEM_DATE = "systemDate";
 			public static final String CURRENT_YEAR = "currentYear";
 			public static final String CURRENT_MONTH = "currentMonth";
 			public static final String CURRENT_DAY = "currentDay";
-			public static final String CURRENT_METHOD_NAME = "currentMethodName";
-			public static final String CONTROLLER_TYPE = "controllerType";
-			public static final String MASTER_TITLE_KEY = "masterTitleKey";
-			public static final String TITLE_KEY = "titleKey";
+
+			// View
+			public static final String BUTTONS = "buttons";
+			public static final String CONTENT_TITLE = "contentTitle";
+			public static final String CONTENT_SUBTITLE = "contentSubtitle";
 			public static final String FORM_NAME = "formName";
+			public static final String FOCUS_TO_FIELD = "focusToField";
+			public static final String MASTER_TITLE_KEY = "masterTitleKey";
 			public static final String NO_CACHE = "noCache";
-			public static final String FIELD_TO_FOCUS = "fieldToFocus";
+			public static final String SHOW_CONTENT_TITLE = "showContentTitle";
+			public static final String SHOW_CONTENT_SUBTITLE = "showContentSubtitle";
 			public static final String REQUIRE_ONE_FILTER = "requireOneFilter";
 			public static final String REPORT_TITLE_KEY = "reportTitleKey";
+			public static final String TARGET_NAME = "targetName";
+			public static final String TARGET_CONFIG = "targetConfig";
+			public static final String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
+			public static final String TITLE_KEY = "titleKey";
+
+			// Controller
+			public static final String CURRENT_METHOD_NAME = "currentMethodName";
+			public static final String CONTROLLER_CONFIG = "controllerConfig";
+			public static final String CONTROLLER_TYPE = "controllerType";
 		}
 
 		public class Ever {
@@ -308,8 +317,8 @@ public class VulpeConstants {
 			public static final String CSS_CONTEXT = "/css/";
 			public static final String THEMES_CONTEXT = "/themes/";
 			public static final String SUFFIX_FORM = "Form";
-			public static final String BODY_TWICE = "vulpeBodyTwice";
-			public static final String BODY_TWICE_TYPE = "vulpeBodyTwiceType";
+			public static final String BODY_TWICE = "bodyTwice";
+			public static final String BODY_TWICE_TYPE = "bodyTwiceType";
 			public static final String SUFFIX_JSP = ".jsp";
 			public static final String SUFFIX_JSP_TABULAR = "Tabular.jsp";
 			public static final String SUFFIX_JSP_OTHER = ".jsp";
@@ -330,9 +339,6 @@ public class VulpeConstants {
 			public static final String BODY_TABULAR_JSP = "tabular.jsp";
 			public static final String BODY_TABULAR_ACTIONS_JSP = "tabularActions.jsp";
 
-			public static final String TARGET_NAME = "vulpeTargetName";
-			public static final String TARGET_CONFIG = "targetConfig";
-			public static final String TARGET_CONFIG_PROPERTY_NAME = "targetConfigPropertyName";
 			public static final String DETAIL_ITEM = "_item";
 		}
 

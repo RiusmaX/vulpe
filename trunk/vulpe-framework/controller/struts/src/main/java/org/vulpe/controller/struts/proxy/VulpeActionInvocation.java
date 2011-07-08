@@ -545,9 +545,9 @@ public class VulpeActionInvocation implements ActionInvocation {
 	 */
 	private void executeMethods(final Object action) {
 		if (action instanceof VulpeController) {
-			final VulpeController controller = (VulpeController) action;
-			controller.setCurrentMethodName(proxy.getConfig().getMethodName());
-			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
+			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) action;
+			baseController.vulpe.controller().currentMethodName(proxy.getConfig().getMethodName());
+			final List<Method> methods = VulpeReflectUtil.getMethods(baseController.getClass());
 			for (final Method method : methods) {
 				final ExecuteAlways executeAlways = method.getAnnotation(ExecuteAlways.class);
 				if (executeAlways != null) {
@@ -645,29 +645,30 @@ public class VulpeActionInvocation implements ActionInvocation {
 	private boolean sameController(final Object action) {
 		boolean same = false;
 		if (action instanceof VulpeController) {
-			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) action;
-			if (controller.ever != null) {
-				controller.ever.put(Ever.CURRENT_CONTROLLER_NAME, controller
-						.getCurrentControllerName());
-				final String currentControllerKey = controller.ever
+			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) action;
+			if (baseController.ever != null) {
+				baseController.ever.put(Ever.CURRENT_CONTROLLER_NAME, baseController.vulpe
+						.controller().currentName());
+				final String currentControllerKey = baseController.ever
 						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
-				final String controllerKey = controller.getCurrentControllerKey();
+				final String controllerKey = baseController.vulpe.controller().currentKey();
 				boolean autocomplete = false;
-				if (controller.getEntitySelect() != null
-						&& StringUtils.isNotEmpty(controller.getEntitySelect().getAutocomplete())) {
+				if (baseController.getEntitySelect() != null
+						&& StringUtils.isNotEmpty(baseController.getEntitySelect()
+								.getAutocomplete())) {
 					autocomplete = true;
 				}
 				if (StringUtils.isEmpty(currentControllerKey)) {
-					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;
 				} else if (!currentControllerKey.equals(controllerKey)
-						&& StringUtils.isEmpty(controller.getPopupKey()) && !autocomplete) {
-					controller.ever.removeWeakRef();
-					controller.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
+						&& StringUtils.isEmpty(baseController.getPopupKey()) && !autocomplete) {
+					baseController.ever.removeWeakRef();
+					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;
 				}
 			}
-			updateParameters(controller);
+			updateParameters(baseController);
 		}
 		return same;
 	}

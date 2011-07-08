@@ -136,25 +136,25 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				}
 			}
 			if (save) {
-				if (getControllerType().equals(ControllerType.TABULAR)) {
+				if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 					invokeServices(Operation.DELETE.getValue().concat(
-							getControllerConfig().getEntityClass().getSimpleName()), new Class[] { List.class },
+							vulpe.controller().config().getEntityClass().getSimpleName()), new Class[] { List.class },
 							new Object[] { removedDetails });
-					if (getControllerConfig().getTabularPageSize() > 0) {
+					if (vulpe.controller().config().getTabularPageSize() > 0) {
 						setTabularSize(getTabularSize() - removedDetails.size());
 					}
 				} else {
 					if (entity.getId() != null && size > details.size()) {
 						invokeServices(Operation.UPDATE.getValue().concat(
-								getControllerConfig().getEntityClass().getSimpleName()),
-								new Class[] { getControllerConfig().getEntityClass() }, new Object[] { entity });
+								vulpe.controller().config().getEntityClass().getSimpleName()),
+								new Class[] { vulpe.controller().config().getEntityClass() }, new Object[] { entity });
 						invokeServices(Operation.DELETE.getValue().concat(
-								getControllerConfig().getEntityClass().getSimpleName()), new Class[] { List.class },
+								vulpe.controller().config().getEntityClass().getSimpleName()), new Class[] { List.class },
 								new Object[] { removedDetails });
 					}
 				}
 			}
-			if (!getControllerType().equals(ControllerType.TABULAR)) {
+			if (!vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				configureDetail();
 			}
 			setExecuted(true);
@@ -183,12 +183,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			// }
 
 			int newDetails = 1;
-			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(getDetail());
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(getDetail());
 			if (detailConfig != null) {
 				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig.getNewDetails();
 			}
 			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
-			if (collection != null && getControllerType().equals(ControllerType.TABULAR)) {
+			if (collection != null && vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				setTabularSize(collection.size());
 			}
 			for (int i = 0; i < newDetails; i++) {
@@ -197,7 +197,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 
 			if (detailConfig != null) {
 				newDetails = detailConfig.getNewDetails();
-				final String parentName = getControllerConfig().getParentName(getDetail());
+				final String parentName = vulpe.controller().config().getParentName(getDetail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
@@ -206,7 +206,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				}
 			}
 
-			if (getControllerType().equals(ControllerType.TABULAR)) {
+			if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				tabularPagingMount(true);
 			}
 			return detailConfig;
@@ -310,9 +310,9 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 
 	@Path("/")
 	public void vraptor() {
-		if (getControllerType().equals(ControllerType.FRONTEND)) {
+		if (vulpe.controller().type().equals(ControllerType.FRONTEND)) {
 			frontend();
-		} else if (getControllerType().equals(ControllerType.BACKEND)) {
+		} else if (vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			backend();
 		}
 	}

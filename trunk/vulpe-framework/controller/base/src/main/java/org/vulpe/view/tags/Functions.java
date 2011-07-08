@@ -49,6 +49,7 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 
@@ -577,9 +578,8 @@ public class Functions {
 		}
 	}
 
-	public static VulpeHashMap<String, Object> getEver(final PageContext pageContext) {
-		return (VulpeHashMap<String, Object>) getSession(pageContext).getAttribute(
-				VulpeConstants.Session.EVER);
+	public static EverParameter getEver(final PageContext pageContext) {
+		return EverParameter.getInstance(getSession(pageContext));
 	}
 
 	public static HttpSession getSession(final PageContext pageContext) {

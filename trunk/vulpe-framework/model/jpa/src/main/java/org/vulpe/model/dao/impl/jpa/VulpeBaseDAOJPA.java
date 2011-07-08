@@ -257,7 +257,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			query.setFirstResult(paging.getFromIndex());
 			query.setMaxResults(pageSize);
 			final List<ENTITY> entities = query.getResultList();
-			for (ENTITY entity2 : entities) {
+			for (final ENTITY entity2 : entities) {
 				entity2.setMap(entity.getMap());
 			}
 			loadRelationships(entities, params, false);
@@ -324,8 +324,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
 						final QueryParameter queryParameter = field
 								.getAnnotation(QueryParameter.class);
-						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "."
-								: "")
+						String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
 								+ (queryParameter != null
 										&& StringUtils.isNotEmpty(queryParameter.value()) ? "_"
 										+ queryParameter.value() : field.getName());
@@ -341,9 +340,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							}
 						}
 					} else if (isNotEmpty(value)) {
+						final QueryParameter queryParameter = field
+								.getAnnotation(QueryParameter.class);
 						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "."
 								: "")
-								+ field.getName();
+								+ (queryParameter != null
+										&& StringUtils.isNotEmpty(queryParameter.value())
+										&& queryParameter.fake() ? "!" + queryParameter.value()
+										: field.getName());
 						final Like like = field.getAnnotation(Like.class);
 						if (like != null) {
 							if (like.type().equals(LikeType.BEGIN)) {
@@ -475,10 +479,19 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (!hql.toString().toLowerCase().contains("where")) {
 					hql.append(" where ");
 				}
+				int size = 0;
+				for (final String name : params.keySet()) {
+					if (!name.startsWith("!")) {
+						++size;
+					}
+				}
 				int count = 0;
 				for (final String name : params.keySet()) {
-					final Object value = params.get(name);
 					++count;
+					if (name.startsWith("!")) {
+						continue;
+					}
+					final Object value = params.get(name);
 					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(
 							QueryParameter.class, entity.getClass(), name);
 					if (queryParameter == null
@@ -516,7 +529,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							hql.append(")");
 						}
 					}
-					if (count < params.size()) {
+					if (count < size) {
 						if (StringUtils.isNotBlank(entity.getAutocompleteTerm())) {
 							hql.append(" or ");
 						} else {
@@ -537,7 +550,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().where())) {
 				if (!hql.toString().toLowerCase().contains("where")) {
 					hql.append(" where ");
-				} else {
+				} else if (!hql.toString().toLowerCase().trim().endsWith("where")) {
 					hql.append(" and ");
 				}
 				hql.append(queryConfiguration.complement().where());
@@ -557,15 +570,16 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(" order by ");
 			hql.append(queryConfiguration.replace().orderBy());
 		} else {
-			if (StringUtils.isNotEmpty(entity.getOrderBy())
-					|| StringUtils.isNotEmpty(order.toString())) {
+			if (StringUtils.isNotEmpty(order.toString()) && (entity.getOrderBy().equals("obj.id") || StringUtils.isBlank(entity.getOrderBy()))) {
+				entity.setOrderBy(order.toString());
+			}
+			if (StringUtils.isNotEmpty(entity.getOrderBy())) {
 				if (hql.toString().toLowerCase().contains("order by")) {
 					hql.append(", ");
 				} else {
 					hql.append(" order by ");
 				}
-				hql.append(StringUtils.isNotEmpty(order.toString()) ? order.toString() : entity
-						.getOrderBy());
+				hql.append(entity.getOrderBy());
 			}
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().orderBy())) {
 				if (!hql.toString().toLowerCase().contains("order by")) {

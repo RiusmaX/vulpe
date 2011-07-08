@@ -9,7 +9,6 @@
 	<c:if test="${empty maxlength}"><c:set var="maxlength" value="10"/></c:if>
 	<c:if test="${not empty property && util:isFieldInValidator(targetValue, property)}"><c:set var="onblur" value="validate${fn:toUpperCase(fn:substring(property, 0, 1))}${fn:substring(property, 1, -1)}(); ${onblur}"/></c:if>
 	<c:if test="${saveInSession}"><c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/></c:if>
-	<c:if test="${onlyToSee}"><c:set var="showAsText" value="${true}"/></c:if>
 	<c:if test="${empty validateType}"><c:set var="validateType" value="DATE"/></c:if>
 	<c:if test="${empty validateDatePattern}"><c:set var="validateDatePattern" value="${global['project-datePattern']}"/></c:if>
 	<c:choose>

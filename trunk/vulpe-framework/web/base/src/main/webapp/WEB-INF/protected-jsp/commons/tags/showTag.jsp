@@ -2,12 +2,12 @@
 <c:if test="${not empty global['project-mobile-enabled'] || global['project-view-breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty currentItem}">
 	<c:if test="${empty targetName}">
-		<c:if test="${empty targetConfig}"><c:set var="targetName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:if>
-		<c:if test="${not empty targetConfig}"><c:set var="targetName" value="${targetConfigPropertyName}[${currentStatus.index}]"/></c:if>
+		<c:if test="${empty now['targetConfig']}"><c:set var="targetName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:if>
+		<c:if test="${not empty now['targetConfig']}"><c:set var="targetName" value="${now['now['targetConfig']PropertyName']}[${currentStatus.index}]"/></c:if>
 	</c:if>
 	<c:if test="${empty targetValue}">
 		<c:choose>
-		<c:when test="${empty targetConfig}">
+		<c:when test="${empty now['targetConfig']}">
 			<c:set var="targetValueEL" value="${'${'}${targetName}${'}'}"/>
 			<c:set var="targetValue" value="${util:eval(pageContext, targetValueEL)}"/>
 		</c:when>

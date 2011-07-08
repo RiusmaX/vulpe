@@ -71,6 +71,7 @@ var vulpe = {
 			alertMessage: "#alertMessage",
 			confirmationDialog: "#confirmationDialog",
 			confirmationMessage: "#confirmationMessage",
+			controlFields: "#vulpeControlFields",
 			informationDialog: "#informationDialog",
 			informationMessage: "#informationMessage",
 			messages: "#messages",
@@ -2526,6 +2527,9 @@ var vulpe = {
 
 				// serialize form
 				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.formName)).fieldSerialize();
+				if (vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) {
+					queryStringForm = (vulpe.util.isEmpty(queryStringForm) ? "" : queryStringForm + "&") + jQuery(":input[type!='file']", vulpe.config.layers.controlFields).fieldSerialize();
+				}
 				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
 					options.queryString = options.queryString + '&' + queryStringForm;
 				} else if (vulpe.util.isNotEmpty(queryStringForm)) {

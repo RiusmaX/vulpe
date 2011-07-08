@@ -114,34 +114,30 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 
 	public DownloadInfo getDownloadInfo(final Collection<?> collection,
 			final VulpeHashMap<String, Object> parameters, final String fileName,
-			final String[] subReports, final String format) {
+			final String[] subReports, final String format, final String reportName,
+			boolean reportDownload) {
 		String contentType = null;
 		if (format.equals(StrutsReportUtil.FORMAT_CSV)) {
 			contentType = "text/plain";
+			reportDownload = true;
 		} else if (format.equals(StrutsReportUtil.FORMAT_HTML)) {
 			contentType = "text/html";
 		} else if (format.equals(StrutsReportUtil.FORMAT_XLS)) {
 			contentType = "application/vnd.ms-excel";
+			reportDownload = true;
 		} else if (format.equals(StrutsReportUtil.FORMAT_XML)) {
 			contentType = "text/xml";
 		} else if (format.equals(StrutsReportUtil.FORMAT_RTF)) {
 			contentType = "application/rtf";
+			reportDownload = true;
 		} else {
 			contentType = "application/pdf";
 		}
 		final byte data[] = getJasperReport(fileName, subReports, collection, parameters, format);
-		return data == null ? null : new DownloadInfo(data, contentType);
-	}
-
-	public DownloadInfo getDownloadInfo(final Collection<?> collection,
-			final VulpeHashMap<String, Object> parameters, final String fileName,
-			final String[] subReports, final String format, final String reportName,
-			final boolean reportDownload) {
-		final DownloadInfo downloadInfo = getDownloadInfo(collection, parameters, fileName,
-				subReports, format);
+		final DownloadInfo downloadInfo = data == null ? null : new DownloadInfo(data, contentType);
 		if (downloadInfo != null) {
 			downloadInfo.setName(reportName.concat(".").concat(format.toLowerCase()));
-			String contentDisposition = reportDownload ? "attachment; " : "inline; ";
+			final String contentDisposition = reportDownload ? "attachment; " : "inline; ";
 			downloadInfo.setContentDisposition(contentDisposition.concat("filename=\"").concat(
 					downloadInfo.getName()).concat("\""));
 		}

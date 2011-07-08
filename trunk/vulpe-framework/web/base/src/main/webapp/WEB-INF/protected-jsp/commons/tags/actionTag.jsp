@@ -53,7 +53,7 @@
 	<c:if test="${not empty validate}"><c:set var="validate" value=", validate: ${validate}"/></c:if>
 	<c:if test="${not empty afterJs}"><c:set var="afterJs" value=", afterJs: '${fn:escapeXml(afterJs)}'"/></c:if>
 	<c:if test="${not empty beforeJs}"><c:set var="beforeJs" value=", beforeJs: '${fn:escapeXml(beforeJs)}'"/></c:if>
-	<c:if test="${not empty action && !fn:contains(action, '/')}"><c:set var="action" value="${controllerConfig.controllerName}/${action}/ajax"/></c:if>
+	<c:if test="${not empty action && !fn:contains(action, '/')}"><c:set var="action" value="${now['controllerConfig'].controllerName}/${action}/ajax"/></c:if>
 	<c:if test="${empty javascript}">
 		<c:choose>
 			<c:when test="${empty action}">

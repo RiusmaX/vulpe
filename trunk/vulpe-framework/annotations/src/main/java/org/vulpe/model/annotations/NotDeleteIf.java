@@ -35,7 +35,9 @@ public @interface NotDeleteIf {
 
 	Class<? extends VulpeEntity<?>>[] usedBy();
 
-	String messageToOneRecord() default "{vulpe.error.validate.record.cannot.be.deleted}";
+	String messageToRecordOnMain() default "{vulpe.error.validate.record.cannot.be.deleted}";
+	
+	String messageToOneRecordOnSelect() default "{vulpe.error.validate.select.record.cannot.be.deleted}";
 
-	String messageToManyRecords() default "{vulpe.error.validate.records.cannot.be.deleted}";
+	String messageToManyRecordsOnSelect() default "{vulpe.error.validate.select.records.cannot.be.deleted}";
 }

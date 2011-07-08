@@ -34,7 +34,6 @@ import ognl.OgnlRuntime;
 import ognl.PropertyAccessor;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants;
@@ -169,7 +168,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				details.remove(getDetailIndex().intValue());
 				++removed;
 			}
-			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					getDetail());
 			if (detailConfig != null) {
 				final Paging paging = ever.getSelf(detailConfig.getName()
@@ -198,28 +197,24 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						}
 					}
 					if (save) {
-						if (getControllerType().equals(ControllerType.TABULAR)) {
+						if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 							invokeServices(getServiceMethodName(Operation.DELETE),
 									new Class[] { List.class }, new Object[] { removedDetails });
-							if (getControllerConfig().getTabularPageSize() > 0) {
+							if (vulpe.controller().config().getTabularPageSize() > 0) {
 								setTabularSize(getTabularSize() - removedDetails.size());
 							}
 						} else {
 							if (entity.getId() != null && size > details.size()) {
-								// invokeServices(getServiceMethodName(Operation.UPDATE),
-								// new Class[] {
-								// getControllerConfig().getEntityClass() },
-								// new Object[] { entity });
 								invokeServices(getServiceMethodName(Operation.DELETE),
 										new Class[] { List.class }, new Object[] { removedDetails });
 							}
 						}
 					}
 					Ognl.setValue(getDetail(), context, this, details);
-					final String parentName = getControllerConfig().getParentName(getDetail());
+					final String parentName = vulpe.controller().config().getParentName(getDetail());
 					final Object parent = Ognl.getValue(parentName, context, this);
-					if (getDetailConfig().getParentDetailConfig() != null) {
-						setRequestAttribute(getDetailConfig().getParentDetailConfig().getBaseName()
+					if (vulpe.controller().detailConfig().getParentDetailConfig() != null) {
+						setRequestAttribute(vulpe.controller().detailConfig().getParentDetailConfig().getBaseName()
 								.concat(Layout.DETAIL_ITEM), parent);
 					}
 				} else {
@@ -229,7 +224,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						mountDetailPaging(detailConfig, paging);
 					}
 				}
-				if (!getControllerType().equals(ControllerType.TABULAR)) {
+				if (!vulpe.controller().type().equals(ControllerType.TABULAR)) {
 					configureDetail();
 				}
 			}
@@ -294,18 +289,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		try {
 			Collection<?> collection = getReportCollection();
 			if (collection == null) {
-				collection = (Collection<?>) PropertyUtils.getProperty(this, getControllerConfig()
+				collection = (Collection<?>) PropertyUtils.getProperty(this, vulpe.controller().config()
 						.getReportDataSourceName());
 			}
-			return StringUtils.isNotBlank(getControllerConfig().getReportName()) ? StrutsReportUtil
-					.getInstance().getDownloadInfo(collection, getReportParameters(),
-							getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(), getReportFormat(),
-							getControllerConfig().getReportName(),
-							getControllerConfig().isReportDownload()) : StrutsReportUtil
-					.getInstance().getDownloadInfo(collection, getReportParameters(),
-							getControllerConfig().getReportFile(),
-							getControllerConfig().getSubReports(), getReportFormat());
+			return StrutsReportUtil.getInstance()
+					.getDownloadInfo(collection, getReportParameters(),
+							vulpe.controller().config().getReportFile(),
+							vulpe.controller().config().getSubReports(), getReportFormat(),
+							vulpe.controller().config().getReportName(),
+							vulpe.controller().config().isReportDownload());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
@@ -384,7 +376,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @return Map with form parameters
 	 */
 	public Map getFormParams() {
-		final String keyForm = getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+		final String keyForm = vulpe.controller().currentKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		Map formParams = ever.getSelf(keyForm);
 		if (formParams == null) {
 			formParams = new HashMap();
@@ -542,7 +534,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	protected boolean validateDetails() {
 		final Map context = ActionContext.getContext().getContextMap();
 		boolean valid = true;
-		for (final VulpeBaseDetailConfig detailConfig : getControllerConfig().getDetails()) {
+		for (final VulpeBaseDetailConfig detailConfig : vulpe.controller().config().getDetails()) {
 			if (detailConfig.getParentDetailConfig() == null) {
 				despiseDetail(this, getEntity(), detailConfig);
 				try {
@@ -647,7 +639,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				createNullObjects = true;
 			}
 			int newDetails = 1;
-			final VulpeBaseDetailConfig detailConfig = getControllerConfig().getDetailConfig(
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					getDetail());
 			if (detailConfig != null) {
 				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig
@@ -684,7 +676,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					paging.setList(list);
 				}
 				newDetails = detailConfig.getNewDetails();
-				final String parentName = getControllerConfig().getParentName(getDetail());
+				final String parentName = vulpe.controller().config().getParentName(getDetail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
@@ -712,7 +704,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				// }
 			}
 
-			if (getControllerType().equals(ControllerType.TABULAR)) {
+			if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				tabularPagingMount(true);
 			}
 			return detailConfig;
@@ -737,9 +729,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
-		if (((getControllerType().equals(ControllerType.TABULAR) && (view.addNewDetailsOnTop() || getControllerConfig()
-				.getTabularConfig().isAddNewDetailsOnTop())) || (getControllerType().equals(
-				ControllerType.MAIN) && (view.addNewDetailsOnTop() || getDetailConfig()
+		if (((vulpe.controller().type().equals(ControllerType.TABULAR) && (view.addNewDetailsOnTop() || vulpe.controller().config()
+				.getTabularConfig().isAddNewDetailsOnTop())) || (vulpe.controller().type().equals(
+				ControllerType.MAIN) && (view.addNewDetailsOnTop() || vulpe.controller().detailConfig()
 				.isAddNewDetailsOnTop())))
 				&& VulpeValidationUtil.isNotEmpty(collection)) {
 			final Object value = accessor.getProperty(context, collection, 0);

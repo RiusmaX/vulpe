@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.vulpe.controller.commons.VulpeControllerConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
@@ -271,14 +270,6 @@ public interface VulpeController extends Serializable {
 	void upload();
 
 	/**
-	 * Return current action configuration.
-	 * 
-	 * @since 1.0
-	 * @return ActionConfig object for current action.
-	 */
-	VulpeControllerConfig getControllerConfig();
-
-	/**
 	 * Method find specific service returns POJO or EJB implementation.
 	 * 
 	 * @param serviceClass
@@ -423,30 +414,6 @@ public interface VulpeController extends Serializable {
 	void setRequestAttribute(final String attributeName, final Object attributeValue);
 
 	/**
-	 * Retrieves key of select form object (entitySelect) attribute on session
-	 * scope.
-	 * 
-	 * @return
-	 */
-	String getSelectFormKey();
-
-	/**
-	 * Retrieves key of select table object (entities) attribute on session
-	 * scope.
-	 * 
-	 * @return
-	 */
-	String getSelectTableKey();
-
-	/**
-	 * Retrieves key of select paging object (paging) attribute on session
-	 * scope.
-	 * 
-	 * @return
-	 */
-	String getSelectPagingKey();
-
-	/**
 	 * Retrieves current HTTP Request.
 	 * 
 	 * @return Http Servlet Request
@@ -519,14 +486,6 @@ public interface VulpeController extends Serializable {
 	void setUrlRedirect(String urlRedirect);
 
 	String getUrlRedirect();
-
-	String getCurrentControllerKey();
-
-	String getCurrentControllerName();
-	
-	String getCurrentMethodName();
-	
-	void setCurrentMethodName(final String methodName);
 
 	public enum Operation {
 

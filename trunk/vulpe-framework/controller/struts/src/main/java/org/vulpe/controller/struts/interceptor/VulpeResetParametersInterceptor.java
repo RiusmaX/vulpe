@@ -38,12 +38,12 @@ public class VulpeResetParametersInterceptor extends MethodFilterInterceptor {
 	@Override
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		if (invocation.getAction() instanceof VulpeController) {
-			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) invocation
 					.getAction();
-			final String key = controller.getCurrentControllerKey().concat(
+			final String key = baseController.vulpe.controller().currentKey().concat(
 					VulpeConstants.PARAMS_SESSION_KEY);
-			if (controller.ever.containsKey(key) && isMethodReset(invocation)) {
-				controller.ever.remove(key);
+			if (baseController.ever.containsKey(key) && isMethodReset(invocation)) {
+				baseController.ever.remove(key);
 			}
 		}
 		return invocation.invoke();

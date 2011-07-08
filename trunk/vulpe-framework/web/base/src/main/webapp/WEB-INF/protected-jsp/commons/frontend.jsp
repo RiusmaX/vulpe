@@ -5,7 +5,7 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/frontendActions.jsp"%>
 	</div>
 	<div id="vulpeFrontendBody">
-		<jsp:include page="${controllerConfig.viewPath}" />
+		<jsp:include page="${now['controllerConfig'].viewPath}" />
 	</div>
 	<c:if test="${not empty frontendFooter}">
 	<div id="vulpeFrontendFooter">

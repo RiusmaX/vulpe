@@ -309,7 +309,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		if (params != null) {
 			for (final String name : params.keySet()) {
 				Object value = params.get(name);
-				final String paramName = name.replace("_", "").replaceAll("\\.", "_");
+				final String paramName = name.replace("!", "").replace("_", "").replaceAll("\\.", "_");
 				if (value instanceof String) {
 					value = ((String) value).replace("[like]", "");
 				}

@@ -16,7 +16,6 @@
 package org.vulpe.view.struts.tags;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,8 +29,8 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.View.Struts;
 import org.vulpe.commons.helper.VulpeCacheHelper;
-import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.view.struts.form.beans.SessionPaging;
 import org.vulpe.view.tags.Functions;
@@ -111,21 +110,6 @@ public final class StrutsFunctions extends Functions {
 
 	/**
 	 * 
-	 * @return
-	 */
-	private static Map getFormParams() {
-		final String keyForm = getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_KEY).concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = getEver().getSelf(keyForm);
-		if (formParams == null) {
-			formParams = new HashMap();
-			getEver().put(keyForm, formParams);
-		}
-		return formParams;
-	}
-
-	/**
-	 * 
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -160,9 +144,9 @@ public final class StrutsFunctions extends Functions {
 	public static Object saveInSession(final String key, final Object value, final Boolean expire) {
 		final Object newValue = value;
 		if (VulpeValidationUtil.isNotEmpty(newValue)) {
-			getFormParams().put(key, new Object[] { expire, newValue });
+			getEver().putWeakRef(key, new Object[] { expire, newValue });
 		} else {
-			getFormParams().remove(key);
+			getEver().remove(key);
 		}
 		return newValue;
 	}
@@ -185,13 +169,13 @@ public final class StrutsFunctions extends Functions {
 				imageData[i] = bytes[i].byteValue();
 			}
 			try {
-				getFormParams().put(key,
+				getEver().putWeakRef(key,
 						new Object[] { expire, resizeImageAsJPG(imageData, width) });
 			} catch (IOException e) {
 				LOG.error(e);
 			}
 		} else {
-			getFormParams().remove(key);
+			getEver().remove(key);
 		}
 		return newValue;
 	}
@@ -246,8 +230,7 @@ public final class StrutsFunctions extends Functions {
 		return VulpeCacheHelper.getInstance().get(Struts.XWORK_CONVERTER);
 	}
 
-	public static VulpeHashMap<String, Object> getEver() {
-		return (VulpeHashMap<String, Object>) ServletActionContext.getRequest().getSession()
-				.getAttribute(VulpeConstants.Session.EVER);
+	public static EverParameter getEver() {
+		return EverParameter.getInstance(ServletActionContext.getRequest().getSession());
 	}
 }

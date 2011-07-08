@@ -49,15 +49,15 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 		if (action instanceof VulpeController) {
 			final Map<String, String> mapControllerMethods = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CONTROLLER_METHODS);
-			final AbstractVulpeBaseController controller = (AbstractVulpeBaseController) invocation
+			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) invocation
 					.getAction();
 			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
-				if (StringUtils.isEmpty(controller.getResultForward())) {
-					controller.controlResultForward();
-					controller.manageButtons(controller.getOperation());
+				if (StringUtils.isEmpty(baseController.getResultForward())) {
+					baseController.controlResultForward();
+					baseController.manageButtons(baseController.getOperation());
 				}
 			}
-			key = controller.getCurrentControllerKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
+			key = baseController.vulpe.controller().currentKey().concat(VulpeConstants.PARAMS_SESSION_KEY);
 		}
 
 		if (isMethodReset(this.invocation)) {

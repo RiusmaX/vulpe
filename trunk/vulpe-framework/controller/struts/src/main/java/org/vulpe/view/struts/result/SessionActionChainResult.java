@@ -26,7 +26,7 @@ import com.opensymphony.xwork2.ActionChainResult;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked" })
 public class SessionActionChainResult extends ActionChainResult {
 	private boolean saveParams;
 	private boolean sendParams;
@@ -80,8 +80,8 @@ public class SessionActionChainResult extends ActionChainResult {
 			if (invocation.getAction() instanceof VulpeStrutsController) {
 				final VulpeStrutsController<?, ?> action = (VulpeStrutsController<?, ?>) invocation
 						.getAction();
-				name = owner ? action.getControllerConfig().getOwnerController() : action
-						.getControllerConfig().getControllerName();
+				name = owner ? action.vulpe.controller().config().getOwnerController()
+						: action.vulpe.controller().config().getControllerName();
 			}
 		}
 		return name;

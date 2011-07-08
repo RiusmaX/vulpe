@@ -53,8 +53,6 @@ public interface VulpeControllerConfig {
 
 	String getParentName(final String detail);
 
-	void setControllerName(final String actionName);
-
 	String getTitleKey();
 
 	String getReportTitleKey();

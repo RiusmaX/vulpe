@@ -77,18 +77,21 @@ public class MultiselectInterceptor extends AbstractInterceptor {
 				if (parameters.containsKey(name)) {
 					final Object[] values = (Object[]) parameters.get(name);
 					if (values != null) {
-						final VulpeStrutsController baseAction = VulpeReflectUtil.getFieldValue(actionInvocation,
-								"action");
-						final Object entity = baseAction.getControllerConfig().getEntityClass().newInstance();
-						final String attributeName = name.contains("entities") ? name.substring(name.indexOf("].") + 2)
-								: name.substring("entity.".length());
+						final VulpeStrutsController baseAction = VulpeReflectUtil.getFieldValue(
+								actionInvocation, "action");
+						final Object entity = baseAction.vulpe.controller().config()
+								.getEntityClass().newInstance();
+						final String attributeName = name.contains("entities") ? name
+								.substring(name.indexOf("].") + 2) : name.substring("entity."
+								.length());
 						if (String[].class.isAssignableFrom(values.getClass())) {
-							final Field field = VulpeReflectUtil.getField(entity.getClass(), attributeName);
+							final Field field = VulpeReflectUtil.getField(entity.getClass(),
+									attributeName);
 							if (List.class.isAssignableFrom(field.getType())) {
-								final Type[] fieldListType = VulpeReflectUtil.getFieldValue(field.getGenericType(),
-										"actualTypeArguments");
-								final Object[] enumConstants = VulpeReflectUtil.getFieldValue(fieldListType[0],
-										"enumConstants");
+								final Type[] fieldListType = VulpeReflectUtil.getFieldValue(field
+										.getGenericType(), "actualTypeArguments");
+								final Object[] enumConstants = VulpeReflectUtil.getFieldValue(
+										fieldListType[0], "enumConstants");
 								if (!ArrayUtils.isEmpty(enumConstants)) {
 									final List list = new ArrayList();
 									for (Object eConstant : enumConstants) {

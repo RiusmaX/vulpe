@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
-<%--<jsp:include page="${controllerConfig.viewItemsPath}" />--%>
+<c:if test="${not empty param.reportFormat}"><jsp:include page="${now['controllerConfig'].viewItemsPath}" /></c:if>
 <c:if test="${not empty downloadInfo}">
 	<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true"
 		render="false" />

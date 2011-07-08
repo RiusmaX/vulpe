@@ -1,15 +1,15 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<c:set var="vulpeFormName" value="${controllerConfig.formName}" scope="request"/>
-<c:if test="${vulpeBodyTwice}">
+<c:set var="vulpeFormName" value="${now['controllerConfig'].formName}" scope="request"/>
+<c:if test="${now['bodyTwice']}">
 	<c:choose>
-		<c:when test="${vulpeBodyTwiceType == 'MAIN'}"><c:set var="vulpeFormName" value="${controllerConfig.MainFormName}" scope="request"/></c:when>
-		<c:when test="${vulpeBodyTwiceType == 'SELECT'}"><c:set var="vulpeFormName" value="${controllerConfig.selectFormName}" scope="request"/></c:when>
+		<c:when test="${now['bodyTwiceType'] == 'MAIN'}"><c:set var="vulpeFormName" value="${now['controllerConfig'].mainFormName}" scope="request"/></c:when>
+		<c:when test="${now['bodyTwiceType'] == 'SELECT'}"><c:set var="vulpeFormName" value="${now['controllerConfig'].selectFormName}" scope="request"/></c:when>
 	</c:choose>
 </c:if>
 <c:if test="${empty targetName}">
 	<c:choose>
-	<c:when test="${empty targetConfig}"><c:set var="prepareName" value="${not empty vulpeTargetName ? vulpeTargetName : 'entity'}"/></c:when>
-	<c:otherwise><c:set var="prepareName" value="${targetConfigPropertyName}"/></c:otherwise>
+	<c:when test="${empty now['targetConfig']}"><c:set var="prepareName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:when>
+	<c:otherwise><c:set var="prepareName" value="${now['now['targetConfig']PropertyName']}"/></c:otherwise>
 	</c:choose>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}"/>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
@@ -98,7 +98,7 @@ $(document).ready(function() {
 	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
 </c:choose>
-	<c:if test="${not empty now['fieldToFocus']}">vulpe.util.getElementField("${now['fieldToFocus']}").focus();</c:if>
+	<c:if test="${not empty now['focusToField']}">vulpe.util.getElementField("${now['focusToField']}").focus();</c:if>
 	<c:if test="${!ajax}">vulpe.view.checkRequiredFields();</c:if>
 	vulpe.view.initTimerToSessionExpire();
 });

@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<c:set var="vulpeTargetName" value="entitySelect" scope="request"/>
-<c:if test="${vulpeBodyTwice}">
+<c:set var="now['targetName']" value="entitySelect" scope="request"/>
+<c:if test="${now['bodyTwice']}">
 <c:set var="vulpeBodySelect" value="${true}" scope="request"/>
 <fieldset>
 <legend><fmt:message>${fn:replace(now['titleKey'], '.twice', '.select')}</fmt:message></legend>
@@ -10,11 +10,11 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/selectActions.jsp" %>
 	</div>
 	<div id="vulpeSelectForm">
-		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectPath : controllerConfig.viewPath}" />
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewSelectPath : now['controllerConfig'].viewPath}" />
 	</div>
 	<div id="vulpeSelectTable-${vulpeFormName}">
 		<c:remove var="vulpeBodySelect" scope="request"/>
-		<jsp:include page="${now['controllerType'] == 'TWICE' ? controllerConfig.viewSelectItemsPath : controllerConfig.viewItemsPath}" />
+		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewSelectItemsPath : now['controllerConfig'].viewItemsPath}" />
 		<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">
 			<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
 			<script type="text/javascript">
@@ -26,6 +26,6 @@
 	</div>
 	<div id="vulpeSelectFooter"></div>
 </div>
-<c:if test="${vulpeBodyTwice}">
+<c:if test="${now['bodyTwice']}">
 </fieldset>
 </c:if>
