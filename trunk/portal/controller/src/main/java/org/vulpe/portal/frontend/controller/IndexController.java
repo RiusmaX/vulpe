@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
@@ -30,12 +29,16 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 	private Long id;
 
 	public void section() {
+		loadSection(getId());
+		controlResultForward();
+	}
+
+	private void loadSection(final Long sectionId) {
 		try {
-			final Section section = getService(CoreService.class).findSection(new Section(getId()));
-			now.put(Now.CONTENT_TITLE, section.getName());
-			now.put(Now.SHOW_CONTENT_TITLE, true);
-			now.put(Now.SHOW_CONTENT_SUBTITLE, true);
-			now.put(Now.CONTENT_SUBTITLE, section.getDescription());
+			final Section section = getService(CoreService.class).findSection(
+					new Section(sectionId));
+			viewConfig.content().title(section.getName().toString()).subtitle(
+					section.getDescription().toString());
 			final Content content = new Content();
 			content.setSection(section);
 			content.setStatus(Status.ACTIVE);
@@ -44,7 +47,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-		controlResultForward();
+
 	}
 
 	public void content() {
@@ -52,9 +55,8 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			final Content content = getService(CoreService.class).findContent(new Content(getId()));
 			content.increaseView();
 			getService(CoreService.class).updateContent(content);
-			now.put(Now.CONTENT_TITLE, content.getTitle());
-			now.put(Now.SHOW_CONTENT_SUBTITLE, true);
-			now.put(Now.CONTENT_SUBTITLE, content.getSubtitle());
+			viewConfig.content().title(content.getTitle().toString()).subtitle(
+					content.getSubtitle().toString());
 			now.put("content", content);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -98,21 +100,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 		super.frontend();
 		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
 		if (VulpeValidationUtil.isNotEmpty(portal.getHomeSection())) {
-			try {
-				final Section section = getService(CoreService.class).findSection(
-						portal.getHomeSection());
-				now.put(Now.CONTENT_TITLE, section.getName());
-				now.put(Now.SHOW_CONTENT_TITLE, true);
-				now.put(Now.SHOW_CONTENT_SUBTITLE, true);
-				now.put(Now.CONTENT_SUBTITLE, section.getDescription());
-				final Content content = new Content();
-				content.setSection(section);
-				content.setStatus(Status.ACTIVE);
-				final List<Content> contents = getService(CoreService.class).readContent(content);
-				now.put("contents", contents);
-			} catch (VulpeApplicationException e) {
-				LOG.error(e);
-			}
+			loadSection(portal.getHomeSection().getId());
 		}
 	}
 }

@@ -256,9 +256,9 @@
 	width: auto;
 }
 
-#contentPortal {
-	width: 97%;
-	display: table;
+#portalContent {
+	width: 100%;
+	display: block;
 	text-align: justify;
 }
 
@@ -772,4 +772,12 @@ ol, ul {
 
 #vulpeSelectAll {
 	width: 40px;
+}
+
+#vulpeFrontendBody {
+	
+}
+
+.portalContentVideo {
+	text-align: center;
 }
