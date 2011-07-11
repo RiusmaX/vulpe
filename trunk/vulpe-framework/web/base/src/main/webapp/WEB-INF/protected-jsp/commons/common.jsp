@@ -8,8 +8,8 @@
 </c:if>
 <c:if test="${empty targetName}">
 	<c:choose>
-	<c:when test="${empty now['targetConfig']}"><c:set var="prepareName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:when>
-	<c:otherwise><c:set var="prepareName" value="${now['now['targetConfig']PropertyName']}"/></c:otherwise>
+	<c:when test="${empty targetConfig}"><c:set var="prepareName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:when>
+	<c:otherwise><c:set var="prepareName" value="${targetConfigPropertyName}"/></c:otherwise>
 	</c:choose>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}"/>
 	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
@@ -26,15 +26,15 @@ $(document).ready(function() {
 	<c:if test="${(global['project-view-frontendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'FRONTEND' || vulpeCurrentLayout == 'FRONTEND')) || (global['project-view-backendMenuType'] == 'SUPERFISH' && (now['controllerType'] == 'BACKEND' || vulpeCurrentLayout == 'BACKEND'))}">if (vulpe.config.browser.ie) { $("#nav").superfish().find("ul").bgIframe({opacity: false}); } else { $("#nav").superfish(); }</c:if>
 	<c:if test="${pageContext.request.locale ne 'en_US'}">$.datepicker.setDefaults($.datepicker.regional['${pageContext.request.locale}']);</c:if>
 	if (document.forms['${vulpeFormName}']) {
-		<c:if test="${empty popupKey}">vulpe.config.formName = "${vulpeFormName}";</c:if>
+		<c:if test="${empty now['popupKey']}">vulpe.config.formName = "${vulpeFormName}";</c:if>
 		vulpe.config.logic.prepareName = "${prepareName}";
 		<c:if test="${!ajax}">
 		vulpe.util.removeHotKeys($(this));
 		vulpe.util.checkHotKeys($(this));
 		</c:if>
 		var operation = vulpe.util.get("${vulpeFormName}-operation");
-		operation.val("${operation}");
-		operation.attr("defaultValue", "${operation}");
+		operation.val("${now['operation' ]}");
+		operation.attr("defaultValue", "${now['operation']}");
 		var pagingPage = vulpe.util.get('${vulpeFormName}-paging.page');
 		pagingPage.val("${paging.page}");
 		pagingPage.attr("defaultValue", "${paging.page}");

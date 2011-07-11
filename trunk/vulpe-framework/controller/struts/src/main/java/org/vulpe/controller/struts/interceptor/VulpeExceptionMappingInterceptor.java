@@ -149,7 +149,7 @@ public class VulpeExceptionMappingInterceptor extends
 				action.addActionMessage(value);
 			}
 		}
-		if (!action.isAjax()) {
+		if (!action.vulpe.controller().ajax()) {
 			request.setAttribute(VulpeConstants.VULPE_SHOW_MESSAGES, true);
 		}
 		if (isDebug(action)) {

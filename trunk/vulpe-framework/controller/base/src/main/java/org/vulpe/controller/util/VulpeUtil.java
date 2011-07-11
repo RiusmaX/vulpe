@@ -39,6 +39,7 @@ import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
+import org.vulpe.controller.VulpeController.Operation;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
@@ -83,9 +84,136 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		this.controller = new VulpeControllerUtil();
 		this.view = new VulpeViewUtil();
 		this.cache = new VulpeCacheUtil();
+		this.baseController.now.put("cachedClasses", cache().classes());
+		this.baseController.now.put("cachedEnuns", cache().enums());
+		this.baseController.now.put("cachedEnunsArray", cache().enumsArray());
 	}
 
 	public class VulpeControllerUtil {
+
+		public boolean ajax() {
+			return baseController.now.getBoolean(Now.AJAX);
+		}
+
+		public void ajax(final boolean ajax) {
+			baseController.now.put(Now.AJAX, ajax);
+		}
+
+		public String popupKey() {
+			return baseController.now.getSelf(Now.POPUP_KEY);
+		}
+
+		public void popupKey(final String popupKey) {
+			baseController.now.getSelf(Now.POPUP_KEY, popupKey);
+		}
+
+		public boolean popup() {
+			return StringUtils.isNotEmpty(popupKey());
+		}
+
+		public boolean back() {
+			return baseController.now.getBoolean(Now.BACK);
+		}
+
+		public void back(final boolean back) {
+			baseController.now.put(Now.BACK, back);
+		}
+
+		public boolean executed() {
+			return baseController.now.getBoolean(Now.EXECUTED);
+		}
+
+		public void executed(final boolean executed) {
+			baseController.now.put(Now.EXECUTED, executed);
+		}
+
+		public void cleaned(boolean cleaned) {
+			baseController.now.put(Now.CLEANED, cleaned);
+		}
+
+		public boolean cleaned() {
+			return baseController.now.getBoolean(Now.CLEANED);
+		}
+
+		public void exported(boolean exported) {
+			baseController.now.put(Now.EXPORTED, exported);
+		}
+
+		public boolean exported() {
+			return baseController.now.getBoolean(Now.EXPORTED);
+		}
+
+		public Operation operation() {
+			return baseController.now.getSelf(Now.OPERATION, Operation.NONE);
+		}
+
+		public void operation(final Operation operation) {
+			baseController.now.put(Now.OPERATION, operation);
+		}
+
+		public void deleted(boolean deleted) {
+			baseController.now.put(Now.DELETED, deleted);
+		}
+
+		public boolean deleted() {
+			return baseController.now.getBoolean(Now.DELETED);
+		}
+
+		public void selectedTab(final String selectedTab) {
+			baseController.now.put(Now.SELECTED_TAB, selectedTab);
+		}
+
+		public String selectedTab() {
+			return baseController.now.getSelf(Now.SELECTED_TAB);
+		}
+
+		public void tabularSize(final Integer tabularSize) {
+			baseController.ever.putWeakRef(Ever.TABULAR_SIZE, tabularSize);
+		}
+
+		public Integer tabularSize() {
+			return baseController.ever.<Integer> getSelf(Ever.TABULAR_SIZE);
+		}
+
+		public void currentPage(final Integer page) {
+			baseController.ever.putWeakRef(Ever.CURRENT_PAGE, page);
+		}
+
+		public Integer currentPage() {
+			return baseController.ever.<Integer> getSelf(Ever.CURRENT_PAGE);
+		}
+
+		public String detail() {
+			return baseController.now.getSelf(Now.DETAIL);
+		}
+
+		public void detail(final String detail) {
+			baseController.now.put(Now.DETAIL, detail);
+		}
+
+		public void detailIndex(final Integer detailIndex) {
+			baseController.now.put(Now.DETAIL_INDEX, detailIndex);
+		}
+
+		public Integer detailIndex() {
+			return baseController.now.getSelf(Now.DETAIL_INDEX);
+		}
+
+		public void detailLayer(String detailLayer) {
+			baseController.now.put(Now.DETAIL_LAYER, detailLayer);
+		}
+
+		public String detailLayer() {
+			return baseController.now.getSelf(Now.DETAIL_LAYER);
+		}
+
+		public void tabularFilter(boolean tabularFilter) {
+			baseController.now.put(Now.TABULAR_FILTER, tabularFilter);
+		}
+
+		public boolean tabularFilter() {
+			return baseController.now.getBoolean(Now.TABULAR_FILTER);
+		}
 
 		/**
 		 * Retrieves controller type
@@ -99,8 +227,16 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public void type(ControllerType controllerType) {
-			baseController.now.put(Now.CONTROLLER_TYPE, controllerType);
 			config().setControllerType(controllerType);
+			baseController.now.put(Now.CONTROLLER_TYPE, controllerType);
+			view().content().titleKey(config().getTitleKey());
+			if (VulpeValidationUtil.isNotEmpty(config().getDetails())) {
+				view().content().masterTitleKey(config().getMasterTitleKey());
+			}
+			if (controllerType.equals(ControllerType.REPORT)) {
+				view().content().reportTitleKey(config().getReportTitleKey());
+			}
+			view.formName(config().getFormName());
 		}
 
 		public String currentName() {
@@ -153,7 +289,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		 * @return
 		 */
 		public VulpeBaseDetailConfig detailConfig() {
-			return config().getDetailConfig(baseController.getDetail());
+			return config().getDetailConfig(detail());
 		}
 
 		/**
@@ -318,6 +454,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				final VulpeBaseControllerConfig<ENTITY, ID> config = baseController.ever
 						.getSelf(key);
 				config.setController(baseController);
+				baseController.now.put(Now.CONTROLLER_CONFIG, config);
 				return config;
 			}
 
@@ -368,19 +505,19 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public VulpeBaseDetailConfig targetConfig() {
-			return baseController.now.getSelf(Now.TARGET_CONFIG);
+			return baseController.getRequestAttribute(Now.TARGET_CONFIG);
 		}
 
 		public void targetConfig(final VulpeBaseDetailConfig config) {
-			baseController.now.put(Now.TARGET_CONFIG, config);
+			baseController.setRequestAttribute(Now.TARGET_CONFIG, config);
 		}
 
 		public String targetConfigPropertyName() {
-			return baseController.now.getSelf(Now.TARGET_CONFIG_PROPERTY_NAME);
+			return baseController.getRequestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME);
 		}
 
 		public void targetConfigPropertyName(final String propertyName) {
-			baseController.now.put(Now.TARGET_CONFIG_PROPERTY_NAME, propertyName);
+			baseController.setRequestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME, propertyName);
 		}
 
 		public VulpeViewUtil requireOneFilter() {
@@ -402,7 +539,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			baseController.now.put(Layout.BODY_TWICE, true);
 			baseController.now.put(Layout.BODY_TWICE_TYPE, controllerType);
 		}
-		
+
 		public VulpeViewUtil noCache() {
 			baseController.now.put(Now.NO_CACHE, Math.random() * Math.random());
 			return this;

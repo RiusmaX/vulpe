@@ -24,20 +24,20 @@
 		</ul>
 	</c:if>
 	<div id="vulpeMainBody">
-		<c:remove var="now['targetConfig']" scope="request"/>
-		<c:remove var="now['now['targetConfig']PropertyName']" scope="request"/>
+		<c:remove var="targetConfig" scope="request"/>
+		<c:remove var="targetConfigPropertyName" scope="request"/>
 		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewMainPath : now['controllerConfig'].viewPath}" />
 	</div>
 	<c:if test="${not empty now['controllerConfig'].details && fn:length(now['controllerConfig'].details) > 0}">
 		<c:forEach items="${now['controllerConfig'].details}" var="detail">
 			<c:if test="${empty detail.parentDetailConfig && !detail.notControlView}">
-				<c:set var="now['targetConfig']" value="${detail}" scope="request"/>
-				<c:set var="now['now['targetConfig']PropertyName']" value="${detail.propertyName}" scope="request"/>
+				<c:set var="targetConfig" value="${detail}" scope="request"/>
+				<c:set var="targetConfigPropertyName" value="${detail.propertyName}" scope="request"/>
 				<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 					<jsp:param name="detailViewPath" value="${detail.viewPath}"/>
 				</jsp:include>
-				<c:remove var="now['targetConfig']" scope="request"/>
-				<c:remove var="now['now['targetConfig']PropertyName']" scope="request"/>
+				<c:remove var="targetConfig" scope="request"/>
+				<c:remove var="targetConfigPropertyName" scope="request"/>
 			</c:if>
 		</c:forEach>
 	</c:if>

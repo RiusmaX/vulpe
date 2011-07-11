@@ -12,17 +12,17 @@
 	<c:set var="itemName" value=""/>
 	<c:if test="${empty pagingList && (empty detailConfig || now['controllerType'] == 'TABULAR') && empty items}">
 		<c:set var="pagingList" value="${(not empty paging && paging.list ne null ? paging : null)}" />
-		<c:if test="${empty pagingList}"><c:set var="detailConfig" value="${now['targetConfig']}"/></c:if>
+		<c:if test="${empty pagingList}"><c:set var="detailConfig" value="${targetConfig}"/></c:if>
 		<c:if test="${not empty pagingList}">
 			<c:set var="name" value="entities"/>
-			<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="detailConfig" value="${now['targetConfig']}"/></c:if>
+			<c:if test="${now['controllerType'] == 'TABULAR'}"><c:set var="detailConfig" value="${targetConfig}"/></c:if>
 		</c:if>
 		<c:if test="${empty detailConfig}">
 			<c:set var="items" value="${entities}"/>
 			<c:if test="${not empty items}"><c:set var="name" value="entities"/></c:if>
 		</c:if>
 	</c:if>
-	<c:if test="${not empty now['targetConfig']}"><c:set var="detailConfig" value="${now['targetConfig']}"/></c:if>
+	<c:if test="${not empty targetConfig}"><c:set var="detailConfig" value="${targetConfig}"/></c:if>
 	<c:set var="isSelectTableTag" value="${false}" scope="request"/>
 	<c:set var="selectCheckOn" scope="request" value=""/>
 	<c:set var="selectCheckOff" scope="request" value=""/>
@@ -35,13 +35,13 @@
 		<c:set var="sortPropertyInfoTableTag" value="${sortPropertyInfo}" scope="request"/>
 	</c:if>
 	<c:if test="${not empty detailConfig}">
-		<c:set var="name" value="${now['now['targetConfig']PropertyName']}"/>
+		<c:set var="name" value="${targetConfigPropertyName}"/>
 		<c:set var="itemName" value="${detailConfig.baseName}_item"/>
 		<c:set var="baseName" value="${detailConfig.baseName}"/>
-		<%-- if detail, then items equals now['now['targetConfig']PropertyName'] --%>
+		<%-- if detail, then items equals targetConfigPropertyName --%>
 		<c:choose>
 		<c:when test="${empty detailConfig.parentDetailConfig}">
-			<c:set var="itemsEL" value="${'${'}${now['now['targetConfig']PropertyName']}${'}'}"/>
+			<c:set var="itemsEL" value="${'${'}${targetConfigPropertyName}${'}'}"/>
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 		</c:when>
 		<%-- if subdetail, then items equals detailConfig.parentDetailConfig.baseName --%>
@@ -74,7 +74,7 @@
 		<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="${pagingFormName}"/></c:if>
 		<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${pagingFormName}"/></c:if>
 	</c:if>
-	<c:if test="${not empty detailConfig && empty now['targetConfig'].parentDetailConfig}">
+	<c:if test="${not empty detailConfig && empty targetConfig.parentDetailConfig}">
 		<c:set var="detailPagingList" value="${detailConfig.name}_pagingList"/>
 		<c:set var="detailPagingListEL" value="${'${'}ever['${detailPagingList}']${'}'}"/>
 		<c:set var="detailPagingList" value="${util:eval(pageContext, detailPagingListEL)}"/>
@@ -107,7 +107,7 @@
 		<c:if test="${name == 'entities'}"><c:set var="enableHooks" value="${true}" scope="request"/></c:if>
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
-			<!-- detail: ${now['now['targetConfig']PropertyName']} - ${now['targetConfig']} -->
+			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
 			<c:set var="isHeaderTableTag" value="${false}" scope="request"/>
 			<c:set var="statusTableTag" value="${baseName}_status" scope="request"/>
 			<c:set var="v_status" value="${util:put(pageContext, statusTableTag, status, applicationScope['REQUEST_SCOPE'])}"/>
@@ -118,20 +118,20 @@
 			<c:set var="currentDetailConfig" value="${detailConfig}" scope="request"/>
 			<jsp:invoke fragment="tableBody"/>
 			<c:if test="${not empty detailConfig && not empty detailConfig.subDetails && fn:length(detailConfig.subDetails) > 0}">
-				<c:set var="now['now['targetConfig']PropertyName']Local" value="${now['now['targetConfig']PropertyName']}"/>
+				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
-					<!-- sub-detail: ${now['now['targetConfig']PropertyName']} - ${now['targetConfig']} -->
-					<c:set var="now['targetConfig']" value="${subDetail}" scope="request"/>
-					<c:if test="${!fn:endsWith(now['now['targetConfig']PropertyName'], subDetail.propertyName)}">
-					<c:set var="now['now['targetConfig']PropertyName']" value="${now['now['targetConfig']PropertyName']}[${status.index}].${subDetail.propertyName}" scope="request"/>
+					<!-- sub-detail: ${targetConfigPropertyName} - ${targetConfig} -->
+					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
+					<c:if test="${!fn:endsWith(targetConfigPropertyName, subDetail.propertyName)}">
+					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>
 					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 						<jsp:param name="detailViewPath" value="${subDetail.viewPath}"/>
 					</jsp:include>
 					</c:if>
-					<c:set var="now['now['targetConfig']PropertyName']" value="${now['now['targetConfig']PropertyName']Local}" scope="request"/>
+					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 				</c:forEach>
-				<c:set var="now['targetConfig']" value="${detailConfig}" scope="request"/>
-				<c:set var="now['now['targetConfig']PropertyName']" value="${now['now['targetConfig']PropertyName']Local}" scope="request"/>
+				<c:set var="targetConfig" value="${detailConfig}" scope="request"/>
+				<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 			</c:if>
 			<c:remove var="statusTableTag" scope="request"/>
 			<c:remove var="itemTableTag" scope="request"/>
@@ -148,8 +148,8 @@
 			});
 		</script>
 	</c:if>
-	<c:remove var="now['targetConfig']" scope="request"/>
-	<c:remove var="now['now['targetConfig']PropertyName']" scope="request"/>
+	<c:remove var="targetConfig" scope="request"/>
+	<c:remove var="targetConfigPropertyName" scope="request"/>
 	<c:remove var="sortPropertyInfoTableTag" scope="request"/>
 	<c:remove var="isHeaderTableTag" scope="request"/>
 </c:if>

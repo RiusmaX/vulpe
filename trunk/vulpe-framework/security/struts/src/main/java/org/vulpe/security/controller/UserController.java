@@ -44,7 +44,7 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	@Override
 	public boolean validateEntity() {
 		boolean valid = super.validateEntity();
-		if (getOperation().equals(Operation.CREATE_POST) && StringUtils.isBlank(getEntity().getPassword())) {
+		if (vulpe.controller().operation().equals(Operation.CREATE_POST) && StringUtils.isBlank(getEntity().getPassword())) {
 			addActionError("{vulpe.security.user.error.empty.password}");
 			return false;
 		}

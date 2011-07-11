@@ -163,6 +163,20 @@ public class VulpeConstants {
 			public static final String CURRENT_METHOD_NAME = "currentMethodName";
 			public static final String CONTROLLER_CONFIG = "controllerConfig";
 			public static final String CONTROLLER_TYPE = "controllerType";
+			public static final String AJAX = "ajax";
+			public static final String BACK = "back";
+			public static final String CLEANED = "cleaned";
+			public static final String DELETED = "deleted";
+			public static final String DETAIL = "detail";
+			public static final String DETAIL_INDEX = "detailIndex";
+			public static final String DETAIL_LAYER = "detailLayer";
+			public static final String EXECUTED = "executed";
+			public static final String EXPORTED = "executed";
+			public static final String OPERATION = "operation";
+			public static final String POPUP = "popup";
+			public static final String POPUP_KEY = "popupKey";
+			public static final String SELECTED_TAB = "selectedTab";
+			public static final String TABULAR_FILTER = "tabularFilter";
 		}
 
 		public class Ever {

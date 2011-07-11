@@ -34,8 +34,8 @@
 				<c:set var="deleteValue" value="id"/>
 				<c:set var="deleteType" value="${now['controllerType'] == 'TABULAR' ? 'detail' : 'select'}"/>
 			</c:when>
-			<c:when test="${not empty now['targetConfig']}">
-				<c:set var="deleteShowName" value="delete${now['targetConfig'].baseName}"/>
+			<c:when test="${not empty targetConfig}">
+				<c:set var="deleteShowName" value="delete${targetConfig.baseName}"/>
 				<c:if test="${util:isButtonRender(pageContext, deleteShowName, '')}">
 					<c:set var="deleteValue" value="selected"/>
 					<c:set var="deleteType" value="detail"/>
@@ -92,9 +92,9 @@
 			<c:choose>
 				<c:when test="${deleteType == 'detail'}">
 					<c:choose>
-						<c:when test="${now['targetConfig'].baseName == 'entities'}"><c:set var="deleteLayer" value="body"/></c:when>
+						<c:when test="${targetConfig.baseName == 'entities'}"><c:set var="deleteLayer" value="body"/></c:when>
 						<c:when test="${not empty detailLayer}"><c:set var="deleteLayer" value="${detailLayer}"/></c:when>
-						<c:otherwise><c:set var="deleteLayer" value="vulpeDetailBody-${now['targetConfig'].baseName}${currentDetailIndex}"/></c:otherwise>
+						<c:otherwise><c:set var="deleteLayer" value="vulpeDetailBody-${targetConfig.baseName}${currentDetailIndex}"/></c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise><c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${deleteFormName}"/></c:otherwise>
@@ -106,7 +106,7 @@
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover"> onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout"> onmouseout="${onmouseout}"</c:set></c:if>
 	</c:if>
-	<c:if test="${popup && !isHeaderTableTag && isSelectTableTag && not empty popupProperties}">
+	<c:if test="${now['popup'] && !isHeaderTableTag && isSelectTableTag && not empty popupProperties}">
 		<c:set var="popupProperties" value="${fn:trim(popupProperties)}"/>
 		<c:set var="valueSelectRow" value=""/>
 		<c:forEach items="${fn:split(popupProperties, ',')}" var="prop" varStatus="sProp">
@@ -136,14 +136,14 @@
 	<c:if test="${not empty rowspan}"><c:set var="rowspan">rowspan="${rowspan}"</c:set></c:if>
 	<c:set var="elementId" value="${vulpeFormName}-${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
-		<c:if test="${!isHeaderTableTag && renderId}"><td style="display: none"><v:hidden property="id" targetName="${empty now['now['targetConfig']PropertyName'] ? 'entities' : now['now['targetConfig']PropertyName']}[${currentStatus.index}]" render="${not empty now['now['targetConfig']PropertyName'] || not empty enableHooks}"/><v:hidden property="fakeId" targetName="${empty now['now['targetConfig']PropertyName'] ? 'entities' : now['now['targetConfig']PropertyName']}[${currentStatus.index}]" render="${not empty now['now['targetConfig']PropertyName']}"/></td></c:if>
+		<c:if test="${!isHeaderTableTag && renderId}"><td style="display: none"><v:hidden property="id" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName || not empty enableHooks}"/><v:hidden property="fakeId" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName}"/></td></c:if>
 		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}" onclick="${selectCheckOn}">
 					<c:set var="checkboxName" value="${!disableDelete ? deleteName : ''}"/>
 					<c:if test="${deleteType eq 'detail'}"><c:set var="checkboxName" value="${!disableDelete ? deleteName : 'unselected'}"/></c:if>
-					<v:checkbox targetName="${empty now['now['targetConfig']PropertyName'] ? 'entities' : now['now['targetConfig']PropertyName']}[${currentStatus.index}]" property="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll('${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
+					<v:checkbox targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" property="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll('${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
 				</v:column>
 			</c:when>
 			<c:otherwise>
@@ -154,12 +154,12 @@
 			</c:otherwise>
 		</c:choose>
 		</c:if>
-		<c:if test="${not empty currentDetailConfig && empty now['targetConfig'].parentDetailConfig}">
+		<c:if test="${not empty currentDetailConfig && empty targetConfig.parentDetailConfig}">
 			<c:set var="detailPagingList" value="${currentDetailConfig.name}_pagingList"/>
 			<c:set var="detailPagingListEL" value="${'${'}ever['${detailPagingList}']${'}'}"/>
 			<c:set var="detailPagingList" value="${util:eval(pageContext, detailPagingListEL)}"/>
 		</c:if>
-		<c:if test="${showRowNumber}"><v:column labelKey="label.vulpe.row" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${!isHeaderTableTag ? xstyleClass : ''}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}"><c:set var="rowNumber" value="${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}"/></c:when><c:otherwise><c:set var="rowNumber" value="${currentStatus.count}"/></c:otherwise></c:choose>${rowNumber}.</c:if><v:hidden property="rowNumber" targetName="${empty now['now['targetConfig']PropertyName'] ? 'entities' : now['now['targetConfig']PropertyName']}[${currentStatus.index}]" value="${rowNumber}" render="${not empty now['now['targetConfig']PropertyName'] || not empty enableHooks}"/></v:column></c:if>
+		<c:if test="${showRowNumber}"><v:column labelKey="label.vulpe.row" style="width: 1%" styleClass="${!isHeaderTableTag ? 'vulpeLine' : 'vulpeRowHeader'} ${!isHeaderTableTag ? xstyleClass : ''}"><c:if test="${!isHeaderTableTag}"><c:choose><c:when test="${not empty detailPagingList}"><c:set var="rowNumber" value="${((detailPagingList.page - 1) * detailPagingList.pageSize) + currentStatus.count}"/></c:when><c:otherwise><c:set var="rowNumber" value="${currentStatus.count}"/></c:otherwise></c:choose>${rowNumber}.</c:if><v:hidden property="rowNumber" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" value="${rowNumber}" render="${not empty targetConfigPropertyName || not empty enableHooks}"/></v:column></c:if>
 		<jsp:doBody/>
 		<c:if test="${not empty updateValue && updateValue ne 'false' && showButtonUpdate}">
 			<c:choose>
@@ -191,7 +191,7 @@
 			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}">
 				<v:column elementId="vulpeDeleteAll" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">
 					<c:choose>
-						<c:when test="${deleteType eq 'detail'}"><c:set var="deleteDetailButton" value="delete${now['targetConfig'].name}"/><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${now['now['targetConfig']PropertyName']}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, deleteDetailButton, 'MAIN')}" disabled="${util:isButtonDisabled(pageContext, deleteDetailButton, 'MAIN')}" /></c:when>
+						<c:when test="${deleteType eq 'detail'}"><c:set var="deleteDetailButton" value="delete${targetConfig.name}"/><v:action javascript="vulpe.view.request.submitDeleteDetailSelected({detail: '${targetConfigPropertyName}', url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, deleteDetailButton, 'MAIN')}" disabled="${util:isButtonDisabled(pageContext, deleteDetailButton, 'MAIN')}" /></c:when>
 						<c:otherwise><v:action javascript="vulpe.view.request.submitDeleteSelected({url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}})" labelKey="label.vulpe.delete.selected" icon="delete-all" iconWidth="16" iconHeight="16" elementId="DeleteAll" show="${util:isButtonShow(pageContext, 'delete', 'SELECT')}" disabled="${util:isButtonDisabled(pageContext, 'delete', 'SELECT')}" /></c:otherwise>
 					</c:choose>
 				</v:column>
@@ -201,7 +201,7 @@
 				<c:when test="${showButtonDeleteThis}">
 				<c:choose>
 					<c:when test="${deleteType eq 'detail'}">
-						<c:set var="javascript">vulpe.view.confirm('delete', function() {vulpe.view.request.submitDeleteDetail({detail: '${now['now['targetConfig']PropertyName']}', detailIndex: ${currentStatus.index}, url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'});});</c:set>
+						<c:set var="javascript">vulpe.view.confirm('delete', function() {vulpe.view.request.submitDeleteDetail({detail: '${targetConfigPropertyName}', detailIndex: ${currentStatus.index}, url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'});});</c:set>
 						<c:if test="${disableDelete}"><c:set var="javascript" value="return false;"/></c:if>
 						<v:columnAction styleClass="vulpeDelete ${xstyleClass} ${disableDelete ? 'vulpeItemOff' : ''}" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" icon="row-delete" iconWidth="16" iconHeight="16" labelKey="${deleteLabelKey}" javascript="${javascript}" style="width: 1%" elementId="Delete${currentStatus.count}" />
 					</c:when>

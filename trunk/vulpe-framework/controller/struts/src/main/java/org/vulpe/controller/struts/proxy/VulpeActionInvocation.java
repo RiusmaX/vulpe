@@ -662,7 +662,8 @@ public class VulpeActionInvocation implements ActionInvocation {
 					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;
 				} else if (!currentControllerKey.equals(controllerKey)
-						&& StringUtils.isEmpty(baseController.getPopupKey()) && !autocomplete) {
+						&& StringUtils.isEmpty(baseController.vulpe.controller().popupKey())
+						&& !autocomplete) {
 					baseController.ever.removeWeakRef();
 					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;

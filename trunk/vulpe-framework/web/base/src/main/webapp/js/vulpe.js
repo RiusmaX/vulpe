@@ -2019,7 +2019,7 @@ var vulpe = {
 			 * @param options {detail, detailIndex, url, formName, layerFields, layer, beforeJs, afterJs}
 			 */
 			submitDeleteDetail: function(options) {
-				options.queryString = "detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail) + "&detailIndex=" + options.detailIndex;
+				options.queryString = "now.detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail) + "&now.detailIndex=" + options.detailIndex;
 				options.validate = false;
 				vulpe.view.request.submitAjaxAction(options);
 			},
@@ -2047,7 +2047,7 @@ var vulpe = {
 								selections[i].value = selectedIds[i];
 							}
 						}
-						options.queryString = "detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail);
+						options.queryString = "now.detail=" + (options.detail == "entities" || options.detail.indexOf("entity.") != -1 ? options.detail : "entity." + options.detail);
 						options.validate = false;
 						vulpe.view.request.submitAjaxAction(options);
 					}
@@ -2150,7 +2150,8 @@ var vulpe = {
 				vulpe.config.redirectToIndex = false;
 				return vulpe.view.request.submitPage({
 					url: vulpe.config.contextPath + url,
-					layer: 'body',
+					layer: "body",
+					layerFields: "this",
 					beforeJs: beforeJs,
 					afterJs: afterJs
 				});
@@ -2283,7 +2284,7 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;
 				}
-				options.queryString = (vulpe.util.isNotEmpty(options.queryString) ? options.queryString + '&' : '') + 'ajax=true';
+				options.queryString = (vulpe.util.isNotEmpty(options.queryString) ? options.queryString + '&' : '') + 'now.ajax=true';
 				vulpe.view.showLoading();
 				jQuery.ajax({
 					type: "POST",

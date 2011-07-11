@@ -18,7 +18,7 @@ package org.vulpe.commons.util;
 import java.util.HashMap;
 
 /**
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -28,7 +28,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 
 	/**
 	 * Retrieves the value referenced by key making automatic conversion.
-	 *
+	 * 
 	 * @param key
 	 * @return
 	 */
@@ -37,15 +37,34 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 		return (T) get(key);
 	}
 
+	public boolean getBoolean(final KEY key) {
+		Boolean value = Boolean.FALSE;
+		Object object = get(key);
+		if (object != null) {
+			if (object instanceof Boolean) {
+				value = (Boolean) object;
+			} else if (object instanceof String) {
+				String string = (String) object;
+				if (string.equals("true")) {
+					value = Boolean.TRUE;
+				} else {
+					value = Boolean.FALSE;
+				}
+			}
+		}
+		return value;
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T> T getSelf(final KEY key, final T defaultValue) {
-		return containsKey(key) ? (T) get(key) : defaultValue;
+		return containsKey(key) && VulpeValidationUtil.isNotEmpty(get(key)) ? (T) getSelf(key)
+				: defaultValue;
 	}
 
 	/**
 	 * Remove and returns the value referenced by key making automatic
 	 * conversion.
-	 *
+	 * 
 	 * @param key
 	 * @return
 	 */
@@ -56,7 +75,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 
 	/**
 	 * Add object on the map and returns himself making automatic conversion.
-	 *
+	 * 
 	 * @param <T>
 	 * @param key
 	 * @param value

@@ -298,8 +298,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		if (getControllerType().equals(ControllerType.FRONTEND)
 				|| getControllerType().equals(ControllerType.BACKEND)) {
 			formName.append(VulpeStringUtil.lowerCaseFirst(getSimpleControllerName()).concat(type));
-		} else if (controllerName.equals(View.AUTHENTICATOR)) {
-			formName.append(controllerName);
+		} else if (getControllerName().equals(View.AUTHENTICATOR)) {
+			formName.append(getControllerName());
 		} else {
 			formName.append(getModuleName().concat(getSimpleControllerName().concat(type)));
 		}
@@ -598,7 +598,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 
 	public String getModuleName() {
 		if (StringUtils.isBlank(this.moduleName)) {
-			final String[] parts = controllerName.split("/");
+			final String[] parts = getControllerName().split("/");
 			this.moduleName = parts[0];
 		}
 		return this.moduleName;

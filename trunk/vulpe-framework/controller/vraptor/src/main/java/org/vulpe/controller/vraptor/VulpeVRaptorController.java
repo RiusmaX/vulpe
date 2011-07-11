@@ -59,8 +59,8 @@ import br.com.caelum.vraptor.core.RequestInfo;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
-		AbstractVulpeBaseController<ENTITY, ID> implements VulpeController {
+public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends AbstractVulpeBaseController<ENTITY, ID> implements VulpeController {
 
 	@Autowired
 	protected RequestInfo requestInfo;
@@ -76,17 +76,19 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			if (subDetail) {
 				final Map context = null;// ActionContext.getContext().getContextMap();
 				try {
-					final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
+					final Collection collection = (Collection) Ognl.getValue(vulpe.controller()
+							.detail(), context, this);
 					for (int i = 0; i < collection.size(); i++) {
-						setDetail(detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."
-								+ detail.getPropertyName());
+						vulpe.controller().detail(
+								detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."
+										+ detail.getPropertyName());
 						onAddDetail(true);
 					}
 				} catch (OgnlException e) {
 					LOG.error(e);
 				}
 			} else if (detail.getParentDetailConfig() == null) {
-				setDetail(detail.getPropertyName());
+				vulpe.controller().detail(detail.getPropertyName());
 				onAddDetail(true);
 			}
 			if (detail.getSubDetails() != null && !detail.getSubDetails().isEmpty()) {
@@ -105,12 +107,14 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final Map context = null;// ActionContext.getContext().getContextMap();
 		try {
-			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(getDetail(), context, this);
+			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(vulpe
+					.controller().detail(), context, this);
 			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
 			final int size = details.size();
 			int removed = 0;
-			if (getDetailIndex() == null) {
-				for (final Iterator<VulpeEntity<?>> iterator = details.iterator(); iterator.hasNext();) {
+			if (vulpe.controller().detailIndex() == null) {
+				for (final Iterator<VulpeEntity<?>> iterator = details.iterator(); iterator
+						.hasNext();) {
 					final VulpeEntity<?> detail = (VulpeEntity<?>) iterator.next();
 					if (detail.isSelected()) {
 						if (detail.getId() != null) {
@@ -121,11 +125,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 					}
 				}
 			} else {
-				final VulpeEntity<?> detail = details.get(getDetailIndex().intValue());
+				final VulpeEntity<?> detail = details.get(vulpe.controller().detailIndex()
+						.intValue());
 				if (detail.getId() != null) {
 					removedDetails.add(detail);
 				}
-				details.remove(getDetailIndex().intValue());
+				details.remove(vulpe.controller().detailIndex().intValue());
 				++removed;
 			}
 			boolean save = false;
@@ -138,26 +143,28 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			if (save) {
 				if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 					invokeServices(Operation.DELETE.getValue().concat(
-							vulpe.controller().config().getEntityClass().getSimpleName()), new Class[] { List.class },
-							new Object[] { removedDetails });
+							vulpe.controller().config().getEntityClass().getSimpleName()),
+							new Class[] { List.class }, new Object[] { removedDetails });
 					if (vulpe.controller().config().getTabularPageSize() > 0) {
-						setTabularSize(getTabularSize() - removedDetails.size());
+						vulpe.controller().tabularSize(
+								vulpe.controller().tabularSize() - removedDetails.size());
 					}
 				} else {
 					if (entity.getId() != null && size > details.size()) {
 						invokeServices(Operation.UPDATE.getValue().concat(
 								vulpe.controller().config().getEntityClass().getSimpleName()),
-								new Class[] { vulpe.controller().config().getEntityClass() }, new Object[] { entity });
+								new Class[] { vulpe.controller().config().getEntityClass() },
+								new Object[] { entity });
 						invokeServices(Operation.DELETE.getValue().concat(
-								vulpe.controller().config().getEntityClass().getSimpleName()), new Class[] { List.class },
-								new Object[] { removedDetails });
+								vulpe.controller().config().getEntityClass().getSimpleName()),
+								new Class[] { List.class }, new Object[] { removedDetails });
 					}
 				}
 			}
 			if (!vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				configureDetail();
 			}
-			setExecuted(true);
+			vulpe.controller().executed(true);
 			return removed;
 		} catch (OgnlException e) {
 			throw new VulpeSystemException(e);
@@ -183,13 +190,16 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			// }
 
 			int newDetails = 1;
-			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(getDetail());
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
+					vulpe.controller().detail());
 			if (detailConfig != null) {
-				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig.getNewDetails();
+				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig
+						.getNewDetails();
 			}
-			final Collection collection = (Collection) Ognl.getValue(getDetail(), context, this);
+			final Collection collection = (Collection) Ognl.getValue(vulpe.controller().detail(),
+					context, this);
 			if (collection != null && vulpe.controller().type().equals(ControllerType.TABULAR)) {
-				setTabularSize(collection.size());
+				vulpe.controller().tabularSize(collection.size());
 			}
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
@@ -197,12 +207,13 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 
 			if (detailConfig != null) {
 				newDetails = detailConfig.getNewDetails();
-				final String parentName = vulpe.controller().config().getParentName(getDetail());
+				final String parentName = vulpe.controller().config().getParentName(
+						vulpe.controller().detail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(Layout.DETAIL_ITEM),
-							parent);
+					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
+							Layout.DETAIL_ITEM), parent);
 				}
 			}
 
@@ -285,8 +296,8 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				// ActionContext.getContext()
 				// .getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, getDownloadContentType(),
-					getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
+					getDownloadContentType(), getDownloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(getDownloadKey());
 			}
@@ -318,11 +329,13 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	}
 
 	@Override
-	protected void despiseDetail(final Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
+	protected void despiseDetail(final Object parent, final ENTITY baseEntity,
+			VulpeBaseDetailConfig detailConfig) {
 	}
 
 	@Override
-	protected boolean duplicatedDetail(final Object parent, final ENTITY baseEntity, VulpeBaseDetailConfig detailConfig) {
+	protected boolean duplicatedDetail(final Object parent, final ENTITY baseEntity,
+			VulpeBaseDetailConfig detailConfig) {
 		return false;
 	}
 

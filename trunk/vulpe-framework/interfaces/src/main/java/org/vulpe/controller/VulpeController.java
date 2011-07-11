@@ -319,32 +319,6 @@ public interface VulpeController extends Serializable {
 	 */
 	void frontend();
 
-	boolean isAjax();
-
-	void setAjax(final boolean ajax);
-
-	Operation getOperation();
-
-	void setOperation(final Operation operation);
-
-	String getOnHideMessages();
-
-	void setOnHideMessages(final String onHideMessages);
-
-	boolean isBack();
-
-	void setBack(final boolean back);
-
-	boolean isExecuted();
-
-	void setExecuted(final boolean executed);
-
-	String getPopupKey();
-
-	void setPopupKey(final String popupKey);
-
-	boolean isPopup();
-
 	void setUrlBack(final String urlBack);
 
 	void setLayerUrlBack(final String layerUrlBack);
@@ -489,7 +463,7 @@ public interface VulpeController extends Serializable {
 
 	public enum Operation {
 
-		ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE(
+		NONE("none"), ADD_DETAIL("addDetail"), CREATE("create"), CREATE_POST("createPost"), CLONE("clone"), DELETE(
 				"delete"), DELETE_DETAIL("deleteDetail"), DELETE_FILE("deleteFile"), UPDATE(
 				"update"), UPDATE_POST("updatePost"), PERSIST("persist"), TABULAR("tabular"), TABULAR_POST(
 				"tabularPost"), TWICE("twice"), PREPARE("prepare"), SELECT("select"), REPORT_EMPTY(
