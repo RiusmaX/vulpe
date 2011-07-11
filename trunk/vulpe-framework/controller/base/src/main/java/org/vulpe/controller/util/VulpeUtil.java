@@ -84,9 +84,9 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		this.controller = new VulpeControllerUtil();
 		this.view = new VulpeViewUtil();
 		this.cache = new VulpeCacheUtil();
-		this.baseController.now.put("cachedClasses", cache().classes());
-		this.baseController.now.put("cachedEnuns", cache().enums());
-		this.baseController.now.put("cachedEnunsArray", cache().enumsArray());
+		this.baseController.now.put(VulpeConstants.CACHED_CLASSES, cache().classes());
+		this.baseController.now.put(VulpeConstants.CACHED_ENUMS, cache().enums());
+		this.baseController.now.put(VulpeConstants.CACHED_ENUMS_ARRAY, cache().enumsArray());
 	}
 
 	public class VulpeControllerUtil {
