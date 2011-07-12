@@ -17,7 +17,6 @@ package org.vulpe.view.struts.tags;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -96,13 +95,7 @@ public final class StrutsFunctions extends Functions {
 
 		final Object value = getProperty(pageContext, property);
 		if (VulpeValidationUtil.isNotEmpty(value)) {
-			final String keyForm = getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_KEY).concat(
-					VulpeConstants.PARAMS_SESSION_KEY);
-			final Map formParams = (Map) ServletActionContext.getRequest().getSession()
-					.getAttribute(keyForm);
-			if (formParams == null || !formParams.containsKey(key)) {
-				saveInSession(key, value, false);
-			}
+			saveInSession(key, value, false);
 		}
 
 		return linkKey(key, contentType, contentDisposition);
@@ -142,13 +135,16 @@ public final class StrutsFunctions extends Functions {
 	 * @return
 	 */
 	public static Object saveInSession(final String key, final Object value, final Boolean expire) {
-		final Object newValue = value;
-		if (VulpeValidationUtil.isNotEmpty(newValue)) {
-			getEver().putWeakRef(key, new Object[] { expire, newValue });
+		if (VulpeValidationUtil.isNotEmpty(value)) {
+			if (expire) {
+				getEver().putWeakRef(key, value);
+			} else {
+				getEver().put(key, value);
+			}
 		} else {
 			getEver().remove(key);
 		}
-		return newValue;
+		return value;
 	}
 
 	/**
@@ -161,23 +157,21 @@ public final class StrutsFunctions extends Functions {
 	 */
 	public static Object saveImageInSession(final String key, final Object value,
 			final Boolean expire, final Integer width) {
-		final Object newValue = value;
-		if (VulpeValidationUtil.isNotEmpty(newValue)) {
-			final Byte[] bytes = (Byte[]) newValue;
+		if (VulpeValidationUtil.isNotEmpty(value)) {
+			final Byte[] bytes = (Byte[]) value;
 			byte[] imageData = new byte[bytes.length];
 			for (int i = 0; i < bytes.length; i++) {
 				imageData[i] = bytes[i].byteValue();
 			}
 			try {
-				getEver().putWeakRef(key,
-						new Object[] { expire, resizeImageAsJPG(imageData, width) });
+				saveInSession(key, resizeImageAsJPG(imageData, width), expire);
 			} catch (IOException e) {
 				LOG.error(e);
 			}
 		} else {
 			getEver().remove(key);
 		}
-		return newValue;
+		return value;
 	}
 
 	/**

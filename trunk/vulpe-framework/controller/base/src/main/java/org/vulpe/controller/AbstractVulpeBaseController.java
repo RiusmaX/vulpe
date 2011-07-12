@@ -55,7 +55,6 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
-import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.I18NService;
@@ -77,8 +76,6 @@ import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 import org.vulpe.model.services.GenericService;
 import org.vulpe.model.services.VulpeService;
 import org.vulpe.security.context.VulpeSecurityContext;
-
-import com.google.gson.Gson;
 
 /**
  * Base Controller
@@ -197,18 +194,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * Download information.
 	 */
 	private DownloadInfo downloadInfo;
-	/**
-	 * 
-	 */
-	private String propertyName;
-	/**
-	 *
-	 */
-	private boolean uploaded;
-
-	private Object jsonRoot;
-
-	private String reportFormat = "PDF";
 
 	public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
@@ -382,24 +367,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void setDownloadContentDisposition(final String downloadContentDisposition) {
 		this.downloadContentDisposition = downloadContentDisposition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#isUploaded()
-	 */
-	public boolean isUploaded() {
-		return uploaded;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#setUploaded(boolean)
-	 */
-	public void setUploaded(final boolean uploaded) {
-		this.uploaded = uploaded;
 	}
 
 	/**
@@ -985,7 +952,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void json() {
 		final Object object = onJson();
 		if (VulpeValidationUtil.isNotEmpty(object)) {
-			renderJSON(object);
+			vulpe.controller().renderJSON(object);
 		}
 	}
 
@@ -1050,7 +1017,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					values.add(map);
 				}
 			} else {
-				renderPlainText("");
+				vulpe.controller().renderPlainText("");
 			}
 		} else if (getEntitySelect().getId() != null) {
 			for (final VulpeHashMap<String, Object> map : values) {
@@ -1063,9 +1030,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		autocompleteAfter();
 		if (getEntitySelect().getId() == null) {
-			renderJSON(values);
+			vulpe.controller().renderJSON(values);
 		} else {
-			renderPlainText(value);
+			vulpe.controller().renderPlainText(value);
 		}
 	}
 
@@ -1312,7 +1279,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#clear()
 	 */
-	@ResetSession(before = true)
 	public void clear() {
 		// setCleaned(true);
 		if (vulpe.controller().type().equals(ControllerType.MAIN)) {
@@ -1332,7 +1298,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#create()
 	 */
-	@ResetSession(before = true)
 	public void create() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -1401,7 +1366,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#cloneIt()
 	 */
-	@ResetSession(before = true)
 	public void cloneIt() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -1468,7 +1432,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#createPost()
 	 */
-	@ResetSession
 	public void createPost() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -1551,7 +1514,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#update()
 	 */
-	@ResetSession(before = true)
 	public void update() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -1580,7 +1542,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 * @return
 	 */
-	@ResetSession(before = true)
 	public void view() {
 		setOnlyToSee(true);
 		update();
@@ -1629,7 +1590,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#updatePost()
 	 */
-	@ResetSession
 	public void updatePost() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -1976,14 +1936,18 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	protected boolean onDeleteFile() {
 		boolean valid = true;
-		if (StringUtils.isNotBlank(getPropertyName())) {
-			if (VulpeReflectUtil.fieldExists(getEntity().getClass(), getPropertyName())) {
-				VulpeReflectUtil.setFieldValue(getEntity(), getPropertyName(), null);
-				final String contentType = getPropertyName().concat(File.SUFFIX_CONTENT_TYPE);
+		if (StringUtils.isNotBlank(vulpe.controller().propertyName())) {
+			if (VulpeReflectUtil.fieldExists(getEntity().getClass(), vulpe.controller()
+					.propertyName())) {
+				VulpeReflectUtil
+						.setFieldValue(getEntity(), vulpe.controller().propertyName(), null);
+				final String contentType = vulpe.controller().propertyName().concat(
+						File.SUFFIX_CONTENT_TYPE);
 				if (VulpeReflectUtil.fieldExists(getEntity().getClass(), contentType)) {
 					VulpeReflectUtil.setFieldValue(getEntity(), contentType, null);
 				}
-				final String fileName = getPropertyName().concat(File.SUFFIX_FILE_NAME);
+				final String fileName = vulpe.controller().propertyName().concat(
+						File.SUFFIX_FILE_NAME);
 				if (VulpeReflectUtil.fieldExists(getEntity().getClass(), fileName)) {
 					VulpeReflectUtil.setFieldValue(getEntity(), fileName, null);
 				}
@@ -2087,7 +2051,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 * @return Navigation.
 	 */
-	@ResetSession
 	public void read() {
 		if (vulpe.controller().type() == null
 				|| !vulpe.controller().type().equals(ControllerType.TWICE)) {
@@ -2124,7 +2087,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
 				if (VulpeValidationUtil.isNotEmpty(vulpe.controller().config().getDetails())
-						&& VulpeValidationUtil.isEmpty(getEntities()) && !vulpe.controller().tabularFilter()) {
+						&& VulpeValidationUtil.isEmpty(getEntities())
+						&& !vulpe.controller().tabularFilter()) {
 					createDetails(vulpe.controller().config().getDetails(), false);
 				} else if (VulpeValidationUtil.isEmpty(getEntities())) {
 					addActionInfoMessage(getDefaultMessage(Operation.READ));
@@ -2263,7 +2227,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#tabularFilter()
 	 */
-	@ResetSession
 	public void tabularFilter() {
 		vulpe.controller().tabularFilter(true);
 		read();
@@ -2274,7 +2237,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#tabularPost()
 	 */
-	@ResetSession
 	public void tabularPost() {
 		if (getEntities() != null) {
 			vulpe.controller().operation(Operation.TABULAR_POST);
@@ -2352,7 +2314,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
-	@ResetSession(before = true)
 	public void prepare() {
 		prepareBefore();
 		onPrepare();
@@ -2379,7 +2340,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		prepareAfter();
 	}
 
-	@ResetSession(before = true)
 	public void twice() {
 		vulpe.controller().type(ControllerType.TWICE);
 		prepareBefore();
@@ -2389,7 +2349,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		prepareAfter();
 	}
 
-	@ResetSession(before = true)
 	public void export() {
 		vulpe.controller().type(ControllerType.SELECT);
 		exportBefore();
@@ -2419,10 +2378,10 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#select()
 	 */
-	@ResetSession(before = true)
 	@Override
 	public void select() {
 		vulpe.controller().type(ControllerType.SELECT);
+		vulpe.view().targetName("entitySelect");
 		selectBefore();
 		onPrepare();
 		manageButtons(Operation.PREPARE);
@@ -2465,7 +2424,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		// extension point
 	}
 
-	@ResetSession(before = true)
 	public void report() {
 		vulpe.controller().type(ControllerType.REPORT);
 		reportBefore();
@@ -2494,7 +2452,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * 
 	 * @see org.vulpe.controller.VulpeController#tabular()
 	 */
-	@ResetSession(before = true)
 	public void tabular() {
 		vulpe.controller().type(ControllerType.TABULAR);
 		if (vulpe.controller().config().isTabularShowFilter()) {
@@ -2574,7 +2531,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		uploadBefore();
 		onUpload();
 		uploadAfter();
-		setResultName(Result.UPLOAD);
+		vulpe.controller().renderBoolean(vulpe.controller().uploaded());
 	}
 
 	/**
@@ -2583,7 +2540,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @since 1.0
 	 */
 	protected void onUpload() {
-		setUploaded(true);
+		vulpe.controller().uploaded(true);
 	}
 
 	/**
@@ -3260,69 +3217,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public Collection<String> getActionInfoMessages() {
 		return actionInfoMessages;
-	}
-
-	public void setPropertyName(String propertyName) {
-		this.propertyName = propertyName;
-	}
-
-	public String getPropertyName() {
-		return propertyName;
-	}
-
-	public void setJsonRoot(Object jsonRoot) {
-		this.jsonRoot = jsonRoot;
-	}
-
-	public Object getJsonRoot() {
-		return jsonRoot;
-	}
-
-	protected void renderError() {
-		setResultName(Result.ERRORS);
-	}
-
-	protected void renderMessages() {
-		setResultName(Result.MESSAGES);
-	}
-
-	protected void renderSuccess() {
-		setResultName(Result.SUCCESS);
-	}
-
-	protected void renderJSON(final Object jsonElement) {
-		setJsonRoot(jsonElement);
-		setResultName(Result.JSON);
-	}
-
-	protected void renderSimpleJSON(final Object jsonElement) {
-		// now.put("RESULT_TYPE", "/*[JSON]*/");
-		now.put("PLAIN_TEXT", new Gson().toJson(jsonElement));
-		setResultName(Result.PLAIN_TEXT);
-	}
-
-	protected void renderJavascript(final Object object) {
-		now.put("RESULT_TYPE", "/*[JS]*/");
-		now.put("PLAIN_TEXT", object);
-		setResultName(Result.PLAIN_TEXT);
-	}
-
-	protected void renderPlainText(final Object object) {
-		now.put("RESULT_TYPE", "/*[PLAINTEXT]*/");
-		now.put("PLAIN_TEXT", object);
-		setResultName(Result.PLAIN_TEXT);
-	}
-
-	protected String toJson(final Object jsonElement) {
-		return new Gson().toJson(jsonElement);
-	}
-
-	public void setReportFormat(String reportFormat) {
-		this.reportFormat = reportFormat;
-	}
-
-	public String getReportFormat() {
-		return reportFormat;
 	}
 
 }

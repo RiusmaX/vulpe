@@ -25,8 +25,6 @@ package org.vulpe.commons;
  */
 public class VulpeConstants {
 
-	public static final String MAPPING_REQUEST = "MAPPING_REQUEST";
-	public static final String FORM_REQUEST = "FORM_REQUEST";
 	public static final String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
 	public static final String STRING_NULL = "";
 	public static final String LITERAL_EMPTY_STRING = "0";
@@ -39,7 +37,6 @@ public class VulpeConstants {
 	public static final String VULPE_SHOW_MESSAGES = "vulpeShowMessages";
 	public static final String GENERAL_ERROR = "vulpe.error.general";
 	public static final String CLEAR_PARAMS = "vulpe.clearParams";
-	public static final String PARAMS_SESSION_KEY = "_params";
 	public static final String CACHED_CLASSES = "vulpeCachedClasses";
 	public static final String CACHED_ENUMS = "vulpeCachedEnums";
 	public static final String CACHED_ENUMS_ARRAY = "vulpeCachedEnumsArray";
@@ -141,6 +138,9 @@ public class VulpeConstants {
 			public static final String CURRENT_YEAR = "currentYear";
 			public static final String CURRENT_MONTH = "currentMonth";
 			public static final String CURRENT_DAY = "currentDay";
+			public static final String CACHED_CLASSES = "cachedClasses";
+			public static final String CACHED_ENUMS = "cachedEnums";
+			public static final String CACHED_ENUMS_ARRAY = "cachedEnumsArray";
 
 			// View
 			public static final String BUTTONS = "buttons";
@@ -148,6 +148,7 @@ public class VulpeConstants {
 			public static final String CONTENT_SUBTITLE = "contentSubtitle";
 			public static final String FORM_NAME = "formName";
 			public static final String FOCUS_TO_FIELD = "focusToField";
+			public static final String HOOKS = "hooks";
 			public static final String MASTER_TITLE_KEY = "masterTitleKey";
 			public static final String NO_CACHE = "noCache";
 			public static final String SHOW_CONTENT_TITLE = "showContentTitle";
@@ -172,11 +173,15 @@ public class VulpeConstants {
 			public static final String DETAIL_LAYER = "detailLayer";
 			public static final String EXECUTED = "executed";
 			public static final String EXPORTED = "executed";
+			public static final String JSON_ROOT = "jsonRoot";
 			public static final String OPERATION = "operation";
 			public static final String POPUP = "popup";
 			public static final String POPUP_KEY = "popupKey";
+			public static final String PROPERTY_NAME = "propertyName";
+			public static final String REPORT_FORMAT = "reportFormat";
 			public static final String SELECTED_TAB = "selectedTab";
 			public static final String TABULAR_FILTER = "tabularFilter";
+			public static final String UPLOADED = "uploaded";
 		}
 
 		public class Ever {

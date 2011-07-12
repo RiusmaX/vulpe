@@ -104,7 +104,7 @@
 				<tr class="vulpeTableFooter">${tableFooter}</tr>
 			</tfoot>
 		</c:if>
-		<c:if test="${name == 'entities'}"><c:set var="enableHooks" value="${true}" scope="request"/></c:if>
+		<c:if test="${name == 'entities' && (empty now['hooks'] || now['hooks'])}"><c:set var="enableHooks" value="${true}" scope="request"/></c:if>
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
 			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->

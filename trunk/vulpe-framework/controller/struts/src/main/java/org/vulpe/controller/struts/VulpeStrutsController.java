@@ -18,7 +18,6 @@ package org.vulpe.controller.struts;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -36,7 +35,6 @@ import ognl.PropertyAccessor;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -47,7 +45,6 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
-import org.vulpe.controller.annotations.ResetSession;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.util.StrutsReportUtil;
@@ -86,18 +83,11 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	private final OgnlUtil ognlUtil = new OgnlUtil();
 
 	@SkipValidation
-	@ResetSession(before = true)
 	public void create() {
 		super.create();
 	}
 
-	@ResetSession
-	public void createPost() {
-		super.createPost();
-	}
-
 	@SkipValidation
-	@ResetSession(before = true)
 	public void update() {
 		super.update();
 	}
@@ -109,19 +99,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @return
 	 */
 	@SkipValidation
-	@ResetSession(before = true)
 	public void view() {
 		super.view();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.AbstractVulpeBaseController#updatePost()
-	 */
-	@ResetSession
-	public void updatePost() {
-		super.updatePost();
 	}
 
 	@SkipValidation
@@ -254,31 +233,26 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * @see org.vulpe.controller.VulpeController#prepare()
 	 */
 	@SkipValidation
-	@ResetSession(before = true)
 	public void prepare() {
 		super.prepare();
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	public void twice() {
 		super.twice();
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	public void select() {
 		super.select();
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	public void report() {
 		super.report();
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	public void tabular() {
 		super.tabular();
 	}
@@ -297,7 +271,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			}
 			return StrutsReportUtil.getInstance().getDownloadInfo(collection,
 					getReportParameters(), vulpe.controller().config().getReportFile(),
-					vulpe.controller().config().getSubReports(), getReportFormat(),
+					vulpe.controller().config().getSubReports(), vulpe.controller().reportFormat(),
 					vulpe.controller().config().getReportName(),
 					vulpe.controller().config().isReportDownload());
 		} catch (Exception e) {
@@ -306,14 +280,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	@Override
 	public void backend() {
 		super.backend();
 	}
 
 	@SkipValidation
-	@ResetSession(before = true)
 	@Override
 	public void frontend() {
 		super.frontend();
@@ -338,11 +310,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	protected DownloadInfo prepareDownloadInfo() {
 		try {
-			Object value = null;
-			if (getFormParams() != null && getFormParams().containsKey(getDownloadKey())) {
-				final Object[] array = (Object[]) getFormParams().get(getDownloadKey());
-				value = array[1];
-			}
+			Object value = ever.get(getDownloadKey());
 			if (value == null) {
 				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
 						.getContextMap(), this);
@@ -370,22 +338,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		if (hasActionErrors() || hasFieldErrors()) {
 			throw new VulpeValidationException();
 		}
-	}
-
-	/**
-	 * Retrieves form parameters
-	 * 
-	 * @return Map with form parameters
-	 */
-	public Map getFormParams() {
-		final String keyForm = vulpe.controller().currentKey().concat(
-				VulpeConstants.PARAMS_SESSION_KEY);
-		Map formParams = ever.getSelf(keyForm);
-		if (formParams == null) {
-			formParams = new HashMap();
-			ever.put(keyForm, formParams);
-		}
-		return formParams;
 	}
 
 	private final ValidationAwareSupport validationAware = new ValidationAwareSupport();

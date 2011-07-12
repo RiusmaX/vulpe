@@ -32,7 +32,7 @@
 	</rule>
 	<rule>
 		<from>^/([a-z]+)/([a-z]+)/reportExport/([a-z]+)</from>
-		<to>/$1/$2/report/ajax?reportFormat=$3</to>
+		<to>/$1/$2/report/ajax?now.reportFormat=$3</to>
 	</rule>
 	<rule>
 		<from>^/([a-z]+)/([a-z]+)/export/([a-z]+)</from>
@@ -64,6 +64,6 @@
 	</rule>
 	<rule>
 		<from>^/([a-z]+)/([a-z]+)/detail/([a-z]+)/page/ajax/([0-9]+)</from>
-		<to>/$1/$2/paging/ajax?detail=$3&amp;paging.page=$4</to>
+		<to>/$1/$2/paging/ajax?now.detail=$3&amp;paging.page=$4</to>
 	</rule>
 </urlrewrite>

@@ -17,13 +17,15 @@ package org.vulpe.commons.util;
 
 import java.util.HashMap;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends HashMap<KEY, VALUE> {
 
 	/**
@@ -32,9 +34,27 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param key
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> T getSelf(final KEY key) {
 		return (T) get(key);
+	}
+
+	public <T> T getEnum(final KEY key, final Class type) {
+		final Object object = getSelf(key);
+		T value = null;
+		if (object instanceof String) {
+			final String string = (String) object;
+			if (StringUtils.isNotBlank(string)) {
+				value = (T) Enum.valueOf(type, string);
+			}
+		} else {
+			value = (T) object;
+		}
+		return value;
+	}
+
+	public <T> T getEnum(final KEY key, final Class type, final T defaultValue) {
+		final T object = getEnum(key, type);
+		return object == null ? defaultValue : object;
 	}
 
 	public boolean getBoolean(final KEY key) {
@@ -55,7 +75,6 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 		return value;
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T> T getSelf(final KEY key, final T defaultValue) {
 		return containsKey(key) && VulpeValidationUtil.isNotEmpty(get(key)) ? (T) getSelf(key)
 				: defaultValue;
@@ -68,7 +87,6 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param key
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> T removeSelf(final KEY key) {
 		return (T) remove(key);
 	}
@@ -81,7 +99,6 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param value
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> T putSelf(final KEY key, final VALUE value) {
 		return (T) super.put(key, value);
 	}

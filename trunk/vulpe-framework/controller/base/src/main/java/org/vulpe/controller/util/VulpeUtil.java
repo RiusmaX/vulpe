@@ -29,6 +29,7 @@ import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Code.Generator;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
+import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.ButtonConfig;
@@ -46,6 +47,8 @@ import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.annotations.View;
+
+import com.google.gson.Gson;
 
 /**
  * Utility class to configuration stuff.
@@ -79,17 +82,96 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		return cache;
 	}
 
+	public String toJson(final Object jsonElement) {
+		return new Gson().toJson(jsonElement);
+	}
+
 	public VulpeUtil(final AbstractVulpeBaseController<ENTITY, ID> baseController) {
 		this.baseController = baseController;
 		this.controller = new VulpeControllerUtil();
 		this.view = new VulpeViewUtil();
 		this.cache = new VulpeCacheUtil();
-		this.baseController.now.put(VulpeConstants.CACHED_CLASSES, cache().classes());
-		this.baseController.now.put(VulpeConstants.CACHED_ENUMS, cache().enums());
-		this.baseController.now.put(VulpeConstants.CACHED_ENUMS_ARRAY, cache().enumsArray());
+		this.baseController.now.put(Now.CACHED_CLASSES, cache().classes());
+		this.baseController.now.put(Now.CACHED_ENUMS, cache().enums());
+		this.baseController.now.put(Now.CACHED_ENUMS_ARRAY, cache().enumsArray());
 	}
 
 	public class VulpeControllerUtil {
+
+		public void renderError() {
+			baseController.setResultName(Result.ERRORS);
+		}
+
+		public void renderMessages() {
+			baseController.setResultName(Result.MESSAGES);
+		}
+
+		public void renderSuccess() {
+			baseController.setResultName(Result.SUCCESS);
+		}
+
+		public void renderJSON(final Object jsonElement) {
+			jsonRoot(jsonElement);
+			baseController.setResultName(Result.JSON);
+		}
+
+		public void renderSimpleJSON(final Object jsonElement) {
+			baseController.now.put("PLAIN_TEXT", new Gson().toJson(jsonElement));
+			baseController.setResultName(Result.PLAIN_TEXT);
+		}
+
+		public void renderJavascript(final Object object) {
+			baseController.now.put("RESULT_TYPE", "/*[JS]*/");
+			baseController.now.put("PLAIN_TEXT", object);
+			baseController.setResultName(Result.PLAIN_TEXT);
+		}
+
+		public void renderPlainText(final Object object) {
+			baseController.now.put("RESULT_TYPE", "/*[PLAINTEXT]*/");
+			baseController.now.put("PLAIN_TEXT", object);
+			baseController.setResultName(Result.PLAIN_TEXT);
+		}
+
+		public void renderBoolean(final boolean object) {
+			baseController.now.put("PLAIN_TEXT", object);
+			baseController.setResultName(Result.PLAIN_TEXT);
+		}
+
+		public void reportFormat(String reportFormat) {
+			baseController.now.put(Now.REPORT_FORMAT, reportFormat);
+		}
+
+		public String reportFormat() {
+			String reportFormat = baseController.now.getSelf(Now.REPORT_FORMAT);
+			if (StringUtils.isBlank(reportFormat)) {
+				reportFormat = "PDF";
+			}
+			return reportFormat;
+		}
+
+		public void jsonRoot(Object jsonRoot) {
+			baseController.now.put(Now.JSON_ROOT, jsonRoot);
+		}
+
+		public Object jsonRoot() {
+			return baseController.now.get(Now.JSON_ROOT);
+		}
+
+		public boolean uploaded() {
+			return baseController.now.getBoolean(Now.UPLOADED);
+		}
+
+		public void uploaded(final boolean uploaded) {
+			baseController.now.put(Now.UPLOADED, uploaded);
+		}
+
+		public void setPropertyName(String propertyName) {
+			baseController.now.put(Now.PROPERTY_NAME, propertyName);
+		}
+
+		public String propertyName() {
+			return baseController.now.getSelf(Now.PROPERTY_NAME);
+		}
 
 		public boolean ajax() {
 			return baseController.now.getBoolean(Now.AJAX);
@@ -144,7 +226,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public Operation operation() {
-			return baseController.now.getSelf(Now.OPERATION, Operation.NONE);
+			return baseController.now.getEnum(Now.OPERATION, Operation.class, Operation.NONE);
 		}
 
 		public void operation(final Operation operation) {
@@ -494,6 +576,14 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public void maxInactiveInterval(final int maxInactiveInterval) {
 			baseController.ever.put(Ever.MAX_INACTIVE_INTERVAL, maxInactiveInterval);
+		}
+
+		public boolean hooks() {
+			return baseController.now.getBoolean(Now.HOOKS);
+		}
+
+		public void hooks(final boolean enable) {
+			baseController.now.put(Now.HOOKS, enable);
 		}
 
 		public String targetName() {

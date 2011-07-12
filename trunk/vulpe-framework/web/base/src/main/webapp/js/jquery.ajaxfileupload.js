@@ -63,7 +63,7 @@ jQuery.extend({
 					response = vulpe.util.trim(io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null);
 				}
 				if (vulpe.util.trim(response) != 'true'){
-					if (response.indexOf("<!--IS_EXCEPTION-->")) {
+					if (response.indexOf("<!--IS_EXCEPTION-->") != -1) {
 						vulpe.exception.handlerError(response);
 					} else {
 						jQuery(vulpe.config.layers.modalMessages).html(vulpe.config.messages.upload);
