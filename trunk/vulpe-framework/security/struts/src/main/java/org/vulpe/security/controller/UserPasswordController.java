@@ -88,7 +88,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 		user.setPasswordConfirmEncrypted(getEntity().getPasswordConfirm());
 		setEntity(user);
 		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.security.msg.user.password.changed}");
-		redirectTo("/j_spring_security_logout", false);
+		vulpe.controller().redirectTo("/j_spring_security_logout", false);
 		return super.onUpdatePost();
 	}
 

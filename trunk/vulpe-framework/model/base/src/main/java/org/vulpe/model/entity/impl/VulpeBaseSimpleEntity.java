@@ -164,4 +164,17 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	@Override
 	public void setUsed(boolean used) {
 	}
+
+	@Override
+	public boolean isConditional() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setConditional(boolean conditional) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

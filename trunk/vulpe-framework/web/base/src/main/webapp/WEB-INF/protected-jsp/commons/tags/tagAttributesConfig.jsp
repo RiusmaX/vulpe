@@ -41,6 +41,6 @@
 </c:if>
 <c:if test="${saveInSession}"><c:set var="valueInSession" value="${util:saveInSession(name, value, expireInSession)}"/></c:if>
 <c:if test="${not empty value}"><c:set var="value" value="${util:toString(value)}"/></c:if>
-<c:if test="${empty showAsText && onlyToSee && targetName != 'entitySelect'}"><c:set var="showAsText" value="${true}"/></c:if>
+<c:if test="${empty showAsText && now['onlyToSee'] && targetName != 'entitySelect'}"><c:set var="showAsText" value="${true}"/></c:if>
 <c:if test="${onlyUpdateDetails && targetName == 'entity'}"><c:set var="showAsText" value="${true}"/></c:if>
 <c:if test="${empty showRequiredIcon}"><c:set var="showRequiredIcon" value="${true}"/></c:if>

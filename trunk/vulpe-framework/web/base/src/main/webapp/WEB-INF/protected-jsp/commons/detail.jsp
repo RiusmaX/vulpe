@@ -24,7 +24,7 @@
 	</c:choose>
 		<div>
 </c:if>
-		<c:if test="${!onlyToSee}">
+		<c:if test="${!now['onlyToSee']}">
 		<div id="vulpeDetailActions-${targetConfigLocal.baseName}${currentDetailIndex}" class="vulpeActions">
 			<%@include file="/WEB-INF/protected-jsp/commons/detailActions.jsp" %>
 		</div>

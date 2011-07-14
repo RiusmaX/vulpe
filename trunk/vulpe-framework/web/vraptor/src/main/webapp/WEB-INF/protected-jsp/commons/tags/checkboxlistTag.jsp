@@ -31,8 +31,8 @@
 	<span id="${elementId}">
 	<c:choose>
 		<c:when test="${not empty enumeration || not empty listValueCheck}">
-			<c:if test="${onlyToSee}">
-				<c:set var="disabled" value="${onlyToSee}" />
+			<c:if test="${now['onlyToSee']}">
+				<c:set var="disabled" value="${now['onlyToSee']}" />
 			</c:if>
 			<c:choose>
 			<c:when test="${not empty enumeration}">
@@ -43,7 +43,7 @@
 			</c:otherwise>
 			</c:choose>
 			<jsp:doBody/>
-			<c:if test="${!onlyToSee}">
+			<c:if test="${!now['onlyToSee']}">
 			<a id="${elementId}-Error" style="display: none;" href="javascript:;" onclick="vulpe.util.get('${elementId}').focus();" onmouseover="vulpe.view.openTooltip('${elementId}-ErrorMsg');" onmouseout="vulpe.view.closeTooltip('${elementId}-ErrorMsg');">
 				<img src="${pageContext.request.contextPath}/themes/${global['project-theme']}/images/stop.png" />
 				<div id="${elementId}-ErrorMsg" class="tooltip"><em></em></div>

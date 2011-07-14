@@ -315,10 +315,6 @@ public interface VulpeController extends Serializable {
 	 */
 	void frontend();
 
-	void setUrlBack(final String urlBack);
-
-	void setLayerUrlBack(final String layerUrlBack);
-
 	/**
 	 * Retrieves a Spring Bean by name.
 	 * 
@@ -405,31 +401,6 @@ public interface VulpeController extends Serializable {
 	HttpSession getSession();
 
 	/**
-	 * Define Result Result to render normal or AJAX request
-	 */
-	void controlResultForward();
-
-	/**
-	 * Method retrieve forward.
-	 * 
-	 * @since 1.0
-	 * @return Result Result.
-	 */
-	String getResultForward();
-
-	void setResultForward(final String resultForward);
-
-	/**
-	 * Method retrieve result.
-	 * 
-	 * @since 1.0
-	 * @return Result Name.
-	 */
-	String getResultName();
-
-	void setResultName(final String resultName);
-
-	/**
 	 * Mount return to view by simple page name or full path.
 	 * 
 	 * @param page
@@ -437,25 +408,6 @@ public interface VulpeController extends Serializable {
 	void returnToPage(final String page);
 
 	void read();
-
-	/**
-	 * Redirect to URL.
-	 * 
-	 * @param url
-	 */
-	void redirectTo(final String url);
-
-	/**
-	 * Redirect to URL using AJAX.
-	 * 
-	 * @param url
-	 * @param ajax
-	 */
-	void redirectTo(final String url, final boolean ajax);
-
-	void setUrlRedirect(String urlRedirect);
-
-	String getUrlRedirect();
 
 	public enum Operation {
 

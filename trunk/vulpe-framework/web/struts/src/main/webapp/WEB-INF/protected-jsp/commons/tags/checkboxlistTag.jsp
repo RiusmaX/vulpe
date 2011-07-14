@@ -30,7 +30,7 @@
 	<span id="${elementId}">
 	<c:choose>
 		<c:when test="${not empty enumeration || not empty listValueCheck}">
-			<c:if test="${onlyToSee}"><c:set var="disabled" value="${onlyToSee}" /></c:if>
+			<c:if test="${now['onlyToSee']}"><c:set var="disabled" value="${now['onlyToSee']}" /></c:if>
 			<c:choose>
 				<c:when test="${not empty enumeration}"><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" list="${enumeration}" /></c:when>
 				<c:otherwise>

@@ -33,7 +33,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
@@ -171,14 +170,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	private Paging<ENTITY> paging;
 	/**
-	 * If true, define as read only
-	 */
-	private boolean onlyToSee = false;
-	/**
-	 * If true, define entity master as read only
-	 */
-	private boolean onlyUpdateDetails = false;
-	/**
 	 *
 	 */
 	private String downloadKey;
@@ -269,14 +260,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public void setPaging(final Paging<ENTITY> paging) {
 		this.paging = paging;
-	}
-
-	public boolean isOnlyToSee() {
-		return onlyToSee;
-	}
-
-	public void setOnlyToSee(final boolean onlyToSee) {
-		this.onlyToSee = onlyToSee;
 	}
 
 	public void setEntitySelect(final ENTITY entitySelect) {
@@ -1180,7 +1163,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (detailConfig == null || detailConfig.getViewPath() == null) {
 					controlResultForward();
 				} else {
-					setResultForward(detailConfig.getViewPath());
+					vulpe.controller().resultForward(detailConfig.getViewPath());
 				}
 			}
 		}
@@ -1243,7 +1226,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (detailConfig == null || detailConfig.getViewPath() == null) {
 				controlResultForward();
 			} else {
-				setResultForward(detailConfig.getViewPath());
+				vulpe.controller().resultForward(detailConfig.getViewPath());
 			}
 		} else {
 			controlResultForward();
@@ -1310,7 +1293,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		manageButtons(Operation.CREATE);
 		if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			vulpe.view().bodyTwice(ControllerType.MAIN);
-			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+			vulpe.controller().resultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
 		}
@@ -1375,7 +1358,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		cloneItBefore();
 		if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			vulpe.view().bodyTwice(ControllerType.MAIN);
-			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+			vulpe.controller().resultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
 		}
@@ -1529,7 +1512,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		manageButtons();
 		if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			vulpe.view().bodyTwice(ControllerType.MAIN);
-			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+			vulpe.controller().resultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
 		}
@@ -1543,7 +1526,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return
 	 */
 	public void view() {
-		setOnlyToSee(true);
+		vulpe.controller().onlyToSee(true);
 		update();
 		manageButtons(Operation.VIEW);
 	}
@@ -1787,7 +1770,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (vulpe.controller().type().equals(ControllerType.MAIN)) {
 				controlResultForward();
 			} else {
-				setResultForward(vulpe.controller().config().getViewItemsPath());
+				vulpe.controller().resultForward(vulpe.controller().config().getViewItemsPath());
 			}
 		}
 	}
@@ -1818,11 +1801,24 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					new Object[] { entities });
 			if (notDeleteIf != null) {
 				final List<Integer> rows = new ArrayList<Integer>();
+				boolean used = false;
 				for (final ENTITY entity2 : entities) {
 					if (entity2.isUsed()) {
 						for (final ENTITY entity3 : getEntities()) {
 							if (entity2.getId().equals(entity3.getId())) {
 								rows.add(entity3.getRowNumber());
+								used = true;
+							}
+						}
+					}
+				}
+				if (rows.isEmpty()) {
+					for (final ENTITY entity2 : entities) {
+						if (entity2.isConditional()) {
+							for (final ENTITY entity3 : getEntities()) {
+								if (entity2.getId().equals(entity3.getId())) {
+									rows.add(entity3.getRowNumber());
+								}
 							}
 						}
 					}
@@ -1839,11 +1835,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						++count;
 					}
 					if (rows.size() == 1) {
-						addActionError(notDeleteIf.messageToOneRecordOnSelect(), affectedRows
-								.toString());
+						addActionError(used ? notDeleteIf.usedBy().messageToOneRecordOnSelect()
+								: notDeleteIf.conditions().messageToOneRecordOnSelect(),
+								affectedRows.toString());
 					} else {
-						addActionError(notDeleteIf.messageToManyRecordsOnSelect(), affectedRows
-								.toString());
+						addActionError(used ? notDeleteIf.usedBy().messageToManyRecordsOnSelect()
+								: notDeleteIf.conditions().messageToManyRecordsOnSelect(),
+								affectedRows.toString());
 					}
 					valid = false;
 				}
@@ -1851,8 +1849,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			invokeServices(getServiceMethodName(Operation.DELETE), new Class[] { vulpe.controller()
 					.config().getEntityClass() }, new Object[] { entity });
-			if (notDeleteIf != null && entity.isUsed()) {
-				addActionError(notDeleteIf.messageToRecordOnMain());
+			if (notDeleteIf != null && (entity.isUsed() || entity.isConditional())) {
+				addActionError(entity.isUsed() ? notDeleteIf.usedBy().messageToRecordOnMain()
+						: notDeleteIf.conditions().messageToRecordOnMain());
 				valid = false;
 			}
 		}
@@ -2007,7 +2006,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (detailConfig == null || StringUtils.isBlank(detailConfig.getViewPath())) {
 				controlResultForward();
 			} else {
-				setResultForward(detailConfig.getViewPath());
+				vulpe.controller().resultForward(detailConfig.getViewPath());
 			}
 		} else {
 			controlResultForward();
@@ -2065,24 +2064,25 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				controlResultForward();
 				vulpe.controller().back(false);
 			} else if (vulpe.controller().ajax() || vulpe.controller().exported()) {
-				setResultForward(vulpe.controller().config().getViewItemsPath());
+				vulpe.controller().resultForward(vulpe.controller().config().getViewItemsPath());
 			} else {
 				controlResultForward();
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.REPORT)) {
 			vulpe.view().targetName("entitySelect");
-			setResultName(Result.REPORT);
+			vulpe.controller().resultName(Result.REPORT);
 			if (vulpe.controller().ajax()) {
-				setResultForward(vulpe.controller().config().getViewItemsPath());
+				vulpe.controller().resultForward(vulpe.controller().config().getViewItemsPath());
 			} else {
 				controlResultForward();
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			vulpe.view().bodyTwice(ControllerType.SELECT);
 			if (vulpe.controller().ajax()) {
-				setResultForward(vulpe.controller().config().getViewSelectItemsPath());
+				vulpe.controller().resultForward(
+						vulpe.controller().config().getViewSelectItemsPath());
 			} else {
-				setResultForward(vulpe.controller().config().getViewSelectPath());
+				vulpe.controller().resultForward(vulpe.controller().config().getViewSelectPath());
 			}
 		} else {
 			if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
@@ -2333,7 +2333,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			read();
 		} else if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			vulpe.view().bodyTwice(ControllerType.SELECT);
-			setResultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+			vulpe.controller().resultForward(Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 		} else {
 			controlResultForward();
 		}
@@ -2352,11 +2352,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void export() {
 		vulpe.controller().type(ControllerType.SELECT);
 		exportBefore();
-		setOnlyToSee(true);
+		vulpe.controller().onlyToSee(true);
 		vulpe.controller().exported(true);
 		onExport();
-		// setResultForward(vulpe.controller().config().getViewItemsPath());
-		// setResultName(Result.EXPORT);
+		// vulpe.controller().resultForward(vulpe.controller().config().getViewItemsPath());
+		// vulpe.controller().resultName(Result.EXPORT);
 		ever.put(Ever.EXPORT_CONTENT, "PDF");
 		exportAfter();
 	}
@@ -2570,7 +2570,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		downloadBefore();
 		onDownload();
 		downloadAfter();
-		setResultName(Result.DOWNLOAD);
+		vulpe.controller().resultName(Result.DOWNLOAD);
 	}
 
 	/**
@@ -2660,15 +2660,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void setReportCollection(Collection<?> collection) {
 		now.put(Controller.REPORT_COLLECTION, collection);
-	}
-
-	public void setOnlyUpdateDetails(boolean onlyUpdateDetails) {
-		this.onlyUpdateDetails = onlyUpdateDetails;
-	}
-
-	public boolean isOnlyUpdateDetails() {
-		onlyUpdateDetails = vulpe.controller().config().isOnlyUpdateDetails();
-		return onlyUpdateDetails;
 	}
 
 	/**
@@ -2943,88 +2934,18 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return getText(key, getText(arg1), getText(arg2), getText(arg3), getText(arg4));
 	}
 
-	/**
-	 * URL Redirect.
-	 */
-	private String urlRedirect;
-
-	/**
-	 * Result Result.
-	 */
-	private String resultForward;
-	/**
-	 * Result Name.
-	 */
-	private String resultName = Result.SUCCESS;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getResultForward()
-	 */
-	public String getResultForward() {
-		return resultForward;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setResultForward(java.lang
-	 * .String)
-	 */
-	public void setResultForward(final String resultForward) {
-		this.resultForward = resultForward;
-	}
-
-	/**
-	 * 
-	 * @param page
-	 */
-	public void setResultPage(final String page) {
-		if (StringUtils.isNotEmpty(page)) {
-			setResultForward(Layout.PROTECTED_JSP
-					+ (page.startsWith("/") ? page.substring(1) : page));
-		}
-	}
-
-	public String getResultName() {
-		return resultName;
-	}
-
-	public void setResultName(final String resultName) {
-		this.resultName = resultName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setUrlBack(java.lang.String )
-	 */
-	public void setUrlBack(final String urlBack) {
-		getSession().setAttribute(VulpeConstants.View.URL_BACK, urlBack);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#setLayerUrlBack(java.lang
-	 * .String)
-	 */
-	public void setLayerUrlBack(final String layerUrlBack) {
-		getSession().setAttribute(VulpeConstants.View.LAYER_URL_BACK, layerUrlBack);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.vulpe.controller.VulpeSimpleController#controlResultForward()
 	 */
 	public void controlResultForward() {
-		setResultForward(vulpe.controller().type().equals(ControllerType.TWICE) ? Layout.PROTECTED_JSP_COMMONS
-				.concat(Layout.BODY_TWICE_JSP)
-				: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
+		vulpe
+				.controller()
+				.resultForward(
+						vulpe.controller().type().equals(ControllerType.TWICE) ? Layout.PROTECTED_JSP_COMMONS
+								.concat(Layout.BODY_TWICE_JSP)
+								: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}
 
 	/*
@@ -3156,36 +3077,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 
 	public abstract void addActionError(final String message);
 
-	public void setUrlRedirect(String urlRedirect) {
-		this.urlRedirect = urlRedirect;
-	}
-
-	public String getUrlRedirect() {
-		return urlRedirect;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#redirectTo(java.lang.String,
-	 * boolean)
-	 */
-	public void redirectTo(final String url, final boolean ajax) {
-		setUrlRedirect(url + (ajax ? "/ajax" : ""));
-		setResultName(Result.REDIRECT);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#redirectTo(java.lang.String)
-	 */
-	public void redirectTo(final String url) {
-		redirectTo(url, vulpe.controller().ajax());
-	}
-
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
@@ -3208,7 +3099,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		} else {
 			path.append(page);
 		}
-		setResultForward(path.toString());
+		vulpe.controller().resultForward(path.toString());
 	}
 
 	public void setActionInfoMessages(Collection<String> actionInfoMessages) {

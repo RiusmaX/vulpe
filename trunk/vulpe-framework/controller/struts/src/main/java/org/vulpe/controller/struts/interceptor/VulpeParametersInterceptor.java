@@ -44,7 +44,7 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) invocation
 					.getAction();
 			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
-				if (StringUtils.isEmpty(baseController.getResultForward())) {
+				if (StringUtils.isEmpty(baseController.vulpe.controller().resultForward())) {
 					baseController.controlResultForward();
 					baseController.manageButtons(baseController.vulpe.controller().operation());
 				}

@@ -204,10 +204,10 @@ public class VulpeActionInvocation implements ActionInvocation {
 
 	public Result createResult() throws Exception {
 		if (getAction() instanceof VulpeController) {
-			final VulpeController controller = (VulpeController) getAction();
-			if (controller.getResultName().equals(Controller.Result.REDIRECT)
-					&& StringUtils.isNotBlank(controller.getUrlRedirect())) {
-				final ServletRedirectResult srr = new ServletRedirectResult("${urlRedirect}");
+			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) getAction();
+			if (baseController.vulpe.controller().resultName().equals(Controller.Result.REDIRECT)
+					&& StringUtils.isNotBlank(baseController.vulpe.controller().urlToRedirect())) {
+				final ServletRedirectResult srr = new ServletRedirectResult("${now.urlToRedirect}");
 				srr.setPrependServletContext(true);
 				srr.setActionMapper(new DefaultActionMapper());
 				return srr;
@@ -274,7 +274,8 @@ public class VulpeActionInvocation implements ActionInvocation {
 					if (getAction() instanceof VulpeController
 							&& !resultCode.equals(Controller.Result.MESSAGES)
 							&& resultCode.equals(Controller.Result.ERRORS)) {
-						resultCode = ((VulpeController) getAction()).getResultName();
+						resultCode = ((AbstractVulpeBaseController) getAction()).vulpe.controller()
+								.resultName();
 					}
 				} finally {
 					UtilTimerStack.pop(interceptorMsg);
@@ -282,7 +283,8 @@ public class VulpeActionInvocation implements ActionInvocation {
 			} else {
 				resultCode = invokeActionOnly();
 				if (getAction() instanceof VulpeController) {
-					resultCode = ((VulpeController) getAction()).getResultName();
+					resultCode = ((AbstractVulpeBaseController) getAction()).vulpe.controller()
+							.resultName();
 				}
 			}
 

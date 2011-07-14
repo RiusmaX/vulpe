@@ -94,47 +94,104 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		this.baseController.now.put(Now.CACHED_CLASSES, cache().classes());
 		this.baseController.now.put(Now.CACHED_ENUMS, cache().enums());
 		this.baseController.now.put(Now.CACHED_ENUMS_ARRAY, cache().enumsArray());
+		controller().onlyToSee(false);
 	}
 
 	public class VulpeControllerUtil {
 
+		public String resultName() {
+			String resultName = baseController.now.getSelf(Now.RESULT_NAME);
+			if (StringUtils.isBlank(resultName)) {
+				resultName = Result.SUCCESS;
+			}
+			return resultName;
+		}
+
+		public void resultName(final String resultName) {
+			baseController.now.put(Now.RESULT_NAME, resultName);
+		}
+
+		public String resultForward() {
+			return baseController.now.getSelf(Now.RESULT_FORWARD);
+		}
+
+		public void resultForward(final String resultForward) {
+			baseController.now.put(Now.RESULT_FORWARD, resultForward);
+		}
+
+		/**
+		 * 
+		 * @param page
+		 */
+		public void resultPage(final String page) {
+			if (StringUtils.isNotEmpty(page)) {
+				resultForward(Layout.PROTECTED_JSP
+						+ (page.startsWith("/") ? page.substring(1) : page));
+			}
+		}
+
+		public void urlToRedirect(String urlToRedirect) {
+			baseController.now.put(Now.URL_TO_REDIRECT, urlToRedirect);
+		}
+
+		public String urlToRedirect() {
+			return baseController.now.getSelf(Now.URL_TO_REDIRECT);
+		}
+
+		public void redirectTo(final String url, final boolean ajax) {
+			urlToRedirect(url + (ajax ? "/ajax" : ""));
+			resultName(Result.REDIRECT);
+		}
+
+		public void redirectTo(final String url) {
+			redirectTo(url, ajax());
+		}
+
+		public void urlBack(final String urlBack) {
+			baseController.now.put(VulpeConstants.View.URL_BACK, urlBack);
+		}
+
+		public void layerUrlBack(final String layerUrlBack) {
+			baseController.now.put(VulpeConstants.View.LAYER_URL_BACK, layerUrlBack);
+		}
+
 		public void renderError() {
-			baseController.setResultName(Result.ERRORS);
+			resultName(Result.ERRORS);
 		}
 
 		public void renderMessages() {
-			baseController.setResultName(Result.MESSAGES);
+			resultName(Result.MESSAGES);
 		}
 
 		public void renderSuccess() {
-			baseController.setResultName(Result.SUCCESS);
+			resultName(Result.SUCCESS);
 		}
 
 		public void renderJSON(final Object jsonElement) {
 			jsonRoot(jsonElement);
-			baseController.setResultName(Result.JSON);
+			resultName(Result.JSON);
 		}
 
 		public void renderSimpleJSON(final Object jsonElement) {
 			baseController.now.put("PLAIN_TEXT", new Gson().toJson(jsonElement));
-			baseController.setResultName(Result.PLAIN_TEXT);
+			resultName(Result.PLAIN_TEXT);
 		}
 
 		public void renderJavascript(final Object object) {
 			baseController.now.put("RESULT_TYPE", "/*[JS]*/");
 			baseController.now.put("PLAIN_TEXT", object);
-			baseController.setResultName(Result.PLAIN_TEXT);
+			resultName(Result.PLAIN_TEXT);
 		}
 
 		public void renderPlainText(final Object object) {
 			baseController.now.put("RESULT_TYPE", "/*[PLAINTEXT]*/");
 			baseController.now.put("PLAIN_TEXT", object);
-			baseController.setResultName(Result.PLAIN_TEXT);
+			resultName(Result.PLAIN_TEXT);
 		}
 
 		public void renderBoolean(final boolean object) {
 			baseController.now.put("PLAIN_TEXT", object);
-			baseController.setResultName(Result.PLAIN_TEXT);
+			resultName(Result.PLAIN_TEXT);
 		}
 
 		public void reportFormat(String reportFormat) {
@@ -171,6 +228,14 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public String propertyName() {
 			return baseController.now.getSelf(Now.PROPERTY_NAME);
+		}
+
+		public boolean onlyToSee() {
+			return baseController.now.getBoolean(Now.ONLY_TO_SEE);
+		}
+
+		public void onlyToSee(final boolean onlyToSee) {
+			baseController.now.put(Now.ONLY_TO_SEE, onlyToSee);
 		}
 
 		public boolean ajax() {

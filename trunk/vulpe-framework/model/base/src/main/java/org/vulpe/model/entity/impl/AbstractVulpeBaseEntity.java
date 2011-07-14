@@ -68,8 +68,18 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		getMap().put(Entity.USED, used);
 	}
 
+	public boolean isConditional() {
+		return getMap().containsKey(Entity.CONDITIONAL) ? (Boolean) getMap()
+				.get(Entity.CONDITIONAL) : false;
+	}
+
+	public void setConditional(final boolean conditional) {
+		getMap().put(Entity.CONDITIONAL, conditional);
+	}
+
 	public Integer getRowNumber() {
-		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER) : 0;
+		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER)
+				: 0;
 	}
 
 	public void setRowNumber(final Integer rowNumber) {

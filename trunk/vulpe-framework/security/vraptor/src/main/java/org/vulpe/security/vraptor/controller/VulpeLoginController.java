@@ -40,9 +40,9 @@ public class VulpeLoginController extends VulpeVRaptorController<VulpeBaseSimple
 	 */
 	public void define() {
 		if (accessDenied) {
-			setResultName(Result.ACCESS_DENIED);
+			vulpe.controller().resultName(Result.ACCESS_DENIED);
 		} else if (loginError != null && loginError == 1) {
-			setResultName(Result.ERRORS);
+			vulpe.controller().resultName(Result.ERRORS);
 		}
 	}
 

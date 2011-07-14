@@ -40,7 +40,7 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	@Override
 	protected void updateAfter() {
 		super.updateAfter();
-		setOnlyToSee(true);
+		vulpe.controller().onlyToSee(true);
 	}
 
 	@Override

@@ -88,7 +88,7 @@ public class VulpeExceptionMappingInterceptor extends
 				.getAction();
 		final HttpServletRequest request = ServletActionContext.getRequest();
 		request.setAttribute(VulpeConstants.IS_EXCEPTION, Boolean.TRUE);
-		action.setResultName(Result.MESSAGES);
+		action.vulpe.controller().resultName(Result.MESSAGES);
 		// gets real exception
 		final Throwable newException = getException(exception);
 		if (newException instanceof VulpeAuthenticationException) {
@@ -155,7 +155,7 @@ public class VulpeExceptionMappingInterceptor extends
 		if (isDebug(action)) {
 			exception.printStackTrace();
 		}
-		return action.getResultName();
+		return action.vulpe.controller().resultName();
 	}
 
 	/**

@@ -8,7 +8,7 @@
 	<c:if test="${empty imageThumbHeight}"><c:set var="imageThumbHeight" value="52"/></c:if>
 	<c:if test="${empty imageWidth}"><c:set var="imageWidth" value="640"/></c:if>
 	<c:if test="${empty imageHeight}"><c:set var="imageHeight" value="480"/></c:if>
-	<c:if test="${!onlyToSee}">
+	<c:if test="${!now['onlyToSee']}">
 		<s:file theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" accept="${accept}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" size="${size}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}"/>
 	</c:if>
 	<jsp:doBody/>

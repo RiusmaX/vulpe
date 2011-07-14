@@ -21,6 +21,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.vulpe.model.entity.VulpeEntity;
+
 /**
  * Tells Vulpe to not delete entity if conditions is true.
  * 
@@ -28,11 +30,14 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface NotDeleteIf {
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface NotDeleteIfUsedBy {
 
-	NotDeleteIfUsedBy usedBy() default @NotDeleteIfUsedBy({});
+	Class<? extends VulpeEntity<?>>[] value();
+
+	String messageToRecordOnMain() default "{vulpe.error.validate.record.cannot.be.deleted.because.is.used}";
 	
-	NotDeleteIfCondition conditions() default @NotDeleteIfCondition({});
+	String messageToOneRecordOnSelect() default "{vulpe.error.validate.select.record.cannot.be.deleted.because.is.used}";
 
+	String messageToManyRecordsOnSelect() default "{vulpe.error.validate.select.records.cannot.be.deleted.because.is.used}";
 }

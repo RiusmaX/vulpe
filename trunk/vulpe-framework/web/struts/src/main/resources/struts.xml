@@ -97,8 +97,8 @@
 
 		<global-results>
 			<result name="index">/index.jsp</result>
-			<result name="success">${resultForward}</result>
-			<result name="redirect" type="redirect">${urlRedirect}</result>
+			<result name="success">${now.resultForward}</result>
+			<result name="redirect" type="redirect">${now.urlToRedirect}</result>
 			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp</result>
 			<result name="plaintext">/WEB-INF/protected-jsp/commons/plaintextResult.jsp</result>
 			<result name="json" type="json" >
@@ -118,7 +118,7 @@
 		<!-- Back-End -->
 		<action name="backend/*" class="backend.{1}Controller" method="backend">
 			<result name="backend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -127,7 +127,7 @@
 
 		<action name="backend/*/ajax" class="backend.{1}Controller" method="backend">
 			<result name="backend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -136,7 +136,7 @@
 
 		<action name="backend/*/*" class="backend.{1}Controller" method="{2}">
 			<result name="backend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -145,7 +145,7 @@
 
 		<action name="backend/*/*/ajax" class="backend.{1}Controller" method="{2}">
 			<result name="backend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -155,7 +155,7 @@
 		<!-- Front-End -->
 		<action name="frontend/*" class="frontend.{1}Controller" method="frontend">
 			<result name="frontend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -164,7 +164,7 @@
 
 		<action name="frontend/*/ajax" class="frontend.{1}Controller" method="frontend">
 			<result name="frontend" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
@@ -173,7 +173,7 @@
 
 		<action name="frontend/*/*" class="frontend.{1}Controller" method="{2}">
 			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
 			</result>
@@ -181,7 +181,7 @@
 
 		<action name="frontend/*/*/ajax" class="frontend.{1}Controller" method="{2}">
 			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="sendParams">true</param>
 				<param name="clearParams">true</param>
 			</result>
@@ -189,29 +189,29 @@
 
 		<action name="*/*/*" class="{1}.{2}Controller" method="{3}">
 			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 			</result>
 			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 			</result>
 			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 			</result>
 		</action>
 
 		<action name="*/*/*/ajax" class="{1}.{2}Controller" method="{3}">
 			<result name="create" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 			</result>
 			<result name="update" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 				<param name="saveParams">true</param>
 			</result>
 			<result name="read" type="chain">
-				<param name="actionName">${resultForward}</param>
+				<param name="actionName">${now.resultForward}</param>
 			</result>
 		</action>
 

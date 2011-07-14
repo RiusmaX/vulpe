@@ -137,7 +137,7 @@
 	<c:set var="elementId" value="${vulpeFormName}-${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
 		<c:if test="${!isHeaderTableTag && renderId}"><td style="display: none"><v:hidden property="id" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName || not empty enableHooks}"/><v:hidden property="fakeId" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName}"/></td></c:if>
-		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false'}">
+		<c:if test="${!now['onlyToSee'] && showButtonsDelete && not empty deleteValue && deleteValue ne 'false'}">
 		<c:choose>
 			<c:when test="${!isHeaderTableTag}">
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}" onclick="${selectCheckOn}">
@@ -177,7 +177,7 @@
 				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: 'this'${updateLayer}${updateBeforeJs}${updateAfterJs}})" style="width: 1%" />
 			</c:if>
 		</c:if>
-		<c:if test="${!onlyToSee && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
+		<c:if test="${!now['onlyToSee'] && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
 			<c:choose>
 				<c:when test="${not empty deleteLayer && deleteLayer != 'body'}"><c:set var="deleteLayer" value=", layer: '${deleteLayer}'"/></c:when>
 				<c:otherwise><c:set var="deleteLayer" value=""/></c:otherwise>

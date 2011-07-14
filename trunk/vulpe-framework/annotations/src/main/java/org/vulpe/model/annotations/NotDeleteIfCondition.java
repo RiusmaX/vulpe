@@ -28,11 +28,14 @@ import java.lang.annotation.Target;
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface NotDeleteIf {
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface NotDeleteIfCondition {
 
-	NotDeleteIfUsedBy usedBy() default @NotDeleteIfUsedBy({});
+	String[] value();
+
+	String messageToRecordOnMain() default "{vulpe.error.validate.record.cannot.be.deleted.because.condition}";
 	
-	NotDeleteIfCondition conditions() default @NotDeleteIfCondition({});
+	String messageToOneRecordOnSelect() default "{vulpe.error.validate.select.record.cannot.be.deleted.because.condition}";
 
+	String messageToManyRecordsOnSelect() default "{vulpe.error.validate.select.records.cannot.be.deleted.because.condition}";
 }

@@ -137,8 +137,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (notDeleteIf != null) {
 			final String propertyName = VulpeStringUtil.lowerCaseFirst(entity.getClass()
 					.getSimpleName());
-			final StringBuilder hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ");
-			for (final Class<? extends VulpeEntity<?>> entityClass : notDeleteIf.usedBy()) {
+			StringBuilder hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ");
+			for (final Class<? extends VulpeEntity<?>> entityClass : notDeleteIf.usedBy().value()) {
 				hqlNotDeleteIf.append(entityClass.getSimpleName()).append(" obj where obj.")
 						.append(propertyName).append(".id = :").append(propertyName);
 				final Query query = getEntityManager().createQuery(hqlNotDeleteIf.toString());
@@ -148,6 +148,23 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					entity.setUsed(true);
 					valid = false;
 					break;
+				}
+			}
+			if (valid) {
+				hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ").append(entity.getClass().getSimpleName()).append(" obj where obj.id = ").append(entity.getId()).append(" and (");
+				int count = 0;
+				for (final String condition : notDeleteIf.conditions().value()) {
+					if (count > 0 && count < notDeleteIf.conditions().value().length) {
+						hqlNotDeleteIf.append(" or ");	
+					}
+					hqlNotDeleteIf.append(condition);
+					++count;
+				}
+				hqlNotDeleteIf.append(")");
+				final Long size = (Long) getEntityManager().createQuery(hqlNotDeleteIf.toString()).getSingleResult();
+				if (size == 1) {
+					entity.setConditional(true);
+					valid = false;
 				}
 			}
 		}

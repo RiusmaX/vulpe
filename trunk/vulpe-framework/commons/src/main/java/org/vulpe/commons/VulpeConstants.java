@@ -174,14 +174,18 @@ public class VulpeConstants {
 			public static final String EXECUTED = "executed";
 			public static final String EXPORTED = "executed";
 			public static final String JSON_ROOT = "jsonRoot";
+			public static final String ONLY_TO_SEE = "onlyToSee";
 			public static final String OPERATION = "operation";
 			public static final String POPUP = "popup";
 			public static final String POPUP_KEY = "popupKey";
 			public static final String PROPERTY_NAME = "propertyName";
 			public static final String REPORT_FORMAT = "reportFormat";
+			public static final String RESULT_FORWARD = "resultForward";
+			public static final String RESULT_NAME = "resultName";
 			public static final String SELECTED_TAB = "selectedTab";
 			public static final String TABULAR_FILTER = "tabularFilter";
 			public static final String UPLOADED = "uploaded";
+			public static final String URL_TO_REDIRECT = "urlToRedirect";
 		}
 
 		public class Ever {
@@ -398,6 +402,7 @@ public class VulpeConstants {
 			public static final String FAKE_ID = "fakeId";
 			public static final String SELECTED = "selected";
 			public static final String USED = "used";
+			public static final String CONDITIONAL = "conditional";
 			public static final String ROW_NUMBER = "rowNumber";
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";

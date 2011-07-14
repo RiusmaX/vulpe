@@ -15,12 +15,13 @@
  */
 package org.vulpe.controller.struts.interceptor;
 
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
-@SuppressWarnings("serial")
+@SuppressWarnings( { "serial", "unchecked" })
 public class VulpeMethodInterceptor extends MethodFilterInterceptor {
 
 	/*
@@ -34,7 +35,8 @@ public class VulpeMethodInterceptor extends MethodFilterInterceptor {
 	protected String doIntercept(final ActionInvocation invocation) throws Exception {
 		String result = invocation.invoke();
 		if (invocation.getAction() instanceof VulpeController) {
-			result = ((VulpeController) invocation.getAction()).getResultName();
+			result = ((AbstractVulpeBaseController) invocation.getAction()).vulpe.controller()
+					.resultName();
 		}
 		return result;
 	}

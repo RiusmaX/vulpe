@@ -48,6 +48,10 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Seria
 
 	void setUsed(final boolean used);
 
+	boolean isConditional();
+
+	void setConditional(final boolean conditional);
+
 	Integer getRowNumber();
 
 	void setRowNumber(final Integer row);
