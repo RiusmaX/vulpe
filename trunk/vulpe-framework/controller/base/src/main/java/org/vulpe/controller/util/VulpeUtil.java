@@ -255,7 +255,9 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public boolean popup() {
-			return StringUtils.isNotEmpty(popupKey());
+			final boolean popup = StringUtils.isNotEmpty(popupKey());
+			baseController.now.put(Now.POPUP, popup);
+			return popup;
 		}
 
 		public boolean back() {

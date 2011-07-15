@@ -125,8 +125,8 @@
 			</c:if>
 		</c:forEach>
 	</c:if>
-	<c:if test="${not empty queryString}"><c:set var="queryString" value="${queryString}&popupKey=${popupId}"/></c:if>
-	<c:if test="${empty queryString}"><c:set var="queryString" value="popupKey=${popupId}"/></c:if>
+	<c:if test="${not empty queryString}"><c:set var="queryString" value="${queryString}&now.popupKey=${popupId}"/></c:if>
+	<c:if test="${empty queryString}"><c:set var="queryString" value="now.popupKey=${popupId}"/></c:if>
 	<c:if test="${empty popupWidth}"><c:set var="popupWidth" value="450px"/></c:if>
 	<c:if test="${empty icon}"><c:set var="icon" value="search"/></c:if>
 	<c:if test="${icon eq 'false'}"><c:set var="icon" value=""/></c:if>

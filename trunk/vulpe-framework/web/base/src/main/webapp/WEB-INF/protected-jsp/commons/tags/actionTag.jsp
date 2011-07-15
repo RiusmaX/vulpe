@@ -58,15 +58,15 @@
 		<c:choose>
 			<c:when test="${empty action}">
 				<c:if test="${showWarningBeforeDelete}"><c:set var="confirmDelete" value="vulpe.view.confirm('delete', function(){"/></c:if>
-				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showWarningBeforeDelete ? '})': ''}" />
+				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjax({layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}, isFile: false});${showWarningBeforeDelete ? '})': ''}" />
 			</c:when>
-			<c:when test="${!noSubmitForm && showDeleteWarningBeforeTabularPost}"><c:set var="javascript" value="vulpe.view.validateSelectedToDelete(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
-			<c:when test="${!noSubmitForm && showWarningBeforeDelete}"><c:set var="javascript" value="vulpe.view.confirm('delete', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
-			<c:when test="${!noSubmitForm && showWarningBeforeUpdatePost}"><c:set var="javascript" value="vulpe.view.confirm('updatePost', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
-			<c:when test="${!noSubmitForm && showWarningBeforeClear}"><c:set var="javascript" value="vulpe.view.confirm('clear', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showDeleteWarningBeforeTabularPost}"><c:set var="javascript" value="vulpe.view.validateSelectedToDelete(function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeDelete}"><c:set var="javascript" value="vulpe.view.confirm('delete', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeUpdatePost}"><c:set var="javascript" value="vulpe.view.confirm('updatePost', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
+			<c:when test="${!noSubmitForm && showWarningBeforeClear}"><c:set var="javascript" value="vulpe.view.confirm('clear', function(){vulpe.view.request.submitAjaxAction({url:'${action}', layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}});})" /></c:when>
 			<c:otherwise>
 				<c:if test="${showWarningBeforeDelete}"><c:set var="confirmDelete" value="vulpe.view.confirm('delete', function(){"/></c:if>
-				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjaxAction({url: '${action}', layerFields: '${layerFields}', layer: '${layer}'${queryString}${validate}${beforeJs}${afterJs}});${showWarningBeforeDelete ? '})': ''}" />
+				<c:set var="javascript" value="${showWarningBeforeDelete ? confirmDelete : ''}vulpe.view.request.submitAjaxAction({url: '${action}', layerFields: '${layerFields}', layer: '${layer}', formName: '${vulpeFormName}'${queryString}${validate}${beforeJs}${afterJs}});${showWarningBeforeDelete ? '})': ''}" />
 			</c:otherwise>
 		</c:choose>
 	</c:if>

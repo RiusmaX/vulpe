@@ -79,6 +79,9 @@ var vulpe = {
 			modalMessages: "#modalMessages"
 		},
 		layout:{
+			loading: {
+				modal: false
+			},
 			showLoading: true,
 			showReportInNewWindow: false,
 			showIconErrorMessage: true
@@ -1687,7 +1690,7 @@ var vulpe = {
 
 		controlMarkUnmarkAll: function(name, parent) {
 			var selected = false;
-			if (parent.indexOf("#") != 0) {
+			if (typeof parent == "string" && parent.indexOf("#") != 0) {
 				parent = "#" + parent;
 			}
 			var items = jQuery(":checkbox[name$='"+ name +"']", parent).length;
@@ -1780,20 +1783,27 @@ var vulpe = {
 		loading: null,
 
 		showLoading: function() {
-			var visible = vulpe.util.get('loading').css("display") != "none";
+			var visible = vulpe.util.get("loading").css("display") != "none";
 			if (vulpe.config.layout.showLoading && !visible) {
-				vulpe.view.loading = jQuery('#loading').modal({
-					overlayId: 'overlayLoading',
-					containerId: 'containerLoading',
-					close: false,
-					containerCss: {top: '40%'}
-				});
+				if (vulpe.config.layout.loading.modal) {
+					vulpe.view.loading = jQuery("#loading").modal({
+						overlayId: "overlayLoading",
+						containerId: "containerLoading",
+						close: false,
+						containerCss: {top: "40%"}
+					});
+				} else {
+					vulpe.util.get("loading").html("<div id='loadingBox'><div id='loadingBoxContent'>" + vulpe.config.messages.loading + "</div></div>");
+					vulpe.util.get("loading").slideDown("slow")
+				}
 			}
 		},
 
 		hideLoading: function() {
-			if (vulpe.view.loading) {
+			if (vulpe.config.layout.loading.modal && vulpe.view.loading) {
 				vulpe.view.loading.close();
+			} else {
+				vulpe.util.get("loading").slideUp("slow")
 			}
 		},
 
@@ -2331,7 +2341,8 @@ var vulpe = {
 										html = data;
 									}
 									html = vulpe.util.trim(html);
-									var layerObject = vulpe.util.get(options.layer);
+									var parent = vulpe.util.isNotEmpty(options.formName) ? "#" + options.formName : "";
+									var layerObject = vulpe.util.get(options.layer, parent);
 									var layerObjectType = layerObject.attr("type");
 									if (layerObjectType && layerObjectType == "text") {
 										html = html.replace("/*[PLAINTEXT]*/", "");
@@ -2345,10 +2356,12 @@ var vulpe = {
 											}
 										}
 										vulpe.view.checkRequiredFields(layerObject);
-										if ((vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) || (vulpe.util.existsVulpePopups(options.layer))) {
-											vulpe.view.checkRows(layerObject)
-											vulpe.view.enableMarkUnmarkAll("selected", layerObject);
-											vulpe.view.controlMarkUnmarkAll("selected", vulpe.config.formName);
+										if (vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) { 
+											vulpe.view.checkRows(layerObject);
+											if (!vulpe.util.existsVulpePopups()) {
+												vulpe.view.enableMarkUnmarkAll("selected", layerObject);
+												vulpe.view.controlMarkUnmarkAll("selected", layerObject);
+											}
 										}
 										vulpe.util.renewHotKeys(options);
 										var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
@@ -2464,6 +2477,7 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;
 				}
+				var parent = vulpe.util.isNotEmpty(options.formName) ? "#" + options.formName : "";
 				options.beforeJs = ''; // set empty do not validate on submitPage
 				for (var i = 0; i < vulpe.RTEs.length; i++) {
 					var rteId = vulpe.RTEs[i];
@@ -2502,9 +2516,6 @@ var vulpe = {
 				} catch(e) {
 					return false;
 				}
-				if (!options.formName && options.layerFields) {
-					options.formName = 	options.layerFields;
-				}
 				if (options.validate && (typeof options.isFile == "undefined" || !options.isFile)) {
 					var name = options.formName.substring(0, 1).toUpperCase() + options.formName.substring(1);
 					try {
@@ -2515,10 +2526,10 @@ var vulpe = {
 					} catch(e) {
 						// do nothing
 					}
-					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(options.layerFields)).each(function (i) {
+					jQuery("." + vulpe.config.css.fieldError, vulpe.util.get(options.layerFields, parent)).each(function (i) {
 						vulpe.exception.hideError(this);
 					});
-					var files = jQuery(':file[value]', vulpe.util.get(options.layerFields));
+					var files = jQuery(':file[value]', vulpe.util.get(options.layerFields, parent));
 					if (files && files.length && files.length > 0) {
 						options.files = files;
 						jQuery.uploadFiles(options);
@@ -2527,9 +2538,9 @@ var vulpe = {
 				}
 
 				// serialize form
-				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.formName)).fieldSerialize();
+				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.layerFields, parent)).fieldSerialize();
 				if (vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) {
-					queryStringForm = (vulpe.util.isEmpty(queryStringForm) ? "" : queryStringForm + "&") + jQuery(":input[type!='file']", vulpe.config.layers.controlFields).fieldSerialize();
+					queryStringForm = (vulpe.util.isEmpty(queryStringForm) ? "" : queryStringForm + "&") + jQuery(":input[type!='file']", $(vulpe.config.layers.controlFields, parent)).fieldSerialize();
 				}
 				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
 					options.queryString = options.queryString + '&' + queryStringForm;

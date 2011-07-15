@@ -164,6 +164,8 @@ public class VulpeStartupListener implements ServletContextListener {
 					.showSliderPanel());
 			global.put(Global.PROJECT_VIEW_LAYOUT_SHOW_SLIDER_PANEL_ONLY_IF_AUTHENTICATED,
 					vulpeProject.view().layout().showSliderPanelOnlyIfAuthenticated());
+			global.put(Global.PROJECT_VIEW_LAYOUT_SHOW_LOADING_AS_MODAL, vulpeProject.view()
+					.layout().showLoadingAsModal());
 			global.put(Global.PROJECT_VIEW_SESSION_IDLE_TIME, vulpeProject.view().session()
 					.idleTime());
 			global.put(Global.PROJECT_VIEW_SESSION_KEEP_ALIVE_URL, vulpeProject.view().session()

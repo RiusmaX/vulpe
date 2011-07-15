@@ -102,7 +102,7 @@
 		</c:if>
 		<c:if test="${empty deleteBeforeJs}"><c:set var="deleteBeforeJs" value=""/></c:if>
 	</c:if>
-	<c:if test="${(popup || not empty updateValue) && (empty showButtonUpdate || !showButtonUpdate)}">
+	<c:if test="${(now['popup'] || not empty updateValue) && (empty showButtonUpdate || !showButtonUpdate)}">
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover"> onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout"> onmouseout="${onmouseout}"</c:set></c:if>
 	</c:if>

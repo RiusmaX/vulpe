@@ -12,7 +12,7 @@
 	<div id="vulpeSelectForm">
 		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewSelectPath : now['controllerConfig'].viewPath}" />
 	</div>
-	<div id="vulpeSelectTable-${vulpeFormName}">
+	<div id="vulpeSelectTable">
 		<c:remove var="vulpeBodySelect" scope="request"/>
 		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewSelectItemsPath : now['controllerConfig'].viewItemsPath}" />
 		<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">

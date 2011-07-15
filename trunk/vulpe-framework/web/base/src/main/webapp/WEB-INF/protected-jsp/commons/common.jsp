@@ -28,7 +28,7 @@ $(document).ready(function() {
 	if (document.forms['${vulpeFormName}']) {
 		<c:if test="${empty now['popupKey']}">vulpe.config.formName = "${vulpeFormName}";</c:if>
 		vulpe.config.logic.prepareName = "${prepareName}";
-		<c:if test="${!ajax}">
+		<c:if test="${!now['ajax']}">
 		vulpe.util.removeHotKeys($(this));
 		vulpe.util.checkHotKeys($(this));
 		</c:if>
@@ -99,7 +99,7 @@ $(document).ready(function() {
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
 </c:choose>
 	<c:if test="${not empty now['focusToField']}">vulpe.util.getElementField("${now['focusToField']}").focus();</c:if>
-	<c:if test="${!ajax}">vulpe.view.checkRequiredFields();</c:if>
+	<c:if test="${!now['ajax']}">vulpe.view.checkRequiredFields();</c:if>
 	vulpe.view.initTimerToSessionExpire();
 });
 </script>

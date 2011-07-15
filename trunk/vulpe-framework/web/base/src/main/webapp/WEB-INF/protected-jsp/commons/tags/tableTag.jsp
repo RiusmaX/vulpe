@@ -72,7 +72,7 @@
 		<c:if test="${empty pagingActionName}"><c:set var="pagingActionName" value="${now['controllerConfig'].ownerController}/read/page"/></c:if>
 		<c:if test="${empty pagingFormName}"><c:set var="pagingFormName" value="${vulpeFormName}"/></c:if>
 		<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="${pagingFormName}"/></c:if>
-		<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${pagingFormName}"/></c:if>
+		<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable'}"/></c:if>
 	</c:if>
 	<c:if test="${not empty detailConfig && empty targetConfig.parentDetailConfig}">
 		<c:set var="detailPagingList" value="${detailConfig.name}_pagingList"/>

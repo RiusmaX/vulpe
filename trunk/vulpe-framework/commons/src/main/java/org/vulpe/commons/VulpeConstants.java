@@ -108,6 +108,7 @@ public class VulpeConstants {
 			public static final String PROJECT_VIEW_SHOW_MODIFICATION_WARNING = "project-view-showModificationWarning";
 			public static final String PROJECT_VIEW_LAYOUT_SHOW_SLIDER_PANEL = "project-view-layout-showSliderPanel";
 			public static final String PROJECT_VIEW_LAYOUT_SHOW_SLIDER_PANEL_ONLY_IF_AUTHENTICATED = "project-view-layout-showSliderPanelOnlyIfAuthenticated";
+			public static final String PROJECT_VIEW_LAYOUT_SHOW_LOADING_AS_MODAL = "project-view-layout-showLoadingAsModal";
 			public static final String PROJECT_VIEW_SORT_TYPE = "project-view-sortType";
 			public static final String PROJECT_VIEW_PAGING_STYLE = "project-view-paging-style";
 			public static final String PROJECT_VIEW_PAGING_BUTTON_STYLE = "project-view-paging-buttonStyle";

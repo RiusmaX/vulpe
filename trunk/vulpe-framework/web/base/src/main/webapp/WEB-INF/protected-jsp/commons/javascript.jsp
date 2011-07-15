@@ -91,6 +91,9 @@ vulpe.config.layout.showReportInNewWindow = true;
 <c:if test="${!global['project-view-showIconErrorMessage']}">
 vulpe.config.layout.showIconErrorMessage = false;
 </c:if>
+<c:if test="${global['project-view-layout-showLoadingAsModal']}">
+vulpe.config.layout.loading.modal = true;
+</c:if>
 vulpe.config.hotKeys = eval("${global['project-hotKeys']}");
 vulpe.config.sortType = "${global['project-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';

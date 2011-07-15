@@ -2,6 +2,7 @@
 * CSS - Vulpe Framework											*
 ************************************************************************/ /* Classes */
 .vulpeActions {
+	border-bottom: 1px solid #eee;
 	width: 100%;
 	text-align: right;
 }
@@ -81,7 +82,9 @@
 
 .vulpeEntities {
 	border: 1px solid #eee;
-	margin-bottom: 15px;
+	margin-bottom: 0px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
 .vulpeMessageError {
@@ -117,10 +120,11 @@
 }
 
 .vulpeMessageInfo,.vulpeMessageSuccess,.vulpeMessageWarning,.vulpeMessageError,.vulpeMessageValidation {
-	border: 1px solid;
+	border: none;
 	margin: 0px 0px 1px 0px;
 	background-repeat: no-repeat;
 	background-position: 10px center;
+	padding: 10px 0px 5px 0px;
 }
 
 .vulpeMessageInfo {
@@ -144,10 +148,8 @@
 }
 
 .vulpeMessages {
-	background-color: #fff;
-	border: 1px solid #333;
-	overflow: auto;
-	padding: 1px;
+	background-color: none;
+	border: none;
 }
 
 .vulpeMessages h1 {
@@ -187,7 +189,7 @@
 }
 
 .vulpePaging {
-	width: 150px;
+	width: auto;
 	margin: 5px auto;
 	text-align: center;
 }
@@ -254,14 +256,13 @@
 /* ID Elements */
 #body {
 	background-color: #fff;
-	padding-bottom: 17px;
 	width: 100%;
 	text-align: left;
 }
 
 #body table {
 	margin-left: 27px;
-	width: 95%;
+	width: 96%;
 }
 
 #body td,th {
@@ -327,7 +328,8 @@
 }
 
 #footer {
-	background: url(../../images/background-all.png) repeat-x;
+	background: none;
+	border-top: 1px solid #eee;
 	display: block;
 	font-size: 10px;
 	height: 20px;
@@ -350,10 +352,38 @@
 	width: 800px;
 }
 
+/*
 #loading {
-	background: url(../../images/loader.gif) center no-repeat;
-	height: 32px;
-	cursor: wait
+	background: url(../../images/frontend/ajax/loader.gif) center no-repeat;
+	cursor: wait;
+}
+*/
+
+#loading {
+	margin: 0 auto;
+	position: absolute;
+	height: 100%;
+	width: 100%;  
+}
+
+#loadingBox {
+	margin: 0 auto;
+	position: relative;
+	width: 100px;
+}
+
+#loadingBoxContent {
+	background-color: #eee;
+	margin: 0 auto;
+	cursor: wait;
+	position: absolute;
+	color: #fff;
+	height: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 100px;
+	-moz-border-radius: 0px 0px 7px 7px;
+	-webkit-border-radius: 0px 0px 7px 7px; 
 }
 
 #menu {
@@ -379,31 +409,15 @@
 }
 
 #vulpeButtonPagingFirstPage {
-	background: url(../../images/icons/button-go-first.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
 }
 
 #vulpeButtonPagingPreviousPage {
-	background: url(../../images/icons/button-go-previous.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
 }
 
 #vulpeButtonPagingNextPage {
-	background: url(../../images/icons/button-go-next.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
 }
 
 #vulpeButtonPagingLastPage {
-	background: url(../../images/icons/button-go-last.png) no-repeat;
-	display: inline-table;
-	height: 16px;
-	width: 16px
 }
 
 #poweredby {
@@ -436,7 +450,7 @@
 }
 
 a,a:visited {
-	color: #030;
+	color: #000;
 }
 
 a:hover {
@@ -444,7 +458,7 @@ a:hover {
 }
 
 body {
-	color: #030;
+	color: #000;
 	font: 11px arial, sans-serif;
 }
 
@@ -474,10 +488,11 @@ h2 {
 }
 
 input,select,textarea {
-	border: 1px solid #030;
-	color: #030;
-	font: 11px arial, sans-serif;
-	padding: 1px;
+	border: 1px solid #eee;
+	font-size: 11px;
+	padding: 5px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
 label {
@@ -504,8 +519,7 @@ tbody tr {
 }
 
 td {
-	color: #030;
-	font: 11px arial, sans-serif;
+	color: #000;
 }
 
 td p {
@@ -514,24 +528,31 @@ td p {
 	margin-bottom: 5px;
 }
 
-th,.vulpeTableHeader {
-	color: #333;
-	font: 11px arial, sans-serif;
+.vulpeTableHeader {
 	font-weight: bold;
-	background: #fff url(../../images/shadow-bottom.png) bottom repeat-x;
+	background-color: #ccc;
+	height: 30px;
 }
 
-thead th,.vulpeTableHeader {
-	color: #333;
-	font: 11px arial, sans-serif;
+.vulpeRowHeader {
 	font-weight: bold;
-	background: #fff url(../../images/shadow-top.png) top repeat-x;
+	vertical-align: top;
+	background-color: #ddd;
+	height: 30px;
+}
+
+.vulpeTableFooter {
+	height: 30px;
+}
+
+thead th {
+	font-weight: bold;
 }
 
 #messages #closeMessages {
 	text-align: right;
 	margin-right: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 	font-size: 9px;
 }
 

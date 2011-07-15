@@ -7,11 +7,11 @@
 		<%@include file="/WEB-INF/protected-jsp/commons/tabularActions.jsp" %>
 	</div>
 	<c:if test="${targetConfig.showFilter}">
-	<div id="vulpeTabularSelect-${targetConfig.baseName}">
+	<div id="vulpeTabularSelect">
 		<jsp:include page="${now['controllerConfig'].viewSelectPath}" />
 	</div>
 	</c:if>
-	<div id="vulpeTabularBody-${targetConfig.baseName}">
+	<div id="vulpeTabularBody">
 		<jsp:include page="${now['controllerConfig'].viewPath}" />
 	</div>
 </div>
