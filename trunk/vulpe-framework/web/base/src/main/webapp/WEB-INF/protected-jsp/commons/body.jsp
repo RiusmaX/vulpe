@@ -17,13 +17,5 @@
 	<input type="hidden" name="now.popupKey" value="${now['popupKey']}" id="${vulpeFormName}-popupKey"/>
 	</div>
 	<c:if test="${securityContext.authenticated && empty now['popupKey'] && (empty now['bodyTwice'] || now['bodyTwiceType'] == 'MAIN')}"><%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %></c:if>
-	<c:if test="${now['showContentTitle'] && empty now['bodyTwice']}">
-	<c:if test="${not empty now['titleKey']}"><fmt:message var="contentTitle">${now['titleKey']}${now['onlyToSee'] ? '.view' : ''}</fmt:message></c:if>
-	<div id="contentTitle">${not empty now['contentTitle'] ? now['contentTitle'] : contentTitle}</div>
-	</c:if>
-	<c:if test="${now['showContentSubtitle'] && empty now['bodyTwice']}">
-		<c:if test="${not empty now['subtitleKey']}"><fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message></c:if>
-		<div id="contentSubtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
-	</c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/content.jsp" %>
 </v:form>

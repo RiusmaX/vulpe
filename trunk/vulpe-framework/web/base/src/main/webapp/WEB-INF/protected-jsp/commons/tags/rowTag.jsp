@@ -172,9 +172,9 @@
 			</c:choose>
 			<c:if test="${not empty updateBeforeJs}"><c:set var="updateBeforeJs" value=", beforeJs: '${updateBeforeJs}'"/></c:if>
 			<c:if test="${not empty updateAfterJs}"><c:set var="updateAfterJs" value=", afterJs: '${updateAfterJs}'"/></c:if>
-			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}"><v:column elementId="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" showBodyInHeader="true" style="text-align: center; width: 1%">&nbsp;</v:column></c:if>
+			<c:if test="${empty isHeaderTableTag || isHeaderTableTag}"><v:column elementId="vulpeUpdate" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" showBodyInHeader="true" style="text-align: center; ${global['project-view-showButtonsAsImage']?'width: 1%':''}">&nbsp;</v:column></c:if>
 			<c:if test="${!isHeaderTableTag}">
-				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: 'this'${updateLayer}${updateBeforeJs}${updateAfterJs}})" style="width: 1%" />
+				<v:columnAction elementId="Update${currentStatus.count}" styleClass="vulpeUpdate ${xstyleClass}" roles="${updateRole}" showOnlyIfAuthenticated="${updateLogged}" icon="row-edit" iconWidth="16" iconHeight="16" labelKey="${updateLabelKey}" javascript="vulpe.view.request.submitUpdate({url: '${updateActionName}/ajax/${recordId}'${updateFormName}, layerFields: 'this'${updateLayer}${updateBeforeJs}${updateAfterJs}})" style="${global['project-view-showButtonsAsImage']?'width: 1%':''}" />
 			</c:if>
 		</c:if>
 		<c:if test="${!now['onlyToSee'] && showButtonsDelete && not empty deleteValue && deleteValue ne 'false' && (deleteType eq 'select' || deleteType eq 'detail')}">
@@ -203,12 +203,12 @@
 					<c:when test="${deleteType eq 'detail'}">
 						<c:set var="javascript">vulpe.view.confirm('delete', function() {vulpe.view.request.submitDeleteDetail({detail: '${targetConfigPropertyName}', detailIndex: ${currentStatus.index}, url: '${deleteActionName}/ajax'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}, queryString: 'detailLayer=${detailLayer}'});});</c:set>
 						<c:if test="${disableDelete}"><c:set var="javascript" value="return false;"/></c:if>
-						<v:columnAction styleClass="vulpeDelete ${xstyleClass} ${disableDelete ? 'vulpeItemOff' : ''}" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" icon="row-delete" iconWidth="16" iconHeight="16" labelKey="${deleteLabelKey}" javascript="${javascript}" style="width: 1%" elementId="Delete${currentStatus.count}" />
+						<v:columnAction styleClass="vulpeDelete ${xstyleClass} ${disableDelete ? 'vulpeItemOff' : ''}" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" icon="row-delete" iconWidth="16" iconHeight="16" labelKey="${deleteLabelKey}" javascript="${javascript}" style="${global['project-view-showButtonsAsImage']?'width: 1%':''}" elementId="Delete${currentStatus.count}" />
 					</c:when>
 					<c:otherwise>
 						<c:set var="javascript">vulpe.view.confirm('delete', function() {vulpe.view.request.submitDelete({url: '${deleteActionName}/ajax/${util:urlEncode(util:evalString(pageContext, deleteValue))}'${deleteFormName}, layerFields: '${deleteLayerFields}'${deleteLayer}${deleteBeforeJs}${deleteAfterJs}});});</c:set>
 						<c:if test="${disableDelete}"><c:set var="javascript" value="return false;"/></c:if>
-						<v:columnAction styleClass="vulpeDelete ${xstyleClass} ${disableDelete ? 'vulpeItemOff' : ''}" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" icon="row-delete" iconWidth="16" iconHeight="16" labelKey="${deleteLabelKey}" javascript="${javascript}" style="width: 1%" elementId="Delete${currentStatus.count}"/>
+						<v:columnAction styleClass="vulpeDelete ${xstyleClass} ${disableDelete ? 'vulpeItemOff' : ''}" roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" icon="row-delete" iconWidth="16" iconHeight="16" labelKey="${deleteLabelKey}" javascript="${javascript}" style="${global['project-view-showButtonsAsImage']?'width: 1%':''}" elementId="Delete${currentStatus.count}"/>
 					</c:otherwise>
 				</c:choose>
 				</c:when>

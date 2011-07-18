@@ -1,10 +1,14 @@
 /************************************************************************
-* CSS - Vulpe Framework											*
-************************************************************************/ /* Classes */
+* CSS - Vulpe Framework													*
+************************************************************************/
+/* Classes */
 .vulpeActions {
-	border-bottom: 1px solid #eee;
 	width: 100%;
 	text-align: right;
+}
+
+.vulpeActions p{
+	margin: 3px 24px;	
 }
 
 .vulpeAlertError {
@@ -16,58 +20,39 @@
 }
 
 .vulpeButton {
-	background: url(../../images/background-button.png) repeat-x;
+	background: url("../../images/background-button.png") repeat-x scroll 0 0 #e7e7e7;
 	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
+	color: #333;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
-.vulpeButtonBack32x32 {
-	background: url(../../images/icons/button-back-32x32.png);
-	width: 32px;
-	height: 32px;
+.vulpeSubmit, .vulpeSubmitOff {
+	background: url("../../images/background-button.png") repeat-x scroll 0 0 #e7e7e7;
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+	color: #333;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	padding: 1px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
-.vulpeButtonClear32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
-}
-
-.vulpeButtonCreate32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
-}
-
-.vulpeButtonCreatePost32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
-}
-
-.vulpeButtonRead32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
-}
-
-.vulpeButtonUpdate32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
-}
-
-.vulpeButtonUpdatePost32x32 {
-	background: url(../../images/icons/button-clear-32x32.png);
-	width: 32px;
-	height: 32px;
+.vulpeButton img, .vulpeSubmit img, .vulpeSubmitOff img {
+	vertical-align: middle;	
 }
 
 .vulpeBlockLabel {
 	display: block;
 	width: 135px;
 	float: left;
+	text-shadow: 1px 1px 0 #eee;
 }
 
 .vulpeBlockshort {
@@ -144,7 +129,7 @@
 }
 
 .vulpeLineOn {
-	background: #eee;
+	background: #ffe;
 }
 
 .vulpeMessages {
@@ -228,13 +213,16 @@
 	width: auto;
 }
 
-#contentTitle {
-	background: #F5F3F1;
+#content #title {
+	background: url("../../images/background-all.png") repeat-x scroll 0 0 #e7e7e7;
+	color: #333;
 	font-family: tahoma, arial, hevetica, sans-serif;
-	font-size: 12px;
+	font-size: 20px;
 	font-weight: bold;
-	height: 10px;
-	padding: 10px 15px 10px 15px;
+	height: 20px;
+	padding: 3px 20px 10px 20px;
+	border-bottom: 1px solid #eee;
+	text-shadow: 1px 1px 0 #fff;
 }
 
 #userAuthenticated {
@@ -261,8 +249,8 @@
 }
 
 #body table {
-	margin-left: 27px;
-	width: 96%;
+	margin-left: 20px;
+	width: 96.6%;
 }
 
 #body td,th {
@@ -373,7 +361,7 @@
 }
 
 #loadingBoxContent {
-	background-color: #eee;
+	background-color: #ccc;
 	margin: 0 auto;
 	cursor: wait;
 	position: absolute;
@@ -387,8 +375,8 @@
 }
 
 #menu {
-	background-color: #ccc;
-	height: 29px;
+	background-color: #999;
+	height: 28px;
 	width: auto;
 }
 
@@ -477,13 +465,13 @@ fieldset {
 
 h1 {
 	margin: 0px 0px 0px 0px;
-	padding-left: 15px;
+	padding-left: 20px;
 	padding-top: 3px;
 }
 
 h2 {
 	margin: 0px 0px 0px 0px;
-	padding-left: 15px;
+	padding-left: 20px;
 	padding-top: 3px;
 }
 
@@ -493,6 +481,10 @@ input,select,textarea {
 	padding: 5px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+input:focus,select:focus,textarea:focus {
+	background-color: #ffe;
 }
 
 label {
@@ -529,20 +521,25 @@ td p {
 }
 
 .vulpeTableHeader {
+	background: url("../../images/background-all.png") repeat-x scroll 0 0 #e7e7e7;
 	font-weight: bold;
-	background-color: #ccc;
+	font-size: 16px;
 	height: 30px;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 .vulpeRowHeader {
 	font-weight: bold;
 	vertical-align: top;
-	background-color: #ddd;
+	background-color: #eee;
 	height: 30px;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 .vulpeTableFooter {
+	background-color: #eee;
 	height: 30px;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 thead th {
@@ -558,4 +555,16 @@ thead th {
 
 #vulpeSelectAll {
 	width: 40px;
+}
+
+#vulpeSelectForm, #vulpeMainBody {
+	border: 1px solid #eee;
+	margin: 0 24px 3px 20px;
+	padding: 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+#vulpeSelectForm p, #vulpeMainBody p {
+	margin: 0;
 }

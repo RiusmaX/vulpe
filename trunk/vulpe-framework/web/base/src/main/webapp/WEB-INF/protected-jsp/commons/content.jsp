@@ -1,5 +1,15 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <div id="content">
+	<c:if test="${now['showContentTitle'] && empty now['bodyTwice']}">
+		<c:if test="${not empty now['titleKey']}"><fmt:message var="contentTitle">${now['titleKey']}${now['onlyToSee'] ? '.view' : ''}</fmt:message></c:if>
+		<div id="title">
+			${not empty now['contentTitle'] ? now['contentTitle'] : contentTitle}
+			<c:if test="${now['showContentSubtitle'] && empty now['bodyTwice']}">
+				<c:if test="${not empty now['subtitleKey']}"><fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message></c:if>
+				<div id="subtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
+			</c:if>		
+		</div>
+	</c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/contentPrepend.jsp" %>
 	<c:choose>
 		<c:when test="${now['bodyTwice']}">

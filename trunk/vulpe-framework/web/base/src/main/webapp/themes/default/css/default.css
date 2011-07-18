@@ -1,10 +1,14 @@
 /************************************************************************
-* CSS - Vulpe Framework											*
-************************************************************************/ /* Classes */
+* CSS - Vulpe Framework													*
+************************************************************************/
+/* Classes */
 .vulpeActions {
-	border-bottom: 1px solid #eee;
 	width: 100%;
 	text-align: right;
+}
+
+.vulpeActions p{
+	margin: 3px 24px;	
 }
 
 .vulpeAlertError {
@@ -16,16 +20,39 @@
 }
 
 .vulpeButton {
-	background: url(../images/background-button.png) repeat-x;
+	background: url(../../images/background-button.png) repeat-x;
 	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
+	color: #333;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.vulpeSubmit, .vulpeSubmitOff {
+	background: url("../../images/background-button.png") repeat-x scroll 0 0 #DDDDDD;
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+	color: #333;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	padding: 1px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.vulpeButton img, .vulpeSubmit img, .vulpeSubmitOff img {
+	vertical-align: middle;	
 }
 
 .vulpeBlockLabel {
 	display: block;
 	width: 135px;
 	float: left;
+	text-shadow: 1px 1px 0 #eee;
 }
 
 .vulpeBlockshort {
@@ -103,7 +130,7 @@
 }
 
 .vulpeLineOn {
-	background: #eee;
+	background: #ffffee;
 }
 
 .vulpeMessages {
@@ -187,13 +214,16 @@
 	width: auto;
 }
 
-#contentTitle {
+#content #title {
 	background: #F5F3F1;
+	color: #fff;
 	font-family: tahoma, arial, hevetica, sans-serif;
-	font-size: 12px;
+	font-size: 20px;
 	font-weight: bold;
-	height: 10px;
+	height: 30px;
 	padding: 10px 15px 10px 15px;
+	border-bottom: 1px solid #eee;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 #userAuthenticated {
@@ -346,8 +376,8 @@
 }
 
 #menu {
-	background-color: #ccc;
-	height: 29px;
+	background-color: #999;
+	height: 28px;
 	width: auto;
 }
 
@@ -489,19 +519,23 @@ td p {
 
 .vulpeTableHeader {
 	font-weight: bold;
-	background-color: #ccc;
+	font-size: 16px;
+	background-color: #eee;
 	height: 30px;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 .vulpeRowHeader {
 	font-weight: bold;
 	vertical-align: top;
-	background-color: #ddd;
+	background-color: #eee;
 	height: 30px;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 .vulpeTableFooter {
 	height: 30px;
+	text-shadow: 1px 1px 0 #eee;
 }
 
 thead th {

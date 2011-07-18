@@ -468,11 +468,11 @@ var vulpe = {
 			return vulpe.config.elements[id];
 		},
 
-		getButton: function(name, formName) {
-			if (!formName) {
-				formName = vulpe.config.formName;
+		getButton: function(name, parent) {
+			if (!parent) {
+				parent = vulpe.config.formName;
 			}
-			return vulpe.util.get("vulpeButton" + name + "-" + formName);
+			return vulpe.util.get("vulpeButton" + name, "#" + parent);
 		},
 
 		getForm: function(options) {
