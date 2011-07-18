@@ -3,11 +3,10 @@
 		projectPackage = "org.vulpe.portal",
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
-					showButtonsAsImage = true,
-					showIconOfButton = false,
-					showTextOfButton = false,
-					frontendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.NONE,
-					backendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.DROPPY
+						showButtonsAsImage = false,
+						showIconOfButton = true,
+						showTextOfButton = true,
+						frontendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.NONE
 				)
 		),
 		theme = "portal"

@@ -449,9 +449,38 @@ html,body {
 	width: auto;
 }
 
+/*
 #loading {
 	background: url(../../images/frontend/ajax/loader.gif) center no-repeat;
 	cursor: wait;
+}
+*/
+
+#loading {
+	margin: 0 auto;
+	position: absolute;
+	height: 100%;
+	width: 100%;  
+}
+
+#loadingBox {
+	margin: 0 auto;
+	position: relative;
+	width: 100px;
+}
+
+#loadingBoxContent {
+	background-color: #eee;
+	margin: 0 auto;
+	cursor: wait;
+	position: absolute;
+	color: #fff;
+	height: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 100px;
+	-moz-border-radius: 0px 0px 7px 7px;
+	-webkit-border-radius: 0px 0px 7px 7px; 
 }
 
 #messages {

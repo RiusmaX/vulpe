@@ -9,14 +9,14 @@
 			app.textChange("${elementId}", ${not empty editor && editor});
 		});
 	</script>
-	<c:forEach var="language" items="${cachedClasses['Language']}" varStatus="status">
+	<c:forEach var="language" items="${now['cachedClasses']['Language']}" varStatus="status">
 		<v:hidden property="${property}.languages[${status.index}].language.id" />
 		<v:hidden property="${property}.languages[${status.index}].text" />
 	</c:forEach>
 	<c:set var="languageIdValueEL" value="${'${'}${name}.languageId${'}'}" />
 	<c:set var="languageIdValue" value="${util:eval(pageContext, languageIdValueEL)}" />
 	<select id="${elementId}-languageIdFlag" style="width: 45px;" name="${name}.languageId">
-		<c:forEach var="language" items="${cachedClasses['Language']}" varStatus="status">
+		<c:forEach var="language" items="${now['cachedClasses']['Language']}" varStatus="status">
 			<c:set var="selected" value="" />
 			<c:if test="${util:toString(language.id) == languageIdValue}">
 				<c:set var="selected"> selected="selected"</c:set>

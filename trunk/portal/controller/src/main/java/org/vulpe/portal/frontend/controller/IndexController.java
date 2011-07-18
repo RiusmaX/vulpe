@@ -37,7 +37,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 		try {
 			final Section section = getService(CoreService.class).findSection(
 					new Section(sectionId));
-			viewConfig.content().title(section.getName().toString()).subtitle(
+			vulpe.view().content().title(section.getName().toString()).subtitle(
 					section.getDescription().toString());
 			final Content content = new Content();
 			content.setSection(section);
@@ -55,7 +55,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			final Content content = getService(CoreService.class).findContent(new Content(getId()));
 			content.increaseView();
 			getService(CoreService.class).updateContent(content);
-			viewConfig.content().title(content.getTitle().toString()).subtitle(
+			vulpe.view().content().title(content.getTitle().toString()).subtitle(
 					content.getSubtitle().toString());
 			now.put("content", content);
 		} catch (VulpeApplicationException e) {
@@ -70,7 +70,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 					new Download(getId()));
 			download.increaseDownload();
 			getService(CoreService.class).updateDownload(download);
-			redirectTo(download.getUrl(), false);
+			vulpe.controller().redirectTo(download.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
@@ -81,7 +81,7 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 			final Link link = getService(CoreService.class).findLink(new Link(getId()));
 			link.increaseClick();
 			getService(CoreService.class).updateLink(link);
-			redirectTo(link.getUrl(), false);
+			vulpe.controller().redirectTo(link.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
@@ -96,11 +96,12 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 	}
 
 	@Override
-	public void frontend() {
-		super.frontend();
+	protected void frontendAfter() {
+		super.frontendAfter();
 		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
 		if (VulpeValidationUtil.isNotEmpty(portal.getHomeSection())) {
 			loadSection(portal.getHomeSection().getId());
 		}
 	}
+
 }

@@ -54,14 +54,13 @@
 <v:textTranslate
 	labelKey="label.portal.core.Content.main.title"
 	property="title"
-	size="40"
+	size="100"
 	required="true"
 />
 <v:textTranslate
 	labelKey="label.portal.core.Content.main.subtitle"
 	property="subtitle"
-	size="40"
-	required="true"
+	size="100"
 />
 <v:textTranslate
 	labelKey="label.portal.core.Content.main.miniText"

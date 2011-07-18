@@ -18,10 +18,12 @@
 		</object>
 		</div>
 		</c:if>
+		<p>
 		<c:choose>
 		<c:when test="${not empty content.miniText.text}">${content.miniText}</c:when>
 		<c:otherwise><c:out value="${content.fullText}" escapeXml="${content.escapeXml}" /></c:otherwise>
 		</c:choose>
+		</p>
 	</div>
 	<br/>
 	</c:forEach>

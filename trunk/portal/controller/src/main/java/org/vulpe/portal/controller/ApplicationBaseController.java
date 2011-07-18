@@ -37,7 +37,8 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
-		final List<Portal> portalList = getCachedClasses().getSelf(Portal.class.getSimpleName());
+		final List<Portal> portalList = vulpe.cache().classes().getSelf(
+				Portal.class.getSimpleName());
 		if (portalList != null) {
 			for (final Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
@@ -45,8 +46,8 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 				}
 			}
 		}
-		if (getControllerType().equals(ControllerType.FRONTEND)
-				|| getControllerType().equals(ControllerType.BACKEND)) {
+		if (vulpe.controller().type().equals(ControllerType.FRONTEND)
+				|| vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			try {
 				final List<Menu> menus = getService(CoreService.class).readMenu(new Menu());
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
@@ -101,14 +102,14 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 
 	@ExecuteAlways
 	public void validateSelectedConfiguration() {
-		if (!getCurrentControllerName().contains("frontend/")
-				&& !getCurrentControllerName().contains("core/Portal")
+		if (!vulpe.controller().currentName().contains("frontend/")
+				&& !vulpe.controller().currentName().contains("core/Portal")
 				&& (ever.get(Core.VULPE_PORTAL) == null || !ever
 						.<Portal> getSelf(Core.VULPE_PORTAL).getStatus().equals(Status.ACTIVE))) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
-				setAjax(true);
+				vulpe.controller().ajax(true);
 			}
-			redirectTo("/core/Portal/select");
+			vulpe.controller().redirectTo("/core/Portal/select");
 		}
 	}
 }
