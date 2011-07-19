@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <form id="vulpeLoginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
-<div id="contentTitle"><fmt:message key="vulpe.security.login.title.application"/></div>
 <div id="content">
+	<div id="title"><fmt:message key="vulpe.security.login.title.application"/></div>
 	<c:if test="${not empty param.loginError}">
 	<p style="color:red">
 	<fmt:message key="vulpe.security.error.login.failed" /> <c:choose>

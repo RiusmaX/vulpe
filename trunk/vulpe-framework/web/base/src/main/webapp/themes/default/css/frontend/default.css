@@ -50,7 +50,7 @@
 
 .vulpeBlockLabel {
 	display: block;
-	width: 135px;
+	width: auto;
 	float: left;
 	text-shadow: 1px 1px 0 #eee;
 }
@@ -483,10 +483,6 @@ input,select,textarea {
 	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
-input:focus,select:focus,textarea:focus {
-	background-color: #ffe;
-}
-
 label {
 	font-weight: bold
 }
@@ -567,4 +563,48 @@ thead th {
 
 #vulpeSelectForm p, #vulpeMainBody p {
 	margin: 0;
+}
+
+#sliderWrap {
+	margin: 0 auto;
+	position: relative;
+	width: 300px;
+	z-index: 5000;
+}
+
+#slider {
+	position: fixed;
+	background-color: #ccc;
+	width: 300px;
+	height: 50px;
+	margin-top: -40px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+#sliderClose {
+	margin-top: -40px;
+}
+
+#sliderContent {
+	margin: 10px 0 0 0;
+	position: absolute;
+	text-align: center;
+	color: #333333;
+	font-weight: bold;
+	padding: 0px;
+	width: 100%;
+}
+
+#openCloseWrap {
+	position:absolute;
+	margin: 38px 0 0 142px;
+	font-size:12px;
+	font-weight:bold;
 }

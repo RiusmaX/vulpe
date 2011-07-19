@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
 <c:if test="${showSize}">
 <c:choose>
-	<c:when test="${controllerType=='TABULAR' && (empty paging || empty paging.list)}">${fn:length(entities)}</c:when>
+	<c:when test="${now['controllerType'] == 'TABULAR' && (empty paging || empty paging.list)}">${fn:length(entities)}</c:when>
 	<c:otherwise>${paging.size}</c:otherwise>
 </c:choose>
 </c:if>

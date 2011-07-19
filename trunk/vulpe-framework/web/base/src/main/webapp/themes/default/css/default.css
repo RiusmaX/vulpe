@@ -20,7 +20,7 @@
 }
 
 .vulpeButton {
-	background: url(../../images/background-button.png) repeat-x;
+	background: url("../images/background-button.png") repeat-x scroll 0 0 #e7e7e7;
 	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
@@ -32,7 +32,7 @@
 }
 
 .vulpeSubmit, .vulpeSubmitOff {
-	background: url("../../images/background-button.png") repeat-x scroll 0 0 #DDDDDD;
+	background: url("../images/background-button.png") repeat-x scroll 0 0 #e7e7e7;
 	border: 1px #CCCCCC solid;
 	cursor: pointer;
 	width: auto;
@@ -50,7 +50,7 @@
 
 .vulpeBlockLabel {
 	display: block;
-	width: 135px;
+	width: auto;
 	float: left;
 	text-shadow: 1px 1px 0 #eee;
 }
@@ -100,7 +100,6 @@
 
 .vulpeImagePopupButton {
 	cursor: pointer;
-	left: -2px;
 	position: relative;
 	top: 3px;
 }
@@ -113,16 +112,16 @@
 	padding: 10px 0px 5px 0px;
 }
 
-.vulpeItemOff {
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
-	-moz-opacity: 0.4;
-	opacity: 0.4;
-}
-
 .vulpeMessageInfo {
 	color: #00529B;
 	background-color: #BDE5F8;
 	background-image: url('../images/icons/message-info.png');
+}
+
+.vulpeItemOff {
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
+	-moz-opacity: 0.4;
+	opacity: 0.4;
 }
 
 .vulpeLineOff {
@@ -130,7 +129,7 @@
 }
 
 .vulpeLineOn {
-	background: #ffffee;
+	background: #ffe;
 }
 
 .vulpeMessages {
@@ -164,6 +163,16 @@
 	background-repeat: no-repeat;
 }
 
+.vulpeSimpleLabel {
+	font-weight: normal;
+}
+
+.vulpeMessageSuccess {
+	color: #4F8A10;
+	background-color: #DFF2BF;
+	background-image: url('../images/icons/message-success.png');
+}
+
 .vulpePaging {
 	width: auto;
 	margin: 5px auto;
@@ -179,10 +188,6 @@
 	cursor: pointer;
 }
 
-.vulpeSimpleLabel {
-	font-weight: normal;
-}
-
 .submit {
 	background: url(../images/background-button.png) repeat-x;
 	border: 1px #CCCCCC solid;
@@ -191,12 +196,6 @@
 	padding: 0px;
 	width: 90px;
 	cursor: pointer;
-}
-
-.vulpeMessageSuccess {
-	color: #4F8A10;
-	background-color: #DFF2BF;
-	background-image: url('../images/icons/message-success.png');
 }
 
 .tooltip {
@@ -215,15 +214,15 @@
 }
 
 #content #title {
-	background: #F5F3F1;
-	color: #fff;
+	background: url("../images/background-all.png") repeat-x scroll 0 0 #e7e7e7;
+	color: #333;
 	font-family: tahoma, arial, hevetica, sans-serif;
 	font-size: 20px;
 	font-weight: bold;
-	height: 30px;
-	padding: 10px 15px 10px 15px;
+	height: 20px;
+	padding: 3px 20px 10px 20px;
 	border-bottom: 1px solid #eee;
-	text-shadow: 1px 1px 0 #ccc;
+	text-shadow: 1px 1px 0 #fff;
 }
 
 #userAuthenticated {
@@ -250,8 +249,8 @@
 }
 
 #body table {
-	margin-left: 27px;
-	width: 96%;
+	margin-left: 20px;
+	width: 96.6%;
 }
 
 #body td,th {
@@ -288,7 +287,7 @@
 }
 
 #error a {
-	margin-left: 00px;
+	margin-left: 0px;
 	padding-left: 0px;
 	padding-top: 3px;
 }
@@ -331,7 +330,7 @@
 #header {
 	background: url("../images/header-background.png") repeat-x;
 	width: 100%;
-	height: 124px;
+	height: 99px;
 }
 
 #header .image {
@@ -343,11 +342,11 @@
 
 /*
 #loading {
-	background: url(../images/ajax/loader.gif) center no-repeat;
-	height: 32px;
-	cursor: wait
+	background: url(../images/frontend/ajax/loader.gif) center no-repeat;
+	cursor: wait;
 }
 */
+
 #loading {
 	margin: 0 auto;
 	position: absolute;
@@ -362,7 +361,7 @@
 }
 
 #loadingBoxContent {
-	background-color: #eee;
+	background-color: #ccc;
 	margin: 0 auto;
 	cursor: wait;
 	position: absolute;
@@ -466,13 +465,13 @@ fieldset {
 
 h1 {
 	margin: 0px 0px 0px 0px;
-	padding-left: 15px;
+	padding-left: 20px;
 	padding-top: 3px;
 }
 
 h2 {
 	margin: 0px 0px 0px 0px;
-	padding-left: 15px;
+	padding-left: 20px;
 	padding-top: 3px;
 }
 
@@ -481,7 +480,7 @@ input,select,textarea {
 	font-size: 11px;
 	padding: 5px;
 	-moz-border-radius: 3px 3px 3px 3px;
-	-webkit-border-radius: 3px 3px 3px 3px; 
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
 label {
@@ -518,9 +517,9 @@ td p {
 }
 
 .vulpeTableHeader {
+	background: url("../images/background-all.png") repeat-x scroll 0 0 #e7e7e7;
 	font-weight: bold;
 	font-size: 16px;
-	background-color: #eee;
 	height: 30px;
 	text-shadow: 1px 1px 0 #ccc;
 }
@@ -534,8 +533,9 @@ td p {
 }
 
 .vulpeTableFooter {
+	background-color: #eee;
 	height: 30px;
-	text-shadow: 1px 1px 0 #eee;
+	text-shadow: 1px 1px 0 #ccc;
 }
 
 thead th {
@@ -551,4 +551,60 @@ thead th {
 
 #vulpeSelectAll {
 	width: 40px;
+}
+
+#vulpeSelectForm, #vulpeMainBody {
+	border: 1px solid #eee;
+	margin: 0 24px 3px 20px;
+	padding: 3px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+#vulpeSelectForm p, #vulpeMainBody p {
+	margin: 0;
+}
+
+#sliderWrap {
+	margin: 0 auto;
+	position: relative;
+	width: 300px;
+	z-index: 5000;
+}
+
+#slider {
+	position: fixed;
+	background-color: #ccc;
+	width: 300px;
+	height: 50px;
+	margin-top: -40px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+}
+
+#sliderClose {
+	margin-top: -40px;
+}
+
+#sliderContent {
+	margin: 10px 0 0 0;
+	position: absolute;
+	text-align: center;
+	color: #333333;
+	font-weight: bold;
+	padding: 0px;
+	width: 100%;
+}
+
+#openCloseWrap {
+	position:absolute;
+	margin: 38px 0 0 142px;
+	font-size:12px;
+	font-weight:bold;
 }
