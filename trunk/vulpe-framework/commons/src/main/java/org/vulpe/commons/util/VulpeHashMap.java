@@ -53,7 +53,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	}
 
 	public <T> T getEnum(final KEY key, final Class type, final T defaultValue) {
-		final T object = getEnum(key, type);
+		final T object = (T) getEnum(key, type);
 		return object == null ? defaultValue : object;
 	}
 

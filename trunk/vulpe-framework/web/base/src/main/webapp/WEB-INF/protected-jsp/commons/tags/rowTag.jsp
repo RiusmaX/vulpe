@@ -97,7 +97,7 @@
 						<c:otherwise><c:set var="deleteLayer" value="vulpeDetailBody-${targetConfig.baseName}${currentDetailIndex}"/></c:otherwise>
 					</c:choose>
 				</c:when>
-				<c:otherwise><c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable-'}${deleteFormName}"/></c:otherwise>
+				<c:otherwise><c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable'}"/></c:otherwise>
 			</c:choose>
 		</c:if>
 		<c:if test="${empty deleteBeforeJs}"><c:set var="deleteBeforeJs" value=""/></c:if>
