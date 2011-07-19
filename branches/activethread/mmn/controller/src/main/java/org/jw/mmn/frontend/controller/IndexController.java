@@ -27,8 +27,14 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 		controlResultForward();
 	}
 
-	protected final List<Congregation> congregations = (List<Congregation>) getCachedClasses().get(
-			Congregation.class.getSimpleName());
+	protected List<Congregation> congregations;
+
+	@Override
+	protected void postConstruct() {
+		super.postConstruct();
+		congregations = (List<Congregation>) vulpe.cache().classes().get(
+				Congregation.class.getSimpleName());
+	}
 
 	public void selecionarValidate() {
 		if (getEntity().getCongregation() != null && getEntity().getCongregation().getId() != null) {
@@ -44,13 +50,13 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 						LOG.error(e);
 					}
 
-					redirectTo("/core/Member/select", true);
+					vulpe.controller().redirectTo("/core/Member/select", true);
 				}
 			}
 		}
 		final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
 		final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
-		redirectTo(url, true);
+		vulpe.controller().redirectTo(url, true);
 	}
 
 	@ExecuteAlways

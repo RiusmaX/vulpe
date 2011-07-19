@@ -13,8 +13,6 @@
 						showButtonsAsImage = true,
 						showIconOfButton = false,
 						showTextOfButton = false,
-						frontendMenuType = MenuType.DROPPY,
-						backendMenuType = MenuType.DROPPY,
 						showSliderPanel = true
 						),
 				messages = @VulpeViewMessages(
@@ -35,7 +33,6 @@ import org.vulpe.config.annotations.VulpeMobile;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.config.annotations.VulpeViewLayout;
-import org.vulpe.config.annotations.VulpeViewLayout.MenuType;
 import org.vulpe.config.annotations.VulpeViewMessages;
 import org.vulpe.config.annotations.VulpeViewSession;
 

@@ -1,6 +1,7 @@
 /************************************************************************
-* CSS - Vulpe Framework											*
-************************************************************************/ /* Classes */
+* CSS - Vulpe Framework													*
+************************************************************************/
+/* Classes */
 .vulpeActions {
 	width: 100%;
 	text-align: right;
@@ -232,7 +233,7 @@
 	position: fixed;
 }
 */
-#contentTitle {
+#content #title {
 	background-color: #eee;
 	border-top: 1px #ddd solid;
 	/*border-bottom: 1px #ddd solid;*/
@@ -487,10 +488,38 @@ tfoot th, .vulpeTableFooter {
 	vertical-align: top;
 	width: auto;
 }
-
+/*
 #loading {
 	background: url(../images/ajax/loader.gif) center no-repeat;
 	cursor: wait;
+}
+*/
+#loading {
+	margin: 0 auto;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 10000;  
+}
+
+#loadingBox {
+	margin: 0 auto;
+	position: relative;
+	width: 100px;
+}
+
+#loadingBoxContent {
+	background-color: #ccc;
+	margin: 0 auto;
+	cursor: wait;
+	position: absolute;
+	color: #fff;
+	height: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 100px;
+	-moz-border-radius: 0px 0px 7px 7px;
+	-webkit-border-radius: 0px 0px 7px 7px; 
 }
 
 #paging {
@@ -648,4 +677,9 @@ tfoot th, .vulpeTableFooter {
 	margin: 38px 0 0 142px;
 	font-size:12px;
 	font-weight:bold;
+}
+
+#menu {
+	background-color: #000;
+	height: 28px;
 }

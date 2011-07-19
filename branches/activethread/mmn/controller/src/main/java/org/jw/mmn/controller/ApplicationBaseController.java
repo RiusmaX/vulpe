@@ -12,8 +12,8 @@ import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.model.entity.VulpeEntity;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
-		VulpeStrutsController<ENTITY, ID> {
+public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends VulpeStrutsController<ENTITY, ID> {
 
 	public Congregation getCongregation() {
 		return ever.<Congregation> getSelf(Core.SELECTED_CONGREGATION);
@@ -21,16 +21,17 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 
 	@ExecuteAlways
 	public void validateSelectedCongregation() {
-		if (!getCurrentControllerName().contains("frontend/Index")
-				&& !getCurrentControllerName().contains("backend/Index")
+		if (!vulpe.controller().currentName().contains("frontend/Index")
+				&& !vulpe.controller().currentName().contains("backend/Index")
 				&& !ever.containsKey(Core.SELECTED_CONGREGATION)
 				&& !this.getClass().getName().equals(CongregationController.class.getName())) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
-				setAjax(true);
+				vulpe.controller().ajax(true);
 			}
 			final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
-			final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
-			redirectTo(url, isAjax());
+			final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index"
+					: "/backend/Index";
+			vulpe.controller().redirectTo(url, vulpe.controller().ajax());
 		}
 	}
 }
