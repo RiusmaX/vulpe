@@ -15,7 +15,7 @@
 	</c:forEach>
 	<c:set var="languageIdValueEL" value="${'${'}${name}.languageId${'}'}" />
 	<c:set var="languageIdValue" value="${util:eval(pageContext, languageIdValueEL)}" />
-	<select id="${elementId}-languageIdFlag" style="width: 45px;" name="${name}.languageId">
+	<select id="${elementId}-languageIdFlag" style="width: 50px;" name="${name}.languageId">
 		<c:forEach var="language" items="${now['cachedClasses']['Language']}" varStatus="status">
 			<c:set var="selected" value="" />
 			<c:if test="${util:toString(language.id) == languageIdValue}">
@@ -27,11 +27,11 @@
 	</select>
 	<c:choose>
 		<c:when test="${empty rows && empty cols}">
-			<v:text property="${property}.text" paragraph="false" size="${size}" required="${required}" />
+			<v:text property="${property}.text" paragraph="false" size="${size}" required="${required}" styleClass="textTranslate" />
 		</c:when>
 		<c:otherwise>
 			<v:textarea property="${property}.text" paragraph="false" required="${required}" rows="${rows}"
-				cols="${cols}" />
+				cols="${cols}" styleClass="textTranslate" />
 		</c:otherwise>
 	</c:choose>
 	<c:set var="textLanguagesEL" value="${'${'}${name}.languages${'}'}" />
@@ -39,7 +39,7 @@
 	<c:if test="${empty editor && not empty textLanguages && fn:length(textLanguages) > 1}">
 		<img src="${pageContext.request.contextPath}/images/icons/bullet_arrow_down.png"
 			style="cursor: pointer" id="${elementId}-showOtherLanguages" alt="show languages text"/>
-		<span id="${elementId}-otherLanguages" style="position: relative; left: 27px; display: none;">
+		<span id="${elementId}-otherLanguages" style="position: relative; left: 26px; display: none;">
 		<c:forEach var="textLanguage" items="${textLanguages}">
 			<span id="${elementId}-otherLanguages${textLanguage.language.id}"><br/>
 			<img

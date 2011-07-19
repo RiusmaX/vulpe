@@ -8,10 +8,10 @@
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<v:column labelKey="label.portal.core.Section.tabular.name">
-				<v:textTranslate property="name" size="40" />
+				<v:textTranslate property="name" size="35" />
 			</v:column>
 			<v:column labelKey="label.portal.core.Section.tabular.description">
-				<v:textTranslate property="description" size="60" />
+				<v:textTranslate property="description" size="55" />
 			</v:column>
 			<v:column labelKey="label.portal.core.Section.tabular.status">
 				<v:select property="status" />

@@ -478,9 +478,17 @@ h2 {
 input,select,textarea {
 	border: 1px solid #eee;
 	font-size: 11px;
-	padding: 5px;
+	padding: 4px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.textTranslate {
+	border: 1px solid #eee;
+	font-size: 11px;
+	padding: 4px;
+	-moz-border-radius: 0px 3px 3px 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
 }
 
 label {
