@@ -10,9 +10,9 @@
 		),
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
-						showButtonsAsImage = true,
-						showIconOfButton = false,
-						showTextOfButton = false,
+						showButtonsAsImage = false,
+						showIconOfButton = true,
+						showTextOfButton = true,
 						showSliderPanel = true
 						),
 				messages = @VulpeViewMessages(

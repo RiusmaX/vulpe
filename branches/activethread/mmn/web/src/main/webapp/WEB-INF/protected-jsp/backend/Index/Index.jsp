@@ -11,5 +11,5 @@
 	showBlank="true" autoLoad="false"
 	required="true" paragraph="false"
 />
-<v:action labelKey="label.mmn.select" helpKey="help.mmn.select" elementId="Select" action="selectValidate" showButtonAsImage="false" showTextOfButton="true" />
+<v:action labelKey="label.mmn.select" helpKey="help.mmn.select" elementId="Select" action="selectValidate" showButtonAsImage="false" showTextOfButton="true" showIconOfButton="false" />
 </p>
