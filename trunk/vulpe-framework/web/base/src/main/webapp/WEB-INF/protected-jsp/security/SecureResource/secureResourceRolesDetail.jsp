@@ -1,17 +1,9 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
-<v:table>
-	<jsp:attribute name="tableBody">
-		<v:row>
-			<v:column labelKey="label.vulpe.security.SecureResource.main.secureResourceRoles.role">
-				<v:hidden property="role.name" />
-				<v:selectPopup labelKey="label.vulpe.security.SecureResource.main.secureResourceRoles.role.name"
-					property="role" identifier="id" description="description" action="/security/Role/select"
-					popupId="roleSelectPopup"
-					popupProperties="role.description=description,role.name=name,role.id=id" size="60"
-					popupWidth="600px" autocomplete="true" />
-			</v:column>
-		</v:row>
-	</jsp:attribute>
-</v:table>
+<fieldset>
+<legend><fmt:message key="label.vulpe.security.SecureResource.main.secureResourceRoles.select.roles"/></legend>
+<v:checkboxlist list="now['cachedClasses']['Role']" listKey="id"
+	listValue="description" property="secureResourceRoles" detail="true" targetName="entity"
+	detailProperty="role" labelStyle="display: inline"/>
+</fieldset>

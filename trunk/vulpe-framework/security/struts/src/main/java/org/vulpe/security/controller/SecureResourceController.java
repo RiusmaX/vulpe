@@ -18,6 +18,7 @@ package org.vulpe.security.controller;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
@@ -32,4 +33,9 @@ import org.vulpe.security.model.services.SecurityService;
 @SuppressWarnings("serial")
 public class SecureResourceController extends VulpeStrutsController<SecureResource, Long> {
 
+	@Override
+	public void manageButtons(Operation operation) {
+		super.manageButtons(operation);
+		notRenderDetailButton("secureResourceRoles", Button.ADD_DETAIL);
+	}
 }

@@ -36,7 +36,7 @@ import org.vulpe.model.annotations.Parameter.OperatorType;
 @Entity
 @Table(name = "VulpeUser")
 @SuppressWarnings("serial")
-@NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "username", operator = OperatorType.EQUAL)) }, message = "vulpe.security.error.user.exists")
+@NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "username", operator = OperatorType.EQUAL)) }, message = "{vulpe.security.error.user.exists}")
 public class User extends BasicUser {
 
 	@Id

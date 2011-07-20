@@ -25,9 +25,11 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
+import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
 
+@CachedClass
 @Entity
 @Table(name = "VulpeRole")
 @SuppressWarnings("serial")

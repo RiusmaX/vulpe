@@ -19,17 +19,19 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.Quantity;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Select;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.security.model.entity.User;
 import org.vulpe.security.model.services.SecurityService;
 
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.UserController")
-@Controller(serviceClass = SecurityService.class, detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
+@Controller(serviceClass = SecurityService.class, select = @Select(requireOneFilter = true), detailsConfig = { @DetailConfig(name = "userRoles", propertyName = "entity.userRoles", despiseFields = "role", startNewDetails = 1, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)) })
 @SuppressWarnings("serial")
 public class UserController extends VulpeStrutsController<User, Long> {
 
@@ -79,5 +81,11 @@ public class UserController extends VulpeStrutsController<User, Long> {
 
 	public void setPassword(final String password) {
 		setSessionAttribute(PASSWORD, password);
+	}
+	
+	@Override
+	public void manageButtons(Operation operation) {
+		super.manageButtons(operation);
+		notRenderDetailButton("userRoles", Button.ADD_DETAIL);
 	}
 }

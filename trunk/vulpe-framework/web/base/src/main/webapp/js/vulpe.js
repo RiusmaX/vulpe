@@ -1213,7 +1213,7 @@ var vulpe = {
 					var typeField = field.attr("type");
 					if (empty && typeField != "hidden") {
 						if (typeField == "checkbox") {
-							if (eval(field.attr("checked"))) {
+							if (field.attr("checked")) {
 								empty = false;
 							}
 						} else {

@@ -444,7 +444,8 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 			final QueryParameter[] parameters = notExistEqual.parameters();
 			final Query query = getObjectContainer().query();
 			query.constrain(entity.getClass());
-			for (QueryParameter queryParameter : parameters) {
+			query.descend("id").constrain(entity.getId()).equal().not();
+			for (final QueryParameter queryParameter : parameters) {
 				try {
 					query.descend(queryParameter.equals().name()).constrain(
 							PropertyUtils.getProperty(entity, queryParameter.equals().name()));
