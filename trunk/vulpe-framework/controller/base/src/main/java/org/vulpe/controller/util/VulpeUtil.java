@@ -17,6 +17,7 @@ package org.vulpe.controller.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -25,15 +26,19 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
+import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.Code.Generator;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
+import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.ButtonConfig;
 import org.vulpe.commons.beans.Tab;
+import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
@@ -46,14 +51,16 @@ import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.VulpeEntity;
-import org.vulpe.view.annotations.View;
+import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
+import org.vulpe.model.services.VulpeService;
+import org.vulpe.security.context.VulpeSecurityContext;
 
 import com.google.gson.Gson;
 
 /**
  * Utility class to configuration stuff.
  * 
- * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
+ * @author <a href="mailto:felipe@org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
@@ -86,6 +93,91 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		return new Gson().toJson(jsonElement);
 	}
 
+	public <T> T sessionAttribute(final String attributeName) {
+		return (T) baseController.getSession().getAttribute(attributeName);
+	}
+
+	public void sessionAttribute(final String attributeName, final Object attributeValue) {
+		baseController.getSession().setAttribute(attributeName, attributeValue);
+	}
+
+	public <T> T requestAttribute(final String attributeName) {
+		return (T) baseController.getRequest().getAttribute(attributeName);
+	}
+
+	public void requestAttribute(final String attributeName, final Object attributeValue) {
+		baseController.getRequest().setAttribute(attributeName, attributeValue);
+	}
+
+	public VulpeService service() {
+		return service(controller().config().getServiceClass());
+	}
+
+	public <T extends VulpeService> T service(final Class<T> serviceClass) {
+		return VulpeServiceLocator.getInstance().getService(serviceClass);
+	}
+
+	public <T> T bean(final String beanName) {
+		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
+	}
+
+	public <T> T bean(final Class<T> clazz) {
+		return (T) bean(clazz.getSimpleName());
+	}
+
+	public VulpeSecurityContext securityContext() {
+		VulpeSecurityContext securityContext = baseController.ever
+				.getSelf(Security.SECURITY_CONTEXT);
+		if (securityContext == null) {
+			securityContext = bean(VulpeSecurityContext.class);
+			baseController.ever.put(Security.SECURITY_CONTEXT, securityContext);
+			if (securityContext != null) {
+				securityContext.afterUserAuthenticationCallback();
+			}
+		}
+		return securityContext;
+	}
+
+	public String userAuthenticated() {
+		return securityContext().getUsername();
+	}
+
+	public boolean hasRole(final String role) {
+		final StringBuilder roleName = new StringBuilder();
+		if (!role.startsWith(Security.ROLE_PREFIX)) {
+			roleName.append(Security.ROLE_PREFIX);
+		}
+		roleName.append(role);
+		boolean has = false;
+		final VulpeSecurityContext vsc = securityContext();
+		if (vsc != null) {
+			final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(vsc,
+					"authentication");
+			if (springSecurityAutentication != null) {
+				final Collection<?> authorities = VulpeReflectUtil.getFieldValue(
+						springSecurityAutentication, "authorities");
+				if (authorities != null) {
+					for (final Object authority : authorities) {
+						if (authority.equals(roleName.toString())) {
+							has = true;
+							break;
+						}
+					}
+
+				}
+			}
+		}
+		return has;
+	}
+
+	public void updateAuditInformation(final ENTITY entity) {
+		if (entity instanceof AbstractVulpeBaseAuditEntity) {
+			final AbstractVulpeBaseAuditEntity auditEntity = (AbstractVulpeBaseAuditEntity) entity;
+			auditEntity.setUserOfLastUpdate(userAuthenticated());
+			auditEntity.setDateOfLastUpdate(Calendar.getInstance().getTime());
+		}
+	}
+
 	public VulpeUtil(final AbstractVulpeBaseController<ENTITY, ID> baseController) {
 		this.baseController = baseController;
 		this.controller = new VulpeControllerUtil();
@@ -94,7 +186,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		this.baseController.now.put(Now.CACHED_CLASSES, cache().classes());
 		this.baseController.now.put(Now.CACHED_ENUMS, cache().enums());
 		this.baseController.now.put(Now.CACHED_ENUMS_ARRAY, cache().enumsArray());
-		controller().onlyToSee(false);
+		view().onlyToSee(false);
 	}
 
 	public class VulpeControllerUtil {
@@ -145,6 +237,20 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public void redirectTo(final String url) {
 			redirectTo(url, ajax());
+		}
+
+		public void returnToPage(final String page) {
+			final StringBuilder path = new StringBuilder();
+			if (!page.contains("/") && !page.contains(".")) {
+				path.append(Layout.PROTECTED_JSP);
+				final String directory = config().getModuleName() + "/"
+						+ config().getSimpleControllerName() + "/";
+				path.append(directory);
+				path.append(page).append(Layout.SUFFIX_JSP);
+			} else {
+				path.append(page);
+			}
+			resultForward(path.toString());
 		}
 
 		public void urlBack(final String urlBack) {
@@ -228,14 +334,6 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public String propertyName() {
 			return baseController.now.getSelf(Now.PROPERTY_NAME);
-		}
-
-		public boolean onlyToSee() {
-			return baseController.now.getBoolean(Now.ONLY_TO_SEE);
-		}
-
-		public void onlyToSee(final boolean onlyToSee) {
-			baseController.now.put(Now.ONLY_TO_SEE, onlyToSee);
 		}
 
 		public boolean ajax() {
@@ -635,10 +733,207 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		public VulpeViewUtil() {
 			content = new VulpeViewContentUtil();
 			noCache();
-			final View view = this.getClass().getAnnotation(View.class);
+			final org.vulpe.view.annotations.View view = this.getClass().getAnnotation(
+					org.vulpe.view.annotations.View.class);
 			if (view != null) {
 				focusToField(view.focusToField());
 			}
+		}
+
+		public void configButton(final String button, final boolean... values) {
+			ButtonConfig buttonConfig = new ButtonConfig();
+			String key = button;
+			if (controller().type().equals(ControllerType.TABULAR)) {
+				String deleteButtonKey = Button.DELETE.concat(controller().config()
+						.getTabularConfig().getBaseName());
+				if (buttons().containsKey(key)) {
+					buttonConfig = buttons().getSelf(key);
+				}
+				switch (values.length) {
+				case 1:
+					buttonConfig = new ButtonConfig(values[0]);
+					break;
+				case 2:
+					buttonConfig = new ButtonConfig(values[0], values[1]);
+					break;
+				case 3:
+					buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
+					break;
+				}
+				buttons().put(deleteButtonKey, buttonConfig);
+			}
+			if (Button.ADD_DETAIL.equals(button)) {
+				key = Button.ADD_DETAIL.concat(controller().config().getTabularConfig()
+						.getBaseName());
+			}
+			if (buttons().containsKey(key)) {
+				buttonConfig = buttons().getSelf(key);
+			}
+			switch (values.length) {
+			case 1:
+				buttonConfig = new ButtonConfig(values[0]);
+				break;
+			case 2:
+				buttonConfig = new ButtonConfig(values[0], values[1]);
+				break;
+			case 3:
+				buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
+				break;
+			}
+			buttons().put(key, buttonConfig);
+		}
+
+		public void configButton(final String button, final String config, final boolean value) {
+			ButtonConfig buttonConfig = new ButtonConfig();
+			String key = button;
+			if (controller().type().equals(ControllerType.TABULAR)) {
+				String deleteButtonKey = Button.DELETE.concat(controller().config()
+						.getTabularConfig().getBaseName());
+				if (buttons().containsKey(key)) {
+					buttonConfig = buttons().getSelf(key);
+				}
+				if (StringUtils.isNotBlank(config)) {
+					if (config.equals(ButtonConfig.RENDER)) {
+						buttonConfig.setRender(value);
+						if (buttonConfig.getShow() == null) {
+							buttonConfig.setShow(true);
+						}
+					} else if (config.equals(ButtonConfig.SHOW)) {
+						buttonConfig.setShow(value);
+					} else if (config.equals(ButtonConfig.DISABLED)) {
+						buttonConfig.setDisabled(value);
+					}
+				}
+				buttons().put(deleteButtonKey, buttonConfig);
+			}
+			if (Button.ADD_DETAIL.equals(button)) {
+				key = Button.ADD_DETAIL.concat(controller().config().getTabularConfig()
+						.getBaseName());
+			}
+			if (buttons().containsKey(key)) {
+				buttonConfig = buttons().getSelf(key);
+			}
+			if (StringUtils.isNotBlank(config)) {
+				if (config.equals(ButtonConfig.RENDER)) {
+					buttonConfig.setRender(value);
+					if (buttonConfig.getShow() == null) {
+						buttonConfig.setShow(true);
+					}
+				} else if (config.equals(ButtonConfig.SHOW)) {
+					buttonConfig.setShow(value);
+				} else if (config.equals(ButtonConfig.DISABLED)) {
+					buttonConfig.setDisabled(value);
+				}
+			}
+			buttons().put(key, buttonConfig);
+		}
+
+		public VulpeViewUtil renderDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(true, true, false));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil notRenderDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(false));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil showDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(true, true));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil hideDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(true, false));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil enableDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(true, true, false));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil disableDetailButtons(final String detail, final String... buttons) {
+			for (final String button : buttons) {
+				buttons().put(button.concat(detail), new ButtonConfig(true, true, true));
+			}
+			return this;
+		}
+
+		public VulpeViewUtil hideButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.SHOW, false);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil notRenderButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.RENDER, false);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil disableButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.DISABLED, true);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil showButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.SHOW, true);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil renderButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.RENDER, true);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil renderButtons(final ControllerType controllerType,
+				final String... buttons) {
+			for (final String button : buttons) {
+				renderButtons(controllerType + "_" + button);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil enableButtons(final String... buttons) {
+			for (final String button : buttons) {
+				configButton(button, ButtonConfig.DISABLED, false);
+			}
+			return this;
+		}
+
+		public VulpeViewUtil showButtons(final ControllerType controllerType,
+				final String... buttons) {
+			for (final String button : buttons) {
+				showButtons(controllerType + "_" + button);
+			}
+			return this;
+		}
+
+		public boolean onlyToSee() {
+			return baseController.now.getBoolean(Now.ONLY_TO_SEE);
+		}
+
+		public void onlyToSee(final boolean onlyToSee) {
+			baseController.now.put(Now.ONLY_TO_SEE, onlyToSee);
 		}
 
 		public void maxInactiveInterval(final int maxInactiveInterval) {
@@ -662,19 +957,19 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public VulpeBaseDetailConfig targetConfig() {
-			return baseController.getRequestAttribute(Now.TARGET_CONFIG);
+			return requestAttribute(Now.TARGET_CONFIG);
 		}
 
 		public void targetConfig(final VulpeBaseDetailConfig config) {
-			baseController.setRequestAttribute(Now.TARGET_CONFIG, config);
+			requestAttribute(Now.TARGET_CONFIG, config);
 		}
 
 		public String targetConfigPropertyName() {
-			return baseController.getRequestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME);
+			return requestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME);
 		}
 
 		public void targetConfigPropertyName(final String propertyName) {
-			baseController.setRequestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME, propertyName);
+			requestAttribute(Now.TARGET_CONFIG_PROPERTY_NAME, propertyName);
 		}
 
 		public VulpeViewUtil requireOneFilter() {

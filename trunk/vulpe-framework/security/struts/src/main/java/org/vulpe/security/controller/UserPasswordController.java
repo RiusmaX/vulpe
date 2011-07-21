@@ -35,7 +35,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	public void update() {
-		setEntity((User) getSecurityContext().getUser().clone());
+		setEntity((User) vulpe.securityContext().getUser().clone());
 		getEntity().setPassword(null);
 		super.update();
 	}
@@ -47,7 +47,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	public boolean validateEntity() {
-		final User user = getSecurityContext().getUser();
+		final User user = vulpe.securityContext().getUser();
 		boolean valid = super.validateEntity();
 		if (StringUtils.isBlank(getEntity().getCurrentPassword())) {
 			addActionError("{vulpe.security.user.error.empty.current.password}");
@@ -83,7 +83,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	protected boolean onUpdatePost() {
-		final User user = getSecurityContext().getUser();
+		final User user = vulpe.securityContext().getUser();
 		user.setPasswordEncrypted(getEntity().getPassword());
 		user.setPasswordConfirmEncrypted(getEntity().getPasswordConfirm());
 		setEntity(user);
@@ -93,16 +93,17 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	}
 
 	public String getPassword() {
-		return getSessionAttribute(PASSWORD);
+		return ever.<String> getSelf(PASSWORD);
 	}
 
 	public void setPassword(final String password) {
-		setSessionAttribute(PASSWORD, password);
+		ever.putWeakRef(PASSWORD, password);
 	}
 
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		hideButtons(Button.CLEAR, Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
+		vulpe.view().hideButtons(Button.CLEAR, Button.CREATE, Button.DELETE, Button.BACK,
+				Button.CLONE);
 	}
 }

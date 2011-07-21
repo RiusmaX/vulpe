@@ -34,10 +34,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Error;
-import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
@@ -46,10 +44,8 @@ import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.VulpeConstants.Upload.File;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.Quantity.QuantityType;
-import org.vulpe.commons.beans.ButtonConfig;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
-import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -71,10 +67,8 @@ import org.vulpe.model.annotations.NotDeleteIf;
 import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.VulpeEntity;
-import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 import org.vulpe.model.services.GenericService;
 import org.vulpe.model.services.VulpeService;
-import org.vulpe.security.context.VulpeSecurityContext;
 
 /**
  * Base Controller
@@ -527,191 +521,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return
 	 */
 	protected boolean validateNotExistEquals() {
-		return getService(GenericService.class).notExistEquals(getEntity());
-	}
-
-	public void renderDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(true, true, false));
-	}
-
-	public void notRenderDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(false));
-	}
-
-	public void showDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(true, true));
-	}
-
-	public void hideDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(true, false));
-	}
-
-	public void enableDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(true, true, false));
-	}
-
-	public void disableDetailButton(final String detail, final String button) {
-		vulpe.view().buttons().put(button.concat(detail), new ButtonConfig(true, true, true));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeController#configButton(java.lang.String,
-	 * boolean[])
-	 */
-	public void configButton(final String button, final boolean... values) {
-		ButtonConfig buttonConfig = new ButtonConfig();
-		String key = button;
-		if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
-			String deleteButtonKey = Button.DELETE.concat(vulpe.controller().config()
-					.getTabularConfig().getBaseName());
-			if (vulpe.view().buttons().containsKey(key)) {
-				buttonConfig = vulpe.view().buttons().getSelf(key);
-			}
-			switch (values.length) {
-			case 1:
-				buttonConfig = new ButtonConfig(values[0]);
-				break;
-			case 2:
-				buttonConfig = new ButtonConfig(values[0], values[1]);
-				break;
-			case 3:
-				buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
-				break;
-			}
-			vulpe.view().buttons().put(deleteButtonKey, buttonConfig);
-		}
-		if (Button.ADD_DETAIL.equals(button)) {
-			key = Button.ADD_DETAIL.concat(vulpe.controller().config().getTabularConfig()
-					.getBaseName());
-		}
-		if (vulpe.view().buttons().containsKey(key)) {
-			buttonConfig = vulpe.view().buttons().getSelf(key);
-		}
-		switch (values.length) {
-		case 1:
-			buttonConfig = new ButtonConfig(values[0]);
-			break;
-		case 2:
-			buttonConfig = new ButtonConfig(values[0], values[1]);
-			break;
-		case 3:
-			buttonConfig = new ButtonConfig(values[0], values[1], values[2]);
-			break;
-		}
-		vulpe.view().buttons().put(key, buttonConfig);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeController#configButton(java.lang.String,
-	 * java.lang.String, boolean)
-	 */
-	public void configButton(final String button, final String config, final boolean value) {
-		ButtonConfig buttonConfig = new ButtonConfig();
-		String key = button;
-		if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
-			String deleteButtonKey = Button.DELETE.concat(vulpe.controller().config()
-					.getTabularConfig().getBaseName());
-			if (vulpe.view().buttons().containsKey(key)) {
-				buttonConfig = vulpe.view().buttons().getSelf(key);
-			}
-			if (StringUtils.isNotBlank(config)) {
-				if (config.equals(ButtonConfig.RENDER)) {
-					buttonConfig.setRender(value);
-					if (buttonConfig.getShow() == null) {
-						buttonConfig.setShow(true);
-					}
-				} else if (config.equals(ButtonConfig.SHOW)) {
-					buttonConfig.setShow(value);
-				} else if (config.equals(ButtonConfig.DISABLED)) {
-					buttonConfig.setDisabled(value);
-				}
-			}
-			vulpe.view().buttons().put(deleteButtonKey, buttonConfig);
-		}
-		if (Button.ADD_DETAIL.equals(button)) {
-			key = Button.ADD_DETAIL.concat(vulpe.controller().config().getTabularConfig()
-					.getBaseName());
-		}
-		if (vulpe.view().buttons().containsKey(key)) {
-			buttonConfig = vulpe.view().buttons().getSelf(key);
-		}
-		if (StringUtils.isNotBlank(config)) {
-			if (config.equals(ButtonConfig.RENDER)) {
-				buttonConfig.setRender(value);
-				if (buttonConfig.getShow() == null) {
-					buttonConfig.setShow(true);
-				}
-			} else if (config.equals(ButtonConfig.SHOW)) {
-				buttonConfig.setShow(value);
-			} else if (config.equals(ButtonConfig.DISABLED)) {
-				buttonConfig.setDisabled(value);
-			}
-		}
-		vulpe.view().buttons().put(key, buttonConfig);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String[])
-	 */
-	public void showButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.SHOW, true);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeController#showButtons(java.lang.String[])
-	 */
-	public void renderButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.RENDER, true);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeController#renderButtons(org.vulpe.controller
-	 * .commons.VulpeControllerConfig.ControllerType, java.lang.String[])
-	 */
-	public void renderButtons(final ControllerType controllerType, final String... buttons) {
-		for (final String button : buttons) {
-			renderButtons(controllerType + "_" + button);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeController#enableButtons(java.lang.String[])
-	 */
-	public void enableButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.DISABLED, false);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeController#showButtons(org.vulpe.controller
-	 * .commons.VulpeControllerConfig.ControllerType, java.lang.String[])
-	 */
-	public void showButtons(final ControllerType controllerType, final String... buttons) {
-		for (final String button : buttons) {
-			showButtons(controllerType + "_" + button);
-		}
+		return vulpe.service(GenericService.class).notExistEquals(getEntity());
 	}
 
 	/**
@@ -734,11 +544,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			if (vulpe.controller().config().getDetails() != null) {
 				for (final VulpeBaseDetailConfig detail : vulpe.controller().config().getDetails()) {
 					if (Operation.VIEW.equals(operation)) {
-						notRenderDetailButton(detail.getBaseName(), Button.ADD_DETAIL);
-						notRenderDetailButton(detail.getBaseName(), Button.DELETE);
+						vulpe.view().notRenderDetailButtons(detail.getBaseName(),
+								Button.ADD_DETAIL, Button.DELETE);
 					} else {
-						renderDetailButton(detail.getBaseName(), Button.ADD_DETAIL);
-						renderDetailButton(detail.getBaseName(), Button.DELETE);
+						vulpe.view().renderDetailButtons(detail.getBaseName(), Button.ADD_DETAIL,
+								Button.DELETE);
 					}
 				}
 			}
@@ -747,85 +557,53 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					|| ((Operation.CREATE.equals(vulpe.controller().operation()) || Operation.CREATE_POST
 							.equals(vulpe.controller().operation())) && Operation.ADD_DETAIL
 							.equals(operation))) {
-				renderButtons(Button.BACK, Button.CREATE_POST, Button.CLEAR);
+				vulpe.view().renderButtons(Button.BACK, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)
 					|| ((Operation.UPDATE.equals(vulpe.controller().operation()) || Operation.UPDATE_POST
 							.equals(vulpe.controller().operation())) && Operation.ADD_DETAIL
 							.equals(operation))) {
-				renderButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
+				vulpe.view().renderButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST,
+						Button.DELETE);
 				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
-					renderButtons(Button.CLONE);
+					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
-				renderButtons();
+				vulpe.view().renderButtons();
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.SELECT)) {
-			renderButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE, Button.DELETE);
+			vulpe.view().renderButtons(Button.READ, Button.CLEAR, Button.CREATE, Button.UPDATE,
+					Button.DELETE);
 			if (vulpe.controller().config().getControllerAnnotation().select().showReport()) {
-				renderButtons(Button.REPORT);
+				vulpe.view().renderButtons(Button.REPORT);
 			} else {
-				notRenderButtons(Button.REPORT);
+				vulpe.view().notRenderButtons(Button.REPORT);
 			}
 			if (vulpe.controller().popup()) {
-				notRenderButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
+				vulpe.view().notRenderButtons(Button.CREATE, Button.UPDATE, Button.DELETE);
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.REPORT)) {
-			renderButtons(Button.READ, Button.CLEAR);
+			vulpe.view().renderButtons(Button.READ, Button.CLEAR);
 		} else if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
-			renderButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
+			vulpe.view().renderButtons(Button.TABULAR_RELOAD, Button.DELETE, Button.TABULAR_POST,
 					Button.ADD_DETAIL);
 			if (vulpe.controller().config().isTabularShowFilter()) {
-				renderButtons(Button.TABULAR_FILTER);
+				vulpe.view().renderButtons(Button.TABULAR_FILTER);
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			if (Operation.DELETE.equals(operation) || Operation.CREATE.equals(operation)
 					|| Operation.TWICE.equals(operation)) {
-				renderButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
+				vulpe.view().renderButtons(ControllerType.MAIN, Button.CREATE_POST, Button.CLEAR);
 			} else if (Operation.UPDATE.equals(operation)) {
-				renderButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST, Button.DELETE);
+				vulpe.view().renderButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST,
+						Button.DELETE);
 				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
-					renderButtons(Button.CLONE);
+					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
-				renderButtons();
+				vulpe.view().renderButtons();
 			}
-			renderButtons(ControllerType.SELECT, Button.READ, Button.BACK, Button.UPDATE,
-					Button.DELETE);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeController#hideButtons(java.lang.String[])
-	 */
-	public void hideButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.SHOW, false);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeController#notRenderButtons(java.lang.String[])
-	 */
-	public void notRenderButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.RENDER, false);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeController#disableButtons(java.lang.String[])
-	 */
-	public void disableButtons(final String... buttons) {
-		for (final String button : buttons) {
-			configButton(button, ButtonConfig.DISABLED, true);
+			vulpe.view().renderButtons(ControllerType.SELECT, Button.READ, Button.BACK,
+					Button.UPDATE, Button.DELETE);
 		}
 	}
 
@@ -897,14 +675,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					mountDetailPaging(detailConfig, paging);
 				}
 			}
-		}
-	}
-
-	protected void updateAuditInformation(final ENTITY entity) {
-		if (entity instanceof AbstractVulpeBaseAuditEntity) {
-			final AbstractVulpeBaseAuditEntity auditEntity = (AbstractVulpeBaseAuditEntity) entity;
-			auditEntity.setUserOfLastUpdate(getUserAuthenticated());
-			auditEntity.setDateOfLastUpdate(Calendar.getInstance().getTime());
 		}
 	}
 
@@ -1040,7 +810,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (entity == null) {
 				entity = vulpe.controller().config().getEntityClass().newInstance();
 			}
-			updateAuditInformation(entity);
+			vulpe.updateAuditInformation(entity);
 			if (Operation.READ.equals(operation) && getEntitySelect() == null) {
 				setEntitySelect(vulpe.controller().config().getEntityClass().newInstance());
 				entity = getEntitySelect();
@@ -1526,7 +1296,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return
 	 */
 	public void view() {
-		vulpe.controller().onlyToSee(true);
+		vulpe.view().onlyToSee(true);
 		update();
 		manageButtons(Operation.VIEW);
 	}
@@ -1662,7 +1432,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (VulpeValidationUtil.isNotEmpty(details)) {
 					if (detailConfig.getParentDetailConfig() == null) {
 						for (final ENTITY detail : details) {
-							updateAuditInformation(detail);
+							vulpe.updateAuditInformation(detail);
 						}
 					} else {
 						for (final ENTITY detail : details) {
@@ -1670,7 +1440,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 									detailConfig.getName());
 							if (VulpeValidationUtil.isNotEmpty(subDetails)) {
 								for (final ENTITY subDetail : subDetails) {
-									updateAuditInformation(subDetail);
+									vulpe.updateAuditInformation(subDetail);
 								}
 								VulpeReflectUtil.setFieldValue(detail, detailConfig.getName(),
 										subDetails);
@@ -2279,7 +2049,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		if (!VulpeValidationUtil.isEmpty(getEntities())) {
 			for (final ENTITY entity : getEntities()) {
-				updateAuditInformation(entity);
+				vulpe.updateAuditInformation(entity);
 			}
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(
 					getServiceMethodName(Operation.PERSIST), new Class[] { List.class },
@@ -2354,7 +2124,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void export() {
 		vulpe.controller().type(ControllerType.SELECT);
 		exportBefore();
-		vulpe.controller().onlyToSee(true);
+		vulpe.view().onlyToSee(true);
 		vulpe.controller().exported(true);
 		onExport();
 		// vulpe.controller().resultForward(vulpe.controller().config().getViewItemsPath());
@@ -2818,7 +2588,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public Object invokeServices(final String serviceName, final Class<?>[] argsType,
 			final Object[] argsValues) {
-		final VulpeService service = getService();
+		final VulpeService service = vulpe.service();
 		try {
 			final Method method = service.getClass().getMethod(serviceName, argsType);
 			return method.invoke(service, argsValues);
@@ -2830,25 +2600,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected String getServiceMethodName(final Operation operation) {
 		return operation.getValue().concat(
 				vulpe.controller().config().getEntityClass().getSimpleName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getService()
-	 */
-	public VulpeService getService() {
-		return getService(vulpe.controller().config().getServiceClass());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#getService(java.lang.Class )
-	 */
-	public <T extends VulpeService> T getService(final Class<T> serviceClass) {
-		return VulpeServiceLocator.getInstance().getService(serviceClass);
 	}
 
 	/**
@@ -2950,121 +2701,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 								: Layout.PROTECTED_JSP_COMMONS.concat(Layout.BODY_JSP));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getSecurityContext()
-	 */
-	public VulpeSecurityContext getSecurityContext() {
-		VulpeSecurityContext securityContext = ever.getSelf(Security.SECURITY_CONTEXT);
-		if (securityContext == null) {
-			securityContext = getBean(VulpeSecurityContext.class);
-			ever.put(Security.SECURITY_CONTEXT, securityContext);
-			if (securityContext != null) {
-				securityContext.afterUserAuthenticationCallback();
-			}
-		}
-		return securityContext;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getUserAuthenticated()
-	 */
-	@Override
-	public String getUserAuthenticated() {
-		return getSecurityContext().getUsername();
-	}
-
-	public boolean hasRole(final String role) {
-		final StringBuilder roleName = new StringBuilder();
-		if (!role.startsWith(Security.ROLE_PREFIX)) {
-			roleName.append(Security.ROLE_PREFIX);
-		}
-		roleName.append(role);
-		boolean has = false;
-		final VulpeSecurityContext vsc = getSecurityContext();
-		if (vsc != null) {
-			final Object springSecurityAutentication = VulpeReflectUtil.getFieldValue(vsc,
-					"authentication");
-			if (springSecurityAutentication != null) {
-				final Collection<?> authorities = VulpeReflectUtil.getFieldValue(
-						springSecurityAutentication, "authorities");
-				if (authorities != null) {
-					for (final Object authority : authorities) {
-						if (authority.equals(roleName.toString())) {
-							has = true;
-							break;
-						}
-					}
-
-				}
-			}
-		}
-		return has;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getBean(java.lang.String)
-	 */
-	public <T> T getBean(final String beanName) {
-		return (T) AbstractVulpeBeanFactory.getInstance().getBean(beanName);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getBean(java.lang.Class)
-	 */
-	public <T> T getBean(final Class<T> clazz) {
-		return (T) getBean(clazz.getSimpleName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getSessionAttribute(java
-	 * .lang.String)
-	 */
-	public <T> T getSessionAttribute(final String attributeName) {
-		return (T) getSession().getAttribute(attributeName);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setSessionAttribute(java.lang
-	 * .String, java.lang.Object)
-	 */
-	public void setSessionAttribute(final String attributeName, final Object attributeValue) {
-		getSession().setAttribute(attributeName, attributeValue);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getRequestAttribute(java
-	 * .lang.String)
-	 */
-	public <T> T getRequestAttribute(final String attributeName) {
-		return (T) getRequest().getAttribute(attributeName);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setRequestAttribute(java.lang
-	 * .String, java.lang.Object)
-	 */
-	public void setRequestAttribute(final String attributeName, final Object attributeValue) {
-		getRequest().setAttribute(attributeName, attributeValue);
-	}
-
 	public String getText(final String key) {
 		final String validKey = key.replace("{", "").replace("}", "");
 		return i18nService.getText(validKey);
@@ -3082,26 +2718,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return super.clone();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#returnToPage(java.lang.String)
-	 */
-	public void returnToPage(final String page) {
-		final StringBuilder path = new StringBuilder();
-		if (!page.contains("/") && !page.contains(".")) {
-			path.append(Layout.PROTECTED_JSP);
-			final String directory = vulpe.controller().config().getModuleName() + "/"
-					+ vulpe.controller().config().getSimpleControllerName() + "/";
-			path.append(directory);
-			path.append(page).append(Layout.SUFFIX_JSP);
-		} else {
-			path.append(page);
-		}
-		vulpe.controller().resultForward(path.toString());
 	}
 
 	public void setActionInfoMessages(Collection<String> actionInfoMessages) {

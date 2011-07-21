@@ -195,7 +195,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 							vulpe.controller().detail());
 					final Object parent = Ognl.getValue(parentName, context, this);
 					if (vulpe.controller().detailConfig().getParentDetailConfig() != null) {
-						setRequestAttribute(vulpe.controller().detailConfig()
+						vulpe.requestAttribute(vulpe.controller().detailConfig()
 								.getParentDetailConfig().getBaseName().concat(Layout.DETAIL_ITEM),
 								parent);
 					}
@@ -637,7 +637,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
+					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
 							Layout.DETAIL_ITEM), parent);
 				}
 				// if
@@ -695,7 +695,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final Object value = accessor.getProperty(context, collection, 0);
 			try {
 				final ENTITY detail = (ENTITY) value.getClass().newInstance();
-				updateAuditInformation(detail);
+				vulpe.updateAuditInformation(detail);
 				((ArrayList<ENTITY>) collection).add(0, prepareDetail(detail));
 			} catch (InstantiationException e) {
 				LOG.error(e);
@@ -704,7 +704,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			}
 		} else {
 			final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-			updateAuditInformation(detail);
+			vulpe.updateAuditInformation(detail);
 			final ENTITY preparedDetail = prepareDetail(detail);
 			if (!preparedDetail.equals(detail)) {
 				accessor.setProperty(context, collection, index, preparedDetail);

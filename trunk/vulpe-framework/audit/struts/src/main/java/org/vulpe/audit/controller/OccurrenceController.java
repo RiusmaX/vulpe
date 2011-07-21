@@ -17,7 +17,6 @@ package org.vulpe.audit.controller;
 
 import java.util.List;
 
-import org.jfree.util.Log;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,17 +39,17 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	@Override
 	protected void updateAfter() {
 		super.updateAfter();
-		vulpe.controller().onlyToSee(true);
+		vulpe.view().onlyToSee(true);
 	}
 
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
 		try {
-			childOccurrences = getService(AuditService.class).findByParentAuditOccurrence(
+			childOccurrences = vulpe.service(AuditService.class).findByParentAuditOccurrence(
 					new AuditOccurrence(getEntity().getId()));
 		} catch (VulpeApplicationException e) {
-			Log.error(e);
+			LOG.error(e);
 		}
 	}
 
@@ -69,6 +68,6 @@ public class OccurrenceController extends VulpeStrutsController<AuditOccurrence,
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		hideButtons(Button.CREATE);
+		vulpe.view().hideButtons(Button.CREATE);
 	}
 }

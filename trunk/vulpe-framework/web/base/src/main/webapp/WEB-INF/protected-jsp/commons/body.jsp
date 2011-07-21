@@ -16,6 +16,6 @@
 	<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}"><input type="hidden" name="entitySelect.orderBy" value="${entity.orderBy}" id="${vulpeFormName}-entitySelect_orderBy"/></c:if>
 	<input type="hidden" name="now.popupKey" value="${now['popupKey']}" id="${vulpeFormName}-popupKey"/>
 	</div>
-	<c:if test="${securityContext.authenticated && empty now['popupKey'] && (empty now['bodyTwice'] || now['bodyTwiceType'] == 'MAIN')}"><%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %></c:if>
+	<c:if test="${ever['securityContext'].authenticated && empty now['popupKey'] && (empty now['bodyTwice'] || now['bodyTwiceType'] == 'MAIN')}"><%@include file="/WEB-INF/protected-jsp/commons/userAuthenticated.jsp" %></c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/content.jsp" %>
 </v:form>

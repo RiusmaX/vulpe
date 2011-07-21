@@ -21,10 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.model.services.VulpeService;
-import org.vulpe.security.context.VulpeSecurityContext;
-
 /**
  * Controller Interface.
  * 
@@ -32,7 +28,6 @@ import org.vulpe.security.context.VulpeSecurityContext;
  * @version 1.0
  * @since 1.0
  */
-
 public interface VulpeController extends Serializable {
 
 	/**
@@ -135,103 +130,9 @@ public interface VulpeController extends Serializable {
 
 	void autocomplete();
 
-	/**
-	 * Method to config button.
-	 * 
-	 * @param button
-	 *            Button
-	 * @param values
-	 *            Array values (1st=render 2nd=show 3th=disabled) (true|false)
-	 * @since 1.0
-	 */
-	void configButton(final String button, final boolean... values);
-
-	/**
-	 * Method to config button.
-	 * 
-	 * @param button
-	 *            Button
-	 * @param config
-	 *            Config
-	 * @param value
-	 *            Value (true|false)
-	 * @since 1.0
-	 */
-	void configButton(final String button, final String config, final boolean value);
-
 	void manageButtons(final Operation operation);
 
-	/**
-	 * Method to render buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void renderButtons(final String... buttons);
-
-	void renderButtons(final ControllerType controllerType, final String... buttons);
-
-	/**
-	 * Method to not render buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void notRenderButtons(final String... buttons);
-
-	/**
-	 * Method to show buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void showButtons(final String... buttons);
-
-	/**
-	 * Method to enable buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void enableButtons(final String... buttons);
-
-	void showButtons(final ControllerType controllerType, final String... buttons);
-
-	/**
-	 * Method to hide buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void hideButtons(final String... buttons);
-
-	/**
-	 * Method to disable buttons.
-	 * 
-	 * @param buttons
-	 *            Buttons.
-	 * @since 1.0
-	 */
-	void disableButtons(final String... buttons);
-
 	void json();
-
-	void renderDetailButton(final String detail, final String button);
-
-	void notRenderDetailButton(final String detail, final String button);
-
-	void showDetailButton(final String detail, final String button);
-
-	void hideDetailButton(final String detail, final String button);
-
-	void enableDetailButton(final String detail, final String button);
-
-	void disableDetailButton(final String detail, final String button);
 
 	void select();
 
@@ -266,40 +167,6 @@ public interface VulpeController extends Serializable {
 	void upload();
 
 	/**
-	 * Method find specific service returns POJO or EJB implementation.
-	 * 
-	 * @param serviceClass
-	 * @return Service Implementation.
-	 * @since 1.0
-	 * @see VulpeService
-	 */
-	<T extends VulpeService> T getService(final Class<T> serviceClass);
-
-	/**
-	 * Retrieves current action service configured.
-	 * 
-	 * @since 1.0
-	 * @return Service Implementation.
-	 * @see VulpeService
-	 */
-	VulpeService getService();
-
-	/**
-	 * Retrieves current security context.
-	 * 
-	 * @return VulpeSecurityContext Interface
-	 * @since 1.0
-	 */
-	VulpeSecurityContext getSecurityContext();
-
-	/**
-	 * Retrieves user authenticated.
-	 * 
-	 * @return
-	 */
-	String getUserAuthenticated();
-
-	/**
 	 * Method to prepare back-end show.
 	 * 
 	 * @since 1.0
@@ -314,70 +181,6 @@ public interface VulpeController extends Serializable {
 	 * @return Navigation
 	 */
 	void frontend();
-
-	/**
-	 * Retrieves a Spring Bean by name.
-	 * 
-	 * @param <T>
-	 *            Class type to return
-	 * @param beanName
-	 *            Name of Component/Service/Repository
-	 * @return Bean converted to Class type
-	 * @since 1.0
-	 */
-	<T> T getBean(final String beanName);
-
-	/**
-	 * Retrieves a Spring Bean by class.
-	 * 
-	 * @param <T>
-	 *            Class type to return
-	 * @param clazz
-	 *            Component/Service/Repository class
-	 * @return Bean converted to Class type
-	 * @since 1.0
-	 */
-	<T> T getBean(final Class<T> clazz);
-
-	/**
-	 * Retrieves a Session Attribute.
-	 * 
-	 * @param <T>
-	 *            Class type to return
-	 * @param attributeName
-	 *            Name of Session Attribute
-	 * @return Attribute converted to Class type
-	 * @since 1.0
-	 */
-	<T> T getSessionAttribute(final String attributeName);
-
-	/**
-	 * Sets attribute on session scope.
-	 * 
-	 * @param attributeName
-	 * @param attributeValue
-	 */
-	void setSessionAttribute(final String attributeName, final Object attributeValue);
-
-	/**
-	 * Retrieves a attribute on request scope.
-	 * 
-	 * @param <T>
-	 *            Class type to return
-	 * @param attributeName
-	 *            Name of Request Attribute
-	 * @return Attribute converted to Class type
-	 * @since 1.0
-	 */
-	<T> T getRequestAttribute(final String attributeName);
-
-	/**
-	 * Sets attribute on request scope.
-	 * 
-	 * @param attributeName
-	 * @param attributeValue
-	 */
-	void setRequestAttribute(final String attributeName, final Object attributeValue);
 
 	/**
 	 * Retrieves current HTTP Request.
@@ -399,13 +202,6 @@ public interface VulpeController extends Serializable {
 	 * @return Http Session
 	 */
 	HttpSession getSession();
-
-	/**
-	 * Mount return to view by simple page name or full path.
-	 * 
-	 * @param page
-	 */
-	void returnToPage(final String page);
 
 	void read();
 

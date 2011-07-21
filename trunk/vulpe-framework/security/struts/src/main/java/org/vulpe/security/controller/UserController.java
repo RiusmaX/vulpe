@@ -46,12 +46,13 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	@Override
 	public boolean validateEntity() {
 		boolean valid = super.validateEntity();
-		if (vulpe.controller().operation().equals(Operation.CREATE_POST) && StringUtils.isBlank(getEntity().getPassword())) {
+		if (vulpe.controller().operation().equals(Operation.CREATE_POST)
+				&& StringUtils.isBlank(getEntity().getPassword())) {
 			addActionError("{vulpe.security.user.error.empty.password}");
 			return false;
 		}
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils.isNotBlank(getEntity()
-				.getPasswordConfirm()))
+		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
+				.isNotBlank(getEntity().getPasswordConfirm()))
 				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
 			addActionError("{vulpe.security.user.error.password.not.match}");
 			valid = false;
@@ -67,7 +68,8 @@ public class UserController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	protected boolean onUpdatePost() {
-		if (StringUtils.isBlank(getEntity().getPassword()) && StringUtils.isBlank(getEntity().getPasswordConfirm())) {
+		if (StringUtils.isBlank(getEntity().getPassword())
+				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
 			getEntity().setPasswordEncrypted(getPassword());
 		} else {
 			setPassword(getEntity().getPassword());
@@ -76,16 +78,16 @@ public class UserController extends VulpeStrutsController<User, Long> {
 	}
 
 	public String getPassword() {
-		return (String) getSessionAttribute(PASSWORD);
+		return ever.<String> getSelf(PASSWORD);
 	}
 
 	public void setPassword(final String password) {
-		setSessionAttribute(PASSWORD, password);
+		ever.putWeakRef(PASSWORD, password);
 	}
-	
+
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		notRenderDetailButton("userRoles", Button.ADD_DETAIL);
+		vulpe.view().notRenderDetailButtons("userRoles", Button.ADD_DETAIL);
 	}
 }

@@ -40,14 +40,14 @@ public class OccurrenceController extends VulpeVRaptorController<AuditOccurrence
 	@Override
 	protected void updateAfter() {
 		super.updateAfter();
-		hideButtons(Button.CREATE, Button.UPDATE_POST, Button.DELETE, Button.CLEAR);
+		vulpe.view().hideButtons(Button.CREATE, Button.UPDATE_POST, Button.DELETE, Button.CLEAR);
 	}
 
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
 		try {
-			childOccurrences = getService(AuditService.class).findByParentAuditOccurrence(
+			childOccurrences = vulpe.service(AuditService.class).findByParentAuditOccurrence(
 					new AuditOccurrence(getEntity().getId()));
 		} catch (VulpeApplicationException e) {
 			Log.error(e);
@@ -64,13 +64,13 @@ public class OccurrenceController extends VulpeVRaptorController<AuditOccurrence
 
 	@Override
 	protected void prepareAfter() {
-		hideButtons(Button.CREATE);
+		vulpe.view().hideButtons(Button.CREATE);
 		super.prepareAfter();
 	}
 
 	@Override
 	protected void readAfter() {
-		hideButtons(Button.CREATE);
+		vulpe.view().hideButtons(Button.CREATE);
 		super.readAfter();
 	}
 

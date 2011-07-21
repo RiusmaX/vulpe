@@ -36,6 +36,6 @@ public class SecureResourceController extends VulpeStrutsController<SecureResour
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		notRenderDetailButton("secureResourceRoles", Button.ADD_DETAIL);
+		vulpe.view().notRenderDetailButtons("secureResourceRoles", Button.ADD_DETAIL);
 	}
 }

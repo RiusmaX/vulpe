@@ -212,7 +212,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					setRequestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
+					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
 							Layout.DETAIL_ITEM), parent);
 				}
 			}
@@ -242,7 +242,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-		updateAuditInformation(detail);
+		vulpe.updateAuditInformation(detail);
 		final ENTITY preparedDetail = prepareDetail(detail);
 		if (!preparedDetail.equals(detail)) {
 			accessor.setProperty(context, collection, index, preparedDetail);
