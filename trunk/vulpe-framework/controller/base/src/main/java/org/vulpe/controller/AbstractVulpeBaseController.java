@@ -2110,7 +2110,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			ever.remove(vulpe.controller().selectPagingKey());
 		}
 		selectAfter();
-		if (vulpe.controller().config().getControllerAnnotation().select().readOnShow()
+		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || VulpeConfigHelper
+				.getProjectConfiguration().view().readOnShow())
 				&& !vulpe.controller().cleaned()) {
 			onRead();
 		}

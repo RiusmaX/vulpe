@@ -31,6 +31,8 @@ public @interface VulpeView {
 	 */
 	boolean addNewDetailsOnTop() default false;
 
+	boolean readOnShow() default false;
+	
 	String dateMask() default "99/99/9999";
 
 	boolean focusFirst() default true;
