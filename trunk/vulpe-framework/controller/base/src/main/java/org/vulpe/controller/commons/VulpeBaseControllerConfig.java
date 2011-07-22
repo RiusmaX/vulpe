@@ -216,8 +216,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 */
 	public int getPageSize() {
 		final int pageSize = this.controllerAnnotation.select().pageSize();
-		final int globalPageSize = VulpeConfigHelper.getProjectConfiguration().view().layout()
-				.globalPageSize();
+		final int globalPageSize = VulpeConfigHelper.getProjectConfiguration().view().paging()
+				.pageSize();
 		return pageSize > 0 ? pageSize : globalPageSize;
 	}
 

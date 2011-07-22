@@ -38,8 +38,6 @@ public @interface VulpeViewLayout {
 	 */
 	MenuType frontendMenuType() default MenuType.SUPERFISH;
 
-	int globalPageSize() default 5;
-
 	String jQueryUI() default JQUERYUI_SMOOTHNESS;
 
 	int iconHeight() default 32;

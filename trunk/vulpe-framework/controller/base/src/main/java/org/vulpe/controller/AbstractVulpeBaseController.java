@@ -967,7 +967,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @see org.vulpe.controller.VulpeController#clear()
 	 */
 	public void clear() {
-		// setCleaned(true);
+		vulpe.controller().cleaned(true);
 		if (vulpe.controller().type().equals(ControllerType.MAIN)) {
 			setEntitySelect(prepareEntity(Operation.CREATE));
 			create();
@@ -2204,6 +2204,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			if (getEntitySelect() == null) {
 				setEntitySelect(vulpe.controller().config().getEntityClass().newInstance());
+			} else if (vulpe.controller().cleaned()) {
+				getEntitySelect().setOrderBy("");
 			}
 		} catch (Exception e) {
 			if (vulpe.controller().type().equals(ControllerType.TWICE)) {

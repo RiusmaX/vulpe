@@ -27,7 +27,9 @@ import java.lang.annotation.Target;
 public @interface VulpeViewPaging {
 
 	PagingButtonStyle buttonStyle() default PagingButtonStyle.CSS;
-	
+
+	int pageSize() default 5;
+
 	boolean showButtonAsLink() default false;
 
 	PagingStyle style() default PagingStyle.NUMERIC;
