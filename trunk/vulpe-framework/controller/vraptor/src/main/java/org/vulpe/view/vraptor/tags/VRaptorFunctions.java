@@ -120,9 +120,9 @@ public final class VRaptorFunctions extends Functions {
 		// final String link =
 		// getRequestInfo().getRequest().getContextPath().concat("/").concat(
 		// new
-		// ControllerUtil().getCurrentControllerName(null)).concat("/download?downloadKey=").concat(urlEncode(key))
-		// .concat("&downloadContentType=").concat(contentType).concat("&downloadContentDisposition=").concat(
-		// contentDisposition).concat("&access=").concat(String.valueOf(System.currentTimeMillis()));
+		// ControllerUtil().getCurrentControllerName(null)).concat("/download?now.downloadKey=").concat(urlEncode(key))
+		// .concat("&now.downloadContentType=").concat(contentType).concat("&now.downloadContentDisposition=").concat(
+		// contentDisposition).concat("&now.access=").concat(String.valueOf(System.currentTimeMillis()));
 		// return link;
 		return "";
 	}

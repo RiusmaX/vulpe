@@ -310,15 +310,16 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	protected DownloadInfo prepareDownloadInfo() {
 		try {
-			Object value = ever.get(getDownloadKey());
+			Object value = ever.get(vulpe.controller().downloadKey());
 			if (value == null) {
-				value = ognlUtil.getValue(getDownloadKey(), ActionContext.getContext()
-						.getContextMap(), this);
+				value = ognlUtil.getValue(vulpe.controller().downloadKey(), ActionContext
+						.getContext().getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, vulpe
+					.controller().downloadContentType(), vulpe.controller()
+					.downloadContentDisposition());
 			if (downloadInfo != null) {
-				downloadInfo.setKey(getDownloadKey());
+				downloadInfo.setKey(vulpe.controller().downloadKey());
 			}
 			return downloadInfo;
 		} catch (OgnlException e) {
@@ -637,8 +638,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
-							Layout.DETAIL_ITEM), parent);
+					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName()
+							.concat(Layout.DETAIL_ITEM), parent);
 				}
 				// if
 				// (VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())

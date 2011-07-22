@@ -40,6 +40,7 @@ import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
+import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.VulpeConstants.Upload.File;
 import org.vulpe.commons.VulpeConstants.View.Layout;
@@ -57,6 +58,7 @@ import org.vulpe.controller.commons.VulpeBaseControllerConfig;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.util.VulpeUtil;
+import org.vulpe.controller.util.VulpeUtil.VulpeControllerUtil;
 import org.vulpe.controller.util.VulpeUtil.VulpeViewUtil;
 import org.vulpe.controller.util.VulpeUtil.VulpeViewUtil.VulpeViewContentUtil;
 import org.vulpe.controller.validator.EntityValidator;
@@ -126,7 +128,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void postConstruct() {
 		ever = EverParameter.getInstance(getSession());
 		vulpe = new VulpeUtil<ENTITY, ID>(this);
-		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
+		final VulpeControllerUtil controller = vulpe.controller();
+		final VulpeBaseControllerConfig<ENTITY, ID> config = controller.config();
 		final VulpeViewUtil view = vulpe.view();
 		view.maxInactiveInterval(getSession().getMaxInactiveInterval());
 		view.formName(config.getFormName());
@@ -138,8 +141,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (VulpeValidationUtil.isNotEmpty(config.getDetails())) {
 			content.masterTitleKey(config.getMasterTitleKey());
 		}
-		if (vulpe.controller().type().equals(ControllerType.REPORT)) {
+		if (controller.type().equals(ControllerType.REPORT)) {
 			content.reportTitleKey(config.getReportTitleKey());
+		}
+		if (!controller.currentName().endsWith(URI.AUTHENTICATOR)) {
+			vulpe.securityContext();
 		}
 	}
 
@@ -163,18 +169,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * Paginated Bean
 	 */
 	private Paging<ENTITY> paging;
-	/**
-	 *
-	 */
-	private String downloadKey;
-	/**
-	 * Download content type.
-	 */
-	private String downloadContentType;
-	/**
-	 *
-	 */
-	private String downloadContentDisposition;
 	/**
 	 * Download information.
 	 */
@@ -284,66 +278,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void setDownloadInfo(final DownloadInfo downloadInfo) {
 		this.downloadInfo = downloadInfo;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadKey()
-	 */
-	public String getDownloadKey() {
-		return downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadKey(java.lang
-	 * .String)
-	 */
-	public void setDownloadKey(final String downloadKey) {
-		this.downloadKey = downloadKey;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#getDownloadContentType()
-	 */
-	public String getDownloadContentType() {
-		return downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.vulpe.controller.VulpeSimpleController#setDownloadContentType
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentType(final String downloadContentType) {
-		this.downloadContentType = downloadContentType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#getDownloadContentDisposition
-	 * ()
-	 */
-	public String getDownloadContentDisposition() {
-		return downloadContentDisposition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.vulpe.controller.VulpeSimpleController#setDownloadContentDisposition
-	 * (java.lang.String)
-	 */
-	public void setDownloadContentDisposition(final String downloadContentDisposition) {
-		this.downloadContentDisposition = downloadContentDisposition;
 	}
 
 	/**

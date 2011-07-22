@@ -15,6 +15,10 @@
  */
 package org.vulpe.audit.model.entity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -79,7 +83,7 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	private String username;
 
 	@Lob
-	private String dataHistory;
+	private Clob dataHistory;
 
 	public Long getId() {
 		return id;
@@ -89,11 +93,11 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 		this.id = id;
 	}
 
-	public String getDataHistory() {
+	public Clob getDataHistory() {
 		return dataHistory;
 	}
 
-	public void setDataHistory(final String dataHistory) {
+	public void setDataHistory(final Clob dataHistory) {
 		this.dataHistory = dataHistory;
 	}
 
@@ -141,11 +145,11 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	public VulpeEntity fromXMLHistory() {
 		final XStream xstream = new XStream();
 		xstream.registerConverter(new XMLDateConversor(), 1);
-		return (VulpeEntity) xstream.fromXML(getDataHistory());
+		return (VulpeEntity) xstream.fromXML(getDataHistory().toString());
 	}
 
 	public List<XMLAttribute> getHistoryAttributes() {
-		return new XMLReader().reader(getDataHistory());
+		return new XMLReader().reader(getDataHistory().toString());
 	}
 
 	public AuditOccurrence() {
@@ -187,7 +191,19 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public List<XMLAttribute> getDataHistoryAttributes() {
-		return new XMLReader().reader(getDataHistory());
+		StringBuilder history = new StringBuilder();
+		try {
+			String aux = "";
+			final BufferedReader buffer = new BufferedReader(getDataHistory().getCharacterStream());
+			while ((aux = buffer.readLine()) != null) {
+				history.append(aux);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new XMLReader().reader(history.toString());
 	}
 
 }

@@ -562,6 +562,11 @@ thead th {
 	font-size: 9px;
 }
 
+#messages li {
+	list-style: disc;
+	margin-left: 5px;
+}
+
 #vulpeSelectAll {
 	width: 40px;
 }

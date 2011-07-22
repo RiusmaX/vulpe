@@ -211,6 +211,30 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			baseController.now.put(Now.RESULT_FORWARD, resultForward);
 		}
 
+		public String downloadKey() {
+			return baseController.now.getSelf(Now.DOWNLOAD_KEY);
+		}
+
+		public void downloadKey(final String downloadKey) {
+			baseController.now.put(Now.DOWNLOAD_KEY, downloadKey);
+		}
+
+		public String downloadContentType() {
+			return baseController.now.getSelf(Now.DOWNLOAD_CONTENT_TYPE);
+		}
+
+		public void downloadContentType(final String downloadContentType) {
+			baseController.now.put(Now.DOWNLOAD_CONTENT_TYPE, downloadContentType);
+		}
+
+		public String downloadContentDisposition() {
+			return baseController.now.getSelf(Now.DOWNLOAD_CONTENT_DISPOSITION);
+		}
+
+		public void downloadContentDisposition(final String downloadContentDisposition) {
+			baseController.now.put(Now.DOWNLOAD_CONTENT_DISPOSITION, downloadContentDisposition);
+		}
+
 		/**
 		 * 
 		 * @param page

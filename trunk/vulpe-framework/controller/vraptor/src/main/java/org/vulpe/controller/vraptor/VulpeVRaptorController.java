@@ -212,8 +212,8 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
-					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName().concat(
-							Layout.DETAIL_ITEM), parent);
+					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName()
+							.concat(Layout.DETAIL_ITEM), parent);
 				}
 			}
 
@@ -296,10 +296,11 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				// ActionContext.getContext()
 				// .getContextMap(), this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value,
-					getDownloadContentType(), getDownloadContentDisposition());
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, vulpe
+					.controller().downloadContentType(), vulpe.controller()
+					.downloadContentDisposition());
 			if (downloadInfo != null) {
-				downloadInfo.setKey(getDownloadKey());
+				downloadInfo.setKey(vulpe.controller().downloadKey());
 			}
 			return downloadInfo;
 		} catch (Exception e) {

@@ -140,18 +140,6 @@ public interface VulpeController extends Serializable {
 
 	void tabularFilter();
 
-	String getDownloadKey();
-
-	void setDownloadKey(final String downloadKey);
-
-	String getDownloadContentType();
-
-	void setDownloadContentType(final String downloadContentType);
-
-	String getDownloadContentDisposition();
-
-	void setDownloadContentDisposition(final String downloadContentDisposition);
-
 	/**
 	 * Method to download file.
 	 * 

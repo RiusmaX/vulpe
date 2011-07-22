@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 
 import javax.persistence.OneToMany;
+import javax.sql.rowset.serial.SerialClob;
 
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.entity.AuditOccurrence;
@@ -32,9 +33,9 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Abstract Base to implementation of DAO.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- *
+ * 
  */
 @SuppressWarnings( { "unchecked" })
 public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
@@ -44,37 +45,43 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 
 	/**
 	 * Make audit.
-	 *
+	 * 
 	 * @param entity
 	 * @param auditOccurrenceType
 	 * @param occurrenceParent
 	 * @throws VulpeApplicationException
 	 */
-	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType, final Long occurrenceParent)
-			throws VulpeApplicationException {
+	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType,
+			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
-			AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity.getClass().getName(), entity
-					.getId().toString(), "");
+			AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity.getClass()
+					.getName(), entity.getId().toString(), "");
 			if (occurrenceParent != null) {
-				occurrence = new AuditOccurrence(occurrenceParent, auditOccurrenceType, entity.getClass().getName(),
-						entity.getId().toString(), "");
+				occurrence = new AuditOccurrence(occurrenceParent, auditOccurrenceType, entity
+						.getClass().getName(), entity.getId().toString(), "");
 			}
 
 			if (LOG.isDebugEnabled()) {
-				LOG
-						.debug("Auditing object" + (occurrenceParent == null ? " son" : "")
-								+ ": ".concat(entity.toString()));
+				LOG.debug("Auditing object" + (occurrenceParent == null ? " son" : "")
+						+ ": ".concat(entity.toString()));
 			}
 			if (entity.isHistoryAuditable()) {
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Auditing history of object" + (occurrenceParent == null ? " son" : "")
+					LOG.debug("Auditing history of object"
+							+ (occurrenceParent == null ? " son" : "")
 							+ ": ".concat(entity.toString()));
 				}
-				if (auditOccurrenceType.equals(AuditOccurrenceType.UPDATE)) {
-					final ENTITY entityAudit = (ENTITY) find(entity);
-					occurrence.setDataHistory(entityAudit.toXMLAudit());
-				} else {
-					occurrence.setDataHistory(entity.toXMLAudit());
+				try {
+					if (auditOccurrenceType.equals(AuditOccurrenceType.UPDATE)) {
+						final ENTITY entityAudit = (ENTITY) find(entity);
+						occurrence.setDataHistory(new SerialClob(entityAudit.toXMLAudit()
+								.toCharArray()));
+					} else {
+						occurrence
+								.setDataHistory(new SerialClob(entity.toXMLAudit().toCharArray()));
+					}
+				} catch (Exception e) {
+					LOG.error(e);
 				}
 			}
 			occurrence = merge(occurrence);
@@ -84,11 +91,13 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 					if (Collection.class.isAssignableFrom(field.getType())) {
 						final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 						if (oneToMany != null) {
-							final String methodName = "get" + field.getName().substring(0, 1).toUpperCase()
+							final String methodName = "get"
+									+ field.getName().substring(0, 1).toUpperCase()
 									+ field.getName().substring(1);
-							final Method method = entity.getClass().getDeclaredMethod(methodName, new Class[] {});
-							final Collection<ENTITY> collection = (Collection<ENTITY>) method.invoke(entity,
-									new Object[] {});
+							final Method method = entity.getClass().getDeclaredMethod(methodName,
+									new Class[] {});
+							final Collection<ENTITY> collection = (Collection<ENTITY>) method
+									.invoke(entity, new Object[] {});
 							if (collection != null) {
 								for (final ENTITY entityAudit : collection) {
 									audit(entityAudit, auditOccurrenceType, occurrence.getId());

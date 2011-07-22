@@ -59,14 +59,14 @@ public final class StrutsFunctions extends Functions {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
 				getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_NAME)).append(
-				"/download?downloadKey=").append(urlEncode(key));
+				"/download?now.downloadKey=").append(urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
-			link.append("&downloadContentType=").append(contentType);
+			link.append("&now.downloadContentType=").append(contentType);
 		}
 		if (StringUtils.isNotEmpty(contentDisposition)) {
-			link.append("&downloadContentDisposition=").append(contentDisposition);
+			link.append("&now.downloadContentDisposition=").append(contentDisposition);
 		}
-		link.append("&access=").append(System.currentTimeMillis());
+		link.append("&now.access=").append(System.currentTimeMillis());
 		return link.toString();
 	}
 
