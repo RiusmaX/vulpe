@@ -62,6 +62,7 @@
 						<include>pom-controller.xml</include>
 						<include>pom-manager.xml</include>
 						<include>pom-view.xml</include>
+						<include>pom-all.xml</include>
 					</includes>
 				</fileSet>
 			</fileSets>
