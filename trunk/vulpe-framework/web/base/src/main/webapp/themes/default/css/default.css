@@ -272,8 +272,7 @@
 }
 
 #body table {
-	margin-left: 20px;
-	width: 96.8%;
+	width: 100%;
 }
 
 #body td,th {
@@ -577,6 +576,10 @@ thead th {
 	padding: 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+#vulpeSelectTable {
+	margin: 0 20px 3px 20px;
 }
 
 #vulpeMainBodyTabs {
