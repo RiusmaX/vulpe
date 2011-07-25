@@ -6,9 +6,7 @@
 		projectPackage = "${package}",
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
-						showButtonsAsImage = false,
-						showIconOfButton = true,
-						showTextOfButton = true
+						showIconOfButton = true
 				)
 		)
 )
