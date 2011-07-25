@@ -600,6 +600,11 @@ thead th {
 	margin: 0;
 }
 
+#vulpeSelectForm .line p {
+	display: inline;
+	padding: 5px;
+}
+
 #sliderWrap {
 	margin: 0 auto;
 	position: relative;

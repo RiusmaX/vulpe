@@ -176,7 +176,7 @@ public class VulpeConstants {
 			public static final String DOWNLOAD_CONTENT_DISPOSITION = "downloadContentDisposition";
 			public static final String DOWNLOAD_CONTENT_TYPE = "downloadContentType";
 			public static final String EXECUTED = "executed";
-			public static final String EXPORTED = "executed";
+			public static final String EXPORTED = "exported";
 			public static final String JSON_ROOT = "jsonRoot";
 			public static final String ONLY_TO_SEE = "onlyToSee";
 			public static final String OPERATION = "operation";
