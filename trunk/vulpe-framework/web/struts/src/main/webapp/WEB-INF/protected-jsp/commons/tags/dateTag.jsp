@@ -34,7 +34,8 @@
 					if (vulpe.config.browser.ie6) {
 						$("select").show();
 					}
-				}
+				},
+				datePattern: "${fn:toLowerCase(validateDatePattern)}"
 			});
 			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
 			vulpe.util.get('ui-datepicker-div').hide();

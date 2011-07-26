@@ -601,7 +601,7 @@ thead th {
 }
 
 #vulpeSelectForm .line p {
-	display: inline;
+	display: table-cell;
 	padding: 5px;
 }
 

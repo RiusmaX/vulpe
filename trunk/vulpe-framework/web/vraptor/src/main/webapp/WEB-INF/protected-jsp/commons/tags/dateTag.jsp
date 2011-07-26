@@ -20,14 +20,26 @@
 	<c:if test="${!showAsText}">
 	<script>
 		jQuery(function($){
-			vulpe.util.get('${elementId}').mask("${mask}");
-			vulpe.util.get('${elementId}').datepicker({
-				showOn: 'button',
-				buttonImage: '${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/button-calendar-16x16.png',
-				buttonImageOnly: true
-			});
-			vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
-			vulpe.util.get('ui-datepicker-div').hide();
+			jQuery(function($){
+				vulpe.util.get('${elementId}').mask("${mask}");
+				vulpe.util.get('${elementId}').datepicker({
+					showOn: 'button',
+					buttonImage: '${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/button-calendar-16x16.png',
+					buttonImageOnly: true,
+					beforeShow: function(input, inst) {
+						if (vulpe.config.browser.ie6) {
+							$("select").hide();
+						}
+					},
+					onClose: function(dateText, inst) {
+						if (vulpe.config.browser.ie6) {
+							$("select").show();
+						}
+					},
+					datePattern: "${fn:toLowerCase(validateDatePattern)}"
+				});
+				vulpe.util.get('ui-datepicker-div').css('z-index', 3000);
+				vulpe.util.get('ui-datepicker-div').hide();
 		});
 	</script>
 	</c:if>

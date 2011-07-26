@@ -2112,6 +2112,9 @@ var vulpe = {
 				if (options.validate && !vulpe.validate.validateAttributes(options.formName)) {
 					return false;
 				}
+				if (options.url.indexOf("/clear") != -1) {
+					vulpe.config.order = new Array();
+				}
 				if (options.url.indexOf(vulpe.config.contextPath) == -1) {
 					options.url = vulpe.config.contextPath + '/' + options.url;
 				}
