@@ -5,7 +5,8 @@
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
 						showIconOfButton = true,
-						frontendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.NONE
+						frontendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.NONE,
+						showSliderPanel = true
 				),
 				readOnShow = true
 		),
