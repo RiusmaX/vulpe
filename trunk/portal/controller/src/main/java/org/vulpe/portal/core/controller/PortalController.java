@@ -8,7 +8,7 @@ import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.Status;
-import org.vulpe.portal.controller.ApplicationBaseController;
+import org.vulpe.portal.controller.PortalBaseController;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.services.CoreService;
 
@@ -19,7 +19,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 1, readOnShow = true))
-public class PortalController extends ApplicationBaseController<Portal, Long> {
+public class PortalController extends PortalBaseController<Portal, Long> {
 
 	@Override
 	public void update() {
@@ -42,6 +42,6 @@ public class PortalController extends ApplicationBaseController<Portal, Long> {
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		hideButtons(Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
+		vulpe.view().hideButtons(Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
 	}
 }

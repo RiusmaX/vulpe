@@ -1,5 +1,5 @@
 <c:choose>
-	<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
+	<c:when test="${ever['vulpeCurrentLayout'] == 'FRONTEND'}">
 	<div id="vulpe">
 		<div id="vulpeqs"></div>
 	</div>

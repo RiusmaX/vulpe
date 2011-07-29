@@ -1,13 +1,13 @@
 @VulpeProject(
+		i18n = {"VulpeResources", "VulpeSecurityResources", "PortalResources"},
 		name = "portal",
 		projectPackage = "org.vulpe.portal",
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
-						showButtonsAsImage = false,
 						showIconOfButton = true,
-						showTextOfButton = true,
 						frontendMenuType = org.vulpe.config.annotations.VulpeViewLayout.MenuType.NONE
-				)
+				),
+				readOnShow = true
 		),
 		theme = "portal"
 )

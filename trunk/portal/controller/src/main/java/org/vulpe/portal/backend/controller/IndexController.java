@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
-import org.vulpe.portal.controller.ApplicationBaseController;
+import org.vulpe.portal.controller.PortalBaseController;
 
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("backend.IndexController")
 @Controller(type = ControllerType.BACKEND)
-public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEntity, Long> {
+public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity, Long> {
 
 }

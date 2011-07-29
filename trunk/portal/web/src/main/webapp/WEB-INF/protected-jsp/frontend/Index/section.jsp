@@ -7,7 +7,7 @@
 		<c:when test="${not empty content.miniText.text}"><a href="javascript:void(0);" onclick="vulpe.view.request.submitLink('/frontend/Index/content/ajax/${content.id}');"><strong>${content.title}</strong></a> - <v:show property="date" targetValue="${content}" type="DATE" pattern="dd/MM/yyyy HH:mm"/><br/></c:when>
 		<c:otherwise><strong>${content.title}</strong> - <v:show property="date" targetValue="${content}" type="DATE" pattern="dd/MM/yyyy HH:mm"/><br/></c:otherwise>
 		</c:choose>
-		${content.subtitle}<br/>
+		<c:if test="${not empty content.subtitle.text}">${content.subtitle}<br/></c:if>
 		<c:if test="${not empty content.videoURL}">
 		<div id="content_${content.id}_video" class="portalContentVideo">
 		<object width="${content.videoWidth}" height="${content.videoHeight}">

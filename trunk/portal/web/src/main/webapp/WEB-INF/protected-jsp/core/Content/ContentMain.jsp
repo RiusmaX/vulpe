@@ -72,7 +72,7 @@
 	property="fullText"
 	cols="120" rows="15"
 	required="false"
-	editor="true"
+	editor="false"
 />
 <v:checkbox
 	labelKey="label.portal.core.Content.main.escapeXml"

@@ -12,19 +12,18 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.portal.commons.ApplicationConstants.Core;
 import org.vulpe.portal.commons.model.entity.Status;
-import org.vulpe.portal.controller.ApplicationBaseController;
+import org.vulpe.portal.controller.PortalBaseController;
 import org.vulpe.portal.core.model.entity.Content;
 import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.entity.Section;
-import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
 @Controller(type = ControllerType.FRONTEND)
-public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEntity, Long> {
+public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity, Long> {
 
 	private Long id;
 
@@ -35,14 +34,14 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 
 	private void loadSection(final Long sectionId) {
 		try {
-			final Section section = getService(CoreService.class).findSection(
+			final Section section = getCoreService().findSection(
 					new Section(sectionId));
 			vulpe.view().content().title(section.getName().toString()).subtitle(
 					section.getDescription().toString());
 			final Content content = new Content();
 			content.setSection(section);
 			content.setStatus(Status.ACTIVE);
-			final List<Content> contents = getService(CoreService.class).readContent(content);
+			final List<Content> contents = getCoreService().readContent(content);
 			now.put("contents", contents);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -52,9 +51,9 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 
 	public void content() {
 		try {
-			final Content content = getService(CoreService.class).findContent(new Content(getId()));
+			final Content content = getCoreService().findContent(new Content(getId()));
 			content.increaseView();
-			getService(CoreService.class).updateContent(content);
+			getCoreService().updateContent(content);
 			vulpe.view().content().title(content.getTitle().toString()).subtitle(
 					content.getSubtitle().toString());
 			now.put("content", content);
@@ -66,10 +65,10 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 
 	public void download() {
 		try {
-			final Download download = getService(CoreService.class).findDownload(
+			final Download download = getCoreService().findDownload(
 					new Download(getId()));
 			download.increaseDownload();
-			getService(CoreService.class).updateDownload(download);
+			getCoreService().updateDownload(download);
 			vulpe.controller().redirectTo(download.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -78,9 +77,9 @@ public class IndexController extends ApplicationBaseController<VulpeBaseSimpleEn
 
 	public void link() {
 		try {
-			final Link link = getService(CoreService.class).findLink(new Link(getId()));
+			final Link link = getCoreService().findLink(new Link(getId()));
 			link.increaseClick();
-			getService(CoreService.class).updateLink(link);
+			getCoreService().updateLink(link);
 			vulpe.controller().redirectTo(link.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);

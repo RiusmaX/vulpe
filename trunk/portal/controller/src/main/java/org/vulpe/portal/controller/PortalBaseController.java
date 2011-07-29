@@ -29,10 +29,10 @@ import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeStrutsController<ENTITY, ID> {
 
-	protected static final Logger LOG = Logger.getLogger(ApplicationBaseController.class);
+	protected static final Logger LOG = Logger.getLogger(PortalBaseController.class);
 
 	@Override
 	protected void postConstruct() {
@@ -49,14 +49,14 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		if (vulpe.controller().type().equals(ControllerType.FRONTEND)
 				|| vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			try {
-				final List<Menu> menus = getService(CoreService.class).readMenu(new Menu());
+				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(new Menu());
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
-				final List<Download> downloads = getService(CoreService.class).readDownload(
+				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
 						new Download());
 				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
-				final List<Link> links = getService(CoreService.class).readLink(new Link());
+				final List<Link> links = vulpe.service(CoreService.class).readLink(new Link());
 				ever.put(Core.VULPE_PORTAL_LINKS, links);
-				final List<Social> social = getService(CoreService.class).readSocial(new Social());
+				final List<Social> social = vulpe.service(CoreService.class).readSocial(new Social());
 				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
@@ -111,5 +111,9 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 			}
 			vulpe.controller().redirectTo("/core/Portal/select");
 		}
+	}
+	
+	public CoreService getCoreService() {
+		return vulpe.service(CoreService.class);
 	}
 }

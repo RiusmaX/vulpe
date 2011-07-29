@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:choose>
-	<c:when test="${vulpeCurrentLayout == 'FRONTEND'}">
+	<c:when test="${ever['vulpeCurrentLayout'] == 'FRONTEND'}">
 		<c:forEach var="menu" items="${ever['vulpePortalMenus']}">
 			<c:choose>
 				<c:when test="${not empty menu.navigateToSection}">
@@ -19,7 +19,7 @@
 					$(document).ready(function() {
 						var menu = vulpe.util.get("vulpeMenuLink-${menu.id}");
 						if (menu.length == 1) {
-							//menu.click();
+							menu.addClass("vulpeCurrentMenu");
 						}
 					});
 				</script>

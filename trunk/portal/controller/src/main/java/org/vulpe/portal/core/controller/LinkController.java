@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
-import org.vulpe.portal.controller.ApplicationBaseController;
+import org.vulpe.portal.controller.PortalBaseController;
 import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.services.CoreService;
 
@@ -17,7 +17,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 5))
-public class LinkController extends ApplicationBaseController<Link, java.lang.Long> {
+public class LinkController extends PortalBaseController<Link, java.lang.Long> {
 
 	@Override
 	protected void createAfter() {

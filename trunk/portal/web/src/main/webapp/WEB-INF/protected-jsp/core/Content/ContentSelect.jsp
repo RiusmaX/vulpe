@@ -8,7 +8,6 @@
 	itemKey="id"
 	itemLabel="name"
 	showBlank="true" autoLoad="true"
-	required="true"
 />
 <%--
 <v:textTranslate
