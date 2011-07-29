@@ -95,7 +95,7 @@ $(document).ready(function() {
 		}
 	});
 	var selectForm = $(vulpe.config.layers.selectForm);
-	if (selectForm.length == 1 && selectForm.val().length == 0) {
+	if (selectForm.length == 1 && vulpe.util.trim(selectForm.html()).length == 0) {
 		selectForm.hide();
 	}
 <c:choose>
