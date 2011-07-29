@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Error;
+import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
@@ -2443,6 +2444,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void backend() {
 		vulpe.controller().config().setControllerType(ControllerType.BACKEND);
+		ever.put(View.CURRENT_LAYOUT, "BACKEND");
 		backendBefore();
 		onBackend();
 		controlResultForward();
@@ -2479,6 +2481,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void frontend() {
 		vulpe.controller().config().setControllerType(ControllerType.FRONTEND);
+		ever.put(View.CURRENT_LAYOUT, "FRONTEND");
 		frontendBefore();
 		onFrontend();
 		controlResultForward();

@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -62,7 +63,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.vulpe.security.context.VulpeSecurityContext#initialize()
 	 */
 	@Override
@@ -162,9 +163,13 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 
 	public void afterUserAuthenticationCallback() {
 		if (isAuthenticated()) {
-			final AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
-			if (afterUserAuthentication != null) {
-				afterUserAuthentication.execute();
+			try {
+				final AfterUserAuthenticationCallback afterUserAuthentication = getBean(AfterUserAuthenticationCallback.class);
+				if (afterUserAuthentication != null) {
+					afterUserAuthentication.execute();
+				}
+			} catch (NoSuchBeanDefinitionException e) {
+				LOG.error(e);
 			}
 		}
 	}

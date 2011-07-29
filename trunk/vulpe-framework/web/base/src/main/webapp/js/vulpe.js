@@ -76,7 +76,9 @@ var vulpe = {
 			informationMessage: "#informationMessage",
 			messages: "#messages",
 			messagesPopup: "#messagesPopup",
-			modalMessages: "#modalMessages"
+			modalMessages: "#modalMessages",
+			selectForm: "#vulpeSelectForm",
+			selectTable: "#vulpeSelectTable"
 		},
 		layout:{
 			loading: {
@@ -142,9 +144,7 @@ var vulpe = {
 			button: "vulpeButton",
 			detail: "#vulpeDetail-",
 			detailTab: "#vulpeMainBodyTabs",
-			popup: "Popup-",
-			selectForm: "vulpeSelectForm-",
-			selectTable: "vulpeSelectTable-"
+			popup: "Popup-"		
 		},
 		popup: {
 			mobile: false,

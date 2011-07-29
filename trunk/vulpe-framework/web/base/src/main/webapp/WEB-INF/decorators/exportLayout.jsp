@@ -5,7 +5,6 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<c:set var="vulpeCurrentLayout" value="FRONTEND" scope="session"/>
 		<fmt:message key="vulpe.frontend.title.application" scope="request" var="htmlTitle"/>
 		<%@include file="/WEB-INF/protected-jsp/commons/htmlExportHead.jsp" %>
 	</head>

@@ -17,9 +17,13 @@ package org.vulpe.security.controller;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.controller.struts.VulpeStrutsController;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
@@ -62,4 +66,12 @@ public class VulpeLoginController extends VulpeStrutsController<VulpeBaseSimpleE
 		this.accessDenied = accessDenied;
 	}
 
+	@ExecuteAlways
+	public void layout() {
+		final DefaultSavedRequest savedRequest = vulpe
+				.sessionAttribute(WebAttributes.SAVED_REQUEST);
+		if (savedRequest != null && savedRequest.getRedirectUrl().contains("/backend")) {
+			ever.put(View.CURRENT_LAYOUT, "BACKEND");
+		}
+	}
 }

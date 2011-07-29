@@ -28,17 +28,17 @@
 			<span id="informationMessage"></span>
 		</p>
 	</div>
-	<c:if test="${(global['project-view-useBackendLayer'] && vulpeCurrentLayout == 'BACKEND') || (global['project-view-useFrontendLayer'] && vulpeCurrentLayout == 'FRONTEND')}"><div id="${vulpeCurrentLayout == 'FRONTEND' ? 'frontend' : 'backend'}"></c:if>
+	<c:if test="${(global['project-view-useBackendLayer'] && ever['vulpeCurrentLayout'] == 'BACKEND') || (global['project-view-useFrontendLayer'] && ever['vulpeCurrentLayout'] == 'FRONTEND')}"><div id="${ever['vulpeCurrentLayout'] == 'FRONTEND' ? 'frontend' : 'backend'}"></c:if>
 		<div id="header">
 			<%@include file="/WEB-INF/protected-jsp/commons/header.jsp" %>
 		</div>
 		<div id="menu">
-			<ul id="nav" class="${((global['project-view-frontendMenuType'] == 'SUPERFISH' && vulpeCurrentLayout == 'FRONTEND') || (global['project-view-backendMenuType'] == 'SUPERFISH' && vulpeCurrentLayout == 'BACKEND')) ? 'sf-menu' : ''}">
+			<ul id="nav" class="${((global['project-view-frontendMenuType'] == 'SUPERFISH' && ever['vulpeCurrentLayout'] == 'FRONTEND') || (global['project-view-backendMenuType'] == 'SUPERFISH' && ever['vulpeCurrentLayout'] == 'BACKEND')) ? 'sf-menu' : ''}">
 				<%@include file="/WEB-INF/protected-jsp/commons/menu.jsp" %>
-				<c:if test="${global['project-audit'] && vulpeCurrentLayout == 'BACKEND'}">
+				<c:if test="${global['project-audit'] && ever['vulpeCurrentLayout'] == 'BACKEND'}">
 					<%@include file="/WEB-INF/protected-jsp/commons/audit/menu.jsp" %>
 				</c:if>
-				<c:if test="${global['project-security'] && vulpeCurrentLayout == 'BACKEND'}">
+				<c:if test="${global['project-security'] && ever['vulpeCurrentLayout'] == 'BACKEND'}">
 					<%@include file="/WEB-INF/protected-jsp/commons/security/menu.jsp" %>
 				</c:if>
 				<li style="display:none"/>
@@ -48,7 +48,7 @@
 		<div id="body">
 			<decorator:body/>
 		</div>
-	<c:if test="${(global['project-view-useBackendLayer'] && vulpeCurrentLayout == 'BACKEND') || (global['project-view-useFrontendLayer'] && vulpeCurrentLayout == 'FRONTEND')}"></div></c:if>
+	<c:if test="${(global['project-view-useBackendLayer'] && ever['vulpeCurrentLayout'] == 'BACKEND') || (global['project-view-useFrontendLayer'] && ever['vulpeCurrentLayout'] == 'FRONTEND')}"></div></c:if>
 	<div id="footer">
 		<%@include file="/WEB-INF/protected-jsp/commons/footer.jsp" %>
 	</div>
