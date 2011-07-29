@@ -10,6 +10,12 @@
 			<span id="confirmationMessage"></span>
 		</p>
 	</div>
+	<div id="warningDialog" style="display: none">
+		<p>
+			<span class="ui-icon ui-icon-notice" style="float:left; margin:0 7px 20px 0;"></span>
+			<span id="warningMessage"></span>
+		</p>
+	</div>
 	<div id="alertDialog" style="display: none;">
 		<p>
 			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>

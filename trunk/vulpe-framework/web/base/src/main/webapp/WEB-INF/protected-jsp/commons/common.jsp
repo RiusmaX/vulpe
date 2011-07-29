@@ -50,7 +50,7 @@ $(document).ready(function() {
 		orderBy.attr("defaultValue", "${entity.orderBy}");
 		</c:if>
 	}
-	$("#alertDialog").dialog({
+	$(vulpe.config.layers.alertDialog).dialog({
 		title: vulpe.config.dialogs.alertTitle,
 		autoOpen: false,
 		bgiframe: true,
@@ -66,8 +66,36 @@ $(document).ready(function() {
 			}
 		}
 	});
-	$("#confirmationDialog").dialog({
+	$(vulpe.config.layers.confirmationDialog).dialog({
 		title: vulpe.config.dialogs.confirmationTitle,
+		autoOpen: false,
+		bgiframe: true,
+		resizable: false,
+		minHeight: 50,
+		modal: true,
+		open: function(event, ui) {
+			vulpe.util.removeHotKeys();
+		},
+		overlay: {
+			backgroundColor: '#000',
+			opacity: 0.5
+		},
+		buttons: {
+			'<fmt:message key="label.vulpe.button.yes"/>': function() {
+				$(this).dialog('close');
+				if (vulpe.command) {
+					vulpe.command();
+					vulpe.util.checkHotKeys();
+				}
+			},
+			'<fmt:message key="label.vulpe.button.no"/>': function() {
+				$(this).dialog('close');
+				vulpe.util.checkHotKeys();
+			}
+		}
+	});
+	$(vulpe.config.layers.warningDialog).dialog({
+		title: vulpe.config.dialogs.warningTitle,
 		autoOpen: false,
 		bgiframe: true,
 		resizable: false,

@@ -31,7 +31,9 @@ var vulpe = {
 		},
 		buttons: {
 			ok: "label.vulpe.button.ok",
-			cancel: "label.vulpe.button.cancel"
+			cancel: "label.vulpe.button.cancel",
+			yes: "label.vulpe.button.yes",
+			no: "label.vulpe.button.no"
 		},
 		contextPath: "",
 		css: {
@@ -39,8 +41,9 @@ var vulpe = {
 		},
 		defaultActions: ["create", "createPost", "select", "read", "report", "update", "updatePost", "tabular", "tabularPost", "tabularFilter"],
 		dialogs: {
-			alertTitle: "vulpe.dialog.warning.title",
+			alertTitle: "vulpe.dialog.alert.title",
 			confirmationTitle: "vulpe.dialog.confirmation.title",
+			warningTitle: "vulpe.dialog.warning.title",
 			successTitle: "vulpe.dialog.success.title"
 		},
 		elements: new Array(),
@@ -74,6 +77,10 @@ var vulpe = {
 			controlFields: "#vulpeControlFields",
 			informationDialog: "#informationDialog",
 			informationMessage: "#informationMessage",
+			successDialog: "#successDialog",
+			successMessage: "#successMessage",
+			warningDialog: "#warningDialog",
+			warningMessage: "#warningMessage",
 			messages: "#messages",
 			messagesPopup: "#messagesPopup",
 			modalMessages: "#modalMessages",
@@ -693,6 +700,14 @@ var vulpe = {
 				}
 			}
 			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).trigger("click");
+		},
+		
+		isVisible: function(element) {
+			if (typeof element == "string") {
+				return vulpe.util.get(element).is(":visible");
+			} else {
+				return element.is(":visible");
+			}
 		}
 	},
 	// vulpe.validate
@@ -1446,15 +1461,14 @@ var vulpe = {
 			});
 			vulpe.command = command;
 			if (count > 0) {
-				$(vulpe.config.layers.confirmationMessage).html(count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
-				$(vulpe.config.layers.confirmationDialog).dialog("open");
+				var message = (count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
+				vulpe.view.confirmDialog(message, command);
 			} else {
 				vulpe.command();
 			}
 		},
 
 		confirm: function(type, command) {
-			vulpe.command = command;
 			var message = "";
 			if (type == "clear") {
 				message = vulpe.config.messages.clear;
@@ -1468,17 +1482,43 @@ var vulpe = {
 					var checked = $(this).attr("checked")
 					if (checked) { count++;	}
 				});
-				message = count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds;
+				message = (count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
 			} else if (type == "updatePost") {
 				if (!vulpe.validate.validateAttributes(vulpe.config.formName)) {
 					return false;
 				}
 				message = vulpe.config.messages.updatePost;
 			}
+			vulpe.view.confirmDialog(message, command);
+		},
+		
+		alertDialog: function(message) {
+			$(vulpe.config.layers.alertMessage).html(message);
+			$(vulpe.config.layers.alertDialog).dialog("open");
+		},
+		
+		confirmDialog: function(message, command) {
+			vulpe.command = command;
 			$(vulpe.config.layers.confirmationMessage).html(message);
 			$(vulpe.config.layers.confirmationDialog).dialog("open");
 		},
 		
+		informationDialog: function(message) {
+			$(vulpe.config.layers.informationMessage).html(message);
+			$(vulpe.config.layers.informationDialog).dialog("open");
+		},
+		
+		warningDialog: function(message, command) {
+			vulpe.command = command;
+			$(vulpe.config.layers.warningMessage).html(message);
+			$(vulpe.config.layers.warningDialog).dialog("open");
+		},
+		
+		successDialog: function(message) {
+			$(vulpe.config.layers.successMessage).html(message);
+			$(vulpe.config.layers.successDialog).dialog("open");
+		},
+
 		configureSliderAction: function() {
 			$("#sliderPanelAction").click( function() {
 				return vulpe.view.sliderActionAnimate(this);
@@ -1607,17 +1647,17 @@ var vulpe = {
 
 		showHideElement: function(elementId, fade) {
 			var element = jQuery("#" + elementId);
-			if (element.css("display") == 'none') {
-				if (fade) {
-					element.fadeIn();
-				} else {
-					element.slideDown("slow");
-				}
-			} else {
+			if (element.is(":visible")) {
 				if (fade) {
 					element.fadeOut();
 				} else {
 					element.slideUp("slow");
+				}
+			} else {
+				if (fade) {
+					element.fadeIn();
+				} else {
+					element.slideDown("slow");
 				}
 			}
 		},
@@ -1783,8 +1823,7 @@ var vulpe = {
 		loading: null,
 
 		showLoading: function() {
-			var visible = vulpe.util.get("loading").css("display") != "none";
-			if (vulpe.config.layout.showLoading && !visible) {
+			if (vulpe.config.layout.showLoading && !vulpe.util.isVisible("loading")) {
 				if (vulpe.config.layout.loading.modal) {
 					vulpe.view.loading = jQuery("#loading").modal({
 						overlayId: "overlayLoading",
@@ -2048,8 +2087,7 @@ var vulpe = {
 					selectedIds[index] = checked ? $(this).val() : "";
 				});
 				if (count > 0) {
-					$(vulpe.config.layers.confirmationMessage).html(count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
-					vulpe.command = function() {
+					var command = function() {
 						$(this).dialog("close");
 						for (var i = 0; i < selectedIds.length; i++) {
 							if (selectedIds != "") {
@@ -2061,10 +2099,10 @@ var vulpe = {
 						options.validate = false;
 						vulpe.view.request.submitAjaxAction(options);
 					}
-					$(vulpe.config.layers.confirmationDialog).dialog("open");
+					var message = (count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
+					vulpe.view.confirmDialog(message, command)
 				} else {
-					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsToDelete);
-					$(vulpe.config.layers.alertDialog).dialog("open");
+					vulpe.view.alertDialog(vulpe.config.messages.selectRecordsToDelete);
 				}
 			},
 
@@ -2082,8 +2120,7 @@ var vulpe = {
 					selectedIds[index] = checked ? $(this).val() : "";
 				});
 				if (count > 0) {
-					$(vulpe.config.layers.confirmationMessage).html(count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
-					vulpe.command = function() {
+					var command = function() {
 						$(this).dialog("close");
 						for (var i = 0; i < selectedIds.length; i++) {
 							if (selectedIds[i] != "") {
@@ -2094,10 +2131,10 @@ var vulpe = {
 						options.validate = false;
 						vulpe.view.request.submitAjaxAction(options);
 					}
-					$(vulpe.config.layers.confirmationDialog).dialog("open");
+					var message = (count == 1 ? vulpe.config.messages.deleteSelected : vulpe.config.messages.deleteSelecteds);
+					vulpe.view.confirmDialog(message, command);
 				} else {
-					$(vulpe.config.layers.alertMessage).html(vulpe.config.messages.selectRecordsToDelete);
-					$(vulpe.config.layers.alertDialog).dialog("open");
+					vulpe.view.alertDialog(vulpe.config.messages.selectRecordsToDelete);
 				}
 			},
 
