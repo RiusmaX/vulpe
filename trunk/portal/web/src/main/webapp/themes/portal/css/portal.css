@@ -485,9 +485,10 @@ body,html {
 }
 
 fieldset {
-	margin-left: 28px;
 	border: 1px solid #e1e4d7;
-	padding-bottom: 10px;
+	padding: 5px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
 h1 {
@@ -598,4 +599,8 @@ thead th {
 
 #vulpeSelectForm p, #vulpeMainBody p {
 	margin: 0;
+}
+#vulpeSelectForm .line p, #vulpeMainBody .line p {
+	display: table-cell;
+	padding-right: 10px;
 }

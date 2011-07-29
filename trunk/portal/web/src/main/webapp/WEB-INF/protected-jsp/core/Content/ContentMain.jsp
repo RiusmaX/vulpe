@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
+<div class="line">
 <v:select
 	labelKey="label.portal.core.Content.main.section"
 	property="section.id"
@@ -20,36 +21,30 @@
 	showBlank="true" autoLoad="true"
 	required="true"
 />
-<fieldset>
-<table>
-<tr>
-<td colspan="2">
+</div>
+<fmt:message key="label.portal.core.Content.main.addRemoveVideo.message" var="message"/>
+<v:action javascript="app.addRemoveVideo('${message}')" labelKey="label.portal.core.Content.main.addRemoveVideo" showIconOfButton="false"/>
+<fieldset id="video" style="${empty entity.videoURL ? 'display:none' : ''}">
+<legend><fmt:message key="label.portal.core.Content.main.addVideo"/></legend>
+<div class="line">
 <v:text
 	labelKey="label.portal.core.Content.main.videoURL"
 	property="videoURL"
-	size="40"
+	size="80"
 />
-</td>
-</tr>
-<tr>
-<td>
 <v:text
 	labelKey="label.portal.core.Content.main.videoWidth"
 	property="videoWidth"
 	size="5"
 	mask="INTEGER"
 />
-</td>
-<td>
 <v:text
 	labelKey="label.portal.core.Content.main.videoHeight"
 	property="videoHeight"
 	size="5"
 	mask="INTEGER"
 />
-</td>
-</tr>
-</table>
+</div>
 </fieldset>
 <v:textTranslate
 	labelKey="label.portal.core.Content.main.title"

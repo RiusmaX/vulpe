@@ -13,6 +13,28 @@ var app = {
 	frontend: {
 
 	},
+	
+	addRemoveVideo: function(message) {
+		var video = vulpe.util.get("video")
+		if (vulpe.util.isVisible(video)) {
+			var videoURL = vulpe.util.getElementField("videoURL");
+			var videoHeight = vulpe.util.getElementField("videoHeight");
+			var videoWidth = vulpe.util.getElementField("videoWidth");
+			if (videoURL.val().length > 0) {
+				var command = function() {
+					video.hide();
+					videoURL.val("");
+					videoHeight.val("");
+					videoWidth.val("");
+				}
+				vulpe.view.warningDialog(message, command);
+			} else {
+				video.hide();
+			}
+		} else {
+			video.show();
+		}
+	},
 
 	textUpdate: function(id, textValue) {
 		var value = vulpe.util.get(id + app.token.languageIdFlag).val();
