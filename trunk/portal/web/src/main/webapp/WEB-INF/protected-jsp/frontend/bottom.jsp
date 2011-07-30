@@ -7,7 +7,7 @@
 	<c:forEach var="link" items="${ever['vulpePortalLinks']}">
 	<c:if test="${link.position == 'FOOTER'}">
 	<c:if test="${link.target.value == '_blank'}"><c:set var="onclick">onclick="window.open(this.href); return false;"</c:set></c:if>
-	<li><a href="${pageContext.request.contextPath}/frontend/Index/link?linkId=${link.id}" ${onclick}>${link.name}</a></li>
+	<li><a href="${pageContext.request.contextPath}/frontend/Index/link?id=${link.id}" ${onclick}>${link.name}</a></li>
 	</c:if>
 	</c:forEach>
 </ul>
@@ -40,7 +40,7 @@
 	<h1><fmt:message key='label.portal.Downloads' /></h1>
 	</li>
 	<c:forEach var="download" items="${ever['vulpePortalDownloads']}">
-	<li><a href="${pageContext.request.contextPath}/frontend/Index/download?downloadId=${download.id}">${download.name}</a></li>
+	<li><a href="${pageContext.request.contextPath}/frontend/Index/download?id=${download.id}">${download.name}</a></li>
 	</c:forEach>
 </ul>
 </div>
