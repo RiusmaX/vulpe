@@ -11,8 +11,8 @@
 	<div id="vulpeReportTable">
 		<p class="vulpeReportTable">
 			<jsp:include page="${now['controllerConfig'].viewItemsPath}" />
-			<c:if test="${not empty downloadInfo}">
-				<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
+			<c:if test="${not empty now['downloadInfo']}">
+				<v:hidden name="downloadInfo" value="${downloadInfonow['downloadInfo']}" saveInSession="true" expireInSession="true" render="false"/>
 				<script type="text/javascript">
 					$(document).ready(function() {
 						vulpe.view.request.submitReport('${util:linkKey('downloadInfo', '', '')}', 800, 600);

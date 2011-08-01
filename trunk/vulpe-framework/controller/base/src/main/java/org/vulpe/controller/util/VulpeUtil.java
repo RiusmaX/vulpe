@@ -37,6 +37,8 @@ import org.vulpe.commons.VulpeConstants.Controller.Result;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.ButtonConfig;
+import org.vulpe.commons.beans.DownloadInfo;
+import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.beans.Tab;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
@@ -111,6 +113,10 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 	public VulpeService service() {
 		return service(controller().config().getServiceClass());
+	}
+
+	public String serviceMethodName(final Operation operation) {
+		return operation.getValue().concat(controller().config().getEntityClass().getSimpleName());
 	}
 
 	public <T extends VulpeService> T service(final Class<T> serviceClass) {
@@ -191,6 +197,133 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 	public class VulpeControllerUtil {
 
+		public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
+
+		{
+			defaultMessage.put(Operation.CREATE_POST, "{vulpe.message.create.post}");
+			defaultMessage.put(Operation.CLONE, "{vulpe.message.clone}");
+			defaultMessage.put(Operation.UPDATE_POST, "{vulpe.message.update.post}");
+			defaultMessage.put(Operation.TABULAR_POST, "{vulpe.message.tabular.post}");
+			defaultMessage.put(Operation.DELETE, "{vulpe.message.delete}");
+			defaultMessage.put(Operation.DELETE_FILE, "{vulpe.message.delete.file}");
+			defaultMessage.put(Operation.READ, "{vulpe.message.empty.list}");
+			defaultMessage.put(Operation.READ_DELETED, "{vulpe.message.empty.list.deleted}");
+			defaultMessage.put(Operation.REPORT_EMPTY, "{vulpe.message.empty.report.data}");
+			defaultMessage.put(Operation.REPORT_SUCCESS,
+					"{vulpe.message.report.generated.successfully}");
+		}
+
+		public String defaultMessage(final Operation operation) {
+			return defaultMessage.getSelf(operation);
+		}
+
+		public String defaultMessage() {
+			return defaultMessage(operation());
+		}
+
+		public void defaultMessage(final String message) {
+			defaultMessage.put(operation(), message);
+		}
+
+		public void defaultMessage(final Operation operation, final String message) {
+			defaultMessage.put(operation, message);
+		}
+
+		public String text(final String key) {
+			final String validKey = key.replace("{", "").replace("}", "");
+			return baseController.i18nService.getText(validKey);
+		}
+
+		public String text(final String key, final Object... args) {
+			final String validKey = key.replace("{", "").replace("}", "");
+			return baseController.i18nService.getText(validKey, args);
+		}
+
+		public String textArg(final String key, final String arg) {
+			return text(key, text(arg));
+		}
+
+		public String textArg(final String key, final String arg1, final String arg2) {
+			return text(key, text(arg1), text(arg2));
+		}
+
+		public String textArg(final String key, final String arg1, final String arg2,
+				final String arg3) {
+			return text(key, text(arg1), text(arg2), text(arg3));
+		}
+
+		public String textArg(final String key, final String arg1, final String arg2,
+				final String arg3, final String arg4) {
+			return text(key, text(arg1), text(arg2), text(arg3), text(arg4));
+		}
+
+		public void removeDetailPaging() {
+			removeDetailPaging(detail());
+		}
+
+		public void removeDetailPaging(final String detail) {
+			baseController.ever.remove(detail + Controller.DETAIL_PAGING_LIST);
+		}
+
+		public <T> T detailPaging(final String detail) {
+			return baseController.ever.<T> getSelf(detail + Controller.DETAIL_PAGING_LIST);
+		}
+
+		public <T> T detailPaging() {
+			return (T) detailPaging(detail());
+		}
+
+		public void detailPaging(final String detail, final Paging<ENTITY> paging) {
+			baseController.ever.putWeakRef(detail + Controller.DETAIL_PAGING_LIST, paging);
+		}
+
+		public List<ID> selected() {
+			final List<ID> selected = new ArrayList<ID>();
+			if (VulpeValidationUtil.isNotEmpty(baseController.entities)) {
+				for (final ENTITY entity : baseController.entities) {
+					if (entity.isSelected()) {
+						selected.add(entity.getId());
+					}
+				}
+			}
+			return selected;
+		}
+
+		/**
+		 * Retrieves Report Collection Data Source.
+		 * 
+		 * @return
+		 */
+		public Collection<?> reportCollection() {
+			if (baseController.now.containsKey(Controller.REPORT_COLLECTION)) {
+				return baseController.now.getSelf(Controller.REPORT_COLLECTION);
+			}
+			return null;
+		}
+
+		/**
+		 * Sets Report Collection Data Source.
+		 * 
+		 * @return
+		 */
+		public void reportCollection(Collection<?> collection) {
+			baseController.now.put(Controller.REPORT_COLLECTION, collection);
+		}
+
+		/**
+		 * Retrieves Report Parameters.
+		 * 
+		 * @return
+		 */
+		public VulpeHashMap<String, Object> reportParameters() {
+			if (baseController.now.containsKey(Controller.REPORT_PARAMETERS)) {
+				return baseController.now.getSelf(Controller.REPORT_PARAMETERS);
+			}
+			final VulpeHashMap<String, Object> reportParameters = new VulpeHashMap<String, Object>();
+			baseController.now.put(Controller.REPORT_PARAMETERS, reportParameters);
+			return reportParameters;
+		}
+
 		public String resultName() {
 			String resultName = baseController.now.getSelf(Now.RESULT_NAME);
 			if (StringUtils.isBlank(resultName)) {
@@ -209,6 +342,28 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public void resultForward(final String resultForward) {
 			baseController.now.put(Now.RESULT_FORWARD, resultForward);
+		}
+
+		/**
+		 * Method to retrieve download info.
+		 * 
+		 * @since 1.0
+		 * @return DownlodInfo object.
+		 */
+		public DownloadInfo downloadInfo() {
+			return baseController.now.<DownloadInfo> getSelf(Now.DOWNLOAD_INFO);
+		}
+
+		/**
+		 * Set download info.
+		 * 
+		 * @param downloadInfo
+		 *            Download Info.
+		 * 
+		 * @since 1.0
+		 */
+		public void downloadInfo(final DownloadInfo downloadInfo) {
+			baseController.now.put(Now.DOWNLOAD_INFO, downloadInfo);
 		}
 
 		public String downloadKey() {

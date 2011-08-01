@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
@@ -48,7 +47,8 @@ public class VulpeControllerInterceptor implements Interceptor {
 			final List<Field> fields = VulpeReflectUtil.getFields(controller.getClass());
 			for (final Field field : fields) {
 				try {
-					result.include(field.getName(), PropertyUtils.getProperty(controller, field.getName()));
+					result.include(field.getName(), VulpeReflectUtil.getFieldValue(controller,
+							field.getName()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}

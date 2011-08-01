@@ -655,9 +655,8 @@ public class VulpeActionInvocation implements ActionInvocation {
 						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = baseController.vulpe.controller().currentKey();
 				boolean autocomplete = false;
-				if (baseController.getEntitySelect() != null
-						&& StringUtils.isNotEmpty(baseController.getEntitySelect()
-								.getAutocomplete())) {
+				if (baseController.entitySelect != null
+						&& StringUtils.isNotEmpty(baseController.entitySelect.getAutocomplete())) {
 					autocomplete = true;
 				}
 				if (StringUtils.isEmpty(currentControllerKey)) {

@@ -47,6 +47,7 @@ import com.opensymphony.xwork2.util.TextParseUtil;
  * Interceptor class to control exceptions.
  * 
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "serial", "unchecked" })
 public class VulpeExceptionMappingInterceptor extends
@@ -100,7 +101,7 @@ public class VulpeExceptionMappingInterceptor extends
 			if (vse.getArgs() != null && vse.getArgs().length > 0) {
 				action.addActionMessage(vse.getMessage(), (Object[]) vse.getArgs());
 			} else {
-				String message = action.getText("vulpe.error.unknown");
+				String message = action.vulpe.controller().text("vulpe.error.unknown");
 				final String key = vse.getMessage();
 				if (key.startsWith("vulpe.error")) {
 					if (vse.getCause() != null
@@ -109,7 +110,7 @@ public class VulpeExceptionMappingInterceptor extends
 							message = vse.getCause().getMessage();
 						}
 						if (message.startsWith("vulpe.error")) {
-							message = action.getText(message);
+							message = action.vulpe.controller().text(message);
 						}
 					}
 					action.addActionError(key, message);
@@ -118,7 +119,7 @@ public class VulpeExceptionMappingInterceptor extends
 							&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
 						message = vse.getCause().getMessage();
 						if (message.startsWith("vulpe.error")) {
-							message = action.getText(message);
+							message = action.vulpe.controller().text(message);
 						}
 					}
 					action.addActionMessage(key, message);
@@ -136,7 +137,7 @@ public class VulpeExceptionMappingInterceptor extends
 							.translateVariables(message, invocation.getStack()), invocation
 							.getInvocationContext().getLocale());
 					message = messageFormat.format(null);
-					value = action.getText(message);
+					value = action.vulpe.controller().text(message);
 					if (StringUtils.isBlank(value) || value.equals(message)) {
 						translateException(invocation, newException);
 					} else {
@@ -223,8 +224,9 @@ public class VulpeExceptionMappingInterceptor extends
 			if (message.contains(token1) && message.contains(token2)) {
 				String entity = message.substring(token1.length(), message.indexOf(token2));
 				String identifier = message.substring(message.indexOf(token2) + token2.length());
-				message = action.getText("vulpe.exception.translate.EntityNotFoundException",
-						action.getText(entity), identifier);
+				message = action.vulpe.controller().text(
+						"vulpe.exception.translate.EntityNotFoundException",
+						action.vulpe.controller().text(entity), identifier);
 			}
 		} else if (exception instanceof ServletException) {
 			message = getCause(exception).getMessage();
@@ -250,20 +252,23 @@ public class VulpeExceptionMappingInterceptor extends
 		} else if (cause instanceof SQLException) {
 			key = cause.getClass().getName();
 		}
-		message = action.getText(key);
+		message = action.vulpe.controller().text(key);
 		final String contactAdministratorMessageKey = "vulpe.error.contact.system.administrator";
-		message += action.getText(contactAdministratorMessageKey);
+		message += action.vulpe.controller().text(contactAdministratorMessageKey);
 		if (isDebug(action)) {
 			final String errorOccurrenceDebugKey = "vulpe.error.occurrence.debug";
-			message += action.getText(errorOccurrenceDebugKey);
+			message += action.vulpe.controller().text(errorOccurrenceDebugKey);
 			if (exception instanceof NullPointerException) {
 				final StackTraceElement ste = exception.getStackTrace()[0];
 				final String fileName = ste.getFileName().replace(".java", "");
 				final String methodName = ste.getMethodName();
 				final int lineNumber = ste.getLineNumber();
-				message += action.getText(key + ".debug", fileName, methodName, lineNumber);
+				message += action.vulpe.controller().text(key + ".debug", fileName, methodName,
+						lineNumber);
 			} else {
-				message += "<i>" + (exception instanceof VulpeValidationException ? "entity" : cause.getMessage()) + "</i>";
+				message += "<i>"
+						+ (exception instanceof VulpeValidationException ? "entity" : cause
+								.getMessage()) + "</i>";
 			}
 		}
 		return message;

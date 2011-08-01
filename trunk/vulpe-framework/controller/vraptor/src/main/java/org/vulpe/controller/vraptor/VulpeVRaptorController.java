@@ -317,7 +317,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	}
 
 	public void addActionError(final String key, final Object... args) {
-		result.include("notice", getText(key));
+		result.include("notice", vulpe.controller().text(key));
 	}
 
 	@Path("/")

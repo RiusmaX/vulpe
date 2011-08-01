@@ -172,6 +172,7 @@ public class VulpeConstants {
 			public static final String DETAIL = "detail";
 			public static final String DETAIL_INDEX = "detailIndex";
 			public static final String DETAIL_LAYER = "detailLayer";
+			public static final String DOWNLOAD_INFO = "downloadInfo";
 			public static final String DOWNLOAD_KEY = "downloadKey";
 			public static final String DOWNLOAD_CONTENT_DISPOSITION = "downloadContentDisposition";
 			public static final String DOWNLOAD_CONTENT_TYPE = "downloadContentType";

@@ -35,32 +35,32 @@ public class UserController extends VulpeVRaptorController<User, Long> {
 
 	@Override
 	public void createPost() {
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
+		if ((StringUtils.isNotBlank(entity.getPassword()) && StringUtils
+				.isNotBlank(entity.getPasswordConfirm()))
+				&& (!entity.getPassword().equals(entity.getPasswordConfirm()))) {
 			showError("{vulpe.security.user.password.not.match}");
 		}
-		setPassword(getEntity().getPassword());
+		setPassword(entity.getPassword());
 		super.createPost();
 	}
 
 	@Override
 	protected void onUpdate() {
 		super.onUpdate();
-		setPassword(getEntity().getPassword());
+		setPassword(entity.getPassword());
 	}
 
 	@Override
 	protected boolean onUpdatePost() {
-		if (StringUtils.isBlank(getEntity().getPassword())
-				&& StringUtils.isBlank(getEntity().getPasswordConfirm())) {
-			getEntity().setPassword(getPassword());
+		if (StringUtils.isBlank(entity.getPassword())
+				&& StringUtils.isBlank(entity.getPasswordConfirm())) {
+			entity.setPassword(getPassword());
 		} else {
-			setPassword(getEntity().getPassword());
+			setPassword(entity.getPassword());
 		}
-		if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-				.isNotBlank(getEntity().getPasswordConfirm()))
-				&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
+		if ((StringUtils.isNotBlank(entity.getPassword()) && StringUtils
+				.isNotBlank(entity.getPasswordConfirm()))
+				&& (!entity.getPassword().equals(entity.getPasswordConfirm()))) {
 			addActionError("{vulpe.security.user.password.not.match}");
 			return false;
 		}

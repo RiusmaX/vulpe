@@ -32,7 +32,6 @@ import ognl.OgnlException;
 import ognl.OgnlRuntime;
 import ognl.PropertyAccessor;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.vulpe.commons.VulpeConstants.Controller;
@@ -41,6 +40,7 @@ import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeFileUtil;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.controller.AbstractVulpeBaseController;
@@ -177,7 +177,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					}
 					if (save) {
 						if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
-							invokeServices(getServiceMethodName(Operation.DELETE),
+							invokeServices(vulpe.serviceMethodName(Operation.DELETE),
 									new Class[] { List.class }, new Object[] { removedDetails });
 							if (vulpe.controller().config().getTabularPageSize() > 0) {
 								vulpe.controller().tabularSize(
@@ -185,7 +185,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 							}
 						} else {
 							if (entity.getId() != null && size > details.size()) {
-								invokeServices(getServiceMethodName(Operation.DELETE),
+								invokeServices(vulpe.serviceMethodName(Operation.DELETE),
 										new Class[] { List.class }, new Object[] { removedDetails });
 							}
 						}
@@ -264,13 +264,14 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 */
 	protected DownloadInfo doReportLoad() {
 		try {
-			Collection<?> collection = getReportCollection();
+			Collection<?> collection = vulpe.controller().reportCollection();
 			if (collection == null) {
-				collection = (Collection<?>) PropertyUtils.getProperty(this, vulpe.controller()
-						.config().getReportDataSourceName());
+				collection = VulpeReflectUtil.getFieldValue(this, vulpe.controller().config()
+						.getReportDataSourceName());
 			}
 			return StrutsReportUtil.getInstance().getDownloadInfo(collection,
-					getReportParameters(), vulpe.controller().config().getReportFile(),
+					vulpe.controller().reportParameters(),
+					vulpe.controller().config().getReportFile(),
 					vulpe.controller().config().getSubReports(), vulpe.controller().reportFormat(),
 					vulpe.controller().config().getReportName(),
 					vulpe.controller().config().isReportDownload());
@@ -387,7 +388,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	public void addActionError(final String anErrorMessage) {
 		if (anErrorMessage.startsWith("{") && anErrorMessage.endsWith("}")) {
-			final String message = getText(anErrorMessage.substring(1, anErrorMessage.length() - 1));
+			final String message = vulpe.controller().text(
+					anErrorMessage.substring(1, anErrorMessage.length() - 1));
 			validationAware.addActionError(message);
 		} else {
 			validationAware.addActionError(anErrorMessage);
@@ -396,7 +398,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	public void addActionMessage(final String aMessage) {
 		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
-			final String message = getText(aMessage.substring(1, aMessage.length() - 1));
+			final String message = vulpe.controller().text(
+					aMessage.substring(1, aMessage.length() - 1));
 			validationAware.addActionMessage(message);
 		} else {
 			validationAware.addActionMessage(aMessage);
@@ -492,14 +495,14 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		boolean valid = true;
 		for (final VulpeBaseDetailConfig detailConfig : vulpe.controller().config().getDetails()) {
 			if (detailConfig.getParentDetailConfig() == null) {
-				despiseDetail(this, getEntity(), detailConfig);
+				despiseDetail(this, entity, detailConfig);
 				try {
 					final List<ENTITY> beans = (List<ENTITY>) Ognl.getValue(detailConfig
 							.getPropertyName(), context, this);
 					if (!validateQuantity(beans, detailConfig)) {
 						valid = false;
 					}
-					if (duplicatedDetail(this, getEntity(), detailConfig)) {
+					if (duplicatedDetail(this, entity, detailConfig)) {
 						valid = false;
 					}
 				} catch (OgnlException e) {

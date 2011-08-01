@@ -15,8 +15,8 @@
 	<div id="vulpeSelectTable">
 		<c:remove var="vulpeBodySelect" scope="request"/>
 		<jsp:include page="${now['controllerType'] == 'TWICE' ? now['controllerConfig'].viewSelectItemsPath : now['controllerConfig'].viewItemsPath}" />
-		<c:if test="${now['controllerType'] == 'REPORT' && not empty downloadInfo}">
-			<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true" render="false"/>
+		<c:if test="${now['controllerType'] == 'REPORT' && not empty now['downloadInfo']}">
+			<v:hidden name="downloadInfo" value="${now['downloadInfo']}" saveInSession="true" expireInSession="true" render="false"/>
 			<script type="text/javascript">
 				$(document).ready(function() {
 					vulpe.view.request.submitReport('${util:linkKey('downloadInfo', '', '')}', 800, 600);

@@ -48,7 +48,7 @@ public class OccurrenceController extends VulpeVRaptorController<AuditOccurrence
 		super.onUpdate();
 		try {
 			childOccurrences = vulpe.service(AuditService.class).findByParentAuditOccurrence(
-					new AuditOccurrence(getEntity().getId()));
+					new AuditOccurrence(entity.getId()));
 		} catch (VulpeApplicationException e) {
 			Log.error(e);
 		}

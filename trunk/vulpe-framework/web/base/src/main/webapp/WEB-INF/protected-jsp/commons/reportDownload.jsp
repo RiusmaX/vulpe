@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <c:if test="${not empty now['reportFormat']}"><jsp:include page="${now['controllerConfig'].viewItemsPath}" /></c:if>
-<c:if test="${not empty downloadInfo}">
-	<v:hidden name="downloadInfo" value="${downloadInfo}" saveInSession="true" expireInSession="true"
+<c:if test="${not empty now['downloadInfo']}">
+	<v:hidden name="downloadInfo" value="${now['downloadInfo']}" saveInSession="true" expireInSession="true"
 		render="false" />
 	<div id="report" title="<fmt:message key="${now['reportTitleKey']}" />" style="display:none">
 		<iframe id="reportFrame" width="100%" height="98%" border="0"/>

@@ -35,8 +35,8 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 
 	@Override
 	public void update() {
-		setEntity((User) vulpe.securityContext().getUser().clone());
-		getEntity().setPassword(null);
+		entity = (User) vulpe.securityContext().getUser().clone();
+		entity.setPassword(null);
 		super.update();
 	}
 
@@ -49,25 +49,25 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	public boolean validateEntity() {
 		final User user = vulpe.securityContext().getUser();
 		boolean valid = super.validateEntity();
-		if (StringUtils.isBlank(getEntity().getCurrentPassword())) {
+		if (StringUtils.isBlank(entity.getCurrentPassword())) {
 			addActionError("{vulpe.security.user.error.empty.current.password}");
 			valid = false;
 		} else {
-			if (user.getPassword().equals(getEntity().getCurrentPassword())) {
-				if (StringUtils.isBlank(getEntity().getPassword())) {
+			if (user.getPassword().equals(entity.getCurrentPassword())) {
+				if (StringUtils.isBlank(entity.getPassword())) {
 					addActionError("{vulpe.security.user.error.empty.password}");
-					setEntity(user);
+					entity = user;
 					return false;
 				}
-				if ((StringUtils.isNotBlank(getEntity().getPassword()) && StringUtils
-						.isNotBlank(getEntity().getPasswordConfirm()))
-						&& (!getEntity().getPassword().equals(getEntity().getPasswordConfirm()))) {
+				if ((StringUtils.isNotBlank(entity.getPassword()) && StringUtils
+						.isNotBlank(entity.getPasswordConfirm()))
+						&& (!entity.getPassword().equals(entity.getPasswordConfirm()))) {
 					addActionError("{vulpe.security.user.error.new.password.not.match}");
 					valid = false;
 				}
-				if (getEntity().getPassword().equals(getEntity().getCurrentPassword())) {
+				if (entity.getPassword().equals(entity.getCurrentPassword())) {
 					addActionError("{vulpe.security.user.error.must.be.different.new.password.and.old.password}");
-					setEntity(user);
+					entity = user;
 					return false;
 				}
 			} else {
@@ -76,7 +76,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 			}
 		}
 		if (!valid) {
-			setEntity(user);
+			entity = user;
 		}
 		return valid;
 	}
@@ -84,10 +84,10 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	@Override
 	protected boolean onUpdatePost() {
 		final User user = vulpe.securityContext().getUser();
-		user.setPasswordEncrypted(getEntity().getPassword());
-		user.setPasswordConfirmEncrypted(getEntity().getPasswordConfirm());
-		setEntity(user);
-		defaultMessage.put(Operation.UPDATE_POST, "{vulpe.security.msg.user.password.changed}");
+		user.setPasswordEncrypted(entity.getPassword());
+		user.setPasswordConfirmEncrypted(entity.getPasswordConfirm());
+		entity = user;
+		vulpe.controller().defaultMessage(Operation.UPDATE_POST, "{vulpe.security.msg.user.password.changed}");
 		vulpe.controller().redirectTo("/j_spring_security_logout", false);
 		return super.onUpdatePost();
 	}

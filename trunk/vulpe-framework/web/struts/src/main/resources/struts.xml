@@ -105,10 +105,10 @@
        	 		<param name="root">now.jsonRoot</param>
        	 	</result>
 			<result name="download" type="stream">
-				<param name="contentType">${downloadInfo.contentType}</param>
-				<param name="contentLength">${downloadInfo.contentLength}</param>
-				<param name="contentDisposition">${downloadInfo.contentDisposition}</param>
-				<param name="inputName">downloadInfo.inputStream</param>
+				<param name="contentType">${now['downloadInfo'].contentType}</param>
+				<param name="contentLength">${now['downloadInfo'].contentLength}</param>
+				<param name="contentDisposition">${now['downloadInfo'].contentDisposition}</param>
+				<param name="inputName">${now['downloadInfo'].inputStream}</param>
 			</result>
 			<result name="export" type="export"/>
 			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp</result>
