@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.view;
+package org.vulpe.fox.apt.strategies;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -32,7 +32,9 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.fox.view.DecoratedView;
+import org.vulpe.fox.view.DecoratedViewDetail;
+import org.vulpe.fox.view.DecoratedViewField;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
@@ -417,6 +419,7 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 			return false;
 		}
 		view = new DecoratedView();
+		view.setOverride(codeGenerator.override());
 		view.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
 				.getSimpleName());
 		if (StringUtils.isNotEmpty(codeGenerator.label())) {

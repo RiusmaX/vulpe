@@ -13,23 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.view;
+package org.vulpe.fox.apt.freemarker.transforms;
+
+import org.vulpe.fox.apt.strategies.ForAllManagerTemplateStrategy;
 
 import net.sf.jelly.apt.freemarker.FreemarkerTransform;
 
-public class ForAllViewTransform extends
-		FreemarkerTransform<ForAllViewTemplateStrategy> {
+public class ForAllManagerTransform extends
+		FreemarkerTransform<ForAllManagerTemplateStrategy> {
 
-	public ForAllViewTransform(final String namespace) {
+	public ForAllManagerTransform(final String namespace) {
 		super(namespace);
 	}
 
-	public ForAllViewTemplateStrategy newStrategy() {
-		return new ForAllViewTemplateStrategy();
+	public ForAllManagerTemplateStrategy newStrategy() {
+		return new ForAllManagerTemplateStrategy();
 	}
 
 	@Override
 	public String getTransformName() {
-		return "forAllView";
+		return "forAllManager";
 	}
 }

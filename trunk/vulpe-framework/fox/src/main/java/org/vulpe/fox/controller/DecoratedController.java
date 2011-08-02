@@ -15,12 +15,13 @@
  */
 package org.vulpe.fox.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.vulpe.fox.Decorated;
+
 @SuppressWarnings("serial")
-public class DecoratedController implements Serializable {
+public class DecoratedController extends Decorated {
 
 	private String name;
 	private String entityName;

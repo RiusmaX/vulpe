@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.dao;
+package org.vulpe.fox.apt.strategies;
 
 import java.io.IOException;
 
@@ -36,7 +36,9 @@ import org.vulpe.commons.VulpeConstants.Code;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.exception.VulpeSystemException;
-import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.fox.dao.DecoratedDAO;
+import org.vulpe.fox.dao.DecoratedDAOMethod;
+import org.vulpe.fox.dao.DecoratedDAOParameter;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.SODAQueries;
 import org.vulpe.model.annotations.db4o.SODAQuery;
@@ -64,6 +66,7 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 				return false;
 			}
 			final DecoratedDAO dao = new DecoratedDAO();
+			dao.setOverride(true);
 			final String simpleName = clazz.getSimpleName();
 			dao.setName(simpleName);
 			dao.setDaoName(simpleName + Code.Generator.DAO_SUFFIX);

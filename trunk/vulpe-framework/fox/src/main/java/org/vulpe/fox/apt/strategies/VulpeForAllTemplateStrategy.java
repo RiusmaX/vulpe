@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox;
+package org.vulpe.fox.apt.strategies;
 
 import javax.persistence.QueryHint;
 

@@ -13,11 +13,24 @@
 		<artifactId>vulpe-parent</artifactId>
 		<version>1.0</version>
 	</parent>
+	<properties>
+		<apt.jelly.version>2.14</apt.jelly.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>net.sf.apt-jelly</groupId>
-			<artifactId>apt-jelly</artifactId>
-			<version>2.3</version>
+			<artifactId>apt-jelly-core</artifactId>
+			<version>${apt.jelly.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly-freemarker</artifactId>
+			<version>${apt.jelly.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly-jelly</artifactId>
+			<version>${apt.jelly.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun</groupId>

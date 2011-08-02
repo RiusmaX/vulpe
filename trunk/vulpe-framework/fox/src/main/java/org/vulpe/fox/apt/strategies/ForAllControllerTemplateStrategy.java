@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.controller;
+package org.vulpe.fox.apt.strategies;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +30,8 @@ import org.vulpe.commons.VulpeConstants.Code;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
-import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.fox.controller.DecoratedController;
+import org.vulpe.fox.controller.DecoratedControllerDetail;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 
@@ -65,6 +66,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 			return false;
 		}
 		controller = new DecoratedController();
+		controller.setOverride(codeGenerator.override());
 		controller.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
 				.getSimpleName());
 		controller.setEntityName(clazz.getSimpleName());

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.manager;
+package org.vulpe.fox.apt.strategies;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.Code;
-import org.vulpe.fox.VulpeForAllTemplateStrategy;
+import org.vulpe.fox.manager.DecoratedManager;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseAuditEntity;
 import org.vulpe.model.entity.impl.AbstractVulpeBaseEntity;
@@ -66,6 +66,7 @@ public class ForAllManagerTemplateStrategy extends VulpeForAllTemplateStrategy {
 			return false;
 		}
 		manager = new DecoratedManager();
+		manager.setOverride(codeGenerator.override());
 		manager.setName(clazz.getSimpleName().concat(Code.Generator.MANAGER_SUFFIX));
 		manager.setEntityName(clazz.getSimpleName());
 		manager.setPackageName(clazz.getPackage().toString());

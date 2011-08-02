@@ -1,7 +1,6 @@
 <#include "macros.ftl"/>
 <@forAllValidDAO ; type, dao>
-Generating DAO: ${dao.daoPackageName}.${dao.daoName}
-<@javaSource name="${dao.daoPackageName}.${dao.daoName}">
+<@source type="dao-interface" override="${dao.override}" name="${dao.daoPackageName}.${dao.daoName}">
 package ${dao.daoPackageName};
 
 import ${dao.packageName}.${dao.name};
@@ -28,4 +27,4 @@ public interface ${dao.daoName} extends org.vulpe.model.dao.VulpeDAO<${dao.name}
 		final ${parameter.type} ${parameter.name}<#if parameter_has_next>,</#if>
 		</#list>) throws org.vulpe.exception.VulpeApplicationException;
 	</#list>
-}</@javaSource></@forAllValidDAO>
+}</@source></@forAllValidDAO>

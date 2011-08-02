@@ -65,4 +65,6 @@ public @interface CodeGenerator {
 	 * Base name to generate code.
 	 */
 	String baseName() default "";
+	
+	boolean override() default false;
 }

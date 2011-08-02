@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.all;
+package org.vulpe.fox;
 
-import net.sf.jelly.apt.freemarker.FreemarkerTransform;
+import java.io.Serializable;
 
-public class ForAllTransform extends
-		FreemarkerTransform<ForAllTemplateStrategy> {
+@SuppressWarnings("serial")
+public class Decorated implements Serializable {
 
-	public ForAllTransform(final String namespace) {
-		super(namespace);
+	private boolean override;
+
+	public void setOverride(boolean override) {
+		this.override = override;
 	}
 
-	public ForAllTemplateStrategy newStrategy() {
-		return new ForAllTemplateStrategy();
+	public boolean isOverride() {
+		return override;
 	}
 
-	@Override
-	public String getTransformName() {
-		return "forAll";
-	}
 }

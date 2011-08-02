@@ -15,12 +15,13 @@
  */
 package org.vulpe.fox.view;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.vulpe.fox.Decorated;
+
 @SuppressWarnings("serial")
-public class DecoratedView implements Serializable {
+public class DecoratedView extends Decorated {
 
 	private String name;
 	private String prefixLabelOfView;

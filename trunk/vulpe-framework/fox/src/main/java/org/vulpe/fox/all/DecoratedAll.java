@@ -15,15 +15,15 @@
  */
 package org.vulpe.fox.all;
 
-import java.io.Serializable;
 import java.util.List;
 
+import org.vulpe.fox.Decorated;
 import org.vulpe.fox.controller.DecoratedController;
 import org.vulpe.fox.manager.DecoratedManager;
 import org.vulpe.fox.view.DecoratedView;
 
 @SuppressWarnings("serial")
-public class DecoratedAll implements Serializable {
+public class DecoratedAll extends Decorated {
 
 	private String name;
 	private String label;

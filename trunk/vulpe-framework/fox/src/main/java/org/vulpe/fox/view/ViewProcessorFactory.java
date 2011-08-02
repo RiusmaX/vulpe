@@ -18,6 +18,9 @@ package org.vulpe.fox.view;
 import java.net.URL;
 import java.util.Collection;
 
+import org.vulpe.fox.apt.freemarker.transforms.ForAllViewTransform;
+import org.vulpe.fox.apt.freemarker.transforms.JSPTransform;
+
 import net.sf.jelly.apt.freemarker.FreemarkerProcessor;
 import net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory;
 import net.sf.jelly.apt.freemarker.FreemarkerTransform;
@@ -35,6 +38,7 @@ public class ViewProcessorFactory extends FreemarkerProcessorFactory {
 				if (list != null && !list.isEmpty()) {
 					final FreemarkerTransform transform = (FreemarkerTransform) list.toArray()[0];
 					list.add(new ForAllViewTransform(transform.getTransformNamespace()));
+					list.add(new JSPTransform(transform.getTransformNamespace()));
 				}
 				return list;
 			}

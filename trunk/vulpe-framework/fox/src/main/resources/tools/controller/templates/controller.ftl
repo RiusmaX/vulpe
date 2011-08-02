@@ -1,7 +1,6 @@
 <#include "macros.ftl"/>
 <@forAllValidController ; type, controller>
-Generating Controller: ${controller.controllerPackageName}.${controller.name}Controller
-<@javaSource name="controller.src.main.java.${controller.controllerPackageName}.${controller.name}Controller">
+<@source type="controller" override="${controller.override}" name="controller.src.main.java.${controller.controllerPackageName}.${controller.name}Controller">
 package ${controller.controllerPackageName};
 
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -35,5 +34,5 @@ import ${controller.projectPackageName}.controller.ApplicationBaseController;
 public class ${controller.name}Controller extends ApplicationBaseController<${controller.entityName}, ${controller.idType}> {
 
 }
-</@javaSource>
+</@source>
 </@forAllValidController>

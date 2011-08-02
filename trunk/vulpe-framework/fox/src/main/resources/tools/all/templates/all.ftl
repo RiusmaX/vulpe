@@ -4,8 +4,7 @@ Vulpe Fox - Code Generator
 ***********************************************************************************************
 <@forAllValid ; type, all>
 <#if all.manager?has_content>
-Generating Manager: ${all.manager.managerPackageName}.${all.manager.name}
-<@javaSource name="${all.manager.moduleName}.src.main.java.${all.manager.managerPackageName}.${all.manager.name}">
+<@source type="manager" override="${all.override}" name="${all.manager.moduleName}.src.main.java.${all.manager.managerPackageName}.${all.manager.name}">
 package ${all.manager.managerPackageName};
 
 import org.springframework.stereotype.Service;
@@ -35,11 +34,10 @@ public class ${all.manager.name} extends VulpeBaseManager<${all.manager.entityNa
 </#if>
 
 }
-</@javaSource>
+</@source>
 </#if>
 <#if all.controller?has_content>
-Generating Controller: ${all.controller.controllerPackageName}.${all.controller.name}Controller
-<@javaSource name="controller.src.main.java.${all.controller.controllerPackageName}.${all.controller.name}Controller">
+<@source type="controller" override="${all.override}" name="controller.src.main.java.${all.controller.controllerPackageName}.${all.controller.name}Controller">
 package ${all.controller.controllerPackageName};
 
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -73,7 +71,7 @@ import ${all.controller.projectPackageName}.controller.ApplicationBaseController
 public class ${all.controller.name}Controller extends ApplicationBaseController<${all.controller.entityName}, ${all.controller.idType}> {
 
 }
-</@javaSource>
+</@source>
 </#if>
 <#if all.view?has_content>
 [ BEGIN - COPY AND PASTE THE FOLLOWING LINES IN THE FILE: ApplicationResources.properties ]
@@ -88,7 +86,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.hea
 <#list all.view.labels?keys as label>
 label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${label}=${all.view.labels[label]}
 </#list>
-<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Select.jsp">
+<@JSP override="${all.override}" name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Select.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -197,8 +195,8 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${l
 </#if>
 />
 </#list>
-</@file>
-<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}SelectItems.jsp">
+</@JSP>
+<@JSP override="${all.override}" name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}SelectItems.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -233,7 +231,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.select.${l
 		<th colspan="${all.view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#if>
 <#if t == 'MAIN' || t == 'ALL'>
 ################################################################################
@@ -243,7 +241,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main=${all
 <#list all.view.fields as field>
 label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${field.name}=${field.label}
 </#list>
-<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Main.jsp">
+<@JSP override="${all.override}" name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Main.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -353,7 +351,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${fie
 </#if>
 />
 </#list>
-</@file>
+</@JSP>
 <#list all.view.details as detail>
 label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.master=${all.view.name}
 ################################################################################
@@ -363,7 +361,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${det
 <#list detail.fields as detailField>
 label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${detail.name}.${detailField.name}=${detailField.label}
 </#list>
-<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${detail.name}Detail.jsp">
+<@JSP override="${all.override}" name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${detail.name}Detail.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -474,7 +472,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.main.${det
 		</v:row>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#list>
 </#if>
 <#if t == 'TABULAR' || t == 'ALL'>
@@ -486,7 +484,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.he
 <#list all.view.fields as field>
 label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.${field.name}=${field.label}
 </#list>
-<@file name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Tabular.jsp">
+<@JSP override="${all.override}" name="web/src/main/webapp/WEB-INF/protected-jsp/${all.view.moduleName}/${all.view.name}/${all.view.name}Tabular.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -607,7 +605,7 @@ label.${all.view.projectName}.${all.view.moduleName}.${all.view.name}.tabular.${
 		<th colspan="${all.view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#if>
 </#list>
 

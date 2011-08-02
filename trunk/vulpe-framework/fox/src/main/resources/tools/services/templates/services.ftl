@@ -1,6 +1,5 @@
 <#include "macros.ftl"/>
-Generating Interface: ${basePackageName}.services.${baseClassName}Service
-<@javaSource name="${basePackageName}.services.${baseClassName}Service">
+<@source type="service-interface" override="true" name="${basePackageName}.services.${baseClassName}Service">
 package ${basePackageName}.services;
 
 import javax.ejb.Remote;
@@ -18,4 +17,4 @@ public interface ${baseClassName}Service extends VulpeService {
 <@toJavaDoc doc=method.docComment ident="	"/>
 	${getSignatureMethod(type, method)};
 </@forAllValidMethods>
-}</@javaSource>
+}</@source>

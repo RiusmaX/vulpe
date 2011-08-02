@@ -1,6 +1,5 @@
 <#include "macros.ftl"/>
-Generating ServiceEJB: ${basePackageName}.services.impl.ejb.${baseClassName}ServiceEJB
-<@javaSource name="${basePackageName}.services.impl.ejb.${baseClassName}ServiceEJB">
+<@source type="service-impl" override="true" name="${basePackageName}.services.impl.ejb.${baseClassName}ServiceEJB">
 package ${basePackageName}.services.impl.ejb;
 
 import javax.ejb.Remote;
@@ -76,4 +75,4 @@ public class ${baseClassName}ServiceEJB implements ${baseClassName}Service {
 	}
 
 </@forAllValidMethods>
-}</@javaSource>
+}</@source>

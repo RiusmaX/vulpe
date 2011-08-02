@@ -15,14 +15,14 @@
  */
 package org.vulpe.fox.dao;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.vulpe.fox.Decorated;
 
 @SuppressWarnings("serial")
-public class DecoratedDAO implements Serializable {
+public class DecoratedDAO extends Decorated {
 
 	private String name;
 	private String idType;

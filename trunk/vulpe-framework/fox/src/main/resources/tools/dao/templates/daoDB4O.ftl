@@ -1,7 +1,7 @@
 <#include "macros.ftl"/>
 <@forAllValidDAO ; type, dao>
 Generating DAODB4O: ${dao.daoPackageName}.impl.db4o.${dao.daoName}DB4O
-<@javaSource name="${dao.daoPackageName}.impl.db4o.${dao.daoName}DB4O">
+<@source type="dao-impl" override="${dao.override}" name="${dao.daoPackageName}.impl.db4o.${dao.daoName}DB4O">
 package ${dao.daoPackageName}.impl.db4o;
 
 import ${dao.packageName}.${dao.name};
@@ -55,4 +55,4 @@ public class ${dao.daoName}DB4O extends org.vulpe.model.dao.impl.db4o.VulpeBaseD
 	</#if>
 	}
 	</#list>
-}</@javaSource></@forAllValidDAO>
+}</@source></@forAllValidDAO>

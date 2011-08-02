@@ -22,6 +22,10 @@ import net.sf.jelly.apt.freemarker.FreemarkerProcessor;
 import net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory;
 import net.sf.jelly.apt.freemarker.FreemarkerTransform;
 
+import org.vulpe.fox.apt.freemarker.transforms.ForAllTransform;
+import org.vulpe.fox.apt.freemarker.transforms.JSPTransform;
+import org.vulpe.fox.apt.freemarker.transforms.SourceTransform;
+
 import com.sun.mirror.apt.AnnotationProcessor;
 
 public class AllProcessorFactory extends FreemarkerProcessorFactory {
@@ -35,6 +39,8 @@ public class AllProcessorFactory extends FreemarkerProcessorFactory {
 				if (list != null && !list.isEmpty()) {
 					final FreemarkerTransform transform = (FreemarkerTransform) list.toArray()[0];
 					list.add(new ForAllTransform(transform.getTransformNamespace()));
+					list.add(new SourceTransform(transform.getTransformNamespace()));
+					list.add(new JSPTransform(transform.getTransformNamespace()));
 				}
 				return list;
 			}

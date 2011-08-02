@@ -1,6 +1,5 @@
 <#include "macros.ftl"/>
-Generating ServicePOJO: ${basePackageName}.services.impl.pojo.${baseClassName}ServicePOJO
-<@javaSource name="${basePackageName}.services.impl.pojo.${baseClassName}ServicePOJO">
+<@source type="service-impl" override="true" name="${basePackageName}.services.impl.pojo.${baseClassName}ServicePOJO">
 package ${basePackageName}.services.impl.pojo;
 
 import org.apache.log4j.Logger;
@@ -65,4 +64,4 @@ public class ${baseClassName}ServicePOJO implements ${baseClassName}Service {
 	}
 
 </@forAllValidMethods>
-}</@javaSource>
+}</@source>

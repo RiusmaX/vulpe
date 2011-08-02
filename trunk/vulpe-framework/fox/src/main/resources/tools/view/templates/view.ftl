@@ -11,7 +11,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.header=${view.p
 <#list view.labels?keys as label>
 label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view.labels[label]}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
+<@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -120,8 +120,8 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 </#if>
 />
 </#list>
-</@file>
-<@file name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
+</@JSP>
+<@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -156,7 +156,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#if>
 <#if t == 'MAIN' || t == 'ALL'>
 ################################################################################
@@ -167,7 +167,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.view=${view.prefi
 <#list view.fields as field>
 label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${field.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Main.jsp">
+<@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Main.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -277,7 +277,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 </#if>
 />
 </#list>
-</@file>
+</@JSP>
 <#list view.details as detail>
 label.${view.projectName}.${view.moduleName}.${view.name}.main.master=${view.name}
 ################################################################################
@@ -287,7 +287,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}=${
 <#list detail.fields as detailField>
 label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}=${detailField.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
+<@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -398,7 +398,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${
 		</v:row>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#list>
 </#if>
 <#if t == 'TABULAR' || t == 'ALL'>
@@ -410,7 +410,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header=${view.
 <#list view.fields as field>
 label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=${field.label}
 </#list>
-<@file name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
+<@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
@@ -531,7 +531,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 		<th colspan="${view.columnSpan}"><fmt:message key="vulpe.total.records"/>&nbsp;<v:paging showSize="true"/></th>
 	</jsp:attribute>
 </v:table>
-</@file>
+</@JSP>
 </#if>
 </#list>
 </@forAllValidView>

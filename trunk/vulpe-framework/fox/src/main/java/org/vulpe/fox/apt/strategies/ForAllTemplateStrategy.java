@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.all;
+package org.vulpe.fox.apt.strategies;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,16 +28,15 @@ import net.sf.jelly.apt.decorations.declaration.DecoratedClassDeclaration;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.fox.VulpeForAllTemplateStrategy;
-import org.vulpe.fox.controller.ForAllControllerTemplateStrategy;
-import org.vulpe.fox.manager.ForAllManagerTemplateStrategy;
-import org.vulpe.fox.view.ForAllViewTemplateStrategy;
+import org.vulpe.fox.all.DecoratedAll;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.view.annotations.View.ViewType;
 
 public class ForAllTemplateStrategy extends VulpeForAllTemplateStrategy {
 
+	private DecoratedAll all;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -58,7 +57,8 @@ public class ForAllTemplateStrategy extends VulpeForAllTemplateStrategy {
 			if (codeGenerator == null || codeGenerator.view().viewType()[0].equals(ViewType.NONE)) {
 				return false;
 			}
-			final DecoratedAll all = new DecoratedAll();
+			all = new DecoratedAll();
+			all.setOverride(codeGenerator.override());
 			all.setName(StringUtils.isNotEmpty(codeGenerator.baseName()) ? codeGenerator.baseName() : clazz
 					.getSimpleName());
 			if (StringUtils.isNotEmpty(codeGenerator.label())) {

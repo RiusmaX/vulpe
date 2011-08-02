@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vulpe.fox.dao;
+package org.vulpe.fox.apt.freemarker.transforms;
+
+import org.vulpe.fox.apt.strategies.ForAllDAOTemplateStrategy;
 
 import net.sf.jelly.apt.freemarker.FreemarkerTransform;
 

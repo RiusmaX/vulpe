@@ -18,6 +18,9 @@ package org.vulpe.fox.manager;
 import java.net.URL;
 import java.util.Collection;
 
+import org.vulpe.fox.apt.freemarker.transforms.ForAllManagerTransform;
+import org.vulpe.fox.apt.freemarker.transforms.SourceTransform;
+
 import net.sf.jelly.apt.freemarker.FreemarkerProcessor;
 import net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory;
 import net.sf.jelly.apt.freemarker.FreemarkerTransform;
@@ -34,8 +37,8 @@ public class ManagerProcessorFactory extends FreemarkerProcessorFactory {
 				final Collection<FreemarkerTransform> list = super.getTransforms();
 				if (list != null && !list.isEmpty()) {
 					final FreemarkerTransform transform = (FreemarkerTransform) list.toArray()[0];
-					final String namespace = transform.getTransformNamespace();
-					list.add(new ForAllManagerTransform(namespace));
+					list.add(new ForAllManagerTransform(transform.getTransformNamespace()));
+					list.add(new SourceTransform(transform.getTransformNamespace()));
 				}
 				return list;
 			}
