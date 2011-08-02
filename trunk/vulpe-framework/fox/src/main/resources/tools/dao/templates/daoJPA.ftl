@@ -1,6 +1,5 @@
 <#include "macros.ftl"/>
 <@forAllValidDAO ; type, dao>
-Generating DAOJPA: ${dao.daoPackageName}.impl.jpa.${dao.daoName}JPA
 <@source type="dao-impl" override="${dao.override}" name="${dao.daoPackageName}.impl.jpa.${dao.daoName}JPA">
 package ${dao.daoPackageName}.impl.jpa;
 

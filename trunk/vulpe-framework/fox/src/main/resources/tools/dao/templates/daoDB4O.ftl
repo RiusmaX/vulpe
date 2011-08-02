@@ -1,6 +1,5 @@
 <#include "macros.ftl"/>
 <@forAllValidDAO ; type, dao>
-Generating DAODB4O: ${dao.daoPackageName}.impl.db4o.${dao.daoName}DB4O
 <@source type="dao-impl" override="${dao.override}" name="${dao.daoPackageName}.impl.db4o.${dao.daoName}DB4O">
 package ${dao.daoPackageName}.impl.db4o;
 
