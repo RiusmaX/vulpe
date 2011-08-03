@@ -25,8 +25,8 @@ public class PortalController extends PortalBaseController<Portal, Long> {
 	public void update() {
 		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
 		if (portal != null) {
-			setId(portal.getId());
-			setEntity(portal);
+			id = portal.getId();
+			entity = portal;
 		}
 		super.update();
 	}
@@ -34,8 +34,8 @@ public class PortalController extends PortalBaseController<Portal, Long> {
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		if (getEntity().getStatus().equals(Status.ACTIVE)) {
-			ever.put(Core.VULPE_PORTAL, getEntity());
+		if (entity.getStatus().equals(Status.ACTIVE)) {
+			ever.put(Core.VULPE_PORTAL, entity);
 		}
 	}
 

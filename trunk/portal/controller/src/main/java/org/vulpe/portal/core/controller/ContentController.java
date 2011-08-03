@@ -21,6 +21,6 @@ public class ContentController extends PortalBaseController<Content, Long> {
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		getEntity().setViews(0L);
+		entity.setViews(0L);
 	}
 }

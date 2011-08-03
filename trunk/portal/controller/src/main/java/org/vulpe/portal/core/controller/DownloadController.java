@@ -21,6 +21,6 @@ public class DownloadController extends PortalBaseController<Download, Long> {
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		getEntity().setDownloads(0L);
+		entity.setDownloads(0L);
 	}
 }

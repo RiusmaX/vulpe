@@ -22,7 +22,7 @@ public class LinkController extends PortalBaseController<Link, java.lang.Long> {
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		getEntity().setClicks(0L);
+		entity.setClicks(0L);
 	}
 
 }
