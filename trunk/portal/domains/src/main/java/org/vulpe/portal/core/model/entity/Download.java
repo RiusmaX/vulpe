@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -10,6 +12,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Download extends BasePortal {
 
 	@VulpeColumn(attribute = "name")
@@ -35,33 +38,9 @@ public class Download extends BasePortal {
 	
 	public Download() {
 	}
-
+	
 	public Download(final Long id) {
 		setId(id);
-	}
-
-	public void setName(TextTranslate name) {
-		this.name = name;
-	}
-
-	public TextTranslate getName() {
-		return name;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getUrl() {
-		return url;
 	}
 
 	@Override
@@ -72,36 +51,12 @@ public class Download extends BasePortal {
 		return super.toString();
 	}
 
-	public void setDownloads(Long downloads) {
-		this.downloads = downloads;
-	}
-
-	public Long getDownloads() {
-		return downloads;
-	}
-
 	public void increaseDownload() {
 		if (downloads == null) {
 			downloads = 1L;
 		} else {
 			++downloads;
 		}
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
-	public Section getSection() {
-		return section;
 	}
 
 }

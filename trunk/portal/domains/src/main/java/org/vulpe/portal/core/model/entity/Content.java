@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
@@ -13,6 +15,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Content extends BasePortal {
 
 	@VulpeColumn(attribute = "name")
@@ -58,62 +61,6 @@ public class Content extends BasePortal {
 		setId(id);
 	}
 
-	public TextTranslate getTitle() {
-		return title;
-	}
-
-	public void setTitle(TextTranslate title) {
-		this.title = title;
-	}
-
-	public TextTranslate getSubtitle() {
-		return subtitle;
-	}
-
-	public void setSubtitle(TextTranslate subtitle) {
-		this.subtitle = subtitle;
-	}
-
-	public TextTranslate getMiniText() {
-		return miniText;
-	}
-
-	public void setMiniText(TextTranslate miniText) {
-		this.miniText = miniText;
-	}
-
-	public TextTranslate getFullText() {
-		return fullText;
-	}
-
-	public void setFullText(TextTranslate fullText) {
-		this.fullText = fullText;
-	}
-
-	public boolean isEscapeXml() {
-		return escapeXml;
-	}
-
-	public void setEscapeXml(boolean escapeXml) {
-		this.escapeXml = escapeXml;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
-	public Section getSection() {
-		return section;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
 	@Override
 	public String toString() {
 		if (getTitle() != null) {
@@ -127,52 +74,12 @@ public class Content extends BasePortal {
 		return "date desc";
 	}
 
-	public void setViews(Long views) {
-		this.views = views;
-	}
-
-	public Long getViews() {
-		return views;
-	}
-
 	public void increaseView() {
 		if (views == null) {
 			views = 1L;
 		} else {
 			++views;
 		}
-	}
-
-	public void setShowComplete(Boolean showComplete) {
-		this.showComplete = showComplete;
-	}
-
-	public Boolean getShowComplete() {
-		return showComplete;
-	}
-
-	public void setVideoURL(String videoURL) {
-		this.videoURL = videoURL;
-	}
-
-	public String getVideoURL() {
-		return videoURL;
-	}
-
-	public void setVideoWidth(Integer videoWidth) {
-		this.videoWidth = videoWidth;
-	}
-
-	public Integer getVideoWidth() {
-		return videoWidth;
-	}
-
-	public void setVideoHeight(Integer videoHeight) {
-		this.videoHeight = videoHeight;
-	}
-
-	public Integer getVideoHeight() {
-		return videoHeight;
 	}
 
 }

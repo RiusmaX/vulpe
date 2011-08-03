@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
@@ -14,6 +16,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 // { ViewType.TABULAR }))
 @CachedClass
 @SuppressWarnings("serial")
+@Data
 public class Language extends BasePortal {
 
 	@VulpeText(size = 10)
@@ -26,30 +29,6 @@ public class Language extends BasePortal {
 	@IgnoreAutoFilter
 	@VulpeCheckbox(fieldValue = "true")
 	private boolean defaultLanguage;
-
-	public void setDefaultLanguage(boolean defaultLanguage) {
-		this.defaultLanguage = defaultLanguage;
-	}
-
-	public boolean isDefaultLanguage() {
-		return defaultLanguage;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setLocaleCode(String localeCode) {
-		this.localeCode = localeCode;
-	}
-
-	public String getLocaleCode() {
-		return localeCode;
-	}
 
 	@Override
 	public String toString() {

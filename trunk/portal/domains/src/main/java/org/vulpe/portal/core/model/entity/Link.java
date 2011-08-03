@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.Position;
 import org.vulpe.portal.commons.model.entity.Target;
@@ -12,6 +14,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Link extends BasePortal {
 
 	@VulpeColumn(attribute = "name")
@@ -50,31 +53,7 @@ public class Link extends BasePortal {
 		setId(id);
 	}
 
-	public void setName(TextTranslate name) {
-		this.name = name;
-	}
-
-	public TextTranslate getName() {
-		return name;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	@Override
+		@Override
 	public String toString() {
 		if (getName() != null) {
 			return getName().toString();
@@ -98,43 +77,4 @@ public class Link extends BasePortal {
 		}
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setSection(Section section) {
-		this.section = section;
-	}
-
-	public Section getSection() {
-		return section;
-	}
-
-	public void setTarget(Target target) {
-		this.target = target;
-	}
-
-	public Target getTarget() {
-		return target;
-	}
-
-	public void setContent(Content content) {
-		this.content = content;
-	}
-
-	public Content getContent() {
-		return content;
-	}
-
-	public void setPosition(Position position) {
-		this.position = position;
-	}
-
-	public Position getPosition() {
-		return position;
-	}
 }

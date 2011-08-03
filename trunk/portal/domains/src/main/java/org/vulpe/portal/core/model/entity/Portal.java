@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
@@ -11,9 +13,11 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 
 @CachedClass
 @Inheritance
-//@CodeGenerator(controller = @Controller(select = @Select(pageSize = 1)), view = @View(viewType = {
-//		ViewType.MAIN, ViewType.SELECT }))
+// @CodeGenerator(controller = @Controller(select = @Select(pageSize = 1)), view
+// = @View(viewType = {
+// ViewType.MAIN, ViewType.SELECT }))
 @SuppressWarnings("serial")
+@Data
 public class Portal extends BasePortal {
 
 	@VulpeColumn
@@ -36,64 +40,7 @@ public class Portal extends BasePortal {
 
 	@VulpeText(size = 40, maxlength = 100, required = true)
 	private TextTranslate offlineMessage;
-	
+
 	private Section homeSection;
-
-	public TextTranslate getName() {
-		return name;
-	}
-
-	public void setName(TextTranslate name) {
-		this.name = name;
-	}
-
-	public TextTranslate getTitle() {
-		return title;
-	}
-
-	public void setTitle(TextTranslate title) {
-		this.title = title;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getCopyright() {
-		return copyright;
-	}
-
-	public void setCopyright(TextTranslate copyright) {
-		this.copyright = copyright;
-	}
-
-	public boolean isOffline() {
-		return offline;
-	}
-
-	public void setOffline(boolean offline) {
-		this.offline = offline;
-	}
-
-	public TextTranslate getOfflineMessage() {
-		return offlineMessage;
-	}
-
-	public void setOfflineMessage(TextTranslate offlineMessage) {
-		this.offlineMessage = offlineMessage;
-	}
-
-	public void setHomeSection(Section homeSection) {
-		this.homeSection = homeSection;
-	}
-
-	public Section getHomeSection() {
-		return homeSection;
-	}
-
 
 }

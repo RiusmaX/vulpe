@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
@@ -9,6 +11,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 @CachedClass
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Section extends BasePortal {
 
 	@VulpeText(size = 40)
@@ -24,22 +27,6 @@ public class Section extends BasePortal {
 		setId(id);
 	}
 	
-	public void setName(TextTranslate name) {
-		this.name = name;
-	}
-
-	public TextTranslate getName() {
-		return name;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
 	@Override
 	public String toString() {
 		if (getName() != null) {

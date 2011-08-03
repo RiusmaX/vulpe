@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -11,6 +13,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.SELECT, ViewType.MAIN }))
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Menu extends BasePortal {
 
 	@VulpeColumn
@@ -31,52 +34,12 @@ public class Menu extends BasePortal {
 	@VulpeCheckbox(fieldValue = "true")
 	private Boolean selectOnLoad;
 
-	public void setName(TextTranslate name) {
-		this.name = name;
-	}
-
-	public TextTranslate getName() {
-		return name;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
 	@Override
 	public String toString() {
 		if (getName() != null) {
 			return getName().toString();
 		}
 		return super.toString();
-	}
-
-	public void setNavigateToSection(Section navigateToSection) {
-		this.navigateToSection = navigateToSection;
-	}
-
-	public Section getNavigateToSection() {
-		return navigateToSection;
-	}
-
-	public void setSelectOnLoad(Boolean selectOnLoad) {
-		this.selectOnLoad = selectOnLoad;
-	}
-
-	public Boolean getSelectOnLoad() {
-		return selectOnLoad;
 	}
 
 }

@@ -1,5 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
+import lombok.Data;
+
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
@@ -17,6 +19,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 		ViewType.SELECT, ViewType.MAIN }))
 @Inheritance
 @SuppressWarnings("serial")
+@Data
 public class Social extends BasePortal {
 
 	@VulpeColumn
@@ -40,38 +43,6 @@ public class Social extends BasePortal {
 			return getName().toString();
 		}
 		return super.toString();
-	}
-
-	public void setTarget(Target target) {
-		this.target = target;
-	}
-
-	public Target getTarget() {
-		return target;
-	}
-
-	public void setNetwork(SocialNetwork network) {
-		this.network = network;
-	}
-
-	public SocialNetwork getNetwork() {
-		return network;
-	}
-
-	public void setDescription(TextTranslate description) {
-		this.description = description;
-	}
-
-	public TextTranslate getDescription() {
-		return description;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 }
