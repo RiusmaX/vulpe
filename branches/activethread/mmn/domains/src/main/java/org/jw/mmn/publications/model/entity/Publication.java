@@ -1,8 +1,7 @@
 package org.jw.mmn.publications.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.Like;
@@ -18,9 +17,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @CachedClass
 @NotExistEquals(parameters = @QueryParameter(equals = @Parameter(name = "name")))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Publication extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)

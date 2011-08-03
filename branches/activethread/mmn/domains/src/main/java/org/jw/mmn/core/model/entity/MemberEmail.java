@@ -1,19 +1,15 @@
 package org.jw.mmn.core.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.Email;
-
-import org.jw.mmn.core.model.entity.Member;
 import org.vulpe.model.annotations.db4o.Inheritance;
 
 @Inheritance
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class MemberEmail extends Email {
 
 	private Member member;

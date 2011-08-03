@@ -2,9 +2,8 @@ package org.jw.mmn.core.model.entity;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.commons.enumeration.DaysOfWeek;
 import org.vulpe.model.annotations.CachedClass;
@@ -21,9 +20,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		@DetailConfig(name = "usuarios", propertyName = "entity.usuarios", despiseFields = "usuario", startNewDetails = 3, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) }), manager = true, view = @View(viewType = {
 //		ViewType.MAIN, ViewType.SELECT, ViewType.TABULAR }))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Congregation extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)

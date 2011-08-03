@@ -1,8 +1,7 @@
 package org.jw.mmn.publications.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -10,12 +9,8 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-import org.jw.mmn.publications.model.entity.Order;
-import org.jw.mmn.publications.model.entity.Publication;
-
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @SuppressWarnings("serial")
 public class OrderPublication extends VulpeBaseDB4OEntity<Long> {
 

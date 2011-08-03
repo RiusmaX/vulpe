@@ -2,9 +2,8 @@ package org.jw.mmn.core.model.entity;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.Gender;
 import org.jw.mmn.commons.model.entity.MinistryStatus;
@@ -26,9 +25,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 
 @NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "name")) })
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Member extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)

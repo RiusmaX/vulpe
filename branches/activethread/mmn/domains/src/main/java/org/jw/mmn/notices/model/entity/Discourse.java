@@ -2,27 +2,22 @@ package org.jw.mmn.notices.model.entity;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
+import org.jw.mmn.core.model.entity.CharacteristicOratory;
+import org.jw.mmn.core.model.entity.Member;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.input.VulpeText;
 
-import org.jw.mmn.notices.model.entity.DiscourseType;
-import org.jw.mmn.core.model.entity.CharacteristicOratory;
-import org.jw.mmn.core.model.entity.Member;
-import org.jw.mmn.notices.model.entity.Meeting;
-
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 3) }), manager = true, view = @View(viewType = {
 //ViewType.SELECT, ViewType.MAIN }))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Discourse extends VulpeBaseDB4OEntity<Long> {
 
 	private Meeting meeting;

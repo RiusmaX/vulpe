@@ -1,8 +1,7 @@
 package org.jw.mmn.publications.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.Like;
@@ -17,9 +16,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //@CodeGenerator(controller =
 //@Controller(select = @Select(pageSize = 5), tabular = @Tabular(despiseFields = { "descricao" }, startNewRecords = 5, newRecords = 1)), view = @View(popupProperties = "id,nome", viewType = { ViewType.TABULAR }))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class PublicationType extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)

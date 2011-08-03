@@ -2,9 +2,8 @@ package org.jw.mmn.ministry.model.entity;
 
 import java.util.Date;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.core.model.entity.Congregation;
@@ -25,9 +24,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "member")),
 		@QueryParameter(equals = @Parameter(name = "month")) })
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class MemberReport extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "name")

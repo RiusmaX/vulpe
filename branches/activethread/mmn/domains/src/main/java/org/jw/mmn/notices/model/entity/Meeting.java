@@ -3,9 +3,8 @@ package org.jw.mmn.notices.model.entity;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.jw.mmn.core.model.entity.Congregation;
 import org.jw.mmn.core.model.entity.Member;
@@ -19,9 +18,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //@CodeGenerator(controller = @Controller(select = @Select(pageSize = 5), detailsConfig = { @DetailConfig(name = "discursos", propertyName = "entity.discursos", despiseFields = "tema", quantity = @Quantity(type = QuantityType.ONE_OR_MORE), newDetails = 3) }), manager = true, view = @View(viewType = {
 //		ViewType.SELECT, ViewType.MAIN }))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Meeting extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true, attribute = "nome")

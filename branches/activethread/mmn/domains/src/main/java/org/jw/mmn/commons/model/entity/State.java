@@ -1,15 +1,12 @@
 package org.jw.mmn.commons.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
-import org.jw.mmn.commons.model.entity.Country;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @SuppressWarnings("serial")
 public class State extends VulpeBaseDB4OEntity<Long> {
 

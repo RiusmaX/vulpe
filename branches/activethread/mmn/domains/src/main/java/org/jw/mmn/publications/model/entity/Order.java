@@ -3,9 +3,8 @@ package org.jw.mmn.publications.model.entity;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.jw.mmn.core.model.entity.Congregation;
 import org.jw.mmn.core.model.entity.Member;
@@ -19,9 +18,8 @@ import org.vulpe.view.annotations.input.VulpeSelectPopup;
 import org.vulpe.view.annotations.logic.main.Detail;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @SuppressWarnings("serial")
 public class Order extends VulpeBaseDB4OEntity<Long> {
 

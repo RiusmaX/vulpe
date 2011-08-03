@@ -2,9 +2,8 @@ package org.jw.mmn.core.model.entity;
 
 import java.util.List;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
@@ -19,9 +18,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //@CodeGenerator(controller = @Controller(select =@Select(pageSize = 5), tabular = @Tabular(despiseFields = "nome", startNewRecords = 5, newRecords = 1), detailsConfig = { @DetailConfig(name = "publicadores", propertyName = "entity.publicadores", despiseFields = "nome", startNewDetails = 10, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) }), manager = true, view = @View(viewType = {
 //		ViewType.TABULAR, ViewType.MAIN, ViewType.SELECT }))
 @SuppressWarnings("serial")
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Group extends VulpeBaseDB4OEntity<Long> {
 
 	@OrderBy
