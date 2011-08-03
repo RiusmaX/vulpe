@@ -1,7 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Select;
@@ -20,8 +20,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 		ViewType.SELECT, ViewType.MAIN }))
 @Inheritance
 @SuppressWarnings("serial")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Social extends BasePortal {
 
 	@VulpeColumn

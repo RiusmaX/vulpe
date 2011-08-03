@@ -1,7 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
@@ -14,8 +14,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.SELECT, ViewType.MAIN }))
 @Inheritance
 @SuppressWarnings("serial")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Menu extends BasePortal {
 
 	@VulpeColumn

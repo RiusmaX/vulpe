@@ -1,7 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
@@ -16,8 +16,8 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //		ViewType.MAIN, ViewType.SELECT }))
 @Inheritance
 @SuppressWarnings("serial")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Content extends BasePortal {
 
 	@VulpeColumn(attribute = "name")

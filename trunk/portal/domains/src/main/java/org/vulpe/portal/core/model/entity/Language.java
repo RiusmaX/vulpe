@@ -1,7 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.CachedClass;
@@ -17,8 +17,8 @@ import org.vulpe.view.annotations.input.VulpeText;
 // { ViewType.TABULAR }))
 @CachedClass
 @SuppressWarnings("serial")
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class Language extends BasePortal {
 
 	@VulpeText(size = 10)
