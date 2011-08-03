@@ -70,5 +70,6 @@
 	<classpathentry kind="var" path="M2_REPO/com/db4o/db4o/7.12/db4o-7.12.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-security-entity/1.0/vulpe-security-entity-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/1.7.1/gson-1.7.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/0.10.0-RC3/lombok-0.10.0-RC3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

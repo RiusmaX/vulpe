@@ -1,7 +1,10 @@
 package org.jw.mmn.report.model.entity;
 
+import lombok.Data;
+
 import org.jw.mmn.publications.model.entity.Publication;
 
+@Data
 public class SimpleOrder implements Comparable<SimpleOrder> {
 
 	private Publication publication;
@@ -13,22 +16,6 @@ public class SimpleOrder implements Comparable<SimpleOrder> {
 
 	public SimpleOrder(final Publication publication, final Integer quantity) {
 		this.publication = publication;
-		this.quantity = quantity;
-	}
-
-	public Publication getPublication() {
-		return publication;
-	}
-
-	public void setPublication(Publication publication) {
-		this.publication = publication;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

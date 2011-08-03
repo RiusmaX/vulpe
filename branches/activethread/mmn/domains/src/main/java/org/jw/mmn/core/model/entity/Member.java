@@ -2,6 +2,10 @@ package org.jw.mmn.core.model.entity;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import org.jw.mmn.commons.model.entity.Gender;
 import org.jw.mmn.commons.model.entity.MinistryStatus;
 import org.jw.mmn.commons.model.entity.MinistryType;
@@ -22,6 +26,9 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 
 @NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "name")) })
 @SuppressWarnings("serial")
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Member extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
@@ -77,122 +84,6 @@ public class Member extends VulpeBaseDB4OEntity<Long> {
 	public int compareTo(VulpeEntity<Long> entity) {
 		final Member member = (Member) entity;
 		return VulpeStringUtil.normalize(name).compareTo(VulpeStringUtil.normalize(member.getName()));
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-	public Boolean getBaptized() {
-		return baptized;
-	}
-
-	public void setBaptized(Boolean baptized) {
-		this.baptized = baptized;
-	}
-
-	public MinistryType getSimpleMinistryType() {
-		return simpleMinistryType;
-	}
-
-	public void setSimpleMinistryType(MinistryType simpleMinistryType) {
-		this.simpleMinistryType = simpleMinistryType;
-	}
-
-	public Responsibility getResponsibility() {
-		return responsibility;
-	}
-
-	public void setResponsibility(Responsibility responsibility) {
-		this.responsibility = responsibility;
-	}
-
-	public List<AdditionalPrivilege> getAdditionalPrivileges() {
-		return additionalPrivileges;
-	}
-
-	public void setAdditionalPrivileges(List<AdditionalPrivilege> additionalPrivileges) {
-		this.additionalPrivileges = additionalPrivileges;
-	}
-
-	public Congregation getCongregation() {
-		return congregation;
-	}
-
-	public void setCongregation(Congregation congregation) {
-		this.congregation = congregation;
-	}
-
-	public MinistryType getMinistryType() {
-		return ministryType;
-	}
-
-	public void setMinistryStatus(MinistryStatus ministryStatus) {
-		this.ministryStatus = ministryStatus;
-	}
-
-	public MinistryStatus getMinistryStatus() {
-		return ministryStatus;
-	}
-
-	public void setAddresses(List<MemberAddress> addresses) {
-		this.addresses = addresses;
-	}
-
-	public List<MemberAddress> getAddresses() {
-		return addresses;
-	}
-
-	public void setEmails(List<MemberEmail> emails) {
-		this.emails = emails;
-	}
-
-	public List<MemberEmail> getEmails() {
-		return emails;
-	}
-
-	public void setPhones(List<MemberPhone> phones) {
-		this.phones = phones;
-	}
-
-	public List<MemberPhone> getPhones() {
-		return phones;
-	}
-
-	public void setUrgentContacts(List<MemberUrgentContact> urgentContacts) {
-		this.urgentContacts = urgentContacts;
-	}
-
-	public List<MemberUrgentContact> getUrgentContacts() {
-		return urgentContacts;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public User getUser() {
-		return user;
 	}
 
 }

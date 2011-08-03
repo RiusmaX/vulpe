@@ -1,5 +1,9 @@
 package org.jw.mmn.publications.model.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelectPopup;
@@ -9,6 +13,9 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 import org.jw.mmn.publications.model.entity.Order;
 import org.jw.mmn.publications.model.entity.Publication;
 
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 public class OrderPublication extends VulpeBaseDB4OEntity<Long> {
 
@@ -26,45 +33,5 @@ public class OrderPublication extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeText(mask = "I", size = 5, maxlength = 5)
 	private Integer quantityDelivered;
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public Publication getPublication() {
-		return publication;
-	}
-
-	public void setPublication(Publication publication) {
-		this.publication = publication;
-	}
-
-	public boolean isDelivered() {
-		return delivered;
-	}
-
-	public void setDelivered(boolean delivered) {
-		this.delivered = delivered;
-	}
-
-	public Integer getQuantityDelivered() {
-		return quantityDelivered;
-	}
-
-	public void setQuantityDelivered(Integer quantityDelivered) {
-		this.quantityDelivered = quantityDelivered;
-	}
 
 }

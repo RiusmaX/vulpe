@@ -1,5 +1,9 @@
 package org.jw.mmn.publications.model.entity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEquals;
@@ -14,6 +18,9 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @CachedClass
 @NotExistEquals(parameters = @QueryParameter(equals = @Parameter(name = "name")))
 @SuppressWarnings("serial")
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Publication extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
@@ -33,37 +40,5 @@ public class Publication extends VulpeBaseDB4OEntity<Long> {
 	@VulpeColumn(sortable = true)
 	@VulpeSelect(required = true)
 	private Classification classification;
-
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public PublicationType getType() {
-		return type;
-	}
-
-	public void setType(PublicationType type) {
-		this.type = type;
-	}
-
-	public Classification getClassification() {
-		return classification;
-	}
-
-	public void setClassification(Classification classification) {
-		this.classification = classification;
-	}
 
 }

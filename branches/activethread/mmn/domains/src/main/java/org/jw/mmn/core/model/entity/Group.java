@@ -2,6 +2,10 @@ package org.jw.mmn.core.model.entity;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
@@ -15,6 +19,9 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 //@CodeGenerator(controller = @Controller(select =@Select(pageSize = 5), tabular = @Tabular(despiseFields = "nome", startNewRecords = 5, newRecords = 1), detailsConfig = { @DetailConfig(name = "publicadores", propertyName = "entity.publicadores", despiseFields = "nome", startNewDetails = 10, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE)) }), manager = true, view = @View(viewType = {
 //		ViewType.TABULAR, ViewType.MAIN, ViewType.SELECT }))
 @SuppressWarnings("serial")
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class Group extends VulpeBaseDB4OEntity<Long> {
 
 	@OrderBy
@@ -29,29 +36,5 @@ public class Group extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeSelect(items = "Congregation", itemKey = "id", itemLabel = "name", required = true, autoLoad = true, argument = true)
 	private Congregation congregation;
-
-	public final String getName() {
-		return name;
-	}
-
-	public final void setName(String name) {
-		this.name = name;
-	}
-
-	public void setCongregation(Congregation congregation) {
-		this.congregation = congregation;
-	}
-
-	public Congregation getCongregation() {
-		return congregation;
-	}
-
-	public void setMembers(List<Member> members) {
-		this.members = members;
-	}
-
-	public List<Member> getMembers() {
-		return members;
-	}
 
 }
