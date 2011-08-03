@@ -118,9 +118,12 @@
 	<classpathentry kind="var" path="M2_REPO/net/sf/jtidy/jtidy/r938/jtidy-r938.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/xhtmlrenderer/core-renderer/R8/core-renderer-R8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/struts/struts2-json-plugin/2.2.3/struts2-json-plugin-2.2.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sf/apt-jelly/apt-jelly/2.3/apt-jelly-2.3.jar" sourcepath="M2_REPO/net/sf/apt-jelly/apt-jelly/2.3/apt-jelly-2.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-jelly/commons-jelly/1.0/commons-jelly-1.0.jar"/>
+	<!-- 
 	<classpathentry kind="var" path="M2_REPO/net/sf/apt-jelly/apt-jelly-core/2.14/apt-jelly-core-2.14.jar" sourcepath="M2_REPO/net/sf/apt-jelly/apt-jelly-core/2.14/apt-jelly-core-2.14-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/apt-jelly/apt-jelly-freemarker/2.14/apt-jelly-freemarker-2.14.jar" sourcepath="M2_REPO/net/sf/apt-jelly/apt-jelly-freemarker/2.14/apt-jelly-freemarker-2.14-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/apt-jelly/apt-jelly-jelly/2.14/apt-jelly-jelly-2.14.jar" sourcepath="M2_REPO/net/sf/apt-jelly/apt-jelly-jelly/2.14/apt-jelly-jelly-2.14-sources.jar"/>
+	 -->
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
