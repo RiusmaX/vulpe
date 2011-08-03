@@ -40,9 +40,9 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 		super.selectAfter();
 		final Calendar calendar = Calendar.getInstance();
 		int month = calendar.get(Calendar.MONTH);
-		getEntitySelect().setMonth(Month.getMonth(month == 0 ? 11 : month - 1));
+		entitySelect.setMonth(Month.getMonth(month == 0 ? 11 : month - 1));
 		int year = calendar.get(Calendar.YEAR);
-		getEntitySelect().setYear(year);
+		entitySelect.setYear(year);
 	}
 
 	@Override
@@ -64,61 +64,61 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		getEntity().setDate(new Date());
+		entity.setDate(new Date());
 		final Calendar calendar = Calendar.getInstance();
 		int month = calendar.get(Calendar.MONTH);
-		getEntity().setMonth(Month.getMonth(month == 0 ? 11 : month - 1));
+		entity.setMonth(Month.getMonth(month == 0 ? 11 : month - 1));
 		int year = calendar.get(Calendar.YEAR);
-		getEntity().setYear(year);
+		entity.setYear(year);
 	}
 
 	@Override
 	protected DownloadInfo doReportLoad() {
 		final Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		if (getEntitySelect().getMonth() != null) {
-			calendar.set(Calendar.MONTH, getEntitySelect().getMonth().ordinal());
+		if (entitySelect.getMonth() != null) {
+			calendar.set(Calendar.MONTH, entitySelect.getMonth().ordinal());
 		}
 		final String period = VulpeDateUtil.getDate(calendar.getTime(), "MMMM 'de' yyyy");
-		getReportParameters().put("period", period);
+		vulpe.controller().reportParameters().put("period", period);
 		final List<String> collection = new ArrayList<String>();
 		collection.add("report");
-		setReportCollection(collection);
+		vulpe.controller().reportCollection(collection);
 		final List<MemberReport> membersReport = new ArrayList<MemberReport>();
 		final List<Member> pendingMembers = new ArrayList<Member>();
-		final List<Member> members = getSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
-		if (VulpeValidationUtil.isNotEmpty(getEntities())) {
-			for (MemberReport memberReport : getEntities()) {
+		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		if (VulpeValidationUtil.isNotEmpty(entities)) {
+			for (MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.PUBLISHER)) {
 					membersReport.add(memberReport);
 				}
 			}
 			final List<MemberReport> auxiliaryPioneers = new ArrayList<MemberReport>();
-			for (MemberReport memberReport : getEntities()) {
+			for (MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
 					auxiliaryPioneers.add(memberReport);
 				}
 			}
 			final List<MemberReport> regularPioneers = new ArrayList<MemberReport>();
-			for (MemberReport memberReport : getEntities()) {
+			for (MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
 					regularPioneers.add(memberReport);
 				}
 			}
 			Collections.sort(membersReport);
 			Collections.sort(membersReport, new MemberReportGroupComparator());
-			getReportParameters().put("publishers", membersReport.isEmpty() ? null : membersReport);
+			vulpe.controller().reportParameters().put("publishers", membersReport.isEmpty() ? null : membersReport);
 			Collections.sort(auxiliaryPioneers);
-			getReportParameters().put("auxiliaryPioneers",
+			vulpe.controller().reportParameters().put("auxiliaryPioneers",
 					auxiliaryPioneers.isEmpty() ? null : auxiliaryPioneers);
 			Collections.sort(regularPioneers);
-			getReportParameters().put("regularPioneers",
+			vulpe.controller().reportParameters().put("regularPioneers",
 					regularPioneers.isEmpty() ? null : regularPioneers);
 			for (Member member : members) {
 				if (!member.getMinistryType().equals(MinistryType.STUDENT)
 						&& !member.getMinistryType().equals(MinistryType.AWAY)) {
 					boolean delivered = false;
-					for (MemberReport relatorio : getEntities()) {
+					for (MemberReport relatorio : entities) {
 						if (relatorio.getMember().getId().equals(member.getId())) {
 							delivered = true;
 						}
@@ -138,7 +138,7 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 		}
 		Collections.sort(pendingMembers);
 		Collections.sort(pendingMembers, new MemberGroupComparator());
-		getReportParameters().put("pendingMembers",
+		vulpe.controller().reportParameters().put("pendingMembers",
 				pendingMembers.isEmpty() ? null : pendingMembers);
 		return super.doReportLoad();
 	}

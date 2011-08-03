@@ -34,17 +34,17 @@ public class OrderController extends ApplicationBaseController<Order, Long> {
 
 	@Override
 	protected void selectAfter() {
-		getEntitySelect().setInitialDate(VulpeDateUtil.getFirstDateOfTheMonth());
-		getEntitySelect().setFinalDate(VulpeDateUtil.getLastDateOfTheMonth());
+		entitySelect.setInitialDate(VulpeDateUtil.getFirstDateOfTheMonth());
+		entitySelect.setFinalDate(VulpeDateUtil.getLastDateOfTheMonth());
 		super.selectAfter();
 	}
 
 	@Override
 	protected void onCreate() {
 		super.onCreate();
-		getEntity().setDate(new Date());
-		if (VulpeValidationUtil.isNotEmpty(getEntity().getPublications())) {
-			for (OrderPublication orderPublication : getEntity().getPublications()) {
+		entity.setDate(new Date());
+		if (VulpeValidationUtil.isNotEmpty(entity.getPublications())) {
+			for (OrderPublication orderPublication : entity.getPublications()) {
 				orderPublication.setQuantity(1);
 			}
 		}
@@ -52,43 +52,43 @@ public class OrderController extends ApplicationBaseController<Order, Long> {
 
 	@Override
 	protected boolean onCreatePost() {
-		getEntity().setValidityDate(generateValidityDate());
-		getEntity().setDelivered(validateDelivery());
-		if (getEntity().isDelivered()) {
-			getEntity().setDeliveryDate(new Date());
+		entity.setValidityDate(generateValidityDate());
+		entity.setDelivered(validateDelivery());
+		if (entity.isDelivered()) {
+			entity.setDeliveryDate(new Date());
 		}
 		return super.onCreatePost();
 	}
 
 	private Date generateValidityDate() {
-		if (getEntity().getDate() == null) {
+		if (entity.getDate() == null) {
 			return null;
 		}
 		final Calendar calendar = Calendar.getInstance();
-		calendar.setTime(getEntity().getDate());
+		calendar.setTime(entity.getDate());
 		calendar.add(Calendar.MONTH, 3);
 		return calendar.getTime();
 	}
 
 	@Override
 	protected boolean onUpdatePost() {
-		getEntity().setValidityDate(generateValidityDate());
-		getEntity().setDelivered(validateDelivery());
-		if (getEntity().isDelivered()) {
-			getEntity().setDeliveryDate(new Date());
+		entity.setValidityDate(generateValidityDate());
+		entity.setDelivered(validateDelivery());
+		if (entity.isDelivered()) {
+			entity.setDeliveryDate(new Date());
 		} else {
-			getEntity().setDeliveryDate(null);
+			entity.setDeliveryDate(null);
 		}
 
 		return super.onUpdatePost();
 	}
 
 	private boolean validateDelivery() {
-		if (VulpeValidationUtil.isEmpty(getEntity().getPublications())) {
+		if (VulpeValidationUtil.isEmpty(entity.getPublications())) {
 			return false;
 		}
 		int count = 0;
-		for (OrderPublication orderPublication : getEntity().getPublications()) {
+		for (OrderPublication orderPublication : entity.getPublications()) {
 			if (orderPublication.getQuantityDelivered() == null) {
 				continue;
 			}
@@ -98,35 +98,35 @@ public class OrderController extends ApplicationBaseController<Order, Long> {
 				count++;
 			}
 		}
-		return count == getEntity().getPublications().size();
+		return count == entity.getPublications().size();
 	}
 
 	@Override
 	protected DownloadInfo doReportLoad() {
 		final StringBuilder period = new StringBuilder();
-		if (getEntitySelect().getInitialDate() != null && getEntitySelect().getFinalDate() != null) {
-			final String initialDate = VulpeDateUtil.getDate(getEntitySelect().getInitialDate(),
+		if (entitySelect.getInitialDate() != null && entitySelect.getFinalDate() != null) {
+			final String initialDate = VulpeDateUtil.getDate(entitySelect.getInitialDate(),
 					"dd 'de' MMMM 'de' yyyy");
-			final String finalDate = VulpeDateUtil.getDate(getEntitySelect().getFinalDate(),
+			final String finalDate = VulpeDateUtil.getDate(entitySelect.getFinalDate(),
 					"dd 'de' MMMM 'de' yyyy");
 			period.append(initialDate).append(" a ").append(finalDate);
-			getReportParameters().put("periodo", period.toString());
-		} else if (getEntitySelect().getInitialDate() != null) {
-			final String initialDate = VulpeDateUtil.getDate(getEntitySelect().getInitialDate(),
+			vulpe.controller().reportParameters().put("periodo", period.toString());
+		} else if (entitySelect.getInitialDate() != null) {
+			final String initialDate = VulpeDateUtil.getDate(entitySelect.getInitialDate(),
 					"dd 'de' MMMM 'de' yyyy");
 			period.append("A partir de ").append(initialDate);
-			getReportParameters().put("periodo", period.toString());
-		} else if (getEntitySelect().getFinalDate() != null) {
-			final String finalDate = VulpeDateUtil.getDate(getEntitySelect().getFinalDate(),
+			vulpe.controller().reportParameters().put("periodo", period.toString());
+		} else if (entitySelect.getFinalDate() != null) {
+			final String finalDate = VulpeDateUtil.getDate(entitySelect.getFinalDate(),
 					"dd 'de' MMMM 'de' yyyy");
 			period.append("Antes de ").append(finalDate);
 		} else {
 			period.append("Total");
 		}
-		getReportParameters().put("period", period.toString());
+		vulpe.controller().reportParameters().put("period", period.toString());
 		final List<OrderPublication> publications = new ArrayList<OrderPublication>();
-		if (getEntities() != null) {
-			for (Order order : getEntities()) {
+		if (entities != null) {
+			for (Order order : entities) {
 				publications.addAll(order.getPublications());
 			}
 			final List<SimpleOrder> stock = new ArrayList<SimpleOrder>();
@@ -179,13 +179,13 @@ public class OrderController extends ApplicationBaseController<Order, Long> {
 			}
 			Collections.sort(soi);
 			Collections.sort(stock);
-			getReportParameters().put("stockPublications", stock.isEmpty() ? null : stock);
-			getReportParameters().put("SOIPublications", soi.isEmpty() ? null : soi);
+			vulpe.controller().reportParameters().put("stockPublications", stock.isEmpty() ? null : stock);
+			vulpe.controller().reportParameters().put("SOIPublications", soi.isEmpty() ? null : soi);
 
 		}
 		final List<String> collection = new ArrayList<String>();
 		collection.add("report");
-		setReportCollection(collection);
+		vulpe.controller().reportCollection(collection);
 		return super.doReportLoad();
 	}
 

@@ -37,15 +37,15 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 		super.createAfter();
 		final Calendar calendar = Calendar.getInstance();
 		int month = calendar.get(Calendar.MONTH);
-		getEntity().setMonth(Month.getMonth(month - 1));
+		entity.setMonth(Month.getMonth(month - 1));
 		int year = calendar.get(Calendar.YEAR);
-		getEntity().setYear(year);
-		getEntity().setDate(new Date());
+		entity.setYear(year);
+		entity.setDate(new Date());
 		try {
-			getSecurityContext().getUser();
-			getEntity().setMember(getService(CoreService.class).findMember(new Member()));
-			if (getEntity().getMember() != null) {
-				getEntity().setMinistryType(getEntity().getMember().getMinistryType());
+			vulpe.securityContext().getUser();
+			entity.setMember(vulpe.service(CoreService.class).findMember(new Member()));
+			if (entity.getMember() != null) {
+				entity.setMinistryType(entity.getMember().getMinistryType());
 			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -63,10 +63,10 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 		try {
 			final MemberPersonalReport memberPersonalReport = new MemberPersonalReport();
 			memberPersonalReport.setSended(false);
-			final List<MemberPersonalReport> list = getService(MinistryService.class).readMemberPersonalReport(
+			final List<MemberPersonalReport> list = vulpe.service(MinistryService.class).readMemberPersonalReport(
 					memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(list)) {
-				setId(list.get(0).getId());
+				id = list.get(0).getId();
 			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -83,11 +83,11 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		hideButtons(Button.CREATE, Button.DELETE, Button.BACK);
+		vulpe.view().hideButtons(Button.CREATE, Button.DELETE, Button.BACK);
 	}
 
 	private void checksDate() {
-		for (PersonalReport personalReport : getEntity().getReports()) {
+		for (PersonalReport personalReport : entity.getReports()) {
 			if (personalReport.getDate() == null) {
 				personalReport.setDate(new Date());
 			}

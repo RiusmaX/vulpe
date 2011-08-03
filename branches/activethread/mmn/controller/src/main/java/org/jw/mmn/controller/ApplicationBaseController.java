@@ -28,7 +28,7 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				vulpe.controller().ajax(true);
 			}
-			final String currentLayout = getSessionAttribute(View.CURRENT_LAYOUT);
+			final String currentLayout = vulpe.sessionAttribute(View.CURRENT_LAYOUT);
 			final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index"
 					: "/backend/Index";
 			vulpe.controller().redirectTo(url, vulpe.controller().ajax());

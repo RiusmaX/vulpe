@@ -44,22 +44,22 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 		super.postConstruct();
 		final String className = MinistryType.class.getName();
 		if (ministryTypeList.isEmpty()) {
-			ministryTypeList.add(new ValueBean(MinistryType.PUBLISHER.toString(), getText(className
+			ministryTypeList.add(new ValueBean(MinistryType.PUBLISHER.toString(), vulpe.controller().text(className
 					+ "." + MinistryType.PUBLISHER.toString())));
 			ministryTypeList.add(new ValueBean(MinistryType.AUXILIARY_PIONEER.toString(),
-					getText(className + "." + MinistryType.AUXILIARY_PIONEER.toString())));
+					vulpe.controller().text(className + "." + MinistryType.AUXILIARY_PIONEER.toString())));
 			ministryTypeList.add(new ValueBean(MinistryType.REGULAR_PIONEER.toString(),
-					getText(className + "." + MinistryType.REGULAR_PIONEER.toString())));
-			ministryTypeList.add(new ValueBean(MinistryType.AWAY.toString(), getText(className
+					vulpe.controller().text(className + "." + MinistryType.REGULAR_PIONEER.toString())));
+			ministryTypeList.add(new ValueBean(MinistryType.AWAY.toString(), vulpe.controller().text(className
 					+ "." + MinistryType.AWAY.toString())));
 		}
 		if (simpleMinistryTypeList.isEmpty()) {
 			simpleMinistryTypeList.add(new ValueBean(MinistryType.PUBLISHER.toString(),
-					getText(className + "." + MinistryType.PUBLISHER.toString())));
+					vulpe.controller().text(className + "." + MinistryType.PUBLISHER.toString())));
 			simpleMinistryTypeList.add(new ValueBean(MinistryType.STUDENT.toString(),
-					getText(className + "." + MinistryType.STUDENT.toString())));
+					vulpe.controller().text(className + "." + MinistryType.STUDENT.toString())));
 			simpleMinistryTypeList.add(new ValueBean(MinistryType.AWAY.toString(),
-					getText(className + "." + MinistryType.AWAY.toString())));
+					vulpe.controller().text(className + "." + MinistryType.AWAY.toString())));
 		}
 	}
 
@@ -71,12 +71,12 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 
 	@Override
 	protected void createPostAfter() {
-		List<Member> members = getSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
 		}
-		members.add(getEntity());
-		setSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		members.add(entity);
+		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	@Override
@@ -88,53 +88,53 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		List<Member> members = getSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
-			members.add(getEntity());
+			members.add(entity);
 		} else {
 			for (Member publicador : members) {
-				if (publicador.getId().equals(getEntity().getId())) {
-					publicador = getEntity();
+				if (publicador.getId().equals(entity.getId())) {
+					publicador = entity;
 					break;
 				}
 			}
 		}
-		setSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	@Override
 	protected void deleteAfter() {
 		super.deleteAfter();
-		final List<Member> members = getSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			final Member publicador = iterator.next();
-			if (publicador.getId().equals(getEntity().getId())) {
+			if (publicador.getId().equals(entity.getId())) {
 				iterator.remove();
 				break;
 			}
 		}
-		setSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	private void cleanPrivileges() {
-		if (!getEntity().getBaptized()) {
-			getEntity().setMinistryType(null);
-			getEntity().setResponsibility(null);
-			getEntity().setAdditionalPrivileges(null);
-		} else if (getEntity().getGender().equals(Gender.FEMALE)) {
-			getEntity().setResponsibility(null);
-			getEntity().setAdditionalPrivileges(null);
+		if (!entity.getBaptized()) {
+			entity.setMinistryType(null);
+			entity.setResponsibility(null);
+			entity.setAdditionalPrivileges(null);
+		} else if (entity.getGender().equals(Gender.FEMALE)) {
+			entity.setResponsibility(null);
+			entity.setAdditionalPrivileges(null);
 		}
 	}
 
 	@Override
 	public List<Member> autocompleteList() {
-		final List<Member> members = getSessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		final List<Member> filteredMembers = new ArrayList<Member>();
 		for (Member member : members) {
 			if (VulpeStringUtil.normalize(member.getName().toLowerCase()).contains(
-					getEntitySelect().getName().toLowerCase())) {
+					entitySelect.getName().toLowerCase())) {
 				filteredMembers.add(member);
 			}
 		}

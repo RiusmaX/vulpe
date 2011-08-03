@@ -43,30 +43,30 @@ public class CongregationController extends ApplicationBaseController<Congregati
 
 	private void updateData() {
 		boolean exists = false;
-		List<Congregation> congregations = getSessionAttribute(Core.CONGREGATIONS_OF_USER);
+		List<Congregation> congregations = vulpe.sessionAttribute(Core.CONGREGATIONS_OF_USER);
 		if (congregations == null) {
 			congregations = new ArrayList<Congregation>();
-			congregations.add(getEntity());
+			congregations.add(entity);
 		} else {
 			for (Congregation congregation : congregations) {
-				if (congregation.getId().equals(getEntity().getId())) {
+				if (congregation.getId().equals(entity.getId())) {
 					exists = true;
 					break;
 				}
 			}
 			if (!exists) {
-				final String username = getUserAuthenticated();
-				if (getEntity().getUsers() != null) {
-					for (CongregationUser congregationUser : getEntity().getUsers()) {
+				final String username = vulpe.userAuthenticated();
+				if (entity.getUsers() != null) {
+					for (CongregationUser congregationUser : entity.getUsers()) {
 						if (congregationUser.getUser().getUsername().equals(username)) {
-							congregations.add(getEntity());
+							congregations.add(entity);
 							break;
 						}
 					}
 				}
 			}
 		}
-		setSessionAttribute(Core.CONGREGATIONS_OF_USER, congregations);
+		vulpe.sessionAttribute(Core.CONGREGATIONS_OF_USER, congregations);
 	}
 
 	@Override

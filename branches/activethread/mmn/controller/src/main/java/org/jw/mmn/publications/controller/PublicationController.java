@@ -27,7 +27,7 @@ public class PublicationController extends ApplicationBaseController<Publication
 		final List<Publication> filteredPublications = new ArrayList<Publication>();
 		for (Publication publication : publications) {
 			if (VulpeStringUtil.normalize(publication.getName().toLowerCase()).contains(
-					getEntitySelect().getName().toLowerCase())) {
+					entitySelect.getName().toLowerCase())) {
 				filteredPublications.add(publication);
 			}
 		}
