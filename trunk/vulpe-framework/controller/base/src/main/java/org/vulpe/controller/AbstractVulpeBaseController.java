@@ -153,7 +153,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	/**
 	 * List of entities
 	 */
-	public List<ENTITY> entities;
+	public List<ENTITY> entities = new ArrayList<ENTITY>();
 	/**
 	 * Current MAIN Entity
 	 */
