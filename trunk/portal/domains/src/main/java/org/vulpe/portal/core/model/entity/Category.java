@@ -1,6 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.db4o.Inheritance;
@@ -12,6 +13,7 @@ import org.vulpe.view.annotations.input.VulpeText;
 @Inheritance
 @SuppressWarnings("serial")
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class Category extends BasePortal {
 
 	@VulpeText(size = 40)
