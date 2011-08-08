@@ -1,6 +1,7 @@
 package org.vulpe.portal.core.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.vulpe.controller.annotations.Controller;
@@ -8,6 +9,7 @@ import org.vulpe.controller.annotations.Select;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.SocialNetwork;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.Target;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.View;
@@ -22,6 +24,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Social extends BasePortal {
 
 	@VulpeColumn
@@ -39,6 +42,10 @@ public class Social extends BasePortal {
 	@VulpeSelect(required = true)
 	private Target target;
 
+	public Social(Status status) {
+		setStatus(status);
+	}
+	
 	@Override
 	public String toString() {
 		if (getName() != null) {

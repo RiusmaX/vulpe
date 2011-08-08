@@ -1,9 +1,11 @@
 package org.vulpe.portal.core.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeSelect;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -15,6 +17,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Download extends BasePortal {
 
 	@VulpeColumn(attribute = "name")
@@ -38,11 +41,12 @@ public class Download extends BasePortal {
 
 	private Long downloads;
 	
-	public Download() {
-	}
-	
 	public Download(final Long id) {
 		setId(id);
+	}
+	
+	public Download(Status status) {
+		setStatus(status);
 	}
 
 	@Override

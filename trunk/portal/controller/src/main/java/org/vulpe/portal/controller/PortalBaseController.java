@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
@@ -32,8 +31,6 @@ import org.vulpe.portal.core.model.services.CoreService;
 public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends VulpeStrutsController<ENTITY, ID> {
 
-	protected static final Logger LOG = Logger.getLogger(PortalBaseController.class);
-
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
@@ -49,14 +46,17 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 		if (vulpe.controller().type().equals(ControllerType.FRONTEND)
 				|| vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			try {
-				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(new Menu());
+				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(
+						new Menu(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
 				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
-						new Download());
+						new Download(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
-				final List<Link> links = vulpe.service(CoreService.class).readLink(new Link());
+				final List<Link> links = vulpe.service(CoreService.class).readLink(
+						new Link(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_LINKS, links);
-				final List<Social> social = vulpe.service(CoreService.class).readSocial(new Social());
+				final List<Social> social = vulpe.service(CoreService.class).readSocial(
+						new Social(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
@@ -112,7 +112,7 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 			vulpe.controller().redirectTo("/core/Portal/select");
 		}
 	}
-	
+
 	public CoreService getCoreService() {
 		return vulpe.service(CoreService.class);
 	}

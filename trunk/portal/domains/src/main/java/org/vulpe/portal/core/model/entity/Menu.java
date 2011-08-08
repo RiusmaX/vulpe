@@ -1,9 +1,11 @@
 package org.vulpe.portal.core.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -16,6 +18,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Menu extends BasePortal {
 
 	@VulpeColumn
@@ -35,6 +38,10 @@ public class Menu extends BasePortal {
 
 	@VulpeCheckbox(fieldValue = "true")
 	private Boolean selectOnLoad;
+
+	public Menu(Status status) {
+		setStatus(status);
+	}
 
 	@Override
 	public String toString() {

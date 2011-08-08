@@ -1,10 +1,12 @@
 package org.vulpe.portal.core.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.portal.commons.model.entity.Position;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.Target;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -17,6 +19,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Link extends BasePortal {
 
 	@VulpeColumn(attribute = "name")
@@ -47,15 +50,16 @@ public class Link extends BasePortal {
 	private Target target;
 
 	private Position position;
-	
-	public Link() {
-	}
 
 	public Link(final Long id) {
 		setId(id);
 	}
 
-		@Override
+	public Link(Status status) {
+		setStatus(status);
+	}
+
+	@Override
 	public String toString() {
 		if (getName() != null) {
 			return getName().toString();

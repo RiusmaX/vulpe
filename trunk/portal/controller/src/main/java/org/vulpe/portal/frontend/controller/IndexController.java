@@ -25,10 +25,10 @@ import org.vulpe.portal.core.model.entity.Section;
 @Controller(type = ControllerType.FRONTEND)
 public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity, Long> {
 
-	private Long id;
-
+	public String querySearch;
+	
 	public void section() {
-		loadSection(getId());
+		loadSection(id);
 		controlResultForward();
 	}
 
@@ -51,7 +51,7 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 
 	public void content() {
 		try {
-			final Content content = getCoreService().findContent(new Content(getId()));
+			final Content content = getCoreService().findContent(new Content(id));
 			content.increaseView();
 			getCoreService().updateContent(content);
 			vulpe.view().content().title(content.getTitle().toString()).subtitle(
@@ -66,7 +66,7 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 	public void download() {
 		try {
 			final Download download = getCoreService().findDownload(
-					new Download(getId()));
+					new Download(id));
 			download.increaseDownload();
 			getCoreService().updateDownload(download);
 			vulpe.controller().redirectTo(download.getUrl(), false);
@@ -77,21 +77,13 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 
 	public void link() {
 		try {
-			final Link link = getCoreService().findLink(new Link(getId()));
+			final Link link = getCoreService().findLink(new Link(id));
 			link.increaseClick();
 			getCoreService().updateLink(link);
 			vulpe.controller().redirectTo(link.getUrl(), false);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
 		}
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	@Override
@@ -101,6 +93,16 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 		if (VulpeValidationUtil.isNotEmpty(portal.getHomeSection())) {
 			loadSection(portal.getHomeSection().getId());
 		}
+	}
+	
+	public void search() {
+		try {
+			final List<Content> contents = getCoreService().readContent(new Content());
+			now.put("contents", contents);
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		controlResultForward();
 	}
 
 }
