@@ -28,14 +28,13 @@ import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends VulpeStrutsController<ENTITY, ID> {
+public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		VulpeStrutsController<ENTITY, ID> {
 
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
-		final List<Portal> portalList = vulpe.cache().classes().getSelf(
-				Portal.class.getSimpleName());
+		final List<Portal> portalList = vulpe.cache().classes().getSelf(Portal.class.getSimpleName());
 		if (portalList != null) {
 			for (final Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
@@ -43,21 +42,23 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 				}
 			}
 		}
+	}
+
+	protected void load() {
 		if (vulpe.controller().type().equals(ControllerType.FRONTEND)
 				|| vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			try {
-				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(
-						new Menu(Status.ACTIVE));
+				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(new Menu(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
-				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
-						new Download(Status.ACTIVE));
-				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
-				final List<Link> links = vulpe.service(CoreService.class).readLink(
-						new Link(Status.ACTIVE));
-				ever.put(Core.VULPE_PORTAL_LINKS, links);
-				final List<Social> social = vulpe.service(CoreService.class).readSocial(
-						new Social(Status.ACTIVE));
-				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+				if (vulpe.controller().type().equals(ControllerType.FRONTEND)) {
+					final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
+							new Download(Status.ACTIVE));
+					ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+					final List<Link> links = vulpe.service(CoreService.class).readLink(new Link(Status.ACTIVE));
+					ever.put(Core.VULPE_PORTAL_LINKS, links);
+					final List<Social> social = vulpe.service(CoreService.class).readSocial(new Social(Status.ACTIVE));
+					ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+				}
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
 			}
@@ -70,12 +71,10 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			if (field.getType().getName().equals(TextTranslate.class.getName())) {
-				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(entity, field
-						.getName());
-				if (textTranslate != null
-						&& VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
-					for (final Iterator<TextTranslateLanguage> iterator = textTranslate
-							.getLanguages().iterator(); iterator.hasNext();) {
+				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(entity, field.getName());
+				if (textTranslate != null && VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
+					for (final Iterator<TextTranslateLanguage> iterator = textTranslate.getLanguages().iterator(); iterator
+							.hasNext();) {
 						final TextTranslateLanguage textTranslateLanguage = iterator.next();
 						if (StringUtils.isEmpty(textTranslateLanguage.getText())) {
 							iterator.remove();
@@ -104,8 +103,8 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 	public void validateSelectedConfiguration() {
 		if (!vulpe.controller().currentName().contains("frontend/")
 				&& !vulpe.controller().currentName().contains("core/Portal")
-				&& (ever.get(Core.VULPE_PORTAL) == null || !ever
-						.<Portal> getSelf(Core.VULPE_PORTAL).getStatus().equals(Status.ACTIVE))) {
+				&& (ever.get(Core.VULPE_PORTAL) == null || !ever.<Portal> getSelf(Core.VULPE_PORTAL).getStatus()
+						.equals(Status.ACTIVE))) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				vulpe.controller().ajax(true);
 			}

@@ -463,7 +463,8 @@ html,body {
 	margin: 0 auto;
 	position: absolute;
 	height: 100%;
-	width: 100%;  
+	width: 100%;
+	z-index: 100000;  
 }
 
 #loadingBox {

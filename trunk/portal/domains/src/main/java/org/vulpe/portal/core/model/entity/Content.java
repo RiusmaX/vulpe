@@ -71,11 +71,6 @@ public class Content extends BasePortal {
 		return super.toString();
 	}
 
-	@Override
-	public String getOrderBy() {
-		return "date desc";
-	}
-
 	public void increaseView() {
 		if (views == null) {
 			views = 1L;

@@ -14,4 +14,9 @@ import org.vulpe.portal.controller.PortalBaseController;
 @Controller(type = ControllerType.BACKEND)
 public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity, Long> {
 
+	@Override
+	protected void backendAfter() {
+		super.backendAfter();
+		load();
+	}
 }

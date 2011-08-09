@@ -3,7 +3,7 @@
 	<c:when test="${ever['vulpeCurrentLayout'] == 'FRONTEND'}">
 	<div id="portal">
 		<div id="search">
-		<input type="text" id="querySearch" name="querySearch" size="40"><v:action labelKey="label.portal.search" action="search" showIconOfButton="false" styleClass="button" elementId="search-button" layerFields="search" beforeJs="portal.querySearch()" />
+		<input type="text" id="querySearch" name="querySearch" size="40"><v:action labelKey="label.portal.search" action="search" showIconOfButton="false" styleClass="button" elementId="search-button" layerFields="search" beforeJs="app.frontend.querySearch()" />
 		</div>
 		<div id="portalLogo"></div>
 	</div>
