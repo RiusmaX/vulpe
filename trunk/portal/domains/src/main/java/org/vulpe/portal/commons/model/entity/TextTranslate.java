@@ -52,6 +52,16 @@ public class TextTranslate extends VulpeBaseDB4OAuditEntity<Long> {
 	}
 
 	public void setText(String text) {
+		if (VulpeValidationUtil.isNotEmpty(languages)) {
+			VulpeContext context = AbstractVulpeBeanFactory.getInstance().getBean("vulpeContext");
+			for (TextTranslateLanguage translateLanguage : languages) {
+				if (translateLanguage.getLanguage() != null
+						&& StringUtils.isNotEmpty(translateLanguage.getLanguage().getLocaleCode())
+						&& translateLanguage.getLanguage().getLocaleCode().equals(context.getLocale().toString())) {
+					setLanguageId(translateLanguage.getLanguage().getId());
+				}
+			}
+		}
 		this.text = text;
 	}
 
