@@ -335,7 +335,7 @@ hr {
 	border: none;
 	border-top: 1px solid #CCCCCC;
 	height: 1px;
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 }
 
 input,select,textarea {
@@ -825,7 +825,7 @@ ol, ul {
 }
 
 #date-show {
-	color: #ddd;
+	color: #999;
 	font-size: 9px;
 }
 

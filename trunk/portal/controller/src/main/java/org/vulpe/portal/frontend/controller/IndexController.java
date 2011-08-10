@@ -41,6 +41,7 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 			content.setSection(section);
 			content.setStatus(Status.ACTIVE);
 			final List<Content> contents = getCoreService().readContent(content);
+			sort(contents);
 			now.put("contents", contents);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -101,18 +102,21 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 			content.setTitle(new TextTranslate());
 			content.getTitle().setText(querySearch);
 			final List<Content> contents = getCoreService().readContent(content);
+			sort(contents);
 			now.put("contents", contents);
 			final Download download = new Download();
 			download.setStatus(Status.ACTIVE);
 			download.setName(new TextTranslate());
 			download.getName().setText(querySearch);
 			final List<Download> downloads = getCoreService().readDownload(download);
+			sort(downloads);
 			now.put("downloads", downloads);
 			final Link link = new Link();
 			link.setStatus(Status.ACTIVE);
 			link.setName(new TextTranslate());
 			link.getName().setText(querySearch);
 			final List<Link> links = getCoreService().readLink(link);
+			sort(links);
 			now.put("links", links);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);

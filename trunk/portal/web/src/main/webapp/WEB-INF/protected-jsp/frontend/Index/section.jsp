@@ -1,7 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <div id="portalContent">
-	<c:forEach var="content" items="${now['contents']}">
+	<c:forEach var="content" items="${now['contents']}" varStatus="status">
+	<c:if test="${status.count > 1}"><hr/></c:if>
 	<div id="content_${content.id}">
 		<p>
 		<c:choose>
@@ -25,7 +26,6 @@
 		</c:choose>
 		</p>
 	</div>
-	<br/>
 	</c:forEach>
-</div>
+</div><br>
 <jsp:include page="../bottom.jsp"/>

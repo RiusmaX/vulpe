@@ -2,6 +2,8 @@ package org.vulpe.portal.controller;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -53,10 +55,13 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 				if (vulpe.controller().type().equals(ControllerType.FRONTEND)) {
 					final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
 							new Download(Status.ACTIVE));
+					sort(downloads);
 					ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
 					final List<Link> links = vulpe.service(CoreService.class).readLink(new Link(Status.ACTIVE));
+					sort(links);
 					ever.put(Core.VULPE_PORTAL_LINKS, links);
 					final List<Social> social = vulpe.service(CoreService.class).readSocial(new Social(Status.ACTIVE));
+					sort(social);
 					ever.put(Core.VULPE_PORTAL_SOCIAL, social);
 				}
 			} catch (VulpeApplicationException e) {
@@ -114,5 +119,14 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 
 	public CoreService getCoreService() {
 		return vulpe.service(CoreService.class);
+	}
+
+	protected void sort(final List<? extends BasePortal> list) {
+		Collections.sort(list, new Comparator<BasePortal>() {
+			@Override
+			public int compare(BasePortal o1, BasePortal o2) {
+				return o2.getDate().compareTo(o1.getDate());
+			}
+		});
 	}
 }

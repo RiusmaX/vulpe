@@ -5,8 +5,6 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.vulpe.model.annotations.OrderBy;
-import org.vulpe.model.annotations.OrderBy.OrderType;
 import org.vulpe.model.annotations.db4o.Inheritance;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
 import org.vulpe.portal.commons.model.entity.Status;
@@ -21,7 +19,6 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @Setter
 public class BasePortal extends VulpeBaseDB4OAuditEntity<Long> {
 
-	@OrderBy(type = OrderType.DESC)
 	private Date date;
 
 	private Date expire;
