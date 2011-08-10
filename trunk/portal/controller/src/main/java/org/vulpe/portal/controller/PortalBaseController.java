@@ -122,11 +122,13 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 	}
 
 	protected void sort(final List<? extends BasePortal> list) {
-		Collections.sort(list, new Comparator<BasePortal>() {
-			@Override
-			public int compare(BasePortal o1, BasePortal o2) {
-				return o2.getDate().compareTo(o1.getDate());
-			}
-		});
+		if (VulpeValidationUtil.isNotEmpty(list)) {
+			Collections.sort(list, new Comparator<BasePortal>() {
+				@Override
+				public int compare(BasePortal o1, BasePortal o2) {
+					return o2.getDate().compareTo(o1.getDate());
+				}
+			});
+		}
 	}
 }
