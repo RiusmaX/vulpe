@@ -32,9 +32,9 @@ import java.lang.annotation.Target;
 @Target( { ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
 public @interface DetailConfig {
 	/**
-	 * Add news details on top of list
+	 * Reverse add news details on top of list
 	 */
-	boolean addNewDetailsOnTop() default false;
+	boolean reverse() default false;
 
 	/**
 	 * Not control view JSPs

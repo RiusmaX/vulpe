@@ -38,11 +38,9 @@ import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.beans.Paging;
-import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeFileUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
-import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
@@ -73,9 +71,9 @@ import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial" })
-public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
-		extends AbstractVulpeBaseController<ENTITY, ID> implements VulpeController,
-		com.opensymphony.xwork2.Action, Validateable, ValidationAware, LocaleProvider {
+public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
+		AbstractVulpeBaseController<ENTITY, ID> implements VulpeController, com.opensymphony.xwork2.Action,
+		Validateable, ValidationAware, LocaleProvider {
 
 	/**
 	 *
@@ -123,8 +121,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final ENTITY entity = prepareEntity(Operation.DELETE);
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final List<ENTITY> details = new ArrayList<ENTITY>((List<ENTITY>) Ognl.getValue(vulpe
-					.controller().detail(), context, this));
+			final List<ENTITY> details = new ArrayList<ENTITY>((List<ENTITY>) Ognl.getValue(
+					vulpe.controller().detail(), context, this));
 			final List<ENTITY> removedDetails = new ArrayList<ENTITY>();
 			final int size = details.size();
 			int removed = 0;
@@ -150,14 +148,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					vulpe.controller().detail());
 			if (detailConfig != null) {
-				final Paging paging = ever.getSelf(detailConfig.getName()
-						+ Controller.DETAIL_PAGING_LIST);
+				final Paging paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
 				final List<ENTITY> realList = new ArrayList<ENTITY>();
 				if (paging != null) {
 					realList.addAll(paging.getRealList());
 					for (final ENTITY detail : (List<ENTITY>) removedDetails) {
-						for (final Iterator<ENTITY> iterator = paging.getRealList().iterator(); iterator
-								.hasNext();) {
+						for (final Iterator<ENTITY> iterator = paging.getRealList().iterator(); iterator.hasNext();) {
 							final ENTITY realDetail = iterator.next();
 							if (realDetail.getId().equals(detail.getId())) {
 								iterator.remove();
@@ -177,27 +173,25 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					}
 					if (save) {
 						if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
-							invokeServices(vulpe.serviceMethodName(Operation.DELETE),
-									new Class[] { List.class }, new Object[] { removedDetails });
+							invokeServices(vulpe.serviceMethodName(Operation.DELETE), new Class[] { List.class },
+									new Object[] { removedDetails });
 							if (vulpe.controller().config().getTabularPageSize() > 0) {
-								vulpe.controller().tabularSize(
-										vulpe.controller().tabularSize() - removedDetails.size());
+								vulpe.controller()
+										.tabularSize(vulpe.controller().tabularSize() - removedDetails.size());
 							}
 						} else {
 							if (entity.getId() != null && size > details.size()) {
-								invokeServices(vulpe.serviceMethodName(Operation.DELETE),
-										new Class[] { List.class }, new Object[] { removedDetails });
+								invokeServices(vulpe.serviceMethodName(Operation.DELETE), new Class[] { List.class },
+										new Object[] { removedDetails });
 							}
 						}
 					}
 					Ognl.setValue(vulpe.controller().detail(), context, this, details);
-					final String parentName = vulpe.controller().config().getParentName(
-							vulpe.controller().detail());
+					final String parentName = vulpe.controller().config().getParentName(vulpe.controller().detail());
 					final Object parent = Ognl.getValue(parentName, context, this);
 					if (vulpe.controller().detailConfig().getParentDetailConfig() != null) {
-						vulpe.requestAttribute(vulpe.controller().detailConfig()
-								.getParentDetailConfig().getBaseName().concat(Layout.DETAIL_ITEM),
-								parent);
+						vulpe.requestAttribute(vulpe.controller().detailConfig().getParentDetailConfig().getBaseName()
+								.concat(Layout.DETAIL_ITEM), parent);
 					}
 				} else {
 					removed = 0;
@@ -266,14 +260,12 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		try {
 			Collection<?> collection = vulpe.controller().reportCollection();
 			if (collection == null) {
-				collection = VulpeReflectUtil.getFieldValue(this, vulpe.controller().config()
-						.getReportDataSourceName());
+				collection = VulpeReflectUtil
+						.getFieldValue(this, vulpe.controller().config().getReportDataSourceName());
 			}
-			return StrutsReportUtil.getInstance().getDownloadInfo(collection,
-					vulpe.controller().reportParameters(),
-					vulpe.controller().config().getReportFile(),
-					vulpe.controller().config().getSubReports(), vulpe.controller().reportFormat(),
-					vulpe.controller().config().getReportName(),
+			return StrutsReportUtil.getInstance().getDownloadInfo(collection, vulpe.controller().reportParameters(),
+					vulpe.controller().config().getReportFile(), vulpe.controller().config().getSubReports(),
+					vulpe.controller().reportFormat(), vulpe.controller().config().getReportName(),
 					vulpe.controller().config().isReportDownload());
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
@@ -313,12 +305,11 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		try {
 			Object value = ever.get(vulpe.controller().downloadKey());
 			if (value == null) {
-				value = ognlUtil.getValue(vulpe.controller().downloadKey(), ActionContext
-						.getContext().getContextMap(), this);
+				value = ognlUtil.getValue(vulpe.controller().downloadKey(), ActionContext.getContext().getContextMap(),
+						this);
 			}
-			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, vulpe
-					.controller().downloadContentType(), vulpe.controller()
-					.downloadContentDisposition());
+			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, vulpe.controller()
+					.downloadContentType(), vulpe.controller().downloadContentDisposition());
 			if (downloadInfo != null) {
 				downloadInfo.setKey(vulpe.controller().downloadKey());
 			}
@@ -388,8 +379,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	public void addActionError(final String anErrorMessage) {
 		if (anErrorMessage.startsWith("{") && anErrorMessage.endsWith("}")) {
-			final String message = vulpe.controller().text(
-					anErrorMessage.substring(1, anErrorMessage.length() - 1));
+			final String message = vulpe.controller().text(anErrorMessage.substring(1, anErrorMessage.length() - 1));
 			validationAware.addActionError(message);
 		} else {
 			validationAware.addActionError(anErrorMessage);
@@ -398,8 +388,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 
 	public void addActionMessage(final String aMessage) {
 		if (aMessage.startsWith("{") && aMessage.endsWith("}")) {
-			final String message = vulpe.controller().text(
-					aMessage.substring(1, aMessage.length() - 1));
+			final String message = vulpe.controller().text(aMessage.substring(1, aMessage.length() - 1));
 			validationAware.addActionMessage(message);
 		} else {
 			validationAware.addActionMessage(aMessage);
@@ -497,8 +486,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (detailConfig.getParentDetailConfig() == null) {
 				despiseDetail(this, entity, detailConfig);
 				try {
-					final List<ENTITY> beans = (List<ENTITY>) Ognl.getValue(detailConfig
-							.getPropertyName(), context, this);
+					final List<ENTITY> beans = (List<ENTITY>) Ognl.getValue(detailConfig.getPropertyName(), context,
+							this);
 					if (!validateQuantity(beans, detailConfig)) {
 						valid = false;
 					}
@@ -522,15 +511,13 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 	 * org.vulpe.controller.commons.VulpeBaseDetailConfig)
 	 */
 	@Override
-	protected void despiseDetail(final Object parent, final ENTITY baseEntity,
-			final VulpeBaseDetailConfig detailConfig) {
+	protected void despiseDetail(final Object parent, final ENTITY baseEntity, final VulpeBaseDetailConfig detailConfig) {
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
-					.getPropertyName(), context, parent);
+			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig.getPropertyName(),
+					context, parent);
 			final List<VulpeEntity<?>> deleted = despiseDetailItens(beans, detailConfig);
-			if (VulpeValidationUtil.isNotEmpty(deleted)
-					&& VulpeValidationUtil.isNotEmpty(baseEntity)) {
+			if (VulpeValidationUtil.isNotEmpty(deleted) && VulpeValidationUtil.isNotEmpty(baseEntity)) {
 				baseEntity.getDeletedDetails().addAll(deleted);
 			}
 			if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
@@ -559,16 +546,15 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		boolean has = false;
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
-					.getPropertyName(), context, parent);
+			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig.getPropertyName(),
+					context, parent);
 			if (beans != null && beans.size() > 1) {
 				has = duplicatedDetailItens(beans, detailConfig);
 			}
 			if (!has) {
 				if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
 					for (final VulpeEntity<?> bean : beans) {
-						for (final VulpeBaseDetailConfig subDetailConfig : detailConfig
-								.getSubDetails()) {
+						for (final VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
 							has = duplicatedDetail(bean, baseEntity, subDetailConfig);
 						}
 					}
@@ -601,17 +587,14 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					vulpe.controller().detail());
 			if (detailConfig != null) {
-				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig
-						.getNewDetails();
+				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig.getNewDetails();
 			}
-			final Collection collection = (Collection) Ognl.getValue(vulpe.controller().detail(),
-					context, this);
+			final Collection collection = (Collection) Ognl.getValue(vulpe.controller().detail(), context, this);
 			for (int i = 0; i < newDetails; i++) {
 				doAddDetail(collection);
 			}
 			if (detailConfig != null) {
-				final Paging<ENTITY> paging = ever.getSelf(detailConfig.getName()
-						+ Controller.DETAIL_PAGING_LIST);
+				final Paging<ENTITY> paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
 				if (paging != null) {
 					int id = paging.getRealList().size();
 					for (final ENTITY entity : (List<ENTITY>) collection) {
@@ -636,8 +619,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					paging.setList(list);
 				}
 				newDetails = detailConfig.getNewDetails();
-				final String parentName = vulpe.controller().config().getParentName(
-						vulpe.controller().detail());
+				final String parentName = vulpe.controller().config().getParentName(vulpe.controller().detail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
@@ -690,11 +672,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		final Map context = ActionContext.getContext().getContextMap();
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
-		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
-		if (((vulpe.controller().type().equals(ControllerType.TABULAR) && (view
-				.addNewDetailsOnTop() || vulpe.controller().config().getTabularConfig()
-				.isAddNewDetailsOnTop())) || (vulpe.controller().type().equals(ControllerType.MAIN) && (view
-				.addNewDetailsOnTop() || vulpe.controller().detailConfig().isAddNewDetailsOnTop())))
+		if (((vulpe.controller().type().equals(ControllerType.TABULAR) && vulpe.controller().config()
+				.getTabularConfig().isAddNewDetailsOnTop()) || (vulpe.controller().type().equals(ControllerType.MAIN) && vulpe
+				.controller().detailConfig().isAddNewDetailsOnTop()))
 				&& VulpeValidationUtil.isNotEmpty(collection)) {
 			final Object value = accessor.getProperty(context, collection, 0);
 			try {
@@ -721,8 +701,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (subDetail) {
 				final Map context = ActionContext.getContext().getContextMap();
 				try {
-					final Collection collection = (Collection) Ognl.getValue(vulpe.controller()
-							.detail(), context, this);
+					final Collection collection = (Collection) Ognl
+							.getValue(vulpe.controller().detail(), context, this);
 					for (int i = 0; i < collection.size(); i++) {
 						vulpe.controller().detail(
 								detail.getParentDetailConfig().getPropertyName() + "[" + i + "]."

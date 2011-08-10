@@ -23,6 +23,8 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.annotations.Quantity;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.view.tags.Functions;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -57,14 +59,15 @@ public class VulpeBaseDetailConfig implements Serializable {
 	}
 
 	public VulpeBaseDetailConfig(final String name, final String propertyName, final int startNewDetails,
-			final int newDetails, final boolean addNewDetailsOnTop, final boolean showFilter,
+			final int newDetails, final boolean reverse, final boolean showFilter,
 			final String[] despiseFields) {
 		this.name = name;
 		this.propertyName = propertyName;
 		this.startNewDetails = startNewDetails == 0 ? 1 : startNewDetails;
 		this.newDetails = newDetails == 0 ? 1 : newDetails;
 		this.despiseFields = despiseFields.clone();
-		this.addNewDetailsOnTop = addNewDetailsOnTop;
+		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
+		this.addNewDetailsOnTop = reverse ? !view.addNewDetailsOnTop() : view.addNewDetailsOnTop();
 		this.showFilter = showFilter;
 		setSimpleName();
 	}
@@ -159,7 +162,8 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.parentDetailConfig = (VulpeBaseDetailConfig) config.getDetail(detail.parentDetailName());
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
-		this.addNewDetailsOnTop = detail.addNewDetailsOnTop();
+		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
+		this.addNewDetailsOnTop = detail.reverse() ? !view.addNewDetailsOnTop() : view.addNewDetailsOnTop();
 		this.notControlView = detail.notControlView();
 		this.showAsAccordion = detail.showAsArccodion();
 		this.pageSize = detail.pageSize();

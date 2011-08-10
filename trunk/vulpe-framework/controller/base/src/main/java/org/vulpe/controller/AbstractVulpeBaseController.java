@@ -683,15 +683,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	protected void mountDetailPaging(final VulpeBaseDetailConfig detailConfig,
-			final Paging<ENTITY> paging) {
+			final Paging<ENTITY> currentPaging) {
 		final List<ENTITY> list = new ArrayList<ENTITY>();
 		if (paging != null && paging.getPage() != null) {
-			paging.setPage(paging.getPage());
+			currentPaging.setPage(paging.getPage());
 		}
 		int count = 1;
 		int total = 0;
-		for (final ENTITY entity : paging.getRealList()) {
-			if (count > ((paging.getPage() - 1) * paging.getPageSize())) {
+		for (final ENTITY entity : currentPaging.getRealList()) {
+			if (count > ((currentPaging.getPage() - 1) * currentPaging.getPageSize())) {
 				if (total == detailConfig.getPageSize()) {
 					break;
 				}
@@ -700,8 +700,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			++count;
 		}
-		paging.processPage();
-		paging.setList(list);
+		currentPaging.processPage();
+		currentPaging.setList(list);
 	}
 
 	protected void repairDetailPaging(final List<ENTITY> values, final Paging<ENTITY> paging) {
