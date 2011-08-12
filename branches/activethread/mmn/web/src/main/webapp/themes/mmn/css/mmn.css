@@ -44,6 +44,10 @@
 	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
+.vulpeButton:hover, .vulpeSubmit:hover {
+	border: 1px #999 solid;
+}
+
 .vulpeButton img, .vulpeSubmit img, .vulpeSubmitOff img {
 	vertical-align: middle;	
 }
@@ -351,7 +355,7 @@
 #header {
 	background: url("../images/header-background.png") repeat-x;
 	width: 100%;
-	height: 78px;
+	height: 50px;
 }
 
 #header .image {
