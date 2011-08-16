@@ -71,7 +71,7 @@
 		<c:set var="items" value="${pagingList.list}"/>
 		<c:if test="${empty pagingActionName}"><c:set var="pagingActionName" value="${now['controllerConfig'].ownerController}/read/page"/></c:if>
 		<c:if test="${empty pagingFormName}"><c:set var="pagingFormName" value="${vulpeFormName}"/></c:if>
-		<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="${pagingFormName}"/></c:if>
+		<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="vulpeSelectForm"/></c:if>
 		<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable'}"/></c:if>
 	</c:if>
 	<c:if test="${not empty detailConfig && empty targetConfig.parentDetailConfig}">
@@ -82,7 +82,7 @@
 			<c:set var="pagingList" value="${detailPagingList}"/>
 			<c:if test="${empty pagingActionName}"><c:set var="pagingActionName" value="${now['controllerConfig'].ownerController}/detail/${detailConfig.name}/page"/></c:if>
 			<c:if test="${empty pagingFormName}"><c:set var="pagingFormName" value="${vulpeFormName}"/></c:if>
-			<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="vulpeDetailBody-${detailConfig.name}"/></c:if>
+			<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="this"/></c:if>
 			<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="vulpeDetailBody-${detailConfig.name}"/></c:if>
 			<c:set var="items" value="${pagingList.list}"/>
 		</c:if>
