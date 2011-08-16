@@ -21,6 +21,23 @@
 	width: auto;
 }
 
+.vulpeSubmit, .vulpeSubmitOff {
+	background: url("../../images/background-button.png") repeat-x scroll 0 0 #e7e7e7;
+	border: 1px #CCCCCC solid;
+	cursor: pointer;
+	width: auto;
+	color: #333;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	padding: 1px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.vulpeButton:hover, .vulpeSubmit:hover {
+	border: 1px #999 solid;
+}
+
 .vulpeBlockLabel {
 	display: block;
 	width: auto;
@@ -556,6 +573,7 @@ html,body {
 }
 
 #search input {
+	border: 1px #CCCCCC solid;
 	padding: 5px;
 	outline: 0;
 	-moz-border-radius: 3px 0px 0px 3px;
@@ -565,8 +583,14 @@ html,body {
 #search .vulpeSubmit {
 	cursor: pointer;
 	padding: 4px;
+	-webkit-padding-before: 5px;
+	-webkit-padding-after: 5px;
 	-moz-border-radius: 0px 3px 3px 0px;
 	-webkit-border-radius: 0px 3px 3px 0px;
+}
+
+#search .vulpeSubmit:hover {
+	border: 1px #999 solid;
 }
 
 /*
