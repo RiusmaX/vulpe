@@ -70,6 +70,9 @@ public class VulpeLoginController extends VulpeStrutsController<VulpeBaseSimpleE
 	public void layout() {
 		final DefaultSavedRequest savedRequest = vulpe
 				.sessionAttribute(WebAttributes.SAVED_REQUEST);
+		if (!ever.containsKey(View.CURRENT_LAYOUT)) {
+			ever.put(View.CURRENT_LAYOUT, "FRONTEND");	
+		}
 		if (savedRequest != null && savedRequest.getRedirectUrl().contains("/backend")) {
 			ever.put(View.CURRENT_LAYOUT, "BACKEND");
 		}
