@@ -49,6 +49,12 @@
 	itemLabel="name"
 	showBlank="true" autoLoad="true"
 />
+<v:text
+	labelKey="label.portal.core.Portal.main.pageTracker"
+	property="pageTracker"
+	size="40"
+	maxlength="400"
+/>
 <v:select
 	labelKey="label.portal.core.Portal.main.status"
 	property="status"
