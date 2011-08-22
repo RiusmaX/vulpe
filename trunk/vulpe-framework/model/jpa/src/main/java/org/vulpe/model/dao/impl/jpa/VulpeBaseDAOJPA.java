@@ -63,8 +63,8 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
  */
 @SuppressWarnings( { "unchecked" })
 @Repository
-public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
-		AbstractVulpeBaseDAOJPA<ENTITY, ID> {
+public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends AbstractVulpeBaseDAOJPA<ENTITY, ID> {
 
 	/*
 	 * (non-Javadoc)
@@ -104,7 +104,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	private void simpleDelete(final ENTITY entity) throws VulpeApplicationException {
 		// persistent entity
-		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(), entity.getId());
+		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
+				entity.getId());
 		audit(entity, AuditOccurrenceType.DELETE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
@@ -134,11 +135,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		boolean valid = true;
 		final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
 		if (notDeleteIf != null) {
-			final String propertyName = VulpeStringUtil.lowerCaseFirst(entity.getClass().getSimpleName());
+			final String propertyName = VulpeStringUtil.lowerCaseFirst(entity.getClass()
+					.getSimpleName());
 			StringBuilder hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ");
 			for (final Class<? extends VulpeEntity<?>> entityClass : notDeleteIf.usedBy().value()) {
-				hqlNotDeleteIf.append(entityClass.getSimpleName()).append(" obj where obj.").append(propertyName)
-						.append(".id = :").append(propertyName);
+				hqlNotDeleteIf.append(entityClass.getSimpleName()).append(" obj where obj.")
+						.append(propertyName).append(".id = :").append(propertyName);
 				final Query query = getEntityManager().createQuery(hqlNotDeleteIf.toString());
 				query.setParameter(propertyName, entity.getId());
 				final Long size = (Long) query.getSingleResult();
@@ -150,8 +152,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			}
 			if (valid && notDeleteIf.conditions().value().length > 0) {
 				hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ").append(
-						entity.getClass().getSimpleName()).append(" obj where obj.id = ").append(entity.getId())
-						.append(" and (");
+						entity.getClass().getSimpleName()).append(" obj where obj.id = ").append(
+						entity.getId()).append(" and (");
 				int count = 0;
 				for (final String condition : notDeleteIf.conditions().value()) {
 					if (count > 0 && count < notDeleteIf.conditions().value().length) {
@@ -161,7 +163,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					++count;
 				}
 				hqlNotDeleteIf.append(")");
-				final Long size = (Long) getEntityManager().createQuery(hqlNotDeleteIf.toString()).getSingleResult();
+				final Long size = (Long) getEntityManager().createQuery(hqlNotDeleteIf.toString())
+						.getSingleResult();
 				if (size == 1) {
 					entity.setConditional(true);
 					valid = false;
@@ -287,8 +290,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	private void mountOrder(final ENTITY entity, final StringBuilder order) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
-			if ((field.isAnnotationPresent(IgnoreAutoFilter.class) || field.isAnnotationPresent(Transient.class) || Modifier
-					.isTransient(field.getModifiers()))
+			if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
+					|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
+					.getModifiers()))
 					&& !field.isAnnotationPresent(QueryParameter.class)) {
 				continue;
 			}
@@ -297,12 +301,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (StringUtils.isNotBlank(order.toString())) {
 					order.append(",");
 				}
-				order.append("obj.").append(field.getName()).append(" ").append(orderBy.type().name());
+				order.append("obj.").append(field.getName()).append(" ").append(
+						orderBy.type().name());
 			}
 		}
 	}
 
-	private void mountParameters(final ENTITY entity, final Map<String, Object> params, final String parent) {
+	private void mountParameters(final ENTITY entity, final Map<String, Object> params,
+			final String parent) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		if (StringUtils.isNotEmpty(entity.getAutocomplete())) {
 			try {
@@ -325,8 +331,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			}
 		} else {
 			for (final Field field : fields) {
-				if ((field.isAnnotationPresent(IgnoreAutoFilter.class) || field.isAnnotationPresent(Transient.class) || Modifier
-						.isTransient(field.getModifiers()))
+				if ((field.isAnnotationPresent(IgnoreAutoFilter.class)
+						|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
+						.getModifiers()))
 						&& !field.isAnnotationPresent(QueryParameter.class)) {
 					continue;
 				}
@@ -335,13 +342,16 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					Class<?> valueClass = PropertyUtils.getPropertyType(entity, field.getName());
 					if (VulpeEntity.class.isAssignableFrom(valueClass)) {
 						final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
-						final QueryParameter queryParameter = field.getAnnotation(QueryParameter.class);
+						final QueryParameter queryParameter = field
+								.getAnnotation(QueryParameter.class);
 						String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
-								+ (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()) ? "_"
+								+ (queryParameter != null
+										&& StringUtils.isNotEmpty(queryParameter.value()) ? "_"
 										+ queryParameter.value() : field.getName());
 						if (value != null) {
 							if (manyToOne != null
-									|| (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value()))) {
+									|| (queryParameter != null && StringUtils
+											.isNotEmpty(queryParameter.value()))) {
 								if (!value.getClass().getSimpleName().contains(CGLIB_ENHANCER)) {
 									mountParameters((ENTITY) value, params, paramName);
 								}
@@ -350,10 +360,14 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							}
 						}
 					} else if (isNotEmpty(value)) {
-						final QueryParameter queryParameter = field.getAnnotation(QueryParameter.class);
-						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
-								+ (queryParameter != null && StringUtils.isNotEmpty(queryParameter.value())
-										&& queryParameter.fake() ? "!" + queryParameter.value() : field.getName());
+						final QueryParameter queryParameter = field
+								.getAnnotation(QueryParameter.class);
+						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "."
+								: "")
+								+ (queryParameter != null
+										&& StringUtils.isNotEmpty(queryParameter.value())
+										&& queryParameter.fake() ? "!" + queryParameter.value()
+										: field.getName());
 						final Like like = field.getAnnotation(Like.class);
 						if (like != null) {
 							if (like.type().equals(LikeType.BEGIN)) {
@@ -386,9 +400,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		mountOrder(entity, order);
 		mountParameters(entity, params, null);
 		final StringBuilder hql = new StringBuilder();
-		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass().getSimpleName().concat(".read"));
+		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
+				.getSimpleName().concat(".read"));
 		QueryConfiguration queryConfiguration = null;
-		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(QueryConfigurations.class);
+		final QueryConfigurations queryConfigurations = entity.getClass().getAnnotation(
+				QueryConfigurations.class);
 		if (queryConfigurations != null) {
 			final String queryConfigurationName = entity.getQueryConfigurationName();
 			for (final QueryConfiguration queryConfig : queryConfigurations.value()) {
@@ -398,7 +414,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				}
 			}
 		}
-		final boolean complement = queryConfiguration != null && queryConfiguration.complement() != null;
+		final boolean complement = queryConfiguration != null
+				&& queryConfiguration.complement() != null;
 		final boolean replace = queryConfiguration != null && queryConfiguration.replace() != null;
 		if (namedQuery == null) {
 			hql.append("select ");
@@ -420,8 +437,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					} else {
 						hql.append(", obj.").append(entity.getAutocomplete());
 					}
-					final List<Field> autocompleteFields = VulpeReflectUtil.getFieldsWithAnnotation(entity.getClass(),
-							Autocomplete.class);
+					final List<Field> autocompleteFields = VulpeReflectUtil
+							.getFieldsWithAnnotation(entity.getClass(), Autocomplete.class);
 					for (Field field : autocompleteFields) {
 						if (!field.getName().equals(entity.getAutocomplete())) {
 							hql.append(", obj.").append(field.getName());
@@ -430,7 +447,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append(")");
 				} else {
 					hql.append("obj");
-					if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
+					if (complement
+							&& StringUtils.isNotEmpty(queryConfiguration.complement().select())) {
 						hql.append(", ");
 						hql.append(queryConfiguration.complement().select());
 					}
@@ -453,7 +471,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							String parent = "obj";
 							for (final String join : joins) {
 								final StringBuilder joinString = new StringBuilder("join ");
-								joinString.append(parent).append(".").append(join).append(" ").append(join).append(" ");
+								joinString.append(parent).append(".").append(join).append(" ")
+										.append(join).append(" ");
 								if (!hql.toString().contains(joinString.toString())) {
 									hqlJoin.append(joinString.toString());
 								}
@@ -473,8 +492,11 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(namedQuery.query());
 		}
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().where())) {
-			hql.append(" where ");
-			hql.append(queryConfiguration.replace().where());
+			final String replaceWhere = validateWhereFunctions(entity, queryConfiguration.replace()
+					.where());
+			if (StringUtils.isNotBlank(replaceWhere)) {
+				hql.append(" where ").append(replaceWhere);
+			}
 		} else {
 			if (!params.isEmpty()) {
 				if (!hql.toString().toLowerCase().contains("where")) {
@@ -493,10 +515,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						continue;
 					}
 					final Object value = params.get(name);
-					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(QueryParameter.class,
-							entity.getClass(), name);
-					if (queryParameter == null || StringUtils.isEmpty(queryParameter.equals().name())) {
-						String hqlAttributeName = name.startsWith("_") ? name.replace("_", "") : "obj." + name;
+					final QueryParameter queryParameter = VulpeReflectUtil.getAnnotationInField(
+							QueryParameter.class, entity.getClass(), name);
+					if (queryParameter == null
+							|| StringUtils.isEmpty(queryParameter.equals().name())) {
+						String hqlAttributeName = name.startsWith("_") ? name.replace("_", "")
+								: "obj." + name;
 						String hqlParamName = name.replace("_", "").replaceAll("\\.", "_");
 						if (VulpeStringUtil.count(name, ".") > 1) {
 							final String attributeName = name.substring(name.lastIndexOf("."));
@@ -507,13 +531,15 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (value instanceof String) {
 							final String valueString = (String) value;
 							final boolean useLike = valueString.startsWith("[like]");
-							hql.append("upper(").append(hqlAttributeName).append(") ").append(useLike ? "like" : "=")
-									.append(" upper(:").append(hqlParamName).append(")");
+							hql.append("upper(").append(hqlAttributeName).append(") ").append(
+									useLike ? "like" : "=").append(" upper(:").append(hqlParamName)
+									.append(")");
 						} else {
 							hql.append(hqlAttributeName).append(" = :").append(hqlParamName);
 						}
 					} else {
-						final Like like = VulpeReflectUtil.getAnnotationInField(Like.class, entity.getClass(), name);
+						final Like like = VulpeReflectUtil.getAnnotationInField(Like.class, entity
+								.getClass(), name);
 						if (queryParameter.orEquals().length > 0) {
 							hql.append("(");
 						}
@@ -545,12 +571,16 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				params.put("status", Status.D);
 			}
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().where())) {
-				if (!hql.toString().toLowerCase().contains("where")) {
-					hql.append(" where ");
-				} else if (!hql.toString().toLowerCase().trim().endsWith("where")) {
-					hql.append(" and ");
+				final String complementWhere = validateWhereFunctions(entity, queryConfiguration
+						.complement().where());
+				if (StringUtils.isNotBlank(complementWhere)) {
+					if (!hql.toString().toLowerCase().contains("where")) {
+						hql.append(" where ");
+					} else if (!hql.toString().toLowerCase().trim().endsWith("where")) {
+						hql.append(" and ");
+					}
+					hql.append(complementWhere);
 				}
-				hql.append(queryConfiguration.complement().where());
 			}
 		}
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().groupBy())) {
@@ -568,7 +598,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(queryConfiguration.replace().orderBy());
 		} else {
 			if (StringUtils.isNotEmpty(order.toString())
-					&& (entity.getOrderBy().equals("obj.id") || StringUtils.isBlank(entity.getOrderBy()))) {
+					&& (entity.getOrderBy().equals("obj.id") || StringUtils.isBlank(entity
+							.getOrderBy()))) {
 				entity.setOrderBy(order.toString());
 			}
 			if (StringUtils.isNotEmpty(entity.getOrderBy())) {
@@ -591,7 +622,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		return hql.toString();
 	}
 
-	private String addHQLQueryParameter(final Parameter parameter, final String paramName, final Like like) {
+	private String addHQLQueryParameter(final Parameter parameter, final String paramName,
+			final Like like) {
 		final StringBuilder hql = new StringBuilder();
 		if (like != null) {
 			hql.append("upper(");
@@ -631,8 +663,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	protected Class<ENTITY> getEntityClass() {
 		if (entityClass == null) {
-			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(), getClass()
-					.getGenericSuperclass());
+			final DeclaredType declaredType = VulpeReflectUtil.getDeclaredType(getClass(),
+					getClass().getGenericSuperclass());
 			if (declaredType.getItems().isEmpty()) {
 				return null;
 			}
@@ -729,8 +761,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 					hql.append(")");
 				}
 				try {
-					values.put(queryParameter.equals().name(), PropertyUtils.getProperty(entity, queryParameter
-							.equals().name()));
+					values.put(queryParameter.equals().name(), PropertyUtils.getProperty(entity,
+							queryParameter.equals().name()));
 				} catch (Exception e) {
 					LOG.error(e);
 				}
@@ -781,22 +813,38 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 	}
 
-	public static void main(String[] args) {
-		StringBuilder hql = new StringBuilder();
-		final Map<String, Object> params = new HashMap<String, Object>();
-		params.put("obj.normaExternaRCI.rci.id", "1");
-		for (final String name : params.keySet()) {
-			String paramName = name.replace("obj.", "");
-			paramName = paramName.substring(0, paramName.lastIndexOf("."));
-			String[] joins = paramName.split("\\.");
-			if (joins.length > 1) {
-				String parent = "obj";
-				for (String join : joins) {
-					hql.append(" join ").append(parent).append(".").append(join);
-					parent = join;
-				}
+	private String validateWhereFunctions(final ENTITY entity, String where) {
+		emptyWhereFunction(entity, where);
+		notEmptyWhereFunction(entity, where);
+		return where;
+	}
+
+	private void notEmptyWhereFunction(final ENTITY entity, String where) {
+		whereFunction(entity, where, "notEmpty");
+	}
+
+	private void emptyWhereFunction(final ENTITY entity, String where) {
+		whereFunction(entity, where, "empty");
+	}
+
+	private void whereFunction(final ENTITY entity, String where, final String token) {
+		final String initialToken = token + "(";
+		while (where.contains(initialToken)) {
+			int initialPos = where.indexOf(token);
+			int initialAttributePos = where.indexOf(token) + token.length();
+			int finalPos = where.indexOf(")");
+			String whereAttributte = where.substring(initialAttributePos, where.indexOf(")"));
+			where = where.substring(0, initialPos) + where.substring(finalPos + 1);
+			int openPos = where.indexOf("{");
+			int closePos = where.indexOf("}");
+			if (entity != null
+					&& VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
+							whereAttributte))) {
+				where = where.substring(0, openPos) + where.substring(openPos + 1, closePos)
+						+ where.substring(closePos + 1);
+			} else {
+				where = where.substring(0, openPos) + where.substring(closePos + 1);
 			}
 		}
-		System.out.println(hql.toString());
 	}
 }
