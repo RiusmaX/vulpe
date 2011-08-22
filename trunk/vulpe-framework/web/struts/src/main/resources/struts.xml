@@ -108,7 +108,7 @@
 				<param name="contentType">${now['downloadInfo'].contentType}</param>
 				<param name="contentLength">${now['downloadInfo'].contentLength}</param>
 				<param name="contentDisposition">${now['downloadInfo'].contentDisposition}</param>
-				<param name="inputName">${now['downloadInfo'].inputStream}</param>
+				<param name="inputName">now['downloadInfo'].inputStream</param>
 			</result>
 			<result name="export" type="export"/>
 			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp</result>
