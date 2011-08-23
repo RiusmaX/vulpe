@@ -42,7 +42,7 @@ import com.thoughtworks.xstream.XStream;
 public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
 		VulpeEntity<ID>, Cloneable {
 
-	private static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
+	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
 	@IgnoreEmpty
 	@IgnoreAudit

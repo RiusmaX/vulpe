@@ -26,6 +26,7 @@ import javax.sql.rowset.serial.SerialClob;
 import org.apache.log4j.Logger;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
+import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeDAO;
@@ -54,11 +55,12 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType,
 			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
+			final String userAuthenticated = (String) entity.getMap().get(Security.USER_AUTHENTICATED);
 			AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity.getClass()
-					.getName(), entity.getId().toString(), "");
+					.getName(), entity.getId().toString(), userAuthenticated);
 			if (occurrenceParent != null) {
 				occurrence = new AuditOccurrence(occurrenceParent, auditOccurrenceType, entity
-						.getClass().getName(), entity.getId().toString(), "");
+						.getClass().getName(), entity.getId().toString(), userAuthenticated);
 			}
 
 			if (LOG.isDebugEnabled()) {

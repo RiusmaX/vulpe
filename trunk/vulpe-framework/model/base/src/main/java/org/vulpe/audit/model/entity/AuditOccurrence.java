@@ -191,7 +191,7 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	}
 
 	public List<XMLAttribute> getDataHistoryAttributes() {
-		StringBuilder history = new StringBuilder();
+		final StringBuilder history = new StringBuilder();
 		try {
 			String aux = "";
 			final BufferedReader buffer = new BufferedReader(getDataHistory().getCharacterStream());
@@ -199,9 +199,9 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 				history.append(aux);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 		return new XMLReader().reader(history.toString());
 	}

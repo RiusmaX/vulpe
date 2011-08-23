@@ -1,11 +1,16 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
-
+<div class="line">
 <v:text labelKey="label.vulpe.audit.Occurrence.main.id" property="id" showAsText="true"/>
 <v:text labelKey="label.vulpe.audit.Occurrence.main.occurrenceType" property="occurrenceType" showAsText="true"/>
+</div>
+<div class="line">
 <v:text labelKey="label.vulpe.audit.Occurrence.main.entity" property="entity" showAsText="true"/>
 <v:text labelKey="label.vulpe.audit.Occurrence.main.primaryKey" property="primaryKey" showAsText="true"/>
+</div>
+<div class="line">
 <v:text labelKey="label.vulpe.audit.Occurrence.main.username" property="username" showAsText="true"/>
 <v:date labelKey="label.vulpe.audit.Occurrence.main.dateTime" property="dateTime" showAsText="true"/>
+</div>
 <fieldset>
 	<legend>&nbsp;<fmt:message key="label.vulpe.audit.dataHistory"/>&nbsp;</legend>
 	<table>
