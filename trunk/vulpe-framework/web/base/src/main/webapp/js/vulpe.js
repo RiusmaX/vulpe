@@ -1874,7 +1874,7 @@ var vulpe = {
 		 */
 		showPopup: function(options) {
 			$('#' + options.id).attr("title", function() {
-				var popupTitle = jQuery("#contentTitle", "#" + options.id);
+				var popupTitle = jQuery("#content", "#" + options.id).find("#title");
 				if (popupTitle) {
 					popupTitle.hide();
 					return popupTitle.html();
@@ -2390,14 +2390,14 @@ var vulpe = {
 									} else {
 										layerObject.html(html);
 										if (vulpe.util.existsVulpePopups(options.layer)) {
-											var popupTitle = jQuery("#contentTitle", layerObject);
+											var popupTitle = jQuery("#content", layerObject).find("#title");
 											if (popupTitle) {
 												popupTitle.hide();
 											}
 										}
 										vulpe.view.checkRequiredFields(layerObject);
+										vulpe.view.checkRows(layerObject);
 										if (vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) { 
-											vulpe.view.checkRows(layerObject);
 											if (!vulpe.util.existsVulpePopups()) {
 												vulpe.view.enableMarkUnmarkAll("selected", layerObject);
 												vulpe.view.controlMarkUnmarkAll("selected", layerObject);
