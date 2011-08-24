@@ -2517,7 +2517,11 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;
 				}
-				var parent = vulpe.util.isNotEmpty(options.formName) ? "#" + options.formName : "";
+				var parent = "";
+				if (vulpe.util.isNotEmpty(options.formName)) {
+					parent = "#" + options.formName;
+					vulpe.config.formName = options.formName;
+				}
 				options.beforeJs = ''; // set empty do not validate on submitPage
 				for (var i = 0; i < vulpe.RTEs.length; i++) {
 					var rteId = vulpe.RTEs[i];
