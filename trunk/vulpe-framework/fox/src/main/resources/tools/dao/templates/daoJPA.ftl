@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository("${dao.daoName}")
 @Transactional
+<#if dao.methods?has_content>
 @SuppressWarnings("unchecked")
+</#if>
 <#if dao.daoSuperclassName??>
 <#if dao.inheritance>
 public class ${dao.daoName}JPA<ENTITY_CLASS extends ${dao.name}> extends ${dao.daoPackageName}.impl.jpa.${dao.daoSuperclassSimpleName}JPA<ENTITY_CLASS> implements ${dao.daoName}<ENTITY_CLASS> {

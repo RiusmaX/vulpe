@@ -813,38 +813,46 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 	}
 
-	private String validateWhereFunctions(final ENTITY entity, String where) {
-		emptyWhereFunction(entity, where);
-		notEmptyWhereFunction(entity, where);
-		return where;
+	private String validateWhereFunctions(final ENTITY entity, final String where) {
+		String whereModified = emptyWhereFunction(entity, where);
+		whereModified = notEmptyWhereFunction(entity, whereModified);
+		return whereModified;
 	}
 
-	private void notEmptyWhereFunction(final ENTITY entity, String where) {
-		whereFunction(entity, where, "notEmpty");
+	private String notEmptyWhereFunction(final ENTITY entity, final String where) {
+		return whereFunction(entity, where, "notEmpty");
 	}
 
-	private void emptyWhereFunction(final ENTITY entity, String where) {
-		whereFunction(entity, where, "empty");
+	private String emptyWhereFunction(final ENTITY entity, final String where) {
+		return whereFunction(entity, where, "empty");
 	}
 
-	private void whereFunction(final ENTITY entity, String where, final String token) {
+	private String whereFunction(final ENTITY entity, final String where, final String token) {
+		String whereModified = where;
 		final String initialToken = token + "(";
-		while (where.contains(initialToken)) {
-			int initialPos = where.indexOf(token);
-			int initialAttributePos = where.indexOf(token) + token.length();
-			int finalPos = where.indexOf(")");
-			String whereAttributte = where.substring(initialAttributePos, where.indexOf(")"));
-			where = where.substring(0, initialPos) + where.substring(finalPos + 1);
-			int openPos = where.indexOf("{");
-			int closePos = where.indexOf("}");
+		while (whereModified.contains(initialToken)) {
+			final int initialPos = whereModified.indexOf(token);
+			final int initialAttributePos = whereModified.indexOf(initialToken)
+					+ initialToken.length();
+			final int finalPos = whereModified.indexOf(")");
+			final String whereAttributte = whereModified.substring(initialAttributePos,
+					whereModified.indexOf(")"));
+			whereModified = whereModified.substring(0, initialPos)
+					+ whereModified.substring(finalPos + 1);
+			final int openPos = whereModified.indexOf("{");
+			final int closePos = whereModified.indexOf("}");
 			if (entity != null
 					&& VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
 							whereAttributte))) {
-				where = where.substring(0, openPos) + where.substring(openPos + 1, closePos)
-						+ where.substring(closePos + 1);
+				whereModified = whereModified.substring(0, openPos)
+						+ whereModified.substring(openPos + 1, closePos)
+						+ whereModified.substring(closePos + 1);
 			} else {
-				where = where.substring(0, openPos) + where.substring(closePos + 1);
+				whereModified = whereModified.substring(0, openPos)
+						+ whereModified.substring(closePos + 1);
 			}
 		}
+		return whereModified;
 	}
+
 }
