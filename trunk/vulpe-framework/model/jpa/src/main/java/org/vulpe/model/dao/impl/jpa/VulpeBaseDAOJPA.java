@@ -399,7 +399,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final StringBuilder order = new StringBuilder();
 		mountOrder(entity, order);
 		mountParameters(entity, params, null);
-		final StringBuilder hql = new StringBuilder();
+		StringBuilder hql = new StringBuilder();
 		final NamedQuery namedQuery = getNamedQuery(getEntityClass(), getEntityClass()
 				.getSimpleName().concat(".read"));
 		QueryConfiguration queryConfiguration = null;
@@ -492,11 +492,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			hql.append(namedQuery.query());
 		}
 		if (replace && StringUtils.isNotEmpty(queryConfiguration.replace().where())) {
-			final String replaceWhere = validateWhereFunctions(entity, queryConfiguration.replace()
-					.where());
-			if (StringUtils.isNotBlank(replaceWhere)) {
-				hql.append(" where ").append(replaceWhere);
-			}
+			hql.append(" where ").append(queryConfiguration.replace().where());
 		} else {
 			if (!params.isEmpty()) {
 				if (!hql.toString().toLowerCase().contains("where")) {
@@ -571,7 +567,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				params.put("status", Status.D);
 			}
 			if (complement && StringUtils.isNotEmpty(queryConfiguration.complement().where())) {
-				final String complementWhere = validateWhereFunctions(entity, queryConfiguration
+				final String complementWhere = validateQueryFunctions(entity, queryConfiguration
 						.complement().where());
 				if (StringUtils.isNotBlank(complementWhere)) {
 					if (!hql.toString().toLowerCase().contains("where")) {
@@ -619,6 +615,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				hql.append(queryConfiguration.complement().orderBy());
 			}
 		}
+
+		hql = new StringBuilder(validateQueryFunctions(entity, hql.toString()));
 		return hql.toString();
 	}
 
@@ -813,46 +811,46 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 	}
 
-	private String validateWhereFunctions(final ENTITY entity, final String where) {
-		String whereModified = emptyWhereFunction(entity, where);
-		whereModified = notEmptyWhereFunction(entity, whereModified);
+	private String validateQueryFunctions(final ENTITY entity, final String query) {
+		String whereModified = emptyQueryFunction(entity, query);
+		whereModified = notEmptyQueryFunction(entity, whereModified);
 		return whereModified;
 	}
 
-	private String notEmptyWhereFunction(final ENTITY entity, final String where) {
-		return whereFunction(entity, where, "notEmpty");
+	private String notEmptyQueryFunction(final ENTITY entity, final String query) {
+		return queryFunction(entity, query, "notEmpty");
 	}
 
-	private String emptyWhereFunction(final ENTITY entity, final String where) {
-		return whereFunction(entity, where, "empty");
+	private String emptyQueryFunction(final ENTITY entity, final String query) {
+		return queryFunction(entity, query, "empty");
 	}
 
-	private String whereFunction(final ENTITY entity, final String where, final String token) {
-		String whereModified = where;
+	private String queryFunction(final ENTITY entity, final String query, final String token) {
+		String queryModified = query;
 		final String initialToken = token + "(";
-		while (whereModified.contains(initialToken)) {
-			final int initialPos = whereModified.indexOf(token);
-			final int initialAttributePos = whereModified.indexOf(initialToken)
+		while (queryModified.contains(initialToken)) {
+			final int initialPos = queryModified.indexOf(token);
+			final int initialAttributePos = queryModified.indexOf(initialToken)
 					+ initialToken.length();
-			final int finalPos = whereModified.indexOf(")");
-			final String whereAttributte = whereModified.substring(initialAttributePos,
-					whereModified.indexOf(")"));
-			whereModified = whereModified.substring(0, initialPos)
-					+ whereModified.substring(finalPos + 1);
-			final int openPos = whereModified.indexOf("{");
-			final int closePos = whereModified.indexOf("}");
+			final int finalPos = queryModified.indexOf(")");
+			final String whereAttributte = queryModified.substring(initialAttributePos,
+					queryModified.indexOf(")"));
+			queryModified = queryModified.substring(0, initialPos)
+					+ queryModified.substring(finalPos + 1);
+			final int openPos = queryModified.indexOf("{");
+			final int closePos = queryModified.indexOf("}");
 			if (entity != null
 					&& VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
 							whereAttributte))) {
-				whereModified = whereModified.substring(0, openPos)
-						+ whereModified.substring(openPos + 1, closePos)
-						+ whereModified.substring(closePos + 1);
+				queryModified = queryModified.substring(0, openPos)
+						+ queryModified.substring(openPos + 1, closePos)
+						+ queryModified.substring(closePos + 1);
 			} else {
-				whereModified = whereModified.substring(0, openPos)
-						+ whereModified.substring(closePos + 1);
+				queryModified = queryModified.substring(0, openPos)
+						+ queryModified.substring(closePos + 1);
 			}
 		}
-		return whereModified;
+		return queryModified;
 	}
 
 }
