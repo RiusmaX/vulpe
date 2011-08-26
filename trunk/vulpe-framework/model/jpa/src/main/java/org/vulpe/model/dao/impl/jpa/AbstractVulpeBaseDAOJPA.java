@@ -1079,4 +1079,62 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 		return entity;
 	}
+	
+	public class QueryFunction {
+		public String execute(final ENTITY entity, final String query, final String token) {
+			String queryModified = query;
+			final String initialToken = token + "(";
+			while (queryModified.contains(initialToken)) {
+				final int initialPos = queryModified.indexOf(token);
+				final int initialAttributePos = queryModified.indexOf(initialToken)
+						+ initialToken.length();
+				final int finalPos = queryModified.indexOf(")");
+				final String queryAttributte = queryModified.substring(initialAttributePos,
+						queryModified.indexOf(")"));
+				queryModified = queryModified.substring(0, initialPos)
+						+ queryModified.substring(finalPos + 1);
+				final int openPos = queryModified.indexOf("{");
+				final int closePos = queryModified.indexOf("}");
+				if (checkCondition(entity, queryAttributte)) {
+					queryModified = queryModified.substring(0, openPos)
+							+ queryModified.substring(openPos + 1, closePos)
+							+ queryModified.substring(closePos + 1);
+				} else {
+					queryModified = queryModified.substring(0, openPos)
+							+ queryModified.substring(closePos + 1);
+				}
+			}
+			return queryModified;
+		}
+
+		public boolean checkCondition(final ENTITY entity, final String queryAttributte) {
+			return false;
+		}
+	}
+
+	protected String validateQueryFunctions(final ENTITY entity, final String query) {
+		String whereModified = emptyQueryFunction(entity, query);
+		whereModified = notEmptyQueryFunction(entity, whereModified);
+		return whereModified;
+	}
+
+	protected String notEmptyQueryFunction(final ENTITY entity, final String query) {
+		return new QueryFunction() {
+			@Override
+			public boolean checkCondition(ENTITY entity, String queryAttributte) {
+				return VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
+						queryAttributte));
+			};
+		}.execute(entity, query, "notEmpty");
+	}
+
+	protected String emptyQueryFunction(final ENTITY entity, final String query) {
+		return new QueryFunction() {
+			@Override
+			public boolean checkCondition(ENTITY entity, String queryAttributte) {
+				return VulpeValidationUtil.isEmpty(VulpeReflectUtil.getFieldValue(entity,
+						queryAttributte));
+			};
+		}.execute(entity, query, "empty");
+	}
 }

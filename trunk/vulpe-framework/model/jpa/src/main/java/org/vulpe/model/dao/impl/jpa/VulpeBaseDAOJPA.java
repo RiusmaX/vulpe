@@ -811,46 +811,4 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		}
 	}
 
-	private String validateQueryFunctions(final ENTITY entity, final String query) {
-		String whereModified = emptyQueryFunction(entity, query);
-		whereModified = notEmptyQueryFunction(entity, whereModified);
-		return whereModified;
-	}
-
-	private String notEmptyQueryFunction(final ENTITY entity, final String query) {
-		return queryFunction(entity, query, "notEmpty");
-	}
-
-	private String emptyQueryFunction(final ENTITY entity, final String query) {
-		return queryFunction(entity, query, "empty");
-	}
-
-	private String queryFunction(final ENTITY entity, final String query, final String token) {
-		String queryModified = query;
-		final String initialToken = token + "(";
-		while (queryModified.contains(initialToken)) {
-			final int initialPos = queryModified.indexOf(token);
-			final int initialAttributePos = queryModified.indexOf(initialToken)
-					+ initialToken.length();
-			final int finalPos = queryModified.indexOf(")");
-			final String whereAttributte = queryModified.substring(initialAttributePos,
-					queryModified.indexOf(")"));
-			queryModified = queryModified.substring(0, initialPos)
-					+ queryModified.substring(finalPos + 1);
-			final int openPos = queryModified.indexOf("{");
-			final int closePos = queryModified.indexOf("}");
-			if (entity != null
-					&& VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
-							whereAttributte))) {
-				queryModified = queryModified.substring(0, openPos)
-						+ queryModified.substring(openPos + 1, closePos)
-						+ queryModified.substring(closePos + 1);
-			} else {
-				queryModified = queryModified.substring(0, openPos)
-						+ queryModified.substring(closePos + 1);
-			}
-		}
-		return queryModified;
-	}
-
 }
