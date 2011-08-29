@@ -34,6 +34,11 @@ public @interface Select {
 	 * Paging size of selection
 	 */
 	int pageSize() default 0;
+	
+	/**
+	 * Read all records and page only on view.
+	 */
+	boolean virtualPaging() default false;
 
 	/**
 	 * Indicates that a filter must be filled
