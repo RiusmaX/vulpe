@@ -1364,9 +1364,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected boolean onDelete() {
 		boolean valid = true;
 		final ENTITY entity = prepareEntity(Operation.DELETE);
-		final List<ENTITY> entities = new ArrayList<ENTITY>();
+		final List<ENTITY> selectedEntities = new ArrayList<ENTITY>();
 		if (VulpeValidationUtil.isNotEmpty(vulpe.controller().selected())) {
-			if (!onDeleteMany(entities)) {
+			if (!onDeleteMany(selectedEntities)) {
 				valid = false;
 			}
 		} else if (vulpe.controller().type().equals(ControllerType.TABULAR)) {
@@ -1378,13 +1378,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		if (valid) {
 			final NotDeleteIf notDeleteIf = entity.getClass().getAnnotation(NotDeleteIf.class);
-			if (VulpeValidationUtil.isNotEmpty(entities)) {
+			if (VulpeValidationUtil.isNotEmpty(selectedEntities)) {
 				invokeServices(vulpe.serviceMethodName(Operation.DELETE),
-						new Class[] { List.class }, new Object[] { entities });
+						new Class[] { List.class }, new Object[] { selectedEntities });
 				if (notDeleteIf != null) {
 					final List<Integer> rows = new ArrayList<Integer>();
 					boolean used = false;
-					for (final ENTITY entity2 : entities) {
+					for (final ENTITY entity2 : selectedEntities) {
 						if (entity2.isUsed()) {
 							for (final ENTITY entity3 : entities) {
 								if (entity2.getId().equals(entity3.getId())) {
@@ -1395,7 +1395,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						}
 					}
 					if (rows.isEmpty()) {
-						for (final ENTITY entity2 : entities) {
+						for (final ENTITY entity2 : selectedEntities) {
 							if (entity2.isConditional()) {
 								for (final ENTITY entity3 : entities) {
 									if (entity2.getId().equals(entity3.getId())) {
