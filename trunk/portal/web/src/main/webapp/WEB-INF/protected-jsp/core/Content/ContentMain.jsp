@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
+<v:hidden property="views"/>
 <div class="line">
 <v:select
 	labelKey="label.portal.core.Content.main.section"

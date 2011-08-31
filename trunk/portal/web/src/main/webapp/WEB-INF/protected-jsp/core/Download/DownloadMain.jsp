@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
+<v:hidden property="downloads"/>
 <v:textTranslate
 	labelKey="label.portal.core.Download.main.name"
 	property="name"
