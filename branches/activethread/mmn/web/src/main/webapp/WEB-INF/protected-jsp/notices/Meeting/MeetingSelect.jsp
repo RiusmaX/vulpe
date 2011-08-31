@@ -8,5 +8,4 @@
 	popupProperties="president.id=id,president.name=name"
 	size="40" popupWidth="420px"
 	autocomplete="true"
-	required="true"
 />

@@ -4,7 +4,7 @@
 	labelKey="label.mmn.core.Congregation.select.name"
 	property="name"
 	size="40"
-	maxlength="60" required="true"
+	maxlength="60"
 	validateType="STRING"
 	validateMinLength="5"
 	validateMaxLength="60"

@@ -354,8 +354,9 @@
 
 #header {
 	background: url("../../images/header-background.png") repeat-x;
+	background-color: #ddd;
 	width: 100%;
-	height: 50px;
+	height: 64px;
 }
 
 #header .image {

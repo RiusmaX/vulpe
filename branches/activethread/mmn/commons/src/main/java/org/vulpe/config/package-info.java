@@ -10,18 +10,17 @@
 		),
 		view = @VulpeView(
 				layout = @VulpeViewLayout(
-						showButtonsAsImage = false,
 						showIconOfButton = true,
-						showTextOfButton = true,
 						showSliderPanel = true
-						),
+				),
 				messages = @VulpeViewMessages(
 						slideUp = false
 				),
 				session = @VulpeViewSession(
 						idleTime = 29 * 60 * 1000,
 						redirectAfter = 60
-				)
+				),
+				readOnShow = true
 		),
 		theme = "mmn",
 		security = true
