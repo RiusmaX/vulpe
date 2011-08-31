@@ -195,6 +195,10 @@ var vulpe = {
 		accentMap: {}
 	},
 
+	controller: {
+		currentName: ""
+	},
+
 	// RTE Array
 	RTEs: new Array(),
 
@@ -1695,10 +1699,8 @@ var vulpe = {
 				vulpe.config.order = new Array();
 			}
 			vulpe.config.order[propertyId] = {property: sortPropertyInfo, value: value, css: order};
-			var buttonRead = vulpe.util.getButton("Read");
-			if (buttonRead) {
-				buttonRead.trigger("click");
-			}
+			var url = vulpe.controller.currentName + "/read/ajax";
+			vulpe.view.request.submitAjax({url: url, layerFields: 'vulpeSelectForm', layer: 'vulpeSelectTable', formName: formName, isFile: false});
 			if (value == "") {
 				value = "obj.id";
 			}
