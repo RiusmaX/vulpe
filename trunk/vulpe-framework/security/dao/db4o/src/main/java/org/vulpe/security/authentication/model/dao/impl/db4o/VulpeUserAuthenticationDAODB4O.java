@@ -29,8 +29,8 @@ import org.vulpe.security.model.entity.User;
 
 /**
  * 
- * This <code>VulpeUserAuthenticationDAO</code> implementation uses data available in
- * memory to authenticate the user.
+ * This <code>VulpeUserAuthenticationDAO</code> implementation uses data
+ * available in memory to authenticate the user.
  * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
@@ -50,9 +50,7 @@ public class VulpeUserAuthenticationDAODB4O extends VulpeBaseDAODB4O<User, Long>
 	 */
 	public VulpeAuthenticationResponse authenticateUser(final String username, final String password)
 			throws VulpeSecurityException {
-		User user = new User();
-		user.setUsername(username);
-		user = getObject(user);
+		final User user = getObject(new User(username));
 		if (user == null) {
 			throw new VulpeSecurityUserNotFoundException(username);
 		}

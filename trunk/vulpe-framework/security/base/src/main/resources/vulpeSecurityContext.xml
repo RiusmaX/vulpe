@@ -24,6 +24,7 @@
 			<security:filter-chain pattern="/themes/**" filters="none" />
 			<security:filter-chain pattern="/authenticator**" filters="none" />
 			<security:filter-chain pattern="/authenticator/ajax" filters="none" />
+			<security:filter-chain pattern="/authenticator/error/**" filters="none" />
 			<security:filter-chain pattern="/WEB-INF/protected-jsp/security/login.jsp"
 				filters="none" />
 			<security:filter-chain pattern="/j_spring_security_check*"
