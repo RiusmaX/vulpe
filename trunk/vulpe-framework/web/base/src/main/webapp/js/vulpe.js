@@ -2585,7 +2585,7 @@ var vulpe = {
 
 				// serialize form
 				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.layerFields, parent)).fieldSerialize();
-				if (vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) {
+				if ((vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) && options.layerFields != "this") {
 					queryStringForm = (vulpe.util.isEmpty(queryStringForm) ? "" : queryStringForm + "&") + jQuery(":input[type!='file']", $(vulpe.config.layers.controlFields, parent)).fieldSerialize();
 				}
 				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
