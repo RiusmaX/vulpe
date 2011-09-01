@@ -27,6 +27,7 @@
 	color: #333;
 	font-weight: bold;
 	text-shadow: 1px 1px 0 #FFFFFF;
+	min-height: 25px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 }
@@ -40,6 +41,7 @@
 	font-weight: bold;
 	text-shadow: 1px 1px 0 #FFFFFF;
 	padding: 1px;
+	min-height: 25px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
 }
@@ -275,19 +277,19 @@
 	text-align: left;
 }
 
-#body table {
-	margin-left: 20px;
-	width: 97%;
+table {
+	margin-left: 0;
+	width: 100%;
 }
 
-#body td,th {
+td,th {
 	padding: 5px;
 }
 
 #container {
 	margin: 0 auto;
 	width: 100%;
-	text-align: left;
+	text-align: center;
 }
 
 #copyright {
@@ -577,6 +579,10 @@ thead th {
 	-webkit-border-radius: 3px 3px 3px 3px;
 }
 
+#vulpeSelectTable {
+	margin: 0 20px 3px 20px;
+}
+
 #vulpeMainBodyTabs {
 	border: 1px solid #eee;
 	margin: 0 20px 3px 20px;
@@ -659,4 +665,9 @@ thead th {
 	height: 40px;
 	padding: 3px 20px 10px;
 	text-shadow: 1px 1px 0 #fff;
+}
+
+#vulpeSelectForm .line p, #vulpeSelectForm .line div, #vulpeMainBody .line p, #vulpeMainBody .line div {
+	display: table-cell;
+	padding-right: 10px;
 }

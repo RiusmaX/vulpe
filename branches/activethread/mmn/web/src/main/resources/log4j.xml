@@ -35,12 +35,12 @@
 	</category>
 
 	<category name="org.jw">
-		<priority value="INFO" />
+		<priority value="DEBUG" />
 		<appender-ref ref="file" />
 	</category>
 
 	<root>
-		<level value="INFO" />
+		<level value="DEUG" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</root>
