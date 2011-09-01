@@ -86,21 +86,21 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 		vulpe.controller().reportCollection(collection);
 		final List<MemberReport> membersReport = new ArrayList<MemberReport>();
 		final List<Member> pendingMembers = new ArrayList<Member>();
-		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
-			for (MemberReport memberReport : entities) {
+			for (final MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.PUBLISHER)) {
 					membersReport.add(memberReport);
 				}
 			}
 			final List<MemberReport> auxiliaryPioneers = new ArrayList<MemberReport>();
-			for (MemberReport memberReport : entities) {
+			for (final MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
 					auxiliaryPioneers.add(memberReport);
 				}
 			}
 			final List<MemberReport> regularPioneers = new ArrayList<MemberReport>();
-			for (MemberReport memberReport : entities) {
+			for (final MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
 					regularPioneers.add(memberReport);
 				}
@@ -114,11 +114,11 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 			Collections.sort(regularPioneers);
 			vulpe.controller().reportParameters().put("regularPioneers",
 					regularPioneers.isEmpty() ? null : regularPioneers);
-			for (Member member : members) {
+			for (final Member member : members) {
 				if (!member.getMinistryType().equals(MinistryType.STUDENT)
 						&& !member.getMinistryType().equals(MinistryType.AWAY)) {
 					boolean delivered = false;
-					for (MemberReport relatorio : entities) {
+					for (final MemberReport relatorio : entities) {
 						if (relatorio.getMember().getId().equals(member.getId())) {
 							delivered = true;
 						}
@@ -129,7 +129,7 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 				}
 			}
 		} else {
-			for (Member member : members) {
+			for (final Member member : members) {
 				if (!member.getMinistryType().equals(MinistryType.STUDENT)
 						&& !member.getMinistryType().equals(MinistryType.AWAY)) {
 					pendingMembers.add(member);

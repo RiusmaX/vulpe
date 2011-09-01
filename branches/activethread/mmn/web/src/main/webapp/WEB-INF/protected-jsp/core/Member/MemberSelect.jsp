@@ -7,7 +7,7 @@
 		<td><v:select labelKey="label.mmn.core.Member.select.gender" property="gender"
 			showBlank="true" autoLoad="false" /></td>
 		<td><v:select labelKey="label.mmn.core.Member.select.group" property="group.id"
-			items="${groupsOfSelectedCongregation}" itemKey="id" itemLabel="name" showBlank="true"
+			items="${ever['groupsOfSelectedCongregation']}" itemKey="id" itemLabel="name" showBlank="true"
 			autoLoad="false" /></td>
 		<td><v:select labelKey="label.mmn.core.Member.select.ministryType"
 			property="ministryType" showBlank="true" autoLoad="false" /></td>

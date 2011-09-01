@@ -19,7 +19,7 @@
 							action="/publications/Publication/select" popupId="publicationSelectPopup"
 							popupProperties="publication.id=id,publication.name=name" size="30" popupWidth="420px"
 							autocomplete="true" autocompleteMinLength="1"
-							autocompleteValueList="${publicationsAutocompleteValueList}" />
+							autocompleteValueList="${ever['publicationsAutocompleteValueList']}" />
 					</td>
 					<td>
 						<v:text property="quantity" mask="I" size="5" maxlength="5" />

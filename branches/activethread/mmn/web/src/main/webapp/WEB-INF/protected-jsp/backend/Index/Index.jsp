@@ -5,7 +5,7 @@
 <v:select
 	labelKey="label.mmn.core.Congregation.main.name"
 	property="congregation.id"
-	items="${congregationsOfUser}"
+	items="${ever['congregationsOfUser']}"
 	itemKey="id"
 	itemLabel="name"
 	showBlank="true" autoLoad="false"

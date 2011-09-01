@@ -32,7 +32,7 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 				Congregation.class.getSimpleName());
 	}
 
-	public void selecionarValidate() {
+	public void selectValidate() {
 		if (entity.getCongregation() != null && entity.getCongregation().getId() != null) {
 			for (final Congregation congregation : congregations) {
 				if (congregation.getId().equals(entity.getCongregation().getId())) {
