@@ -69,6 +69,11 @@ public class User extends BasicUser {
 		// default constructor
 	}
 
+	public User(final Long id) {
+		super();
+		this.id = id;
+	}
+
 	public User(final String username) {
 		super();
 		this.setUsername(username);
@@ -80,7 +85,8 @@ public class User extends BasicUser {
 		this.name = name;
 	}
 
-	public User(final String username, final String password, final boolean active, final List<UserRole> userRoles) {
+	public User(final String username, final String password, final boolean active,
+			final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);
@@ -88,8 +94,8 @@ public class User extends BasicUser {
 		this.setUserRoles(userRoles);
 	}
 
-	public User(final String username, final String password, final String name, final String email,
-			final List<UserRole> userRoles) {
+	public User(final String username, final String password, final String name,
+			final String email, final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);
@@ -99,7 +105,8 @@ public class User extends BasicUser {
 		this.setUserRoles(userRoles);
 	}
 
-	public User(final String username, final String password, final String name, final List<UserRole> userRoles) {
+	public User(final String username, final String password, final String name,
+			final List<UserRole> userRoles) {
 		super();
 		this.setUsername(username);
 		this.setPassword(password);
