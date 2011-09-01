@@ -9,6 +9,6 @@
 		<td><v:selectPopup labelKey="label.mmn.ministry.MemberReport.select.member" property="member"
 			identifier="id" description="name" action="/core/Member/select" popupId="memberSelectPopup"
 			popupProperties="member.id=id,member.name=name" size="40" popupWidth="420px" autocomplete="true"
-			autocompleteMinLength="1" autocompleteValueList="${membersAutocompleteValueList}" /></td>
+			autocompleteMinLength="1" autocompleteValueList="${ever['membersAutocompleteValueList']}" /></td>
 	</tr>
 </table>

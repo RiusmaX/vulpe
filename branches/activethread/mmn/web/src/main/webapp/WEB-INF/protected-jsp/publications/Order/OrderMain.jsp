@@ -6,7 +6,7 @@
 		<td><v:selectPopup labelKey="label.mmn.publications.Order.main.member" property="member"
 			identifier="id" description="name" action="/core/Member/select" popupId="memberSelectPopup"
 			popupProperties="member.id=id,member.name=name" size="40" popupWidth="420px" required="true"
-			autocomplete="true" autocompleteMinLength="1" autocompleteValueList="${membersAutocompleteValueList}" /></td>
+			autocomplete="true" autocompleteMinLength="1" autocompleteValueList="${ever['membersAutocompleteValueList']}" /></td>
 		<td><v:date labelKey="label.mmn.publications.Order.main.date" property="date" required="true" />
 		</td>
 		<td><v:checkbox labelKey="label.mmn.publications.Order.main.delivered" property="delivered"

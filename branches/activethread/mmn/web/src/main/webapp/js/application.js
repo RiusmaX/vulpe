@@ -57,14 +57,7 @@ var app = {
 
 		showHideAdditionalPrivileges : function(index, show) {
 			var additionalPrivilegesId = "entity.additionalPrivileges-" + index;
-			var labels = $("label.checkboxLabel");
-			var additionalPrivilegesLabel;
-			for ( var i = 0; i < labels.length; i++) {
-				var label = jQuery(labels[i]);
-				if (label.attr("htmlFor") == additionalPrivilegesId) {
-					additionalPrivilegesLabel = label;
-				}
-			}
+			var additionalPrivilegesLabel = $("label[for='" + additionalPrivilegesId + "']");
 			if (show) {
 				vulpe.util.get(additionalPrivilegesId).show();
 				additionalPrivilegesLabel.show();

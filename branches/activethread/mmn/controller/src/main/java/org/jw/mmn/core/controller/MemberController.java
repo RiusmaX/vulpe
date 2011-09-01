@@ -71,12 +71,12 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 
 	@Override
 	protected void createPostAfter() {
-		List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
 		}
 		members.add(entity);
-		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		ever.put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	@Override
@@ -88,26 +88,26 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
 			members.add(entity);
 		} else {
-			for (Member publicador : members) {
-				if (publicador.getId().equals(entity.getId())) {
-					publicador = entity;
+			for (Member member : members) {
+				if (member.getId().equals(entity.getId())) {
+					member = entity;
 					break;
 				}
 			}
 		}
-		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		ever.put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	@Override
 	protected void deleteAfter() {
 		super.deleteAfter();
 		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
-		for (Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
+		for (final Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			final Member publicador = iterator.next();
 			if (publicador.getId().equals(entity.getId())) {
 				iterator.remove();
@@ -130,9 +130,9 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 
 	@Override
 	public List<Member> autocompleteList() {
-		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		final List<Member> filteredMembers = new ArrayList<Member>();
-		for (Member member : members) {
+		for (final Member member : members) {
 			if (VulpeStringUtil.normalize(member.getName().toLowerCase()).contains(
 					entitySelect.getName().toLowerCase())) {
 				filteredMembers.add(member);

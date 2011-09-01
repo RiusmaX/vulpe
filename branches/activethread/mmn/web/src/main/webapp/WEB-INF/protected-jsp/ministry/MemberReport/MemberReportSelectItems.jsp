@@ -9,22 +9,22 @@
 			<v:column
 				labelKey="label.mmn.ministry.MemberReport.select.month"
 				property="month"
-				sort="true"
+				sort="true" width="15%"
 			/>
 			<v:column
 				labelKey="label.mmn.ministry.MemberReport.select.ministryType"
 				property="ministryType"
-				sort="true"
+				sort="true" width="15%"
 			/>
 			<v:column
 				labelKey="label.mmn.ministry.MemberReport.select.member"
 				property="member.name"
-				sort="true"
+				sort="true" width="60%"
 			/>
 			<v:column
 				labelKey="label.mmn.ministry.MemberReport.select.hours"
 				property="hours"
-				sort="true"
+				sort="true" width="10%"
 			/>
 		</v:row>
 	</jsp:attribute>

@@ -12,7 +12,7 @@
 			autocompleteMinLength="1" property="member" identifier="id" description="name"
 			action="/core/Member/select" popupId="memberSelectPopup"
 			popupProperties="member.id=id,member.name=name" size="35" popupWidth="420px" autocomplete="true"
-			autocompleteValueList="${membersAutocompleteValueList}" required="true" autocompleteProperties="ministryType" /></td>
+			autocompleteValueList="${ever['membersAutocompleteValueList']}" required="true" autocompleteProperties="ministryType" /></td>
 	</tr>
 	<tr>
 		<td colspan="3">

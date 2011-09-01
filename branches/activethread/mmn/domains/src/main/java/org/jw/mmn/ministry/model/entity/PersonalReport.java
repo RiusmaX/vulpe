@@ -26,7 +26,7 @@ public class PersonalReport extends VulpeBaseDB4OEntity<Long> {
 	private Integer brochures;
 
 	@VulpeText(mask = "I", size = 8)
-	private double hours;
+	private Double hours;
 
 	@VulpeText(mask = "I", size = 8)
 	private Integer magazines;

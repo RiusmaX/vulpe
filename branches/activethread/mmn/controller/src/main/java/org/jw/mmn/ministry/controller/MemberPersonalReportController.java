@@ -67,6 +67,9 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 					memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(list)) {
 				id = list.get(0).getId();
+			} else {
+				create();
+				return;
 			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
@@ -87,7 +90,7 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 	}
 
 	private void checksDate() {
-		for (PersonalReport personalReport : entity.getReports()) {
+		for (final PersonalReport personalReport : entity.getReports()) {
 			if (personalReport.getDate() == null) {
 				personalReport.setDate(new Date());
 			}

@@ -15,4 +15,10 @@ public class CongregationUser extends VulpeBaseDB4OEntity<Long> {
 
 	private User user;
 
+	public CongregationUser() {
+	}
+	
+	public CongregationUser(final User user) {
+		this.user = user;
+	}
 }

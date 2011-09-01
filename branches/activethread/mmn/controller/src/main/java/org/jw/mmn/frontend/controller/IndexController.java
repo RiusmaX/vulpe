@@ -44,7 +44,8 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 					final Group grupo = new Group();
 					grupo.setCongregation(congregation);
 					try {
-						final List<Group> grupos = vulpe.service(CoreService.class).readGroup(grupo);
+						final List<Group> grupos = vulpe.service(CoreService.class)
+								.readGroup(grupo);
 						ever.put(Core.GROUPS_OF_SELECTED_CONGREGATION, grupos);
 					} catch (VulpeApplicationException e) {
 						LOG.error(e);
@@ -54,17 +55,17 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 				}
 			}
 		}
-		final String currentLayout = vulpe.sessionAttribute(View.CURRENT_LAYOUT);
+		final String currentLayout = ever.getSelf(View.CURRENT_LAYOUT);
 		final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
 		vulpe.controller().redirectTo(url, true);
 	}
 
 	@ExecuteAlways
 	public void init() {
-		final Congregation congragation = vulpe.sessionAttribute(Core.SELECTED_CONGREGATION);
-		if (congragation != null) {
+		final Congregation congregation = ever.getSelf(Core.SELECTED_CONGREGATION);
+		if (congregation != null) {
 			entity = new Index();
-			entity.setCongregation(congragation);
+			entity.setCongregation(congregation);
 		}
 	}
 

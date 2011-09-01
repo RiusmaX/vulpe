@@ -35,4 +35,10 @@ public class Group extends VulpeBaseDB4OEntity<Long> {
 	@VulpeSelect(items = "Congregation", itemKey = "id", itemLabel = "name", required = true, autoLoad = true, argument = true)
 	private Congregation congregation;
 
+	public Group() {
+	}
+	
+	public Group(final Congregation congregation) {
+		this.congregation = congregation;
+	}
 }

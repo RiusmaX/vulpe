@@ -11,7 +11,7 @@
 					popupProperties="speaker.id=id,speaker.name=name"
 					size="40" popupWidth="420px"
 					autocomplete="true"
-					required="true" autocompleteValueList="${membersAutocompleteValueList}"
+					required="true" autocompleteValueList="${ever['membersAutocompleteValueList']}"
 				/>
 			</v:column>
 			<v:column labelKey="label.mmn.notices.Meeting.main.discourses.assistant">
@@ -21,7 +21,7 @@
 					popupProperties="speaker.id=id,speaker.name=name"
 					size="40" popupWidth="420px"
 					autocomplete="true"
-					required="true" autocompleteValueList="${membersAutocompleteValueList}"
+					required="true" autocompleteValueList="${ever['membersAutocompleteValueList']}"
 				/>
 			</v:column>
 			<v:column labelKey="label.mmn.notices.Meeting.main.discourses.topic">

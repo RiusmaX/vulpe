@@ -3,7 +3,6 @@ package org.jw.mmn.security.authentication.callback;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jw.mmn.commons.ApplicationConstants.Core;
 import org.jw.mmn.commons.ApplicationConstants.Publications;
 import org.jw.mmn.core.model.entity.Congregation;
@@ -29,34 +28,26 @@ import com.google.gson.Gson;
 public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCallbackUtil implements
 		AfterUserAuthenticationCallback {
 
-	protected static final Logger LOG = Logger.getLogger(AfterUserAuthenticationCallbackPOJO.class);
-
 	@Override
 	public void execute() {
 		final VulpeSecurityContext securityContext = getBean(VulpeSecurityContext.class);
 		if (securityContext != null) {
 			final Long userId = securityContext.getUser().getId();
 			try {
-				final CongregationUser congregationUser = new CongregationUser();
-				final User usser = new User();
-				usser.setId(userId);
-				congregationUser.setUser(usser);
 				final List<CongregationUser> congregationUsers = getService(CoreService.class).readCongregationUser(
-						congregationUser);
+						new CongregationUser(new User(userId)));
 				final List<Congregation> congregations = new ArrayList<Congregation>();
-				for (CongregationUser congregationUser2 : congregationUsers) {
-					congregations.add(congregationUser2.getCongregation());
+				for (final CongregationUser congregationUser : congregationUsers) {
+					congregations.add(congregationUser.getCongregation());
 				}
 				if (congregations.size() == 1) {
 					final Congregation congregation = congregations.get(0);
 					getEver().put(Core.SELECTED_CONGREGATION, congregation);
-					final Group group = new Group();
-					group.setCongregation(congregation);
-					final List<Group> groups = getService(CoreService.class).readGroup(group);
+					final List<Group> groups = getService(CoreService.class).readGroup(new Group(congregation));
 					final List<Member> members = new ArrayList<Member>();
-					for (Group group2 : groups) {
+					for (final Group group : groups) {
 						final Member member = new Member();
-						member.setGroup(group2);
+						member.setGroup(group);
 						final List<Member> membersByGroup = getService(CoreService.class).readMember(member);
 						if (VulpeValidationUtil.isNotEmpty(membersByGroup)) {
 							members.addAll(membersByGroup);
@@ -78,7 +69,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 				final List<Publication> publications = getService(PublicationsService.class).readPublication(
 						new Publication());
 				final List<VulpeHashMap<String, Object>> values = new ArrayList<VulpeHashMap<String, Object>>();
-				for (Publication publication : publications) {
+				for (final Publication publication : publications) {
 					final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 					map.put("id", publication.getId());
 					map.put("value", publication.getName());
