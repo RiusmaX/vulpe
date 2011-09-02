@@ -1782,9 +1782,15 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			entities = list;
 			if (vulpe.controller().exported()) {
 				final int size = VulpeValidationUtil.isNotEmpty(entities) ? entities.size() : 0;
-				final Paging<ENTITY> paging = new Paging<ENTITY>(size, config.getPageSize(), 1);
-				paging.setList(entities);
-				this.paging = paging;
+				final Paging<ENTITY> currentPaging = new Paging<ENTITY>(size, config.getPageSize(), 1);
+				currentPaging.setList(entities);
+				paging = currentPaging;
+			}
+			if (config.getControllerAnnotation().select().virtualPaging()) {
+				if (VulpeValidationUtil.isEmpty(entities)) {
+					addActionInfoMessage(vulpe.controller().defaultMessage(
+							vulpe.controller().deleted() ? Operation.READ_DELETED : Operation.READ));
+				}
 			}
 		}
 		if (vulpe.controller().type().equals(ControllerType.REPORT)) {
@@ -1794,9 +1800,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else {
 				addActionMessage(vulpe.controller().defaultMessage(Operation.REPORT_SUCCESS));
 				final int size = entities.size();
-				final Paging<ENTITY> paging = new Paging<ENTITY>(size, config.getPageSize(), 1);
-				paging.setList(entities);
-				this.paging = paging;
+				final Paging<ENTITY> currentPaging = new Paging<ENTITY>(size, config.getPageSize(), 1);
+				currentPaging.setList(entities);
+				paging = currentPaging;
 			}
 		} else {
 			ever.put(vulpe.controller().selectFormKey(), entity.clone());
@@ -2012,6 +2018,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			ever.remove(vulpe.controller().selectPagingKey());
 		}
 		selectAfter();
+		ever.remove(Controller.VIRTUAL_PAGING);
 		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || VulpeConfigHelper
 				.getProjectConfiguration().view().readOnShow())
 				&& !vulpe.controller().cleaned()) {
