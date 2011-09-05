@@ -12,6 +12,7 @@
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${empty disabled}"><c:set var="disabled" value="${false}"/></c:if>
 	<c:set var="buttonPrefix" value="vulpeButton" />
+	<c:set var="buttonName" value="${elementId}" />
 	<c:choose>
 		<c:when test="${empty elementId}"><c:set var="elementId" value="${labelKey}" /></c:when>
 		<c:when test="${!fn:contains(elementId, buttonPrefix)}"><c:set var="elementId" value="${buttonPrefix}${elementId}" /></c:when>
@@ -71,7 +72,7 @@
 		</c:choose>
 	</c:if>
 	<c:if test="${disabled}">
-		<c:set var="javascript" value="void(0);" />
+		<c:set var="javascript" value="if (!vulpe.buttons['${buttonName}'].disabled) {${javascript}}" />
 	</c:if>
 	<c:if test="${not empty icon}">
 		<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['project-mobile-enabled'] ? global['project-mobile-iconWidth'] : global['project-view-iconWidth']}" /></c:if>
@@ -125,6 +126,9 @@
 			},
 			override: true
 		});
+		<c:if test="${disabled}">
+		vulpe.buttons["${buttonName}"] = { disabled: true };
+		</c:if>
 	});
 	</script>
 	</c:if>

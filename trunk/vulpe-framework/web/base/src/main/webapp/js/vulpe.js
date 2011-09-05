@@ -195,6 +195,8 @@ var vulpe = {
 		accentMap: {}
 	},
 
+	buttons: new Array(),
+	
 	controller: {
 		currentName: ""
 	},
@@ -484,6 +486,32 @@ var vulpe = {
 				parent = vulpe.config.formName;
 			}
 			return vulpe.util.get("vulpeButton" + name, "#" + parent);
+		},
+		
+		disableButton: function(name, parent) {
+			if (!parent) {
+				parent = vulpe.config.formName;
+			}
+			var button = vulpe.util.get("vulpeButton" + name, "#" + parent);
+			var buttonSpan = vulpe.util.get("vulpeButton" + name + "-button", "#" + parent);
+			button.attr("disabled", true);
+			button.removeClass("vulpeSubmit");
+			button.addClass("vulpeSubmitOff");
+			buttonSpan.addClass("vulpeItemOff");
+			vulpe.buttons[name] = {disabled: true};
+		},
+		
+		enableButton: function(name, parent) {
+			if (!parent) {
+				parent = vulpe.config.formName;
+			}
+			var button = vulpe.util.get("vulpeButton" + name, "#" + parent);
+			var buttonSpan = vulpe.util.get("vulpeButton" + name + "-button", "#" + parent);
+			button.removeAttr("disabled");
+			button.removeClass("vulpeSubmitOff");
+			button.addClass("vulpeSubmit");
+			buttonSpan.removeClass("vulpeItemOff");
+			vulpe.buttons[name] = {disabled: false};
 		},
 
 		getForm: function(options) {
