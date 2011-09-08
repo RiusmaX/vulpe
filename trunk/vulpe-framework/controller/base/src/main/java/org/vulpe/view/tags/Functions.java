@@ -461,7 +461,7 @@ public class Functions {
 			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 1) {
-				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field);
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
 			} else {
 				int count = 1;
 				Class<?> parentClass = bean.getClass();
@@ -520,7 +520,7 @@ public class Functions {
 			String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 1) {
-				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field);
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
 			} else {
 				int count = 1;
 				Class<?> parentClass = bean.getClass();
