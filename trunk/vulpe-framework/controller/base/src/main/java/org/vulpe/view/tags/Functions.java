@@ -460,12 +460,19 @@ public class Functions {
 			final List list = new ArrayList();
 			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
-			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
-						fieldParts[0]);
-				fieldClass = VulpeReflectUtil.getFieldClass(parentClass, fieldParts[1]);
+			if (fieldParts.length == 1) {
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field);
 			} else {
-				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
+				int count = 1;
+				Class<?> parentClass = bean.getClass();
+				for (final String fieldPart : fieldParts) {
+					parentClass = VulpeReflectUtil.getFieldClass(parentClass, fieldPart);
+					++count;
+					if (count == fieldParts.length) {
+						fieldClass = VulpeReflectUtil.getFieldClass(parentClass,
+								fieldParts[fieldParts.length - 1]);
+					}
+				}
 			}
 			if (fieldClass.isEnum()) {
 				int count = 0;
@@ -512,12 +519,19 @@ public class Functions {
 			}
 			String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
-			if (fieldParts.length == 2) {
-				Class<?> parentClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
-						fieldParts[0]);
-				fieldClass = VulpeReflectUtil.getFieldClass(parentClass, fieldParts[1]);
+			if (fieldParts.length == 1) {
+				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field);
 			} else {
-				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
+				int count = 1;
+				Class<?> parentClass = bean.getClass();
+				for (final String fieldPart : fieldParts) {
+					parentClass = VulpeReflectUtil.getFieldClass(parentClass, fieldPart);
+					++count;
+					if (count == fieldParts.length) {
+						fieldClass = VulpeReflectUtil.getFieldClass(parentClass,
+								fieldParts[fieldParts.length - 1]);
+					}
+				}
 			}
 			if (fieldClass == null) {
 				return null;
