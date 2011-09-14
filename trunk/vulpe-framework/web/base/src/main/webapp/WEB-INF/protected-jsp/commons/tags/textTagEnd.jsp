@@ -74,6 +74,7 @@
 				vulpe.exception.hideFieldError({element: vulpe.util.get(idValue)});
 				//vulpe.util.get(idProperty).blur();
 				<c:if test="${not empty autocompleteCallback}">
+				/*
 				var autocompleteCallback = "${autocompleteCallback}";
 				if (vulpe.util.isNotEmpty(autocompleteCallback)) {
 					try {
@@ -82,6 +83,7 @@
 						// do nothing
 					}
 				}
+				*/
 				</c:if>
 			},
 			</c:if>
