@@ -356,11 +356,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 									mountParameters((ENTITY) value, params, paramName);
 								}
 							} else if (isNotEmpty(value)) {
-								if (value instanceof Enum) {
-									params.put(paramName, value.toString());
-								} else {
-									params.put(paramName, value);
-								}
+								params.put(paramName, value);
 							}
 						}
 					} else if (isNotEmpty(value)) {
@@ -383,11 +379,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							}
 							value = "[like]" + value;
 						}
-						if (value instanceof Enum) {
-							params.put(paramName, value.toString());
-						} else {
-							params.put(paramName, value);
-						}
+						params.put(paramName, value);
 					}
 				} catch (Exception e) {
 					throw new VulpeSystemException(e);
