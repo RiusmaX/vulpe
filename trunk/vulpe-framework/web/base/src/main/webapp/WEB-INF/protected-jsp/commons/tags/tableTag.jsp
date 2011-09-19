@@ -82,7 +82,7 @@
 			<c:set var="pagingList" value="${detailPagingList}"/>
 			<c:if test="${empty pagingActionName}"><c:set var="pagingActionName" value="${now['controllerConfig'].ownerController}/detail/${detailConfig.name}/page"/></c:if>
 			<c:if test="${empty pagingFormName}"><c:set var="pagingFormName" value="${vulpeFormName}"/></c:if>
-			<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="this"/></c:if>
+			<c:if test="${empty pagingLayerFields}"><c:set var="pagingLayerFields" value="vulpeDetailBody-${detailConfig.name}"/></c:if>
 			<c:if test="${empty pagingLayer}"><c:set var="pagingLayer" value="vulpeDetailBody-${detailConfig.name}"/></c:if>
 			<c:set var="items" value="${pagingList.list}"/>
 		</c:if>
