@@ -173,6 +173,10 @@
 
 .vulpeSelectedRow {
 	background-color: #ffccbc;
+}
+
+.vulpeMouseOverRow {
+	background-color: #ffccbc;
 	cursor: pointer;
 }
 

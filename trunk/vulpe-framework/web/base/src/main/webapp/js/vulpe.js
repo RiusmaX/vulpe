@@ -1457,10 +1457,18 @@ var vulpe = {
 			$("tr[id*='-row-']", parent).each(function(index) {
 				var id = $(this).attr("id");
 				if (id.indexOf("header") == -1) {
-					$("#" + id).unbind("mouseenter mouseleave");
-					$("#" + id).bind("mouseenter mouseleave", function(event){
-						$(this).find("td").toggleClass("vulpeSelectedRow");
-					});
+					var row = $("#" + id); 
+					if (row.find(":input[type!='hidden']").length == 1) {
+						row.unbind("mouseenter mouseleave");
+						row.bind("mouseenter mouseleave", function(event){
+							$(this).find("td").toggleClass("vulpeMouseOverRow");
+						});
+					} else {
+						row.unbind("mouseover mouseout");
+						row.bind("mouseover mouseout", function(event){
+							$(this).find("td").toggleClass("vulpeMouseOverRow");
+						});
+					}
 					var onclick = $(this).attr("onclick");
 					if (typeof onclick == "function" || vulpe.util.isNotEmpty(onclick)) {
 						var key = "";
@@ -1558,22 +1566,22 @@ var vulpe = {
 		},
 		
 		sliderActionAnimate: function(action) {
-			if ($(action).find('span').hasClass('ui-icon-triangle-1-n')) {
-	            $('#slider').animate({
+			if ($(action).find("span").hasClass("ui-icon-triangle-1-n")) {
+	            $("#slider").animate({
 	            	marginTop: $("#sliderClose").css("marginTop")
 	            }, {
 	                queue: false
 	            });
-	            $(action).find('span').removeClass('ui-icon-triangle-1-n');
-	            $(action).find('span').addClass('ui-icon-triangle-1-s');
+	            $(action).find("span").removeClass("ui-icon-triangle-1-n");
+	            $(action).find("span").addClass("ui-icon-triangle-1-s");
 	        } else {
-	            $('#slider').animate({
+	            $("#slider").animate({
 	            	marginTop: 0
 	            }, {
 	                queue: false
 	            });
-	            $(action).find('span').removeClass('ui-icon-triangle-1-s');
-	            $(action).find('span').addClass('ui-icon-triangle-1-n');
+	            $(action).find("span").removeClass("ui-icon-triangle-1-s");
+	            $(action).find("span").addClass("ui-icon-triangle-1-n");
 	        }	
 		},
 		
@@ -1663,7 +1671,7 @@ var vulpe = {
 		},
 
 		clearFieldsInLayer: function(layer) {
-			jQuery(':input', vulpe.util.get(layer)).clearFields();
+			jQuery(":input", vulpe.util.get(layer)).clearFields();
 		},
 
 		isSelection: false,
@@ -1728,7 +1736,7 @@ var vulpe = {
 			}
 			vulpe.config.order[propertyId] = {property: sortPropertyInfo, value: value, css: order};
 			var url = vulpe.controller.currentName + "/read/ajax";
-			vulpe.view.request.submitAjax({url: url, layerFields: 'vulpeSelectForm', layer: 'vulpeSelectTable', formName: formName, isFile: false});
+			vulpe.view.request.submitAjax({url: url, layerFields: "vulpeSelectForm", layer: "vulpeSelectTable", formName: formName, isFile: false});
 			if (value == "") {
 				value = "obj.id";
 			}
@@ -1759,11 +1767,24 @@ var vulpe = {
 		},
 
 		controlMarkUnmarkAll: function(name, parent) {
-			var selected = false;
+			var parentId = parent;
 			if (typeof parent == "string" && parent.indexOf("#") != 0) {
 				parent = "#" + parent;
+			} else {
+				parentId = $(parent).attr("id");
 			}
 			var items = jQuery(":checkbox[name$='"+ name +"']", parent).length;
+			var selectAll = vulpe.util.get("selectAll", parent);
+			if (selectAll.length > 1) {
+				selectAll = $(selectAll[0]);
+				items = 0;
+				jQuery(":checkbox[name$='"+ name +"']", parent).each(function(index) {
+					var closest = $(this).closest("div");
+					if (closest.attr("id") == parentId) {
+						++items;
+					}
+				});
+			}
 			var count = 0;
 			jQuery(":checkbox[name$='"+ name +"']", parent).each(function(index) {
 				if (this.checked) {
@@ -1771,9 +1792,15 @@ var vulpe = {
 				}
 			});
 			if (count == items) {
-				selected = true;
+				selectAll.removeClass("vulpeItemOff");
+				selectAll.attr("checked", true);
+			} else if (count > 0) {
+				selectAll.addClass("vulpeItemOff");
+				selectAll.attr("checked", true);
+			} else if (count == 0) {
+				selectAll.removeClass("vulpeItemOff");
+				selectAll.attr("checked", false);
 			}
-			vulpe.util.get("selectAll", parent).attr("checked", selected);
 		},
 
 		enableMarkUnmarkAll: function(name, parent) {
@@ -1795,23 +1822,47 @@ var vulpe = {
 			}
 		},
 
-		markUnmarkAll: function(controller, name, parent) {
+		markUnmarkAll: function(name, parent) {
 			if (!parent) {
-				parent = "#body";
+				parent = "#vulpeSelectAll";
+			}
+			var selectAll = vulpe.util.get("selectAll", parent);
+			if (selectAll.length > 1) {
+				selectAll = $(selectAll[0]);	
+			}
+			var checked = vulpe.util.getElement("selectAll", parent).checked;
+			if (!checked && selectAll.hasClass("vulpeItemOff")) {
+				selectAll.attr("checked", true);
+				checked = true;
 			}
 			jQuery(":checkbox[name$='" + name + "']", parent).each(function(index) {
 				if (!$(this).attr("disabled")) {
-					$(this).attr("checked", controller.checked);
+					var closest = $(this).closest("div");
+					if (closest.attr("id") == parent.substring(1)) {
+						$(this).attr("checked", checked);
+						vulpe.view.controlSelectedRow(this);
+					}
+				}
+			});
+			selectAll.removeClass("vulpeItemOff");
+		},
+		
+		controlSelectedRow: function(line) {
+			jQuery("td", $(line).closest("tr")).each(function(index) {
+				if (line.checked) {
+					jQuery(this).addClass("vulpeSelectedRow");
+				} else {
+					jQuery(this).removeClass("vulpeSelectedRow");
 				}
 			});
 		},
 
 		onmouseoverRow: function(row) {
-			jQuery(row).addClass('vulpeSelectedRow');
+			jQuery(row).addClass("vulpeMouseOverRow");
 		},
 
 		onmouseoutRow: function(row) {
-			jQuery(row).removeClass('vulpeSelectedRow');
+			jQuery(row).removeClass("vulpeMouseOverRow");
 		},
 
 		/**
@@ -1825,9 +1876,9 @@ var vulpe = {
 			vulpe.view.selectPopupCache = new Array();
 			vulpe.config.valid = true;
 			vulpe.config.popup.selectRow = true;
-			var popupName = jQuery(row).parents('div.vulpePopup').attr('id');
+			var popupName = jQuery(row).parents("div.vulpePopup").attr("id");
 			var popup = vulpe.util.get(popupName);
-			var popupProperties = popup.attr('properties');
+			var popupProperties = popup.attr("properties");
 			vulpe.util.loopMap(popupProperties, function(c, v) {
 				var value = vulpe.util.getValueMap(values, v);
 				value = (typeof value == "undefined") ? '' : webtoolkit.url.decode(value);

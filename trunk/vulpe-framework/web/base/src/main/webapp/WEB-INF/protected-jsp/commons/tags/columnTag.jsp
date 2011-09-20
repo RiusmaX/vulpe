@@ -42,7 +42,7 @@
 		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}" </c:set></c:if>
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
-		<c:if test="${not empty selectCheckOff && empty onclick && empty limitContent}"><c:set var="onclick">onclick="${selectCheckOff}"</c:set></c:if>
+		<c:if test="${not empty selectCheckOff && empty onclick && (empty limitContent || fn:length(value) < limitContent)}"><c:set var="onclick">onclick="${selectCheckOff}"</c:set></c:if>
 		<c:if test="${not empty colspan}"><c:set var="colspan">colspan="${colspan}"</c:set></c:if>
 		<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
 		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
