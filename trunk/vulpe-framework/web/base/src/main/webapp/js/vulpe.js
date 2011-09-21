@@ -1790,6 +1790,7 @@ var vulpe = {
 				if (this.checked) {
 					++count;
 				}
+				vulpe.view.controlSelectedRow(this);
 			});
 			if (count == items) {
 				selectAll.removeClass("vulpeItemOff");

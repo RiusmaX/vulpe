@@ -143,7 +143,7 @@
 				<v:column roles="${deleteRole}" showOnlyIfAuthenticated="${deleteLogged}" labelKey="${deleteLabelKey}" style="width: 1%" styleClass="vulpeSelect ${xstyleClass}" onclick="${selectCheckOn}">
 					<c:set var="checkboxName" value="${!disableDelete ? deleteName : ''}"/>
 					<c:if test="${deleteType eq 'detail'}"><c:set var="checkboxName" value="${!disableDelete ? deleteName : 'unselected'}"/></c:if>
-					<v:checkbox targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" property="${checkboxName}" onclick="vulpe.view.controlSelectedRow(this); vulpe.view.controlMarkUnmarkAll('${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
+					<v:checkbox targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" property="${checkboxName}" onclick="vulpe.view.controlMarkUnmarkAll('${checkboxName}', '${deleteLayer}');" fieldValue="true" paragraph="false" tabindex="100000" titleKey="help.vulpe.delete.selected" disabled="${disableDelete}" focused="false"/>
 				</v:column>
 			</c:when>
 			<c:otherwise>
