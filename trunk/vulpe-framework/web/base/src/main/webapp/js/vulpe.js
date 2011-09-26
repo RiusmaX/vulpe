@@ -731,7 +731,12 @@ var vulpe = {
 					vulpe.config.tabIndex = vulpe.config.tabIndex + 1;
 				}
 			}
-			jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex).trigger("click");
+			var tab = jQuery(vulpe.config.prefix.detailTab + vulpe.config.tabIndex);
+			if (!tab.is(":visible")) {
+				vulpe.util.tabControl(index);
+			} else {
+				tab.trigger("click");
+			}
 		},
 		
 		isVisible: function(element) {
@@ -2625,6 +2630,9 @@ var vulpe = {
 					jQuery("select,input", "#" + options.layer).each(function(index) {
 						var elementId = $(this).attr("id");
 						var elementType = $(this).attr("type");
+						if (vulpe.util.isEmpty(elementType)) {
+							elementType = this.type;
+						}
 						if (elementType != null && elementType != "hidden") {
 							var elementLoadingId = elementId + vulpe.config.suffix.loading;
 							var elementLoading = vulpe.util.get(elementLoadingId);
