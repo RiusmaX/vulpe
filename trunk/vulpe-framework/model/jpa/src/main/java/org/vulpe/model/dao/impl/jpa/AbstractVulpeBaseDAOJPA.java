@@ -50,7 +50,6 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.model.annotations.ForceLoadRelationship;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryConfigurations;
@@ -533,13 +532,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
 								if (oneToMany != null && loadAll) {
 									final List<ENTITY> result = query.getResultList();
-									loadRelationshipsMountChild(relationship, result, childs,
-											relationshipIds, parentName);
+									childs.addAll(loadRelationshipsMountChild(relationship, result,
+											relationshipIds, parentName));
 								} else {
 									final List<Map> result = query.getResultList();
-									loadRelationshipsMountChild(relationship, result, childs,
+									childs.addAll(loadRelationshipsMountChild(relationship, result,
 											relationshipIds, parentName, propertyType,
-											hqlAttributes, oneToMany);
+											hqlAttributes, oneToMany));
 								}
 								if (!onlyInMain) {
 									final Session session = (Session) entityManager.getDelegate();
@@ -670,80 +669,29 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return hql.toString();
 	}
 
-	private void loadRelationshipsMountChild(final Relationship relationship,
-			final List<ENTITY> result, final List<ENTITY> childs,
-			final Map<ID, ID> relationshipIds, final String parentName) {
+	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship,
+			final List<ENTITY> result, final Map<ID, ID> relationshipIds, final String parentName) {
+		final List<ENTITY> childs = new ArrayList<ENTITY>();
 		try {
 			for (final ENTITY entity : result) {
+				entity.setQueryConfigurationName(relationship.forceLoadQueryConfiguration());
+				loadEntityRelationships(entity);
 				final ENTITY parent = (ENTITY) PropertyUtils.getProperty(entity, parentName);
 				relationshipIds.put(entity.getId(), parent.getId());
-				final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-				for (final Field field : fields) {
-					if (field.getName().equals(parentName)) {
-						continue;
-					}
-					if (field.isAnnotationPresent(ManyToOne.class)) {
-						final ENTITY childEntity = (ENTITY) PropertyUtils.getProperty(entity, field
-								.getName());
-						if (VulpeValidationUtil.isNotEmpty(childEntity)) {
-							if (relationship.forceLoad()) {
-								if (childEntity instanceof HibernateProxy) {
-									final ENTITY childEntity2 = initializeAndUnproxy(childEntity);
-									childEntity2.setQueryConfigurationName(relationship
-											.forceLoadQueryConfiguration());
-									loadEntityRelationships(childEntity2);
-									PropertyUtils
-											.setProperty(entity, field.getName(), childEntity2);
-								} else {
-									childEntity.setQueryConfigurationName(relationship
-											.forceLoadQueryConfiguration());
-									loadEntityRelationships(childEntity);
-									PropertyUtils.setProperty(entity, field.getName(), childEntity);
-								}
-							} else {
-								PropertyUtils.setProperty(entity, field.getName(),
-										(ENTITY) getEntityManager().getReference(field.getType(),
-												childEntity.getId()));
-							}
-						}
-					} else if (relationship.forceLoad()
-							&& field.isAnnotationPresent(OneToMany.class)
-							&& field.isAnnotationPresent(ForceLoadRelationship.class)) {
-						final List<ENTITY> list = (List<ENTITY>) PropertyUtils.getProperty(entity,
-								field.getName());
-						if (VulpeValidationUtil.isNotEmpty(list)) {
-							for (final ENTITY vulpeEntity : list) {
-								final List<Field> childFields = VulpeReflectUtil
-										.getFields(vulpeEntity.getClass());
-								for (final Field childField : childFields) {
-									if (childField.getName().equals(
-											VulpeStringUtil.getAttributeName(entity.getClass()
-													.getSimpleName()))) {
-										continue;
-									}
-									if (childField.isAnnotationPresent(ManyToOne.class)) {
-										final ENTITY childEntity = (ENTITY) PropertyUtils
-												.getProperty(vulpeEntity, childField.getName());
-										if (VulpeValidationUtil.isNotEmpty(childEntity)) {
-											loadEntityRelationships(childEntity);
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				relationshipIds.put(entity.getId(), parent.getId());
 				childs.add(entity);
 			}
 		} catch (Exception e) {
 			LOG.error(e);
 		}
+		return childs;
 	}
 
-	private void loadRelationshipsMountChild(final Relationship relationship,
-			final List<Map> result, final List<ENTITY> childs, final Map<ID, ID> relationshipIds,
-			final String parentName, final Class propertyType,
-			final Map<String, String> hqlAttributes, final OneToMany oneToMany) {
+	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship,
+			final List<Map> result, final Map<ID, ID> relationshipIds, final String parentName,
+			final Class propertyType, final Map<String, String> hqlAttributes,
+			final OneToMany oneToMany) {
+		final List<ENTITY> childs = new ArrayList<ENTITY>();
 		try {
 			for (final Map map : result) {
 				final ENTITY child = (ENTITY) (oneToMany != null ? oneToMany.targetEntity()
@@ -838,6 +786,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		} catch (Exception e) {
 			LOG.error(e);
 		}
+		return childs;
 	}
 
 	private void loadRelationshipsMountEntities(final Relationship relationship,
@@ -1079,7 +1028,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 		return entity;
 	}
-	
+
 	public class QueryFunction {
 		public String execute(final ENTITY entity, final String query, final String token) {
 			String queryModified = query;
