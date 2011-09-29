@@ -651,9 +651,8 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			ControllerType type = config().getControllerType();
 			if (baseController.now.containsKey(Now.CONTROLLER_TYPE)) {
 				type = baseController.now.getEnum(Now.CONTROLLER_TYPE, ControllerType.class);
-				type(type);
 			} else {
-				baseController.now.put(Now.CONTROLLER_TYPE, type);
+				type(type);
 			}
 			return type;
 		}
