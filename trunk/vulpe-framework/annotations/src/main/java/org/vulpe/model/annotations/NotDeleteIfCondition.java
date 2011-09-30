@@ -33,6 +33,8 @@ public @interface NotDeleteIfCondition {
 
 	String[] value();
 
+	String queryInject() default "";
+	
 	String messageToRecordOnMain() default "{vulpe.error.validate.record.cannot.be.deleted.because.condition}";
 	
 	String messageToOneRecordOnSelect() default "{vulpe.error.validate.select.record.cannot.be.deleted.because.condition}";
