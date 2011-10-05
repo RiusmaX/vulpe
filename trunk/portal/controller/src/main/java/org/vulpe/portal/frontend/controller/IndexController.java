@@ -88,7 +88,7 @@ public class IndexController extends PortalBaseController<VulpeBaseSimpleEntity,
 	protected void frontendAfter() {
 		super.frontendAfter();
 		load();
-		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
+		final Portal portal = ever.getAuto(Core.VULPE_PORTAL);
 		if (VulpeValidationUtil.isNotEmpty(portal.getHomeSection())) {
 			loadSection(portal.getHomeSection().getId());
 		}

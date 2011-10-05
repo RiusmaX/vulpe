@@ -23,7 +23,7 @@ public class PortalController extends PortalBaseController<Portal, Long> {
 
 	@Override
 	public void update() {
-		final Portal portal = ever.getSelf(Core.VULPE_PORTAL);
+		final Portal portal = ever.getAuto(Core.VULPE_PORTAL);
 		if (portal != null) {
 			id = portal.getId();
 			entity = portal;

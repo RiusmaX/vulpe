@@ -36,7 +36,7 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
-		final List<Portal> portalList = vulpe.cache().classes().getSelf(Portal.class.getSimpleName());
+		final List<Portal> portalList = vulpe.cache().classes().getAuto(Portal.class.getSimpleName());
 		if (portalList != null) {
 			for (final Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
@@ -108,7 +108,7 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 	public void validateSelectedConfiguration() {
 		if (!vulpe.controller().currentName().contains("frontend/")
 				&& !vulpe.controller().currentName().contains("core/Portal")
-				&& (ever.get(Core.VULPE_PORTAL) == null || !ever.<Portal> getSelf(Core.VULPE_PORTAL).getStatus()
+				&& (ever.get(Core.VULPE_PORTAL) == null || !ever.<Portal> getAuto(Core.VULPE_PORTAL).getStatus()
 						.equals(Status.ACTIVE))) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				vulpe.controller().ajax(true);
