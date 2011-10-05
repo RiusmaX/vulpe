@@ -22,7 +22,7 @@ public class PublicationController extends ApplicationBaseController<Publication
 
 	@Override
 	protected List<Publication> autocompleteList() {
-		final List<Publication> publications = vulpe.cache().classes().getSelf(
+		final List<Publication> publications = vulpe.cache().classes().getAuto(
 				Publication.class.getSimpleName());
 		final List<Publication> filteredPublications = new ArrayList<Publication>();
 		for (Publication publication : publications) {

@@ -43,7 +43,7 @@ public class CongregationController extends ApplicationBaseController<Congregati
 
 	private void updateData() {
 		boolean exists = false;
-		List<Congregation> congregations = ever.getSelf(Core.CONGREGATIONS_OF_USER);
+		List<Congregation> congregations = ever.getAuto(Core.CONGREGATIONS_OF_USER);
 		if (congregations == null) {
 			congregations = new ArrayList<Congregation>();
 			congregations.add(entity);

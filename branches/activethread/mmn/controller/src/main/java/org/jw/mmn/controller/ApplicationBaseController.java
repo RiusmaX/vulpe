@@ -16,7 +16,7 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		extends VulpeStrutsController<ENTITY, ID> {
 
 	public Congregation getCongregation() {
-		return ever.<Congregation> getSelf(Core.SELECTED_CONGREGATION);
+		return ever.<Congregation> getAuto(Core.SELECTED_CONGREGATION);
 	}
 
 	@ExecuteAlways

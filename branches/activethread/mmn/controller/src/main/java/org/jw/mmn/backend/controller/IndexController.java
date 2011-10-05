@@ -57,7 +57,7 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 
 	@ExecuteAlways
 	public void init() {
-		final Congregation congregation = ever.getSelf(Core.SELECTED_CONGREGATION);
+		final Congregation congregation = ever.getAuto(Core.SELECTED_CONGREGATION);
 		if (congregation != null) {
 			entity = new Index();
 			entity.setCongregation(congregation);

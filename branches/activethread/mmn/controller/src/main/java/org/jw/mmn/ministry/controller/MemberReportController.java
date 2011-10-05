@@ -86,7 +86,7 @@ public class MemberReportController extends ApplicationBaseController<MemberRepo
 		vulpe.controller().reportCollection(collection);
 		final List<MemberReport> membersReport = new ArrayList<MemberReport>();
 		final List<Member> pendingMembers = new ArrayList<Member>();
-		final List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = ever.getAuto(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
 			for (final MemberReport memberReport : entities) {
 				if (memberReport.getMinistryType().equals(MinistryType.PUBLISHER)) {

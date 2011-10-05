@@ -55,14 +55,14 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 				}
 			}
 		}
-		final String currentLayout = ever.getSelf(View.CURRENT_LAYOUT);
+		final String currentLayout = ever.getAuto(View.CURRENT_LAYOUT);
 		final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
 		vulpe.controller().redirectTo(url, true);
 	}
 
 	@ExecuteAlways
 	public void init() {
-		final Congregation congregation = ever.getSelf(Core.SELECTED_CONGREGATION);
+		final Congregation congregation = ever.getAuto(Core.SELECTED_CONGREGATION);
 		if (congregation != null) {
 			entity = new Index();
 			entity.setCongregation(congregation);

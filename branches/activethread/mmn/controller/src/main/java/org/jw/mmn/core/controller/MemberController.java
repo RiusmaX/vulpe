@@ -71,7 +71,7 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 
 	@Override
 	protected void createPostAfter() {
-		List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = ever.getAuto(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
 		}
@@ -88,7 +88,7 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		List<Member> members = ever.getAuto(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		if (members == null) {
 			members = new ArrayList<Member>();
 			members.add(entity);
@@ -130,7 +130,7 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 
 	@Override
 	public List<Member> autocompleteList() {
-		final List<Member> members = ever.getSelf(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = ever.getAuto(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		final List<Member> filteredMembers = new ArrayList<Member>();
 		for (final Member member : members) {
 			if (VulpeStringUtil.normalize(member.getName().toLowerCase()).contains(
