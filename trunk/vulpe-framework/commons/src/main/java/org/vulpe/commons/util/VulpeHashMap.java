@@ -34,12 +34,12 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param key
 	 * @return
 	 */
-	public <T> T getSelf(final KEY key) {
+	public <T> T getAuto(final KEY key) {
 		return (T) get(key);
 	}
 
 	public <T> T getEnum(final KEY key, final Class type) {
-		final Object object = getSelf(key);
+		final Object object = getAuto(key);
 		T value = null;
 		if (object instanceof String) {
 			final String string = (String) object;
@@ -75,8 +75,8 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 		return value;
 	}
 
-	public <T> T getSelf(final KEY key, final T defaultValue) {
-		return containsKey(key) && VulpeValidationUtil.isNotEmpty(get(key)) ? (T) getSelf(key)
+	public <T> T getAuto(final KEY key, final T defaultValue) {
+		return containsKey(key) && VulpeValidationUtil.isNotEmpty(get(key)) ? (T) getAuto(key)
 				: defaultValue;
 	}
 
@@ -87,7 +87,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param key
 	 * @return
 	 */
-	public <T> T removeSelf(final KEY key) {
+	public <T> T removeAuto(final KEY key) {
 		return (T) remove(key);
 	}
 
@@ -99,7 +99,7 @@ public class VulpeHashMap<KEY extends Object, VALUE extends Object> extends Hash
 	 * @param value
 	 * @return
 	 */
-	public <T> T putSelf(final KEY key, final VALUE value) {
+	public <T> T putAuto(final KEY key, final VALUE value) {
 		return (T) super.put(key, value);
 	}
 

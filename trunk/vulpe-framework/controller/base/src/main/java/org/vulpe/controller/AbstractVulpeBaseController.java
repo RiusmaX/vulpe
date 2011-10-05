@@ -588,7 +588,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							}
 						}
 						if (entitySelect.getId() != null) {
-							value = map.getSelf("value");
+							value = map.getAuto("value");
 							break;
 						}
 					} catch (Exception e) {
@@ -601,9 +601,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		} else if (entitySelect.getId() != null) {
 			for (final VulpeHashMap<String, Object> map : values) {
-				final Long id = map.getSelf("id");
+				final Long id = map.getAuto("id");
 				if (id.equals(entitySelect.getId())) {
-					value = map.getSelf("value");
+					value = map.getAuto("value");
 					break;
 				}
 			}
@@ -1198,7 +1198,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				vulpe.cache().classes().put(entityName, list);
 			}
 			if (!config.isOnlyUpdateDetails()) {
-				final List<ENTITY> entities = ever.getSelf(vulpe.controller().selectTableKey());
+				final List<ENTITY> entities = ever.getAuto(vulpe.controller().selectTableKey());
 				if (entities != null && !entities.isEmpty()) {
 					final List<ENTITY> entitiesOld = new ArrayList<ENTITY>(entities);
 					int index = 0;
@@ -1641,7 +1641,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		readBefore();
 		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
 		if (ever.containsKey(Controller.VIRTUAL_PAGING)) {
-			final Paging<ENTITY> currentPaging = ever.getSelf(Controller.VIRTUAL_PAGING);
+			final Paging<ENTITY> currentPaging = ever.getAuto(Controller.VIRTUAL_PAGING);
 			mountPaging(currentPaging, config.getPageSize());
 			this.paging = currentPaging;
 			entities = currentPaging.getList();
@@ -1723,7 +1723,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	protected void onRead() {
 		if (vulpe.controller().type().equals(ControllerType.TWICE)) {
 			if (ever.containsKey(vulpe.controller().selectFormKey()) && entitySelect == null) {
-				entitySelect = ever.<ENTITY> getSelf(vulpe.controller().selectFormKey());
+				entitySelect = ever.<ENTITY> getAuto(vulpe.controller().selectFormKey());
 			}
 			if (entitySelect == null) {
 				entitySelect = entity;
@@ -1938,8 +1938,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (vulpe.controller().type().equals(ControllerType.SELECT)
 				|| vulpe.controller().type().equals(ControllerType.REPORT)) {
 			if (vulpe.controller().back()) {
-				entitySelect = ever.<ENTITY> getSelf(vulpe.controller().selectFormKey());
-				entities = ever.<List<ENTITY>> getSelf(vulpe.controller().selectTableKey());
+				entitySelect = ever.<ENTITY> getAuto(vulpe.controller().selectFormKey());
+				entities = ever.<List<ENTITY>> getAuto(vulpe.controller().selectTableKey());
 				read();
 			} else {
 				ever.remove(vulpe.controller().selectFormKey());
@@ -2003,9 +2003,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		onPrepare();
 		manageButtons(Operation.PREPARE);
 		if (vulpe.controller().back()) {
-			entitySelect = ever.<ENTITY> getSelf(vulpe.controller().selectFormKey());
-			entities = ever.<List<ENTITY>> getSelf(vulpe.controller().selectTableKey());
-			paging = ever.<Paging<ENTITY>> getSelf(vulpe.controller().selectPagingKey());
+			entitySelect = ever.<ENTITY> getAuto(vulpe.controller().selectFormKey());
+			entities = ever.<List<ENTITY>> getAuto(vulpe.controller().selectTableKey());
+			paging = ever.<Paging<ENTITY>> getAuto(vulpe.controller().selectPagingKey());
 			if (paging != null) {
 				paging.setList(entities);
 			}
@@ -2265,7 +2265,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					if (VulpeValidationUtil.isNotEmpty(value)
 							&& !Modifier.isTransient(field.getModifiers())
 							&& value.getClass().isAnnotationPresent(CachedClass.class)) {
-						final List<ENTITY> cachedList = vulpe.cache().classes().getSelf(
+						final List<ENTITY> cachedList = vulpe.cache().classes().getAuto(
 								value.getClass().getSimpleName());
 						if (VulpeValidationUtil.isNotEmpty(cachedList)) {
 							for (final ENTITY cached : cachedList) {

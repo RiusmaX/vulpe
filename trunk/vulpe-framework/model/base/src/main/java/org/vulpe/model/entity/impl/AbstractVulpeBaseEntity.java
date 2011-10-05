@@ -242,4 +242,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		getMap().put(Entity.DELETED_DETAILS, deletedDetails);
 	}
 
+	public <T> T simple() {
+		T simple = null;
+		try {
+			simple = (T) this.getClass().newInstance();
+			((VulpeEntity<ID>)simple).setId(getId());
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return simple;
+	}
 }

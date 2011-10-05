@@ -304,7 +304,7 @@ public class Functions {
 				.getRequest().getAttribute(Request.NOW);
 		final StringBuilder config = new StringBuilder();
 		if (now != null) {
-			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getAuto(Now.BUTTONS);
 			if (button != null && buttons.containsKey(button)) {
 				final ButtonConfig buttonInfo = buttons.get(button);
 				if (buttonInfo.getDisabled() != null && buttonInfo.getDisabled()) {
@@ -341,7 +341,7 @@ public class Functions {
 				.getRequest().getAttribute(Request.NOW);
 		boolean render = false;
 		if (now != null) {
-			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getAuto(Now.BUTTONS);
 			if (button != null && buttons.containsKey(button)) {
 				final ButtonConfig buttonInfo = buttons.get(button);
 				render = buttonInfo.getRender() != null && buttonInfo.getRender();
@@ -362,7 +362,7 @@ public class Functions {
 				.getRequest().getAttribute(Request.NOW);
 		boolean show = false;
 		if (now != null) {
-			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getAuto(Now.BUTTONS);
 			if (button != null && buttons.containsKey(button)) {
 				final ButtonConfig buttonInfo = buttons.get(button);
 				show = buttonInfo.getShow() != null && buttonInfo.getShow();
@@ -383,7 +383,7 @@ public class Functions {
 				.getRequest().getAttribute(Request.NOW);
 		boolean disabled = false;
 		if (now != null) {
-			final VulpeHashMap<String, ButtonConfig> buttons = now.getSelf(Now.BUTTONS);
+			final VulpeHashMap<String, ButtonConfig> buttons = now.getAuto(Now.BUTTONS);
 			if (button != null && buttons.containsKey(button)) {
 				final ButtonConfig buttonInfo = buttons.get(button);
 				disabled = buttonInfo.getDisabled() != null && buttonInfo.getDisabled();
@@ -565,7 +565,7 @@ public class Functions {
 		try {
 			final VulpeHashMap<String, Object> map = VulpeCacheHelper.getInstance().get(
 					VulpeConstants.CACHED_ENUMS);
-			final List<ValueBean> enumeration = map.getSelf(type);
+			final List<ValueBean> enumeration = map.getAuto(type);
 			final StringBuilder list = new StringBuilder();
 			if (fieldValue instanceof Collection<?>) {
 				final Collection<?> collection = (Collection<?>) fieldValue;

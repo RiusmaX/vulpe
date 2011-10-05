@@ -93,7 +93,7 @@ public class UserPasswordController extends VulpeStrutsController<User, Long> {
 	}
 
 	public String getPassword() {
-		return ever.<String> getSelf(PASSWORD);
+		return ever.<String> getAuto(PASSWORD);
 	}
 
 	public void setPassword(final String password) {

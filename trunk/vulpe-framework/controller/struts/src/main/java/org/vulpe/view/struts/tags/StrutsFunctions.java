@@ -58,7 +58,7 @@ public final class StrutsFunctions extends Functions {
 			final String contentDisposition) throws JspException {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
-				getEver().<String> getSelf(Ever.CURRENT_CONTROLLER_NAME)).append(
+				getEver().<String> getAuto(Ever.CURRENT_CONTROLLER_NAME)).append(
 				"/download?now.downloadKey=").append(urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
 			link.append("&now.downloadContentType=").append(contentType);

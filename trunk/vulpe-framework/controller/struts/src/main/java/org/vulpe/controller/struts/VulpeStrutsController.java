@@ -148,7 +148,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					vulpe.controller().detail());
 			if (detailConfig != null) {
-				final Paging paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
+				final Paging paging = ever.getAuto(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
 				final List<ENTITY> realList = new ArrayList<ENTITY>();
 				if (paging != null) {
 					realList.addAll(paging.getRealList());
@@ -594,7 +594,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				doAddDetail(collection);
 			}
 			if (detailConfig != null) {
-				final Paging<ENTITY> paging = ever.getSelf(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
+				final Paging<ENTITY> paging = ever.getAuto(detailConfig.getName() + Controller.DETAIL_PAGING_LIST);
 				if (paging != null) {
 					int id = paging.getRealList().size();
 					for (final ENTITY entity : (List<ENTITY>) collection) {

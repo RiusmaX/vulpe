@@ -133,7 +133,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 	public VulpeSecurityContext securityContext() {
 		VulpeSecurityContext securityContext = baseController.ever
-				.getSelf(Security.SECURITY_CONTEXT);
+				.getAuto(Security.SECURITY_CONTEXT);
 		if (securityContext == null) {
 			securityContext = bean(VulpeSecurityContext.class);
 			baseController.ever.put(Security.SECURITY_CONTEXT, securityContext);
@@ -215,7 +215,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String defaultMessage(final Operation operation) {
-			return defaultMessage.getSelf(operation);
+			return defaultMessage.getAuto(operation);
 		}
 
 		public String defaultMessage() {
@@ -267,7 +267,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public <T> T detailPaging(final String detail) {
-			return baseController.ever.<T> getSelf(detail + Controller.DETAIL_PAGING_LIST);
+			return baseController.ever.<T> getAuto(detail + Controller.DETAIL_PAGING_LIST);
 		}
 
 		public <T> T detailPaging() {
@@ -297,7 +297,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		 */
 		public Collection<?> reportCollection() {
 			if (baseController.now.containsKey(Controller.REPORT_COLLECTION)) {
-				return baseController.now.getSelf(Controller.REPORT_COLLECTION);
+				return baseController.now.getAuto(Controller.REPORT_COLLECTION);
 			}
 			return null;
 		}
@@ -318,7 +318,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		 */
 		public VulpeHashMap<String, Object> reportParameters() {
 			if (baseController.now.containsKey(Controller.REPORT_PARAMETERS)) {
-				return baseController.now.getSelf(Controller.REPORT_PARAMETERS);
+				return baseController.now.getAuto(Controller.REPORT_PARAMETERS);
 			}
 			final VulpeHashMap<String, Object> reportParameters = new VulpeHashMap<String, Object>();
 			baseController.now.put(Controller.REPORT_PARAMETERS, reportParameters);
@@ -326,7 +326,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String resultName() {
-			String resultName = baseController.now.getSelf(Now.RESULT_NAME);
+			String resultName = baseController.now.getAuto(Now.RESULT_NAME);
 			if (StringUtils.isBlank(resultName)) {
 				resultName = Result.SUCCESS;
 			}
@@ -338,7 +338,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String resultForward() {
-			return baseController.now.getSelf(Now.RESULT_FORWARD);
+			return baseController.now.getAuto(Now.RESULT_FORWARD);
 		}
 
 		public void resultForward(final String resultForward) {
@@ -352,7 +352,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		 * @return DownlodInfo object.
 		 */
 		public DownloadInfo downloadInfo() {
-			return baseController.now.<DownloadInfo> getSelf(Now.DOWNLOAD_INFO);
+			return baseController.now.<DownloadInfo> getAuto(Now.DOWNLOAD_INFO);
 		}
 
 		/**
@@ -368,7 +368,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String downloadKey() {
-			return baseController.now.getSelf(Now.DOWNLOAD_KEY);
+			return baseController.now.getAuto(Now.DOWNLOAD_KEY);
 		}
 
 		public void downloadKey(final String downloadKey) {
@@ -376,7 +376,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String downloadContentType() {
-			return baseController.now.getSelf(Now.DOWNLOAD_CONTENT_TYPE);
+			return baseController.now.getAuto(Now.DOWNLOAD_CONTENT_TYPE);
 		}
 
 		public void downloadContentType(final String downloadContentType) {
@@ -384,7 +384,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String downloadContentDisposition() {
-			return baseController.now.getSelf(Now.DOWNLOAD_CONTENT_DISPOSITION);
+			return baseController.now.getAuto(Now.DOWNLOAD_CONTENT_DISPOSITION);
 		}
 
 		public void downloadContentDisposition(final String downloadContentDisposition) {
@@ -407,7 +407,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String urlToRedirect() {
-			return baseController.now.getSelf(Now.URL_TO_REDIRECT);
+			return baseController.now.getAuto(Now.URL_TO_REDIRECT);
 		}
 
 		public void redirectTo(final String url, final boolean ajax) {
@@ -485,7 +485,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String reportFormat() {
-			String reportFormat = baseController.now.getSelf(Now.REPORT_FORMAT);
+			String reportFormat = baseController.now.getAuto(Now.REPORT_FORMAT);
 			if (StringUtils.isBlank(reportFormat)) {
 				reportFormat = "PDF";
 			}
@@ -513,7 +513,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String propertyName() {
-			return baseController.now.getSelf(Now.PROPERTY_NAME);
+			return baseController.now.getAuto(Now.PROPERTY_NAME);
 		}
 
 		public boolean ajax() {
@@ -525,11 +525,11 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String popupKey() {
-			return baseController.now.getSelf(Now.POPUP_KEY);
+			return baseController.now.getAuto(Now.POPUP_KEY);
 		}
 
 		public void popupKey(final String popupKey) {
-			baseController.now.getSelf(Now.POPUP_KEY, popupKey);
+			baseController.now.getAuto(Now.POPUP_KEY, popupKey);
 		}
 
 		public boolean popup() {
@@ -591,7 +591,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String selectedTab() {
-			return baseController.now.getSelf(Now.SELECTED_TAB);
+			return baseController.now.getAuto(Now.SELECTED_TAB);
 		}
 
 		public void tabularSize(final Integer tabularSize) {
@@ -599,7 +599,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public Integer tabularSize() {
-			return baseController.ever.<Integer> getSelf(Ever.TABULAR_SIZE);
+			return baseController.ever.<Integer> getAuto(Ever.TABULAR_SIZE);
 		}
 
 		public void currentPage(final Integer page) {
@@ -607,11 +607,11 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public Integer currentPage() {
-			return baseController.ever.<Integer> getSelf(Ever.CURRENT_PAGE);
+			return baseController.ever.<Integer> getAuto(Ever.CURRENT_PAGE);
 		}
 
 		public String detail() {
-			return baseController.now.getSelf(Now.DETAIL);
+			return baseController.now.getAuto(Now.DETAIL);
 		}
 
 		public void detail(final String detail) {
@@ -623,7 +623,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public Integer detailIndex() {
-			return baseController.now.getSelf(Now.DETAIL_INDEX);
+			return baseController.now.getAuto(Now.DETAIL_INDEX);
 		}
 
 		public void detailLayer(String detailLayer) {
@@ -631,7 +631,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String detailLayer() {
-			return baseController.now.getSelf(Now.DETAIL_LAYER);
+			return baseController.now.getAuto(Now.DETAIL_LAYER);
 		}
 
 		public void tabularFilter(boolean tabularFilter) {
@@ -706,7 +706,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String currentMethodName() {
-			return (String) baseController.now.getSelf(Now.CURRENT_METHOD_NAME);
+			return (String) baseController.now.getAuto(Now.CURRENT_METHOD_NAME);
 		}
 
 		public void currentMethodName(final String methodName) {
@@ -883,7 +883,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			final String key = currentKey();
 			if (baseController.ever.containsKey(key)) {
 				final VulpeBaseControllerConfig<ENTITY, ID> config = baseController.ever
-						.getSelf(key);
+						.getAuto(key);
 				config.setController(baseController);
 				baseController.now.put(Now.CONTROLLER_CONFIG, config);
 				return config;
@@ -931,7 +931,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				String deleteButtonKey = Button.DELETE.concat(controller().config()
 						.getTabularConfig().getBaseName());
 				if (buttons().containsKey(key)) {
-					buttonConfig = buttons().getSelf(key);
+					buttonConfig = buttons().getAuto(key);
 				}
 				switch (values.length) {
 				case 1:
@@ -951,7 +951,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 						.getBaseName());
 			}
 			if (buttons().containsKey(key)) {
-				buttonConfig = buttons().getSelf(key);
+				buttonConfig = buttons().getAuto(key);
 			}
 			switch (values.length) {
 			case 1:
@@ -974,7 +974,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				String deleteButtonKey = Button.DELETE.concat(controller().config()
 						.getTabularConfig().getBaseName());
 				if (buttons().containsKey(key)) {
-					buttonConfig = buttons().getSelf(key);
+					buttonConfig = buttons().getAuto(key);
 				}
 				if (StringUtils.isNotBlank(config)) {
 					if (config.equals(ButtonConfig.RENDER)) {
@@ -995,7 +995,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 						.getBaseName());
 			}
 			if (buttons().containsKey(key)) {
-				buttonConfig = buttons().getSelf(key);
+				buttonConfig = buttons().getAuto(key);
 			}
 			if (StringUtils.isNotBlank(config)) {
 				if (config.equals(ButtonConfig.RENDER)) {
@@ -1133,7 +1133,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String targetName() {
-			return baseController.now.getSelf(Now.TARGET_NAME);
+			return baseController.now.getAuto(Now.TARGET_NAME);
 		}
 
 		public void targetName(final String targetName) {
@@ -1183,7 +1183,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public VulpeHashMap<String, Tab> tabs() {
 			if (baseController.now.containsKey(Controller.TABS)) {
-				return (VulpeHashMap<String, Tab>) baseController.now.getSelf(Controller.TABS);
+				return (VulpeHashMap<String, Tab>) baseController.now.getAuto(Controller.TABS);
 			}
 			final VulpeHashMap<String, Tab> tabs = new VulpeHashMap<String, Tab>();
 			baseController.now.put(Controller.TABS, tabs);
@@ -1192,7 +1192,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public VulpeHashMap<String, ButtonConfig> buttons() {
 			if (baseController.now.containsKey(Now.BUTTONS)) {
-				return (VulpeHashMap<String, ButtonConfig>) baseController.now.getSelf(Now.BUTTONS);
+				return (VulpeHashMap<String, ButtonConfig>) baseController.now.getAuto(Now.BUTTONS);
 			}
 			final VulpeHashMap<String, ButtonConfig> buttons = new VulpeHashMap<String, ButtonConfig>();
 			baseController.now.put(Now.BUTTONS, buttons);
@@ -1256,7 +1256,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		 * @return
 		 */
 		public <T extends VulpeEntity<?>> T findClass(final Class<T> entityClass, final Long id) {
-			final List<T> entities = classes().getSelf(entityClass.getSimpleName());
+			final List<T> entities = classes().getAuto(entityClass.getSimpleName());
 			for (final T entity : entities) {
 				if (entity.getId().equals(id)) {
 					return entity;

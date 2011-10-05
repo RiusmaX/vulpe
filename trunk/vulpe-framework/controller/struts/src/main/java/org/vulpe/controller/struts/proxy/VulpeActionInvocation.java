@@ -652,7 +652,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				baseController.ever.put(Ever.CURRENT_CONTROLLER_NAME, baseController.vulpe
 						.controller().currentName());
 				final String currentControllerKey = baseController.ever
-						.getSelf(Ever.CURRENT_CONTROLLER_KEY);
+						.getAuto(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = baseController.vulpe.controller().currentKey();
 				boolean autocomplete = false;
 				if (baseController.entitySelect != null

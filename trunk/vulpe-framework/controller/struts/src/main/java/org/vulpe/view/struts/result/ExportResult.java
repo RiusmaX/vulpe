@@ -49,7 +49,7 @@ public class ExportResult extends StrutsResultSupport {
 			response.setHeader("Content-disposition", "inline;filename=export.pdf");
 			final OutputStream output = response.getOutputStream();
 			Html2PdfUtil.convert(VulpeStringUtil.encodeHTMLSpecials(EverParameter.getInstance(
-					request.getSession()).<String> getSelf(Ever.CURRENT_HTML_CONTENT)), output);
+					request.getSession()).<String> getAuto(Ever.CURRENT_HTML_CONTENT)), output);
 			output.flush();
 			output.close();
 		} catch (Exception e) {

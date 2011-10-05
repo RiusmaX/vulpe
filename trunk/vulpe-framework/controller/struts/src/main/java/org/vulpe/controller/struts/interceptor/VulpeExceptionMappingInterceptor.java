@@ -166,7 +166,7 @@ public class VulpeExceptionMappingInterceptor extends
 	 * @return
 	 */
 	protected boolean isDebug(final VulpeStrutsController<?, ?> action) {
-		final Boolean sessionDebug = action.ever.getSelf(VulpeConstants.Configuration.Ever.DEBUG,
+		final Boolean sessionDebug = action.ever.getAuto(VulpeConstants.Configuration.Ever.DEBUG,
 				Boolean.FALSE);
 		final Map<String, Object> global = (Map<String, Object>) getServletContext().getAttribute(
 				Context.GLOBAL);
