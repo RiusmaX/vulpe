@@ -803,6 +803,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	public void addDetail() {
 		addDetailBefore();
 		final VulpeBaseDetailConfig detailConfig = onAddDetail(false);
+		configureDetail();
 		manageButtons(Operation.ADD_DETAIL);
 		if (vulpe.controller().ajax()) {
 			if (detailConfig == null || detailConfig.getViewPath() == null) {
@@ -1568,6 +1569,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		deleteDetailBefore();
 		manageButtons(Operation.UPDATE);
 		final int size = onDeleteDetail();
+		configureDetail();
 		if (size > 0) {
 			// final String defaultMessage =
 			// getDefaultMessage(Operation.DELETE_DETAIL);

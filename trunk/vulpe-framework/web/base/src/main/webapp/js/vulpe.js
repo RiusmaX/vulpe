@@ -2484,7 +2484,7 @@ var vulpe = {
 										}
 										vulpe.view.checkRequiredFields(layerObject);
 										vulpe.view.checkRows(layerObject);
-										if (vulpe.config.formName && vulpe.config.formName.indexOf("SelectForm") != -1) { 
+										if (html.indexOf("-row-") != -1) {
 											if (!vulpe.util.existsVulpePopups()) {
 												vulpe.view.enableMarkUnmarkAll("selected", layerObject);
 												vulpe.view.controlMarkUnmarkAll("selected", layerObject);

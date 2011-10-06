@@ -44,6 +44,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
+import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -82,7 +83,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param <T>
 	 * @param entity
 	 */
-	private <T> void repairRelationship(final T entity) {
+	protected <T> void repairRelationship(final T entity) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
@@ -180,8 +181,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			// VulpeReflectUtil.copyOnlyTransient(merged, entity);
 			((ENTITY) entity).setId(((ENTITY) merged).getId());
 		}
-		entityManager.flush();
-		entityManager.clear();
+		if (!(entity instanceof AuditOccurrence)) {
+			entityManager.flush();
+			entityManager.clear();
+		}
 		loadEntityRelationships((ENTITY) entity);
 		return entity;
 	}

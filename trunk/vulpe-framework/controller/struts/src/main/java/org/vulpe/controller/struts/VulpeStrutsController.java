@@ -200,9 +200,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						mountDetailPaging(detailConfig, paging);
 					}
 				}
-				if (!vulpe.controller().type().equals(ControllerType.TABULAR)) {
-					configureDetail();
-				}
 			}
 			vulpe.controller().executed(true);
 			return removed;
@@ -621,7 +618,6 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				newDetails = detailConfig.getNewDetails();
 				final String parentName = vulpe.controller().config().getParentName(vulpe.controller().detail());
 				final Object parent = Ognl.getValue(parentName, context, this);
-				configureDetail();
 				if (detailConfig.getParentDetailConfig() != null) {
 					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName()
 							.concat(Layout.DETAIL_ITEM), parent);
