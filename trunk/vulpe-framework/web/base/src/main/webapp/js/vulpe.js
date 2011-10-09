@@ -2469,7 +2469,7 @@ var vulpe = {
 									}
 									html = vulpe.util.trim(html);
 									var parent = vulpe.util.isNotEmpty(options.formName) ? "#" + options.formName : "";
-									var layerObject = vulpe.util.get(options.layer, parent);
+									var layerObject = options.layer == "body" ? vulpe.util.get(options.layer) : vulpe.util.get(options.layer, parent);
 									var layerObjectType = layerObject.attr("type");
 									if (layerObjectType && layerObjectType == "text") {
 										html = html.replace("/*[PLAINTEXT]*/", "");
