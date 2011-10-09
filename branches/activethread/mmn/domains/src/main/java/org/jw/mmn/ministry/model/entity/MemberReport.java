@@ -22,7 +22,8 @@ import org.vulpe.view.annotations.input.VulpeText;
 import org.vulpe.view.annotations.output.VulpeColumn;
 
 @NotExistEquals(parameters = { @QueryParameter(equals = @Parameter(name = "member")),
-		@QueryParameter(equals = @Parameter(name = "month")) })
+		@QueryParameter(equals = @Parameter(name = "month")),
+		@QueryParameter(equals = @Parameter(name = "year")) })
 @SuppressWarnings("serial")
 @Getter
 @Setter

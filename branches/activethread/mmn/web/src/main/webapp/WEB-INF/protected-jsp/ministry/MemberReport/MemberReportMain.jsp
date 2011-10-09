@@ -10,7 +10,7 @@
 <v:selectPopup labelKey="label.mmn.ministry.MemberReport.main.member"
 			autocompleteMinLength="1" property="member" identifier="id" description="name"
 			action="/core/Member/select" popupId="memberSelectPopup"
-			popupProperties="member.id=id,member.name=name" size="35" popupWidth="600px" autocomplete="true"
+			popupProperties="member.id=id,member.name=name" size="40" popupWidth="600px" autocomplete="true"
 			autocompleteValueList="${ever['membersAutocompleteValueList']}" required="true" autocompleteProperties="ministryType" />
 </div><br/>
 <div class="line">
