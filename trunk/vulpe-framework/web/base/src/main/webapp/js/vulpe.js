@@ -47,7 +47,7 @@ var vulpe = {
 			successTitle: "vulpe.dialog.success.title"
 		},
 		elements: new Array(),
-		entity: "-entity_",
+		entity: "entity_",
 		formName: "",
 		hotKeys: [
 		          ["Clear", "Alt+Ctrl+Shift+del", ""],
@@ -433,11 +433,12 @@ var vulpe = {
 			}
 		},
 
-		getPrefixId: function(formName) {
-			if (formName) {
-				vulpe.config.formName = formName;
-			}
-			return vulpe.config.formName + "-" + (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + vulpe.config.token.dot);
+		getPrefixId: function() {
+			return (vulpe.config.logic.prepareName == "" ? "" : vulpe.config.logic.prepareName + vulpe.config.token.dot);
+		},
+
+		getParent: function() {
+			return vulpe.util.isNotEmpty(vulpe.config.formName) ? "#" + vulpe.config.formName : "";
 		},
 
 		getElementId: function(element) {
@@ -463,15 +464,16 @@ var vulpe = {
 		},
 
 		getElementField: function(name, element) {
+			var parent = vulpe.util.getParent();
 			name = name.replace(/\./g,"_");
 			var prefix = element ? vulpe.util.getPrefixIdByElement(element) : vulpe.util.getPrefixId();
-			var field = vulpe.util.get(name.indexOf(prefix) != -1 ? name : prefix + name);
+			var field = vulpe.util.get(name.indexOf(prefix) != -1 ? name : prefix + name, parent);
 			if (field.length == 0 && vulpe.util.isNotEmpty(element)) {
 				prefix = vulpe.util.getElementId(element) + vulpe.config.token.dot;
-				field = vulpe.util.get(prefix + name);
+				field = vulpe.util.get(prefix + name, parent);
 				if (field.length == 0) {
 					prefix = vulpe.util.getElementId(element) + "-";
-					field = vulpe.util.get(prefix + name);
+					field = vulpe.util.get(prefix + name, parent);
 				}
 			}
 			return field;
@@ -1462,7 +1464,7 @@ var vulpe = {
 			$("tr[id*='-row-']", parent).each(function(index) {
 				var id = $(this).attr("id");
 				if (id.indexOf("header") == -1) {
-					var row = $("#" + id); 
+					var row = $("#" + id, parent); 
 					if (row.find(":input[type!='hidden']").length == 1) {
 						row.unbind("mouseenter mouseleave");
 						row.bind("mouseenter mouseleave", function(event){
@@ -1797,7 +1799,7 @@ var vulpe = {
 				}
 				vulpe.view.controlSelectedRow(this);
 			});
-			if (count == items) {
+			if (items > 0 && count == items) {
 				selectAll.removeClass("vulpeItemOff");
 				selectAll.attr("checked", true);
 			} else if (count > 0) {

@@ -4,7 +4,7 @@
 <c:if test="${render}">
 	<c:if test="${empty show}"><c:set var="show" value="${true}"/></c:if>
 	<c:if test="${!show}"><c:set var="style" value="display:none;${style}"/></c:if>
-	<c:if test="${empty sortPropertyInfo}"><c:set var="sortPropertyInfo" value="${vulpeFormName}-entitySelect_orderBy"/></c:if>
+	<c:if test="${empty sortPropertyInfo}"><c:set var="sortPropertyInfo" value="entitySelect_orderBy"/></c:if>
 	<c:if test="${empty renderId}"><c:set var="renderId" value="${true}" scope="request"/></c:if>
 	<c:if test="${empty emptyKey}"><c:set var="emptyKey" value="vulpe.message.empty.list"/></c:if>
 	<c:set var="name" value=""/>
@@ -38,13 +38,11 @@
 		<c:set var="name" value="${targetConfigPropertyName}"/>
 		<c:set var="itemName" value="${detailConfig.baseName}_item"/>
 		<c:set var="baseName" value="${detailConfig.baseName}"/>
-		<%-- if detail, then items equals targetConfigPropertyName --%>
 		<c:choose>
 		<c:when test="${empty detailConfig.parentDetailConfig}">
 			<c:set var="itemsEL" value="${'${'}${targetConfigPropertyName}${'}'}"/>
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 		</c:when>
-		<%-- if subdetail, then items equals detailConfig.parentDetailConfig.baseName --%>
 		<c:otherwise>
 			<c:set var="itemsEL" value="${'${'}${detailConfig.parentDetailConfig.baseName}_item.${detailConfig.propertyName}${'}'}"/>
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
@@ -107,7 +105,6 @@
 		<c:if test="${name == 'entities' && (empty now['hooks'] || now['hooks'])}"><c:set var="enableHooks" value="${true}" scope="request"/></c:if>
 		<tbody>
 		<c:forEach var="item" items="${items}" varStatus="status">
-			<!-- detail: ${targetConfigPropertyName} - ${targetConfig} -->
 			<c:set var="isHeaderTableTag" value="${false}" scope="request"/>
 			<c:set var="statusTableTag" value="${baseName}_status" scope="request"/>
 			<c:set var="v_status" value="${util:put(pageContext, statusTableTag, status, applicationScope['REQUEST_SCOPE'])}"/>
@@ -120,7 +117,6 @@
 			<c:if test="${not empty detailConfig && not empty detailConfig.subDetails && fn:length(detailConfig.subDetails) > 0}">
 				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
-					<!-- sub-detail: ${targetConfigPropertyName} - ${targetConfig} -->
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
 					<c:if test="${!fn:endsWith(targetConfigPropertyName, subDetail.propertyName)}">
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>

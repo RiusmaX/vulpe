@@ -23,9 +23,9 @@
 			<c:set var="name" value="${targetName}.${property}"/>
 			<c:set var="prepareName" value="${fn:replace(name, '[', '__')}"/>
 			<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
-			<c:set var="autocompleteId" value="${vulpeFormName}-${prepareName}.${identifier}"/>
+			<c:set var="autocompleteId" value="${prepareName}.${identifier}"/>
 			<c:set var="autocompleteId" value="${fn:replace(autocompleteId, '.', '_')}"/>
-			<c:set var="autocompleteDescription" value="${vulpeFormName}-${prepareName}.${description}"/>
+			<c:set var="autocompleteDescription" value="${prepareName}.${description}"/>
 			<c:set var="autocompleteDescription" value="${fn:replace(autocompleteDescription, '.', '_')}"/>
 			<c:if test="${not empty afterJs}"><c:set var="autocompleteIdAfterJs">, afterJs: function(){${afterJs}}</c:set></c:if>
 			<c:choose><c:when test="${empty autocompleteNotFoundMessage}"><fmt:message key="vulpe.error.record.notFound" var="autocompleteNotFoundMessage"/></c:when><c:otherwise><fmt:message key="${autocompleteNotFoundMessage}" var="autocompleteNotFoundMessage"/></c:otherwise></c:choose>

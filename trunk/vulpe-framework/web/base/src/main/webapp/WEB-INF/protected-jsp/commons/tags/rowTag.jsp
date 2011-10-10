@@ -134,7 +134,7 @@
 	<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
 	<c:if test="${not empty styleClass}"><c:set var="styleClass">class="${styleClass}"</c:set></c:if>
 	<c:if test="${not empty rowspan}"><c:set var="rowspan">rowspan="${rowspan}"</c:set></c:if>
-	<c:set var="elementId" value="${vulpeFormName}-${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
+	<c:set var="elementId" value="${currentTableElementId}-row-${!isHeaderTableTag ? currentStatus.index : 'header'}"/>
 	<tr id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${styleClass} ${style} ${rowspan}>
 		<c:if test="${!isHeaderTableTag && renderId}"><td style="display: none"><v:hidden property="id" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName || not empty enableHooks}"/><v:hidden property="fakeId" targetName="${empty targetConfigPropertyName ? 'entities' : targetConfigPropertyName}[${currentStatus.index}]" render="${not empty targetConfigPropertyName}"/></td></c:if>
 		<c:if test="${!now['onlyToSee'] && showButtonsDelete && not empty deleteValue && deleteValue ne 'false'}">

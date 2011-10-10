@@ -33,20 +33,20 @@ $(document).ready(function() {
 		vulpe.util.removeHotKeys($(this));
 		vulpe.util.checkHotKeys($(this));
 		</c:if>
-		var operation = vulpe.util.get("${vulpeFormName}-operation");
+		var operation = vulpe.util.get("operation");
 		operation.val("${now['operation' ]}");
 		operation.attr("defaultValue", "${now['operation']}");
-		var pagingPage = vulpe.util.get('${vulpeFormName}-paging.page');
+		var pagingPage = vulpe.util.get('paging.page');
 		pagingPage.val("${paging.page}");
 		pagingPage.attr("defaultValue", "${paging.page}");
-		var id = vulpe.util.get("${vulpeFormName}-id");
+		var id = vulpe.util.get("id");
 		id.val("${id}");
 		id.attr("defaultValue", "${id}");
-		var executed = vulpe.util.get("${vulpeFormName}-executed");
+		var executed = vulpe.util.get("executed");
 		executed.val("${executed}");
 		executed.attr("defaultValue", "${executed}");
 		<c:if test="${now['controllerType'] != 'FRONTEND' && now['controllerType'] != 'BACKEND'}">
-		var orderBy = vulpe.util.get('${vulpeFormName}-entity_orderBy');
+		var orderBy = vulpe.util.get('entity_orderBy');
 		orderBy.val("${entity.orderBy}");
 		orderBy.attr("defaultValue", "${entity.orderBy}");
 		</c:if>
