@@ -255,7 +255,7 @@
 * Vinter.validate()
 * Version 1.9.5
 *
-* Vinter.validate is (c) 2008 Lars Huring, Olov NilzÈn and Vinter (www.vinterwebb.se) and is released under the MIT License:
+* Vinter.validate is (c) 2008 Lars Huring, Olov Nilz√©n and Vinter (www.vinterwebb.se) and is released under the MIT License:
 * http://www.opensource.org/licenses/mit-license.php
 * 
 * Changelog:
@@ -333,7 +333,7 @@
 				messagecontainer: "#validationmsg",
 				errormsg: ".errmsg",
 				notvalidclass: "notvalid",
-				messageheader: "Hittade nÂgra problem i formul‰ret",
+				messageheader: "Hittade n√•gra problem i formul√§ret",
 				onerror: "",
 				oncomplete: "",
 				erroridprefix: "validationerror_",
@@ -509,7 +509,7 @@
 	})(jQuery);
 
 	/**
-	* @Copyright (c) 2008 AurÈlio Saraiva (aureliosaraiva@gmail.com)
+	* @Copyright (c) 2008 Aur√©lio Saraiva (aureliosaraiva@gmail.com)
 	* @Page http://inovaideia.com.br/maskInputMoney
 	* Permission is hereby granted, free of charge, to any person
 	* obtaining a copy of this software and associated documentation
@@ -564,7 +564,7 @@
 					preventDefault(e);
 					return true;
 				}
-				var key = String.fromCharCode(k);  // Valor para o cÛdigo da Chave
+				var key = String.fromCharCode(k);  // Valor para o c√≥digo da Chave
 				preventDefault(e);
 				input.val(maskValue(input.val()+key));
 			}
@@ -667,11 +667,15 @@
 			var $this = $(this);
 			if ($this.is('textarea') || $this.is('input:text')) {
 				$this.keypress(function(e) {
+					var maxlength = $this.attr("maxlength");
 					var pressedKey = e.charCode == undefined ? e.keyCode : e.charCode;
 					var str = String.fromCharCode(pressedKey);
 					if (pressedKey < 97 || (pressedKey > 122 && (pressedKey < 128 && pressedKey > 165))) {
-						if (settings.ln == 'en' || !isTRChar(pressedKey))
+						if (settings.ln == 'en' || !isTRChar(pressedKey)) {
 							return;
+						}
+					} else if (maxlength && maxlength == $this.val().length) {
+						return false;
 					}
 					if (settings.ln == 'tr' && pressedKey == 105)
 						str = '\u0130';
@@ -716,11 +720,15 @@
 			var $this = $(this);
 			if ($this.is('textarea') || $this.is('input:text')) {
 				$this.keypress(function(e) {
+					var maxlength = $this.attr("maxlength");
 					var pressedKey = e.charCode == undefined ? e.keyCode : e.charCode;
 					var str = String.fromCharCode(pressedKey);
 					if (pressedKey < 64 || (pressedKey > 90 && (pressedKey < 128 && pressedKey > 165))) {
-						if (settings.ln == 'en' || !isTRChar(pressedKey))
+						if (settings.ln == 'en' || !isTRChar(pressedKey)) {
 							return;
+						}
+					} else if (maxlength && maxlength == $this.val().length) {
+						return false;
 					}
 					if (settings.ln == 'tr' && pressedKey == 105)
 						str = '\u0130';
