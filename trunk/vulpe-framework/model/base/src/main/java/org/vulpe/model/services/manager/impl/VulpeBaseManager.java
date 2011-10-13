@@ -231,7 +231,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		getDAO().updateSomeAttributes(entity);
 		updateSomeAttributesAfter(entity);
 	}
-
+	
 	/**
 	 * Extension point to code rules before update some attributes.
 	 */
@@ -246,6 +246,27 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		// extension point
 	}
 
+	@GenerateSuffix
+	public void updateSomeAttributes(final List<ENTITY> list) throws VulpeApplicationException {
+		updateSomeAttributesBefore(list);
+		getDAO().updateSomeAttributes(list);
+		updateSomeAttributesAfter(list);
+	}
+
+	/**
+	 * Extension point to code rules before update some attributes.
+	 */
+	protected void updateSomeAttributesBefore(final List<ENTITY> list) throws VulpeApplicationException {
+		// extension point
+	}
+
+	/**
+	 * Extension point to code rules after update some attributes.
+	 */
+	protected void updateSomeAttributesAfter(final List<ENTITY> list) throws VulpeApplicationException {
+		// extension point
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 *

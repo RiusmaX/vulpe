@@ -70,6 +70,8 @@ public interface VulpeManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @throws VulpeApplicationException
 	 */
 	void updateSomeAttributes(ENTITY entity) throws VulpeApplicationException;
+	
+	void updateSomeAttributes(List<ENTITY> list) throws VulpeApplicationException;
 
 	/**
 	 *

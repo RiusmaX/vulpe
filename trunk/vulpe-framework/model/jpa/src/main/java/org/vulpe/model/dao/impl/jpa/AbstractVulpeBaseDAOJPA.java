@@ -928,6 +928,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 	}
 
+	@Override
+	public void updateSomeAttributes(final List<ENTITY> list) {
+		for (final ENTITY entity : list) {
+			updateSomeAttributes(entity);
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

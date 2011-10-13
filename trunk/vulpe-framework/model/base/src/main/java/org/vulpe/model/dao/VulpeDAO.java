@@ -173,4 +173,10 @@ public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializabl
 	 * @param ids
 	 */
 	void updateSomeAttributes(final ENTITY entity, final List<ID> ids);
+	
+	/**
+	 * 
+	 * @param list
+	 */
+	void updateSomeAttributes(final List<ENTITY> list);
 }
