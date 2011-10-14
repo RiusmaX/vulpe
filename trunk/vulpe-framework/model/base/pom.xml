@@ -39,6 +39,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<excludes>
 						<exclude>*.xml</exclude>
@@ -47,6 +48,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -55,14 +57,7 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<property environment="env" />
-								<property name="maven.repo" value="${env.M2_REPO}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement
-											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<if>
 									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
@@ -70,7 +65,7 @@
 										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/"
 											overwrite="true">
 											<fileset
-												file="${project.build.directory}/${artifactId}-${version}.jar" />
+												file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
 										</copy>
 									</then>
 								</if>
@@ -78,6 +73,24 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
