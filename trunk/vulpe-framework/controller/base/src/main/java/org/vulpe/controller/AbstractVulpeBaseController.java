@@ -1642,11 +1642,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		readBefore();
 		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
-		if (ever.containsKey(Controller.VIRTUAL_PAGING)) {
+		if (ever.containsKey(Controller.VIRTUAL_PAGING) && VulpeValidationUtil.isNotEmpty(paging)) {
 			final Paging<ENTITY> currentPaging = ever.getAuto(Controller.VIRTUAL_PAGING);
 			mountPaging(currentPaging, config.getPageSize());
 			this.paging = currentPaging;
 			entities = currentPaging.getList();
+			ever.put(vulpe.controller().selectPagingKey(), currentPaging);
 		} else {
 			onRead();
 			manageVirtualPaging();
