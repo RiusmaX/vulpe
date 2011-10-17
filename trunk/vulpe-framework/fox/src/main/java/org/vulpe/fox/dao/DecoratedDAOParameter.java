@@ -22,6 +22,7 @@ public class DecoratedDAOParameter implements Serializable {
 
 	private String name;
 	private String type;
+	private Object value;
 
 	public String getType() {
 		return type;
@@ -37,5 +38,13 @@ public class DecoratedDAOParameter implements Serializable {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public void setValue(final Object value) {
+		this.value = value;
+	}
+
+	public Object getValue() {
+		return value;
 	}
 }

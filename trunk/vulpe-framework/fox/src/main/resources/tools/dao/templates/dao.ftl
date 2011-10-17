@@ -22,9 +22,6 @@ public interface ${dao.daoName} extends org.vulpe.model.dao.VulpeDAO<${dao.name}
 </#if>
 </#if>
 	<#list dao.methods as method>
-	${method.returnType} ${method.name}(
-		<#list method.parameters as parameter>
-		final ${parameter.type} ${parameter.name}<#if parameter_has_next>,</#if>
-		</#list>) throws org.vulpe.exception.VulpeApplicationException;
+	${method.returnType} ${method.name}(<#list method.parameters as parameter><#if parameter.name != "limit">final ${parameter.type} ${parameter.name}<#if parameter_has_next>, </#if></#if></#list>) throws org.vulpe.exception.VulpeApplicationException;
 	</#list>
 }</@source></@forAllValidDAO>

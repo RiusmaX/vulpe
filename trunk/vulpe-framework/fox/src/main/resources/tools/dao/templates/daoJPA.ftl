@@ -31,14 +31,11 @@ public class ${dao.daoName}JPA extends org.vulpe.model.dao.impl.jpa.VulpeBaseDAO
 </#if>
 </#if>
 	<#list dao.methods as method>
-	public ${method.returnType} ${method.name}(
-		<#list method.parameters as parameter>
-		final ${parameter.type} ${parameter.name}<#if parameter_has_next>,</#if>
-		</#list>) throws org.vulpe.exception.VulpeApplicationException {
+	public ${method.returnType} ${method.name}(<#list method.parameters as parameter><#if parameter.name != "limit">final ${parameter.type} ${parameter.name}<#if parameter_has_next>, </#if></#if></#list>) throws org.vulpe.exception.VulpeApplicationException {
 		<#if method.parameters?has_content>
 		final java.util.Map<String, Object> map = new java.util.HashMap();
 		<#list method.parameters as parameter>
-		map.put("${parameter.name}", ${parameter.name});
+		<#if parameter.name == "limit">map.put("${parameter.name}", ${parameter.value});<#else>map.put("${parameter.name}", ${parameter.name});</#if>
 		</#list>
 		</#if>
 		<#if method.returnType == dao.name || method.returnType?index_of("List") == -1>

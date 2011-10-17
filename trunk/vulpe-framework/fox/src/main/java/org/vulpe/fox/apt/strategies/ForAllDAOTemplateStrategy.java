@@ -215,6 +215,15 @@ public class ForAllDAOTemplateStrategy extends VulpeForAllTemplateStrategy {
 			method.getParameters().add(parameter);
 		}
 
+		for (final QueryHint queryHint : hints) {
+			if (queryHint.name().equals("limit")) {
+				final DecoratedDAOParameter parameter = new DecoratedDAOParameter();
+				parameter.setName("limit");
+				parameter.setType("java.lang.Integer");
+				parameter.setValue(Integer.valueOf(queryHint.value()));
+				method.getParameters().add(0, parameter);
+			}
+		}
 		setupReturn(dao, queryName, hints, method, unique);
 
 		dao.getMethods().add(method);
