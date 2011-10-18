@@ -1810,7 +1810,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		vulpe.controller().executed(true);
 	}
-	
+
 	private void initPaging() {
 		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
 		final int size = VulpeValidationUtil.isNotEmpty(entities) ? entities.size() : 0;
@@ -2025,8 +2025,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		selectAfter();
 		ever.remove(Controller.VIRTUAL_PAGING);
-		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || VulpeConfigHelper
-				.getProjectConfiguration().view().readOnShow())
+		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || (!vulpe
+				.controller().config().getControllerAnnotation().disableApplicationDefaults() && VulpeConfigHelper
+				.getProjectConfiguration().view().readOnShow()))
 				&& !vulpe.controller().cleaned()) {
 			onRead();
 			manageVirtualPaging();

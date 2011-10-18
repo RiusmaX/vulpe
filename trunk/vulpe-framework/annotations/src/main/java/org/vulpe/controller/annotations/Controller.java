@@ -100,4 +100,7 @@ public @interface Controller {
 	 * Name of Query Configuration on entity
 	 */
 	String queryConfigurationName() default "default";
+	
+	boolean disableApplicationDefaults() default false;
+
 }
