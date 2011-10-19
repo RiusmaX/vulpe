@@ -39,8 +39,8 @@ import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
 @SuppressWarnings( { "unchecked", "serial" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
-		VulpeEntity<ID>, Cloneable {
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements VulpeEntity<ID>,
+		Cloneable {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -52,8 +52,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isSelected() {
-		return getMap().containsKey(Entity.SELECTED) ? (Boolean) getMap().get(Entity.SELECTED)
-				: false;
+		return getMap().containsKey(Entity.SELECTED) ? (Boolean) getMap().get(Entity.SELECTED) : false;
 	}
 
 	public void setSelected(final boolean selected) {
@@ -69,8 +68,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isConditional() {
-		return getMap().containsKey(Entity.CONDITIONAL) ? (Boolean) getMap()
-				.get(Entity.CONDITIONAL) : false;
+		return getMap().containsKey(Entity.CONDITIONAL) ? (Boolean) getMap().get(Entity.CONDITIONAL) : false;
 	}
 
 	public void setConditional(final boolean conditional) {
@@ -78,8 +76,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public Integer getRowNumber() {
-		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER)
-				: 0;
+		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER) : 0;
 	}
 
 	public void setRowNumber(final Integer rowNumber) {
@@ -87,8 +84,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getOrderBy() {
-		return getMap().containsKey(Entity.ORDER_BY) ? (String) getMap().get(Entity.ORDER_BY)
-				: null;
+		return getMap().containsKey(Entity.ORDER_BY) ? (String) getMap().get(Entity.ORDER_BY) : null;
 	}
 
 	public void setOrderBy(final String orderBy) {
@@ -98,8 +94,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@Override
 	public boolean equals(final Object obj) {
 		final AbstractVulpeBaseEntity<ID> entity = (AbstractVulpeBaseEntity<ID>) obj;
-		if ((obj == null || obj.getClass() != this.getClass())
-				|| (entity.getId() == null || getId() == null)) {
+		if ((obj == null || obj.getClass() != this.getClass()) || (entity.getId() == null || getId() == null)) {
 			return false;
 		}
 
@@ -108,8 +103,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName().concat(
-				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
+		return getClass().getSimpleName().concat(this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
 	public int compareTo(final VulpeEntity<ID> entity) {
@@ -164,8 +158,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				|| attribute.getType() == Character.class || attribute.getType() == Integer.class
 				|| attribute.getType() == Short.class || attribute.getType() == Long.class
 				|| attribute.getType() == Double.class || attribute.getType() == Date.class
-				|| attribute.getType() == java.sql.Date.class
-				|| attribute.getType() == java.sql.Timestamp.class) {
+				|| attribute.getType() == java.sql.Date.class || attribute.getType() == java.sql.Timestamp.class) {
 			return true;
 		}
 		return false;
@@ -186,8 +179,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getAutocomplete() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(
-				Entity.AUTOCOMPLETE) : null;
+		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(Entity.AUTOCOMPLETE) : null;
 	}
 
 	public void setAutocompleteTerm(final String autocompleteTerm) {
@@ -195,8 +187,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getAutocompleteTerm() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(
-				Entity.AUTOCOMPLETE_TERM) : null;
+		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(Entity.AUTOCOMPLETE_TERM) : null;
 	}
 
 	public void setMap(final Map<String, Object> map) {
@@ -224,8 +215,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isFakeId() {
-		return getMap().containsKey(Entity.FAKE_ID) ? (Boolean) getMap().get(Entity.FAKE_ID)
-				: false;
+		return getMap().containsKey(Entity.FAKE_ID) ? (Boolean) getMap().get(Entity.FAKE_ID) : false;
 	}
 
 	public List<VulpeEntity<?>> getDeletedDetails() {
@@ -246,9 +236,17 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		T simple = null;
 		try {
 			simple = (T) this.getClass().newInstance();
-			((VulpeEntity<ID>)simple).setId(getId());
+			((VulpeEntity<ID>) simple).setId(getId());
 		} catch (Exception e) {
 			LOG.error(e);
+		}
+		return simple;
+	}
+
+	public <T> T simple(final String... properties) {
+		T simple = (T) simple();
+		for (final String property : properties) {
+			VulpeReflectUtil.setFieldValue(simple, property, VulpeReflectUtil.getFieldValue(this, property));
 		}
 		return simple;
 	}
