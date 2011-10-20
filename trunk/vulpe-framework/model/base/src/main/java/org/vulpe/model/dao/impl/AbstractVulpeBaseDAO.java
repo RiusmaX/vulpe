@@ -17,8 +17,8 @@ package org.vulpe.model.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.OneToMany;
 import javax.sql.rowset.serial.SerialClob;
@@ -28,6 +28,7 @@ import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeDAO;
 import org.vulpe.model.entity.VulpeEntity;
@@ -55,7 +56,8 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType,
 			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
-			final String userAuthenticated = (String) entity.getMap().get(Security.USER_AUTHENTICATED);
+			final String userAuthenticated = (String) entity.getMap().get(
+					Security.USER_AUTHENTICATED);
 			AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity.getClass()
 					.getName(), entity.getId().toString(), userAuthenticated);
 			if (occurrenceParent != null) {
@@ -88,18 +90,13 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 			}
 			occurrence = merge(occurrence);
 			try {
-				final Field[] fields = entity.getClass().getDeclaredFields();
+				List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 				for (final Field field : fields) {
 					if (Collection.class.isAssignableFrom(field.getType())) {
 						final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 						if (oneToMany != null) {
-							final String methodName = "get"
-									+ field.getName().substring(0, 1).toUpperCase()
-									+ field.getName().substring(1);
-							final Method method = entity.getClass().getDeclaredMethod(methodName,
-									new Class[] {});
-							final Collection<ENTITY> collection = (Collection<ENTITY>) method
-									.invoke(entity, new Object[] {});
+							final Collection<ENTITY> collection = VulpeReflectUtil.getFieldValue(
+									entity, field.getName());
 							if (collection != null) {
 								for (final ENTITY entityAudit : collection) {
 									audit(entityAudit, auditOccurrenceType, occurrence.getId());

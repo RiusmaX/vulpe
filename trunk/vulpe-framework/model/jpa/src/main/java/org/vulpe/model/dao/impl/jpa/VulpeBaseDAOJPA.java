@@ -182,6 +182,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Updating object: ".concat(entity.toString()));
 		}
+		repairRelationship(entity);
 		audit(entity, AuditOccurrenceType.UPDATE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
