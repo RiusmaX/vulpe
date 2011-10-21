@@ -1340,7 +1340,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			vulpe.controller().deleted(true);
 			if (vulpe.controller().type().equals(ControllerType.MAIN)) {
 				managePaging(false);
-				controlResultForward();
+				create();
 			} else if (vulpe.controller().type().equals(ControllerType.TWICE)
 					&& entity.getId() != null) {
 				onRead();

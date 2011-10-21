@@ -1016,11 +1016,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			while (queryModified.contains(initialToken)) {
 				final int initialPos = queryModified.indexOf(token);
 				final int initialAttributePos = queryModified.indexOf(initialToken) + initialToken.length();
-				final int finalPos = queryModified.indexOf(")");
+				final int finalPos = queryModified.indexOf(")", initialPos);
 				final String queryAttributte = queryModified.substring(initialAttributePos, queryModified.indexOf(")"));
 				queryModified = queryModified.substring(0, initialPos) + queryModified.substring(finalPos + 1);
 				final int openPos = queryModified.indexOf("{");
-				final int closePos = queryModified.indexOf("}");
+				final int closePos = queryModified.indexOf("}", openPos);
 				if (checkCondition(entity, queryAttributte)) {
 					queryModified = queryModified.substring(0, openPos)
 							+ queryModified.substring(openPos + 1, closePos) + queryModified.substring(closePos + 1);
@@ -1059,4 +1059,5 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			};
 		}.execute(entity, query, "empty");
 	}
+	
 }
