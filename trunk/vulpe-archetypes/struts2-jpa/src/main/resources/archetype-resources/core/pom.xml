@@ -23,36 +23,47 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>unjar-fox</id>
-						<phase>validate</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<tasks>
-								<property environment="env" />
-								<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
-								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
-								<property name="tools.dir" value="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${symbol_dollar}{maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 							</tasks>
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -60,12 +71,12 @@
 				<configuration>
 					<factory>org.vulpe.fox.apt.freemarker.VulpeFreemarkerProcessorFactory</factory>
 					<options>
-						<param>template=${symbol_dollar}{env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/services/templates/plugin.ftl</param>
+						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/services/templates/plugin.ftl</param>
 						<param>component=core</param>
 						<param>package=${package}.core.model</param>
-						<param>services=POJO</param>
+						<param>services=EJB3</param>
 						<param>serviceLookup=spring</param>
-						<param>applicationServer=${deployServer}</param>
+						<param>applicationServer=${symbol_dollar}{deployServer}</param>
 					</options>
 					<sourceOutputDirectory>${symbol_dollar}{basedir}/generated/main/java</sourceOutputDirectory>
 				</configuration>

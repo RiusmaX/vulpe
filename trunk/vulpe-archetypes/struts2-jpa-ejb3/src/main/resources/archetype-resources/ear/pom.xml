@@ -98,25 +98,21 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>delete</id>
-						<phase>validate</phase>
+						<id>package</id>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<tasks>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property environment="env" />
-								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
-								<property name="jboss.home" value="${symbol_dollar}{env.JBOSS_HOME}" />
-								<property name="glassfish.home" value="${symbol_dollar}{env.GLASSFISH_HOME}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement
-											location="${symbol_dollar}{maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
+								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
+								<property name="jboss.home" value="${symbol_dollar}{settings.localRepository}/../Servers/jboss/" />
+								<property name="glassfish.home" value="${symbol_dollar}{settings.localRepository}/../Servers/glassfish/" />
 								<if>
 									<equals arg1="${symbol_dollar}{deployServer}" arg2="jboss" />
 									<then>
@@ -165,7 +161,7 @@
 						<configuration>
 							<tasks>
 								<property environment="env" />
-								<property name="maven.repo" value="${symbol_dollar}{env.M2_REPO}" />
+								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
 								<property name="jboss.home" value="${symbol_dollar}{env.JBOSS_HOME}" />
 								<property name="glassfish.home" value="${symbol_dollar}{env.GLASSFISH_HOME}" />
 								<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -220,6 +216,24 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
