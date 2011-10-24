@@ -19,6 +19,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>unjar-fox</id>
@@ -28,17 +29,9 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<property environment="env" />
-								<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
-								<property name="maven.repo" value="${env.M2_REPO}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement
-											location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="tools.dir"
-									value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+									value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${tools.dir}" property="tools.dir.present"
 									type="dir" />
@@ -46,8 +39,8 @@
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
 										<unjar
-											src="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
-											dest="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+											src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar"
+											dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
 								<delete dir="${basedir}/../web/target" />
@@ -55,6 +48,24 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -62,7 +73,7 @@
 				<configuration>
 					<factory>org.vulpe.fox.controller.ControllerProcessorFactory</factory>
 					<options>
-						<param>template=${env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/controller/templates/plugin.ftl</param>
+						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/controller/templates/plugin.ftl</param>
 					</options>
 					<sourceOutputDirectory>${basedir}/../</sourceOutputDirectory>
 				</configuration>
