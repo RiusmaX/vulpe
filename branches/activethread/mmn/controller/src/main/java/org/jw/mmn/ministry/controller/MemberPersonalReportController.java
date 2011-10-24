@@ -20,6 +20,7 @@ import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
+import org.vulpe.controller.annotations.Report;
 import org.vulpe.exception.VulpeApplicationException;
 
 /**
@@ -28,7 +29,7 @@ import org.vulpe.exception.VulpeApplicationException;
 @Component("ministry.MemberPersonalReportController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "hours") }, showInTabs = false)
+@Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "hours") }, showInTabs = false, report = @Report(subReports = { "Reports" }))
 public class MemberPersonalReportController extends
 		ApplicationBaseController<MemberPersonalReport, java.lang.Long> {
 
@@ -109,6 +110,7 @@ public class MemberPersonalReportController extends
 		if (entity.getYear() == null) {
 			entity.setYear(calendar.get(Calendar.YEAR));
 		}
+		vulpe.view().renderButtons(Button.REPORT);
 	}
 
 	@Override
@@ -154,4 +156,5 @@ public class MemberPersonalReportController extends
 			}
 		}
 	}
+
 }

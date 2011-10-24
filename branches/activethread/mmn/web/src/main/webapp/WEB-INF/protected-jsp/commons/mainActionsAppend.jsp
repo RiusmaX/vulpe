@@ -1,0 +1,2 @@
+<%@include file="/WEB-INF/protected-jsp/commons/actions.jsp"%>
+<v:action labelKey="report" elementId="Report" layer="report" layerFields="control" action="${now['controllerConfig'].reportControllerName}/report/ajax" helpKey="report" icon="report" iconClass="Report" config="${util:buttonConfig(pageContext, 'report', 'MAIN')}" />

@@ -6,6 +6,14 @@ var app = {
 	frontend : {
 
 	},
+	
+	ministry: {
+		changePersonalReportData: function(value) {
+			if (vulpe.util.isNotEmpty(value)) {
+				vulpe.view.request.submitAjax({url: 'ministry/MemberPersonalReport/update/ajax', layerFields: 'reportData'});
+			}
+		}
+	},
 
 	publications : {
 		fillQuantityDelivered : function(delivered) {

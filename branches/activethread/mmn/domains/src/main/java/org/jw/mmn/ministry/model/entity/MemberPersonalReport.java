@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.core.model.entity.Member;
+import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -45,4 +46,7 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 
 	private boolean delivered;
 
+	public String getMonthI18n() {
+		return MultipleResourceBundle.getInstance().getI18NEnum(this.month);
+	}
 }
