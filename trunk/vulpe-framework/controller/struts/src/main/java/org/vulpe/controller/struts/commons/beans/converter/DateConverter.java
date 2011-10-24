@@ -19,6 +19,7 @@ import java.util.Date;
 
 import ognl.TypeConverter;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.vulpe.commons.util.VulpeDateUtil;
 
@@ -32,7 +33,7 @@ public class DateConverter extends AbstractVulpeBaseTypeConverter implements Typ
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
-				if (!value.toString().equals("")) {
+				if (StringUtils.isNotBlank(value.toString())) {
 					return VulpeDateUtil.convertStringToDate(value.toString());
 				}
 			} else if (value instanceof Date && String.class.equals(type)) {

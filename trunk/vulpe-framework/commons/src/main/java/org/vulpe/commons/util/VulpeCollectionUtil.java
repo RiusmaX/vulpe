@@ -16,6 +16,7 @@
 package org.vulpe.commons.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.log4j.Logger;
@@ -52,5 +53,14 @@ public class VulpeCollectionUtil {
 			}
 		}
 		return collection;
+	}
+
+	public static Collection<?> asCollection(final String value) {
+		if (value.startsWith("[") && value.endsWith("]")) {
+			String newValue = value.substring(1, value.length() - 1);
+			final String[] parts = newValue.split(",");
+			return Arrays.asList(parts);
+		}
+		return null;
 	}
 }

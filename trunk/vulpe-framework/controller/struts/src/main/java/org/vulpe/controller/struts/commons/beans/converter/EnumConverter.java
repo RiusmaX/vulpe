@@ -21,7 +21,9 @@ import java.util.List;
 
 import ognl.TypeConverter;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.vulpe.commons.util.VulpeCollectionUtil;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
@@ -33,8 +35,11 @@ public class EnumConverter extends AbstractVulpeBaseTypeConverter implements Typ
 	public Object convert(final Class type, final Object value) {
 		try {
 			if (value instanceof String) {
-				if (!value.toString().equals("")) {
-					if (Collection.class.isAssignableFrom(type)) {
+				String enumValue = value.toString();
+				if (StringUtils.isNotBlank(enumValue)) {
+					if (enumValue.startsWith("[") && enumValue.endsWith("]")) {
+						return VulpeCollectionUtil.asCollection(enumValue);
+					} else if (Collection.class.isAssignableFrom(type)) {
 						final List list = new ArrayList();
 						list.add(value);
 						return list;

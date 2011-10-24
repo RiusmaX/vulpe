@@ -35,7 +35,7 @@ public class DecimalConverter extends AbstractVulpeBaseTypeConverter implements 
 			final DecimalFormat valueFormat = new DecimalFormat("#,##0.00",
 					new DecimalFormatSymbols(new Locale("pt", "BR")));
 			if (value instanceof String) {
-				if (!value.toString().equals("")) {
+				if (StringUtils.isNotBlank(value.toString())) {
 					Object newValue = value;
 					newValue = StringUtils.replace(value.toString(), ".", "");
 					newValue = StringUtils.replace(value.toString(), ",", ".");

@@ -15,9 +15,7 @@
 <c:if test="${not empty targetConfig.parentDetailConfig || now['controllerConfig'].showInTabs eq false}">
 	<c:if test="${!showAsAccordion}"><fieldset></c:if>
 	<c:choose>
-		<c:when test="${showAsAccordion}">
-		<h3 id="vulpeDetail-${targetConfigLocal.baseName}-title"><a href="#" id="vulpeDetail-${targetConfigLocal.baseName}-link"><fmt:message key="${targetConfigLocal.titleKey}"/></a></h3>
-		</c:when>
+		<c:when test="${showAsAccordion}"><h3 id="vulpeDetail-${targetConfigLocal.baseName}-title"><a href="#" id="vulpeDetail-${targetConfigLocal.baseName}-link"><fmt:message key="${targetConfigLocal.titleKey}"/></a></h3></c:when>
 		<c:otherwise><legend><fmt:message key="${targetConfigLocal.titleKey}"/></legend></c:otherwise>
 	</c:choose>
 		<div>
@@ -44,7 +42,7 @@
 	</td>
 </tr>
 </c:if>
-<c:if test="${(not empty targetConfig.parentDetailConfig || now['controllerConfig'].showInTabs eq false) && targetConfig.showAsAccordion}">
+<c:if test="${(not empty targetConfig.parentDetailConfig || now['controllerConfig'].showInTabs eq false) && targetConfig.showAsAccordion && showAsAccordion}">
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var id = 'vulpeDetail-${targetConfigLocal.baseName}';

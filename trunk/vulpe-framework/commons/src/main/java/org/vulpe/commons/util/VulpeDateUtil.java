@@ -260,15 +260,16 @@ public final class VulpeDateUtil {
 	public static String getFormatedTime(final int minutes) {
 		final int hours = minutes / 60;
 		final int min = minutes % 60;
-		final StringBuilder hoursString = new StringBuilder();
-		final StringBuilder minutesString = new StringBuilder();
+		final StringBuilder time = new StringBuilder();
 		if (hours < 10) {
-			hoursString.append("0").append(hours);
+			time.append("0");
 		}
+		time.append(hours).append(":");
 		if (min < 10) {
-			minutesString.append("0").append(minutes);
+			time.append("0");
 		}
-		return hoursString.toString() + ":" + minutesString.toString();
+		time.append(min);
+		return time.toString();
 	}
 
 	/**
@@ -290,13 +291,12 @@ public final class VulpeDateUtil {
 	public static Integer getTimeInMinutes(final String duration) {
 		Integer totalMinutes = null;
 		if (!"".equals(duration)) {
-			final int index = duration.indexOf(':');
+			final int index = duration.indexOf(":");
 
 			final Integer hours = Integer.valueOf(duration.substring(0, index));
 			final Integer minutes = Integer.valueOf(duration.substring(index + 1));
 
 			totalMinutes = Integer.valueOf((hours.intValue() * 60) + minutes.intValue());
-
 		}
 		return totalMinutes;
 	}
@@ -334,7 +334,7 @@ public final class VulpeDateUtil {
 		sdf.applyPattern(HHMM);
 		if (lenient) {
 			try {
-				final int index = time.indexOf(':');
+				final int index = time.indexOf(":");
 				// Integer hours = Integer.valueOf(time.substring(0, index));
 				final Integer minutes = Integer.valueOf(time.substring(index + 1));
 				if ((minutes != null) && (minutes.intValue() < 60)) {
@@ -410,7 +410,8 @@ public final class VulpeDateUtil {
 	 * @return
 	 */
 	public String getExtensiveDate() {
-		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(
+				DateFormat.MEDIUM, locale);
 		format.applyPattern("MMMM");
 		final Calendar calendar = Calendar.getInstance();
 		final String month = format.format(calendar.getTime());
@@ -513,7 +514,8 @@ public final class VulpeDateUtil {
 	public static String convertDateTimeToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(formatedDateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM, locale);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
+					locale);
 			formatedDateTime = formatDateTime.format(formatedDateTime);
 		}
 		return formatedDateTime;
@@ -541,7 +543,8 @@ public final class VulpeDateUtil {
 	public static String convertDateTimeSecondToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS, locale);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS,
+					locale);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
@@ -657,8 +660,8 @@ public final class VulpeDateUtil {
 	 * @param end
 	 * @return
 	 */
-	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd, final Date begin,
-			final Date end) {
+	private static int calculateTruncatedTime(final Date dateTimeBegin, final Date dateTimeEnd,
+			final Date begin, final Date end) {
 
 		if (begin.compareTo(end) > 0) {
 			final Calendar calendarBegin1 = new GregorianCalendar();
@@ -672,7 +675,8 @@ public final class VulpeDateUtil {
 			calendarEnd2.add(Calendar.DAY_OF_YEAR, 1);
 
 			return calculateTruncatedTime(dateTimeBegin, dateTimeEnd, calendarBegin1.getTime(), end)
-					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2.getTime());
+					+ calculateTruncatedTime(dateTimeBegin, dateTimeEnd, begin, calendarEnd2
+							.getTime());
 		}
 
 		int returnedTime = 0;
@@ -683,10 +687,10 @@ public final class VulpeDateUtil {
 		final Calendar startActivity = new GregorianCalendar();
 		startActivity.setTime(dateTimeBegin);
 
-		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH), startActivity
-				.get(Calendar.DATE));
-		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH), startActivity
-				.get(Calendar.DATE));
+		periodBegin.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
+				startActivity.get(Calendar.DATE));
+		periodEnd.set(startActivity.get(Calendar.YEAR), startActivity.get(Calendar.MONTH),
+				startActivity.get(Calendar.DATE));
 
 		if (periodBegin.getTime().compareTo(periodEnd.getTime()) > 0) {
 			periodEnd.add(Calendar.DATE, 1);
@@ -703,7 +707,8 @@ public final class VulpeDateUtil {
 			// c
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
-			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(), dateTimeEnd), period), 0); // d,
+			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
+					dateTimeEnd), period), 0); // d,
 			// e
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
 			returnedTime = activityTime; // f
@@ -768,8 +773,8 @@ public final class VulpeDateUtil {
 	 * @param end
 	 * @return
 	 */
-	public static int calculateTruncatedTimeByDays(final Date dateTimeStart, final Date dateTimeEnd, final Date start,
-			final Date end) {
+	public static int calculateTruncatedTimeByDays(final Date dateTimeStart,
+			final Date dateTimeEnd, final Date start, final Date end) {
 		int minutes = 0;
 		final Date startActivity = new Date(dateTimeStart.getTime());
 		final Date endActivity = new Date(dateTimeEnd.getTime());
@@ -805,8 +810,8 @@ public final class VulpeDateUtil {
 				} else {
 					dtEndActivity = endActivity;
 				}
-				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity, datePeriodStart,
-						datePeriodEnd);
+				final int parcialMinutes = calculateTruncatedTime(dtBeginActivity, dtEndActivity,
+						datePeriodStart, datePeriodEnd);
 				minutes += parcialMinutes;
 				beginNextDay.setTime(dtEndActivity);
 				dtBeginActivity = beginNextDay.getTime();
@@ -909,7 +914,8 @@ public final class VulpeDateUtil {
 	 * @param periodEnd
 	 * @return
 	 */
-	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart, final Date periodEnd) {
+	public static boolean validatePeriodBetweenDate(final Date date, final Date periodStart,
+			final Date periodEnd) {
 		return (date.after(periodStart) && (periodEnd == null || date.before(periodEnd)));
 	}
 
