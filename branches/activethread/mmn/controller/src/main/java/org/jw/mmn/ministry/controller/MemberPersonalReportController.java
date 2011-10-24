@@ -22,6 +22,7 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Report;
 import org.vulpe.exception.VulpeApplicationException;
+import org.vulpe.security.model.entity.User;
 
 /**
  * Controller implementation of MemberPersonalReport
@@ -50,14 +51,9 @@ public class MemberPersonalReportController extends
 			entity.setYear(memberPersonalReport.getYear());
 		}
 		entity.setDate(new Date());
-		try {
-			vulpe.securityContext().getUser();
-			entity.setMember(vulpe.service(CoreService.class).findMember(new Member()));
-			if (entity.getMember() != null) {
-				entity.setMinistryType(entity.getMember().getMinistryType());
-			}
-		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+		entity.setMember(retrieveMember());
+		if (entity.getMember() != null) {
+			entity.setMinistryType(entity.getMember().getMinistryType());
 		}
 	}
 
@@ -87,6 +83,7 @@ public class MemberPersonalReportController extends
 					memberPersonalReport.setYear(entity.getYear());
 				}
 			}
+			memberPersonalReport.setMember(retrieveMember());
 			final List<MemberPersonalReport> list = vulpe.service(MinistryService.class)
 					.readMemberPersonalReport(memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(list)) {
@@ -100,6 +97,21 @@ public class MemberPersonalReportController extends
 			LOG.error(e);
 		}
 		super.update();
+	}
+
+	private Member retrieveMember() {
+		Member member = new Member(new User(vulpe.securityContext().getUser().getId()));
+		try {
+			final List<Member> members = vulpe.service(CoreService.class).readMember(member);
+			if (VulpeValidationUtil.isNotEmpty(members)) {
+				member = members.get(0);
+			} else {
+				member = null;
+			}
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return member;
 	}
 
 	@Override

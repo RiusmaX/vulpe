@@ -3,6 +3,7 @@ package org.jw.mmn.core.model.entity;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.Gender;
@@ -27,6 +28,7 @@ import org.vulpe.view.annotations.output.VulpeColumn;
 @SuppressWarnings("serial")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Member extends VulpeBaseDB4OEntity<Long> {
 
 	@VulpeColumn(sortable = true)
@@ -81,7 +83,12 @@ public class Member extends VulpeBaseDB4OEntity<Long> {
 	@Override
 	public int compareTo(VulpeEntity<Long> entity) {
 		final Member member = (Member) entity;
-		return VulpeStringUtil.normalize(name).compareTo(VulpeStringUtil.normalize(member.getName()));
+		return VulpeStringUtil.normalize(name).compareTo(
+				VulpeStringUtil.normalize(member.getName()));
+	}
+
+	public Member(final User user) {
+		this.user = user;
 	}
 
 }

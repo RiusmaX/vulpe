@@ -14,7 +14,7 @@
 </v:menu>
 <v:menu elementId="Ministry" labelKey="label.mmn.menu.Ministry" roles="ADMINISTRATOR,MINISTRY">
 	<v:menu elementId="MemberReport" labelKey="label.mmn.menu.Ministry.memberReport" action="/ministry/MemberReport/select" />
-	<v:menu elementId="PersonalMemberReport" labelKey="label.mmn.menu.Ministry.memberPersonalReport" action="/ministry/MemberPersonalReport/update" roles="ADMINISTRATOR" />
+	<v:menu elementId="PersonalMemberReport" labelKey="label.mmn.menu.Ministry.memberPersonalReport" action="/ministry/MemberPersonalReport/update" roles="ADMINISTRATOR,MINISTRY" />
 </v:menu>
 <v:menu elementId="Notices" labelKey="label.mmn.menu.Notices" roles="ADMINISTRATOR,NOTICES">
 	<v:menu elementId="SchoolMinistry" labelKey="label.mmn.menu.Notices.schoolMinistry" action="/notices/Meeting/select" />
