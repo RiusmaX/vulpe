@@ -50,7 +50,7 @@ public class IndexController extends ApplicationBaseController<Index, Long> {
 				}
 			}
 		}
-		final String currentLayout = vulpe.sessionAttribute(View.CURRENT_LAYOUT);
+		final String currentLayout = ever.getAuto(View.CURRENT_LAYOUT);
 		final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index" : "/backend/Index";
 		vulpe.controller().redirectTo(url, true);
 	}

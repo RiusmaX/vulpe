@@ -23,7 +23,8 @@
 				readOnShow = true
 		),
 		theme = "mmn",
-		security = true
+		security = true,
+		debug = true
 
 )
 package org.vulpe.config;

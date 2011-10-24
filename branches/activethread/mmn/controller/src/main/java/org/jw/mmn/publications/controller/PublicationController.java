@@ -17,7 +17,7 @@ import org.jw.mmn.publications.model.entity.Publication;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publications.PublicationController")
-@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5, requireOneFilter = true))
+@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5))
 public class PublicationController extends ApplicationBaseController<Publication, Long> {
 
 	@Override

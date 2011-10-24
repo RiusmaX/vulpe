@@ -477,8 +477,13 @@ body,html {
 }
 
 fieldset {
-	border: 1px solid #e1e4d7;
-	padding-bottom: 5px;
+	border: 1px solid #eee;
+	padding: 5px;
+	border-radius: 3px;	
+}
+
+legend {
+	padding: 5px;	
 }
 
 h1 {
@@ -577,6 +582,15 @@ thead th {
 	padding: 3px;
 	-moz-border-radius: 3px 3px 3px 3px;
 	-webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.vulpeDetailBody {
+	margin: 0 20px 3px 20px;
+	padding: 0px;
+}
+
+.vulpeDetailBody .vulpeActions p {
+	margin: 3px 0px;	
 }
 
 #vulpeSelectTable {

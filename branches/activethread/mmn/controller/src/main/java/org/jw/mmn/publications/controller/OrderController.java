@@ -28,8 +28,8 @@ import org.vulpe.controller.annotations.Select;
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publications.OrderController")
 @SuppressWarnings("serial")
-//@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(file = "/WEB-INF/reports/publications/Order/Orders.jasper", name = "Orders", subReports = "Publications"), detailsConfig = { @DetailConfig(name = "publications", propertyName = "entity.publications", despiseFields = "publication", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE), pageSize = 3) })
-@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(file = "/WEB-INF/reports/publications/Order/Order.jasper", name = "Orders", subReports = "Order-publications"), detailsConfig = { @DetailConfig(name = "publications", propertyName = "entity.publications", despiseFields = "publication", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE), pageSize = 3) })
+//@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(file = "/WEB-INF/reports/publications/Order/Orders.jasper", name = "Orders", subReports = "Publications"), detailsConfig = { @DetailConfig(name = "publications", propertyName = "entity.publications", despiseFields = "publication", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE), pageSize = 3) })
+@Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(file = "/WEB-INF/reports/publications/Order/Order.jasper", name = "Orders", subReports = "Order-publications"), detailsConfig = { @DetailConfig(name = "publications", propertyName = "entity.publications", despiseFields = "publication", newDetails = 1, startNewDetails = 3, quantity = @Quantity(type = QuantityType.ONE_OR_MORE), pageSize = 3) })
 public class OrderController extends ApplicationBaseController<Order, Long> {
 
 	@Override

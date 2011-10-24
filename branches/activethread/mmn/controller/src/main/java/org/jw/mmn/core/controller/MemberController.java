@@ -24,7 +24,7 @@ import org.jw.mmn.core.model.entity.Member;
 @Component("core.MemberController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(type = ControllerType.MAIN, serviceClass = CoreService.class, select = @Select(pageSize = 5, requireOneFilter = true), detailsConfig = {
+@Controller(type = ControllerType.MAIN, serviceClass = CoreService.class, select = @Select(pageSize = 5), detailsConfig = {
 		@DetailConfig(name = "addresses", propertyName = "entity.addresses", despiseFields = "address", startNewDetails = 1, newDetails = 1),
 		@DetailConfig(name = "phones", propertyName = "entity.phones", despiseFields = "number", startNewDetails = 2, newDetails = 1),
 		@DetailConfig(name = "emails", propertyName = "entity.emails", despiseFields = "address", startNewDetails = 2, newDetails = 1),
@@ -106,7 +106,7 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 	@Override
 	protected void deleteAfter() {
 		super.deleteAfter();
-		final List<Member> members = vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION);
+		final List<Member> members = ever.getAuto(Core.MEMBERS_OF_SELECTED_CONGREGATION);
 		for (final Iterator<Member> iterator = members.iterator(); iterator.hasNext();) {
 			final Member publicador = iterator.next();
 			if (publicador.getId().equals(entity.getId())) {
@@ -114,7 +114,7 @@ public class MemberController extends ApplicationBaseController<Member, Long> {
 				break;
 			}
 		}
-		vulpe.sessionAttribute(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+		ever.put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 	}
 
 	private void cleanPrivileges() {

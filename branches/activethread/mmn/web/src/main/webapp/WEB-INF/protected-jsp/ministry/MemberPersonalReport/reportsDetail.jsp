@@ -14,7 +14,7 @@
 				<v:text property="brochures" mask="I" size="8" />
 			</v:column>
 			<v:column labelKey="label.mmn.ministry.MemberPersonalReport.main.reports.hours">
-				<v:text property="hours" mask="I" size="8" />
+				<v:text property="hours" mask="99:99" />
 			</v:column>
 			<v:column labelKey="label.mmn.ministry.MemberPersonalReport.main.reports.magazines">
 				<v:text property="magazines" mask="I" size="8" />
@@ -23,5 +23,14 @@
 				<v:text property="revisits" mask="I" size="8" />
 			</v:column>
 		</v:row>
+	</jsp:attribute>
+	<jsp:attribute name="tableFooter">
+		<th colspan="3"><v:label key="label.mmn.ministry.MemberPersonalReport.main.reports.total"/></th>
+		<th>${now.totalBooks}</th>
+		<th>${now.totalBrochures}</th>
+		<th>${now.totalHours}</th>
+		<th>${now.totalMagazines}</th>
+		<th>${now.totalRevisits}</th>
+		<th></th>
 	</jsp:attribute>
 </v:table>

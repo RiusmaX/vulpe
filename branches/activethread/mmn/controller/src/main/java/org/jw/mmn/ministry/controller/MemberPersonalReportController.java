@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.exception.VulpeApplicationException;
@@ -28,18 +29,25 @@ import org.vulpe.exception.VulpeApplicationException;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "hours") }, showInTabs = false)
-public class MemberPersonalReportController extends ApplicationBaseController<MemberPersonalReport, java.lang.Long> {
+public class MemberPersonalReportController extends
+		ApplicationBaseController<MemberPersonalReport, java.lang.Long> {
 
 	private static final Logger LOG = Logger.getLogger(MemberPersonalReportController.class);
+
+	private void monthAndYear(final MemberPersonalReport entity) {
+		entity.setMonth(Month.getMonth(calendar.get(Calendar.MONTH) - 1));
+		entity.setYear(calendar.get(Calendar.YEAR));
+	}
 
 	@Override
 	protected void createAfter() {
 		super.createAfter();
-		final Calendar calendar = Calendar.getInstance();
-		int month = calendar.get(Calendar.MONTH);
-		entity.setMonth(Month.getMonth(month - 1));
-		int year = calendar.get(Calendar.YEAR);
-		entity.setYear(year);
+		monthAndYear(entity);
+		final MemberPersonalReport memberPersonalReport = ever.getAuto("memberPersonalReport");
+		if (memberPersonalReport != null) {
+			entity.setMonth(memberPersonalReport.getMonth());
+			entity.setYear(memberPersonalReport.getYear());
+		}
 		entity.setDate(new Date());
 		try {
 			vulpe.securityContext().getUser();
@@ -53,6 +61,12 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 	}
 
 	@Override
+	protected void createPostAfter() {
+		super.createPostAfter();
+		sum();
+	}
+
+	@Override
 	public void addDetail() {
 		super.addDetail();
 		checksDate();
@@ -63,11 +77,21 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 		try {
 			final MemberPersonalReport memberPersonalReport = new MemberPersonalReport();
 			memberPersonalReport.setSended(false);
-			final List<MemberPersonalReport> list = vulpe.service(MinistryService.class).readMemberPersonalReport(
-					memberPersonalReport);
+			monthAndYear(memberPersonalReport);
+			if (entity != null) {
+				if (entity.getMonth() != null) {
+					memberPersonalReport.setMonth(entity.getMonth());
+				}
+				if (entity.getYear() != null) {
+					memberPersonalReport.setYear(entity.getYear());
+				}
+			}
+			final List<MemberPersonalReport> list = vulpe.service(MinistryService.class)
+					.readMemberPersonalReport(memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(list)) {
 				id = list.get(0).getId();
 			} else {
+				ever.putWeakRef("memberPersonalReport", memberPersonalReport);
 				create();
 				return;
 			}
@@ -81,12 +105,46 @@ public class MemberPersonalReportController extends ApplicationBaseController<Me
 	protected void updateAfter() {
 		super.updateAfter();
 		checksDate();
+		sum();
+		if (entity.getYear() == null) {
+			entity.setYear(calendar.get(Calendar.YEAR));
+		}
+	}
+
+	@Override
+	protected void updatePostAfter() {
+		super.updatePostAfter();
+		sum();
+	}
+
+	private void sum() {
+		if (VulpeValidationUtil.isNotEmpty(entity.getReports())) {
+			int books = 0;
+			int brochures = 0;
+			int minutes = 0;
+			int magazines = 0;
+			int revisits = 0;
+			for (final PersonalReport personalReport : entity.getReports()) {
+				books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
+				brochures += personalReport.getBrochures() == null ? 0 : personalReport
+						.getBrochures();
+				minutes += personalReport.getTotalMinites();
+				magazines += personalReport.getMagazines() == null ? 0 : personalReport
+						.getMagazines();
+				revisits += personalReport.getRevisits() == null ? 0 : personalReport.getRevisits();
+			}
+			now.put("totalBooks", books);
+			now.put("totalBrochures", brochures);
+			now.put("totalHours", VulpeDateUtil.getFormatedTime(minutes));
+			now.put("totalMagazines", magazines);
+			now.put("totalRevisits", revisits);
+		}
 	}
 
 	@Override
 	public void manageButtons(Operation operation) {
 		super.manageButtons(operation);
-		vulpe.view().hideButtons(Button.CREATE, Button.DELETE, Button.BACK);
+		vulpe.view().hideButtons(Button.CREATE, Button.DELETE, Button.BACK, Button.CLONE);
 	}
 
 	private void checksDate() {

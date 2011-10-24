@@ -31,7 +31,7 @@ import org.vulpe.controller.annotations.Select;
 @Component("ministry.MemberReportController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = MinistryService.class, select = @Select(pageSize = 5, showReport = true, requireOneFilter = true), report = @Report(subReports = {
+@Controller(serviceClass = MinistryService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(subReports = {
 		"MemberReports", "PendingMemberReports" }), newOnPost = true)
 public class MemberReportController extends ApplicationBaseController<MemberReport, java.lang.Long> {
 
