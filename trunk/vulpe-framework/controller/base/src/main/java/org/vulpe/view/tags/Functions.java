@@ -579,6 +579,18 @@ public class Functions {
 						}
 					}
 				}
+			} else if (fieldValue instanceof String[]) {
+				final String[] collection = (String[]) fieldValue;
+				for (final String string : collection) {
+					for (final ValueBean value : enumeration) {
+						if (value.getId().equals(string)) {
+							if (StringUtils.isNotBlank(list.toString())) {
+								list.append(", ");
+							}
+							list.append(findText(value.getValue()));
+						}
+					}
+				}
 			} else {
 				for (final ValueBean value : enumeration) {
 					if (value.getId().equals(fieldValue.toString())) {

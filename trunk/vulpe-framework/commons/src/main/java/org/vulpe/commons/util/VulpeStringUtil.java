@@ -138,7 +138,8 @@ public class VulpeStringUtil {
 	public static String normalize(final String term) {
 		final StringBuilder normalized = new StringBuilder();
 		for (int i = 0; i < term.length(); i++) {
-			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i)) : term.charAt(i));
+			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i))
+					: term.charAt(i));
 		}
 		return normalized.toString();
 	}
@@ -151,7 +152,8 @@ public class VulpeStringUtil {
 	public static String encodeUTF(final String value) {
 		final StringBuilder encoded = new StringBuilder();
 		for (int i = 0; i < value.length(); i++) {
-			encoded.append(utfChars.containsKey(value.charAt(i)) ? utfChars.get(value.charAt(i)) : value.charAt(i));
+			encoded.append(utfChars.containsKey(value.charAt(i)) ? utfChars.get(value.charAt(i))
+					: value.charAt(i));
 		}
 		return encoded.toString();
 	}
@@ -164,8 +166,8 @@ public class VulpeStringUtil {
 	public static String encodeHTMLSpecials(final String value) {
 		final StringBuilder encoded = new StringBuilder();
 		for (int i = 0; i < value.length(); i++) {
-			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value.charAt(i)) : value
-					.charAt(i));
+			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value
+					.charAt(i)) : value.charAt(i));
 		}
 		return encoded.toString();
 	}
@@ -307,5 +309,14 @@ public class VulpeStringUtil {
 			LOG.error(e);
 		}
 		return encoded;
+	}
+
+	public static String concat(final Object object, final String... properties) {
+		final StringBuilder concat = new StringBuilder();
+		for (final String property : properties) {
+			final Object value = VulpeReflectUtil.getFieldValue(object, property);
+			concat.append(String.valueOf(value));
+		}
+		return concat.toString();
 	}
 }

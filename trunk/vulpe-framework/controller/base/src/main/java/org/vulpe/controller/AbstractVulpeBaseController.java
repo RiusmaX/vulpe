@@ -1310,20 +1310,20 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				final List<ENTITY> list = (List<ENTITY>) vulpe.cache().classes().get(entityName);
 				if (VulpeValidationUtil.isNotEmpty(list)) {
 					for (final Iterator<ENTITY> iterator = list.iterator(); iterator.hasNext();) {
-						final ENTITY entity = iterator.next();
+						final ENTITY currentEntity = iterator.next();
 						if (vulpe.controller().type().equals(ControllerType.SELECT)) {
 							if (VulpeValidationUtil.isNotEmpty(vulpe.controller().selected())) {
 								for (final ID id : vulpe.controller().selected()) {
-									if (entity.getId().equals(id)) {
+									if (currentEntity.getId().equals(id)) {
 										iterator.remove();
 										break;
 									}
 								}
-							} else if (entity.getId().equals(id)) {
+							} else if (currentEntity.getId().equals(id)) {
 								iterator.remove();
 							}
 						} else {
-							if (entity.getId().equals(entity.getId())) {
+							if (currentEntity.getId().equals(entity.getId())) {
 								iterator.remove();
 							}
 						}

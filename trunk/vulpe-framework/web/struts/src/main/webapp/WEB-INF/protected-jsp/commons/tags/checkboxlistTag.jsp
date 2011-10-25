@@ -10,9 +10,9 @@
 		<c:set var="enumeration" value="#{"/>
 		<c:forEach var="item" items="${fn:split(items, ',')}" varStatus="status">
 			<c:if test="${status.index > 0}"><c:set var="enumeration" value="${enumeration},"/></c:if>
-			<c:set var="value" value="${fn:split(item, ':')}"/>
-			<c:set var="description"><fmt:message key="${value[1]}"/></c:set>
-			<c:set var="enumeration" value="${enumeration}'${value[0]}':'${description}'"/>
+			<c:set var="enumValue" value="${fn:split(item, ':')}"/>
+			<c:set var="description"><fmt:message key="${enumValue[1]}"/></c:set>
+			<c:set var="enumeration" value="${enumeration}'${enumValue[0]}':'${description}'"/>
 		</c:forEach>
 		<c:set var="enumeration" value="${enumeration}}"/>
 	</c:if>
