@@ -622,7 +622,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			baseController.now.put(Now.DETAIL_INDEX, detailIndex);
 		}
 
-		public Integer detailIndex() {
+		public String detailIndex() {
 			return baseController.now.getAuto(Now.DETAIL_INDEX);
 		}
 

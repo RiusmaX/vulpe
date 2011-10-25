@@ -31,6 +31,7 @@ import ognl.OgnlException;
 import ognl.OgnlRuntime;
 import ognl.PropertyAccessor;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants.View.Layout;
 import org.vulpe.commons.beans.DownloadInfo;
@@ -112,7 +113,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 			final List<VulpeEntity<?>> removedDetails = new ArrayList<VulpeEntity<?>>();
 			final int size = details.size();
 			int removed = 0;
-			if (vulpe.controller().detailIndex() == null) {
+			if (StringUtils.isEmpty(vulpe.controller().detailIndex())) {
 				for (final Iterator<VulpeEntity<?>> iterator = details.iterator(); iterator
 						.hasNext();) {
 					final VulpeEntity<?> detail = (VulpeEntity<?>) iterator.next();
@@ -125,12 +126,12 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 					}
 				}
 			} else {
-				final VulpeEntity<?> detail = details.get(vulpe.controller().detailIndex()
-						.intValue());
+				final Integer detailIndex = Integer.valueOf(vulpe.controller().detailIndex());
+				final VulpeEntity<?> detail = details.get(detailIndex.intValue());
 				if (detail.getId() != null) {
 					removedDetails.add(detail);
 				}
-				details.remove(vulpe.controller().detailIndex().intValue());
+				details.remove(detailIndex.intValue());
 				++removed;
 			}
 			boolean save = false;
