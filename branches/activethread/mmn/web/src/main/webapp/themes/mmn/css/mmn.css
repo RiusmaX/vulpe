@@ -289,7 +289,7 @@ td,th {
 #container {
 	margin: 0 auto;
 	width: 100%;
-	text-align: center;
+	text-align: left;
 }
 
 #copyright {
