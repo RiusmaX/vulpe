@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
+import org.vulpe.commons.beans.DownloadInfo;
 import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
@@ -30,7 +31,7 @@ import org.vulpe.security.model.entity.User;
 @Component("ministry.MemberPersonalReportController")
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "hours") }, showInTabs = false, report = @Report(subReports = { "Reports" }))
+@Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "despise") }, showInTabs = false, report = @Report(subReports = { "Reports" }))
 public class MemberPersonalReportController extends
 		ApplicationBaseController<MemberPersonalReport, java.lang.Long> {
 
@@ -129,6 +130,7 @@ public class MemberPersonalReportController extends
 	protected void updatePostAfter() {
 		super.updatePostAfter();
 		sum();
+		vulpe.view().renderButtons(Button.REPORT);
 	}
 
 	private void sum() {
@@ -169,4 +171,34 @@ public class MemberPersonalReportController extends
 		}
 	}
 
+	@Override
+	protected DownloadInfo doReportLoad() {
+		if (VulpeValidationUtil.isNotEmpty(entities)) {
+			for (MemberPersonalReport memberPersonalReport : entities) {
+				if (VulpeValidationUtil.isNotEmpty(memberPersonalReport.getReports())) {
+					int books = 0;
+					int brochures = 0;
+					int minutes = 0;
+					int magazines = 0;
+					int revisits = 0;
+					for (final PersonalReport personalReport : memberPersonalReport.getReports()) {
+						books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
+						brochures += personalReport.getBrochures() == null ? 0 : personalReport
+								.getBrochures();
+						minutes += personalReport.getTotalMinites();
+						magazines += personalReport.getMagazines() == null ? 0 : personalReport
+								.getMagazines();
+						revisits += personalReport.getRevisits() == null ? 0 : personalReport
+								.getRevisits();
+					}
+					vulpe.controller().reportParameters().put("totalBooks", books);
+					vulpe.controller().reportParameters().put("totalBrochures", brochures);
+					vulpe.controller().reportParameters().put("totalHours", VulpeDateUtil.getFormatedTime(minutes));
+					vulpe.controller().reportParameters().put("totalMagazines", magazines);
+					vulpe.controller().reportParameters().put("totalRevisits", revisits);
+				}
+			}
+		}
+		return super.doReportLoad();
+	}
 }

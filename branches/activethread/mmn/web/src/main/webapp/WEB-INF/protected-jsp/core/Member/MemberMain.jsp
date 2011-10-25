@@ -42,7 +42,7 @@
 </table>
 <c:if test="${empty entity.responsibility}">
 <script type="text/javascript">
-jQuery(function(){
+jQuery(function() {
 	app.core.showHideAdditionalPrivileges(4, false);
 });
 </script>

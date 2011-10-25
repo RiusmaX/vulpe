@@ -55,7 +55,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 					}
 					getEver().put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
 					final List<VulpeHashMap<String, Object>> values = new ArrayList<VulpeHashMap<String, Object>>();
-					for (Member member : members) {
+					for (final Member member : members) {
 						final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
 						map.put("id", member.getId());
 						map.put("value", member.getName());

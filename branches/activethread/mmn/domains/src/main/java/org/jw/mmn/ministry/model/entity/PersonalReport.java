@@ -46,4 +46,9 @@ public class PersonalReport extends VulpeBaseDB4OEntity<Long> {
 		return minutes;
 	}
 
+	public String getDespise() {
+		return String.valueOf(date) + String.valueOf(books) + String.valueOf(brochures) + hours
+				+ String.valueOf(magazines) + String.valueOf(revisits);
+	}
+
 }

@@ -59,7 +59,7 @@ public class Member extends VulpeBaseDB4OEntity<Long> {
 
 	private User user;
 
-	private List<AdditionalPrivilege> additionalPrivileges;
+	private String[] additionalPrivileges;
 
 	private Congregation congregation;
 
