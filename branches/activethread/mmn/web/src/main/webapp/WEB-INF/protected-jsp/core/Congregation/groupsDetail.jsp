@@ -3,7 +3,7 @@
 <v:table>
 	<jsp:attribute name="tableBody">
 		<v:row>
-			<v:column labelKey="label.mmn.core.Congregation.main.groups.name" align="left">
+			<v:column labelKey="label.mmn.core.Congregation.main.groups.name" align="left" width="100%">
 				<v:text property="name"
 					size="40"
 					maxlength="40"

@@ -9,7 +9,7 @@
 			<v:column
 				labelKey="label.mmn.core.Congregation.select.name"
 				property="name"
-				sort="true"
+				sort="true" width="100%"
 			/>
 		</v:row>
 	</jsp:attribute>

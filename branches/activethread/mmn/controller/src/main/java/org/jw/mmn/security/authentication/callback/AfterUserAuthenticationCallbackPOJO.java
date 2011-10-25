@@ -34,52 +34,81 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 		if (securityContext != null) {
 			final Long userId = securityContext.getUser().getId();
 			try {
-				final List<CongregationUser> congregationUsers = getService(CoreService.class).readCongregationUser(
-						new CongregationUser(new User(userId)));
-				final List<Congregation> congregations = new ArrayList<Congregation>();
-				for (final CongregationUser congregationUser : congregationUsers) {
-					congregations.add(congregationUser.getCongregation());
-				}
-				if (congregations.size() == 1) {
-					final Congregation congregation = congregations.get(0);
-					getEver().put(Core.SELECTED_CONGREGATION, congregation);
-					final List<Group> groups = getService(CoreService.class).readGroup(new Group(congregation));
-					final List<Member> members = new ArrayList<Member>();
-					for (final Group group : groups) {
-						final Member member = new Member();
-						member.setGroup(group);
-						final List<Member> membersByGroup = getService(CoreService.class).readMember(member);
-						if (VulpeValidationUtil.isNotEmpty(membersByGroup)) {
-							members.addAll(membersByGroup);
-						}
+				final List<CongregationUser> congregationUsers = getService(CoreService.class)
+						.readCongregationUser(new CongregationUser(new User(userId)));
+				if (VulpeValidationUtil.isNotEmpty(congregationUsers)) {
+					final List<Congregation> congregations = new ArrayList<Congregation>();
+					for (final CongregationUser congregationUser : congregationUsers) {
+						congregations.add(congregationUser.getCongregation());
 					}
-					getEver().put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+					if (congregations.size() == 1) {
+						final Congregation congregation = congregations.get(0);
+						getEver().put(Core.SELECTED_CONGREGATION, congregation);
+						final List<Group> groups = getService(CoreService.class).readGroup(
+								new Group(congregation));
+						final List<Member> members = new ArrayList<Member>();
+						for (final Group group : groups) {
+							final Member member = new Member();
+							member.setGroup(group);
+							final List<Member> membersByGroup = getService(CoreService.class)
+									.readMember(member);
+							if (VulpeValidationUtil.isNotEmpty(membersByGroup)) {
+								members.addAll(membersByGroup);
+							}
+						}
+						getEver().put(Core.MEMBERS_OF_SELECTED_CONGREGATION, members);
+						final List<VulpeHashMap<String, Object>> values = new ArrayList<VulpeHashMap<String, Object>>();
+						for (final Member member : members) {
+							final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
+							map.put("id", member.getId());
+							map.put("value", member.getName());
+							map.put("ministryType", member.getMinistryType().name());
+							values.add(map);
+						}
+						getEver().put(Core.MEMBERS_AUTOCOMPLETE_VALUE_LIST,
+								new Gson().toJson(values));
+						getEver().put(Core.GROUPS_OF_SELECTED_CONGREGATION, groups);
+					}
+					getEver().put(Core.CONGREGATIONS_OF_USER, congregations);
+					final List<Publication> publications = getService(PublicationsService.class)
+							.readPublication(new Publication());
 					final List<VulpeHashMap<String, Object>> values = new ArrayList<VulpeHashMap<String, Object>>();
-					for (final Member member : members) {
+					for (final Publication publication : publications) {
 						final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
-						map.put("id", member.getId());
-						map.put("value", member.getName());
-						map.put("ministryType", member.getMinistryType().name());
+						map.put("id", publication.getId());
+						map.put("value", publication.getName());
 						values.add(map);
 					}
-					getEver().put(Core.MEMBERS_AUTOCOMPLETE_VALUE_LIST, new Gson().toJson(values));
-					getEver().put(Core.GROUPS_OF_SELECTED_CONGREGATION, groups);
+					getEver().put(Publications.PUBLICATIONS_AUTOCOMPLETE_VALUE_LIST,
+							new Gson().toJson(values));
+				} else {
+					final Member member = retrieveMember();
+					if (VulpeValidationUtil.isNotEmpty(member)) {
+						getEver().put(Core.SELECTED_CONGREGATION, member.getCongregation());
+						final List<Congregation> congregations = new ArrayList<Congregation>();
+						congregations.add(member.getCongregation());
+						getEver().put(Core.CONGREGATIONS_OF_USER, congregations);
+					}
 				}
-				getEver().put(Core.CONGREGATIONS_OF_USER, congregations);
-				final List<Publication> publications = getService(PublicationsService.class).readPublication(
-						new Publication());
-				final List<VulpeHashMap<String, Object>> values = new ArrayList<VulpeHashMap<String, Object>>();
-				for (final Publication publication : publications) {
-					final VulpeHashMap<String, Object> map = new VulpeHashMap<String, Object>();
-					map.put("id", publication.getId());
-					map.put("value", publication.getName());
-					values.add(map);
-				}
-				getEver().put(Publications.PUBLICATIONS_AUTOCOMPLETE_VALUE_LIST, new Gson().toJson(values));
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
 			}
 		}
 	}
 
+	private Member retrieveMember() {
+		final VulpeSecurityContext securityContext = getBean(VulpeSecurityContext.class);
+		Member member = new Member(new User(securityContext.getUser().getId()));
+		try {
+			final List<Member> members = getService(CoreService.class).readMember(member);
+			if (VulpeValidationUtil.isNotEmpty(members)) {
+				member = members.get(0);
+			} else {
+				member = null;
+			}
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return member;
+	}
 }

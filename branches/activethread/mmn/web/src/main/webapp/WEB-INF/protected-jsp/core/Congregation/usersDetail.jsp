@@ -3,7 +3,7 @@
 <v:table>
 	<jsp:attribute name="tableBody">
 		<v:row>
-			<v:column labelKey="label.mmn.core.Congregation.main.users.user" align="left">
+			<v:column labelKey="label.mmn.core.Congregation.main.users.user" align="left" width="100%">
 				<v:selectPopup property="user"
 					identifier="id" description="name"
 					action="/security/User/select" popupId="userSelectPopup"

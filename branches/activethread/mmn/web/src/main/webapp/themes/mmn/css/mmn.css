@@ -686,3 +686,7 @@ thead th {
 	display: table-cell;
 	padding-right: 10px;
 }
+
+:focus {
+	outline: 0;
+}

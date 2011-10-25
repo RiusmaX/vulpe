@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.apache.commons.lang.StringUtils;
+import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.model.annotations.CodeGenerator;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeText;
@@ -47,8 +48,8 @@ public class PersonalReport extends VulpeBaseDB4OEntity<Long> {
 	}
 
 	public String getDespise() {
-		return String.valueOf(date) + String.valueOf(books) + String.valueOf(brochures) + hours
-				+ String.valueOf(magazines) + String.valueOf(revisits);
+		return VulpeStringUtil.concat(this, "date", "books", "brochures", "hours", "magazines",
+				"revisits");
 	}
 
 }

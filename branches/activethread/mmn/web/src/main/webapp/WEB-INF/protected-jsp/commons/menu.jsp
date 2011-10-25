@@ -20,3 +20,8 @@
 	<v:menu elementId="SchoolMinistry" labelKey="label.mmn.menu.Notices.schoolMinistry" action="/notices/Meeting/select" />
 	<v:menu elementId="ServiceMeeting" labelKey="label.mmn.menu.Notices.seviceMeeting" action="/notices/Meeting/select" />
 </v:menu>
+<v:menu elementId="Security" labelKey="label.vulpe.menu.Security" roles="ADMINISTRATOR">
+	<v:menu elementId="Role" labelKey="label.vulpe.menu.Security.Role" action="/security/Role/tabular"/>
+	<v:menu elementId="User" labelKey="label.vulpe.menu.Security.User" action="/security/User/select"/>
+	<v:menu elementId="SecureResource" labelKey="label.vulpe.menu.Security.Resource" action="/security/SecureResource/select" />
+</v:menu>
