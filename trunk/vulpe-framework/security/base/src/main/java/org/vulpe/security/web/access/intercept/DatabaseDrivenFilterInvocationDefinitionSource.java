@@ -65,8 +65,8 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 		// creating ConfigAttributeDefinition
 		if (secureObjectRoles != null && !secureObjectRoles.isEmpty()) {
 			final Collection<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
-			for (Role role : secureObjectRoles) {
-				ConfigAttribute configAttribute = new SecurityConfig(role.getName());
+			for (final Role role : secureObjectRoles) {
+				final ConfigAttribute configAttribute = new SecurityConfig(role.getName());
 				list.add(configAttribute);
 			}
 			return list;
