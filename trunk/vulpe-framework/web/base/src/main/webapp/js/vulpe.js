@@ -180,7 +180,7 @@ var vulpe = {
 			identifier: "-id",
 			loading: "-loading",
 			selectPopup: "-selectPopup",
-			selectedTab: "-selectedTab"
+			selectedTab: "selectedTab"
 		},
 		redirectToIndex: true,
 		requireOneFilter: false,
@@ -577,7 +577,7 @@ var vulpe = {
 		},
 
 		selectTab: function(name) {
-			var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
+			var selectedTab = vulpe.util.get(vulpe.config.suffix.selectedTab);
 			selectedTab.val(name);
 		},
 
@@ -2493,7 +2493,7 @@ var vulpe = {
 											}
 										}
 										vulpe.util.renewHotKeys(options);
-										var selectedTab = vulpe.util.get(vulpe.config.formName + vulpe.config.suffix.selectedTab);
+										var selectedTab = vulpe.util.get(vulpe.config.suffix.selectedTab);
 										if (selectedTab.val() != "") {
 											$(vulpe.config.prefix.detailTab, layerObject).tabs("select", "#" + selectedTab.val());
 										}
