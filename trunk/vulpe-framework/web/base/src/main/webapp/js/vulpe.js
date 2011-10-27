@@ -329,13 +329,13 @@ var vulpe = {
 				}
 			}
 			if (key != "") {
-				var buttonName = vulpe.config.prefix.button + "AddDetail-" + parent.replace(vulpe.config.prefix.detail, "") + "-" + vulpe.config.formName;
+				var buttonName = vulpe.config.prefix.button + "AddDetail-" + parent.replace(vulpe.config.prefix.detail, "");
 				vulpe.util.removeHotKey(key);
-				if (vulpe.util.get(buttonName).length == 1) {
+				if (vulpe.util.get(buttonName, parent).length == 1) {
 					vulpe.util.addHotKey({
 						hotKey: key,
 						command: function () {
-							vulpe.util.get(buttonName).trigger("click");
+							vulpe.util.get(buttonName, parent).trigger("click");
 							return false;
 						}
 					});

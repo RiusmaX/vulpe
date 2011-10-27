@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlType;
 import org.vulpe.commons.util.VulpeValidationUtil;
 
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.PROPERTY)
-@XmlType(name = "paging", propOrder = { "firstPage", "lastPage", "list", "realList", "nextPage", "page", "pages",
-		"pageSize", "previousPage", "size" })
+@XmlType(name = "paging", propOrder = { "firstPage", "lastPage", "list", "realList", "nextPage",
+		"page", "pages", "pageSize", "previousPage", "size" })
 @SuppressWarnings("serial")
 public class Paging<BEAN extends Serializable> implements Serializable {
 
@@ -134,11 +134,11 @@ public class Paging<BEAN extends Serializable> implements Serializable {
 	}
 
 	public Integer getFromIndex() {
-		int inicio = (int) ((int) (getPage() * getPageSize()) - getPageSize());
-		if (inicio < 0) {
-			inicio = 0;
+		int start = (int) ((int) (getPage() * getPageSize()) - getPageSize());
+		if (start < 0) {
+			start = 0;
 		}
-		return inicio;
+		return start;
 	}
 
 	public Integer getToIndex() {
