@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -61,6 +62,10 @@ public class Content extends BasePortal {
 
 	public Content(final Long id) {
 		setId(id);
+	}
+
+	public Content(final Status status) {
+		setStatus(status);
 	}
 
 	@Override

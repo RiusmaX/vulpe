@@ -18,5 +18,6 @@ public class ApplicationConstants {
 		public static final String VULPE_PORTAL_DOWNLOADS = "vulpePortalDownloads";
 		public static final String VULPE_PORTAL_LINKS = "vulpePortalLinks";
 		public static final String VULPE_PORTAL_SOCIAL = "vulpePortalSocial";
+		public static final String VULPE_PORTAL_CONTENTS = "vulpePortalContents";
 	}
 }

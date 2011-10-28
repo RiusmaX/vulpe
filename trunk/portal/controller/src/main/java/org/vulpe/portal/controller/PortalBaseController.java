@@ -22,6 +22,7 @@ import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.model.entity.BasePortal;
+import org.vulpe.portal.core.model.entity.Content;
 import org.vulpe.portal.core.model.entity.Download;
 import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Menu;
@@ -30,13 +31,14 @@ import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> extends
-		VulpeStrutsController<ENTITY, ID> {
+public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+		extends VulpeStrutsController<ENTITY, ID> {
 
 	@Override
 	protected void postConstruct() {
 		super.postConstruct();
-		final List<Portal> portalList = vulpe.cache().classes().getAuto(Portal.class.getSimpleName());
+		final List<Portal> portalList = vulpe.cache().classes().getAuto(
+				Portal.class.getSimpleName());
 		if (portalList != null) {
 			for (final Portal portal : portalList) {
 				if (portal.getStatus().equals(Status.ACTIVE)) {
@@ -50,19 +52,26 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 		if (vulpe.controller().type().equals(ControllerType.FRONTEND)
 				|| vulpe.controller().type().equals(ControllerType.BACKEND)) {
 			try {
-				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(new Menu(Status.ACTIVE));
+				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(
+						new Menu(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
-				if (vulpe.controller().type().equals(ControllerType.FRONTEND)) {
-					final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
-							new Download(Status.ACTIVE));
-					sort(downloads);
-					ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
-					final List<Link> links = vulpe.service(CoreService.class).readLink(new Link(Status.ACTIVE));
-					sort(links);
-					ever.put(Core.VULPE_PORTAL_LINKS, links);
-					final List<Social> social = vulpe.service(CoreService.class).readSocial(new Social(Status.ACTIVE));
-					sort(social);
-					ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
+						new Download(Status.ACTIVE));
+				sort(downloads);
+				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+				final List<Link> links = vulpe.service(CoreService.class).readLink(
+						new Link(Status.ACTIVE));
+				sort(links);
+				ever.put(Core.VULPE_PORTAL_LINKS, links);
+				final List<Social> social = vulpe.service(CoreService.class).readSocial(
+						new Social(Status.ACTIVE));
+				sort(social);
+				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+				if (vulpe.controller().type().equals(ControllerType.BACKEND)) {
+					final List<Content> contents = vulpe.service(CoreService.class).readContent(
+							new Content(Status.ACTIVE));
+					sort(contents);
+					ever.put(Core.VULPE_PORTAL_CONTENTS, contents);
 				}
 			} catch (VulpeApplicationException e) {
 				LOG.error(e);
@@ -76,10 +85,12 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 		for (final Field field : fields) {
 			if (field.getType().getName().equals(TextTranslate.class.getName())) {
-				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(entity, field.getName());
-				if (textTranslate != null && VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
-					for (final Iterator<TextTranslateLanguage> iterator = textTranslate.getLanguages().iterator(); iterator
-							.hasNext();) {
+				final TextTranslate textTranslate = VulpeReflectUtil.getFieldValue(entity, field
+						.getName());
+				if (textTranslate != null
+						&& VulpeValidationUtil.isNotEmpty(textTranslate.getLanguages())) {
+					for (final Iterator<TextTranslateLanguage> iterator = textTranslate
+							.getLanguages().iterator(); iterator.hasNext();) {
 						final TextTranslateLanguage textTranslateLanguage = iterator.next();
 						if (StringUtils.isEmpty(textTranslateLanguage.getText())) {
 							iterator.remove();
@@ -108,8 +119,8 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 	public void validateSelectedConfiguration() {
 		if (!vulpe.controller().currentName().contains("frontend/")
 				&& !vulpe.controller().currentName().contains("core/Portal")
-				&& (ever.get(Core.VULPE_PORTAL) == null || !ever.<Portal> getAuto(Core.VULPE_PORTAL).getStatus()
-						.equals(Status.ACTIVE))) {
+				&& (ever.get(Core.VULPE_PORTAL) == null || !ever
+						.<Portal> getAuto(Core.VULPE_PORTAL).getStatus().equals(Status.ACTIVE))) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				vulpe.controller().ajax(true);
 			}
