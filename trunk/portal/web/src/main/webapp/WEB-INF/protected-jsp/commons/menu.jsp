@@ -27,7 +27,7 @@
 		</c:forEach>
 	</c:when>
 	<c:otherwise>
-		<v:menu elementId="Management" labelKey="label.portal.menu.Index">
+		<v:menu elementId="Management" labelKey="label.portal.menu.Index" roles="ADMINISTRATOR">
 			<v:menu elementId="Portal" labelKey="label.portal.menu.Index.Portal" action="/core/Portal/update" />
 			<v:menu elementId="Language" labelKey="label.portal.menu.Index.Language"
 				action="/core/Language/tabular" />
