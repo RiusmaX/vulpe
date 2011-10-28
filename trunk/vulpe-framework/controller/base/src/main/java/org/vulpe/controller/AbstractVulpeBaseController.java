@@ -694,20 +694,22 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (paging != null && paging.getPage() != null) {
 			currentPaging.setPage(paging.getPage());
 		}
-		int count = 1;
-		int total = 0;
-		for (final ENTITY entity : currentPaging.getRealList()) {
-			if (count > ((currentPaging.getPage() - 1) * currentPaging.getPageSize())) {
-				if (total == pageSize) {
-					break;
+		if (VulpeValidationUtil.isNotEmpty(currentPaging.getRealList())) {
+			int count = 1;
+			int total = 0;
+			for (final ENTITY entity : currentPaging.getRealList()) {
+				if (count > ((currentPaging.getPage() - 1) * currentPaging.getPageSize())) {
+					if (total == pageSize) {
+						break;
+					}
+					list.add(entity);
+					++total;
 				}
-				list.add(entity);
-				++total;
+				++count;
 			}
-			++count;
+			currentPaging.processPage();
+			currentPaging.setList(list);
 		}
-		currentPaging.processPage();
-		currentPaging.setList(list);
 	}
 
 	protected void repairDetailPaging(final List<ENTITY> values, final Paging<ENTITY> paging) {
