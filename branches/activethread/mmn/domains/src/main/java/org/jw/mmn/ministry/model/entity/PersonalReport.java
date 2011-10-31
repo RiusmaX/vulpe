@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.model.annotations.CodeGenerator;
+import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeText;
 
@@ -52,4 +53,8 @@ public class PersonalReport extends VulpeBaseDB4OEntity<Long> {
 				"revisits");
 	}
 
+	@Override
+	public int compareTo(VulpeEntity<Long> entity) {
+		return this.date.compareTo(((PersonalReport) entity).getDate());
+	}
 }

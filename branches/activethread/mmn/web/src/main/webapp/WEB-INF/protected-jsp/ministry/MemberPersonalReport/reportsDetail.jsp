@@ -2,6 +2,15 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
+	<jsp:attribute name="tableHeader">
+		<th colspan="3"><v:label key="label.mmn.ministry.MemberPersonalReport.main.reports.total"/></th>
+		<th>${now.totalBooks}</th>
+		<th>${now.totalBrochures}</th>
+		<th>${now.totalHours}${now.totalPioneer}</th>
+		<th>${now.totalMagazines}</th>
+		<th>${now.totalRevisits}</th>
+		<th></th>
+	</jsp:attribute>
 	<jsp:attribute name="tableBody">
 		<v:row>
 			<v:column labelKey="label.mmn.ministry.MemberPersonalReport.main.reports.date">
@@ -28,7 +37,7 @@
 		<th colspan="3"><v:label key="label.mmn.ministry.MemberPersonalReport.main.reports.total"/></th>
 		<th>${now.totalBooks}</th>
 		<th>${now.totalBrochures}</th>
-		<th>${now.totalHours}</th>
+		<th>${now.totalHours}${now.totalPioneer}</th>
 		<th>${now.totalMagazines}</th>
 		<th>${now.totalRevisits}</th>
 		<th></th>

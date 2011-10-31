@@ -49,4 +49,5 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	public String getMonthI18n() {
 		return MultipleResourceBundle.getInstance().getI18NEnum(this.month);
 	}
+
 }

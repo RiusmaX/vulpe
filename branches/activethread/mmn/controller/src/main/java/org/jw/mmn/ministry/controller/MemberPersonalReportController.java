@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.controller.ApplicationBaseController;
 import org.jw.mmn.core.model.entity.Member;
 import org.jw.mmn.core.model.services.CoreService;
@@ -38,7 +39,7 @@ public class MemberPersonalReportController extends
 	private static final Logger LOG = Logger.getLogger(MemberPersonalReportController.class);
 
 	private void monthAndYear(final MemberPersonalReport entity) {
-		entity.setMonth(Month.getMonth(calendar.get(Calendar.MONTH) - 1));
+		entity.setMonth(Month.getMonth(calendar.get(Calendar.MONTH)));
 		entity.setYear(calendar.get(Calendar.YEAR));
 	}
 
@@ -154,6 +155,19 @@ public class MemberPersonalReportController extends
 			now.put("totalHours", VulpeDateUtil.getFormatedTime(minutes));
 			now.put("totalMagazines", magazines);
 			now.put("totalRevisits", revisits);
+			if (entity.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
+				final int totalMinutesAuxiliary = 50 * 60;
+				if (minutes < totalMinutesAuxiliary) {
+					now.put("totalPioneer", " (-"
+							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
+				}
+			} else if (entity.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
+				final int totalMinutesRegula = 70 * 60;
+				if (minutes < totalMinutesRegula) {
+					now.put("totalPioneer", " (-"
+							+ VulpeDateUtil.getFormatedTime(totalMinutesRegula - minutes) + ")");
+				}
+			}
 		}
 	}
 
@@ -193,7 +207,8 @@ public class MemberPersonalReportController extends
 					}
 					vulpe.controller().reportParameters().put("totalBooks", books);
 					vulpe.controller().reportParameters().put("totalBrochures", brochures);
-					vulpe.controller().reportParameters().put("totalHours", VulpeDateUtil.getFormatedTime(minutes));
+					vulpe.controller().reportParameters().put("totalHours",
+							VulpeDateUtil.getFormatedTime(minutes));
 					vulpe.controller().reportParameters().put("totalMagazines", magazines);
 					vulpe.controller().reportParameters().put("totalRevisits", revisits);
 				}
