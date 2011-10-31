@@ -11,6 +11,9 @@ var app = {
 		changePersonalReportData: function(value) {
 			if (vulpe.util.isNotEmpty(value)) {
 				vulpe.view.request.submitAjax({url: 'ministry/MemberPersonalReport/update/ajax', layerFields: 'reportData'});
+				vulpe.util.get("reportId").val(vulpe.util.getFieldElement("id").val());
+			} else {
+				vulpe.util.get("reportId").val("");
 			}
 		}
 	},

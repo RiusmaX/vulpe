@@ -62,7 +62,7 @@ public class MemberPersonalReportController extends
 	@Override
 	protected void createPostAfter() {
 		super.createPostAfter();
-		sum();
+		sum(entity);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class MemberPersonalReportController extends
 	protected void updateAfter() {
 		super.updateAfter();
 		checksDate();
-		sum();
+		sum(entity);
 		if (entity.getYear() == null) {
 			entity.setYear(calendar.get(Calendar.YEAR));
 		}
@@ -130,18 +130,18 @@ public class MemberPersonalReportController extends
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		sum();
+		sum(entity);
 		vulpe.view().renderButtons(Button.REPORT);
 	}
 
-	private void sum() {
-		if (VulpeValidationUtil.isNotEmpty(entity.getReports())) {
+	private void sum(final MemberPersonalReport memberPersonalReport) {
+		if (VulpeValidationUtil.isNotEmpty(memberPersonalReport.getReports())) {
 			int books = 0;
 			int brochures = 0;
 			int minutes = 0;
 			int magazines = 0;
 			int revisits = 0;
-			for (final PersonalReport personalReport : entity.getReports()) {
+			for (final PersonalReport personalReport : memberPersonalReport.getReports()) {
 				books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
 				brochures += personalReport.getBrochures() == null ? 0 : personalReport
 						.getBrochures();
@@ -150,21 +150,21 @@ public class MemberPersonalReportController extends
 						.getMagazines();
 				revisits += personalReport.getRevisits() == null ? 0 : personalReport.getRevisits();
 			}
-			now.put("totalBooks", books);
-			now.put("totalBrochures", brochures);
-			now.put("totalHours", VulpeDateUtil.getFormatedTime(minutes));
-			now.put("totalMagazines", magazines);
-			now.put("totalRevisits", revisits);
-			if (entity.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
+			memberPersonalReport.setTotalBooks(books);
+			memberPersonalReport.setTotalBrochures(brochures);
+			memberPersonalReport.setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
+			memberPersonalReport.setTotalMagazines(magazines);
+			memberPersonalReport.setTotalRevisits(revisits);
+			if (memberPersonalReport.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
 				final int totalMinutesAuxiliary = 50 * 60;
 				if (minutes < totalMinutesAuxiliary) {
-					now.put("totalPioneer", " (-"
+					memberPersonalReport.setTotalPioneer(" (-"
 							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
 				}
-			} else if (entity.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
+			} else if (memberPersonalReport.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
 				final int totalMinutesRegula = 70 * 60;
 				if (minutes < totalMinutesRegula) {
-					now.put("totalPioneer", " (-"
+					memberPersonalReport.setTotalPioneer(" (-"
 							+ VulpeDateUtil.getFormatedTime(totalMinutesRegula - minutes) + ")");
 				}
 			}
@@ -188,32 +188,22 @@ public class MemberPersonalReportController extends
 	@Override
 	protected DownloadInfo doReportLoad() {
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
-			for (MemberPersonalReport memberPersonalReport : entities) {
-				if (VulpeValidationUtil.isNotEmpty(memberPersonalReport.getReports())) {
-					int books = 0;
-					int brochures = 0;
-					int minutes = 0;
-					int magazines = 0;
-					int revisits = 0;
-					for (final PersonalReport personalReport : memberPersonalReport.getReports()) {
-						books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
-						brochures += personalReport.getBrochures() == null ? 0 : personalReport
-								.getBrochures();
-						minutes += personalReport.getTotalMinites();
-						magazines += personalReport.getMagazines() == null ? 0 : personalReport
-								.getMagazines();
-						revisits += personalReport.getRevisits() == null ? 0 : personalReport
-								.getRevisits();
-					}
-					vulpe.controller().reportParameters().put("totalBooks", books);
-					vulpe.controller().reportParameters().put("totalBrochures", brochures);
-					vulpe.controller().reportParameters().put("totalHours",
-							VulpeDateUtil.getFormatedTime(minutes));
-					vulpe.controller().reportParameters().put("totalMagazines", magazines);
-					vulpe.controller().reportParameters().put("totalRevisits", revisits);
-				}
+			for (final MemberPersonalReport memberPersonalReport : entities) {
+				sum(memberPersonalReport);
 			}
 		}
 		return super.doReportLoad();
+	}
+
+	@Override
+	protected void addDetailAfter() {
+		super.addDetailAfter();
+		sum(entity);
+	}
+
+	@Override
+	protected void deleteDetailAfter() {
+		super.deleteDetailAfter();
+		sum(entity);
 	}
 }

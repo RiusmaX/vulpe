@@ -14,6 +14,7 @@
 	<field name="brochures" class="java.lang.Integer"/>
 	<field name="revisits" class="java.lang.Integer"/>
 	<field name="date" class="java.util.Date"/>
+	<variable name="variable1" class="java.lang.String"/>
 	<columnHeader>
 		<band height="25">
 			<rectangle>

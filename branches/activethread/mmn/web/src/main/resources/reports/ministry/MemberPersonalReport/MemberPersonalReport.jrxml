@@ -30,14 +30,13 @@
 	<parameter name="SUBREPORT_0" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\mmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\ministry\\MemberPersonalReport\\Reports.jasper"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="totalBooks" class="java.lang.Integer"/>
-	<parameter name="totalBrochures" class="java.lang.Integer"/>
-	<parameter name="totalRevisits" class="java.lang.Integer"/>
-	<parameter name="totalMagazines" class="java.lang.Integer"/>
-	<parameter name="totalHours" class="java.lang.String"/>
 	<field name="year" class="java.lang.Integer"/>
 	<field name="monthI18n" class="java.lang.String"/>
 	<field name="reports" class="java.util.List"/>
+	<field name="totalBooks" class="java.lang.Integer"/>
+	<field name="totalBrochures" class="java.lang.Integer"/>
+	<field name="totalMagazines" class="java.lang.Integer"/>
+	<field name="totalRevisits" class="java.lang.Integer"/>
 	<title>
 		<band height="53" splitType="Stretch">
 			<rectangle>
@@ -86,19 +85,19 @@
 			<subreport>
 				<reportElement x="0" y="21" width="555" height="15"/>
 				<subreportParameter name="totalBrochures">
-					<subreportParameterExpression><![CDATA[$P{totalBrochures}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{totalBrochures}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalRevisits">
-					<subreportParameterExpression><![CDATA[$P{totalRevisits}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{totalRevisits}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalHours">
-					<subreportParameterExpression><![CDATA[$P{totalHours}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{totalHours}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalBooks">
-					<subreportParameterExpression><![CDATA[$P{totalBooks}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{totalBooks}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalMagazines">
-					<subreportParameterExpression><![CDATA[$P{totalMagazines}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{totalMagazines}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{reports})]]></dataSourceExpression>
 				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_0}]]></subreportExpression>

@@ -1,7 +1,7 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <div id="report"></div>
-<c:if test="${not empty entity.id}"><div id="control"><input type="hidden" name="entitySelect.id" value="${entity.id}"></div></c:if>
+<c:if test="${not empty entity.id}"><div id="control"><input id="reportId" type="hidden" name="entitySelect.id" value="${entity.id}"></div></c:if>
 <v:hidden property="id" />
 <v:hidden property="member.id" />
 <v:hidden property="date" />

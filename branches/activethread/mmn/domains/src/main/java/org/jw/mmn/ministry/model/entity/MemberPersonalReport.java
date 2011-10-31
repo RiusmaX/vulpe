@@ -46,6 +46,18 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 
 	private boolean delivered;
 
+	private transient Integer totalBooks;
+	
+	private transient Integer totalBrochures;
+	
+	private transient Integer totalMagazines;
+	
+	private transient Integer totalRevisits;
+	
+	private transient String totalHours;
+	
+	private transient String totalPioneer;
+
 	public String getMonthI18n() {
 		return MultipleResourceBundle.getInstance().getI18NEnum(this.month);
 	}

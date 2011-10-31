@@ -40,7 +40,7 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		if (!vulpe.controller().currentName().contains("frontend/Index")
 				&& !vulpe.controller().currentName().contains("backend/Index")
 				&& !ever.containsKey(Core.SELECTED_CONGREGATION)
-				&& !this.getClass().getName().equals(CongregationController.class.getName())) {
+				&& !this.getClass().equals(CongregationController.class)) {
 			if (getRequest().getRequestURI().endsWith(URI.AJAX)) {
 				vulpe.controller().ajax(true);
 			}
@@ -48,6 +48,11 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 			final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index"
 					: "/backend/Index";
 			vulpe.controller().redirectTo(url, vulpe.controller().ajax());
+		} else if ((vulpe.controller().currentName().contains("frontend/Index") || vulpe
+				.controller().currentName().contains("backend/Index"))
+				&& ever.containsKey(Core.SELECTED_CONGREGATION)) {
+			vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update",
+					vulpe.controller().ajax());
 		}
 	}
 }

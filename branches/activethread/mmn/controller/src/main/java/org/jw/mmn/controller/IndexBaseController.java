@@ -41,7 +41,7 @@ public class IndexBaseController extends ApplicationBaseController<Index, Long> 
 						LOG.error(e);
 					}
 
-					vulpe.controller().redirectTo("/core/Member/select", true);
+					vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update", true);
 				}
 			}
 		}

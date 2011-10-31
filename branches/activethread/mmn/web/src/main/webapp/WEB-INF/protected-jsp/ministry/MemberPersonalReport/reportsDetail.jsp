@@ -4,11 +4,11 @@
 <v:table>
 	<jsp:attribute name="tableHeader">
 		<th colspan="3"><v:label key="label.mmn.ministry.MemberPersonalReport.main.reports.total"/></th>
-		<th>${now.totalBooks}</th>
-		<th>${now.totalBrochures}</th>
-		<th>${now.totalHours}${now.totalPioneer}</th>
-		<th>${now.totalMagazines}</th>
-		<th>${now.totalRevisits}</th>
+		<th>${entity.totalBooks}</th>
+		<th>${entity.totalBrochures}</th>
+		<th>${entity.totalHours}${entity.totalPioneer}</th>
+		<th>${entity.totalMagazines}</th>
+		<th>${entity.totalRevisits}</th>
 		<th></th>
 	</jsp:attribute>
 	<jsp:attribute name="tableBody">
@@ -35,11 +35,11 @@
 	</jsp:attribute>
 	<jsp:attribute name="tableFooter">
 		<th colspan="3"><v:label key="label.mmn.ministry.MemberPersonalReport.main.reports.total"/></th>
-		<th>${now.totalBooks}</th>
-		<th>${now.totalBrochures}</th>
-		<th>${now.totalHours}${now.totalPioneer}</th>
-		<th>${now.totalMagazines}</th>
-		<th>${now.totalRevisits}</th>
+		<th>${entity.totalBooks}</th>
+		<th>${entity.totalBrochures}</th>
+		<th>${entity.totalHours}${entity.totalPioneer}</th>
+		<th>${entity.totalMagazines}</th>
+		<th>${entity.totalRevisits}</th>
 		<th></th>
 	</jsp:attribute>
 </v:table>
