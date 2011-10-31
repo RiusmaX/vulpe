@@ -75,25 +75,32 @@ public class MemberPersonalReportController extends
 	public void update() {
 		try {
 			final MemberPersonalReport memberPersonalReport = new MemberPersonalReport();
-			memberPersonalReport.setSended(false);
-			monthAndYear(memberPersonalReport);
-			if (entity != null) {
-				if (entity.getMonth() != null) {
-					memberPersonalReport.setMonth(entity.getMonth());
-				}
-				if (entity.getYear() != null) {
-					memberPersonalReport.setYear(entity.getYear());
-				}
-			}
 			memberPersonalReport.setMember(retrieveMember());
-			final List<MemberPersonalReport> list = vulpe.service(MinistryService.class)
-					.readMemberPersonalReport(memberPersonalReport);
-			if (VulpeValidationUtil.isNotEmpty(list)) {
-				id = list.get(0).getId();
-			} else {
-				ever.putWeakRef("memberPersonalReport", memberPersonalReport);
-				create();
+			if (VulpeValidationUtil.isEmpty(memberPersonalReport.getMember())) {
+				addActionError("{app.message.error.ministry.MemberPersonalReport.main.member.not.found}");
+				vulpe.view().notRenderButtons(Button.CREATE_POST, Button.UPDATE_POST, Button.REPORT);
+				controlResultForward();
 				return;
+			} else {
+				memberPersonalReport.setSended(false);
+				monthAndYear(memberPersonalReport);
+				if (entity != null) {
+					if (entity.getMonth() != null) {
+						memberPersonalReport.setMonth(entity.getMonth());
+					}
+					if (entity.getYear() != null) {
+						memberPersonalReport.setYear(entity.getYear());
+					}
+				}
+				final List<MemberPersonalReport> list = vulpe.service(MinistryService.class)
+						.readMemberPersonalReport(memberPersonalReport);
+				if (VulpeValidationUtil.isNotEmpty(list)) {
+					id = list.get(0).getId();
+				} else {
+					ever.putWeakRef("memberPersonalReport", memberPersonalReport);
+					create();
+					return;
+				}
 			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e);
