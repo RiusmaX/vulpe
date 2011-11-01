@@ -676,6 +676,17 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		return detail;
 	}
 
+	protected void orderDetails() {
+		for (final VulpeBaseDetailConfig detailConfig : vulpe.controller().config().getDetails()) {
+			final List<ENTITY> details = VulpeReflectUtil.getExpressionValue(this, detailConfig
+					.getPropertyName());
+			if (VulpeValidationUtil.isNotEmpty(details)) {
+				Collections.sort(details);
+			}
+		}
+	}
+
+
 	/**
 	 * Configure detail to view.
 	 */
@@ -1012,6 +1023,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		controlResultForward();
 		if (validateEntity() && onCreatePost()) {
 			manageButtons(Operation.UPDATE);
+			orderDetails();
 			addActionMessage(vulpe.controller().defaultMessage());
 			if (config.getEntityClass().isAnnotationPresent(CachedClass.class)) {
 				if (validateCacheClass(entity)) {
@@ -1129,6 +1141,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					new Class[] { vulpe.controller().config().getEntityClass() },
 					new Object[] { prepareEntity(vulpe.controller().operation()) });
 			prepareDetailPaging();
+			orderDetails();
 			vulpe.controller().executed(false);
 		}
 	}
@@ -1170,6 +1183,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		manageButtons(Operation.UPDATE);
 		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
 		if (validateEntity() && onUpdatePost()) {
+			orderDetails();
 			addActionMessage(vulpe.controller().defaultMessage());
 			if (config.getEntityClass().isAnnotationPresent(CachedClass.class)) {
 				boolean valid = validateCacheClass(entity);

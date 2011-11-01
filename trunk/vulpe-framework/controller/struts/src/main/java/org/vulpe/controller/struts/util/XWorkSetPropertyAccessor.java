@@ -73,7 +73,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 			if (ReflectionContextState.isCreatingNullObjects(context)
 					&& objectTypeDeterminer.shouldCreateIfNew(lastClass, lastProperty, target,
 							null, true)) {
-				boolean seted = false;
+				boolean setted = false;
 				if (list.size() <= index) {
 					for (int i = list.size(); i < index; i++) {
 						list.add(null);
@@ -84,7 +84,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 										beanClass, context));
 						if (added) {
 							list.add(index, result);
-							seted = true;
+							setted = true;
 						}
 					} catch (Exception exc) {
 						throw new XWorkException(exc);
@@ -93,14 +93,14 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 					try {
 						list.set(index, (result = ActionContext.getContext().getContainer()
 								.getInstance(ObjectFactory.class).buildBean(beanClass, context)));
-						seted = true;
+						setted = true;
 					} catch (Exception exc) {
 						throw new XWorkException(exc);
 					}
 				} else {
 					result = list.get(index);
 				}
-				if (seted) {
+				if (setted) {
 					set.clear();
 					for (Object object : list) {
 						if (object != null) {

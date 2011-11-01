@@ -791,17 +791,17 @@ public class VulpeReflectUtil {
 			final Method method = getMethod(object.getClass(), "get".concat(name));
 			if (method != null) {
 				synchronized (method) {
-					boolean seted = false;
+					boolean setted = false;
 					if (!method.isAccessible()) {
 						method.setAccessible(true);
-						seted = true;
+						setted = true;
 					}
 					try {
 						return (T) method.invoke(object);
 					} catch (Exception e) {
 						LOG.error(e);
 					} finally {
-						if (seted) {
+						if (setted) {
 							method.setAccessible(false);
 						}
 					}
@@ -810,15 +810,15 @@ public class VulpeReflectUtil {
 			final Field field = getField(object.getClass(), fieldName);
 			if (field != null) {
 				synchronized (field) {
-					boolean seted = false;
+					boolean setted = false;
 					if (!field.isAccessible()) {
 						field.setAccessible(true);
-						seted = true;
+						setted = true;
 					}
 					try {
 						return (T) field.get(object);
 					} finally {
-						if (seted) {
+						if (setted) {
 							field.setAccessible(false);
 						}
 					}
@@ -828,6 +828,25 @@ public class VulpeReflectUtil {
 		} catch (Exception e) {
 			throw new VulpeSystemException(e);
 		}
+	}
+
+	public static <T> T getExpressionValue(Object object, String expression) {
+		final String[] expressionParts = expression.split("\\.");
+		Object fieldValue = null;
+		if (expressionParts.length > 1) {
+			int count = 1;
+			for (final String part : expressionParts) {
+				if (count == expressionParts.length) {
+					fieldValue = getFieldValue(object, part);
+				} else {
+					object = getFieldValue(object, part);
+				}
+				++count;
+			}
+		} else {
+			fieldValue = getFieldValue(object, expression);
+		}
+		return (T) fieldValue;
 	}
 
 	public static void instanciate(Object object, String expression, Object value) {
