@@ -1,7 +1,8 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <v:menu elementId="Index" labelKey="label.mmn.menu.Index" roles="ADMINISTRATOR,PUBLICATIONS,MINISTRY,NOTICES,NORMAL_USER">
-	<v:menu elementId="SelectCongregation" labelKey="label.mmn.menu.Index.selectCongregation" action="/backend/Index" />
+	<v:menu elementId="Dashboard" labelKey="label.mmn.menu.Index.dashboard" action="/${ever['vulpeCurrentLayout'] == 'FRONTEND' ? 'frontend' : 'backend'}/Index" />
+	<v:menu elementId="SelectCongregation" labelKey="label.mmn.menu.Index.selectCongregation" action="/core/ChangeCongregation" />
 	<v:menu elementId="Congregation" labelKey="label.mmn.menu.Index.congregations" action="/core/Congregation/select" roles="ADMINISTRATOR" />
 	<v:menu elementId="Member" labelKey="label.mmn.menu.Index.members" action="/core/Member/select" roles="ADMINISTRATOR,MINISTRY" />
 </v:menu>

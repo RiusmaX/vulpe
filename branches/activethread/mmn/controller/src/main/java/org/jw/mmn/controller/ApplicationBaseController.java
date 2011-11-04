@@ -7,12 +7,18 @@ import java.util.List;
 import org.jw.mmn.commons.ApplicationConstants.Core;
 import org.jw.mmn.core.controller.CongregationController;
 import org.jw.mmn.core.model.entity.Congregation;
+import org.jw.mmn.core.model.entity.Member;
 import org.jw.mmn.core.model.entity.Year;
+import org.jw.mmn.core.model.services.CoreService;
+import org.jw.mmn.ministry.model.services.MinistryService;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Controller.URI;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.struts.VulpeStrutsController;
+import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.entity.VulpeEntity;
+import org.vulpe.security.model.entity.User;
 
 @SuppressWarnings( { "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
@@ -51,8 +57,32 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		} else if ((vulpe.controller().currentName().contains("frontend/Index") || vulpe
 				.controller().currentName().contains("backend/Index"))
 				&& ever.containsKey(Core.SELECTED_CONGREGATION)) {
-			vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update",
-					vulpe.controller().ajax());
+//			vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update",
+//					vulpe.controller().ajax());
 		}
 	}
+	
+	public CoreService coreService() {
+		return vulpe.service(CoreService.class);
+	}
+	
+	public MinistryService ministryService() {
+		return vulpe.service(MinistryService.class);
+	}
+	
+	protected Member retrieveMember() {
+		Member member = new Member(new User(vulpe.securityContext().getUser().getId()));
+		try {
+			final List<Member> members = vulpe.service(CoreService.class).readMember(member);
+			if (VulpeValidationUtil.isNotEmpty(members)) {
+				member = members.get(0);
+			} else {
+				member = null;
+			}
+		} catch (VulpeApplicationException e) {
+			LOG.error(e);
+		}
+		return member;
+	}
+
 }

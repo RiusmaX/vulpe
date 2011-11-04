@@ -5,10 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.controller.ApplicationBaseController;
-import org.jw.mmn.core.model.entity.Member;
-import org.jw.mmn.core.model.services.CoreService;
 import org.jw.mmn.ministry.model.entity.MemberPersonalReport;
 import org.jw.mmn.ministry.model.entity.Month;
 import org.jw.mmn.ministry.model.entity.PersonalReport;
@@ -19,12 +16,10 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.DownloadInfo;
-import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Report;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.security.model.entity.User;
 
 /**
  * Controller implementation of MemberPersonalReport
@@ -62,7 +57,7 @@ public class MemberPersonalReportController extends
 	@Override
 	protected void createPostAfter() {
 		super.createPostAfter();
-		sum(entity);
+		entity.sum();
 	}
 
 	@Override
@@ -78,7 +73,8 @@ public class MemberPersonalReportController extends
 			memberPersonalReport.setMember(retrieveMember());
 			if (VulpeValidationUtil.isEmpty(memberPersonalReport.getMember())) {
 				addActionError("{app.message.error.ministry.MemberPersonalReport.main.member.not.found}");
-				vulpe.view().notRenderButtons(Button.CREATE_POST, Button.UPDATE_POST, Button.REPORT);
+				vulpe.view()
+						.notRenderButtons(Button.CREATE_POST, Button.UPDATE_POST, Button.REPORT);
 				controlResultForward();
 				return;
 			} else {
@@ -108,26 +104,11 @@ public class MemberPersonalReportController extends
 		super.update();
 	}
 
-	private Member retrieveMember() {
-		Member member = new Member(new User(vulpe.securityContext().getUser().getId()));
-		try {
-			final List<Member> members = vulpe.service(CoreService.class).readMember(member);
-			if (VulpeValidationUtil.isNotEmpty(members)) {
-				member = members.get(0);
-			} else {
-				member = null;
-			}
-		} catch (VulpeApplicationException e) {
-			LOG.error(e);
-		}
-		return member;
-	}
-
 	@Override
 	protected void updateAfter() {
 		super.updateAfter();
 		checksDate();
-		sum(entity);
+		entity.sum();
 		if (entity.getYear() == null) {
 			entity.setYear(calendar.get(Calendar.YEAR));
 		}
@@ -137,45 +118,8 @@ public class MemberPersonalReportController extends
 	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
-		sum(entity);
+		entity.sum();
 		vulpe.view().renderButtons(Button.REPORT);
-	}
-
-	private void sum(final MemberPersonalReport memberPersonalReport) {
-		if (VulpeValidationUtil.isNotEmpty(memberPersonalReport.getReports())) {
-			int books = 0;
-			int brochures = 0;
-			int minutes = 0;
-			int magazines = 0;
-			int revisits = 0;
-			for (final PersonalReport personalReport : memberPersonalReport.getReports()) {
-				books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
-				brochures += personalReport.getBrochures() == null ? 0 : personalReport
-						.getBrochures();
-				minutes += personalReport.getTotalMinites();
-				magazines += personalReport.getMagazines() == null ? 0 : personalReport
-						.getMagazines();
-				revisits += personalReport.getRevisits() == null ? 0 : personalReport.getRevisits();
-			}
-			memberPersonalReport.setTotalBooks(books);
-			memberPersonalReport.setTotalBrochures(brochures);
-			memberPersonalReport.setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
-			memberPersonalReport.setTotalMagazines(magazines);
-			memberPersonalReport.setTotalRevisits(revisits);
-			if (memberPersonalReport.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
-				final int totalMinutesAuxiliary = 50 * 60;
-				if (minutes < totalMinutesAuxiliary) {
-					memberPersonalReport.setTotalPioneer(" (-"
-							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
-				}
-			} else if (memberPersonalReport.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
-				final int totalMinutesRegula = 70 * 60;
-				if (minutes < totalMinutesRegula) {
-					memberPersonalReport.setTotalPioneer(" (-"
-							+ VulpeDateUtil.getFormatedTime(totalMinutesRegula - minutes) + ")");
-				}
-			}
-		}
 	}
 
 	@Override
@@ -196,7 +140,7 @@ public class MemberPersonalReportController extends
 	protected DownloadInfo doReportLoad() {
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
 			for (final MemberPersonalReport memberPersonalReport : entities) {
-				sum(memberPersonalReport);
+				memberPersonalReport.sum();
 			}
 		}
 		return super.doReportLoad();
@@ -205,12 +149,12 @@ public class MemberPersonalReportController extends
 	@Override
 	protected void addDetailAfter() {
 		super.addDetailAfter();
-		sum(entity);
+		entity.sum();
 	}
 
 	@Override
 	protected void deleteDetailAfter() {
 		super.deleteDetailAfter();
-		sum(entity);
+		entity.sum();
 	}
 }

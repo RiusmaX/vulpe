@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.core.model.entity.Member;
+import org.vulpe.commons.util.VulpeDateUtil;
+import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeDate;
@@ -57,9 +59,52 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	private transient String totalHours;
 	
 	private transient String totalPioneer;
+	
+	private transient Integer totalMinutes;
 
 	public String getMonthI18n() {
 		return MultipleResourceBundle.getInstance().getI18NEnum(this.month);
 	}
+	
+	public int getOrdinalMonth() {
+		return this.month.ordinal();
+	}
 
+	public void sum() {
+		if (VulpeValidationUtil.isNotEmpty(this.getReports())) {
+			int books = 0;
+			int brochures = 0;
+			int minutes = 0;
+			int magazines = 0;
+			int revisits = 0;
+			for (final PersonalReport personalReport : this.getReports()) {
+				books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
+				brochures += personalReport.getBrochures() == null ? 0 : personalReport
+						.getBrochures();
+				minutes += personalReport.getTotalMinites();
+				magazines += personalReport.getMagazines() == null ? 0 : personalReport
+						.getMagazines();
+				revisits += personalReport.getRevisits() == null ? 0 : personalReport.getRevisits();
+			}
+			this.setTotalBooks(books);
+			this.setTotalBrochures(brochures);
+			this.setTotalMinutes(minutes);
+			this.setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
+			this.setTotalMagazines(magazines);
+			this.setTotalRevisits(revisits);
+			if (this.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
+				final int totalMinutesAuxiliary = 50 * 60;
+				if (minutes < totalMinutesAuxiliary) {
+					this.setTotalPioneer(" (-"
+							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
+				}
+			} else if (this.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
+				final int totalMinutesRegula = 70 * 60;
+				if (minutes < totalMinutesRegula) {
+					this.setTotalPioneer(" (-"
+							+ VulpeDateUtil.getFormatedTime(totalMinutesRegula - minutes) + ")");
+				}
+			}
+		}
+	}
 }

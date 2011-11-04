@@ -1,0 +1,1 @@
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
