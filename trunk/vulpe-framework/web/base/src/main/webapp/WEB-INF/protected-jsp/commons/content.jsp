@@ -24,6 +24,7 @@
 		<c:when test="${now['controllerType'] == 'REPORT'}"><%@include file="/WEB-INF/protected-jsp/commons/report.jsp" %></c:when>
 		<c:when test="${now['controllerType'] == 'FRONTEND'}"><%@include file="/WEB-INF/protected-jsp/commons/frontend.jsp" %></c:when>
 		<c:when test="${now['controllerType'] == 'BACKEND'}"><%@include file="/WEB-INF/protected-jsp/commons/backend.jsp" %></c:when>
+		<c:when test="${now['controllerType'] == 'NONE'}"><%@include file="/WEB-INF/protected-jsp/commons/none.jsp" %></c:when>
 	</c:choose>
 	<%@include file="/WEB-INF/protected-jsp/commons/contentAppend.jsp" %>
 </div>

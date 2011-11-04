@@ -98,6 +98,6 @@ public interface VulpeControllerConfig {
 	 * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
 	 */
 	public enum ControllerType {
-		MAIN, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, OTHER, ALL, NONE
+		MAIN, TWICE, TABULAR, SELECT, REPORT, BACKEND, FRONTEND, ALL, NONE
 	}
 }

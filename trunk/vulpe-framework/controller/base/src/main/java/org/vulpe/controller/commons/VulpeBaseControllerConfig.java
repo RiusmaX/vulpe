@@ -462,7 +462,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		}
 
 		if (!getControllerType().equals(ControllerType.BACKEND)
-				&& !getControllerType().equals(ControllerType.FRONTEND)) {
+				&& !getControllerType().equals(ControllerType.FRONTEND)
+				&& !getControllerType().equals(ControllerType.NONE)) {
 			titleKey.append(".").append(getControllerType().name().toLowerCase());
 		}
 		return titleKey.toString();
@@ -531,12 +532,14 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 				.isNotEmpty(getControllerAnnotation().viewBaseName()) ? getControllerAnnotation()
 				.viewBaseName() : getSimpleControllerName();
 		if (getControllerType().equals(ControllerType.BACKEND)
-				|| getControllerType().equals(ControllerType.FRONTEND)) {
+				|| getControllerType().equals(ControllerType.FRONTEND)
+				|| getControllerType().equals(ControllerType.NONE)) {
 			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/");
 			final String method = ((AbstractVulpeBaseController) getController()).vulpe
 					.controller().currentMethodName();
-			if (!Operation.FRONTEND.getValue().equals(method)
-					&& !Operation.BACKEND.getValue().equals(method)) {
+			if (StringUtils.isNotBlank(method) && !Operation.FRONTEND.getValue().equals(method)
+					&& !Operation.BACKEND.getValue().equals(method)
+					&& !Operation.NONE.getValue().equals(method)) {
 				this.viewPath += method;
 			} else {
 				this.viewPath += viewBaseName;

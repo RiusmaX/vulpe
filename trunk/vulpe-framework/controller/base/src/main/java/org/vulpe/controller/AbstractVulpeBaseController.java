@@ -36,7 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Error;
-import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
@@ -2343,7 +2342,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void backend() {
 		vulpe.controller().config().setControllerType(ControllerType.BACKEND);
-		ever.put(View.CURRENT_LAYOUT, "BACKEND");
+		vulpe.view().currentLayout("BACKEND");
 		backendBefore();
 		onBackend();
 		controlResultForward();
@@ -2380,7 +2379,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void frontend() {
 		vulpe.controller().config().setControllerType(ControllerType.FRONTEND);
-		ever.put(View.CURRENT_LAYOUT, "FRONTEND");
+		vulpe.view().currentLayout("FRONTEND");
 		frontendBefore();
 		onFrontend();
 		controlResultForward();
@@ -2410,6 +2409,12 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		LOG.debug("frontendAfter");
 	}
 
+	public void none() {
+		vulpe.controller().config().setControllerType(ControllerType.NONE);
+		controlResultForward();
+		vulpe.controller().executed(false);
+	}
+	
 	/**
 	 * Method to invoke services.
 	 * 

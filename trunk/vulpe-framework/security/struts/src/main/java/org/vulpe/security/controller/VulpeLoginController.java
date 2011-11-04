@@ -31,7 +31,7 @@ import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 @SuppressWarnings("serial")
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("security.authenticator")
-@Controller(type = ControllerType.OTHER)
+@Controller(type = ControllerType.NONE)
 public class VulpeLoginController extends VulpeStrutsController<VulpeBaseSimpleEntity, Long> {
 
 	private Integer loginError;

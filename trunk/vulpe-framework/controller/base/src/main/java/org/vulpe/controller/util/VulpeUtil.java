@@ -29,6 +29,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Code.Generator;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
@@ -609,7 +610,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		public Integer currentPage() {
 			return baseController.ever.<Integer> getAuto(Ever.CURRENT_PAGE);
 		}
-
+		
 		public String detail() {
 			return baseController.now.getAuto(Now.DETAIL);
 		}
@@ -1228,6 +1229,22 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				baseController.now.put(Now.REPORT_TITLE_KEY, reportTitleKey);
 				return this;
 			}
+		}
+		
+		public String currentLayout() {
+			return baseController.ever.getAuto(View.CURRENT_LAYOUT);
+		}
+		
+		public void currentLayout(final String layout) {
+			baseController.ever.put(View.CURRENT_LAYOUT, layout);
+		}
+		
+		public boolean frontend() {
+			return "FRONTEND".equals(baseController.ever.getAuto(View.CURRENT_LAYOUT));
+		}
+		
+		public boolean backend() {
+			return "BACKEND".equals(baseController.ever.getAuto(View.CURRENT_LAYOUT));
 		}
 
 		public VulpeViewContentUtil content() {
