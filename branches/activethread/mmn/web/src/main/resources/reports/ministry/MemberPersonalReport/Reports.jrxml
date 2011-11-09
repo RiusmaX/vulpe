@@ -8,6 +8,8 @@
 	<parameter name="totalRevisits" class="java.lang.Integer"/>
 	<parameter name="totalMagazines" class="java.lang.Integer"/>
 	<parameter name="totalHours" class="java.lang.String"/>
+	<parameter name="year" class="java.lang.Integer"/>
+	<parameter name="monthI18n" class="java.lang.String"/>
 	<field name="hours" class="java.lang.String"/>
 	<field name="magazines" class="java.lang.Integer"/>
 	<field name="books" class="java.lang.Integer"/>
@@ -15,6 +17,23 @@
 	<field name="revisits" class="java.lang.Integer"/>
 	<field name="date" class="java.util.Date"/>
 	<variable name="variable1" class="java.lang.String"/>
+	<title>
+		<band height="20">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#EEEEEE"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{year} + " - " + $P{monthI18n}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
 	<columnHeader>
 		<band height="25">
 			<rectangle>

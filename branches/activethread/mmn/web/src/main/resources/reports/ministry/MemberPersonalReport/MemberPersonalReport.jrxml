@@ -37,6 +37,8 @@
 	<field name="totalBrochures" class="java.lang.Integer"/>
 	<field name="totalMagazines" class="java.lang.Integer"/>
 	<field name="totalRevisits" class="java.lang.Integer"/>
+	<field name="totalHours" class="java.lang.String"/>
+	<field name="month" class="org.jw.mmn.ministry.model.entity.Month"/>
 	<title>
 		<band height="53" splitType="Stretch">
 			<rectangle>
@@ -45,13 +47,6 @@
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
-				<reportElement x="0" y="30" width="555" height="20"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{year} + " - " + $F{monthI18n}]]></textFieldExpression>
-			</textField>
 			<rectangle>
 				<reportElement x="0" y="0" width="555" height="25"/>
 				<graphicElement>
@@ -87,14 +82,20 @@
 				<subreportParameter name="totalBrochures">
 					<subreportParameterExpression><![CDATA[$F{totalBrochures}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="monthI18n">
+					<subreportParameterExpression><![CDATA[$F{monthI18n}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="totalRevisits">
 					<subreportParameterExpression><![CDATA[$F{totalRevisits}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="totalHours">
-					<subreportParameterExpression><![CDATA[$F{totalHours}]]></subreportParameterExpression>
+				<subreportParameter name="year">
+					<subreportParameterExpression><![CDATA[$F{year}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalBooks">
 					<subreportParameterExpression><![CDATA[$F{totalBooks}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="totalHours">
+					<subreportParameterExpression><![CDATA[$F{totalHours}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="totalMagazines">
 					<subreportParameterExpression><![CDATA[$F{totalMagazines}]]></subreportParameterExpression>

@@ -1,6 +1,8 @@
 package org.jw.mmn.ministry.controller;
 
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Controller.Button;
 import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.beans.DownloadInfo;
+import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.annotations.Controller;
 import org.vulpe.controller.annotations.Report;
@@ -52,6 +55,12 @@ public class MemberPersonalReportController extends
 		if (entity.getMember() != null) {
 			entity.setMinistryType(entity.getMember().getMinistryType());
 		}
+	}
+
+	@Override
+	protected void createPostBefore() {
+		super.createPostBefore();
+		mountDate();
 	}
 
 	@Override
@@ -116,6 +125,12 @@ public class MemberPersonalReportController extends
 	}
 
 	@Override
+	protected void updatePostBefore() {
+		super.updatePostBefore();
+		mountDate();
+	}
+
+	@Override
 	protected void updatePostAfter() {
 		super.updatePostAfter();
 		entity.sum();
@@ -135,10 +150,23 @@ public class MemberPersonalReportController extends
 			}
 		}
 	}
+	
+	private void mountDate() {
+		if (entity.getYear() != null && entity.getMonth() != null) {
+			int month = entity.getMonth().ordinal() + 1;
+			try {
+				entity.setDate(VulpeDateUtil.convertStringToDateTime("01/"
+						+ (month < 10 ? "0" + month : month) + "/" + entity.getYear() + " 00:00:00"));
+			} catch (ParseException e) {
+				LOG.error(e);
+			}
+		}
+	}
 
 	@Override
 	protected DownloadInfo doReportLoad() {
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
+			Collections.sort(entities);
 			for (final MemberPersonalReport memberPersonalReport : entities) {
 				memberPersonalReport.sum();
 			}
@@ -156,5 +184,31 @@ public class MemberPersonalReportController extends
 	protected void deleteDetailAfter() {
 		super.deleteDetailAfter();
 		entity.sum();
+	}
+
+	@Override
+	protected void onRead() {
+		if (entitySelect.getMonth() == null) {
+			int year = calendar.get(Calendar.YEAR);
+			int serviceYear = year;
+			if (calendar.get(Calendar.MONTH) < 8) {
+				--serviceYear;
+			}
+			final Calendar currentCalendar = Calendar.getInstance();
+			currentCalendar.set(Calendar.HOUR, 0);
+			currentCalendar.set(Calendar.MINUTE, 0);
+			currentCalendar.set(Calendar.MILLISECOND, 0);
+			currentCalendar.set(Calendar.YEAR, serviceYear);
+			currentCalendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
+			currentCalendar.set(Calendar.DAY_OF_MONTH, 1);
+			final Date initialDate = currentCalendar.getTime();
+			entitySelect.setInitialDate(initialDate);
+			currentCalendar.set(Calendar.YEAR, serviceYear);
+			currentCalendar.set(Calendar.MONTH, Calendar.DECEMBER);
+			currentCalendar.set(Calendar.DAY_OF_MONTH, 31);
+			final Date finalDate = currentCalendar.getTime();
+			entitySelect.setFinalDate(finalDate);
+		}
+		super.onRead();
 	}
 }

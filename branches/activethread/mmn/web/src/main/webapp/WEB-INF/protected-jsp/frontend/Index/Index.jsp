@@ -2,18 +2,18 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:if test="${not empty now['memberPersonalReports']}">
 <script type="text/javascript">
-	/*	
-	var chart;
+	var pieChart;
+	var dunutChart;
 	$(document).ready(function() {
-		chart = new Highcharts.Chart({
+		pieChart = new Highcharts.Chart({
 			chart: {
-				renderTo: 'personalReport',
+				renderTo: 'personalReport-pie',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false
 			},
 			title: {
-				text: 'Ano de Serviço de 2011'
+				text: 'Ano de Serviço de ${now['serviceYear']}'
 			},
 			tooltip: {
 				formatter: function() {
@@ -58,10 +58,6 @@
 				]
 			}]
 		});
-	});
-	*/
-	var chart;
-	$(document).ready(function() {
 		var colors = Highcharts.getOptions().colors,
 			categories = [${now['chartYears']}],
 			name = 'Years',
@@ -107,9 +103,9 @@
 		}
 		
 		// Create the chart
-		chart = new Highcharts.Chart({
+		dunutChart = new Highcharts.Chart({
 			chart: {
-				renderTo: 'personalReport', 
+				renderTo: 'personalReport-donut', 
 				type: 'pie'
 			},
 			title: {
@@ -155,5 +151,6 @@
 		});
 	});
 </script>
-<div id="personalReport" style="width: 500px; height: 320px;"></div>
+<div id="personalReport-pie" style="width: 500px; height: 320px;"></div>
+<div id="personalReport-donut" style="width: 500px; height: 320px;"></div>
 </c:if>

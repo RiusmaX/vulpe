@@ -11,6 +11,10 @@ import org.jw.mmn.core.model.entity.Member;
 import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.MultipleResourceBundle;
+import org.vulpe.model.annotations.Parameter;
+import org.vulpe.model.annotations.QueryParameter;
+import org.vulpe.model.annotations.Parameter.OperatorType;
+import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeDate;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -29,6 +33,12 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	@VulpeColumn(sortable = true)
 	@VulpeDate
 	private Date date;
+
+	@QueryParameter(equals = @Parameter(name = "date", operator = OperatorType.GREATER_OR_EQUAL))
+	private transient Date initialDate;
+
+	@QueryParameter(equals = @Parameter(name = "date", operator = OperatorType.SMALLER_OR_EQUAL))
+	private transient Date finalDate;
 
 	@VulpeSelect
 	private Month month;
@@ -49,23 +59,23 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	private boolean delivered;
 
 	private transient Integer totalBooks;
-	
+
 	private transient Integer totalBrochures;
-	
+
 	private transient Integer totalMagazines;
-	
+
 	private transient Integer totalRevisits;
-	
+
 	private transient String totalHours;
-	
+
 	private transient String totalPioneer;
-	
+
 	private transient Integer totalMinutes;
 
 	public String getMonthI18n() {
 		return MultipleResourceBundle.getInstance().getI18NEnum(this.month);
 	}
-	
+
 	public int getOrdinalMonth() {
 		return this.month.ordinal();
 	}
@@ -106,5 +116,13 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 				}
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(VulpeEntity<Long> entity) {
+		final MemberPersonalReport memberPersonalReport = (MemberPersonalReport) entity;
+		// +
+		// Integer.valueOf(this.month.ordinal()).compareTo(Integer.valueOf(memberPersonalReport.getMonth().ordinal()))
+		return this.year.compareTo(memberPersonalReport.getYear());
 	}
 }

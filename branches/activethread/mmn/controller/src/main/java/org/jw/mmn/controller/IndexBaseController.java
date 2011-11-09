@@ -1,6 +1,7 @@
 package org.jw.mmn.controller;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import org.jw.mmn.commons.ApplicationConstants.Core;
@@ -35,6 +36,7 @@ public class IndexBaseController extends ApplicationBaseController<Index, Long> 
 			final List<MemberPersonalReport> memberPersonalReports = ministryService()
 					.readMemberPersonalReport(memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(memberPersonalReports)) {
+				Collections.sort(memberPersonalReports);
 				for (final MemberPersonalReport personalReport : memberPersonalReports) {
 					personalReport.sum();
 				}
