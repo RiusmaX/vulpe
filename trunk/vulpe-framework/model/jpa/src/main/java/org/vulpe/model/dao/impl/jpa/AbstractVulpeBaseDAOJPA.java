@@ -178,8 +178,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 		if (!(entity instanceof AuditOccurrence)) {
 			entityManager.flush();
-			entityManager.clear();
 		}
+		entityManager.clear();
 		loadEntityRelationships((ENTITY) entity);
 		return entity;
 	}
