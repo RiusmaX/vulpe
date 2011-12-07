@@ -319,4 +319,8 @@ public class VulpeStringUtil {
 		}
 		return concat.toString();
 	}
+
+	public static String getValueFromLast(String value, String token) {
+		return value.substring(value.lastIndexOf(token) + 1);
+	}
 }

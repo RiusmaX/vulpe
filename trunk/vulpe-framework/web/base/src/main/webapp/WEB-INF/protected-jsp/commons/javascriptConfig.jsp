@@ -43,7 +43,15 @@ vulpe.config.messages = {
 	keyRequired: '<fmt:message key="vulpe.js.error.key.required"/>',
 	deleteSelected: '<fmt:message key="vulpe.message.confirm.delete.selected"/>',
 	deleteSelecteds: '<fmt:message key="vulpe.message.confirm.delete.selecteds"/>',
-	loading: '<fmt:message key="vulpe.message.loading"/>',
+	loadingBase: '<fmt:message key="vulpe.message.loading"/>',
+	loadingCreate: '<fmt:message key="vulpe.message.loading.create"/>',
+	loadingCreatePost: '<fmt:message key="vulpe.message.loading.createPost"/>',
+	loadingUpdate: '<fmt:message key="vulpe.message.loading.update"/>',
+	loadingUpdatePost: '<fmt:message key="vulpe.message.loading.updatePost"/>',
+	loadingDelete: '<fmt:message key="vulpe.message.loading.delete"/>',
+	loadingRead: '<fmt:message key="vulpe.message.loading.read"/>',
+	loadingClear: '<fmt:message key="vulpe.message.loading.clear"/>',
+	loadingBack: '<fmt:message key="vulpe.message.loading.back"/>',
 	selectRecordsToDelete: '<fmt:message key="vulpe.message.select.records.to.delete"/>',
 	updatePost: '<fmt:message key="vulpe.message.confirm.updatePost"/>',
 	upload: '<fmt:message key="vulpe.error.upload"/>',
@@ -55,18 +63,11 @@ vulpe.config.lightbox = {
 }
 vulpe.config.messageSlideUp = "${global['project-view-messageSlideUp']}";
 vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}";
-<c:if test="${global['project-mobile-enabled']}">
-vulpe.config.popup.mobile = true;
-</c:if>
-<c:if test="${global['project-view-showReportInNewWindow']}">
-vulpe.config.layout.showReportInNewWindow = true;
-</c:if>
-<c:if test="${!global['project-view-showIconErrorMessage']}">
-vulpe.config.layout.showIconErrorMessage = false;
-</c:if>
-<c:if test="${global['project-view-layout-showLoadingAsModal']}">
-vulpe.config.layout.loading.modal = true;
-</c:if>
+<c:if test="${global['project-mobile-enabled']}">vulpe.config.popup.mobile = true;</c:if>
+<c:if test="${global['project-view-showReportInNewWindow']}">vulpe.config.layout.showReportInNewWindow = true;</c:if>
+<c:if test="${!global['project-view-showIconErrorMessage']}">vulpe.config.layout.showIconErrorMessage = false;</c:if>
+<c:if test="${global['project-view-layout-displaySpecificMessagesWhenLoading']}">vulpe.config.layout.displaySpecificMessagesWhenLoading = true;</c:if>
+<c:if test="${global['project-view-layout-showLoadingAsModal']}">vulpe.config.layout.loading.modal = true;</c:if>
 vulpe.config.hotKeys = eval("${global['project-hotKeys']}");
 vulpe.config.sortType = "${global['project-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';

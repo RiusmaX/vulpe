@@ -33,6 +33,8 @@ public @interface VulpeViewLayout {
 
 	boolean breakLabel() default true;
 
+	boolean displaySpecificMessagesWhenLoading() default false;
+	
 	/**
 	 * Menu Type to frontend.
 	 */

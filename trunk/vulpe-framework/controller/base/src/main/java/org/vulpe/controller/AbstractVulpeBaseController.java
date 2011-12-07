@@ -1726,9 +1726,9 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					}
 					++count;
 				}
-				paging.setList(entities);
-				ever.putWeakRef(Controller.VIRTUAL_PAGING, paging);
 			}
+			paging.setList(entities);
+			ever.putWeakRef(Controller.VIRTUAL_PAGING, paging);
 			this.paging = paging;
 		}
 	}

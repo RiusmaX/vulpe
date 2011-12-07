@@ -725,20 +725,29 @@ public class VulpeReflectUtil {
 						}
 					}
 				}
-			}
-			final Field field = getField(object.getClass(), fieldName);
-			if (field != null) {
-				synchronized (field) {
-					boolean setted = false;
-					if (!field.isAccessible()) {
-						field.setAccessible(true);
-						setted = true;
-					}
-					try {
-						field.set(object, value);
-					} finally {
-						if (setted) {
-							field.setAccessible(false);
+			} else {
+				final Field field = getField(object.getClass(), fieldName);
+				if (field != null) {
+					synchronized (field) {
+						boolean setted = false;
+						if (!field.isAccessible()) {
+							field.setAccessible(true);
+							setted = true;
+						}
+						try {
+							if (field.getType().isAssignableFrom(value.getClass())) {
+								field.set(object, value);
+							} else {
+								Object newValue = value;
+								if (Long.class.isAssignableFrom(field.getType())) {
+									newValue = new Long(value.toString());
+								}
+								field.set(object, newValue);
+							}
+						} finally {
+							if (setted) {
+								field.setAccessible(false);
+							}
 						}
 					}
 				}

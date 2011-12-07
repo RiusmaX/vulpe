@@ -92,6 +92,7 @@ var vulpe = {
 				modal: false
 			},
 			showLoading: true,
+			displaySpecificMessagesWhenLoading: false,
 			showReportInNewWindow: false,
 			showIconErrorMessage: true
 		},
@@ -133,7 +134,16 @@ var vulpe = {
 			keyRequired: "vulpe.js.error.key.required",
 			deleteSelected: "vulpe.message.confirm.delete.selected",
 			deleteSelecteds: "vulpe.message.confirm.delete.selecteds",
-			loading: "vulpe.message.loading",
+			loading: "",
+			loadingBase: "vulpe.message.loading",
+			loadingCreate: "vulpe.message.loading.create",
+			loadingCreatePost: "vulpe.message.loading.createPost",
+			loadingUpdate: "vulpe.message.loading.update",
+			loadingUpdatePost: "vulpe.message.loading.updatePost",
+			loadingDelete: "vulpe.message.loading.delete",
+			loadingRead: "vulpe.message.loading.read",
+			loadingClear: "vulpe.message.loading.clear",
+			loadingBack: "vulpe.message.loading.back",
 			selectRecordsToDelete: "vulpe.message.select.records.to.delete",
 			updatePost: "vulpe.message.confirm.updatePost",
 			upload: "vulpe.error.upload",
@@ -1911,6 +1921,30 @@ var vulpe = {
 
 		loading: null,
 
+		controlLoadingMessage: function(url) {
+			if (vulpe.config.layout.displaySpecificMessagesWhenLoading) {
+				if (url.indexOf("/create/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingCreate;
+				} else if (url.indexOf("/createPost/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingCreatePost;
+				} else if (url.indexOf("/update/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingUpdate;
+				} else if (url.indexOf("/updatePost/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingUpdatePost;
+				} else if (url.indexOf("/delete/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingDelete;
+				} else if (url.indexOf("/read/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingRead;
+				} else if (url.indexOf("/clear/") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingClear;
+				} else if (url.indexOf("now.back=true") != -1) {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingBack;
+				} else {
+					vulpe.config.messages.loading = vulpe.config.messages.loadingBase;
+				}
+			}
+		},
+		
 		showLoading: function() {
 			if (vulpe.config.layout.showLoading && !vulpe.util.isVisible("loading")) {
 				if (vulpe.config.layout.loading.modal) {
@@ -1921,6 +1955,9 @@ var vulpe = {
 						containerCss: {top: "40%"}
 					});
 				} else {
+					if (vulpe.util.isEmpty(vulpe.config.messages.loading)) {
+						vulpe.config.messages.loading = vulpe.config.messages.loadingBase;
+					}
 					vulpe.util.get("loading").html("<div id='loadingBox'><div id='loadingBoxContent'>" + vulpe.config.messages.loading + "</div></div>");
 					vulpe.util.get("loading").slideDown("slow")
 				}
@@ -2423,6 +2460,7 @@ var vulpe = {
 				if (!vulpe.view.request.submitBefore(options.beforeJs)) {
 					return false;
 				}
+				vulpe.view.controlLoadingMessage(options.url);
 				options.queryString = (vulpe.util.isNotEmpty(options.queryString) ? options.queryString + '&' : '') + 'now.ajax=true';
 				vulpe.view.showLoading();
 				jQuery.ajax({

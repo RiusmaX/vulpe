@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="annotations/src/main/java"/>
+	<classpathentry kind="src" path="model/jdbc/src/main/java"/>
 	<classpathentry kind="src" path="security/vraptor/src/main/java"/>
 	<classpathentry kind="src" path="audit/vraptor/src/main/java"/>
 	<classpathentry excluding="**/**" kind="src" path="web/vraptor/src/main/webapp"/>
@@ -120,5 +121,8 @@
 	<classpathentry kind="var" path="M2_REPO/net/sf/apt-jelly/apt-jelly/2.3/apt-jelly-2.3.jar" sourcepath="M2_REPO/net/sf/apt-jelly/apt-jelly/2.3/apt-jelly-2.3-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-jelly/commons-jelly/1.0/commons-jelly-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/0.10.0-RC3/lombok-0.10.0-RC3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-asm/3.0.5.RELEASE/spring-asm-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-expression/3.0.5.RELEASE/spring-expression-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Applications/Active-Thread/Vulpe-Framework/1.0/Servers/tomcat/lib/mysql-connector-java-5.1.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
