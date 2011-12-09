@@ -128,7 +128,7 @@ public class VulpeExceptionMappingInterceptor extends
 		} else if (newException instanceof VulpeApplicationException) {
 			final VulpeApplicationException vae = (VulpeApplicationException) newException;
 			action.addActionMessage(newException.getMessage(), (Object[]) vae.getArgs());
-		} else {
+		} else if (!action.now.containsKey("fileUploadError")) {
 			String value = treatExceptionMessage(invocation, newException);
 			if (StringUtils.isBlank(value)) {
 				String message = newException.getMessage();

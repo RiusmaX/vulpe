@@ -35,6 +35,7 @@ import org.apache.struts2.interceptor.FileUploadInterceptor;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeUpload;
+import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 
@@ -239,6 +240,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			if (validation != null) {
 				// validation.addFieldError(inputName, message);
 				validation.addActionError(message);
+				final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) validation;
+				baseController.now.put("fileUploadError", "too.large");
 			}
 
 			LOG.error(message);
