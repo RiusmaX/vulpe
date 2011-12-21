@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OAuditEntity;
 import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.security.model.entity.User;

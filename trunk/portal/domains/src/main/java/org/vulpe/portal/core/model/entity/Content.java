@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.vulpe.model.annotations.IgnoreAutoFilter;
-import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;

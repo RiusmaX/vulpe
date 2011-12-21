@@ -1,4 +1,65 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
+<script type="text/javascript">
+	var downloadsPieChart;
+	$(document).ready(function() {
+		downloadsPieChart = new Highcharts.Chart({
+			chart: {
+				renderTo: 'downloads-pie',
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false
+			},
+			title: {
+				text: 'Downloads'
+			},
+			tooltip: {
+				formatter: function() {
+					return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
+				}
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false,
+						color: '#000000',
+						connectorColor: '#000000',
+						formatter: function() {
+							return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
+						}
+					},
+					showInLegend: true
+				}
+			},
+		    series: [{
+				type: 'pie',
+				name: 'Personal Report',
+				data: [
+			       <c:forEach var="download" items="${ever['vulpePortalDownloads']}" varStatus="status">
+			       <c:if test="${status.index > 0}">,</c:if>
+			       	<c:choose>
+			       	<c:when test="${false}">
+			       	{
+						name: '${download.name}',    
+						y: ${download.downloads},
+						sliced: true,
+						selected: true
+					}
+					</c:when>
+					<c:otherwise>
+					['${download.name}', ${download.downloads}]
+					</c:otherwise>
+					</c:choose>
+			       </c:forEach>
+				]
+			}]
+		});
+	});
+</script>
+<div id="downloads-pie" style="width: 500px; height: 320px;"></div>
 <table style="margin: 0; width: 100%">
 	<tr>
 		<td valign="top" width="33%">

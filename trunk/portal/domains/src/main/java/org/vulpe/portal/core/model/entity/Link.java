@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.portal.commons.model.entity.Position;
 import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.Target;

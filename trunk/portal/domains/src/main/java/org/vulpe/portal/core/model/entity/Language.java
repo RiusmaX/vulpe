@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.IgnoreAutoFilter;
 import org.vulpe.model.annotations.OrderBy;
-import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeText;
 
