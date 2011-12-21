@@ -73,10 +73,6 @@ public class VulpeConstants {
 	public static final String FILTER_DISPATCHER = "vulpeFilterDispatcher";
 
 	public class Context {
-		public static final String APPLICATION_SCOPE = "APPLICATION_SCOPE";
-		public static final String PAGE_SCOPE = "PAGE_SCOPE";
-		public static final String REQUEST_SCOPE = "REQUEST_SCOPE";
-		public static final String SESSION_SCOPE = "SESSION_SCOPE";
 		public static final String GLOBAL = "global";
 	}
 

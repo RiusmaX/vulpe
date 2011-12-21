@@ -43,7 +43,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 import org.vulpe.commons.VulpeConstants;
@@ -108,16 +107,6 @@ public class VulpeStartupListener implements ServletContextListener {
 				}
 			}
 		}
-		// sets scopes as attributes to use in tags and JSPs
-		evt.getServletContext().setAttribute(Context.APPLICATION_SCOPE,
-				Integer.valueOf(PageContext.APPLICATION_SCOPE));
-		evt.getServletContext().setAttribute(Context.PAGE_SCOPE,
-				Integer.valueOf(PageContext.PAGE_SCOPE));
-		evt.getServletContext().setAttribute(Context.REQUEST_SCOPE,
-				Integer.valueOf(PageContext.REQUEST_SCOPE));
-		evt.getServletContext().setAttribute(Context.SESSION_SCOPE,
-				Integer.valueOf(PageContext.SESSION_SCOPE));
-
 		// sets attributes to configure application
 		final VulpeProject vulpeProject = VulpeConfigHelper.get(VulpeProject.class);
 		global.put(Global.PROJECT_DEBUG, vulpeProject.debug());
