@@ -61,7 +61,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.Length;
 import org.vulpe.audit.model.annotations.IgnoreAudit;
 import org.vulpe.commons.xml.XMLAttribute;
 import org.vulpe.commons.xml.XMLDateConversor;
@@ -92,15 +91,12 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
 
-	@Length(max = 150)
 	@Column(length = 150)
 	private String entity;
 
-	@Length(max = 50)
 	@Column(length = 50)
 	private String primaryKey;
 
-	@Length(max = 30)
 	@Column(length = 30)
 	private String username;
 

@@ -276,6 +276,7 @@ var vulpe = {
 				var char = value.toUpperCase().charAt(i);
 				if (char != firstChar) {
 					equalChars = false;
+					break;
 				}
 			}
 			return equalChars;
@@ -2625,6 +2626,7 @@ var vulpe = {
 					options.queryString = "entitySelect.autocomplete=" + options.autocomplete + "&entitySelect.id=" + options.value;
 					options.layer = options.description;
 					options.layerFields = options.description;
+					options.ignoreControlFields = true;
 					vulpe.view.request.submitAjax(options);
 				} else {
 					vulpe.view.selectPopupCache[identifier] = ["", ""];
@@ -2713,7 +2715,7 @@ var vulpe = {
 
 				// serialize form
 				var queryStringForm = jQuery(":input[type!='file']", vulpe.util.get(options.layerFields, parent)).fieldSerialize();
-				if ((vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) && (options.layerFields != "this" || options.url.indexOf("/clear/") != -1)) {
+				if ((vulpe.util.isEmpty(queryStringForm) || queryStringForm.indexOf("controllerType") == -1) && (options.layerFields != "this" || options.url.indexOf("/clear/") != -1) && !options.ignoreControlFields) {
 					queryStringForm = (vulpe.util.isEmpty(queryStringForm) ? "" : queryStringForm + "&") + jQuery(":input[type!='file']", $(vulpe.config.layers.controlFields, parent)).fieldSerialize();
 				}
 				if (vulpe.util.isNotEmpty(options.queryString) && vulpe.util.isNotEmpty(queryStringForm)) {
