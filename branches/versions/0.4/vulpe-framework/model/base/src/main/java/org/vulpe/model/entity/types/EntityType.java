@@ -48,7 +48,6 @@ import java.util.Properties;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 import org.vulpe.commons.VulpeServiceLocator;
@@ -200,15 +199,4 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	@Override
-	public Object nullSafeGet(ResultSet arg0, String[] arg1, SessionImplementor arg2, Object arg3)
-			throws HibernateException, SQLException {
-		return null;
-	}
-
-	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor arg3)
-			throws HibernateException, SQLException {
-		
-	}
 }
