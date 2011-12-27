@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-vulpe.xml" />
+	<include file="struts-audit.xml" />
+	<include file="struts-security.xml" />
+	<include file="struts-application.xml" />
+
+	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
+
+    <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="struts" class="org.vulpe.controller.struts.proxy.VulpeActionProxyFactory"/>
+ 
+	<bean type="com.opensymphony.xwork2.conversion.ObjectTypeDeterminer" name="generics" class="org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer"/>
+	<bean type="com.opensymphony.xwork2.conversion.NullHandler" name="java.lang.Object" class="org.vulpe.controller.struts.util.GenericsNullHandler" />
+	<bean type="ognl.PropertyAccessor" name="java.lang.Object" class="org.vulpe.controller.struts.util.GenericsPropertyAccessor" />
+	<bean type="ognl.PropertyAccessor" name="java.util.Set" class="org.vulpe.controller.struts.util.XWorkSetPropertyAccessor" />
+	<package name="default" extends="struts-default">
+		<result-types>
+			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />
+			<result-type name="export" class="org.vulpe.view.struts.result.ExportResult" />
+			<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+			<result-type name="plaintext" class="org.apache.struts2.dispatcher.PlainTextResult" />
+		</result-types>
+
+		<interceptors>
+			<!-- file upload interceptor -->
+			<interceptor name="fileUpload" class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
+
+			<!-- exception interceptor -->
+			<interceptor name="exception"
+				class="org.vulpe.controller.struts.interceptor.VulpeExceptionMappingInterceptor" />
+
+			<!-- chain interceptor -->
+			<interceptor name="chain" class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
+
+			<!-- params interceptor -->
+			<interceptor name="params"
+				class="org.vulpe.controller.struts.interceptor.VulpeParametersInterceptor" />
+				
+			<!-- Basic stack -->
+            <interceptor-stack name="basicStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                    <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+            </interceptor-stack>
+
+			<!-- A complete stack with all the common interceptors in place.
+                 Generally, this stack should be the one you use, though it
+                 may do more than you need. Also, the ordering can be
+                 switched around (ex: if you wish to have your servlet-related
+                 objects applied before prepare() is called, you'd need to move
+                 servletConfig interceptor up.
+
+                 This stack also excludes from the normal validation and workflow
+                 the method names input, back, and cancel. These typically are
+                 associated with requests that should not be validated.
+                 -->
+            <interceptor-stack name="defaultStack">
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="i18n"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="debugging"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="fileUpload"/>
+                <interceptor-ref name="checkbox"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params">
+                  <param name="excludeParams">dojo\..*,^struts\..*</param>
+                </interceptor-ref>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="validation">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+            </interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="index">/index.jsp</result>
+			<result name="success">${now.resultForward}</result>
+			<result name="redirect" type="redirect">${now.urlToRedirect}</result>
+			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp</result>
+			<result name="plaintext">/WEB-INF/protected-jsp/commons/plaintextResult.jsp</result>
+			<result name="json" type="json" >
+       	 		<param name="root">now.jsonRoot</param>
+       	 	</result>
+			<result name="download" type="stream">
+				<param name="contentType">${now['downloadInfo'].contentType}</param>
+				<param name="contentLength">${now['downloadInfo'].contentLength}</param>
+				<param name="contentDisposition">${now['downloadInfo'].contentDisposition}</param>
+				<param name="inputName">now['downloadInfo'].inputStream</param>
+			</result>
+			<result name="export" type="export"/>
+			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/commons/errors.jsp</result>
+		</global-results>
+
+		<!-- Back-End -->
+		<action name="backend/*" class="backend.{1}Controller" method="backend">
+			<result name="backend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="backend/*/ajax" class="backend.{1}Controller" method="backend">
+			<result name="backend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="backend/*/*" class="backend.{1}Controller" method="{2}">
+			<result name="backend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="backend/*/*/ajax" class="backend.{1}Controller" method="{2}">
+			<result name="backend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<!-- Front-End -->
+		<action name="frontend/*" class="frontend.{1}Controller" method="frontend">
+			<result name="frontend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="frontend/*/ajax" class="frontend.{1}Controller" method="frontend">
+			<result name="frontend" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="frontend/*/*" class="frontend.{1}Controller" method="{2}">
+			<result name="read" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="frontend/*/*/ajax" class="frontend.{1}Controller" method="{2}">
+			<result name="read" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+		
+		<action name="*/*" class="{1}.{2}Controller" method="none">
+			<result name="none" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+		
+		<action name="*/*/ajax" class="{1}.{2}Controller" method="none">
+			<result name="none" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+				<param name="sendParams">true</param>
+				<param name="clearParams">true</param>
+			</result>
+		</action>
+
+		<action name="*/*/*" class="{1}.{2}Controller" method="{3}">
+			<result name="create" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="update" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="read" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+			</result>
+		</action>
+
+		<action name="*/*/*/ajax" class="{1}.{2}Controller" method="{3}">
+			<result name="create" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="update" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+				<param name="saveParams">true</param>
+			</result>
+			<result name="read" type="chain">
+				<param name="actionName">${now.resultForward}</param>
+			</result>
+		</action>
+
+	</package>
+</struts>

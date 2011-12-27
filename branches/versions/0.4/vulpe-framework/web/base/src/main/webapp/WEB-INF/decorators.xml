@@ -1,0 +1,23 @@
+<decorators defaultdir="/WEB-INF/decorators">
+	<excludes>
+		<pattern>*/ajax*</pattern>
+		<pattern>*/reportExport/*</pattern>
+		<pattern>/login.jsp*</pattern>
+		<pattern>/accessDenied.jsp*</pattern>
+		<pattern>*/errors/*</pattern>
+		<pattern>*/j_spring_security_check*</pattern>
+		<pattern>*/authenticator/error/*</pattern>
+	</excludes>
+	<decorator name="default" page="backendLayout.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	<decorator name="frontend" page="frontendLayout.jsp">
+		<pattern>*/frontend*</pattern>
+	</decorator>
+	<decorator name="authenticator" page="authenticatorLayout.jsp">
+		<pattern>*/authenticator</pattern>
+	</decorator>
+	<decorator name="export" page="exportLayout.jsp">
+		<pattern>*/export*</pattern>
+	</decorator>
+</decorators>
