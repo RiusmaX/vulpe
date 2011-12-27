@@ -65,7 +65,9 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeHashMap;
@@ -111,7 +113,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
 			if (oneToMany != null) {
 				try {
-					final List<ENTITY> entities = (List<ENTITY>) PropertyUtils.getProperty(entity, field.getName());
+					final List<ENTITY> entities = (List<ENTITY>) PropertyUtils.getProperty(entity,
+							field.getName());
 					if (VulpeValidationUtil.isNotEmpty(entities)) {
 						for (final ENTITY entityChild : entities) {
 							repairRelationship(entityChild);
@@ -127,39 +130,37 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 
 	/**
 	 * 
-	 * @param <T>
-	 * @param entity
+	 * @param entities
 	 */
-	private <T> void repairReference(final T entity, final boolean recursive) {
-		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-		for (final Field field : fields) {
-			final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
-			final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
-			if (manyToOne != null) {
-				try {
-					final ENTITY value = (ENTITY) PropertyUtils.getProperty(entity, field.getName());
-					final Class<?> valueClass = PropertyUtils.getPropertyType(entity, field.getName());
-					if (VulpeValidationUtil.isNotEmpty(value)) {
-						PropertyUtils.setProperty(entity, field.getName(), entityManager.getReference(valueClass, value
-								.getId()));
-						if (recursive) {
-							repairReference(value, false);
+	private void repairInstance(final ENTITY entity) {
+		if (VulpeValidationUtil.isNotEmpty(entity)) {
+			final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+			for (final Field field : fields) {
+				final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
+				final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+				if (manyToOne != null) {
+					try {
+						ENTITY value = (ENTITY) PropertyUtils.getProperty(entity, field.getName());
+						if (value != null && value instanceof HibernateProxy) {
+							VulpeReflectUtil.setFieldValue(entity, field.getName(), entityManager
+									.getReference(field.getType(), initializeAndUnproxy(value)
+											.getId()));
 						}
+					} catch (Exception e) {
+						LOG.error(e);
 					}
-				} catch (Exception e) {
-					LOG.error(e);
-				}
-			} else if (oneToMany != null) {
-				try {
-					final List<ENTITY> entities = (List<ENTITY>) PropertyUtils.getProperty(entity, field.getName());
-					if (VulpeValidationUtil.isNotEmpty(entities)) {
-						for (final ENTITY entityChild : entities) {
-							repairReference(entityChild, false);
-							PropertyUtils.setProperty(entityChild, oneToMany.mappedBy(), entity);
+				} else if (oneToMany != null) {
+					try {
+						final List<ENTITY> childs = (List<ENTITY>) PropertyUtils.getProperty(
+								entity, field.getName());
+						for (ENTITY child : childs) {
+							if (VulpeValidationUtil.isNotEmpty(childs)) {
+								repairInstance(child);
+							}
 						}
+					} catch (Exception e) {
+						LOG.error(e);
 					}
-				} catch (Exception e) {
-					LOG.error(e);
 				}
 			}
 		}
@@ -171,10 +172,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @see org.vulpe.model.dao.VulpeDAO#merge(java.lang.Object)
 	 */
 	public <T> T merge(final T entity) {
+		if (entity instanceof AuditOccurrence) {
+			entityManager.clear();
+		}
 		repairRelationship(entity);
 		T merged = entity;
 		if (((ENTITY) entity).getMap().containsKey(Entity.ONLY_UPDATE_DETAILS)) {
-			final List<String> detailNames = (List<String>) ((ENTITY) entity).getMap().get(Entity.ONLY_UPDATE_DETAILS);
+			final List<String> detailNames = (List<String>) ((ENTITY) entity).getMap().get(
+					Entity.ONLY_UPDATE_DETAILS);
 			if (VulpeValidationUtil.isNotEmpty(detailNames)) {
 				for (final String detail : detailNames) {
 					List<ENTITY> details = null;
@@ -193,14 +198,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 		} else {
 			merged = entityManager.merge(entity);
-			// ((ENTITY) merged).setMap(((ENTITY) entity).getMap());
-			// repairReference(merged, true);
-			// VulpeReflectUtil.copyOnlyTransient(merged, entity);
 			((ENTITY) entity).setId(((ENTITY) merged).getId());
 		}
-		if (!(entity instanceof AuditOccurrence)) {
-			entityManager.flush();
-		}
+		entityManager.flush();
 		entityManager.clear();
 		loadEntityRelationships((ENTITY) entity);
 		return entity;
@@ -215,7 +215,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @return
 	 * @throws VulpeApplicationException
 	 */
-	protected <T> List<T> execute(final String hql, final Map<String, Object> params) throws VulpeApplicationException {
+	protected <T> List<T> execute(final String hql, final Map<String, Object> params)
+			throws VulpeApplicationException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Reading object: ".concat(hql));
 		}
@@ -242,8 +243,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * java.util.List)
 	 */
 	@Override
-	public CallableStatement executeFunction(final String name, final int returnType, final List<Parameter> parameters)
-			throws VulpeApplicationException {
+	public CallableStatement executeFunction(final String name, final int returnType,
+			final List<Parameter> parameters) throws VulpeApplicationException {
 		return executeCallableStatement(name, returnType, parameters);
 	}
 
@@ -259,7 +260,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		CallableStatement cstmt = null;
 		try {
 			final Session session = (Session) entityManager.getDelegate();
-			final Connection connection = session.connection();
+			final SessionFactoryImplementor sessionFactoryImplementor = (SessionFactoryImplementor) session
+					.getSessionFactory();
+			final ConnectionProvider connectionProvider = sessionFactoryImplementor
+					.getConnectionProvider();
+			final Connection connection = connectionProvider.getConnection();
+
 			final StringBuilder call = new StringBuilder();
 			call.append(returnType == null ? "{call " : "{? = call ");
 			call.append(name);
@@ -303,7 +309,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					}
 					if (parameter.isOut()) {
 						if (parameter.getType() == Types.ARRAY) {
-							cstmt.registerOutParameter(count, Types.ARRAY, parameter.getArrayType());
+							cstmt
+									.registerOutParameter(count, Types.ARRAY, parameter
+											.getArrayType());
 						} else {
 							cstmt.registerOutParameter(count, parameter.getType());
 						}
@@ -324,7 +332,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		if (params != null) {
 			for (final String name : params.keySet()) {
 				Object value = params.get(name);
-				final String paramName = name.replace("!", "").replace("_", "").replaceAll("\\.", "_");
+				final String paramName = name.replace("!", "").replace("_", "").replaceAll("\\.",
+						"_");
 				if (value instanceof String) {
 					value = ((String) value).replace("[like]", "");
 				}
@@ -374,12 +383,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		final List<String> attributeList = new ArrayList<String>();
 		String first = attribute.substring(0, attribute.indexOf("["));
 		loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
-		if (StringUtils.isNotEmpty(first)) {
+		if (StringUtils.isNotBlank(first)) {
 			first += "_";
 		}
 		for (final String attributeName : attributeList) {
-			hqlAttribute.append(", obj.").append(attributeName).append(" as ").append(first).append(
-					attributeName.replaceAll("\\.", "_"));
+			hqlAttribute.append(", obj.").append(attributeName).append(" as ").append(first)
+					.append(attributeName.replaceAll("\\.", "_"));
 		}
 		return hqlAttribute.toString();
 	}
@@ -389,8 +398,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param attributeList
 	 * @param value
 	 */
-	private void loadRelationshipsSeparateAttributes(final List<String> attributeList, String value, String parent) {
-		if (StringUtils.isNotEmpty(value)) {
+	private void loadRelationshipsSeparateAttributes(final List<String> attributeList,
+			String value, String parent) {
+		if (StringUtils.isNotBlank(value)) {
 			value = value.replaceAll(" ", "");
 		}
 		boolean initial = value.startsWith("[") && value.endsWith("]");
@@ -438,9 +448,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			if (value.contains("[")) {
 				value = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
 			}
-			final String text = value.contains("[") ? value.substring(0, value.indexOf("[")) : value;
+			final String text = value.contains("[") ? value.substring(0, value.indexOf("["))
+					: value;
 			final String[] textParts = text.split(",");
-			parent = StringUtils.isNotEmpty(parent) ? parent + "." : "";
+			parent = StringUtils.isNotBlank(parent) ? parent + "." : "";
 			int count = 1;
 			for (final String textPart : textParts) {
 				if (count == textParts.length && !textPart.equals(value)) {
@@ -455,7 +466,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 				++count;
 			}
-			if (StringUtils.isEmpty(subParent) && StringUtils.isNotEmpty(value)) {
+			if (StringUtils.isEmpty(subParent) && StringUtils.isNotBlank(value)) {
 				attributeList.add(value);
 			}
 			if (value.contains("[")) {
@@ -479,13 +490,18 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			LOG.debug("Method loadRelationships - Start");
 		}
 		if (VulpeValidationUtil.isNotEmpty(entities)) {
+			for (final ENTITY entity : entities) {
+				repairInstance(entity);
+			}
 			final ENTITY entity = entities.get(0);
 			final String queryConfigurationName = entity.getQueryConfigurationName();
 			final Class<?> entityClass = initializeAndUnproxy(entity).getClass();
-			final QueryConfigurations queryConfigurations = entityClass.getAnnotation(QueryConfigurations.class);
+			final QueryConfigurations queryConfigurations = entityClass
+					.getAnnotation(QueryConfigurations.class);
 			if (queryConfigurations != null && queryConfigurations.value().length > 0) {
 				for (final QueryConfiguration queryConfiguration : queryConfigurations.value()) {
-					if (queryConfiguration != null && queryConfiguration.name().equals(queryConfigurationName)
+					if (queryConfiguration != null
+							&& queryConfiguration.name().equals(queryConfigurationName)
 							&& queryConfiguration.relationships().length > 0) {
 						final List<ID> parentIds = new ArrayList<ID>();
 						for (final ENTITY parent : entities) {
@@ -500,17 +516,20 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							}
 							try {
 								final StringBuilder hql = new StringBuilder();
-								final String parentName = VulpeStringUtil.getAttributeName(entityClass.getSimpleName());
-								final Class propertyType = PropertyUtils.getPropertyType(entityClass.newInstance(),
-										relationship.property());
-								final OneToMany oneToMany = VulpeReflectUtil.getAnnotationInField(OneToMany.class,
-										entityClass, relationship.property());
+								final String parentName = VulpeStringUtil
+										.getAttributeName(entityClass.getSimpleName());
+								final Class propertyType = PropertyUtils.getPropertyType(
+										entityClass.newInstance(), relationship.property());
+								final OneToMany oneToMany = VulpeReflectUtil.getAnnotationInField(
+										OneToMany.class, entityClass, relationship.property());
 								final Map<String, String> hqlAttributes = new HashMap<String, String>();
 								// select and from
-								hql.append(loadRelationshipsMountSelectAndFrom(relationship, parentName, propertyType,
-										entity, hqlAttributes, oneToMany, loadAll));
+								hql.append(loadRelationshipsMountSelectAndFrom(relationship,
+										parentName, propertyType, entity, hqlAttributes, oneToMany,
+										loadAll));
 								// where
-								hql.append(loadRelationshipsMountWhere(relationship, parentName, params, oneToMany));
+								hql.append(loadRelationshipsMountWhere(relationship, parentName,
+										params, oneToMany));
 								final Query query = entityManager.createQuery(hql.toString());
 								if (oneToMany != null) {
 									query.setParameter("parentIds", parentIds);
@@ -529,10 +548,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 									query.setParameter("ids", ids);
 								}
 								if (relationship.parameters() != null) {
-									for (final QueryParameter queryParameter : relationship.parameters()) {
+									for (final QueryParameter queryParameter : relationship
+											.parameters()) {
 										if (params.containsKey(queryParameter.equals().name())) {
-											query.setParameter(queryParameter.equals().name(), params
-													.get(queryParameter.equals().name()));
+											query.setParameter(queryParameter.equals().name(),
+													params.get(queryParameter.equals().name()));
 										}
 									}
 								}
@@ -540,19 +560,20 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								final Map<ID, ID> relationshipIds = new HashMap<ID, ID>();
 								if (oneToMany != null && loadAll) {
 									final List<ENTITY> result = query.getResultList();
-									childs.addAll(loadRelationshipsMountChild(relationship, result, relationshipIds,
-											parentName));
+									childs.addAll(loadRelationshipsMountChild(relationship, result,
+											relationshipIds, parentName));
 								} else {
 									final List<Map> result = query.getResultList();
-									childs.addAll(loadRelationshipsMountChild(relationship, result, relationshipIds,
-											parentName, propertyType, hqlAttributes, oneToMany));
+									childs.addAll(loadRelationshipsMountChild(relationship, result,
+											relationshipIds, parentName, propertyType,
+											hqlAttributes, oneToMany));
 								}
 								if (!onlyInMain) {
 									final Session session = (Session) entityManager.getDelegate();
 									session.clear();
 								}
-								loadRelationshipsMountEntities(relationship, entities, childs, relationshipIds,
-										parentName, oneToMany);
+								loadRelationshipsMountEntities(relationship, entities, childs,
+										relationshipIds, parentName, oneToMany);
 							} catch (Exception e) {
 								LOG.error(e);
 							}
@@ -566,9 +587,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 	}
 
-	private String loadRelationshipsMountSelectAndFrom(final Relationship relationship, final String parentName,
-			final Class propertyType, final ENTITY firstEntity, final Map<String, String> hqlAttributes,
-			final OneToMany oneToMany, final boolean loadAll) {
+	private String loadRelationshipsMountSelectAndFrom(final Relationship relationship,
+			final String parentName, final Class propertyType, final ENTITY firstEntity,
+			final Map<String, String> hqlAttributes, final OneToMany oneToMany,
+			final boolean loadAll) {
 		final StringBuilder hql = new StringBuilder();
 		try {
 			final List<String> hqlJoin = new ArrayList<String>();
@@ -581,43 +603,46 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						continue;
 					}
 					if (oneToMany != null) {
-						final Class attributeType = PropertyUtils.getPropertyType(oneToMany.targetEntity()
-								.newInstance(), attribute);
+						final Class attributeType = PropertyUtils.getPropertyType(oneToMany
+								.targetEntity().newInstance(), attribute);
 						boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
 								|| VulpeEntity.class.isAssignableFrom(attributeType);
-						hql.append(", ").append("obj.").append(attribute + (manyToOne ? ".id" : "")).append(" as ")
+						hql.append(", ").append("obj.")
+								.append(attribute + (manyToOne ? ".id" : "")).append(" as ")
 								.append(attribute);
 					} else {
 						if (attribute.contains("[")) {
-							final StringBuilder hqlAttribute = new StringBuilder("select new map(obj.id as id");
+							final StringBuilder hqlAttribute = new StringBuilder(
+									"select new map(obj.id as id");
 							String attributeParent = attribute.substring(0, attribute.indexOf("["));
 							hqlAttribute.append(loadRelationshipsMountReference(attribute, null));
 							if (StringUtils.isEmpty(attributeParent)) {
 								attributeParent = relationship.property();
-								final Class attributeParentType = PropertyUtils.getPropertyType(firstEntity,
-										attributeParent);
-								hqlAttribute.append(") from ").append(attributeParentType.getSimpleName()).append(
-										" obj");
+								final Class attributeParentType = PropertyUtils.getPropertyType(
+										firstEntity, attributeParent);
+								hqlAttribute.append(") from ").append(
+										attributeParentType.getSimpleName()).append(" obj");
 							} else {
-								final Class attributeParentType = PropertyUtils.getPropertyType(propertyType
-										.newInstance(), attributeParent);
-								hqlAttribute.append(") from ").append(attributeParentType.getSimpleName()).append(
-										" obj");
+								final Class attributeParentType = PropertyUtils.getPropertyType(
+										propertyType.newInstance(), attributeParent);
+								hqlAttribute.append(") from ").append(
+										attributeParentType.getSimpleName()).append(" obj");
 								int joinCount = hqlJoin.size() + 1;
-								hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj." + attributeParent
-										+ " obj" + joinCount);
-								hql.append(", obj").append(joinCount).append(".id").append(" as ").append(
-										attributeParent);
+								hqlJoin.add((joinCount > 0 ? "" : ",") + "left outer join obj."
+										+ attributeParent + " obj" + joinCount);
+								hql.append(", obj").append(joinCount).append(".id").append(" as ")
+										.append(attributeParent);
 							}
 							hqlAttribute.append(" where obj.id in (:ids)");
 							hqlAttributes.put(attribute, hqlAttribute.toString());
 						} else {
-							final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
-									attribute);
+							final Class attributeType = PropertyUtils.getPropertyType(propertyType
+									.newInstance(), attribute);
 							boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
 									|| VulpeEntity.class.isAssignableFrom(attributeType);
-							hql.append(", ").append("obj.").append(attribute + (manyToOne ? ".id" : "")).append(" as ")
-									.append(attribute);
+							hql.append(", ").append("obj.").append(
+									attribute + (manyToOne ? ".id" : "")).append(" as ").append(
+									attribute);
 						}
 					}
 				}
@@ -626,8 +651,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 				hql.append(")");
 			}
-			final String className = oneToMany == null ? propertyType.getSimpleName() : oneToMany.targetEntity()
-					.getSimpleName();
+			final String className = oneToMany == null ? propertyType.getSimpleName() : oneToMany
+					.targetEntity().getSimpleName();
 			hql.append(" from ").append(className).append(" obj ");
 			for (final String join : hqlJoin) {
 				hql.append(join);
@@ -638,15 +663,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return hql.toString();
 	}
 
-	private String loadRelationshipsMountWhere(final Relationship relationship, final String parentName,
-			final Map<String, Object> params, final OneToMany oneToMany) {
+	private String loadRelationshipsMountWhere(final Relationship relationship,
+			final String parentName, final Map<String, Object> params, final OneToMany oneToMany) {
 		final StringBuilder hql = new StringBuilder();
 		if (oneToMany != null) {
 			hql.append(" where obj.").append(parentName).append(".id in (:parentIds)");
 		} else {
 			hql.append(" where obj.id in (:ids)");
 		}
-		if (StringUtils.isNotEmpty(relationship.condition())) {
+		if (StringUtils.isNotBlank(relationship.condition())) {
 			hql.append(" and ").append(relationship.condition());
 		}
 
@@ -654,13 +679,16 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			for (final QueryParameter queryParameter : relationship.parameters()) {
 				if (params.containsKey(queryParameter.equals().name())) {
 					hql.append(" and ");
-					hql.append(
-							StringUtils.isNotEmpty(queryParameter.equals().alias()) ? queryParameter.equals().alias()
-									: "obj").append(".");
+					hql
+							.append(
+									StringUtils.isNotBlank(queryParameter.equals().alias()) ? queryParameter
+											.equals().alias()
+											: "obj").append(".");
 					hql.append(queryParameter.equals().name());
-					final Like like = VulpeReflectUtil.getAnnotationInField(Like.class, oneToMany.targetEntity(),
-							queryParameter.equals().name());
-					hql.append(" ").append(like != null ? "like" : queryParameter.equals().operator().getValue())
+					final Like like = VulpeReflectUtil.getAnnotationInField(Like.class, oneToMany
+							.targetEntity(), queryParameter.equals().name());
+					hql.append(" ").append(
+							like != null ? "like" : queryParameter.equals().operator().getValue())
 							.append(" ");
 					hql.append(":").append(queryParameter.equals().name());
 				}
@@ -669,8 +697,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return hql.toString();
 	}
 
-	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship, final List<ENTITY> result,
-			final Map<ID, ID> relationshipIds, final String parentName) {
+	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship,
+			final List<ENTITY> result, final Map<ID, ID> relationshipIds, final String parentName) {
 		final List<ENTITY> childs = new ArrayList<ENTITY>();
 		try {
 			for (final ENTITY entity : result) {
@@ -687,14 +715,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return childs;
 	}
 
-	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship, final List<Map> result,
-			final Map<ID, ID> relationshipIds, final String parentName, final Class propertyType,
-			final Map<String, String> hqlAttributes, final OneToMany oneToMany) {
+	private List<ENTITY> loadRelationshipsMountChild(final Relationship relationship,
+			final List<Map> result, final Map<ID, ID> relationshipIds, final String parentName,
+			final Class propertyType, final Map<String, String> hqlAttributes,
+			final OneToMany oneToMany) {
 		final List<ENTITY> childs = new ArrayList<ENTITY>();
 		try {
 			for (final Map map : result) {
-				final ENTITY child = (ENTITY) (oneToMany != null ? oneToMany.targetEntity().newInstance()
-						: propertyType.newInstance());
+				final ENTITY child = (ENTITY) (oneToMany != null ? oneToMany.targetEntity()
+						.newInstance() : propertyType.newInstance());
 				VulpeReflectUtil.setFieldValue(child, "id", map.get("id"));
 				relationshipIds.put(child.getId(), (ID) map.get(parentName));
 				childs.add(child);
@@ -712,10 +741,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								break;
 							}
 						}
-						if (StringUtils.isNotEmpty(attributeParent)) {
-							final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
-									attributeParent);
-							final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType.newInstance();
+						if (StringUtils.isNotBlank(attributeParent)) {
+							final Class attributeType = PropertyUtils.getPropertyType(propertyType
+									.newInstance(), attributeParent);
+							final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
+									.newInstance();
 							newAttribute.setId((ID) map.get(attributeParent));
 							ids.add(newAttribute.getId());
 							VulpeReflectUtil.setFieldValue(child, attributeParent, newAttribute);
@@ -723,25 +753,29 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 							ids.add(child.getId());
 						}
 					}
-					if (StringUtils.isNotEmpty(attributeParent)) {
-						final Query queryAttribute = getEntityManager().createQuery(hqlAttribute).setParameter("ids",
-								ids);
-						final List<Map> listAttributeMap = (List<Map>) queryAttribute.getResultList();
+					if (StringUtils.isNotBlank(attributeParent)) {
+						final Query queryAttribute = getEntityManager().createQuery(hqlAttribute)
+								.setParameter("ids", ids);
+						final List<Map> listAttributeMap = (List<Map>) queryAttribute
+								.getResultList();
 						for (ENTITY child : childs) {
-							final Class attributeType = PropertyUtils.getPropertyType(propertyType.newInstance(),
-									attributeParent);
-							final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType.newInstance();
+							final Class attributeType = PropertyUtils.getPropertyType(propertyType
+									.newInstance(), attributeParent);
+							final VulpeEntity<ID> newAttribute = (VulpeEntity<ID>) attributeType
+									.newInstance();
 							for (Map map : listAttributeMap) {
 								if (((Long) map.get("id")).equals(child.getId())) {
-									loadRelationshipsMountProperties(map, newAttribute, attribute, null);
+									loadRelationshipsMountProperties(map, newAttribute, attribute,
+											null);
 								}
 							}
 							VulpeReflectUtil.setFieldValue(child, attributeParent, newAttribute);
 						}
 					} else {
-						final Query queryAttribute = getEntityManager().createQuery(hqlAttribute).setParameter("ids",
-								ids);
-						final List<Map> listAttributeMap = (List<Map>) queryAttribute.getResultList();
+						final Query queryAttribute = getEntityManager().createQuery(hqlAttribute)
+								.setParameter("ids", ids);
+						final List<Map> listAttributeMap = (List<Map>) queryAttribute
+								.getResultList();
 						for (final ENTITY child : childs) {
 							for (final Map map : listAttributeMap) {
 								if (((Long) map.get("id")).equals(child.getId())) {
@@ -762,14 +796,17 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						final Class attributeType = PropertyUtils.getPropertyType(child, attribute);
 						boolean manyToOne = attributeType.isAnnotationPresent(ManyToOne.class)
 								|| VulpeEntity.class.isAssignableFrom(attributeType);
-						VulpeReflectUtil.instanciate(child, attribute + (manyToOne ? ".id" : ""), map.get(attribute));
+						VulpeReflectUtil.instanciate(child, attribute + (manyToOne ? ".id" : ""),
+								map.get(attribute));
 					}
 				}
 			}
 			if (relationship.forceLoad()) {
 				if (!"default".equals(relationship.forceLoadQueryConfiguration())) {
 					for (final ENTITY entity : childs) {
-						entity.setQueryConfigurationName(relationship.forceLoadQueryConfiguration());
+						entity
+								.setQueryConfigurationName(relationship
+										.forceLoadQueryConfiguration());
 					}
 				}
 				loadRelationships(childs, null, false);
@@ -780,9 +817,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return childs;
 	}
 
-	private void loadRelationshipsMountEntities(final Relationship relationship, final List<ENTITY> entities,
-			final List<ENTITY> childs, final Map<ID, ID> relationshipIds, final String parentName,
-			final OneToMany oneToMany) {
+	private void loadRelationshipsMountEntities(final Relationship relationship,
+			final List<ENTITY> entities, final List<ENTITY> childs,
+			final Map<ID, ID> relationshipIds, final String parentName, final OneToMany oneToMany) {
 		try {
 			for (final ENTITY parent : entities) {
 				if (VulpeValidationUtil.isEmpty(childs)) {
@@ -796,10 +833,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								PropertyUtils.setProperty(child, parentName, parent);
 								loadedChilds.add(child);
 							}
-							PropertyUtils.setProperty(parent, relationship.property(), loadedChilds);
+							PropertyUtils
+									.setProperty(parent, relationship.property(), loadedChilds);
 						} else {
-							final VulpeEntity<ID> parentChild = (VulpeEntity<ID>) PropertyUtils.getProperty(parent,
-									relationship.property());
+							final VulpeEntity<ID> parentChild = (VulpeEntity<ID>) PropertyUtils
+									.getProperty(parent, relationship.property());
 							if (VulpeValidationUtil.isNotEmpty(parentChild)
 									&& child.getId().equals(parentChild.getId())) {
 								PropertyUtils.setProperty(parent, relationship.property(), child);
@@ -820,13 +858,13 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	 * @param attribute
 	 * @param parent
 	 */
-	private void loadRelationshipsMountProperties(final Map<String, Object> map, final VulpeEntity<ID> entity,
-			final String attribute, final String parent) {
+	private void loadRelationshipsMountProperties(final Map<String, Object> map,
+			final VulpeEntity<ID> entity, final String attribute, final String parent) {
 		try {
 			final List<String> attributeList = new ArrayList<String>();
 			String first = attribute.substring(0, attribute.indexOf("["));
 			loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
-			if (StringUtils.isNotEmpty(first)) {
+			if (StringUtils.isNotBlank(first)) {
 				first += "_";
 			}
 			for (final String attributeName : attributeList) {
@@ -954,7 +992,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 			final Field idField = VulpeReflectUtil.getField(entity.getClass(), "id");
 			final Column column = idField.getAnnotation(Column.class);
-			sql.append(column != null ? column.name() : "id").append(" in (").append(sqlIds).append(")");
+			sql.append(column != null ? column.name() : "id").append(" in (").append(sqlIds)
+					.append(")");
 			final Query query = entityManager.createNativeQuery(sql.toString());
 			for (final String key : map.keySet()) {
 				final Object value = map.get(key);
@@ -1009,7 +1048,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				if (column != null) {
 					map.put(column.name(), value);
 				} else if (joinColumn != null) {
-					map.put(StringUtils.isNotEmpty(joinColumn.referencedColumnName()) ? joinColumn
+					map.put(StringUtils.isNotBlank(joinColumn.referencedColumnName()) ? joinColumn
 							.referencedColumnName() : joinColumn.name(), value);
 				} else {
 					map.put(field.getName(), value);
@@ -1019,14 +1058,15 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return map;
 	}
 
-	public <T> T initializeAndUnproxy(T entity) {
+	protected <T> T initializeAndUnproxy(T entity) {
 		if (entity == null) {
 			throw new NullPointerException("Entity passed for initialization is null");
 		}
 
 		Hibernate.initialize(entity);
 		if (entity instanceof HibernateProxy) {
-			entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer().getImplementation();
+			entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer()
+					.getImplementation();
 		}
 		return entity;
 	}
@@ -1037,17 +1077,22 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final String initialToken = token + "(";
 			while (queryModified.contains(initialToken)) {
 				final int initialPos = queryModified.indexOf(token);
-				final int initialAttributePos = queryModified.indexOf(initialToken) + initialToken.length();
+				final int initialAttributePos = queryModified.indexOf(initialToken)
+						+ initialToken.length();
 				final int finalPos = queryModified.indexOf(")", initialPos);
-				final String queryAttributte = queryModified.substring(initialAttributePos, queryModified.indexOf(")"));
-				queryModified = queryModified.substring(0, initialPos) + queryModified.substring(finalPos + 1);
+				final String queryAttributte = queryModified.substring(initialAttributePos,
+						queryModified.indexOf(")", initialAttributePos));
+				queryModified = queryModified.substring(0, initialPos)
+						+ queryModified.substring(finalPos + 1);
 				final int openPos = queryModified.indexOf("{");
 				final int closePos = queryModified.indexOf("}", openPos);
 				if (checkCondition(entity, queryAttributte)) {
 					queryModified = queryModified.substring(0, openPos)
-							+ queryModified.substring(openPos + 1, closePos) + queryModified.substring(closePos + 1);
+							+ queryModified.substring(openPos + 1, closePos)
+							+ queryModified.substring(closePos + 1);
 				} else {
-					queryModified = queryModified.substring(0, openPos) + queryModified.substring(closePos + 1);
+					queryModified = queryModified.substring(0, openPos)
+							+ queryModified.substring(closePos + 1);
 				}
 			}
 			return queryModified;
@@ -1068,7 +1113,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return new QueryFunction() {
 			@Override
 			public boolean checkCondition(ENTITY entity, String queryAttributte) {
-				return VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity, queryAttributte));
+				return VulpeValidationUtil.isNotEmpty(VulpeReflectUtil.getFieldValue(entity,
+						queryAttributte));
 			};
 		}.execute(entity, query, "notEmpty");
 	}
@@ -1077,9 +1123,10 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		return new QueryFunction() {
 			@Override
 			public boolean checkCondition(ENTITY entity, String queryAttributte) {
-				return VulpeValidationUtil.isEmpty(VulpeReflectUtil.getFieldValue(entity, queryAttributte));
+				return VulpeValidationUtil.isEmpty(VulpeReflectUtil.getFieldValue(entity,
+						queryAttributte));
 			};
 		}.execute(entity, query, "empty");
 	}
-	
+
 }

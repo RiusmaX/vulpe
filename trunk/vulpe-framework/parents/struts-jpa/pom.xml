@@ -5,14 +5,14 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-parent-struts-jpa</artifactId>
-	<version>1.0</version>
+	<version>${vulpe.version}</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent Struts JPA</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent-struts-base</artifactId>
-		<version>1.0</version>
+		<version>${vulpe.version}</version>
 	</parent>
 
 	<description>Vulpe Framework ;) Quick and Smart - Parent Struts JPA</description>
@@ -23,47 +23,43 @@
 		<url>http://www.activethread.com.br</url>
 	</organization>
 	<properties>
-		<hibernate.version>3.2.1.ga</hibernate.version>
+		<vulpe.version>1.0</vulpe.version>
+		<hibernate.version>4.0.0.Final</hibernate.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-struts</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model-jpa</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-dao-jpa</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-dao-jpa</artifactId>
-			<version>1.0</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
+			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
@@ -72,9 +68,14 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
-			<version>1.0.1B</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -84,7 +85,7 @@
 		<dependency>
 			<groupId>jboss</groupId>
 			<artifactId>jboss-archive-browsing</artifactId>
-			<version>5.0.0alpha-200607201-119</version>
+			<version>5.0.0.Alpha</version>
 		</dependency>
 	</dependencies>
 </project>

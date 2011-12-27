@@ -182,7 +182,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * read(org.vulpe.model.entity.VulpeEntity)
 	 */
-	@TransactionType(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionType(TransactionAttributeType.NEVER)
 	@GenerateSuffix
 	public List<ENTITY> read(final ENTITY entity) throws VulpeApplicationException {
 		readBefore(entity);
@@ -323,7 +323,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * @see org.vulpe.model.services.manager.impl.VulpeBaseManager#
 	 * find(org.vulpe.model.entity.VulpeEntity)
 	 */
-	@TransactionType(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionType(TransactionAttributeType.NEVER)
 	@GenerateSuffix
 	public ENTITY find(final ENTITY entity) throws VulpeApplicationException {
 		findBefore(entity.getId());
@@ -353,7 +353,7 @@ public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 	 * paging(org.vulpe.model.entity.VulpeEntity, java.lang.Integer,
 	 * java.lang.Integer)
 	 */
-	@TransactionType(TransactionAttributeType.NOT_SUPPORTED)
+	@TransactionType(TransactionAttributeType.NEVER)
 	@GenerateSuffix
 	public Paging<ENTITY> paging(final ENTITY entity, final Integer pageSize, final Integer page)
 			throws VulpeApplicationException {

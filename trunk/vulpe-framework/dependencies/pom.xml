@@ -5,11 +5,12 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-dependencies</artifactId>
-	<version>1.0</version>
+	<version>${vulpe.version}</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Dependencies</name>
 
 	<properties>
+		<vulpe.version>1.0</vulpe.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
@@ -43,6 +44,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.0.0.GA</version>
+		</dependency>
+
+		<dependency>
 			<groupId>jboss</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.3.ga</version>
@@ -52,13 +59,13 @@
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.9.0.GA</version>
+			<version>3.12.1.GA</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
+			<version>1.0.2</version>
 		</dependency>
 
 		<dependency>
@@ -67,10 +74,6 @@
 			<version>1.0-MR1</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!--
-			<dependency> <groupId>joda-time</groupId> <artifactId>joda-time</artifactId> <version>1.6</version> </dependency>
-		-->
 
 		<dependency>
 			<groupId>javax.ejb</groupId>
@@ -269,22 +272,22 @@
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.2.1.ga</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.2.1.ga</version>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.0.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.2.1.ga</version>
+			<version>4.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 
