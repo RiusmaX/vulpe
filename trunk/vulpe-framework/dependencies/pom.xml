@@ -5,7 +5,7 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-dependencies</artifactId>
-	<version>${vulpe.version}</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Dependencies</name>
 
