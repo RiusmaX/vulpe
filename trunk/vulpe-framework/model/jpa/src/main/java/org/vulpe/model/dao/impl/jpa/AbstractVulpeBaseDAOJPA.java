@@ -45,7 +45,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +65,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.collection.internal.PersistentBag;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.service.jdbc.connections.spi.ConnectionProvider;
@@ -140,7 +138,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
 				for (final Field field : fields) {
 					final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
-					final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+					// final OneToMany oneToMany =
+					// field.getAnnotation(OneToMany.class);
 					if (manyToOne != null) {
 						try {
 							ENTITY value = (ENTITY) PropertyUtils.getProperty(entity, field
@@ -157,35 +156,17 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						} catch (Exception e) {
 							LOG.error(e);
 						}
-					} else if (oneToMany != null) {
-						try {
-							List<ENTITY> childs = VulpeReflectUtil.getFieldValue(entity, field
-									.getName());
-							repairBag(childs);
-							if (VulpeValidationUtil.isNotEmpty(childs)) {
-								repairInstance(childs);
-							}
-						} catch (Exception e) {
-							LOG.error(e);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private void repairBag(List<ENTITY> entities) {
-		if (VulpeValidationUtil.isNotEmpty(entities)) {
-			if (entities instanceof PersistentBag) {
-				entities = VulpeReflectUtil.getFieldValue(entities, "bag");
-			}
-			for (final ENTITY entity : entities) {
-				final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-				for (final Field field : fields) {
-					if (Collection.class.isAssignableFrom(field.getType())) {
-						List<ENTITY> childs = VulpeReflectUtil.getFieldValue(entity, field
-								.getName());
-						repairBag(childs);
+						// } else if (oneToMany != null) {
+						// try {
+						// List<ENTITY> childs =
+						// VulpeReflectUtil.getFieldValue(entity, field
+						// .getName());
+						// if (VulpeValidationUtil.isNotEmpty(childs)) {
+						// repairInstance(childs);
+						// }
+						// } catch (Exception e) {
+						// LOG.error(e);
+						// }
 					}
 				}
 			}

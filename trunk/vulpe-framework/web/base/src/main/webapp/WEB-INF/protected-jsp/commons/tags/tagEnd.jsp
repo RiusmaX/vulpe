@@ -31,7 +31,8 @@ jQuery(function($){
 	vulpe.util.get("${elementId}").charCounter(${validateMaxLength}, {
 		container: "#${elementId}-charcount",
 		pulse: !vulpe.config.browser.ie6,
-		format: vulpe.config.messages.charCount
+		format: vulpe.config.messages.charCount,
+		delay: 50
 	});
 });
 </c:if>
