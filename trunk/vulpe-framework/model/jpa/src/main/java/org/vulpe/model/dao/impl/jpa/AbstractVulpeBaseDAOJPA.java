@@ -141,10 +141,12 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				if (manyToOne != null) {
 					try {
 						ENTITY value = (ENTITY) PropertyUtils.getProperty(entity, field.getName());
-						if (value != null && value instanceof HibernateProxy) {
-							VulpeReflectUtil.setFieldValue(entity, field.getName(), entityManager
-									.getReference(field.getType(), initializeAndUnproxy(value)
-											.getId()));
+						if (value != null && value.getClass().getSimpleName().contains("_javassist_")) {
+							final ENTITY newValue = (ENTITY) field.getType().newInstance();
+							final Object handler = VulpeReflectUtil.getFieldValue(value, "handler");
+							final ID id = VulpeReflectUtil.getFieldValue(handler, "id");
+							newValue.setId(id);
+							VulpeReflectUtil.setFieldValue(entity, field.getName(), newValue);
 						}
 					} catch (Exception e) {
 						LOG.error(e);
@@ -1064,6 +1066,14 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 
 		Hibernate.initialize(entity);
+		if (entity instanceof HibernateProxy) {
+			entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer()
+					.getImplementation();
+		}
+		return entity;
+	}
+
+	protected <T> T unproxy(T entity) {
 		if (entity instanceof HibernateProxy) {
 			entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer()
 					.getImplementation();

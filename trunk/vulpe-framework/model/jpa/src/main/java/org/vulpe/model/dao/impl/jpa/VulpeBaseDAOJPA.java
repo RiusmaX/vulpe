@@ -707,7 +707,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		Long size = 0L;
 		if (entity.getId() != null) {
 			hql.append("select count(*) from ");
-			hql.append(initializeAndUnproxy(entity).getClass().getSimpleName()).append(" obj where ");
+			hql.append(unproxy(entity).getClass().getSimpleName()).append(" obj where ");
 			hql.append(" obj.id = :id ");
 			final Query query = getEntityManager().createQuery(hql.toString());
 			query.setParameter("id", entity.getId());
@@ -732,7 +732,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final NotExistEquals notExistEqual = entity.getClass().getAnnotation(NotExistEquals.class);
 		if (notExistEqual != null) {
 			hql.append("select count(*) from ");
-			hql.append(initializeAndUnproxy(entity).getClass().getSimpleName()).append(" obj where ");
+			hql.append(unproxy(entity).getClass().getSimpleName()).append(" obj where ");
 			final QueryParameter[] queryParameters = notExistEqual.parameters();
 			// getting total records
 			final Map<String, Object> values = new HashMap<String, Object>();
