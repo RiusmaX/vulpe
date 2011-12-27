@@ -5,13 +5,13 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-fox</artifactId>
-	<version>1.1</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - FOX Code Generator</name>
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent</artifactId>
-		<version>1.1</version>
+		<version>1.0.1</version>
 	</parent>
 	<!-- 
 	<properties>

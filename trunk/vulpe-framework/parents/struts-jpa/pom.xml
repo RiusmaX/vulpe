@@ -5,14 +5,14 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-parent-struts-jpa</artifactId>
-	<version>1.1</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent Struts JPA</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent-struts-base</artifactId>
-		<version>1.1</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<description>Vulpe Framework ;) Quick and Smart - Parent Struts JPA</description>
@@ -30,32 +30,32 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-struts</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model-jpa</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-dao-jpa</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-dao-jpa</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>

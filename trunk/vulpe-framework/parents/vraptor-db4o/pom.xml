@@ -5,14 +5,14 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-parent-vraptor-db4o</artifactId>
-	<version>1.1</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent VRaptor db4o</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent-vraptor-base</artifactId>
-		<version>1.1</version>
+		<version>1.0.1</version>
 	</parent>
 
 	<description>Vulpe Framework ;) Quick and Smart - Parent VRaptor db4o</description>
@@ -31,17 +31,17 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model-db4o</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-dao-db4o</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-dao-db4o</artifactId>
-			<version>1.1</version>
+			<version>1.0.1</version>
 		</dependency>
 	</dependencies>
 </project>
