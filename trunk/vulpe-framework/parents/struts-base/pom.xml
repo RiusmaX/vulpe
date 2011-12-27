@@ -5,14 +5,14 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-parent-struts-base</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent Struts Base</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent-struts</artifactId>
-		<version>1.0</version>
+		<version>1.1</version>
 	</parent>
 
 	<description>Vulpe Framework ;) Quick and Smart - Parent Struts Base</description>
@@ -27,33 +27,33 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-web</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 			<type>war</type>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-fox</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-struts</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit-struts</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security-struts</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-web-struts</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 			<type>war</type>
 		</dependency>
 	</dependencies>

@@ -5,13 +5,13 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-fox</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - FOX Code Generator</name>
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-parent</artifactId>
-		<version>1.0</version>
+		<version>1.1</version>
 	</parent>
 	<!-- 
 	<properties>
@@ -78,13 +78,13 @@
 							<tasks>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="tools.dir"
-									value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+									value="${maven.repo}/org/vulpe/vulpe-fox/1.1/vulpe-fox-1.1/tools" />
 								<available file="${tools.dir}" property="tools.dir.present"
 									type="dir" />
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="true" />
 									<then>
-										<delete dir="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<delete dir="${maven.repo}/org/vulpe/vulpe-fox/1.1/vulpe-fox-1.1" />
 									</then>
 								</if>
 							</tasks>

@@ -5,14 +5,14 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-security-dao-db4o</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - Security DAO db4o</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-dependencies</artifactId>
-		<version>1.0</version>
+		<version>1.1</version>
 	</parent>
 
 	<properties>
@@ -23,17 +23,17 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-security</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model-db4o</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

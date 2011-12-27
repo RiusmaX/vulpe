@@ -5,12 +5,12 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-dependencies</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Dependencies</name>
 
 	<properties>
-		<vulpe.version>1.0</vulpe.version>
+		<vulpe.version>1.1</vulpe.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 	</properties>
 
