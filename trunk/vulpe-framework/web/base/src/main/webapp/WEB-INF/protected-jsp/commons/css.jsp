@@ -2,6 +2,9 @@
 <style media="all" type="text/css">
 	@import "${pageContext.request.contextPath}/css/vulpe.css";
 	@import "${pageContext.request.contextPath}/themes/${global['project-theme']}/css/${layout}${global['project-theme']}.css";
+	<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['project-view-frontendMenuType'] == 'VULPE') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['project-view-backendMenuType'] == 'VULPE')}">
+	@import "${pageContext.request.contextPath}/themes/${global['project-theme']}/css/${layout}vulpe.menu.css";
+	</c:if>
 	<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['project-view-frontendMenuType'] == 'DROPPY') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['project-view-backendMenuType'] == 'DROPPY')}">
 	@import "${pageContext.request.contextPath}/themes/${global['project-theme']}/css/${layout}jquery.droppy.css";
 	</c:if>

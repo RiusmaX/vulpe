@@ -52,7 +52,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -100,7 +99,6 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 	@Column(length = 30)
 	private String username;
 
-	@Lob
 	private Clob dataHistory;
 
 	public Long getId() {

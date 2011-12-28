@@ -106,7 +106,7 @@ public @interface VulpeViewLayout {
 	 * Menu Type.
 	 */
 	enum MenuType {
-		DROPPY, SUPERFISH, NONE
+		VULPE, DROPPY, SUPERFISH, NONE
 	}
 
 	public final String JQUERYUI_SMOOTHNESS = "smoothness";
