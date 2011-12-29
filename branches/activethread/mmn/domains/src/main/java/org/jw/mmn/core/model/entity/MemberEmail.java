@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.jw.mmn.commons.model.entity.Email;
-import org.vulpe.model.annotations.db4o.Inheritance;
+import org.vulpe.model.db4o.annotations.Inheritance;
 
 @Inheritance
 @SuppressWarnings("serial")
