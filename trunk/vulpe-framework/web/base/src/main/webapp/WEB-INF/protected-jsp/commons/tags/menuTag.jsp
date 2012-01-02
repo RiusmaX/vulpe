@@ -19,7 +19,7 @@
 </c:choose>
 </c:if>
 <c:if test="${not empty accesskey}"><c:set var="accesskey">accesskey="${accesskey}"</c:set></c:if>
-<c:if test="${not empty onclick}"><c:set var="accesskey">onclick="${onclick}"</c:set></c:if>
+<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}"</c:set></c:if>
 <c:if test="${current}"><c:set var="currentClass">class="vulpeCurrentMenu"</c:set></c:if>
 <c:choose>
 <c:when test="${not empty action}">
