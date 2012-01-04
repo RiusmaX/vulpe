@@ -70,7 +70,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>package</id>
@@ -79,7 +79,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="tomcat.home" value="${symbol_dollar}{settings.localRepository}/../Servers/tomcat/" />
 								<if>
@@ -87,33 +87,28 @@
 									<then>
 										<property name="contextSuffix" value="" />
 										<delete file="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${symbol_dollar}{rootArtifactId}.xml" />
+										<condition property="environmentSetted">
+											<isset property="environment" />
+										</condition>
 										<if>
-											<equals arg1="${symbol_dollar}{unpack}" arg2="false" />
+											<equals arg1="${symbol_dollar}{environmentSetted}" arg2="true" />
 											<then>
-												<unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0" />
-											</then>
-										</if>
-										<if>
-											<equals arg1="${symbol_dollar}{environment}" arg2="test" />
-											<then>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml"
-													overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-test.xml" />
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-${symbol_dollar}{environment}.xml" />
 												</copy>
-											</then>
-											<elseif>
-												<equals arg1="${symbol_dollar}{environment}" arg2="production" />
-												<then>
-													<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml"
-														overwrite="true">
-														<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-production.xml" />
-													</copy>
-												</then>
-											</elseif>
-										</if>
-										<if>
-											<equals arg1="${symbol_dollar}{unpack}" arg2="false" />
-											<then>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/loginx.properties" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/loginx-${symbol_dollar}{environment}.properties" />
+												</copy>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/mail.properties" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/mail-${symbol_dollar}{environment}.properties" />
+												</copy>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/log4j.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/log4j-${symbol_dollar}{environment}.xml" />
+												</copy>
+												<delete>
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/loginx-*.properties,**/mail-*.properties" />
+												</delete>
 												<war destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/web.xml"
 													basedir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0" />
 											</then>
@@ -129,9 +124,9 @@
 												</copy>
 											</then>
 											<elseif>
-												<equals arg1="${symbol_dollar}{deployMode}" arg2="quick-restart" />
+												<equals arg1="${deployMode}" arg2="quick-restart" />
 												<then>
-													<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
+													<copy todir="${tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
 														<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" excludes="**/*.jar" />
 													</copy>
 												</then>
@@ -147,12 +142,15 @@
 																<delete dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${symbol_dollar}{rootArtifactId}" />
 															</then>
 														</if>
-														<unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}" />
+														<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}">
+															<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" includes="**/**" />
+														</copy>
+														<!-- <unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}" /> -->
 													</then>
 													<else>
 														<delete file="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}.war" />
 														<copy todir="${symbol_dollar}{tomcat.home}/webapps/">
-															<fileset dir="${symbol_dollar}{project.build.directory}" includes="${symbol_dollar}{rootArtifactId}.war" />
+															<fileset dir="${project.build.directory}" includes="${symbol_dollar}{rootArtifactId}.war" />
 														</copy>
 													</else>
 												</if>
@@ -160,7 +158,7 @@
 										</if>
 									</then>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>

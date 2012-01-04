@@ -98,7 +98,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>package</id>
@@ -107,7 +107,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property environment="env" />
 								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
@@ -149,7 +149,7 @@
 										</then>
 									</elseif>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 					<execution>
@@ -159,7 +159,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<property environment="env" />
 								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
 								<property name="jboss.home" value="${symbol_dollar}{env.JBOSS_HOME}" />
@@ -212,7 +212,7 @@
 										</then>
 									</elseif>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>

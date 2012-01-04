@@ -21,7 +21,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>unjar-fox</id>
@@ -30,7 +30,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
 								<property name="tools.dir.present" value="false" />
@@ -41,7 +41,7 @@
 										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
 									</then>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>

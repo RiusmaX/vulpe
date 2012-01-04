@@ -70,7 +70,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>package</id>
@@ -79,7 +79,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="jboss.home" value="${symbol_dollar}{settings.localRepository}/../Servers/jboss/" />
 								<property name="glassfish.home" value="${symbol_dollar}{settings.localRepository}/../Servers/glassfish/" />
@@ -161,7 +161,7 @@
 										</if>
 									</then>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>
