@@ -54,7 +54,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -62,7 +62,7 @@
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<tasks>
+							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<if>
 									<equals arg1="${deployServer}" arg2="tomcat" />
@@ -75,7 +75,7 @@
 										</copy>
 									</then>
 								</if>
-							</tasks>
+							</target>
 						</configuration>
 					</execution>
 				</executions>
