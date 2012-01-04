@@ -1,0 +1,186 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${symbol_dollar}{package}</groupId>
+	<artifactId>${symbol_dollar}{rootArtifactId}-web</artifactId>
+	<version>${symbol_dollar}{version}</version>
+	<packaging>war</packaging>
+	<name>${symbol_dollar}{rootArtifactId} - Web</name>
+	<description>${symbol_dollar}{rootArtifactId}</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-struts</artifactId>
+			<version>1.0</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-struts</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${symbol_dollar}{package}</groupId>
+			<artifactId>${symbol_dollar}{rootArtifactId}-commons</artifactId>
+			<version>${symbol_dollar}{version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${symbol_dollar}{package}</groupId>
+			<artifactId>${symbol_dollar}{rootArtifactId}-domains</artifactId>
+			<version>${symbol_dollar}{version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${symbol_dollar}{package}</groupId>
+			<artifactId>${symbol_dollar}{rootArtifactId}-core</artifactId>
+			<version>${symbol_dollar}{version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${symbol_dollar}{package}</groupId>
+			<artifactId>${symbol_dollar}{rootArtifactId}-controller</artifactId>
+			<version>${symbol_dollar}{version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1-beta-1</version>
+				<configuration>
+					<packagingExcludes>**/*.jar</packagingExcludes>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>APP-INF/lib/</classpathPrefix>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tomcat.home" value="${symbol_dollar}{settings.localRepository}/../Servers/tomcat/" />
+								<if>
+									<equals arg1="${symbol_dollar}{deployServer}" arg2="tomcat" />
+									<then>
+										<property name="contextSuffix" value="" />
+										<delete file="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${symbol_dollar}{rootArtifactId}.xml" />
+										<condition property="environmentSetted">
+											<isset property="environment" />
+										</condition>
+										<if>
+											<equals arg1="${symbol_dollar}{environmentSetted}" arg2="true" />
+											<then>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-${symbol_dollar}{environment}.xml" />
+												</copy>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/loginx.properties" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/loginx-${symbol_dollar}{environment}.properties" />
+												</copy>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/mail.properties" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/mail-${symbol_dollar}{environment}.properties" />
+												</copy>
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/log4j.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/log4j-${symbol_dollar}{environment}.xml" />
+												</copy>
+												<delete>
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/loginx-*.properties,**/mail-*.properties" />
+												</delete>
+												<war destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/web.xml"
+													basedir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0" />
+											</then>
+										</if>
+										<copy tofile="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${symbol_dollar}{rootArtifactId}.xml" overwrite="true">
+											<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml" />
+										</copy>
+										<if>
+											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
+											<then>
+												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${deployMode}" arg2="quick-restart" />
+												<then>
+													<copy todir="${tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
+														<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" excludes="**/*.jar" />
+													</copy>
+												</then>
+											</elseif>
+											<else>
+												<if>
+													<equals arg1="${symbol_dollar}{unpack}" arg2="true" />
+													<then>
+														<delete dir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}" />
+														<if>
+															<equals arg1="${symbol_dollar}{deleteWork}" arg2="true" />
+															<then>
+																<delete dir="${symbol_dollar}{tomcat.home}/work/Catalina/localhost/${symbol_dollar}{rootArtifactId}" />
+															</then>
+														</if>
+														<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}">
+															<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" includes="**/**" />
+														</copy>
+														<!-- <unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}" /> -->
+													</then>
+													<else>
+														<delete file="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}.war" />
+														<copy todir="${symbol_dollar}{tomcat.home}/webapps/">
+															<fileset dir="${project.build.directory}" includes="${symbol_dollar}{rootArtifactId}.war" />
+														</copy>
+													</else>
+												</if>
+											</else>
+										</if>
+									</then>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

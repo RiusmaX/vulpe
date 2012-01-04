@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe.archetypes</groupId>
+	<artifactId>vulpe-archetype</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - Archetypes POM</name>
+
+	<modules>
+		<module>struts2-db4o</module>
+		<module>struts2-db4o-ejb3</module>
+		<module>struts2-jpa</module>
+		<module>struts2-jpa-ejb3</module>
+	</modules>
+	<description>Vulpe Framework ;) Quick and Smart</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<distributionManagement>
+		<repository>
+			<id>ftp-activethread</id>
+			<name>Active Thread Maven2 Repository</name>
+			<url>ftp://activethread.com.br</url>
+		</repository>
+	</distributionManagement>
+</project>
