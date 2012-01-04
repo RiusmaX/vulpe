@@ -32,13 +32,13 @@
 						<configuration>
 							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1" />
 									</then>
 								</if>
 							</target>
@@ -70,7 +70,7 @@
 				<configuration>
 					<factory>org.vulpe.fox.controller.ControllerProcessorFactory</factory>
 					<options>
-						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/controller/templates/plugin.ftl</param>
+						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools/controller/templates/plugin.ftl</param>
 					</options>
 					<sourceOutputDirectory>${symbol_dollar}{basedir}/../</sourceOutputDirectory>
 				</configuration>
@@ -78,7 +78,7 @@
 					<dependency>
 						<groupId>org.vulpe</groupId>
 						<artifactId>vulpe-fox</artifactId>
-						<version>1.0</version>
+						<version>1.0.1</version>
 						<exclusions>
 							<exclusion>
 								<groupId>com.sun</groupId>
