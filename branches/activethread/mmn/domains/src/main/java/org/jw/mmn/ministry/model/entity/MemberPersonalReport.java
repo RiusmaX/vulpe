@@ -1,5 +1,6 @@
 package org.jw.mmn.ministry.model.entity;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +71,14 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 
 	private transient String totalPioneer;
 
+	private transient String totalPioneerRemain;
+
+	private transient String totalPioneerRemainPerDay;
+
+	private transient String totalAveragePerDay;
+
+	private transient Integer totalLeftDays;
+
 	private transient Integer totalMinutes;
 
 	public String getMonthI18n() {
@@ -102,18 +111,30 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 			this.setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
 			this.setTotalMagazines(magazines);
 			this.setTotalRevisits(revisits);
+			int totalDaysOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+			this.setTotalAveragePerDay(VulpeDateUtil.getFormatedTime(minutes / currentDay));
+			this.setTotalLeftDays((totalDaysOfMonth - currentDay) + 1);
 			if (this.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
 				final int totalMinutesAuxiliary = 50 * 60;
 				if (minutes < totalMinutesAuxiliary) {
 					this.setTotalPioneer(" (-"
 							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
 				}
+				int totalRemain = (totalMinutesAuxiliary - minutes);
+				int totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
+				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
 			} else if (this.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
-				final int totalMinutesRegula = 70 * 60;
-				if (minutes < totalMinutesRegula) {
+				final int totalMinutesRegular = 70 * 60;
+				if (minutes < totalMinutesRegular) {
 					this.setTotalPioneer(" (-"
-							+ VulpeDateUtil.getFormatedTime(totalMinutesRegula - minutes) + ")");
+							+ VulpeDateUtil.getFormatedTime(totalMinutesRegular - minutes) + ")");
 				}
+				int totalRemain = (totalMinutesRegular - minutes);
+				int totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
+				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
 			}
 		}
 	}
