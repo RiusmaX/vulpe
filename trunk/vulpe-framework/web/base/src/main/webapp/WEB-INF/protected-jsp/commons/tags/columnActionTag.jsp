@@ -7,7 +7,7 @@
 	<c:if test="${not empty width}"><c:set var="width">width="${width}"</c:set></c:if>
 	<c:if test="${!isHeader}">
 		<td ${width} ${onclick} ${styleClass}>
-			<v:action iconClass="${iconClass}" javascript="${javascript}" layerFields="${layerFields}" beforeJs="${beforeJs}" afterJs="${afterJs}" style="${style}" elementId="${elementId}" validate="${validate}" labelKey="${labelKey}" layer="${layer}" queryString="${queryString}" action="${action}" iconBorder="${iconBorder}" iconHeight="${iconHeight}" icon="${icon}" iconWidth="${iconWidth}" noSubmitForm="${noSubmitForm}" showTextOfButton="${!global['project-view-showIconOfButton']}"/>
+			<v:action iconClass="${iconClass}" javascript="${javascript}" layerFields="${layerFields}" beforeJs="${beforeJs}" afterJs="${afterJs}" style="${style}" elementId="${elementId}" validate="${validate}" labelKey="${labelKey}" layer="${layer}" queryString="${queryString}" action="${action}" iconBorder="${iconBorder}" iconHeight="${iconHeight}" icon="${icon}" iconWidth="${iconWidth}" noSubmitForm="${noSubmitForm}" showTextOfButton="${!global['application-view-showIconOfButton']}"/>
 		</td>
 	</c:if>
 </c:if>

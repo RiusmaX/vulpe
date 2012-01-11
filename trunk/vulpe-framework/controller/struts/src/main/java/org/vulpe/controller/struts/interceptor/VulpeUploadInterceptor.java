@@ -84,7 +84,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	 */
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
-		final VulpeUpload upload = VulpeConfigHelper.getProjectConfiguration().upload();
+		final VulpeUpload upload = VulpeConfigHelper.getApplicationConfiguration().upload();
 		setMaximumSize(new Long(upload.maximumSize() * 1048576));
 		if (!"*".equals(upload.allowedTypes())) {
 			setAllowedTypes(upload.allowedTypes());
@@ -254,7 +254,7 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			}
 			LOG.error(message);
 		} else if (maximumSize != null && maximumSize.longValue() < file.length()) {
-			final VulpeUpload upload = VulpeConfigHelper.getProjectConfiguration().upload();
+			final VulpeUpload upload = VulpeConfigHelper.getApplicationConfiguration().upload();
 			// String errMsg = getText("vulpe.error.file.too.large", new
 			// Object[] { inputName, file.getName(),
 			// "" + file.length() });

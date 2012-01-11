@@ -104,7 +104,7 @@ public final class VulpeJobSchedulerHelper {
 				}
 				if (jarName.contains(VulpeConstants.VULPE) || jarName.contains(VulpeConstants.COMMONS)
 						|| jarName.contains(VulpeConstants.CONTROLLER)
-						|| jarName.contains(VulpeConfigHelper.getProjectName())) {
+						|| jarName.contains(VulpeConfigHelper.getApplicationName())) {
 					urls.add(url);
 				}
 			}

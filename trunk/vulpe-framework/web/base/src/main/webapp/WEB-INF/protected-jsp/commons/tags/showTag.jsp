@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/tags/tagHeader.jsp" %>
-<c:if test="${not empty global['project-mobile-enabled'] || global['project-view-breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
+<c:if test="${not empty global['application-mobile-enabled'] || global['application-view-breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty currentItem}">
 	<c:if test="${empty targetName}">
 		<c:if test="${empty targetConfig}"><c:set var="targetName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:if>

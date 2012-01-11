@@ -23,22 +23,22 @@
 		<c:set var="buttonDisabled" value="Off" />
 		<c:set var="disabledButton">disabled="disabled"</c:set>
 	</c:if>
-	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['project-view-showButtonsAsImage']}" /></c:if>
-	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['project-view-showIconOfButton']}" /></c:if>
-	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['project-view-showTextOfButton']}" /></c:if>
-	<c:if test="${global['project-view-showWarningBeforeDelete'] && action == 'delete'}">
+	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['application-view-showButtonsAsImage']}" /></c:if>
+	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['application-view-showIconOfButton']}" /></c:if>
+	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['application-view-showTextOfButton']}" /></c:if>
+	<c:if test="${global['application-view-showWarningBeforeDelete'] && action == 'delete'}">
 		<c:set var="showWarningBeforeDelete" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['project-view-showWarningBeforeUpdatePost'] && action == 'updatePost'}">
+	<c:if test="${global['application-view-showWarningBeforeUpdatePost'] && action == 'updatePost'}">
 		<c:set var="showWarningBeforeUpdatePost" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['project-view-showWarningBeforeClear'] && action == 'clear'}">
+	<c:if test="${global['application-view-showWarningBeforeClear'] && action == 'clear'}">
 		<c:set var="showWarningBeforeClear" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
-	<c:if test="${global['project-view-showWarningBeforeDelete'] && action == 'tabularPost'}">
+	<c:if test="${global['application-view-showWarningBeforeDelete'] && action == 'tabularPost'}">
 		<c:set var="showDeleteWarningBeforeTabularPost" value="true" />
 		<c:set var="beforeJs" value="" />
 	</c:if>
@@ -75,11 +75,11 @@
 		<c:set var="javascript" value="if (!vulpe.buttons['${buttonName}'].disabled) {${javascript}}" />
 	</c:if>
 	<c:if test="${not empty icon}">
-		<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['project-mobile-enabled'] ? global['project-mobile-iconWidth'] : global['project-view-iconWidth']}" /></c:if>
-		<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['project-mobile-enabled'] ? global['project-mobile-iconHeight'] : global['project-view-iconHeight']}" /></c:if>
+		<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['application-mobile-enabled'] ? global['application-mobile-iconWidth'] : global['application-view-iconWidth']}" /></c:if>
+		<c:if test="${empty iconHeight}"><c:set var="iconHeight" value="${global['application-mobile-enabled'] ? global['application-mobile-iconHeight'] : global['application-view-iconHeight']}" /></c:if>
 		<c:if test="${empty iconBorder}"><c:set var="iconBorder" value="0" /></c:if>
 		<c:if test="${empty iconExtension}"><c:set var="iconExtension" value="png" /></c:if>
-		<c:set var="iconPrefix"	value="themes/${global['project-theme']}/images/icons/button" />
+		<c:set var="iconPrefix"	value="themes/${global['application-theme']}/images/icons/button" />
 		<c:set var="icon" value="${iconPrefix}-${icon}-${iconWidth}x${iconHeight}.${iconExtension}" />
 		<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}"><c:set var="icon" value="${pageContext.request.contextPath}/${icon}" /></c:if>
 	</c:if>

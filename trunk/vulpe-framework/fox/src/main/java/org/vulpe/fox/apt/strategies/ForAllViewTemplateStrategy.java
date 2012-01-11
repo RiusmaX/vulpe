@@ -449,17 +449,17 @@ public class ForAllViewTemplateStrategy extends VulpeForAllTemplateStrategy {
 		} else {
 			view.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil.upperCaseFirst(view.getName())));
 		}
-		view.setPrefixLabelOfView(VulpeConfigHelper.getProjectConfiguration().codeGenerator().prefixLabelOfView());
-		view.setPrefixLabelOfMaintenance(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+		view.setPrefixLabelOfView(VulpeConfigHelper.getApplicationConfiguration().codeGenerator().prefixLabelOfView());
+		view.setPrefixLabelOfMaintenance(VulpeConfigHelper.getApplicationConfiguration().codeGenerator()
 				.prefixLabelOfMaintenance());
-		view.setPrefixLabelOfSelection(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+		view.setPrefixLabelOfSelection(VulpeConfigHelper.getApplicationConfiguration().codeGenerator()
 				.prefixLabelOfSelection());
-		view.setPrefixLabelOfSelectionList(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+		view.setPrefixLabelOfSelectionList(VulpeConfigHelper.getApplicationConfiguration().codeGenerator()
 				.prefixLabelOfSelectionList());
 		view
-				.setPrefixLabelOfTabular(VulpeConfigHelper.getProjectConfiguration().codeGenerator()
+				.setPrefixLabelOfTabular(VulpeConfigHelper.getApplicationConfiguration().codeGenerator()
 						.prefixLabelOfTabular());
-		view.setProjectName(VulpeConfigHelper.getProjectName());
+		view.setProjectName(VulpeConfigHelper.getApplicationName());
 		view.setModuleName(getModuleName(clazz));
 		view.setPopupProperties(codeGenerator.view().popupProperties());
 		final List<String> types = new ArrayList<String>();

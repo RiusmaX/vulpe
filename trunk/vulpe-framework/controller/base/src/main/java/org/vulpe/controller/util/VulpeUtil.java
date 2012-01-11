@@ -704,7 +704,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		public String currentKey() {
-			return VulpeConfigHelper.getProjectName().concat(".").concat(
+			return VulpeConfigHelper.getApplicationName().concat(".").concat(
 					currentName().replace("/", "."));
 		}
 

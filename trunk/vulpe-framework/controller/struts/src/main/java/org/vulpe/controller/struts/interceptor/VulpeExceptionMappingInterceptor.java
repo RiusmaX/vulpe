@@ -193,7 +193,7 @@ public class VulpeExceptionMappingInterceptor extends
 		final Map<String, Object> global = (Map<String, Object>) getServletContext().getAttribute(
 				Context.GLOBAL);
 		Boolean globalDebug = (Boolean) global
-				.get(VulpeConstants.Configuration.Global.PROJECT_DEBUG);
+				.get(VulpeConstants.Configuration.Global.APPLICATION_DEBUG);
 		if (globalDebug == null) {
 			globalDebug = Boolean.FALSE;
 		}

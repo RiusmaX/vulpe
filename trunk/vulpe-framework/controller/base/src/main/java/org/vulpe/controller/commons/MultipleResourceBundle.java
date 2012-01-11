@@ -51,7 +51,7 @@ import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.config.annotations.VulpeProject;
+import org.vulpe.config.annotations.VulpeApplication;
 
 /**
  * Class to provide multiple Resource Bundle in application.
@@ -82,7 +82,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	protected List<ResourceBundle> getBundles() {
 		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
 				VulpeConstants.CONTEXT);
-		final VulpeProject project = VulpeConfigHelper.get(VulpeProject.class);
+		final VulpeApplication project = VulpeConfigHelper.get(VulpeApplication.class);
 		final String modules[] = project.i18n();
 		final List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
 		for (final String module : modules) {

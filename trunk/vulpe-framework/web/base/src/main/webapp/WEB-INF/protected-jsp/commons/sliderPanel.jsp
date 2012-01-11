@@ -1,6 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:set var="show" value="${true}"/>
-<c:if test="${global['project-view-layout-showSliderPanelOnlyIfAuthenticated'] && !util:isAuthenticated(pageContext)}">
+<c:if test="${global['application-view-layout-showSliderPanelOnlyIfAuthenticated'] && !util:isAuthenticated(pageContext)}">
 	<c:set var="show" value="${false}"/>
 </c:if>
 <c:if test="${show}">

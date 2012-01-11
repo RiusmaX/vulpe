@@ -13,7 +13,7 @@ vulpe.config.dialogs = {
 	warningTitle: "<fmt:message key='vulpe.dialog.warning.title'/>",
 	successTitle: "<fmt:message key='vulpe.dialog.success.title'/>"
 }
-vulpe.config.theme = '${global['project-theme']}';
+vulpe.config.theme = '${global['application-theme']}';
 vulpe.config.messages = {
 	error: {
 		checkfield: '<fmt:message key="vulpe.error.validate.checkfield"/>',
@@ -61,15 +61,15 @@ vulpe.config.lightbox = {
 	imageText: '<fmt:message key="vulpe.lightbox.image.text"/>',
 	ofText: '<fmt:message key="vulpe.lightbox.of.text"/>'
 }
-vulpe.config.messageSlideUp = "${global['project-view-messageSlideUp']}";
-vulpe.config.messageSlideUpTime = "${global['project-view-messageSlideUpTime']}";
-<c:if test="${global['project-mobile-enabled']}">vulpe.config.popup.mobile = true;</c:if>
-<c:if test="${global['project-view-showReportInNewWindow']}">vulpe.config.layout.showReportInNewWindow = true;</c:if>
-<c:if test="${!global['project-view-showIconErrorMessage']}">vulpe.config.layout.showIconErrorMessage = false;</c:if>
-<c:if test="${global['project-view-layout-displaySpecificMessagesWhenLoading']}">vulpe.config.layout.displaySpecificMessagesWhenLoading = true;</c:if>
-<c:if test="${global['project-view-layout-showLoadingAsModal']}">vulpe.config.layout.loading.modal = true;</c:if>
-vulpe.config.hotKeys = eval("${global['project-hotKeys']}");
-vulpe.config.sortType = "${global['project-view-sortType']}";
+vulpe.config.messageSlideUp = "${global['application-view-messageSlideUp']}";
+vulpe.config.messageSlideUpTime = "${global['application-view-messageSlideUpTime']}";
+<c:if test="${global['application-mobile-enabled']}">vulpe.config.popup.mobile = true;</c:if>
+<c:if test="${global['application-view-showReportInNewWindow']}">vulpe.config.layout.showReportInNewWindow = true;</c:if>
+<c:if test="${!global['application-view-showIconErrorMessage']}">vulpe.config.layout.showIconErrorMessage = false;</c:if>
+<c:if test="${global['application-view-layout-displaySpecificMessagesWhenLoading']}">vulpe.config.layout.displaySpecificMessagesWhenLoading = true;</c:if>
+<c:if test="${global['application-view-layout-showLoadingAsModal']}">vulpe.config.layout.loading.modal = true;</c:if>
+vulpe.config.hotKeys = eval("${global['application-hotKeys']}");
+vulpe.config.sortType = "${global['application-view-sortType']}";
 vulpe.config.popup.closeTitle = '<fmt:message key="vulpe.js.close.popup.title"/>';
 vulpe.config.accentMap = {
 	"á": "a", "â": "a", "ã": "a", "à": "a",	"ä": "a",
@@ -87,12 +87,12 @@ vulpe.config.accentMap = {
 }
 <c:if test="${util:isAuthenticated(pageContext)}">
 vulpe.config.session = {
-	idleTime: ${global['project-view-session-idleTime']},
+	idleTime: ${global['application-view-session-idleTime']},
 	initialSessionTimeoutMessage: "<fmt:message key='vulpe.message.session.initialSessionTimeoutMessage'/>",
 	timeoutCountdownId: "#sessionTimeoutCountdown",
-	redirectAfter: ${global['project-view-session-redirectAfter']},
-	redirectTo: eval("${global['project-view-session-redirectTo']}"),
-	keepAliveURL: eval("${global['project-view-session-keepAliveURL']}"),
+	redirectAfter: ${global['application-view-session-redirectAfter']},
+	redirectTo: eval("${global['application-view-session-redirectTo']}"),
+	keepAliveURL: eval("${global['application-view-session-keepAliveURL']}"),
 	expireSessionMessageTitle: "<fmt:message key='vulpe.message.session.expireSessionMessageTitle'/>",
 	expiredMessageTitle: "<fmt:message key='vulpe.message.session.expiredMessageTitle'/>",
 	expiredMessage: "<fmt:message key='vulpe.message.session.expiredMessage'/>",

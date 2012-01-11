@@ -251,7 +251,7 @@ public final class VulpeCachedObjectsHelper {
 		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASSES, mapCachedClass);
 		final Class[] cachedEnum = VulpeConfigHelper.get(VulpeDomains.class).cachedEnum();
 		if (cachedEnum != null) {
-			final String projectName = VulpeConfigHelper.getProjectName();
+			final String projectName = VulpeConfigHelper.getApplicationName();
 			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
 			final VulpeHashMap<String, String> mapCachedEnumArray = new VulpeHashMap<String, String>();
 			for (Class clazz : cachedEnum) {

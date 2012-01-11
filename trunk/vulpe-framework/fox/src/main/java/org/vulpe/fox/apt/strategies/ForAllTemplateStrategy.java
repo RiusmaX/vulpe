@@ -88,7 +88,7 @@ public class ForAllTemplateStrategy extends VulpeForAllTemplateStrategy {
 			} else {
 				all.setLabel(VulpeStringUtil.separateWords(VulpeStringUtil.upperCaseFirst(all.getName())));
 			}
-			all.setProjectName(VulpeConfigHelper.getProjectName());
+			all.setProjectName(VulpeConfigHelper.getApplicationName());
 			all.setModuleName(getModuleName(clazz));
 			final List<String> types = new ArrayList<String>();
 			for (final ViewType viewType : codeGenerator.view().viewType()) {

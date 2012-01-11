@@ -50,7 +50,7 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.config.annotations.VulpeProject;
+import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.controller.commons.ExportDelegate;
 
 /**
@@ -78,7 +78,7 @@ public class VulpeFilter extends CharacterEncodingFilter {
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 		}
-		final String encoding = VulpeConfigHelper.get(VulpeProject.class).characterEncoding();
+		final String encoding = VulpeConfigHelper.get(VulpeApplication.class).characterEncoding();
 		response.setCharacterEncoding(encoding);
 		setEncoding(encoding);
 		setForceEncoding(true);

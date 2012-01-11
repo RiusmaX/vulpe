@@ -1,7 +1,7 @@
 <c:if test="${render}">
 	<%@include file="/WEB-INF/protected-jsp/commons/tags/tagBegin.jsp" %>
 	<c:if test="${empty mask}">
-		<c:set var="mask" value="${global['project-view-dateMask']}"/>
+		<c:set var="mask" value="${global['application-view-dateMask']}"/>
 		<c:set var="maxlength" value="${fn:length(mask)}"/>
 	</c:if>
 	<c:if test="${empty size && not empty maxlength}"><c:set var="size" value="${maxlength}"/></c:if>
@@ -23,7 +23,7 @@
 			vulpe.util.get('${elementId}').mask("${mask}");
 			vulpe.util.get('${elementId}').datepicker({
 				showOn: 'button',
-				buttonImage: '${pageContext.request.contextPath}/themes/${global['project-theme']}/images/icons/button-calendar-16x16.png',
+				buttonImage: '${pageContext.request.contextPath}/themes/${global['application-theme']}/images/icons/button-calendar-16x16.png',
 				buttonImageOnly: true,
 				beforeShow: function(input, inst) {
 					if (vulpe.config.browser.ie6) {

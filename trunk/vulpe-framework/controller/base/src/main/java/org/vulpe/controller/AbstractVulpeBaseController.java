@@ -411,7 +411,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							.equals(operation))) {
 				vulpe.view().renderButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST,
 						Button.DELETE);
-				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
+				if (VulpeConfigHelper.getApplicationConfiguration().view().layout().showButtonClone()) {
 					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
@@ -443,7 +443,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (Operation.UPDATE.equals(operation)) {
 				vulpe.view().renderButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST,
 						Button.DELETE);
-				if (VulpeConfigHelper.getProjectConfiguration().view().layout().showButtonClone()) {
+				if (VulpeConfigHelper.getApplicationConfiguration().view().layout().showButtonClone()) {
 					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
@@ -2064,7 +2064,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		ever.remove(Controller.VIRTUAL_PAGING);
 		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || (!vulpe
 				.controller().config().getControllerAnnotation().disableApplicationDefaults() && VulpeConfigHelper
-				.getProjectConfiguration().view().readOnShow()))
+				.getApplicationConfiguration().view().readOnShow()))
 				&& !vulpe.controller().cleaned()) {
 			onRead();
 			manageVirtualPaging();

@@ -37,39 +37,54 @@
  */
 package org.vulpe.commons.helper;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.config.annotations.VulpeDomains;
-import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Framework configuration helper.
- *
+ * 
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked" })
 public final class VulpeConfigHelper {
 
-	private VulpeConfigHelper() {
-	}
-
 	private static final Logger LOG = Logger.getLogger(VulpeConfigHelper.class);
 	private static final String DOMAINS_CONFIG_CLASS = "org.vulpe.config.domains.package-info";
 	private static final String DOMAINS_CONFIG_BASE_CLASS = "org.vulpe.config.base.domains.package-info";
 	private static final String CONFIG_CLASS = "org.vulpe.config.package-info";
 	private static final String CONFIG_BASE_CLASS = "org.vulpe.config.base.package-info";
+	private static Properties VULPE = new Properties();
+	private static Properties VULPE_APPLICATION = new Properties();
+
+	private VulpeConfigHelper() {
+		final InputStream vulpe = this.getClass().getResourceAsStream("vulpe.properties");
+		final InputStream application = this.getClass().getResourceAsStream(
+				"application.properties");
+		try {
+			VULPE.load(vulpe);
+			VULPE_APPLICATION.load(application);
+		} catch (IOException e) {
+			LOG.error(e);
+		}
+	}
 
 	/**
-	 *
+	 * 
 	 * @param classPath
 	 */
 	private static void forceClassloader(final String classPath) {
 		try {
 			final Class config = Class.forName(classPath);
 			@SuppressWarnings("unused")
-			final VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
+			final VulpeApplication application = (VulpeApplication) config
+					.getAnnotation(VulpeApplication.class);
 		} catch (ClassNotFoundException e) {
 			LOG.error(e);
 		}
@@ -77,18 +92,44 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for audit enabled e false to audit disabled.
-	 *
+	 * 
+	 * @since 1.0
+	 * @return Enabled (true|false).
+	 */
+	public static boolean isDebugEnabled() {
+		boolean enabled = false;
+		try {
+			if (VULPE_APPLICATION.containsKey("debug")) {
+				if ("true".equals(VULPE_APPLICATION.get("debug"))) {
+					enabled = true;
+				}
+			} else if (VULPE.containsKey("debug")) {
+				if ("true".equals(VULPE.get("debug"))) {
+					enabled = true;
+				}
+			}
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		return enabled;
+	}
+
+	/**
+	 * Method return true for audit enabled e false to audit disabled.
+	 * 
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
 	public static boolean isAuditEnabled() {
-		boolean enabled = true;
+		boolean enabled = false;
 		try {
-			final Class config = getConfig();
-			if (config != null) {
-				final VulpeProject project = get(VulpeProject.class);
-				if (project != null) {
-					enabled = project.audit();
+			if (VULPE_APPLICATION.containsKey("audit")) {
+				if ("true".equals(VULPE_APPLICATION.get("audit"))) {
+					enabled = true;
+				}
+			} else if (VULPE.containsKey("audit")) {
+				if ("true".equals(VULPE.get("audit"))) {
+					enabled = true;
 				}
 			}
 		} catch (Exception e) {
@@ -99,18 +140,20 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for security enabled e false to audit disabled.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
 	public static boolean isSecurityEnabled() {
-		boolean enabled = true;
+		boolean enabled = false;
 		try {
-			final Class config = getConfig();
-			if (config != null) {
-				final VulpeProject project = get(VulpeProject.class);
-				if (project != null) {
-					enabled = project.security();
+			if (VULPE_APPLICATION.containsKey("security")) {
+				if ("true".equals(VULPE_APPLICATION.get("security"))) {
+					enabled = true;
+				}
+			} else if (VULPE.containsKey("security")) {
+				if ("true".equals(VULPE.get("security"))) {
+					enabled = true;
 				}
 			}
 		} catch (Exception e) {
@@ -120,7 +163,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -143,19 +186,17 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method returns name of theme to application use.
-	 *
+	 * 
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
 	public static String getTheme() {
 		String themeName = "default";
 		try {
-			final Class config = getConfig();
-			if (config != null) {
-				final VulpeProject project = get(VulpeProject.class);
-				if (project != null) {
-					themeName = project.theme();
-				}
+			if (VULPE_APPLICATION.containsKey("theme")) {
+				themeName = (String) VULPE_APPLICATION.get("theme");
+			} else if (VULPE.containsKey("theme")) {
+				themeName = (String) VULPE.get("theme");
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -164,15 +205,16 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public static VulpeProject getProjectConfiguration() {
+	public static VulpeApplication getApplicationConfiguration() {
 		try {
 			final Class config = getConfig();
 			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				return project;
+				final VulpeApplication application = (VulpeApplication) config
+						.getAnnotation(VulpeApplication.class);
+				return application;
 			}
 		} catch (Exception e) {
 			LOG.error(e);
@@ -181,83 +223,59 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public static String getProjectName() {
-		try {
-			final Class config = getConfig();
-			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				if (project != null) {
-					return project.name();
-				}
-			}
-		} catch (Exception e) {
-			LOG.error(e);
+	public static String getApplicationName() {
+		String applicationName = "";
+		final VulpeApplication application = getApplicationConfiguration();
+		if (application != null) {
+			applicationName = application.name();
 		}
-		return "";
+		return applicationName;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static String getI18n() {
-		try {
-			final Class config = getConfig();
-			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				if (project != null) {
-					return project.i18n().toString();
-				}
-			}
-		} catch (Exception e) {
-			LOG.error(e);
+		String i18n = "";
+		final VulpeApplication application = getApplicationConfiguration();
+		if (application != null) {
+			i18n = application.i18n().toString();
 		}
-		return "";
+		return i18n;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static String getI18nManager() {
-		try {
-			final Class config = getConfig();
-			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				if (project != null) {
-					return project.i18nManager();
-				}
-			}
-		} catch (Exception e) {
-			LOG.error(e);
+		String i18nManager = "";
+		final VulpeApplication application = getApplicationConfiguration();
+		if (application != null) {
+			i18nManager = application.i18nManager();
 		}
-		return "";
+		return i18nManager;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
-	public static String getProjectPackage() {
-		try {
-			final Class config = getConfig();
-			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				if (project != null) {
-					return project.projectPackage();
-				}
-			}
-		} catch (Exception e) {
-			LOG.error(e);
+	public static String getApplicationPackage() {
+		String applicationPackage = "";
+		final VulpeApplication application = getApplicationConfiguration();
+		if (application != null) {
+			applicationPackage = application.applicationPackage();
 		}
-		return "";
+		return applicationPackage;
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Class getConfig() {
@@ -281,7 +299,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	private static Class getDomainsConfig() {
@@ -305,23 +323,17 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 *
+	 * 
 	 * @return
 	 */
 	public static Locale getLocale() {
-		try {
-			final Class config = getConfig();
-			if (config != null) {
-				VulpeProject project = (VulpeProject) config.getAnnotation(VulpeProject.class);
-				if (project != null) {
-					String[] locale = project.localeCode().split("\\_");
-					return new Locale(locale[0], locale[1]);
-				}
-			}
-		} catch (Exception e) {
-			LOG.error(e);
+		Locale locale = new Locale("en", "US");
+		final VulpeApplication application = getApplicationConfiguration();
+		if (application != null) {
+			String[] localeParts = application.localeCode().split("\\_");
+			return new Locale(localeParts[0], localeParts[1]);
 		}
-		return new Locale("en", "US");
+		return locale;
 	}
 
 }

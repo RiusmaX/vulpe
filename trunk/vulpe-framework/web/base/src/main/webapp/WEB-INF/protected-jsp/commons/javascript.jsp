@@ -5,8 +5,8 @@
 <script src="${pageContext.request.contextPath}/js/jquery.ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.charcounter.js" type="text/javascript" charset="utf-8"></script>
 <!--[if IE]><script src="${pageContext.request.contextPath}/js/jquery.bgiframe.js" type="text/javascript" charset="utf-8"></script><![endif]-->
-<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['project-view-frontendMenuType'] == 'DROPPY') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['project-view-backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
-<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['project-view-frontendMenuType'] == 'SUPERFISH') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['project-view-backendMenuType'] == 'SUPERFISH')}">
+<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['application-view-frontendMenuType'] == 'DROPPY') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['application-view-backendMenuType'] == 'DROPPY')}"><script src="${pageContext.request.contextPath}/js/jquery.droppy.js" type="text/javascript" charset="utf-8"></script></c:if>
+<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['application-view-frontendMenuType'] == 'SUPERFISH') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['application-view-backendMenuType'] == 'SUPERFISH')}">
 <script src="${pageContext.request.contextPath}/js/jquery.hover.intent.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.superfish.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery.supersubs.js" type="text/javascript" charset="utf-8"></script>
@@ -27,8 +27,8 @@
 <script src="${pageContext.request.contextPath}/js/vulpe.browser.detect.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/vulpe.webtoolkit.js" type="text/javascript" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/vulpe.js" type="text/javascript" charset="utf-8"></script>
-<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['project-view-frontendMenuType'] == 'VULPE') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['project-view-backendMenuType'] == 'VULPE')}"><script src="${pageContext.request.contextPath}/js/vulpe.menu.js" type="text/javascript" charset="utf-8"></script></c:if>
+<c:if test="${(ever['vulpeCurrentLayout'] == 'FRONTEND' && global['application-view-frontendMenuType'] == 'VULPE') || (ever['vulpeCurrentLayout'] == 'BACKEND' && global['application-view-backendMenuType'] == 'VULPE')}"><script src="${pageContext.request.contextPath}/js/vulpe.menu.js" type="text/javascript" charset="utf-8"></script></c:if>
 <script src="${pageContext.request.contextPath}/js/application.js" type="text/javascript" charset="utf-8"></script>
-<script src="${pageContext.request.contextPath}/themes/${global['project-theme']}/js/frontend/${global['project-theme']}.js" type="text/javascript" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/themes/${global['application-theme']}/js/frontend/${global['application-theme']}.js" type="text/javascript" charset="utf-8"></script>
 <%@include file="/WEB-INF/protected-jsp/commons/javascriptExtended.jsp"%>
 <%@include file="/WEB-INF/protected-jsp/commons/javascriptConfig.jsp"%>

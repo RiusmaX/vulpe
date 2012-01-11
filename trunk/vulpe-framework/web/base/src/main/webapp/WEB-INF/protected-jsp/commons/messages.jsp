@@ -70,10 +70,10 @@
 					});
 					$(messages).html(message);
 					$(messages).slideDown("slow");
-					<c:if test="${global['project-view-messageSlideUp']}">
+					<c:if test="${global['application-view-messageSlideUp']}">
 					setTimeout(function() {
 			          	$(messages).slideUp("slow", function(){ $(this).html(""); });
-					}, ${global['project-view-messageSlideUpTime']});
+					}, ${global['application-view-messageSlideUpTime']});
 					</c:if>
 				});
 			</script>

@@ -88,7 +88,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 		this.startNewDetails = startNewDetails == 0 ? 1 : startNewDetails;
 		this.newDetails = newDetails == 0 ? 1 : newDetails;
 		this.despiseFields = despiseFields.clone();
-		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
+		final VulpeView view = VulpeConfigHelper.getApplicationConfiguration().view();
 		this.addNewDetailsOnTop = reverse ? !view.addNewDetailsOnTop() : view.addNewDetailsOnTop();
 		this.showFilter = showFilter;
 		setSimpleName();
@@ -184,7 +184,7 @@ public class VulpeBaseDetailConfig implements Serializable {
 			this.parentDetailConfig = (VulpeBaseDetailConfig) config.getDetail(detail.parentDetailName());
 			this.parentDetailConfig.getSubDetails().add(this);
 		}
-		final VulpeView view = VulpeConfigHelper.getProjectConfiguration().view();
+		final VulpeView view = VulpeConfigHelper.getApplicationConfiguration().view();
 		this.addNewDetailsOnTop = detail.reverse() ? !view.addNewDetailsOnTop() : view.addNewDetailsOnTop();
 		this.notControlView = detail.notControlView();
 		this.showAsAccordion = detail.showAsArccodion();

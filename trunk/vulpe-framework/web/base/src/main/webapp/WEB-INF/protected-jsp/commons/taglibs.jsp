@@ -5,4 +5,4 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <%@ taglib uri="/WEB-INF/util" prefix="util"%>
 <%@include file="/WEB-INF/protected-jsp/commons/taglibsExtended.jsp"%>
-<fmt:setBundle basename="${global['project-i18nManager']}" />
+<fmt:setBundle basename="${global['application-i18nManager']}" />

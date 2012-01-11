@@ -44,12 +44,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to configure Project properties.
+ * Annotation to configure application properties.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PACKAGE)
-public @interface VulpeProject {
+public @interface VulpeApplication {
 
 	/**
 	 * Project Name.
@@ -59,7 +59,7 @@ public @interface VulpeProject {
 	/**
 	 * Project Package.
 	 */
-	String projectPackage();
+	String applicationPackage();
 
 	/**
 	 * Character Encoding.
@@ -115,25 +115,5 @@ public @interface VulpeProject {
 	 * Configure Hot Keys properties
 	 */
 	VulpeHotKeys hotKeys() default @VulpeHotKeys;
-
-	/**
-	 * Project Theme.
-	 */
-	String theme() default "default";
-
-	/**
-	 * Audit enable/disable.
-	 */
-	boolean audit() default true;
-
-	/**
-	 * Security enable/disable.
-	 */
-	boolean security() default true;
-
-	/**
-	 * Debug mode enable/disable.
-	 */
-	boolean debug() default false;
 
 }

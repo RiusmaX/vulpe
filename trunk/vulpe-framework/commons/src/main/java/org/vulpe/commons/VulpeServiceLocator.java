@@ -121,7 +121,7 @@ public class VulpeServiceLocator {
 	 */
 	@SuppressWarnings("unused")
 	private String getEJBName(final Class classe) {
-		return VulpeConfigHelper.getProjectName().concat("/").concat(classe.getSimpleName())
+		return VulpeConfigHelper.getApplicationName().concat("/").concat(classe.getSimpleName())
 				.concat("/remote");
 	}
 

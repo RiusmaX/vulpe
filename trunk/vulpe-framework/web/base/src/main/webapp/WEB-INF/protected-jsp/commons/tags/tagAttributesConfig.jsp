@@ -8,7 +8,7 @@
 <c:if test="${empty focused}"><c:set var="focused" value="true"/></c:if>
 <c:set var="styleClass" value="${styleClass}${focused ? ' focused' : ''}"/>
 <c:if test="${required && !showAsText}"><c:set var="styleClass" value="${styleClass} vulpeRequired"/></c:if>
-<c:if test="${global['project-mobile-enabled'] || global['project-view-breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
+<c:if test="${global['application-mobile-enabled'] || global['application-view-breakLabel']}"><c:set var="breakLabel" value="${true}"/></c:if>
 <c:if test="${empty targetName}">
 	<c:if test="${empty targetConfig}"><c:set var="targetName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:if>
 	<c:if test="${not empty targetConfig}"><c:set var="targetName" value="${targetConfigPropertyName}[${currentStatus.index}]"/></c:if>
