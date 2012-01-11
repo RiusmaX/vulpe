@@ -49,7 +49,7 @@ public class DecoratedController extends Decorated {
 	private String entityName;
 	private String idType;
 	private String moduleName;
-	private String projectPackageName;
+	private String applicationPackageName;
 	private String packageName;
 	private String servicePackageName;
 	private String controllerPackageName;
@@ -171,12 +171,12 @@ public class DecoratedController extends Decorated {
 		return details;
 	}
 
-	public void setProjectPackageName(String projectPackageName) {
-		this.projectPackageName = projectPackageName;
+	public void setApplicationPackageName(String projectPackageName) {
+		this.applicationPackageName = projectPackageName;
 	}
 
-	public String getProjectPackageName() {
-		return projectPackageName;
+	public String getApplicationPackageName() {
+		return applicationPackageName;
 	}
 
 	public void setTabularNewRecords(int tabularNewRecords) {

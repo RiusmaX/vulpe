@@ -93,7 +93,7 @@ public class ForAllControllerTemplateStrategy extends VulpeForAllTemplateStrateg
 				.getSimpleName());
 		controller.setEntityName(clazz.getSimpleName());
 		controller.setPackageName(clazz.getPackage().toString());
-		controller.setProjectPackageName(VulpeConfigHelper.getApplicationPackage());
+		controller.setApplicationPackageName(VulpeConfigHelper.getApplicationPackage());
 		controller.setServicePackageName(StringUtils.replace(clazz.getPackage().toString(),
 				Code.Generator.ENTITY_PACKAGE, Code.Generator.SERVICE_PACKAGE));
 		controller.setControllerPackageName(StringUtils.replace(clazz.getPackage().toString(),

@@ -21,7 +21,7 @@ import org.vulpe.controller.annotations.Tabular;
 
 import ${controller.packageName}.${controller.entityName};
 import ${controller.servicePackageName}.${controller.moduleName?capitalize}Service;
-import ${controller.projectPackageName}.controller.ApplicationBaseController;
+import ${controller.applicationPackageName}.controller.ApplicationBaseController;
 
 
 /**
