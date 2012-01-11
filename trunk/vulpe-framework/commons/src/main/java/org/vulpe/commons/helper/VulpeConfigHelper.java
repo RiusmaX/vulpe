@@ -37,10 +37,8 @@
  */
 package org.vulpe.commons.helper;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.vulpe.config.annotations.VulpeApplication;
@@ -60,17 +58,14 @@ public final class VulpeConfigHelper {
 	private static final String DOMAINS_CONFIG_BASE_CLASS = "org.vulpe.config.base.domains.package-info";
 	private static final String CONFIG_CLASS = "org.vulpe.config.package-info";
 	private static final String CONFIG_BASE_CLASS = "org.vulpe.config.base.package-info";
-	private static Properties VULPE = new Properties();
-	private static Properties VULPE_APPLICATION = new Properties();
+	private static ResourceBundle VULPE = null;
+	private static ResourceBundle VULPE_APPLICATION = null;
 
-	private VulpeConfigHelper() {
-		final InputStream vulpe = this.getClass().getResourceAsStream("vulpe.properties");
-		final InputStream application = this.getClass().getResourceAsStream(
-				"application.properties");
+	static {
 		try {
-			VULPE.load(vulpe);
-			VULPE_APPLICATION.load(application);
-		} catch (IOException e) {
+			VULPE = ResourceBundle.getBundle("vulpe", new Locale(""));
+			VULPE_APPLICATION = ResourceBundle.getBundle("application", new Locale(""));
+		} catch (Exception e) {
 			LOG.error(e);
 		}
 	}
@@ -99,12 +94,12 @@ public final class VulpeConfigHelper {
 	public static boolean isDebugEnabled() {
 		boolean enabled = false;
 		try {
-			if (VULPE_APPLICATION.containsKey("debug")) {
-				if ("true".equals(VULPE_APPLICATION.get("debug"))) {
+			if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("debug")) {
+				if ("true".equals(VULPE_APPLICATION.getString("debug"))) {
 					enabled = true;
 				}
 			} else if (VULPE.containsKey("debug")) {
-				if ("true".equals(VULPE.get("debug"))) {
+				if ("true".equals(VULPE.getString("debug"))) {
 					enabled = true;
 				}
 			}
@@ -123,12 +118,12 @@ public final class VulpeConfigHelper {
 	public static boolean isAuditEnabled() {
 		boolean enabled = false;
 		try {
-			if (VULPE_APPLICATION.containsKey("audit")) {
-				if ("true".equals(VULPE_APPLICATION.get("audit"))) {
+			if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("audit")) {
+				if ("true".equals(VULPE_APPLICATION.getString("audit"))) {
 					enabled = true;
 				}
 			} else if (VULPE.containsKey("audit")) {
-				if ("true".equals(VULPE.get("audit"))) {
+				if ("true".equals(VULPE.getString("audit"))) {
 					enabled = true;
 				}
 			}
@@ -147,12 +142,12 @@ public final class VulpeConfigHelper {
 	public static boolean isSecurityEnabled() {
 		boolean enabled = false;
 		try {
-			if (VULPE_APPLICATION.containsKey("security")) {
-				if ("true".equals(VULPE_APPLICATION.get("security"))) {
+			if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("security")) {
+				if ("true".equals(VULPE_APPLICATION.getString("security"))) {
 					enabled = true;
 				}
 			} else if (VULPE.containsKey("security")) {
-				if ("true".equals(VULPE.get("security"))) {
+				if ("true".equals(VULPE.getString("security"))) {
 					enabled = true;
 				}
 			}
@@ -193,10 +188,10 @@ public final class VulpeConfigHelper {
 	public static String getTheme() {
 		String themeName = "default";
 		try {
-			if (VULPE_APPLICATION.containsKey("theme")) {
-				themeName = (String) VULPE_APPLICATION.get("theme");
+			if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("theme")) {
+				themeName = (String) VULPE_APPLICATION.getString("theme");
 			} else if (VULPE.containsKey("theme")) {
-				themeName = (String) VULPE.get("theme");
+				themeName = (String) VULPE.getString("theme");
 			}
 		} catch (Exception e) {
 			LOG.error(e);

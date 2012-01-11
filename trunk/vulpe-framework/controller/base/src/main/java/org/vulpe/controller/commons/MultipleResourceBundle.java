@@ -82,8 +82,8 @@ public class MultipleResourceBundle extends ResourceBundle {
 	protected List<ResourceBundle> getBundles() {
 		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
 				VulpeConstants.CONTEXT);
-		final VulpeApplication project = VulpeConfigHelper.get(VulpeApplication.class);
-		final String modules[] = project.i18n();
+		final VulpeApplication application = VulpeConfigHelper.get(VulpeApplication.class);
+		final String modules[] = application.i18n();
 		final List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
 		for (final String module : modules) {
 			ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
