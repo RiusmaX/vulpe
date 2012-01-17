@@ -52,7 +52,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -73,7 +72,6 @@ import com.thoughtworks.xstream.XStream;
 @SuppressWarnings( { "serial", "unchecked" })
 @Entity
 @Table(name = "VulpeAuditOccurrence")
-@MappedSuperclass
 @IgnoreAudit
 public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 
