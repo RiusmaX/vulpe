@@ -90,9 +90,6 @@
 												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context.xml" overwrite="true">
 													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context-${symbol_dollar}{environment}.xml" />
 												</copy>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/loginx.properties" overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/loginx-${symbol_dollar}{environment}.properties" />
-												</copy>
 												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/mail.properties" overwrite="true">
 													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/mail-${symbol_dollar}{environment}.properties" />
 												</copy>
@@ -101,7 +98,7 @@
 												</copy>
 												<delete>
 													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/loginx-*.properties,**/mail-*.properties" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/mail-*.properties" />
 												</delete>
 												<war destfile="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/web.xml"
 													basedir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0" />
