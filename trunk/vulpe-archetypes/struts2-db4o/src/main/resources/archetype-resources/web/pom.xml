@@ -64,7 +64,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.5</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>package</id>
@@ -74,9 +74,26 @@
 						</goals>
 						<configuration>
 							<target>
+								<macrodef name="trim">
+									<attribute name="input" />
+									<attribute name="property" />
+									<sequential>
+										<tempfile property="temp.file" destDir="target" />
+										<echo file="${symbol_dollar}{temp.file}" message="@{input}" />
+										<move file="${symbol_dollar}{temp.file}" tofile="${symbol_dollar}{temp.file}.2">
+											<filterchain>
+												<deletecharacters chars="\t\s\n\r" />
+												<trim />
+												<ignoreblank />
+											</filterchain>
+										</move>
+										<loadfile property="@{property}" srcFile="${symbol_dollar}{temp.file}.2" />
+										<delete file="${symbol_dollar}{temp.file}.2" failonerror="false" />
+									</sequential>
+								</macrodef>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property environment="env"/>
-								<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
+								<property environment="env" />
+								<trim input="${symbol_dollar}{env.TOMCAT_HOME}" property="tomcat.home" />
 								<if>
 									<equals arg1="${symbol_dollar}{deployServer}" arg2="tomcat" />
 									<then>
