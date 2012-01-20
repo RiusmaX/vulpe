@@ -64,7 +64,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
+				<version>1.5</version>
 				<executions>
 					<execution>
 						<id>package</id>
@@ -75,11 +75,11 @@
 						<configuration>
 							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="tomcat.home" value="${symbol_dollar}{settings.localRepository}/../Servers/tomcat/" />
+								<property environment="env"/>
+								<property name="tomcat.home" value="${symbol_dollar}{env.TOMCAT_HOME}" />
 								<if>
 									<equals arg1="${symbol_dollar}{deployServer}" arg2="tomcat" />
 									<then>
-										<property name="contextSuffix" value="" />
 										<delete file="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${rootArtifactId}.xml" />
 										<condition property="environmentSetted">
 											<isset property="environment" />
