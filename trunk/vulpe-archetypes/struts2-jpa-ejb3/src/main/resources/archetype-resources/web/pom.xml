@@ -119,14 +119,14 @@
 												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/log4j.xml" overwrite="true">
 													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/log4j-${symbol_dollar}{environment}.xml" />
 												</copy>
-												<delete>
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/mail-*.properties" />
-												</delete>
 												<war destfile="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/web.xml"
 													basedir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0" />
 											</then>
 										</if>
+										<delete>
+											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
+											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/mail-*.properties" />
+										</delete>
 										<copy tofile="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${rootArtifactId}.xml" overwrite="true">
 											<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context.xml" />
 										</copy>
