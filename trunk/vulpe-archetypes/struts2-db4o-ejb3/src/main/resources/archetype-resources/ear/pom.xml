@@ -57,7 +57,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>2.1.1</version>
 				<configuration>
 					<packagingExcludes>**/*.jar</packagingExcludes>
 					<archive>
@@ -80,9 +80,28 @@
 						</goals>
 						<configuration>
 							<target>
+								<macrodef name="trim">
+									<attribute name="input" />
+									<attribute name="property" />
+									<sequential>
+										<tempfile property="temp.file" destDir="target" />
+										<echo file="${symbol_dollar}{temp.file}" message="@{input}" />
+										<move file="${symbol_dollar}{temp.file}" tofile="${symbol_dollar}{temp.file}.2">
+											<filterchain>
+												<deletecharacters chars="\t\s\n\r" />
+												<trim />
+												<ignoreblank />
+											</filterchain>
+										</move>
+										<loadfile property="@{property}" srcFile="${symbol_dollar}{temp.file}.2" />
+										<delete file="${symbol_dollar}{temp.file}.2" failonerror="false" />
+									</sequential>
+								</macrodef>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="jboss.home" value="${symbol_dollar}{settings.localRepository}/../Servers/jboss/" />
-								<property name="glassfish.home" value="${symbol_dollar}{settings.localRepository}/../Servers/glassfish/" />
+								<property environment="env" />
+								<trim input="${symbol_dollar}{env.JBOSS_HOME}" property="jboss.home" />
+								<trim input="${symbol_dollar}{env.GLASSFISH_HOME}" property="glassfish.home" />
+								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
 								<if>
 									<equals arg1="${symbol_dollar}{deployServer}" arg2="tomcat" />
 									<then>
