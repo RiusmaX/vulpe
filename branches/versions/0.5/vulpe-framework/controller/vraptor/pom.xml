@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe-controller-vraptor</artifactId>
+	<version>1.0.1</version>
+	<packaging>jar</packaging>
+	<name>Vulpe Framework - Controller VRaptor</name>
+
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-parent-vraptor</artifactId>
+		<version>1.0.1</version>
+	</parent>
+
+	<description>Vulpe Framework ;) Quick and Smart - Controller VRaptor</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<excludes>
+						<exclude>*.xml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<if>
+									<equals arg1="${deployServer}" arg2="tomcat" />
+									<then>
+										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/" overwrite="true">
+											<fileset file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
+										</copy>
+									</then>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

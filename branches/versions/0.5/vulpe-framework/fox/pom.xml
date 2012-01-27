@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe-fox</artifactId>
+	<version>1.0.1</version>
+	<packaging>jar</packaging>
+	<name>Vulpe Framework - FOX Code Generator</name>
+	<parent>
+		<groupId>org.vulpe</groupId>
+		<artifactId>vulpe-parent</artifactId>
+		<version>1.0.1</version>
+	</parent>
+	<!-- 
+	<properties>
+		<apt.jelly.version>2.14</apt.jelly.version>
+	</properties>
+	 -->
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-jelly</groupId>
+			<artifactId>commons-jelly</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly-core</artifactId>
+			<version>${apt.jelly.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly-freemarker</artifactId>
+			<version>${apt.jelly.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.apt-jelly</groupId>
+			<artifactId>apt-jelly-jelly</artifactId>
+			<version>${apt.jelly.version}</version>
+		</dependency>
+		 -->
+		<dependency>
+			<groupId>com.sun</groupId>
+			<artifactId>tools</artifactId>
+			<version>1.6.0_19</version>
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<description>Vulpe Framework ;) Quick and Smart - Fox Code Generator</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tools.dir"
+									value="${maven.repo}/org/vulpe/vulpe-fox/1.1/vulpe-fox-1.1/tools" />
+								<available file="${tools.dir}" property="tools.dir.present"
+									type="dir" />
+								<if>
+									<equals arg1="${tools.dir.present}" arg2="true" />
+									<then>
+										<delete dir="${maven.repo}/org/vulpe/vulpe-fox/1.1/vulpe-fox-1.1" />
+									</then>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<debug>true</debug>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
