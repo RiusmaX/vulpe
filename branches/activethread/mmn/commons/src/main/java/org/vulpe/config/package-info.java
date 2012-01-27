@@ -1,6 +1,6 @@
-@VulpeProject(
+@VulpeApplication(
 		name = "mmn",
-		projectPackage = "org.jw.mmn",
+		applicationPackage = "org.jw.mmn",
 		mobile = @VulpeMobile(
 				viewportWidth = "480",
 				viewportHeight = "480",
@@ -21,16 +21,13 @@
 						redirectAfter = 60
 				),
 				readOnShow = true
-		),
-		theme = "mmn",
-		security = true,
-		debug = true
+		)
 
 )
 package org.vulpe.config;
 
 import org.vulpe.config.annotations.VulpeMobile;
-import org.vulpe.config.annotations.VulpeProject;
+import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.config.annotations.VulpeView;
 import org.vulpe.config.annotations.VulpeViewLayout;
 import org.vulpe.config.annotations.VulpeViewMessages;
