@@ -10,14 +10,6 @@
 	<include file="struts-security.xml" />
 	<include file="struts-application.xml" />
 
-	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
-
-    <bean type="com.opensymphony.xwork2.ActionProxyFactory" name="struts" class="org.vulpe.controller.struts.proxy.VulpeActionProxyFactory"/>
- 
-	<bean type="com.opensymphony.xwork2.conversion.ObjectTypeDeterminer" name="generics" class="org.vulpe.controller.struts.util.GenericsObjectTypeDeterminer"/>
-	<bean type="com.opensymphony.xwork2.conversion.NullHandler" name="java.lang.Object" class="org.vulpe.controller.struts.util.GenericsNullHandler" />
-	<bean type="ognl.PropertyAccessor" name="java.lang.Object" class="org.vulpe.controller.struts.util.GenericsPropertyAccessor" />
-	<bean type="ognl.PropertyAccessor" name="java.util.Set" class="org.vulpe.controller.struts.util.XWorkSetPropertyAccessor" />
 	<package name="default" extends="struts-default">
 		<result-types>
 			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />

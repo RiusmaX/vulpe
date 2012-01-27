@@ -40,10 +40,14 @@ package org.vulpe.controller.struts.dispatcher;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.struts2.dispatcher.ng.ExecuteOperations;
+import org.apache.struts2.dispatcher.ng.PrepareOperations;
+import org.apache.struts2.dispatcher.ng.filter.FilterHostConfig;
 import org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
@@ -80,6 +84,25 @@ public class VulpeStrutsFilterDispatcher extends StrutsPrepareAndExecuteFilter {
 			return;
 		}
 		super.doFilter(request, response, chain);
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		VulpeInitOperations init = new VulpeInitOperations();
+		try {
+			FilterHostConfig config = new FilterHostConfig(filterConfig);
+			init.initLogging(config);
+			VulpeDispatcher dispatcher = (VulpeDispatcher) init.initDispatcher(config);
+			init.initStaticContentLoader(config, dispatcher);
+
+			prepare = new PrepareOperations(filterConfig.getServletContext(), dispatcher);
+			execute = new ExecuteOperations(filterConfig.getServletContext(), dispatcher);
+			this.excludedPatterns = init.buildExcludedPatternsList(dispatcher);
+
+			postInit(dispatcher, filterConfig);
+		} finally {
+			init.cleanup();
+		}
 	}
 
 }
