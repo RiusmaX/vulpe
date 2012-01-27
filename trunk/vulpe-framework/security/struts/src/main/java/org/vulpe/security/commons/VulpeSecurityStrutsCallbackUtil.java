@@ -77,7 +77,7 @@ public class VulpeSecurityStrutsCallbackUtil extends VulpeSecurityUtil {
 	 * Returns global attributes map.
 	 * @return
 	 */
-	public EverParameter getEver() {
+	public EverParameter ever() {
 		return EverParameter.getInstance(getSession());
 	}
 }

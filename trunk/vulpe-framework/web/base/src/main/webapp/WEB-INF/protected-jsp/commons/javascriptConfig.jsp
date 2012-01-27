@@ -6,7 +6,7 @@ vulpe.config.buttons = {
 	yes: '<fmt:message key="label.vulpe.button.yes"/>',
 	no: '<fmt:message key="label.vulpe.button.no"/>'
 }
-vulpe.config.contextPath = '${pageContext.request.contextPath}';
+vulpe.config.contextPath = '${ever['contextPath']}';
 vulpe.config.dialogs = {
 	alertTitle: "<fmt:message key='vulpe.dialog.alert.title'/>",
 	confirmationTitle: "<fmt:message key='vulpe.dialog.confirmation.title'/>",

@@ -540,7 +540,7 @@ var vulpe = {
 
 		completeURL: function(url) {
 			if (url.indexOf(vulpe.config.contextPath) == -1) {
-				url = vulpe.config.contextPath + (url.indexOf('/') == 0 ? '' : '/') + url;
+				url = vulpe.config.contextPath + (url.indexOf("/") == 0 ? "" : "/") + url;
 			}
 			return url;
 		},
@@ -2279,8 +2279,10 @@ var vulpe = {
 				if (options.url.indexOf("/clear") != -1) {
 					vulpe.config.order = new Array();
 				}
-				if (options.url.indexOf(vulpe.config.contextPath) == -1) {
-					options.url = vulpe.config.contextPath + '/' + options.url;
+				if (vulpe.util.isEmpty(vulpe.config.contextPath)) {
+					options.url = "/" + options.url;
+				} else if (options.url.indexOf(vulpe.config.contextPath) == -1) {
+					options.url = vulpe.config.contextPath + "/" + options.url;
 				}
 				vulpe.util.getForm(options).attr("action", options.url);
 				options.isFile = false;
@@ -2296,7 +2298,7 @@ var vulpe = {
 					if (vulpe.util.existsVulpePopups()) {
 						options.layer = vulpe.util.getLastVulpePopup();
 					}
-					vulpe.util.getForm(options).attr("action", vulpe.config.contextPath + '/' + vulpe.config.springSecurityCheck);
+					vulpe.util.getForm(options).attr("action", vulpe.config.contextPath + "/" + vulpe.config.springSecurityCheck);
 					options.isFile = false;
 					vulpe.view.request.submitAjax(options);
 				}
@@ -2478,7 +2480,7 @@ var vulpe = {
 						if (data.indexOf('<!--IS_EXCEPTION-->') != -1) {
 							vulpe.exception.handlerError(data, status);
 						} else if (!authenticator && loginForm && vulpe.config.redirectToIndex && vulpe.config.authenticator.url.redirect == '') {
-							$(window.location).attr("href", vulpe.config.contextPath);
+							$(window.location).attr("href", vulpe.util.isEmpty(vulpe.config.contextPath) ? "/" : vulpe.config.contextPath);
 						} else if (data.indexOf('/*[JS]*/') != -1) {
 							data = data.replace("/*[JS]*/", "");
 							eval(data);

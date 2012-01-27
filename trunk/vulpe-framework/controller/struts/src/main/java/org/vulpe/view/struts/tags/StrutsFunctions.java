@@ -80,7 +80,7 @@ public final class StrutsFunctions extends Functions {
 			final String contentDisposition) throws JspException {
 		final StringBuilder link = new StringBuilder();
 		link.append(ServletActionContext.getRequest().getContextPath()).append("/").append(
-				getEver().<String> getAuto(Ever.CURRENT_CONTROLLER_NAME)).append(
+				ever().<String> getAuto(Ever.CURRENT_CONTROLLER_NAME)).append(
 				"/download?now.downloadKey=").append(urlEncode(key));
 		if (StringUtils.isNotEmpty(contentType)) {
 			link.append("&now.downloadContentType=").append(contentType);
@@ -159,12 +159,12 @@ public final class StrutsFunctions extends Functions {
 	public static Object saveInSession(final String key, final Object value, final Boolean expire) {
 		if (VulpeValidationUtil.isNotEmpty(value)) {
 			if (expire) {
-				getEver().putWeakRef(key, value);
+				ever().putWeakRef(key, value);
 			} else {
-				getEver().put(key, value);
+				ever().put(key, value);
 			}
 		} else {
-			getEver().remove(key);
+			ever().remove(key);
 		}
 		return value;
 	}
@@ -191,7 +191,7 @@ public final class StrutsFunctions extends Functions {
 				LOG.error(e);
 			}
 		} else {
-			getEver().remove(key);
+			ever().remove(key);
 		}
 		return value;
 	}
@@ -246,7 +246,7 @@ public final class StrutsFunctions extends Functions {
 		return VulpeCacheHelper.getInstance().get(Struts.XWORK_CONVERTER);
 	}
 
-	public static EverParameter getEver() {
+	public static EverParameter ever() {
 		return EverParameter.getInstance(ServletActionContext.getRequest().getSession());
 	}
 }

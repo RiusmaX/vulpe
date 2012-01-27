@@ -1,5 +1,5 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
-<form id="vulpeLoginForm" action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
+<form id="vulpeLoginForm" action="${ever['contextPath']}/j_spring_security_check" method="post">
 <div id="content">
 	<div id="title"><fmt:message key="vulpe.security.login.title.application"/></div>
 	<c:if test="${not empty param.loginError}">
@@ -35,7 +35,7 @@
 $(document).ready(function() {
 	vulpe.config.authenticator.url.redirect = "${SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl}";
 	if (vulpe.config.authenticator.url.redirect == "") {
-		vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
+		vulpe.config.authenticator.url.redirect = "${ever['contextPath']}/index.jsp";
 	}
 	var j_username = vulpe.util.getElement('j_username');
 	var j_password = vulpe.util.getElement('j_password');

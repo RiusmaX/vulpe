@@ -23,7 +23,7 @@
 			vulpe.util.get('${elementId}').mask("${mask}");
 			vulpe.util.get('${elementId}').datepicker({
 				showOn: 'button',
-				buttonImage: '${pageContext.request.contextPath}/themes/${global['application-theme']}/images/icons/button-calendar-16x16.png',
+				buttonImage: '${ever['contextPath']}/themes/${global['application-theme']}/images/icons/button-calendar-16x16.png',
 				buttonImageOnly: true,
 				beforeShow: function(input, inst) {
 					if (vulpe.config.browser.ie6) {

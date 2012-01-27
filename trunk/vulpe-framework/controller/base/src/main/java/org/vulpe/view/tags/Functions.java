@@ -626,7 +626,7 @@ public class Functions {
 		}
 	}
 
-	public static EverParameter getEver(final PageContext pageContext) {
+	public static EverParameter ever(final PageContext pageContext) {
 		return EverParameter.getInstance(getSession(pageContext));
 	}
 
