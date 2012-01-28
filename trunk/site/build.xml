@@ -1,5 +1,0 @@
-<project>
-	<target name="teste">
-		<copy file="" tofile=""/>
-	</target>
-</project>
