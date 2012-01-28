@@ -35,7 +35,7 @@
 						<configuration>
 							<tasks>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="tools.dir" value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+								<property name="tools.dir" value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
@@ -73,7 +73,7 @@
 				<configuration>
 					<factory>org.vulpe.fox.apt.freemarker.VulpeFreemarkerProcessorFactory</factory>
 					<options>
-						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/services/templates/plugin.ftl</param>
+						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools/services/templates/plugin.ftl</param>
 						<param>component=core</param>
 						<param>package=org.vulpe.portal.core.model</param>
 						<param>services=POJO</param>

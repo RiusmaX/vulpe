@@ -13,7 +13,8 @@
 				),
 				readOnShow = true
 		),
-		theme = "portal"
+		theme = "portal",
+		debug = true
 )
 package org.vulpe.config;
 
