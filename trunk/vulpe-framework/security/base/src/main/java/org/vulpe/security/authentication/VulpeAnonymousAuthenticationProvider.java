@@ -48,6 +48,10 @@ import org.springframework.security.authentication.AnonymousAuthenticationProvid
  */
 public class VulpeAnonymousAuthenticationProvider extends AnonymousAuthenticationProvider {
 
+	public VulpeAnonymousAuthenticationProvider(final Properties anonymousConfig) {
+		super(anonymousConfig.getProperty("key"));
+	}
+
 	private Properties anonymousConfig;
 
 	public Properties getAnonymousConfig() {
@@ -56,9 +60,6 @@ public class VulpeAnonymousAuthenticationProvider extends AnonymousAuthenticatio
 
 	public void setAnonymousConfig(final Properties anonymousConfig) {
 		this.anonymousConfig = anonymousConfig;
-		if (anonymousConfig != null) {
-			setKey(anonymousConfig.getProperty("key"));
-		}
 	}
 
 }

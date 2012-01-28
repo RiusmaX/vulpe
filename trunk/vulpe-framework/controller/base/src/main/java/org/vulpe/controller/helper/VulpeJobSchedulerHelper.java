@@ -47,12 +47,12 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.quartz.CronTrigger;
-import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
+import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.CronTriggerImpl;
 import org.scannotation.AnnotationDB;
 import org.scannotation.WarUrlFinder;
 import org.vulpe.commons.VulpeConstants;
@@ -99,10 +99,12 @@ public final class VulpeJobSchedulerHelper {
 			final List<URL> urls = new ArrayList<URL>();
 			for (final URL url : urlsWebInfLib) {
 				final String jarName = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
-				if (!VulpeConfigHelper.isSecurityEnabled() && jarName.contains(VulpeConstants.VULPE_SECURITY)) {
+				if (!VulpeConfigHelper.isSecurityEnabled()
+						&& jarName.contains(VulpeConstants.VULPE_SECURITY)) {
 					continue;
 				}
-				if (jarName.contains(VulpeConstants.VULPE) || jarName.contains(VulpeConstants.COMMONS)
+				if (jarName.contains(VulpeConstants.VULPE)
+						|| jarName.contains(VulpeConstants.COMMONS)
 						|| jarName.contains(VulpeConstants.CONTROLLER)
 						|| jarName.contains(VulpeConfigHelper.getApplicationName())) {
 					urls.add(url);
@@ -141,7 +143,7 @@ public final class VulpeJobSchedulerHelper {
 				final Scheduler scheduler = schedulerFactory.getScheduler();
 				for (String jobClass : jobClasses) {
 					try {
-						final Class classicClass = Class.forName(jobClass);
+						final Class<?> classicClass = Class.forName(jobClass);
 						if (VulpeJob.class.isAssignableFrom(classicClass)) {
 							final Class<? extends VulpeJob> clazz = (Class<? extends VulpeJob>) classicClass;
 							jobScheduler(scheduler, clazz.newInstance());
@@ -164,15 +166,22 @@ public final class VulpeJobSchedulerHelper {
 	public static void jobScheduler(final Scheduler scheduler, final VulpeJob job) {
 		final Job jobAnnotation = job.getClass().getAnnotation(Job.class);
 		try {
-			final JobDetail jobDetail = new JobDetail(job.getClass().getName(), jobAnnotation.group(), job.getClass());
-			final String triggerName = StringUtils.isNotBlank(jobAnnotation.trigger()) ? jobAnnotation.trigger() : job
-					.getClass().getSimpleName().concat("Trigger");
-			final CronTrigger trigger = new CronTrigger(triggerName, jobAnnotation.group(), job.getClass().getName(),
-					jobAnnotation.group(), jobAnnotation.value());
+			final JobDetailImpl jobDetail = new JobDetailImpl();
+			jobDetail.setName(job.getClass().getName());
+			jobDetail.setGroup(jobAnnotation.group());
+			jobDetail.setJobClass(job.getClass());
+			final String triggerName = StringUtils.isNotBlank(jobAnnotation.trigger()) ? jobAnnotation
+					.trigger()
+					: job.getClass().getSimpleName().concat("Trigger");
+			final CronTriggerImpl trigger = new CronTriggerImpl();
+			trigger.setName(triggerName);
+			trigger.setGroup(jobAnnotation.group());
+			trigger.setJobName(job.getClass().getName());
+			trigger.setJobGroup(jobAnnotation.group());
+			trigger.setCronExpression(jobAnnotation.value());
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (Exception e) {
 			LOG.error(e);
 		}
 	}
-
 }

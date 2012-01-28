@@ -7,6 +7,6 @@
 <meta name="viewport" content="width=${global['application-mobile-viewportWidth']}, height=${global['application-mobile-viewportHeight']}, user-scalable=${global['application-mobile-viewportUserScalable']}, initial-scale=${global['application-mobile-viewportInitialScale']}, maximum-scale=${global['application-mobile-viewportMaximumScale']}, minimum-scale=${global['application-mobile-viewportMinimumScale']}" />
 </c:if>
 <title>${htmlTitle}</title>
-<link type="image/x-icon" href="${ever['contextPath']}/themes/${global['application-theme']}/images/icon.png" rel="shortcut icon"/>
+<link type="image/x-icon" href="${pageContext.request.contextPath}/themes/${global['application-theme']}/images/icon.png" rel="shortcut icon"/>
 <%@include file="/WEB-INF/protected-jsp/commons/cssExport.jsp" %>
 <decorator:head/>

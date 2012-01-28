@@ -47,11 +47,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
-import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeApplication;
+import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.ExportDelegate;
 
@@ -62,6 +62,7 @@ import org.vulpe.controller.commons.ExportDelegate;
  * @version 1.0
  * @since 1.0
  */
+@SuppressWarnings("deprecation")
 public class VulpeFilter extends CharacterEncodingFilter {
 
 	/*
@@ -80,14 +81,9 @@ public class VulpeFilter extends CharacterEncodingFilter {
 		if (vulpeContext != null) {
 			vulpeContext.setLocale(request.getLocale());
 		}
-		String contextPath = request.getContextPath();
-		if (contextPath.equals("/")) {
-			contextPath = "";
-		}
-		if (!ever(request).containsKey(Ever.CONTEXT_PATH)) {
-			ever(request).put(Ever.CONTEXT_PATH, contextPath);
-		}
-		final String encoding = VulpeConfigHelper.get(VulpeApplication.class).characterEncoding();
+		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
+		final String encoding = vulpeProject != null ? vulpeProject.characterEncoding()
+				: VulpeConfigHelper.getApplicationConfiguration().characterEncoding();
 		response.setCharacterEncoding(encoding);
 		setEncoding(encoding);
 		setForceEncoding(true);

@@ -221,7 +221,6 @@ public class VulpeConstants {
 			public static final String CURRENT_CONTROLLER_NAME = "currentControllerName";
 			public static final String CURRENT_HTML_CONTENT = "currentControllerName";
 			public static final String EXPORT_CONTENT = "exportContent";
-			public static final String CONTEXT_PATH = "exportContent";
 			public static final String CURRENT_PAGE = "currentPage";
 			public static final String TABULAR_SIZE = "tabularSize";
 			public static final String DEBUG = "debug";

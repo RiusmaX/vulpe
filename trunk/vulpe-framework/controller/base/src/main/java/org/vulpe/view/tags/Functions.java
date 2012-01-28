@@ -284,7 +284,7 @@ public class Functions {
 	 * @param requestedRoles
 	 * @return
 	 */
-	public static Boolean hasRole(final PageContext pageContext, final String requestedRoles) {
+	public static Boolean hasRoles(final PageContext pageContext, final String requestedRoles) {
 		final Object springSecurity = getSession(pageContext).getAttribute(
 				Security.SPRING_SECURITY_CONTEXT);
 		boolean has = false;

@@ -11,8 +11,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><fmt:message key="vulpe.error.400.title" /></title>
 <style media="all" type="text/css">
-@import "${ever['contextPath']}/css/frontend/vulpe.css";
-@import	"${ever['contextPath']}/themes/${global['application-theme']}/css/${layout}${global['application-theme']}.css";
+@import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
+@import	"${pageContext.request.contextPath}/themes/${global['application-theme']}/css/${layout}${global['application-theme']}.css";
 </style>
 </head>
 <body>
@@ -23,7 +23,7 @@
 	<h2><fmt:message key="vulpe.error.400" /></h2>
 	<br/>
 	<div id="home">
-		<a href="${ever['contextPath']}"><fmt:message key="label.vulpe.home" /></a>
+		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
 	</div>
 	<br/>
 </div>

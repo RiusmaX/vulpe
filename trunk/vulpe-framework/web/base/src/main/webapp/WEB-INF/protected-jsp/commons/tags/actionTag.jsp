@@ -81,7 +81,7 @@
 		<c:if test="${empty iconExtension}"><c:set var="iconExtension" value="png" /></c:if>
 		<c:set var="iconPrefix"	value="/themes/${global['application-theme']}/images/icons/button" />
 		<c:set var="icon" value="${iconPrefix}-${icon}-${iconWidth}x${iconHeight}.${iconExtension}" />
-		<c:if test="${!fn:startsWith(icon, ever['contextPath'])}"><c:set var="icon" value="${ever['contextPath']}${icon}" /></c:if>
+		<c:if test="${!fn:startsWith(icon, pageContext.request.contextPath)}"><c:set var="icon" value="${pageContext.request.contextPath}${icon}" /></c:if>
 	</c:if>
 	<c:choose>
 		<c:when test="${showButtonAsImage}">

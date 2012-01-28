@@ -39,8 +39,8 @@ package org.vulpe.security.controller;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.web.WebAttributes;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.View;
 import org.vulpe.commons.VulpeConstants.Controller.Result;
@@ -90,10 +90,10 @@ public class VulpeLoginController extends VulpeStrutsController<VulpeBaseSimpleE
 
 	@ExecuteAlways
 	public void layout() {
-		final DefaultSavedRequest savedRequest = vulpe
-				.sessionAttribute(WebAttributes.SAVED_REQUEST);
+		final SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(getRequest(),
+				getResponse());
 		if (!ever.containsKey(View.CURRENT_LAYOUT)) {
-			ever.put(View.CURRENT_LAYOUT, "FRONTEND");	
+			ever.put(View.CURRENT_LAYOUT, "FRONTEND");
 		}
 		if (savedRequest != null && savedRequest.getRedirectUrl().contains("/backend")) {
 			ever.put(View.CURRENT_LAYOUT, "BACKEND");

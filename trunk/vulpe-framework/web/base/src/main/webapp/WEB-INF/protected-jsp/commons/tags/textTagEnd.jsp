@@ -64,7 +64,9 @@
 				<c:if test="${not empty autocompleteProperties}">
 				var autocompleteProperties = "${autocompleteProperties}".split(",");
 				for (var i = 0; i < autocompleteProperties.length; i++) {
-					var field = vulpe.util.get("${elementId}".replace("${fn:replace(property, '.', '_')}", "") + autocompleteProperties[i]);
+					var fieldId = "${elementId}";
+					fieldId = fieldId.substring(0, fieldId.lastIndexOf("_")) + autocompleteProperties[i].replace(/\./g, "_");
+					var field = vulpe.util.get(fieldId);
 					if (field.length == 1) {
 						field.val(eval("ui.item." + autocompleteProperties[i]));
 					}

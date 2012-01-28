@@ -187,7 +187,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 						springSecurityAutentication, "authorities");
 				if (authorities != null) {
 					for (final Object authority : authorities) {
-						if (authority.equals(roleName.toString())) {
+						if (authority.toString().equals(roleName.toString())) {
 							has = true;
 							break;
 						}

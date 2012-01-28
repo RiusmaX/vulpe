@@ -13,9 +13,7 @@
 	<c:set var="autocompleteAction" value="${fn:replace(action, '/select', '/autocomplete/ajax')}" />
 	<c:choose>
 		<c:when test="${empty autocompleteProperties}"><c:set var="autocompleteProperties" value="${description}"/></c:when>
-	<c:otherwise>
-		<c:set var="autocompleteProperties" value="${description},${autocompleteProperties}"/>
-	</c:otherwise>
+		<c:otherwise><c:set var="autocompleteProperties" value="${description},${autocompleteProperties}"/></c:otherwise>
 	</c:choose>
 	<c:choose>
 		<c:when test="${showIdentifier}">

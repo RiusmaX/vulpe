@@ -10,8 +10,8 @@
 	<name>Vulpe Framework - Dependencies</name>
 
 	<properties>
-		<vulpe.version>1.1</vulpe.version>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<vulpe.version>1.0.1</vulpe.version>
+		<spring.version>3.1.0.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -107,6 +107,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>
 			<version>1.2</version>
@@ -140,13 +152,13 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.14</version>
+			<version>2.3.18</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4</version>
+			<version>1.4.4</version>
 		</dependency>
 
 		<dependency>
@@ -156,34 +168,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.9.1</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-impl</artifactId>
-			<version>2.1.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
+			<version>2.2.4-1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.xml.ws</groupId>
 			<artifactId>jaxws-api</artifactId>
-			<version>2.1</version>
+			<version>2.2.8</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -191,6 +184,13 @@
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>
 			<version>3.0.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.10.0</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -238,7 +238,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>3.7.4</version>
+			<version>4.5.0</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.lowagie</groupId>
@@ -294,13 +294,13 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
+			<version>1.4.2</version>
 		</dependency>
 
 		<dependency>
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
-			<version>1.3.03</version>
+			<version>1.4.01</version>
 		</dependency>
 
 		<dependency>
@@ -347,33 +347,33 @@
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcmail-jdk14</artifactId>
-			<version>1.45</version>
+			<version>1.46</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk14</artifactId>
-			<version>1.45</version>
+			<version>1.46</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bctsp-jdk14</artifactId>
-			<version>1.45</version>
+			<version>1.46</version>
 		</dependency>
 		<!-- VERSION ADDED -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>1.8.4</version>
+			<version>2.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>1.7.1</version>
+			<version>2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
-			<version>2.1.0</version>
+			<version>2.1.7</version>
 		</dependency>
 	</dependencies>
 

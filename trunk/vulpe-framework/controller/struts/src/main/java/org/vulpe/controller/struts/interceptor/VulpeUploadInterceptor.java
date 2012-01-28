@@ -56,6 +56,7 @@ import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.apache.struts2.interceptor.FileUploadInterceptor;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.config.annotations.VulpeUpload;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
@@ -71,7 +72,7 @@ import com.opensymphony.xwork2.ValidationAware;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * 
  */
-@SuppressWarnings( { "unchecked", "serial" })
+@SuppressWarnings( { "unchecked", "serial", "deprecation" })
 public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 	private static final Logger LOG = Logger.getLogger(VulpeUploadInterceptor.class);
@@ -84,15 +85,19 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	 */
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
-		final VulpeUpload upload = VulpeConfigHelper.getApplicationConfiguration().upload();
+		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
+		final VulpeUpload upload = vulpeProject != null ? vulpeProject.upload() : VulpeConfigHelper
+				.getApplicationConfiguration().upload();
 		setMaximumSize(new Long(upload.maximumSize() * 1048576));
 		if (!"*".equals(upload.allowedTypes())) {
 			setAllowedTypes(upload.allowedTypes());
 		}
 		final ActionContext actionContext = invocation.getInvocationContext();
-		final HttpServletRequest request = (HttpServletRequest) actionContext.get(ServletActionContext.HTTP_REQUEST);
+		final HttpServletRequest request = (HttpServletRequest) actionContext
+				.get(ServletActionContext.HTTP_REQUEST);
 		// sets the files in the session to parameters.
-		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(VulpeConstants.Upload.FILES);
+		List<Object[]> fileList = (List<Object[]>) actionContext.getSession().get(
+				VulpeConstants.Upload.FILES);
 		if (fileList != null) {
 			for (Object[] object : fileList) {
 				final String inputName = (String) object[0];
@@ -113,8 +118,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {
 				final ActionProxy proxy = invocation.getProxy();
-				LOG.debug(getText("vulpe.message.bypass.request", new Object[] { proxy.getNamespace(),
-						proxy.getActionName() }));
+				LOG.debug(getText("vulpe.message.bypass.request", new Object[] {
+						proxy.getNamespace(), proxy.getActionName() }));
 			}
 			return invocation.invoke();
 		}
@@ -128,7 +133,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
 		final MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) request;
 		if (multiWrapper.hasErrors()) {
-			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator.hasNext();) {
+			for (final Iterator errorIterator = multiWrapper.getErrors().iterator(); errorIterator
+					.hasNext();) {
 				final String error = (String) errorIterator.next();
 				// the request was rejected because its size (9014884) exceeds
 				// the configured maximum (2097152)
@@ -160,19 +166,21 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 						}
 						byte[][] bytes = new byte[files.length][];
 						for (int index = 0; index < files.length; index++) {
-							if (acceptFile(files[index], contentType[index], inputName, validation, actionContext
-									.getLocale())) {
+							if (acceptFile(files[index], contentType[index], inputName, validation,
+									actionContext.getLocale())) {
 								bytes[index] = FileUtils.readFileToByteArray(files[index]);
 							}
 						}
-						fileList.add(new Object[] { inputName, (files.length == 1 ? bytes[0] : bytes), contentType,
-								fileName });
+						fileList.add(new Object[] { inputName,
+								(files.length == 1 ? bytes[0] : bytes), contentType, fileName });
 					}
 				} else {
 					LOG.error(getText("vulpe.message.invalid.file", new Object[] { inputName }));
 				}
 			} else {
-				LOG.error(getText("vulpe.message.invalid.content.type", new Object[] { inputName }));
+				LOG
+						.error(getText("vulpe.message.invalid.content.type",
+								new Object[] { inputName }));
 			}
 		}
 
@@ -190,7 +198,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			final File[] file = multiWrapper.getFiles(inputValue);
 			for (int index = 0; index < file.length; index++) {
 				final File currentFile = file[index];
-				LOG.info(getText("vulpe.message.removing.file", new Object[] { inputValue, currentFile }));
+				LOG.info(getText("vulpe.message.removing.file", new Object[] { inputValue,
+						currentFile }));
 				if ((currentFile != null) && currentFile.isFile()) {
 					currentFile.delete();
 				}
@@ -239,8 +248,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 	 * @param locale
 	 * @return true if the proposed file is acceptable by contentType and size.
 	 */
-	protected boolean acceptFile(File file, String contentType, String inputName, ValidationAware validation,
-			Locale locale) {
+	protected boolean acceptFile(File file, String contentType, String inputName,
+			ValidationAware validation, Locale locale) {
 		boolean fileIsAcceptable = false;
 
 		// If it's null the upload failed
@@ -271,8 +280,8 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			// String errMsg = getText("vulpe.error.content.type.not.allowed",
 			// new Object[] { inputName, file.getName(),
 			// contentType });
-			final String message = getText("vulpe.error.content.type.not.allowed", new Object[] { inputName,
-					file.getName(), contentType });
+			final String message = getText("vulpe.error.content.type.not.allowed", new Object[] {
+					inputName, file.getName(), contentType });
 			if (validation != null) {
 				// validation.addFieldError(inputName, message);
 				validation.addActionError(message);

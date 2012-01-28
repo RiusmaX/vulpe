@@ -44,9 +44,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.vulpe.commons.VulpeConstants.Controller.URI;
 import org.vulpe.commons.util.VulpeReflectUtil;
 
@@ -58,10 +58,14 @@ import org.vulpe.commons.util.VulpeReflectUtil;
  */
 public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
+	public VulpeLoginUrlAuthenticationEntryPoint(final String loginFormUrl) {
+		super(loginFormUrl);
+	}
+
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		setLoginFormUrl(URI.AUTHENTICATOR
+		VulpeReflectUtil.setFieldValue(this, "loginFormUrl", URI.AUTHENTICATOR
 				+ (request.getRequestURI().endsWith(URI.AJAX) ? URI.AJAX : ""));
 		super.commence(request, response, authException);
 	}
@@ -70,16 +74,16 @@ public class VulpeLoginUrlAuthenticationEntryPoint extends LoginUrlAuthenticatio
 	 * 
 	 * @param request
 	 */
-	public void changeSavedRequest(final HttpServletRequest request) {
-		final DefaultSavedRequest savedRequest = (DefaultSavedRequest) request.getSession()
-				.getAttribute(WebAttributes.SAVED_REQUEST);
-		if (savedRequest != null && !savedRequest.getRequestURI().contains(URI.AUTHENTICATOR)) {
-			String requestURI = savedRequest.getRequestURI();
+	public void changeSavedRequest(final HttpServletRequest request, HttpServletResponse response) {
+		final SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request,
+				response);
+		if (savedRequest != null && !savedRequest.getRedirectUrl().contains(URI.AUTHENTICATOR)) {
+			String requestURI = savedRequest.getRedirectUrl();
 			if (!requestURI.endsWith(URI.AJAX)) {
 				requestURI += URI.AJAX;
 			}
 			VulpeReflectUtil.setFieldValue(savedRequest, "requestURI", requestURI);
-			request.getSession().setAttribute(WebAttributes.SAVED_REQUEST, savedRequest);
+			new HttpSessionRequestCache().saveRequest(request, response);
 		}
 	}
 }

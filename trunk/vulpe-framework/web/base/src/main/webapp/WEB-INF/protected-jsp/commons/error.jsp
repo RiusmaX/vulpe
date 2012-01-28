@@ -12,8 +12,8 @@
 <title><fmt:message	key="vulpe.error.internal.title" /></title>
 <%@include file="/WEB-INF/protected-jsp/commons/javascript.jsp" %>
 <style media="all" type="text/css">
-@import "${ever['contextPath']}/css/frontend/vulpe.css";
-@import	"${ever['contextPath']}/themes/${global['application-theme']}/css/${layout}${global['application-theme']}.css";
+@import "${pageContext.request.contextPath}/css/frontend/vulpe.css";
+@import	"${pageContext.request.contextPath}/themes/${global['application-theme']}/css/${layout}${global['application-theme']}.css";
 </style>
 </head>
 <body>
@@ -36,7 +36,7 @@
 	<br/>
 	<!--
 	<div id="home">
-		<a href="${ever['contextPath']}"><fmt:message key="label.vulpe.home" /></a>
+		<a href="${pageContext.request.contextPath}"><fmt:message key="label.vulpe.home" /></a>
 	</div>
 	<br/>
 	-->

@@ -96,9 +96,9 @@
 	</function>
 
 	<function>
-		<name>hasRole</name>
+		<name>hasRoles</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean hasRole(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+		<function-signature>java.lang.Boolean hasRoles(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
 	</function>
 
 	<function>

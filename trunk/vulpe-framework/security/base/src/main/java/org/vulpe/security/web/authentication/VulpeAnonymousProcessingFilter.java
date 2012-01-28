@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.memory.UserAttribute;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.util.StringUtils;
@@ -91,10 +92,11 @@ public class VulpeAnonymousProcessingFilter extends AnonymousAuthenticationFilte
 
 	public void setAnonymousConfig(final Properties anonymousConfig) {
 		this.anonymousConfig = anonymousConfig;
-		if (anonymousConfig != null) {
-			setUserAttribute(setAsText(anonymousConfig.getProperty("anonymousUser").concat(",")
-					.concat(anonymousConfig.getProperty("anonymousRole"))));
-			setKey(anonymousConfig.getProperty("key"));
-		}
 	}
+
+	public VulpeAnonymousProcessingFilter(final Properties anonymousConfig) {
+		super(anonymousConfig.getProperty("key"), "anonymousUser", AuthorityUtils
+				.createAuthorityList(anonymousConfig.getProperty("anonymousRole")));
+	}
+
 }
