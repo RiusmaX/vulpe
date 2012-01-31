@@ -41,7 +41,7 @@
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<unjar src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1.jar" dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1" />
 									</then>
 								</if>
 							</tasks>
