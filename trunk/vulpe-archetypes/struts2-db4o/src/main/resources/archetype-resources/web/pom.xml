@@ -82,7 +82,7 @@
 										<echo file="${symbol_dollar}{temp.file}" message="@{input}" />
 										<move file="${symbol_dollar}{temp.file}" tofile="${symbol_dollar}{temp.file}.2">
 											<filterchain>
-												<deletecharacters chars="\t\s\n\r" />
+												<deletecharacters chars="\\n\\r" />
 												<trim />
 												<ignoreblank />
 											</filterchain>
