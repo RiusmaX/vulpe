@@ -539,7 +539,9 @@ var vulpe = {
 		},
 
 		completeURL: function(url) {
-			if (url.indexOf(vulpe.config.contextPath) == -1) {
+			if (vulpe.util.isEmpty(vulpe.config.contextPath)) {
+				url = (url.indexOf("/") == 0 ? "" : "/") + url;
+			} else if (url.indexOf(vulpe.config.contextPath) == -1) {
 				url = vulpe.config.contextPath + (url.indexOf("/") == 0 ? "" : "/") + url;
 			}
 			return url;
