@@ -1404,6 +1404,7 @@ var vulpe = {
 	},
 	// vulpe.view
 	view: {
+		onScroll: function() {},
 		
 		selectShowContent: function(id) {
 			var selectId = id + "_" + vulpe.util.get(id).val();
@@ -2300,7 +2301,7 @@ var vulpe = {
 					if (vulpe.util.existsVulpePopups()) {
 						options.layer = vulpe.util.getLastVulpePopup();
 					}
-					vulpe.util.getForm(options).attr("action", vulpe.config.contextPath + "/" + vulpe.config.springSecurityCheck);
+					options.url = vulpe.config.contextPath + "/" + vulpe.config.springSecurityCheck;
 					options.isFile = false;
 					vulpe.view.request.submitAjax(options);
 				}

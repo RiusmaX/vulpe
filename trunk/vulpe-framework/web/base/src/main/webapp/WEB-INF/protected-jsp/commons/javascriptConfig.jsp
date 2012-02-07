@@ -1,5 +1,6 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <script type="text/javascript" charset="utf-8">
+$(document).bind("scroll", vulpe.view.onScroll);
 vulpe.config.buttons = {
 	ok: '<fmt:message key="label.vulpe.button.ok"/>',
 	cancel: '<fmt:message key="label.vulpe.button.cancel"/>',
