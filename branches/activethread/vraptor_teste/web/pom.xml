@@ -18,14 +18,14 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-web-vraptor</artifactId>
-			<version>1.0</version>
+			<version>1.0.1</version>
 			<type>war</type>
 		</dependency>
 
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-controller-vraptor</artifactId>
-			<version>1.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -59,32 +59,61 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<version>2.1.1</version>
 				<configuration>
 					<warName>vraptor_teste</warName>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
 				<executions>
 					<execution>
+						<id>package</id>
 						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<tasks>
-								<property environment="env" />
-								<property name="maven.repo" value="${env.M2_REPO}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tomcat.home" value="${settings.localRepository}/../Servers/tomcat/" />
 								<if>
 									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
-										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
+										<property name="contextSuffix" value="" />
+										<delete file="${tomcat.home}/conf/Catalina/localhost/vraptor_teste.xml" />
+										<if>
+											<equals arg1="${unpack}" arg2="false" />
+											<then>
+												<unwar src="${project.build.directory}/vraptor_teste.war" dest="${project.build.directory}/vraptor_teste-web-1.0" />
+											</then>
+										</if>
+										<if>
+											<equals arg1="${environment}" arg2="test" />
+											<then>
+												<copy tofile="${project.build.directory}/vraptor_teste-web-1.0/META-INF/context.xml"
+													overwrite="true">
+													<fileset file="${project.build.directory}/vraptor_teste-web-1.0/META-INF/context-test.xml" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${environment}" arg2="production" />
+												<then>
+													<copy tofile="${project.build.directory}/vraptor_teste-web-1.0/META-INF/context.xml"
+														overwrite="true">
+														<fileset file="${project.build.directory}/vraptor_teste-web-1.0/META-INF/context-production.xml" />
+													</copy>
+												</then>
+											</elseif>
+										</if>
+										<if>
+											<equals arg1="${unpack}" arg2="false" />
+											<then>
+												<war destfile="${project.build.directory}/vraptor_teste.war" webxml="${project.build.directory}/vraptor_teste-web-1.0/WEB-INF/web.xml"
+													basedir="${project.build.directory}/vraptor_teste-web-1.0" />
+											</then>
+										</if>
 										<if>
 											<equals arg1="${deployMode}" arg2="quick" />
 											<then>
@@ -101,14 +130,25 @@
 												</then>
 											</elseif>
 											<else>
-												<delete dir="${tomcat.home}/webapps/${projectName}" />
 												<if>
-													<equals arg1="${deleteWork}" arg2="true" />
+													<equals arg1="${unpack}" arg2="true" />
 													<then>
-														<delete dir="${tomcat.home}/work/Catalina/localhost/vraptor_teste" />
+														<delete dir="${tomcat.home}/webapps/vraptor_teste" />
+														<if>
+															<equals arg1="${deleteWork}" arg2="true" />
+															<then>
+																<delete dir="${tomcat.home}/work/Catalina/localhost/vraptor_teste" />
+															</then>
+														</if>
+														<unwar src="${project.build.directory}/vraptor_teste.war" dest="${tomcat.home}/webapps/vraptor_teste" />
 													</then>
+													<else>
+														<delete file="${tomcat.home}/webapps/vraptor_teste.war" />
+														<copy todir="${tomcat.home}/webapps/">
+															<fileset dir="${project.build.directory}" includes="vraptor_teste.war" />
+														</copy>
+													</else>
 												</if>
-												<unwar src="${project.build.directory}/vraptor_teste.war" dest="${tomcat.home}/webapps/vraptor_teste" />
 											</else>
 										</if>
 									</then>
@@ -117,6 +157,24 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

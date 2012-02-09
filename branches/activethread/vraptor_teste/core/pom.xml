@@ -34,27 +34,38 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<property environment="env" />
-								<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
-								<property name="maven.repo" value="${env.M2_REPO}" />
-								<taskdef resource="net/sf/antcontrib/antlib.xml">
-									<classpath>
-										<pathelement location="${maven.repo}/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" />
-									</classpath>
-								</taskdef>
-								<property name="tools.dir" value="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools" />
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tools.dir" value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0.jar" dest="${maven.repo}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0" />
+										<unjar src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1.jar" dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1" />
 									</then>
 								</if>
 							</tasks>
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -62,7 +73,7 @@
 				<configuration>
 					<factory>net.sf.jelly.apt.freemarker.FreemarkerProcessorFactory</factory>
 					<options>
-						<param>template=${env.M2_REPO}/org/vulpe/vulpe-fox/1.0/vulpe-fox-1.0/tools/services/templates/plugin.ftl</param>
+						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools/services/templates/plugin.ftl</param>
 						<param>component=core</param>
 						<param>package=br.teste.vraptor_teste.core.model</param>
 						<param>services=POJO</param>
