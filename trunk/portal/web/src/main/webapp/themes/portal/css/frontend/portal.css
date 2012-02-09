@@ -908,3 +908,7 @@ ol, ul {
 	font-size:12px;
 	font-weight:bold;
 }
+
+:focus {
+	outline: 0;
+}
