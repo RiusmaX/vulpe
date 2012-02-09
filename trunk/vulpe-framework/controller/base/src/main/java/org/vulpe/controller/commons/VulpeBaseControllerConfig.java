@@ -50,6 +50,7 @@ import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
+import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeController.Operation;
@@ -65,7 +66,7 @@ import org.vulpe.view.tags.Functions;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings( { "serial", "unchecked", "deprecation" })
 public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		implements VulpeControllerConfig, Serializable {
 
@@ -238,8 +239,9 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 */
 	public int getPageSize() {
 		final int pageSize = this.controllerAnnotation.select().pageSize();
-		final int globalPageSize = VulpeConfigHelper.getApplicationConfiguration().view().paging()
-				.pageSize();
+		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
+		final int globalPageSize = vulpeProject != null ? vulpeProject.view().paging().pageSize()
+				: VulpeConfigHelper.getApplicationConfiguration().view().paging().pageSize();
 		return pageSize > 0 ? pageSize : globalPageSize;
 	}
 

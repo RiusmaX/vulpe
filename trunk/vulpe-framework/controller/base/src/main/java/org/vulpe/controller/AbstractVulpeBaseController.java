@@ -73,6 +73,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
+import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.commons.DuplicatedBean;
 import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.I18NService;
@@ -101,7 +102,7 @@ import org.vulpe.model.services.VulpeService;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "unchecked", "serial" })
+@SuppressWarnings( { "unchecked", "serial", "deprecation" })
 public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		implements VulpeController {
 
@@ -411,7 +412,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							.equals(operation))) {
 				vulpe.view().renderButtons(Button.BACK, Button.CREATE, Button.UPDATE_POST,
 						Button.DELETE);
-				if (VulpeConfigHelper.getApplicationConfiguration().view().layout().showButtonClone()) {
+				if (VulpeConfigHelper.getApplicationConfiguration().view().layout()
+						.showButtonClone()) {
 					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
@@ -443,7 +445,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (Operation.UPDATE.equals(operation)) {
 				vulpe.view().renderButtons(ControllerType.MAIN, Button.CREATE, Button.UPDATE_POST,
 						Button.DELETE);
-				if (VulpeConfigHelper.getApplicationConfiguration().view().layout().showButtonClone()) {
+				if (VulpeConfigHelper.getApplicationConfiguration().view().layout()
+						.showButtonClone()) {
 					vulpe.view().renderButtons(Button.CLONE);
 				}
 			} else if (Operation.VIEW.equals(operation)) {
@@ -706,7 +709,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 		}
 	}
-
 
 	/**
 	 * Configure detail to view.
@@ -2062,9 +2064,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		selectAfter();
 		ever.remove(Controller.VIRTUAL_PAGING);
+		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
 		if ((vulpe.controller().config().getControllerAnnotation().select().readOnShow() || (!vulpe
-				.controller().config().getControllerAnnotation().disableApplicationDefaults() && VulpeConfigHelper
-				.getApplicationConfiguration().view().readOnShow()))
+				.controller().config().getControllerAnnotation().disableApplicationDefaults() && (vulpeProject != null ? vulpeProject
+				.view().readOnShow()
+				: VulpeConfigHelper.getApplicationConfiguration().view().readOnShow())))
 				&& !vulpe.controller().cleaned()) {
 			onRead();
 			manageVirtualPaging();
@@ -2436,7 +2440,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		controlResultForward();
 		vulpe.controller().executed(false);
 	}
-	
+
 	/**
 	 * Method to invoke services.
 	 * 
