@@ -376,7 +376,7 @@ td, th {
 
 #loading {
 	margin: 0 auto;
-	position: absolute;
+	position: fixed;
 	height: 100%;
 	width: 100%;
 	z-index: 10000;  
@@ -677,4 +677,34 @@ thead th {
 
 :focus {
 	outline: 0;
+}
+.sticky {
+	position:fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 1005;
+}
+
+.sticky p {
+	background-color: #fff;
+	border: 1px solid #eee;
+	left: 0px;
+	padding: 10px 0 10px;
+	margin: 0 20px;
+}
+
+.stickyDetail {
+	position:fixed;
+	top: 54px;
+	left: 20px;
+	width: 96.6%;
+	z-index: 1005;
+}
+
+.stickyDetail p {
+	background-color: #fff;
+	border: 1px solid #eee;
+	left: 0px;
+	padding: 10px 0 10px;
 }

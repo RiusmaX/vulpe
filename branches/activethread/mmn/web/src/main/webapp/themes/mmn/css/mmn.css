@@ -690,3 +690,18 @@ thead th {
 :focus {
 	outline: 0;
 }
+.sticky {
+	position:fixed;
+	top: 195px;
+	left: 20px;
+	width: 98.75%;
+	z-index: 1005;
+}
+
+.sticky p {
+	background-color: #fff;
+	border: 1px solid #eee;
+	left: 0px;
+	width: 97.9%;
+	padding: 10px 0 10px;
+}

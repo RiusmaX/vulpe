@@ -1,9 +1,30 @@
 /**
  * JavaScript Application Document
  */
+vulpe.view.onScroll = function() {
+	if ($("#vulpeMain").length == 1 && !vulpe.config.os.iPhone) {
+		var scrollTop = $(document).scrollTop();
+		var actions = $('#vulpeMainActions');
+        if (scrollTop > 154) {
+        	actions.addClass('sticky');
+        } else {
+        	actions.removeClass('sticky');
+        }
+        var detailActions = $('#vulpeDetailActions-reports');
+        if (scrollTop > 190) {
+        	detailActions.addClass('stickyDetail');
+        	if (vulpe.config.browser.firefox) {
+        		//detailActions.css("width", "96.9");
+        	}
+        } else {
+        	detailActions.removeClass('stickyDetail');
+        }
+    }
+}
+
 var app = {
 
-	frontend : {
+	frontend: {
 
 	},
 	
@@ -11,7 +32,7 @@ var app = {
 		changePersonalReportData: function(value) {
 			if (vulpe.util.isNotEmpty(value)) {
 				vulpe.view.request.submitAjax({url: 'ministry/MemberPersonalReport/update/ajax', layerFields: 'reportData'});
-				vulpe.util.get("reportId").val(vulpe.util.getFieldElement("id").val());
+				vulpe.util.get("reportId").val(vulpe.util.get("id").val());
 			} else {
 				vulpe.util.get("reportId").val("");
 			}
