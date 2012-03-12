@@ -387,6 +387,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 */
 	public void manageButtons(final Operation operation) {
 		vulpe.view().buttons().clear();
+		vulpe.controller().popup();
 		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
 		if (vulpe.controller().type().equals(ControllerType.MAIN)) {
 			if (config.getDetails() != null) {
