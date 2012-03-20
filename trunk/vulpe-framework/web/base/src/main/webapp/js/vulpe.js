@@ -2680,7 +2680,7 @@ var vulpe = {
 						if (vulpe.util.isEmpty(elementType)) {
 							elementType = this.type;
 						}
-						if (elementType != null && elementType != "hidden") {
+						if (elementType != null && elementType != "hidden" && elementType != "button") {
 							var elementLoadingId = elementId + vulpe.config.suffix.loading;
 							var elementLoading = vulpe.util.get(elementLoadingId);
 							if (elementLoading.length == 1) {
