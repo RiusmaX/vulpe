@@ -39,8 +39,8 @@ package org.vulpe.controller.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -203,7 +203,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		if (entity instanceof AbstractVulpeBaseAuditEntity) {
 			final AbstractVulpeBaseAuditEntity auditEntity = (AbstractVulpeBaseAuditEntity) entity;
 			auditEntity.setUserOfLastUpdate(userAuthenticated());
-			auditEntity.setDateOfLastUpdate(Calendar.getInstance().getTime());
+			auditEntity.setDateOfLastUpdate(new Date());
 		}
 		entity.getMap().put(Security.USER_AUTHENTICATED, userAuthenticated());
 	}
