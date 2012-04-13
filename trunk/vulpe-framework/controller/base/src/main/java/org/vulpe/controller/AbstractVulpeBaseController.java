@@ -748,7 +748,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	}
 
 	protected void repairDetailPaging(final List<ENTITY> values, final Paging<ENTITY> paging) {
-		if (VulpeValidationUtil.isNotEmpty(values)
+		if (VulpeValidationUtil.isNotEmpty(values) && VulpeValidationUtil.isNotEmpty(paging)
 				&& VulpeValidationUtil.isNotEmpty(paging.getRealList())) {
 			int index = 0;
 			for (final ENTITY real : paging.getRealList()) {
