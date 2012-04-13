@@ -691,17 +691,16 @@ public class VulpeActionInvocation implements ActionInvocation {
 				final String currentControllerKey = baseController.ever
 						.getAuto(Ever.CURRENT_CONTROLLER_KEY);
 				final String controllerKey = baseController.vulpe.controller().currentKey();
-				boolean autocomplete = false;
-				if (baseController.entitySelect != null
-						&& StringUtils.isNotEmpty(baseController.entitySelect.getAutocomplete())) {
-					autocomplete = true;
-				}
+				boolean autocomplete = (baseController.entitySelect != null && StringUtils
+						.isNotEmpty(baseController.entitySelect.getAutocomplete()));
+				boolean upload = ("upload".equals(baseController.vulpe.controller()
+						.currentMethodName()));
 				if (StringUtils.isEmpty(currentControllerKey)) {
 					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;
 				} else if (!currentControllerKey.equals(controllerKey)
 						&& StringUtils.isEmpty(baseController.vulpe.controller().popupKey())
-						&& !autocomplete) {
+						&& !autocomplete && !upload) {
 					baseController.ever.removeWeakRef();
 					baseController.ever.put(Ever.CURRENT_CONTROLLER_KEY, controllerKey);
 					same = true;

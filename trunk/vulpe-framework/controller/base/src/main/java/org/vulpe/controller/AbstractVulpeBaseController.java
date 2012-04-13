@@ -517,10 +517,13 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					} else {
 						repairDetailPaging(details, paging);
 						details.clear();
-						details.addAll(paging.getRealList());
-						for (final ENTITY entity : details) {
-							if (entity.isFakeId()) {
-								entity.setId(null);
+						if (VulpeValidationUtil.isNotEmpty(paging)
+								&& VulpeValidationUtil.isNotEmpty(paging.getRealList())) {
+							details.addAll(paging.getRealList());
+							for (final ENTITY entity : details) {
+								if (entity.isFakeId()) {
+									entity.setId(null);
+								}
 							}
 						}
 					}
@@ -729,7 +732,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		if (paging != null && paging.getPage() != null) {
 			currentPaging.setPage(paging.getPage());
 		}
-		if (VulpeValidationUtil.isNotEmpty(currentPaging.getRealList())) {
+		if (VulpeValidationUtil.isNotEmpty(currentPaging)
+				&& VulpeValidationUtil.isNotEmpty(currentPaging.getRealList())) {
 			int count = 1;
 			int total = 0;
 			for (final ENTITY entity : currentPaging.getRealList()) {
