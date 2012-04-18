@@ -96,13 +96,15 @@ public interface VulpeEntity<ID extends Serializable & Comparable> extends Seria
 
 	void setAutocompleteTerm(final String autoCompleteTerm);
 	
-	Map<String, Object> getMap();
+	Map<String, Object> map();
 
-	void setMap(final Map<String, Object> map);
+	void map(final Map<String, Object> map);
 
 	void setQueryConfigurationName(final String queryConfigurationName);
 
 	String getQueryConfigurationName();
+	
+	Map<String, String> fieldColumnMap();
 
 	List<VulpeEntity<?>> getDeletedDetails();
 

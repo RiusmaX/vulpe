@@ -72,7 +72,7 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	}
 
 	@Override
-	public Map<String, Object> getMap() {
+	public Map<String, Object> map() {
 		return null;
 	}
 
@@ -127,7 +127,7 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 	}
 
 	@Override
-	public void setMap(Map<String, Object> map) {
+	public void map(Map<String, Object> map) {
 
 	}
 
@@ -189,14 +189,16 @@ public class VulpeBaseSimpleEntity implements VulpeEntity<Long>, Cloneable {
 
 	@Override
 	public boolean isConditional() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void setConditional(boolean conditional) {
-		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public Map<String, String> fieldColumnMap() {
+		return null;
 	}
 
 }

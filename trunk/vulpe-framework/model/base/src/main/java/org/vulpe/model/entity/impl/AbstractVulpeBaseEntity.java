@@ -74,43 +74,43 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isSelected() {
-		return getMap().containsKey(Entity.SELECTED) ? (Boolean) getMap().get(Entity.SELECTED) : false;
+		return map().containsKey(Entity.SELECTED) ? (Boolean) map().get(Entity.SELECTED) : false;
 	}
 
 	public void setSelected(final boolean selected) {
-		getMap().put(Entity.SELECTED, selected);
+		map().put(Entity.SELECTED, selected);
 	}
 
 	public boolean isUsed() {
-		return getMap().containsKey(Entity.USED) ? (Boolean) getMap().get(Entity.USED) : false;
+		return map().containsKey(Entity.USED) ? (Boolean) map().get(Entity.USED) : false;
 	}
 
 	public void setUsed(final boolean used) {
-		getMap().put(Entity.USED, used);
+		map().put(Entity.USED, used);
 	}
 
 	public boolean isConditional() {
-		return getMap().containsKey(Entity.CONDITIONAL) ? (Boolean) getMap().get(Entity.CONDITIONAL) : false;
+		return map().containsKey(Entity.CONDITIONAL) ? (Boolean) map().get(Entity.CONDITIONAL) : false;
 	}
 
 	public void setConditional(final boolean conditional) {
-		getMap().put(Entity.CONDITIONAL, conditional);
+		map().put(Entity.CONDITIONAL, conditional);
 	}
 
 	public Integer getRowNumber() {
-		return getMap().containsKey(Entity.ROW_NUMBER) ? (Integer) getMap().get(Entity.ROW_NUMBER) : 0;
+		return map().containsKey(Entity.ROW_NUMBER) ? (Integer) map().get(Entity.ROW_NUMBER) : 0;
 	}
 
 	public void setRowNumber(final Integer rowNumber) {
-		getMap().put(Entity.ROW_NUMBER, rowNumber);
+		map().put(Entity.ROW_NUMBER, rowNumber);
 	}
 
 	public String getOrderBy() {
-		return getMap().containsKey(Entity.ORDER_BY) ? (String) getMap().get(Entity.ORDER_BY) : null;
+		return map().containsKey(Entity.ORDER_BY) ? (String) map().get(Entity.ORDER_BY) : null;
 	}
 
 	public void setOrderBy(final String orderBy) {
-		getMap().put(Entity.ORDER_BY, orderBy);
+		map().put(Entity.ORDER_BY, orderBy);
 	}
 
 	@Override
@@ -197,26 +197,26 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public void setAutocomplete(final String autocomplete) {
-		getMap().put(Entity.AUTOCOMPLETE, autocomplete);
+		map().put(Entity.AUTOCOMPLETE, autocomplete);
 	}
 
 	public String getAutocomplete() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE) ? (String) getMap().get(Entity.AUTOCOMPLETE) : null;
+		return map().containsKey(Entity.AUTOCOMPLETE) ? (String) map().get(Entity.AUTOCOMPLETE) : null;
 	}
 
 	public void setAutocompleteTerm(final String autocompleteTerm) {
-		getMap().put(Entity.AUTOCOMPLETE_TERM, autocompleteTerm);
+		map().put(Entity.AUTOCOMPLETE_TERM, autocompleteTerm);
 	}
 
 	public String getAutocompleteTerm() {
-		return getMap().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) getMap().get(Entity.AUTOCOMPLETE_TERM) : null;
+		return map().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) map().get(Entity.AUTOCOMPLETE_TERM) : null;
 	}
 
-	public void setMap(final Map<String, Object> map) {
+	public void map(final Map<String, Object> map) {
 		this.map = map;
 	}
 
-	public Map<String, Object> getMap() {
+	public Map<String, Object> map() {
 		if (map == null) {
 			map = new HashMap<String, Object>();
 		}
@@ -224,26 +224,35 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getQueryConfigurationName() {
-		return getMap().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) this.map
+		return map().containsKey(Entity.QUERY_CONFIGURATION_NAME) ? (String) this.map
 				.get(Entity.QUERY_CONFIGURATION_NAME) : "default";
 	}
 
 	public void setQueryConfigurationName(final String queryConfigurationName) {
-		getMap().put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
+		map().put(Entity.QUERY_CONFIGURATION_NAME, queryConfigurationName);
 	}
 
+	public Map<String, String> fieldColumnMap() {
+		Map<String, String> fieldColumnMap = (Map<String, String>) map().get(Entity.FIELD_COLUMN_MAP);
+		if (fieldColumnMap == null) {
+			fieldColumnMap = new HashMap<String, String>();
+		}
+		map().put(Entity.FIELD_COLUMN_MAP, fieldColumnMap);
+		return fieldColumnMap;
+	}
+	
 	public void setFakeId(final boolean fakeId) {
-		getMap().put(Entity.FAKE_ID, fakeId);
+		map().put(Entity.FAKE_ID, fakeId);
 	}
 
 	public boolean isFakeId() {
-		return getMap().containsKey(Entity.FAKE_ID) ? (Boolean) getMap().get(Entity.FAKE_ID) : false;
+		return map().containsKey(Entity.FAKE_ID) ? (Boolean) map().get(Entity.FAKE_ID) : false;
 	}
 
 	public List<VulpeEntity<?>> getDeletedDetails() {
 		final List<VulpeEntity<?>> deleted = new ArrayList<VulpeEntity<?>>();
-		if (getMap().containsKey(Entity.DELETED_DETAILS)) {
-			deleted.addAll((List<VulpeEntity<?>>) getMap().get(Entity.DELETED_DETAILS));
+		if (map().containsKey(Entity.DELETED_DETAILS)) {
+			deleted.addAll((List<VulpeEntity<?>>) map().get(Entity.DELETED_DETAILS));
 		} else {
 			setDeletedDetails(deleted);
 		}
@@ -251,7 +260,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public void setDeletedDetails(final List<VulpeEntity<?>> deletedDetails) {
-		getMap().put(Entity.DELETED_DETAILS, deletedDetails);
+		map().put(Entity.DELETED_DETAILS, deletedDetails);
 	}
 
 	public <T> T simple() {

@@ -434,6 +434,7 @@ public class VulpeConstants {
 			public static final String CONDITIONAL = "conditional";
 			public static final String ROW_NUMBER = "rowNumber";
 			public static final String QUERY_CONFIGURATION_NAME = "queryConfigurationName";
+			public static final String FIELD_COLUMN_MAP = "fieldColumnMap";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 			public static final String ORDER_BY = "orderBy";
 		}

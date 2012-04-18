@@ -184,8 +184,8 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 		repairRelationship(entity);
 		T merged = entity;
-		if (((ENTITY) entity).getMap().containsKey(Entity.ONLY_UPDATE_DETAILS)) {
-			final List<String> detailNames = (List<String>) ((ENTITY) entity).getMap().get(
+		if (((ENTITY) entity).map().containsKey(Entity.ONLY_UPDATE_DETAILS)) {
+			final List<String> detailNames = (List<String>) ((ENTITY) entity).map().get(
 					Entity.ONLY_UPDATE_DETAILS);
 			if (VulpeValidationUtil.isNotEmpty(detailNames)) {
 				for (final String detail : detailNames) {
@@ -1048,16 +1048,21 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 			final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
 			if (VulpeValidationUtil.isNotEmpty(value)) {
-				final Column column = field.getAnnotation(Column.class);
-				final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
-				if (column != null) {
-					map.put(column.name(), value);
-				} else if (joinColumn != null) {
-					map.put(StringUtils.isNotBlank(joinColumn.referencedColumnName()) ? joinColumn
-							.referencedColumnName() : joinColumn.name(), value);
+				String columnName = field.getName();
+				if (entity.fieldColumnMap().containsKey(field.getName())) {
+					columnName = entity.fieldColumnMap().get(field.getName());
 				} else {
-					map.put(field.getName(), value);
+					final Column column = field.getAnnotation(Column.class);
+					final JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
+					if (column != null) {
+						columnName = column.name();
+					} else if (joinColumn != null) {
+						columnName = (StringUtils.isNotBlank(joinColumn.referencedColumnName()) ? joinColumn
+								.referencedColumnName()
+								: joinColumn.name());
+					}
 				}
+				map.put(columnName, value);
 			}
 		}
 		return map;

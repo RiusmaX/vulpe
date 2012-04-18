@@ -1280,7 +1280,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			for (final VulpeBaseDetailConfig detailConfig : config.getDetails()) {
 				details.add(detailConfig.getName());
 			}
-			entity.getMap().put(Entity.ONLY_UPDATE_DETAILS, details);
+			entity.map().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
 		if (VulpeValidationUtil.isNotEmpty(config.getDetails())) {
 			for (final VulpeBaseDetailConfig detailConfig : config.getDetails()) {

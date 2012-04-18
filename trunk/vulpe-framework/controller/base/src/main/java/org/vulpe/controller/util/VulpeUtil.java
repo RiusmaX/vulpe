@@ -205,7 +205,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			auditEntity.setUserOfLastUpdate(userAuthenticated());
 			auditEntity.setDateOfLastUpdate(Calendar.getInstance().getTime());
 		}
-		entity.getMap().put(Security.USER_AUTHENTICATED, userAuthenticated());
+		entity.map().put(Security.USER_AUTHENTICATED, userAuthenticated());
 	}
 
 	public VulpeUtil(final AbstractVulpeBaseController<ENTITY, ID> baseController) {
