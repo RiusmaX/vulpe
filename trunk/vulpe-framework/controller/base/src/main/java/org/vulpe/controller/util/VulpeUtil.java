@@ -199,7 +199,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		return has;
 	}
 
-	public void updateAuditInformation(final ENTITY entity) {
+	public void updateAuditInfo(final ENTITY entity) {
 		if (entity instanceof AbstractVulpeBaseAuditEntity) {
 			final AbstractVulpeBaseAuditEntity auditEntity = (AbstractVulpeBaseAuditEntity) entity;
 			auditEntity.setUserOfLastUpdate(userAuthenticated());

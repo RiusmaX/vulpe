@@ -716,7 +716,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final Object value = accessor.getProperty(context, collection, 0);
 			try {
 				final ENTITY detail = (ENTITY) value.getClass().newInstance();
-				vulpe.updateAuditInformation(detail);
+				vulpe.updateAuditInfo(detail);
 				((ArrayList<ENTITY>) collection).add(0, prepareDetail(detail));
 			} catch (InstantiationException e) {
 				LOG.error(e);
@@ -725,7 +725,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			}
 		} else {
 			final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-			vulpe.updateAuditInformation(detail);
+			vulpe.updateAuditInfo(detail);
 			final ENTITY preparedDetail = prepareDetail(detail);
 			if (!preparedDetail.equals(detail)) {
 				accessor.setProperty(context, collection, index, preparedDetail);

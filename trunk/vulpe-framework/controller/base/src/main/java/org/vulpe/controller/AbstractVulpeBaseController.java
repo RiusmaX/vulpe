@@ -666,7 +666,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			} else if (currentEntity == null) {
 				currentEntity = config.getEntityClass().newInstance();
 			}
-			vulpe.updateAuditInformation(currentEntity);
+			vulpe.updateAuditInfo(currentEntity);
 			if (Operation.READ.equals(operation) && entitySelect == null) {
 				entitySelect = config.getEntityClass().newInstance();
 				currentEntity = entitySelect;
@@ -1086,6 +1086,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 	 * @return Entity created.
 	 */
 	protected boolean onCreatePost() {
+		updateDetailsAuditInfo();
 		entity = (ENTITY) invokeServices(vulpe.serviceMethodName(Operation.CREATE),
 				new Class[] { vulpe.controller().config().getEntityClass() },
 				new Object[] { prepareEntity(Operation.CREATE_POST) });
@@ -1282,6 +1283,16 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			entity.map().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
+		updateDetailsAuditInfo();
+		this.entity = (ENTITY) invokeServices(vulpe.serviceMethodName(Operation.UPDATE),
+				new Class[] { config.getEntityClass() }, new Object[] { entity });
+		managePaging(true);
+		vulpe.controller().executed(true);
+		return true;
+	}
+	
+	private void updateDetailsAuditInfo() {
+		final VulpeBaseControllerConfig<ENTITY, ID> config = vulpe.controller().config();
 		if (VulpeValidationUtil.isNotEmpty(config.getDetails())) {
 			for (final VulpeBaseDetailConfig detailConfig : config.getDetails()) {
 				final List<ENTITY> details = VulpeReflectUtil.getFieldValue(entity, detailConfig
@@ -1290,7 +1301,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				if (VulpeValidationUtil.isNotEmpty(details)) {
 					if (detailConfig.getParentDetailConfig() == null) {
 						for (final ENTITY detail : details) {
-							vulpe.updateAuditInformation(detail);
+							vulpe.updateAuditInfo(detail);
 						}
 					} else {
 						for (final ENTITY detail : details) {
@@ -1298,7 +1309,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 									detailConfig.getName());
 							if (VulpeValidationUtil.isNotEmpty(subDetails)) {
 								for (final ENTITY subDetail : subDetails) {
-									vulpe.updateAuditInformation(subDetail);
+									vulpe.updateAuditInfo(subDetail);
 								}
 								VulpeReflectUtil.setFieldValue(detail, detailConfig.getName(),
 										subDetails);
@@ -1309,11 +1320,6 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				}
 			}
 		}
-		this.entity = (ENTITY) invokeServices(vulpe.serviceMethodName(Operation.UPDATE),
-				new Class[] { config.getEntityClass() }, new Object[] { entity });
-		managePaging(true);
-		vulpe.controller().executed(true);
-		return true;
 	}
 
 	/**
@@ -1942,7 +1948,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 		}
 		if (!VulpeValidationUtil.isEmpty(entities)) {
 			for (final ENTITY entity : entities) {
-				vulpe.updateAuditInformation(entity);
+				vulpe.updateAuditInfo(entity);
 			}
 			final List<ENTITY> list = (List<ENTITY>) invokeServices(vulpe
 					.serviceMethodName(Operation.PERSIST), new Class[] { List.class },

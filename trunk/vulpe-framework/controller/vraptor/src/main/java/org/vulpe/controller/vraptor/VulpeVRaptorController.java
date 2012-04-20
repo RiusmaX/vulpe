@@ -265,7 +265,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
-		vulpe.updateAuditInformation(detail);
+		vulpe.updateAuditInfo(detail);
 		final ENTITY preparedDetail = prepareDetail(detail);
 		if (!preparedDetail.equals(detail)) {
 			accessor.setProperty(context, collection, index, preparedDetail);

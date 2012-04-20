@@ -1441,17 +1441,27 @@ var vulpe = {
 			vulpe.util.get(valueId).show();
 		},
 		
-		setRequired: function(name, enabled) {
-			var field = vulpe.util.getElementField(name);
-			if (enabled) {
-				field.addClass("vulpeRequired");
-				vulpe.view.addRequiredField(field);
+		setRequired: function(names, enabled) {
+			var required = function(name) {
+				var field = vulpe.util.getElementField(name);
+				if (enabled) {
+					field.addClass("vulpeRequired");
+					vulpe.view.addRequiredField(field);
+				} else {
+					field.removeClass("vulpeRequired");
+					vulpe.view.addRequiredField(field);
+					var idField = field.attr("id");
+					var idRequiredField = idField + "FieldRequired";
+					vulpe.util.get(idRequiredField).hide();
+				}
+			}
+			if (names.indexOf(",") != -1) {
+				var nameArray = names.split(",");
+				for (var i = 0; i < nameArray.length; i++) {
+					required(nameArray[i]);
+				}
 			} else {
-				field.removeClass("vulpeRequired");
-				vulpe.view.addRequiredField(field);
-				var idField = field.attr("id");
-				var idRequiredField = idField + "FieldRequired";
-				vulpe.util.get(idRequiredField).hide();
+				required(names);
 			}
 		},
 
