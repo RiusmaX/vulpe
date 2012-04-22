@@ -108,7 +108,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/3.1.0.RELEASE/spring-jdbc-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.1/gson-2.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jboss/ejb3/jboss-ejb3-ext-api/1.1.1/jboss-ejb3-ext-api-1.1.1.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/vulpe/vulpe-commons/1.0/vulpe-commons-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/com/caelum/vraptor/3.4.0/vraptor-3.4.0.jar" sourcepath="/M2_REPO/br/com/caelum/vraptor/3.4.0/vraptor-3.4.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/google/collections/google-collections/1.0/google-collections-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar"/>
@@ -124,6 +123,5 @@
 	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/0.10.8/lombok-0.10.8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-asm/3.1.0.RELEASE/spring-asm-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/springframework/spring-expression/3.1.0.RELEASE/spring-expression-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Applications/Active-Thread/Vulpe-Framework/1.0/Servers/tomcat/lib/mysql-connector-java-5.1.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
