@@ -129,6 +129,7 @@
 	<c:if test="${empty queryString}"><c:set var="queryString" value="now.popupKey=${popupId}"/></c:if>
 	<c:if test="${empty popupWidth}"><c:set var="popupWidth" value="450px"/></c:if>
 	<c:if test="${empty icon}"><c:set var="icon" value="search"/></c:if>
+	<c:if test="${not empty action && !fn:contains(action, '/ajax')}"><c:set var="action" value="${action}/ajax"/></c:if>
 	<c:if test="${icon eq 'false'}"><c:set var="icon" value=""/></c:if>
 	<v:action showOnlyIfAuthenticated="${showOnlyIfAuthenticated}" roles="${roles}" elementId="${elementId}" icon="${icon}" labelKey="${labelKey}" javascript="vulpe.view.request.submitPopup({url: '${action}', queryString: '${queryString}', name: '${popupId}', layerParent: '${popupLayerParent}', paramLayerParent: '${paramLayerParent}', properties: '${popupPropertiesAux}', expressions: '${popupExpressions}', paramProperties: '${paramPropertiesAux}', paramExpressions: '${paramExpressions}', requiredParamProperties: '${requiredParamPropertiesAux}', requiredParamExpressions: '${requiredParamExpressions}', styleClass: '${styleClass}', beforeJs: '${util:urlEncode(beforeJs)}', afterJs: '${util:urlEncode(afterJs)}', width: '${popupWidth}'});" iconWidth="16" iconHeight="16"/>
 </c:if>
