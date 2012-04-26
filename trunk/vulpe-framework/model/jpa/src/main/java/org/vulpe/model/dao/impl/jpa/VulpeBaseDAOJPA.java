@@ -220,7 +220,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			LOG.debug("Retriving id: ".concat(entity.getId().toString()));
 		}
 		enableFilters();
-		final ENTITY newEntity = getEntityManager().find(getEntityClass(), entity.getId());
+		final ENTITY newEntity = (ENTITY) getEntityManager().find(entity.getClass(), entity.getId());
 		if (newEntity.getId() instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) newEntity;
 			if (Status.D.equals(logicEntity.getStatus())) {
