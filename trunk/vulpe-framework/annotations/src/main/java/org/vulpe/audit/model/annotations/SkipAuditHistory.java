@@ -52,6 +52,6 @@ import java.lang.annotation.Target;
 @Documented
 @Target( { TYPE })
 @Retention(RUNTIME)
-public @interface IgnoreAuditHistory {
+public @interface SkipAuditHistory {
 
 }

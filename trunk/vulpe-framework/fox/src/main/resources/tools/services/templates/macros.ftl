@@ -235,10 +235,10 @@ ${ident} *${line}
 	<#return ret>
 </#function>
 
-<#function hasIgnoreManager type>
+<#function hasSkipManager type>
 	<#local ignore=false>
 	<#list type.annotations?keys as entry>
-		<#if entry == "org.vulpe.model.annotations.IgnoreManager">
+		<#if entry == "org.vulpe.model.annotations.SkipManager">
 		     <#local ignore=true>
 	    </#if>
 	</#list>
@@ -251,7 +251,7 @@ ${ident} *${line}
 <#macro forAllValidClasses>
 	<@forAllTypes var="type">
 		<#if type?last_index_of("Manager") != -1>
-			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.impl.VulpeBaseManager") && !hasIgnoreManager(type)>
+			<#if type.isPublic() && type.isClass() && !type.isAbstract() && isInstanceOf(type, "org.vulpe.model.services.manager.impl.VulpeBaseManager") && !hasSkipManager(type)>
 				<#assign typeVariables = findTypeVariables(type, type.superclass)>
 				<#local signatureClass = getSignatureClass(type)>
 				<#nested type signatureClass>

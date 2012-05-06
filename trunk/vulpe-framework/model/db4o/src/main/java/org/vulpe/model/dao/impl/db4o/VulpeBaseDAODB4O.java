@@ -57,7 +57,7 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
-import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.annotations.Like;
 import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.OrderBy;
@@ -337,7 +337,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 		}
 		emptyToNull(entity);
 		for (Field field : VulpeReflectUtil.getFields(getEntityClass())) {
-			if (field.isAnnotationPresent(IgnoreAutoFilter.class)) {
+			if (field.isAnnotationPresent(SkipAutoFilter.class)) {
 				continue;
 			}
 			final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());

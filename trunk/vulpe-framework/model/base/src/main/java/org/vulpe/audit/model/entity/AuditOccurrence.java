@@ -59,7 +59,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.vulpe.audit.model.annotations.IgnoreAudit;
+import org.vulpe.audit.model.annotations.SkipAudit;
 import org.vulpe.commons.xml.XMLAttribute;
 import org.vulpe.commons.xml.XMLDateConversor;
 import org.vulpe.commons.xml.XMLReader;
@@ -72,7 +72,7 @@ import com.thoughtworks.xstream.XStream;
 @SuppressWarnings( { "serial", "unchecked" })
 @Entity
 @Table(name = "VulpeAuditOccurrence")
-@IgnoreAudit
+@SkipAudit
 public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 
 	@Id

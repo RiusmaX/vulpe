@@ -35,7 +35,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.vulpe.model.annotations;
+package org.vulpe.model.db4o.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -43,24 +43,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Annotation to query complementation and replacement.
- *
- * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.ANNOTATION_TYPE)
-public @interface QueryConfiguration {
-
-	String name() default "default";
-
-	QueryComplement complement() default @QueryComplement;
-
-	QueryReplace replace() default @QueryReplace;
-
-	Relationship[] relationships() default {};
-	
-	boolean disableFilters() default false;
+@Target(ElementType.FIELD)
+public @interface SkipEmpty {
 
 }

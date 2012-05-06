@@ -55,5 +55,13 @@ public @interface QueryParameter {
 	Parameter equals() default @Parameter(name = "");
 
 	Parameter[] orEquals() default {};
+	
+	TypeParameter type() default TypeParameter.NONE;
+	
+	String pattern() default ""; 
+	
+	public enum TypeParameter {
+		NONE, DATE
+	}
 
 }

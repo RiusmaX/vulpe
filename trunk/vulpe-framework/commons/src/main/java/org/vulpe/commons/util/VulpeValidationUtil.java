@@ -44,14 +44,14 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to validation.
- *
+ * 
  */
 @SuppressWarnings("unchecked")
 public class VulpeValidationUtil {
 
 	/**
 	 * Validate if value is not empty
-	 *
+	 * 
 	 * @param value
 	 * @return returns true if is not empty
 	 */
@@ -79,13 +79,59 @@ public class VulpeValidationUtil {
 		return true;
 	}
 
+	public static boolean isNotEmpty(final Object... values) {
+		boolean notEmpty = true;
+		for (final Object value : values) {
+			if (isEmpty(value)) {
+				notEmpty = false;
+				break;
+			}
+		}
+		return notEmpty;
+	}
+
 	/**
 	 * Validate if value is empty.
-	 *
+	 * 
 	 * @param value
 	 * @return returns true if is empty
 	 */
 	public static boolean isEmpty(final Object value) {
 		return !isNotEmpty(value);
+	}
+
+	public static boolean isEmpty(final Object... values) {
+		boolean empty = true;
+		for (final Object value : values) {
+			if (isNotEmpty(value)) {
+				empty = false;
+				break;
+			}
+		}
+		return empty;
+	}
+
+	public static boolean isNull(final Object... objects) {
+		boolean nullable = true;
+		for (final Object object : objects) {
+			if (object != null) {
+				nullable = false;
+				break;
+			}
+		}
+		return nullable;
+
+	}
+
+	public static boolean isNotNull(final Object... objects) {
+		boolean nullable = false;
+		for (final Object object : objects) {
+			if (object == null) {
+				nullable = true;
+				break;
+			}
+		}
+		return !nullable;
+
 	}
 }

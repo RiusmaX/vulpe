@@ -42,17 +42,19 @@ import java.util.Date;
 
 import javax.persistence.MappedSuperclass;
 
-import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.SkipAutoFilter;
+import org.vulpe.model.annotations.SkipCompare;
 
 @MappedSuperclass
 @SuppressWarnings( { "serial", "unchecked" })
 public abstract class AbstractVulpeBaseAuditEntity<ID extends Serializable & Comparable> extends
 		AbstractVulpeBaseEntity<ID> {
 
-	@IgnoreAutoFilter
+	@SkipAutoFilter
 	private String userOfLastUpdate;
 
-	@IgnoreAutoFilter
+	@SkipCompare
+	@SkipAutoFilter
 	private Date dateOfLastUpdate;
 
 	public AbstractVulpeBaseAuditEntity() {

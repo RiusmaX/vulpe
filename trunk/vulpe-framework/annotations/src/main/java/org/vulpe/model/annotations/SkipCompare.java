@@ -37,22 +37,15 @@
  */
 package org.vulpe.model.annotations;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * Tells Vulpe to ignore the attribute in automatic filter.
- *
- * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- */
 @Documented
-@Target( { FIELD, TYPE })
-@Retention(RUNTIME)
-public @interface IgnoreAutoFilter {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface SkipCompare {
 
 }

@@ -50,6 +50,7 @@ import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Security;
 import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.commons.util.VulpeBeanComparatorUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.dao.VulpeDAO;
@@ -78,57 +79,60 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType,
 			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
-			final String userAuthenticated = (String) entity.map().get(
-					Security.USER_AUTHENTICATED);
-			AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity.getClass()
-					.getName(), entity.getId().toString(), userAuthenticated);
-			if (occurrenceParent != null) {
-				occurrence = new AuditOccurrence(occurrenceParent, auditOccurrenceType, entity
+			final ENTITY entityBeforeUpdate = (ENTITY) entity.map().get("entityBeforeUpdate");
+			if (VulpeBeanComparatorUtil.isDifferent(entityBeforeUpdate, entity)) {
+				final String userAuthenticated = (String) entity.map().get(
+						Security.USER_AUTHENTICATED);
+				AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity
 						.getClass().getName(), entity.getId().toString(), userAuthenticated);
-			}
+				if (occurrenceParent != null) {
+					occurrence = new AuditOccurrence(occurrenceParent, auditOccurrenceType, entity
+							.getClass().getName(), entity.getId().toString(), userAuthenticated);
+				}
 
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Auditing object" + (occurrenceParent == null ? " son" : "")
-						+ ": ".concat(entity.toString()));
-			}
-			if (entity.isHistoryAuditable()) {
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Auditing history of object"
-							+ (occurrenceParent == null ? " son" : "")
+					LOG.debug("Auditing object" + (occurrenceParent == null ? " son" : "")
 							+ ": ".concat(entity.toString()));
 				}
-				try {
-					if (auditOccurrenceType.equals(AuditOccurrenceType.UPDATE)) {
-						final ENTITY entityAudit = (ENTITY) find(entity);
-						occurrence.setDataHistory(new SerialClob(entityAudit.toXMLAudit()
-								.toCharArray()));
-					} else {
-						occurrence
-								.setDataHistory(new SerialClob(entity.toXMLAudit().toCharArray()));
+				if (entity.isHistoryAuditable()) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Auditing history of object"
+								+ (occurrenceParent == null ? " son" : "")
+								+ ": ".concat(entity.toString()));
 					}
-				} catch (Exception e) {
-					LOG.error(e);
+					try {
+						if (auditOccurrenceType.equals(AuditOccurrenceType.UPDATE)) {
+							final ENTITY entityAudit = (ENTITY) find(entity);
+							occurrence.setDataHistory(new SerialClob(entityAudit.toXMLAudit()
+									.toCharArray()));
+						} else {
+							occurrence.setDataHistory(new SerialClob(entity.toXMLAudit()
+									.toCharArray()));
+						}
+					} catch (Exception e) {
+						LOG.error(e);
+					}
 				}
-			}
-			occurrence = merge(occurrence);
-			try {
-				List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-				for (final Field field : fields) {
-					if (Collection.class.isAssignableFrom(field.getType())) {
-						final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
-						if (oneToMany != null) {
-							final Collection<ENTITY> collection = VulpeReflectUtil.getFieldValue(
-									entity, field.getName());
-							if (collection != null) {
-								for (final ENTITY entityAudit : collection) {
-									audit(entityAudit, auditOccurrenceType, occurrence.getId());
+				occurrence = merge(occurrence);
+				try {
+					List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+					for (final Field field : fields) {
+						if (Collection.class.isAssignableFrom(field.getType())) {
+							final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+							if (oneToMany != null) {
+								final Collection<ENTITY> collection = VulpeReflectUtil
+										.getFieldValue(entity, field.getName());
+								if (collection != null) {
+									for (final ENTITY entityAudit : collection) {
+										audit(entityAudit, auditOccurrenceType, occurrence.getId());
+									}
 								}
 							}
 						}
 					}
+				} catch (Exception e) {
+					LOG.error(e);
 				}
-			} catch (Exception e) {
-				LOG.error(e);
 			}
 		}
 	}

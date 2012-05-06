@@ -35,7 +35,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.vulpe.model.db4o.annotations;
+package org.vulpe.model.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -43,9 +43,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates if method of Manager will be despised.
+ *
+ * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface IgnoreEmpty {
+@Target(ElementType.TYPE)
+public @interface SkipManager {
 
 }

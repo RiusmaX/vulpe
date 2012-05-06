@@ -246,6 +246,7 @@ public class VulpeConstants {
 	}
 
 	public class Controller {
+		public static final String ENTITY_BEFORE_UPDATE = "entityBeforeUpdate";
 		public static final String ENTITIES = "entities";
 		public static final String SELECT_FORM = "_selectForm";
 		public static final String SELECT_TABLE = "_selectTable";

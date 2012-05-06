@@ -37,20 +37,22 @@
  */
 package org.vulpe.model.annotations;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates if method of Manager will be despised.
+ * Tells Vulpe to ignore the attribute in automatic filter.
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface IgnoreManager {
+@Target( { FIELD, TYPE })
+@Retention(RUNTIME)
+public @interface SkipAutoFilter {
 
 }

@@ -55,7 +55,7 @@ import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CreateIfNotExist;
 import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.dao.impl.AbstractVulpeBaseDAO;
-import org.vulpe.model.db4o.annotations.IgnoreEmpty;
+import org.vulpe.model.db4o.annotations.SkipEmpty;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.db4o.Identifier;
 
@@ -187,7 +187,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 		final List<Field> fields = VulpeReflectUtil.getFields(object.getClass());
 		for (final Field field : fields) {
 			try {
-				if (field.isAnnotationPresent(IgnoreEmpty.class)) {
+				if (field.isAnnotationPresent(SkipEmpty.class)) {
 					continue;
 				}
 				if ((Modifier.isTransient(field.getModifiers()) || field.isAnnotationPresent(Transient.class))

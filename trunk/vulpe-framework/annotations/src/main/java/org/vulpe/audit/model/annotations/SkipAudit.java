@@ -53,6 +53,6 @@ import java.lang.annotation.Target;
 @Documented
 @Target( { FIELD, TYPE })
 @Retention(RUNTIME)
-public @interface IgnoreAudit {
+public @interface SkipAudit {
 
 }

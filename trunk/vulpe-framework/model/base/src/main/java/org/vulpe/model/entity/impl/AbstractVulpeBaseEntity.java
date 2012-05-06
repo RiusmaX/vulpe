@@ -49,12 +49,13 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.apache.log4j.Logger;
-import org.vulpe.audit.model.annotations.IgnoreAudit;
-import org.vulpe.audit.model.annotations.IgnoreAuditHistory;
+import org.vulpe.audit.model.annotations.SkipAudit;
+import org.vulpe.audit.model.annotations.SkipAuditHistory;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.xml.XMLDateConversor;
-import org.vulpe.model.db4o.annotations.IgnoreEmpty;
+import org.vulpe.model.annotations.SkipCompare;
+import org.vulpe.model.db4o.annotations.SkipEmpty;
 import org.vulpe.model.entity.VulpeEntity;
 
 import com.thoughtworks.xstream.XStream;
@@ -66,8 +67,9 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
 
-	@IgnoreEmpty
-	@IgnoreAudit
+	@SkipCompare
+	@SkipEmpty
+	@SkipAudit
 	private transient Map<String, Object> map = new HashMap<String, Object>();
 
 	public AbstractVulpeBaseEntity() {
@@ -146,12 +148,12 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 
 	@Transient
 	public boolean isAuditable() {
-		return this.getClass().getAnnotation(IgnoreAudit.class) == null;
+		return this.getClass().getAnnotation(SkipAudit.class) == null;
 	}
 
 	@Transient
 	public boolean isHistoryAuditable() {
-		return this.getClass().getAnnotation(IgnoreAuditHistory.class) == null;
+		return this.getClass().getAnnotation(SkipAuditHistory.class) == null;
 	}
 
 	@Transient
@@ -173,7 +175,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	protected boolean isConvertible(final Field attribute) {
-		if (attribute.getAnnotation(IgnoreAudit.class) != null) {
+		if (attribute.getAnnotation(SkipAudit.class) != null) {
 			return false;
 		}
 		if (attribute.getType().isPrimitive() || attribute.getType() == String.class
