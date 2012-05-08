@@ -393,12 +393,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 								.getAnnotation(QueryParameter.class);
 						String alias = StringUtils.isNotEmpty(parent) ? parent + "." : "";
 						StringBuilder paramName = new StringBuilder(alias);
+						String fieldName = field.getName();
 						if (queryParameter != null) {
 							if (queryParameter.fake()
 									&& StringUtils.isNotEmpty(queryParameter.value())) {
-								paramName.append("!" + queryParameter.value());
+								fieldName = "!" + fieldName;
 							} else if (StringUtils.isNotEmpty(queryParameter.value())) {
-								paramName.append(field.getName());
 								if (queryParameter.type().equals(TypeParameter.DATE)) {
 									final SimpleDateFormat sdf = new SimpleDateFormat(
 											queryParameter.pattern());
@@ -406,9 +406,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 											.replace(":value", sdf.format(value)));
 								}
 							}
-						} else {
-							paramName.append(field.getName());
 						}
+						paramName.append(fieldName);
 						final Like like = field.getAnnotation(Like.class);
 						if (like != null) {
 							if (like.type().equals(LikeType.BEGIN)) {
