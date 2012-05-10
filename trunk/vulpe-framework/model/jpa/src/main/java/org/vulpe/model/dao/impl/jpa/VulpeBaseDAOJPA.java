@@ -57,6 +57,7 @@ import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.FilterDefs;
 import org.springframework.stereotype.Repository;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
@@ -107,7 +108,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		final ENTITY newEntity = merge(entity);
 		newEntity.map(entity.map());
 		loadEntityRelationships(newEntity);
-		audit(newEntity, AuditOccurrenceType.INSERT, null);
+		audit(unproxy(newEntity), AuditOccurrenceType.INSERT, null);
 		return newEntity;
 	}
 
@@ -130,7 +131,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		// persistent entity
 		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
 				entity.getId());
-		audit(entity, AuditOccurrenceType.DELETE, null);
+		audit(unproxy(entity), AuditOccurrenceType.DELETE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
 			logicEntity.setStatus(Status.D);
@@ -203,7 +204,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			LOG.debug("Updating object: ".concat(entity.toString()));
 		}
 		repairRelationship(entity);
-		audit(entity, AuditOccurrenceType.UPDATE, null);
+		audit(unproxy(entity), AuditOccurrenceType.UPDATE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entity;
 			logicEntity.setStatus(Status.U);
@@ -236,6 +237,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		newEntity.map(entity.map());
 		loadEntityRelationships(newEntity);
 		disableFilters();
+		newEntity.map().put(Entity.UNPROXYFIED, unproxy(newEntity));
 		return newEntity;
 	}
 

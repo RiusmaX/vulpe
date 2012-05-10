@@ -38,12 +38,15 @@
 package org.vulpe.commons.util;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NullArgumentException;
+import org.apache.log4j.Logger;
+import org.hibernate.mapping.Collection;
 import org.vulpe.model.annotations.SkipCompare;
 
 /**
@@ -52,6 +55,8 @@ import org.vulpe.model.annotations.SkipCompare;
  */
 public class VulpeBeanComparatorUtil {
 
+	private static final Logger LOG = Logger.getLogger(VulpeBeanComparatorUtil.class);
+
 	/**
 	 * Compare beans and return map with differences by field.
 	 * 
@@ -59,7 +64,8 @@ public class VulpeBeanComparatorUtil {
 	 * @param bean2
 	 * @return Map with differences by field.
 	 */
-	public static Map<String, Object[]> compare(final Object bean1, final Object bean2) {
+	public static Map<String, Object[]> compare(final Object bean1, final Object bean2,
+			boolean skipCollections) {
 		if (VulpeValidationUtil.isEmpty(bean1, bean2)) {
 			throw new NullArgumentException("bean1(" + bean1 + ") bean2(" + bean2 + ")");
 		}
@@ -70,27 +76,42 @@ public class VulpeBeanComparatorUtil {
 		final Map<String, Object[]> diffMap = new HashMap<String, Object[]>();
 		final List<Field> fields = VulpeReflectUtil.getFields(bean1.getClass());
 		for (final Field field : fields) {
-			if (VulpeReflectUtil.isAnnotationInField(SkipCompare.class, bean1.getClass(),
-					field)) {
+			if (VulpeReflectUtil.isAnnotationInField(SkipCompare.class, bean1.getClass(), field)
+					|| (skipCollections && Collection.class.isAssignableFrom(field.getType()))) {
 				continue;
 			}
-			final Object value1 = VulpeReflectUtil.getFieldValue(bean1, field.getName());
-			final Object value2 = VulpeReflectUtil.getFieldValue(bean2, field.getName());
-			if (VulpeValidationUtil.isNull(value1, value2)) {
-				continue;
-			}
-			if ((VulpeValidationUtil.isEmpty(value1) && VulpeValidationUtil.isNotEmpty(value2))
-					|| (VulpeValidationUtil.isNotEmpty(value1) && VulpeValidationUtil
-							.isEmpty(value2)) || !value1.equals(value2)) {
-				diffMap.put(field.getName(), new Object[] { value1, value2 });
+			try {
+				final Object value1 = VulpeReflectUtil.getFieldValue(bean1, field.getName());
+				final Object value2 = VulpeReflectUtil.getFieldValue(bean2, field.getName());
+				if (VulpeValidationUtil.isNull(value1, value2)) {
+					continue;
+				}
+				boolean diff = false;
+				if ((VulpeValidationUtil.isEmpty(value1) && VulpeValidationUtil.isNotEmpty(value2))
+						|| (VulpeValidationUtil.isNotEmpty(value1) && VulpeValidationUtil
+								.isEmpty(value2))) {
+					diff = true;
+				} else {
+					if (Date.class.isAssignableFrom(field.getType())) {
+						if (((Date) value1).getTime() != ((Date) value2).getTime()) {
+							diff = true;
+						}
+					} else if (!value1.equals(value2)) {
+						diff = true;
+					}
+				}
+				if (diff) {
+					diffMap.put(field.getName(), new Object[] { value1, value2 });
+				}
+			} catch (Exception e) {
+				LOG.error(e);
 			}
 		}
 		return diffMap;
 	}
 
 	public static boolean isDifferent(final Object bean1, final Object bean2) {
-		final Map<String, Object[]> diffMap = compare(bean1, bean2);
-		return !diffMap.isEmpty();
+		return !compare(bean1, bean2, false).isEmpty();
 	}
 
 }

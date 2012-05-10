@@ -49,6 +49,7 @@ import org.apache.log4j.Logger;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Security;
+import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeBeanComparatorUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -79,7 +80,7 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 	protected void audit(final ENTITY entity, final AuditOccurrenceType auditOccurrenceType,
 			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
-			final ENTITY entityBeforeUpdate = (ENTITY) entity.map().get("entityBeforeUpdate");
+			final ENTITY entityBeforeUpdate = (ENTITY) entity.map().get(Entity.BEFORE_UPDATE);
 			if (VulpeBeanComparatorUtil.isDifferent(entityBeforeUpdate, entity)) {
 				final String userAuthenticated = (String) entity.map().get(
 						Security.USER_AUTHENTICATED);

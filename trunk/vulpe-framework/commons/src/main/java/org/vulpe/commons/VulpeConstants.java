@@ -246,7 +246,6 @@ public class VulpeConstants {
 	}
 
 	public class Controller {
-		public static final String ENTITY_BEFORE_UPDATE = "entityBeforeUpdate";
 		public static final String ENTITIES = "entities";
 		public static final String SELECT_FORM = "_selectForm";
 		public static final String SELECT_TABLE = "_selectTable";
@@ -438,6 +437,9 @@ public class VulpeConstants {
 			public static final String FIELD_COLUMN_MAP = "fieldColumnMap";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 			public static final String ORDER_BY = "orderBy";
+			public static final String UNPROXYFIED = "unproxyfied";
+			public static final String BEFORE_UPDATE = "beforeUpdate";
+
 		}
 
 		public class DAO {
