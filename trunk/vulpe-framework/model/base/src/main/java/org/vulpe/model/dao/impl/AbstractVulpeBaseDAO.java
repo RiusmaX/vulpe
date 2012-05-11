@@ -81,7 +81,7 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 			final Long occurrenceParent) throws VulpeApplicationException {
 		if (VulpeConfigHelper.isAuditEnabled() && entity.isAuditable()) {
 			final ENTITY entityBeforeUpdate = (ENTITY) entity.map().get(Entity.BEFORE_UPDATE);
-			if (VulpeBeanComparatorUtil.isDifferent(entityBeforeUpdate, entity)) {
+			if (entityBeforeUpdate == null || VulpeBeanComparatorUtil.isDifferent(entityBeforeUpdate, entity)) {
 				final String userAuthenticated = (String) entity.map().get(
 						Security.USER_AUTHENTICATED);
 				AuditOccurrence occurrence = new AuditOccurrence(auditOccurrenceType, entity

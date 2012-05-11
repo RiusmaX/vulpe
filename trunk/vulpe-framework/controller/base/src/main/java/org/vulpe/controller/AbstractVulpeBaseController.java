@@ -1145,7 +1145,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			controlResultForward();
 		}
 		updateAfter();
-		ever.putWeakRef(Entity.BEFORE_UPDATE, entity.map().get(Entity.UNPROXYFIED));
+		ever.putWeakRef(Controller.ENTITY_BEFORE_UPDATE, entity.map().get(Entity.UNPROXYFIED));
 	}
 
 	/**
@@ -1284,7 +1284,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			}
 			entity.map().put(Entity.ONLY_UPDATE_DETAILS, details);
 		}
-		entity.map().put(Entity.BEFORE_UPDATE, ever.get(Entity.BEFORE_UPDATE));
+		entity.map().put(Entity.BEFORE_UPDATE, ever.get(Controller.ENTITY_BEFORE_UPDATE));
 		updateDetailsAuditInfo();
 		this.entity = (ENTITY) invokeServices(vulpe.serviceMethodName(Operation.UPDATE),
 				new Class[] { config.getEntityClass() }, new Object[] { entity });

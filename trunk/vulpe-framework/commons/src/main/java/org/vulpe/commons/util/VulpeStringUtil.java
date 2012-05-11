@@ -41,6 +41,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -345,4 +347,54 @@ public class VulpeStringUtil {
 	public static String getValueFromLast(String value, String token) {
 		return value.substring(value.lastIndexOf(token) + 1);
 	}
+	
+	public static List<String> splitHierarchy(String value) {
+		final List<String> parts = new ArrayList<String>();
+		int firstPos = value.indexOf("[");
+		int lastPos = value.lastIndexOf("]");
+		String parent = "";
+		if (firstPos > 0) {
+			parent = value.substring(0, firstPos);
+		}
+		value = value.substring(firstPos + 1, lastPos);
+		final List<Integer> positions = new ArrayList<Integer>();
+		for (int i = 0; i < value.length(); i++) {
+			if (value.charAt(i) == ",".charAt(0)) {
+				positions.add(i);
+			}
+		}
+		if (positions.size() == 1) {
+			int pos = positions.get(0);
+			String cut = value.substring(0, pos);
+			parts.add(parent + "." + cut);
+			cut = value.substring(pos + 1);
+			parts.add(parent + "." + cut);
+		} else {
+			int pos2 = 0;
+			for (int i = 0; i < positions.size(); i++) {
+				int pos = positions.get(i);
+				String cut = value.substring(pos2, pos);
+				int open = VulpeStringUtil.count(cut, "[");
+				int close = VulpeStringUtil.count(cut, "]");
+				if (cut.contains("[") && cut.contains("]") && open == close) {
+					parts.add(parent + "." + cut);
+				} else if (cut.contains("[") || cut.contains("]")) {
+					if (i == (positions.size() - 1)) {
+						cut = value.substring(pos2);
+						parts.add(parent + "." + cut);
+					}
+					continue;
+				} else {
+					parts.add(parent + "." + cut);
+				}
+				pos2 = pos + 1;
+				if (i == (positions.size() - 1)) {
+					cut = value.substring(pos2);
+					parts.add(parent + "." + cut);
+				}
+			}
+		}
+		return parts;
+	}
+
 }
