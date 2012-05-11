@@ -38,16 +38,20 @@
 package org.vulpe.commons.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.log4j.Logger;
 import org.hibernate.mapping.Collection;
 import org.vulpe.model.annotations.SkipCompare;
+import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Utility class to compare beans.
@@ -65,7 +69,7 @@ public class VulpeBeanComparatorUtil {
 	 * @return Map with differences by field.
 	 */
 	public static Map<String, Object[]> compare(final Object bean1, final Object bean2,
-			boolean skipCollections) {
+			boolean skipCollections, boolean skipTransient) {
 		if (VulpeValidationUtil.isEmpty(bean1) || VulpeValidationUtil.isEmpty(bean2)) {
 			throw new NullArgumentException("bean1(" + bean1 + ") bean2(" + bean2 + ")");
 		}
@@ -77,12 +81,14 @@ public class VulpeBeanComparatorUtil {
 		final List<Field> fields = VulpeReflectUtil.getFields(bean1.getClass());
 		for (final Field field : fields) {
 			if (VulpeReflectUtil.isAnnotationInField(SkipCompare.class, bean1.getClass(), field)
-					|| (skipCollections && Collection.class.isAssignableFrom(field.getType()))) {
+					|| (skipCollections && Collection.class.isAssignableFrom(field.getType()))
+					|| (skipTransient && (Modifier.isTransient(field.getModifiers()) || field
+							.isAnnotationPresent(Transient.class)))) {
 				continue;
 			}
 			try {
-				final Object value1 = VulpeReflectUtil.getFieldValue(bean1, field.getName());
-				final Object value2 = VulpeReflectUtil.getFieldValue(bean2, field.getName());
+				Object value1 = VulpeReflectUtil.getFieldValue(bean1, field.getName());
+				Object value2 = VulpeReflectUtil.getFieldValue(bean2, field.getName());
 				if (VulpeValidationUtil.isNull(value1, value2)) {
 					continue;
 				}
@@ -94,6 +100,13 @@ public class VulpeBeanComparatorUtil {
 				} else {
 					if (Date.class.isAssignableFrom(field.getType())) {
 						if (((Date) value1).getTime() != ((Date) value2).getTime()) {
+							diff = true;
+						}
+					} else if (VulpeEntity.class.isAssignableFrom(field.getClass())) {
+						if (!((VulpeEntity<?>) value1).getId().equals(
+								((VulpeEntity<?>) value2).getId())) {
+							value1 = ((VulpeEntity<?>) value1).getId();
+							value2 = ((VulpeEntity<?>) value2).getId();
 							diff = true;
 						}
 					} else if (!value1.equals(value2)) {
@@ -111,7 +124,7 @@ public class VulpeBeanComparatorUtil {
 	}
 
 	public static boolean isDifferent(final Object bean1, final Object bean2) {
-		return !compare(bean1, bean2, false).isEmpty();
+		return !compare(bean1, bean2, false, true).isEmpty();
 	}
 
 }
