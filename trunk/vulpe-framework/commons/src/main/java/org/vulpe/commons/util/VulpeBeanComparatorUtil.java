@@ -102,7 +102,7 @@ public class VulpeBeanComparatorUtil {
 						if (((Date) value1).getTime() != ((Date) value2).getTime()) {
 							diff = true;
 						}
-					} else if (VulpeEntity.class.isAssignableFrom(field.getClass())) {
+					} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {
 						if (!((VulpeEntity<?>) value1).getId().equals(
 								((VulpeEntity<?>) value2).getId())) {
 							value1 = ((VulpeEntity<?>) value1).getId();
