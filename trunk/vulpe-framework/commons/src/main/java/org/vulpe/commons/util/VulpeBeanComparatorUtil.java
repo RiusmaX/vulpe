@@ -66,7 +66,7 @@ public class VulpeBeanComparatorUtil {
 	 */
 	public static Map<String, Object[]> compare(final Object bean1, final Object bean2,
 			boolean skipCollections) {
-		if (VulpeValidationUtil.isEmpty(bean1, bean2)) {
+		if (VulpeValidationUtil.isEmpty(bean1) || VulpeValidationUtil.isEmpty(bean2)) {
 			throw new NullArgumentException("bean1(" + bean1 + ") bean2(" + bean2 + ")");
 		}
 		if (!bean1.getClass().equals(bean2.getClass()) || VulpeValidationUtil.isEmpty(bean1)
