@@ -438,7 +438,7 @@ public class VulpeConstants {
 			public static final String FIELD_COLUMN_MAP = "fieldColumnMap";
 			public static final String ONLY_UPDATE_DETAILS = "onlyUpdateDetails";
 			public static final String ORDER_BY = "orderBy";
-			public static final String UNPROXYFIED = "unproxyfied";
+			public static final String UNREFERENCED = "unreferenced";
 			public static final String BEFORE_UPDATE = "beforeUpdate";
 
 		}

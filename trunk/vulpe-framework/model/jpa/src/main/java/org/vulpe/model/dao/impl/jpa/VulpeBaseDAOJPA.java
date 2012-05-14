@@ -41,6 +41,8 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,7 @@ import javax.persistence.Transient;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.FilterDefs;
@@ -237,8 +240,60 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		newEntity.map(entity.map());
 		loadEntityRelationships(newEntity);
 		disableFilters();
-		newEntity.map().put(Entity.UNPROXYFIED, unproxy(newEntity));
+		disreference(newEntity);
+		newEntity.map().put(Entity.UNREFERENCED, unproxy(clone(newEntity, null)));
 		return newEntity;
+	}
+
+	private ENTITY disreference(ENTITY entity) {
+		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
+		for (final Field field : fields) {
+			if (!Hibernate.isInitialized(VulpeReflectUtil.getFieldValue(entity, field.getName()))) {
+				VulpeReflectUtil.setFieldValue(entity, field.getName(), null);
+			}
+		}
+		for (final Field field : fields) {
+			if (Collection.class.isAssignableFrom(field.getType())) {
+				final Object value = VulpeReflectUtil.getFieldValue(entity, field.getName());
+				if (VulpeValidationUtil.isNotEmpty(value)) {
+					for (final ENTITY childEntity : (List<ENTITY>) value) {
+						disreference(childEntity);
+					}
+				}
+			}
+		}
+		return entity;
+	}
+
+	private ENTITY clone(final ENTITY entity, final String parent) {
+		final ENTITY clone = (ENTITY) entity.clone();
+		final List<Field> fields = VulpeReflectUtil.getFields(clone.getClass());
+		for (final Field field : fields) {
+			if (VulpeValidationUtil.isNotEmpty(parent) && parent.equals(field.getName())) {
+				continue;
+			}
+			if (Collection.class.isAssignableFrom(field.getType())) {
+				final List<?> value1 = VulpeReflectUtil.getFieldValue(clone, field.getName());
+				if (VulpeValidationUtil.isNotEmpty(value1)) {
+					final List<?> value2 = ((List<?>) ((ArrayList<?>) value1).clone());
+					for (final ENTITY childEntity : (List<ENTITY>) value2) {
+						if (VulpeValidationUtil.isNotEmpty(childEntity)) {
+							clone((ENTITY) childEntity.clone(), VulpeStringUtil
+									.getAttributeName(clone.getClass().getSimpleName()));
+						}
+					}
+					VulpeReflectUtil.setFieldValue(clone, field.getName(), value2);
+				}
+			} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+				final ENTITY value = VulpeReflectUtil.getFieldValue(clone, field.getName());
+				if (VulpeValidationUtil.isNotEmpty(value)) {
+					VulpeReflectUtil.setFieldValue(clone, field.getName(), clone((ENTITY) value
+							.clone(), VulpeStringUtil.getAttributeName(clone.getClass()
+							.getSimpleName())));
+				}
+			}
+		}
+		return clone;
 	}
 
 	/*

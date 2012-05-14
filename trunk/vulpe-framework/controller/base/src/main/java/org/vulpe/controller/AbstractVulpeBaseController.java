@@ -1145,7 +1145,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			controlResultForward();
 		}
 		updateAfter();
-		ever.putWeakRef(Controller.ENTITY_BEFORE_UPDATE, entity.map().get(Entity.UNPROXYFIED));
+		ever.putWeakRef(Controller.ENTITY_BEFORE_UPDATE, entity.map().get(Entity.UNREFERENCED));
 	}
 
 	/**
