@@ -50,7 +50,6 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.ExportDelegate;

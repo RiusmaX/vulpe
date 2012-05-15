@@ -87,11 +87,11 @@ public class StrutsReportUtil extends ReportUtil implements JasperReportConstant
 			final Collection<?> collection, final VulpeHashMap<String, Object> parameters,
 			final String format) {
 		try {
-			String fullFileName = getRealPath(fileName);
+			final String fullFileName = getRealPath(fileName);
 			if (StringUtils.isBlank(fullFileName)) {
 				throw new VulpeSystemException("vulpe.error.report");
 			}
-			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fullFileName);
+			final JasperReport jasperReport = (JasperReport) JRLoader.loadObject(new File(fullFileName));
 			final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(collection);
 
 			parameters.put("BASEDIR", StringUtils.replace(fullFileName, StringUtils.replace(
