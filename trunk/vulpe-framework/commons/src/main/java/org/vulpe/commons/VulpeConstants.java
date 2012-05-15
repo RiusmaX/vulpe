@@ -63,6 +63,7 @@ public class VulpeConstants {
 	public static final String CACHED_ENUMS = "vulpeCachedEnums";
 	public static final String CACHED_ENUMS_ARRAY = "vulpeCachedEnumsArray";
 	public static final String CONTROLLER_METHODS = "vulpeControllerMethods";
+	public static final String APPLICATION = "application";
 	public static final String VULPE = "vulpe";
 	public static final String VULPE_SECURITY = "vulpe-security";
 	public static final String DOMAINS = "domains";

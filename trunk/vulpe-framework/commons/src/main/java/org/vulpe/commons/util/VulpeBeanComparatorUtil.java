@@ -50,8 +50,11 @@ import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.log4j.Logger;
 import org.hibernate.mapping.Collection;
+import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.model.annotations.SkipCompare;
 import org.vulpe.model.entity.VulpeEntity;
+
+import com.sun.jmx.snmp.Timestamp;
 
 /**
  * Utility class to compare beans.
@@ -100,6 +103,17 @@ public class VulpeBeanComparatorUtil {
 				} else {
 					if (Date.class.isAssignableFrom(field.getType())) {
 						if (((Date) value1).getTime() != ((Date) value2).getTime()) {
+							if (value1 instanceof Timestamp || value2 instanceof Timestamp) {
+								value1 = VulpeDateUtil.getDate((Date) value1, VulpeConfigHelper
+										.getDateTimePattern());
+								value2 = VulpeDateUtil.getDate((Date) value2, VulpeConfigHelper
+										.getDateTimePattern());
+							} else {
+								value1 = VulpeDateUtil.getDate((Date) value1, VulpeConfigHelper
+										.getDatePattern());
+								value2 = VulpeDateUtil.getDate((Date) value2, VulpeConfigHelper
+										.getDatePattern());
+							}
 							diff = true;
 						}
 					} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {

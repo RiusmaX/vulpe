@@ -41,6 +41,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.vulpe.commons.VulpeConstants;
 import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.config.annotations.VulpeProject;
@@ -64,8 +65,9 @@ public final class VulpeConfigHelper {
 
 	static {
 		try {
-			VULPE = ResourceBundle.getBundle("vulpe", new Locale(""));
-			VULPE_APPLICATION = ResourceBundle.getBundle("application", new Locale(""));
+			VULPE = ResourceBundle.getBundle(VulpeConstants.VULPE, new Locale(""));
+			VULPE_APPLICATION = ResourceBundle
+					.getBundle(VulpeConstants.APPLICATION, new Locale(""));
 		} catch (Exception e) {
 			LOG.error(e);
 		}
@@ -136,6 +138,38 @@ public final class VulpeConfigHelper {
 			}
 		}
 		return enabled;
+	}
+
+	/**
+	 * Method return date pattern.
+	 * 
+	 * @since 1.0
+	 * @return Date Pattern. Example: MM/dd/yyyy.
+	 */
+	public static String getDatePattern() {
+		String pattern = "MM/dd/yyyy";
+		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("datePattern")) {
+			pattern = VULPE_APPLICATION.getString("datePattern");
+		} else if (VULPE.containsKey("datePattern")) {
+			pattern = VULPE.getString("datePattern");
+		}
+		return pattern;
+	}
+	
+	/**
+	 * Method return date time pattern.
+	 * 
+	 * @since 1.0
+	 * @return Date Pattern. Example: MM/dd/yyyy HH:mm:ss.
+	 */
+	public static String getDateTimePattern() {
+		String pattern = "MM/dd/yyyy HH:mm:ss";
+		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("dateTimePattern")) {
+			pattern = VULPE_APPLICATION.getString("dateTimePattern");
+		} else if (VULPE.containsKey("dateTimePattern")) {
+			pattern = VULPE.getString("dateTimePattern");
+		}
+		return pattern;
 	}
 
 	/**
