@@ -514,9 +514,8 @@ public class Functions {
 							continue;
 						}
 					}
-					final String key = fieldClass.getName().concat(".").concat(item.toString());
-					final String value = findText(key);
-					list.add(new ValueBean(item.toString(), value));
+					list.add(new ValueBean(item.toString(), findText(fieldClass.getName().concat(
+							".").concat(item.toString()))));
 				}
 			}
 			return list;
@@ -539,7 +538,7 @@ public class Functions {
 			if (bean == null) {
 				return null;
 			}
-			String[] fieldParts = field.replace(".id", "").split("\\.");
+			final String[] fieldParts = field.replace(".id", "").split("\\.");
 			Class<?> fieldClass = null;
 			if (fieldParts.length == 1) {
 				fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), fieldParts[0]);
@@ -559,13 +558,9 @@ public class Functions {
 				return null;
 			}
 			if (fieldClass.isEnum()) {
-				String key = null;
-				String value = null;
 				for (final Object item : fieldClass.getEnumConstants()) {
-					if (item.equals(fieldValue)) {
-						key = fieldClass.getName().concat(".").concat(item.toString());
-						value = findText(key);
-						return value;
+					if (item.equals(fieldValue) || item.toString().equals(fieldValue)) {
+						return findText(fieldClass.getName().concat(".").concat(item.toString()));
 					}
 				}
 			}

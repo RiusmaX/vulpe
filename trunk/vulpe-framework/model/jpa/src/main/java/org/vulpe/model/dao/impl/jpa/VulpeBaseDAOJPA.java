@@ -241,7 +241,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		loadEntityRelationships(newEntity);
 		disableFilters();
 		dereference(newEntity);
-		newEntity.map().put(Entity.UNREFERENCED, unproxy(VulpeCloneUtil.clone(newEntity, null)));
+		newEntity.map().put(Entity.UNREFERENCED, VulpeCloneUtil.clone(unproxy(newEntity), null));
 		return newEntity;
 	}
 

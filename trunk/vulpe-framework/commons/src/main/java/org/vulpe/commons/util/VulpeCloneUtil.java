@@ -54,12 +54,12 @@ public class VulpeCloneUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeCloneUtil.class);
 
-	public static  VulpeEntity<?> clone(final VulpeEntity<?> entity, final String parent) {
+	public static VulpeEntity<?> clone(final VulpeEntity<?> entity, final Class parent) {
 		LOG.debug("Initiating clone");
 		final VulpeEntity<?> clone = (VulpeEntity<?>) entity.clone();
 		final List<Field> fields = VulpeReflectUtil.getFields(clone.getClass());
 		for (final Field field : fields) {
-			if (VulpeValidationUtil.isNotEmpty(parent) && parent.equals(field.getName())) {
+			if (field.getType().equals(parent)) {
 				continue;
 			}
 			if (Collection.class.isAssignableFrom(field.getType())) {
@@ -68,8 +68,7 @@ public class VulpeCloneUtil {
 					final List<?> value2 = ((List<?>) ((ArrayList<?>) value1).clone());
 					for (final VulpeEntity<?> childEntity : (List<VulpeEntity<?>>) value2) {
 						if (VulpeValidationUtil.isNotEmpty(childEntity)) {
-							clone((VulpeEntity<?>) childEntity.clone(), VulpeStringUtil
-									.getAttributeName(clone.getClass().getSimpleName()));
+							clone((VulpeEntity<?>) childEntity.clone(), clone.getClass());
 						}
 					}
 					VulpeReflectUtil.setFieldValue(clone, field.getName(), value2);
@@ -78,8 +77,7 @@ public class VulpeCloneUtil {
 				final VulpeEntity<?> value = VulpeReflectUtil.getFieldValue(clone, field.getName());
 				if (VulpeValidationUtil.isNotEmpty(value)) {
 					VulpeReflectUtil.setFieldValue(clone, field.getName(), clone(
-							(VulpeEntity<?>) value.clone(), VulpeStringUtil.getAttributeName(clone
-									.getClass().getSimpleName())));
+							(VulpeEntity<?>) value.clone(), clone.getClass()));
 				}
 			}
 		}
