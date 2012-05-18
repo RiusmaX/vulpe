@@ -446,23 +446,14 @@ public class Functions {
 	 * @throws JspException
 	 */
 	public static String booleanTo(final Boolean value, final String toValue) throws JspException {
-		final StringTokenizer values = new StringTokenizer(toValue, "|");
-		String valueTrue = values.nextToken();
-		String valueFalse = values.nextToken();
-		char openBrace = "{".charAt(0);
-		char closeBrace = "}".charAt(0);
-		if (valueTrue.charAt(0) == openBrace
-				&& valueTrue.charAt(valueTrue.length() - 1) == closeBrace) {
-			valueTrue = findText(valueTrue.substring(1, valueTrue.length() - 1));
+		String returnValue = "";
+		if (StringUtils.isNotEmpty(toValue)) {
+			final StringTokenizer values = new StringTokenizer(toValue, "|");
+			final String valueTrue = values.nextToken().replace("{", "");
+			final String valueFalse = values.nextToken().replace("}", "");
+			returnValue = value ? findText(valueTrue) : findText(valueFalse);
 		}
-		if (valueFalse.charAt(0) == openBrace
-				&& valueFalse.charAt(valueFalse.length() - 1) == closeBrace) {
-			valueFalse = findText(valueFalse.substring(1, valueFalse.length() - 1));
-		}
-		if (value) {
-			return valueTrue;
-		}
-		return valueFalse;
+		return returnValue;
 	}
 
 	/**
