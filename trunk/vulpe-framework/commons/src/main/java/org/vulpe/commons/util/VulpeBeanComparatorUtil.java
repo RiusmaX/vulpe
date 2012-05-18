@@ -100,6 +100,33 @@ public class VulpeBeanComparatorUtil {
 						|| (VulpeValidationUtil.isNotEmpty(value1) && VulpeValidationUtil
 								.isEmpty(value2))) {
 					diff = true;
+					if (Date.class.isAssignableFrom(field.getType())) {
+						if (VulpeValidationUtil.isNotEmpty(value1)) {
+							if (value1 instanceof Timestamp) {
+								value1 = VulpeDateUtil.getDate((Date) value1, VulpeConfigHelper
+										.getDateTimePattern());
+							} else {
+								value1 = VulpeDateUtil.getDate((Date) value1, VulpeConfigHelper
+										.getDatePattern());
+							}
+						}
+						if (VulpeValidationUtil.isNotEmpty(value2)) {
+							if (value2 instanceof Timestamp) {
+								value2 = VulpeDateUtil.getDate((Date) value2, VulpeConfigHelper
+										.getDateTimePattern());
+							} else {
+								value2 = VulpeDateUtil.getDate((Date) value2, VulpeConfigHelper
+										.getDatePattern());
+							}
+						}
+					} else if (VulpeEntity.class.isAssignableFrom(field.getType())) {
+						if (VulpeValidationUtil.isNotEmpty(value1)) {
+							value1 = ((VulpeEntity<?>) value1).getId();
+						}
+						if (VulpeValidationUtil.isNotEmpty(value2)) {
+							value2 = ((VulpeEntity<?>) value2).getId();
+						}
+					}
 				} else {
 					if (Date.class.isAssignableFrom(field.getType())) {
 						if (((Date) value1).getTime() != ((Date) value2).getTime()) {
