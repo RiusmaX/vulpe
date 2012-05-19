@@ -39,6 +39,8 @@ package org.vulpe.commons.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,12 +51,9 @@ import javax.persistence.Transient;
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.log4j.Logger;
-import org.hibernate.mapping.Collection;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.model.annotations.SkipCompare;
 import org.vulpe.model.entity.VulpeEntity;
-
-import com.sun.jmx.snmp.Timestamp;
 
 /**
  * Utility class to compare beans.
