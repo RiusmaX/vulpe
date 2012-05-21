@@ -72,25 +72,28 @@ public class VulpeBeanComparatorUtil {
 	 */
 	public static Map<String, Object[]> compare(final Object bean1, final Object bean2,
 			boolean skipCollections, boolean skipTransient) {
-		if (VulpeValidationUtil.isEmpty(bean1) || VulpeValidationUtil.isEmpty(bean2)) {
+		if (VulpeValidationUtil.isEmpty(bean1, bean2)) {
 			throw new NullArgumentException("bean1(" + bean1 + ") bean2(" + bean2 + ")");
 		}
-		if (!bean1.getClass().equals(bean2.getClass()) || VulpeValidationUtil.isEmpty(bean1)
-				|| VulpeValidationUtil.isEmpty(bean2)) {
+		if (VulpeValidationUtil.isNotEmpty(bean1, bean2)
+				&& !bean1.getClass().equals(bean2.getClass())) {
 			throw new IllegalClassException(bean1.getClass(), bean2.getClass());
 		}
+		final Class<?> baseClass = bean1 != null ? bean1.getClass() : bean2.getClass();
 		final Map<String, Object[]> diffMap = new HashMap<String, Object[]>();
-		final List<Field> fields = VulpeReflectUtil.getFields(bean1.getClass());
+		final List<Field> fields = VulpeReflectUtil.getFields(baseClass);
 		for (final Field field : fields) {
-			if (VulpeReflectUtil.isAnnotationInField(SkipCompare.class, bean1.getClass(), field)
+			if (VulpeReflectUtil.isAnnotationInField(SkipCompare.class, baseClass, field)
 					|| (skipCollections && Collection.class.isAssignableFrom(field.getType()))
 					|| (skipTransient && (Modifier.isTransient(field.getModifiers()) || field
 							.isAnnotationPresent(Transient.class)))) {
 				continue;
 			}
 			try {
-				Object value1 = VulpeReflectUtil.getFieldValue(bean1, field.getName());
-				Object value2 = VulpeReflectUtil.getFieldValue(bean2, field.getName());
+				Object value1 = VulpeValidationUtil.isNotEmpty(bean1) ? VulpeReflectUtil
+						.getFieldValue(bean1, field.getName()) : null;
+				Object value2 = VulpeValidationUtil.isNotEmpty(bean2) ? VulpeReflectUtil
+						.getFieldValue(bean2, field.getName()) : null;
 				if (VulpeValidationUtil.isNull(value1, value2)) {
 					continue;
 				}
