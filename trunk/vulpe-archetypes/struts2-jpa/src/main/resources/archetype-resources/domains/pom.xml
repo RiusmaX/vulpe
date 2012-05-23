@@ -65,7 +65,7 @@
 					<factory>org.vulpe.fox.dao.DAOProcessorFactory</factory>
 					<options>
 						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools/dao/templates/plugin.ftl</param>
-						<param>SGDB=DB4O</param>
+						<param>SGDB=JPA</param>
 					</options>
 					<sourceOutputDirectory>${symbol_dollar}{basedir}/generated/main/java</sourceOutputDirectory>
 				</configuration>
