@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import org.apache.commons.lang.StringUtils;
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.annotations.OrderBy;
 import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -28,7 +28,7 @@ public class Language extends BasePortal {
 	@VulpeText(size = 30)
 	private String name;
 
-	@IgnoreAutoFilter
+	@SkipAutoFilter
 	@VulpeCheckbox(fieldValue = "true")
 	private boolean defaultLanguage;
 

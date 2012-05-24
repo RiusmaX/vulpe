@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import org.vulpe.model.annotations.CachedClass;
-import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
@@ -35,7 +35,7 @@ public class Portal extends BasePortal {
 	@VulpeText(size = 40, maxlength = 100, required = true)
 	private TextTranslate copyright;
 
-	@IgnoreAutoFilter
+	@SkipAutoFilter
 	@VulpeColumn(booleanTo = "{Yes|{No}}")
 	@VulpeCheckbox(fieldValue = "true")
 	private boolean offline;

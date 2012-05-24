@@ -3,7 +3,7 @@ package org.vulpe.portal.core.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.vulpe.model.annotations.IgnoreAutoFilter;
+import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.db4o.annotations.Inheritance;
 import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
@@ -51,7 +51,7 @@ public class Content extends BasePortal {
 	@VulpeColumn
 	private Long views;
 
-	@IgnoreAutoFilter
+	@SkipAutoFilter
 	@VulpeCheckbox(fieldValue = "true", required = true)
 	private boolean escapeXml;
 
