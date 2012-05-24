@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -79,11 +79,11 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- * 
+ *
  */
-@SuppressWarnings( { "unchecked" })
+@SuppressWarnings( { "unchecked", "rawtypes" })
 public class Functions {
 
 	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
@@ -93,7 +93,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -103,7 +103,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return
@@ -120,7 +120,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @return
 	 */
@@ -140,7 +140,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param url
 	 * @return
 	 * @throws JspException
@@ -158,7 +158,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param chars
 	 * @return
@@ -172,7 +172,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param value
@@ -186,7 +186,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param string
 	 * @param begin
 	 * @param end
@@ -206,7 +206,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @return
@@ -231,7 +231,7 @@ public class Functions {
 	 * JPG, PNG and possibly other formats) and resizes it to have a width no
 	 * greater than the pMaxWidth parameter in pixels. It converts the image to
 	 * a standard quality JPG and returns the byte array of that JPG image.
-	 * 
+	 *
 	 * @param imageData
 	 *            the image data.
 	 * @param maxWidth
@@ -280,7 +280,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param requestedRoles
 	 * @return
 	 */
@@ -315,7 +315,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param button
 	 * @param controllerType
 	 * @return
@@ -352,7 +352,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param button
 	 * @param controllerType
 	 * @return
@@ -373,7 +373,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param button
 	 * @param controllerType
 	 * @return
@@ -394,7 +394,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param button
 	 * @param controllerType
 	 * @return
@@ -415,7 +415,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static Boolean isAuthenticated(final PageContext pageContext) {
@@ -439,7 +439,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @param toValue
 	 * @return
@@ -457,7 +457,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @param removeEnumItems
@@ -516,7 +516,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @param fieldValue
@@ -562,7 +562,7 @@ public class Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type
 	 * @param fieldValue
 	 * @return

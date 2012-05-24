@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -82,12 +82,12 @@ import com.opensymphony.xwork2.util.ValueStackFactory;
 import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings( { "serial", "rawtypes" })
 public class VulpeActionInvocation implements ActionInvocation {
 
 	private static final Logger LOG = Logger.getLogger(VulpeActionInvocation.class);
@@ -180,7 +180,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	 * returned. If the DefaultActionInvocation's result has not been executed
 	 * before, the Result instance will be created and populated with the result
 	 * params.
-	 * 
+	 *
 	 * @return a Result instance
 	 * @throws Exception
 	 */
@@ -228,7 +228,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	 * The ActionInvocation implementation must guarantee that listeners will be
 	 * called in the order in which they are registered. Listener registration
 	 * and execution does not need to be thread-safe.
-	 * 
+	 *
 	 * @param listener
 	 */
 	public void addPreResultListener(PreResultListener listener) {
@@ -436,7 +436,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 
 	/**
 	 * Uses getResult to get the final Result and executes it
-	 * 
+	 *
 	 * @throws ConfigurationException
 	 *             If not result can be found with the returned code
 	 */
@@ -579,7 +579,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	private void executeMethods(final Object action) {
@@ -609,7 +609,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	private void executeAlwaysBefore(final Object action) {
@@ -626,7 +626,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	private void executeAlwaysAfter(final Object action) {
@@ -643,7 +643,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	private void executeOnceBefore(final Object action) {
@@ -660,7 +660,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 */
 	private void executeOnceAfter(final Object action) {
@@ -677,7 +677,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */
@@ -712,7 +712,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param controller
 	 */
 	private void updateParameters(final AbstractVulpeBaseController controller) {

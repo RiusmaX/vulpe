@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -53,7 +53,7 @@ import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 import org.vulpe.view.tags.Functions;
 
-@SuppressWarnings( { "unchecked" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VRaptorFunctions extends Functions {
 
 	private static final Logger LOG = Logger.getLogger(VRaptorFunctions.class.getName());
@@ -63,7 +63,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -76,8 +76,8 @@ public final class VRaptorFunctions extends Functions {
 			}
 
 			final List list = new ArrayList();
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field
-					.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
+					field.replace(".id", ""));
 			if (fieldClass.isEnum()) {
 				String key = null;
 				String value = null;
@@ -94,7 +94,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bean
 	 * @param field
 	 * @return
@@ -107,8 +107,8 @@ public final class VRaptorFunctions extends Functions {
 				return null;
 			}
 
-			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(), field
-					.replace(".id", ""));
+			final Class<?> fieldClass = VulpeReflectUtil.getFieldClass(bean.getClass(),
+					field.replace(".id", ""));
 			if (fieldClass == null) {
 				return null;
 			}
@@ -130,7 +130,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param contentType
 	 * @param contentDisposition
@@ -150,7 +150,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param property
 	 * @param contentType
@@ -188,7 +188,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Map getFormParams() {
@@ -206,7 +206,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param key
 	 * @param contentType
@@ -232,7 +232,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -249,7 +249,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param key
 	 * @param value
 	 * @param expire
@@ -278,7 +278,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 * @throws JspException
@@ -288,7 +288,7 @@ public final class VRaptorFunctions extends Functions {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pageContext
 	 * @param expression
 	 * @return

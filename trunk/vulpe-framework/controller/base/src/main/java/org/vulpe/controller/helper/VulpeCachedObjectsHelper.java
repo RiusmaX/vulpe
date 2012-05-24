@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -61,11 +61,11 @@ import org.vulpe.model.entity.VulpeEntity;
 
 /**
  * Class to control Cached Objects.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
- * 
+ *
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VulpeCachedObjectsHelper {
 
 	private VulpeCachedObjectsHelper() {
@@ -77,7 +77,7 @@ public final class VulpeCachedObjectsHelper {
 
 	/**
 	 * Load list of classes noted with @CachedClass
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 */
@@ -90,7 +90,7 @@ public final class VulpeCachedObjectsHelper {
 
 	/**
 	 * Load list of classes noted with @CachedEnum
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 */
@@ -103,7 +103,7 @@ public final class VulpeCachedObjectsHelper {
 
 	/**
 	 * Scanning libs of application to find noted classes.
-	 * 
+	 *
 	 * @param servletContext
 	 * @return
 	 * @return
@@ -147,7 +147,7 @@ public final class VulpeCachedObjectsHelper {
 	/**
 	 * Puts domains objects with annotations (@CachedClass and @CachedEnum) in
 	 * cache.
-	 * 
+	 *
 	 * @param servletContext
 	 */
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
@@ -206,8 +206,8 @@ public final class VulpeCachedObjectsHelper {
 							}
 							array.append("}");
 							mapCachedEnumArray.put(enumName, array.toString());
-							LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(
-									valuesDescricption.toString()).concat("]"));
+							LOG.debug("Reading object: ".concat(enumName).concat(" [")
+									.concat(valuesDescricption.toString()).concat("]"));
 							mapCachedEnum.put(enumName, list);
 						} catch (Exception e) {
 							LOG.error(e);
@@ -225,7 +225,7 @@ public final class VulpeCachedObjectsHelper {
 
 	/**
 	 * Puts domains objects configured by @VulpeDomains annotation in cache.
-	 * 
+	 *
 	 * @param servletContext
 	 */
 	public static void putObjectsInCache(final ServletContext servletContext) {
@@ -238,9 +238,7 @@ public final class VulpeCachedObjectsHelper {
 					final VulpeEntity<?> entity = clazz.newInstance();
 					final CachedClass cachedClassAnnotation = clazz
 							.getAnnotation(CachedClass.class);
-					entity
-							.setQueryConfigurationName(cachedClassAnnotation
-									.queryConfigurationName());
+					entity.setQueryConfigurationName(cachedClassAnnotation.queryConfigurationName());
 					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
 							.getList(entity));
 				} catch (Exception e) {
@@ -268,9 +266,9 @@ public final class VulpeCachedObjectsHelper {
 						}
 						valuesDescricption.append(object);
 						final ValueBean value = new ValueBean(object.toString(),
-								VulpeConstants.View.LABEL.concat(projectName).concat(
-										VulpeConstants.View.ENUM).concat(enumName).concat(".")
-										.concat(object.toString()));
+								VulpeConstants.View.LABEL.concat(projectName)
+										.concat(VulpeConstants.View.ENUM).concat(enumName)
+										.concat(".").concat(object.toString()));
 						array.append("'");
 						array.append(value.getId());
 						array.append("':'");
@@ -279,8 +277,8 @@ public final class VulpeCachedObjectsHelper {
 					}
 					array.append("}");
 					mapCachedEnumArray.put(enumName, array.toString());
-					LOG.debug("Reading object: ".concat(enumName).concat(" [").concat(
-							valuesDescricption.toString()).concat("]"));
+					LOG.debug("Reading object: ".concat(enumName).concat(" [")
+							.concat(valuesDescricption.toString()).concat("]"));
 					mapCachedEnum.put(enumName, list);
 				} catch (Exception e) {
 					LOG.error(e);

@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -58,7 +58,7 @@ import org.vulpe.exception.VulpeSystemException;
 /**
  * Utility class to send mail.
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "rawtypes" })
 public final class VulpeEmailUtil {
 
 	private static final Logger LOG = Logger.getLogger(VulpeEmailUtil.class.getName());
@@ -67,7 +67,7 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send Mail to many recipients.
-	 * 
+	 *
 	 * @param recipients
 	 *            Recipients
 	 * @param subject
@@ -77,7 +77,8 @@ public final class VulpeEmailUtil {
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public static boolean sendMail(final String[] recipients, final String subject, final String body) {
+	public static boolean sendMail(final String[] recipients, final String subject,
+			final String body) {
 		boolean sended = true;
 		if (!checkValidEmail(recipients)) {
 			LOG.error("Invalid mails: " + recipients);
@@ -96,7 +97,8 @@ public final class VulpeEmailUtil {
 			if (bundle != null) {
 				final HtmlEmail mail = new HtmlEmail();
 				String mailFrom = "";
-				if (bundle.containsKey("mail.smtp.auth") && Boolean.valueOf(bundle.getString("mail.smtp.auth"))) {
+				if (bundle.containsKey("mail.smtp.auth")
+						&& Boolean.valueOf(bundle.getString("mail.smtp.auth"))) {
 					final String username = bundle.getString("mail.smtp.user");
 					final String password = bundle.getString("mail.smtp.password");
 					mail.setAuthentication(username, password);
@@ -142,11 +144,11 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Returns String Array of recipients.
-	 * 
+	 *
 	 * @param recipients
-	 * 
+	 *
 	 * @param property
-	 * 
+	 *
 	 * @return
 	 */
 	public static String[] getRecipients(final List recipients, final String property) {
@@ -167,13 +169,13 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send Mail to recipient.
-	 * 
+	 *
 	 * @param recipient
-	 * 
+	 *
 	 * @param subject
-	 * 
+	 *
 	 * @param body
-	 * 
+	 *
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
@@ -189,20 +191,20 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Send mail to recipients by Web Service.
-	 * 
+	 *
 	 * @param recipients
-	 * 
+	 *
 	 * @param subject
-	 * 
+	 *
 	 * @param body
-	 * 
+	 *
 	 * @param mailerService
-	 * 
+	 *
 	 * @throws VulpeSystemException
 	 *             exception
 	 */
-	public static void sendMailByService(final String[] recipients, final String subject, final String body,
-			final String mailerService) throws VulpeSystemException {
+	public static void sendMailByService(final String[] recipients, final String subject,
+			final String body, final String mailerService) throws VulpeSystemException {
 		try {
 			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
 			String mailFrom = "";
@@ -254,17 +256,18 @@ public final class VulpeEmailUtil {
 
 	/**
 	 * Checks if the email format is valid
-	 * 
+	 *
 	 * @return true if valid
 	 */
 	private static boolean checkEmailFormat(final String email) {
 		final char arroba = "@".charAt(0);
 		final char dot = ".".charAt(0);
-		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false : true;
+		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false
+				: true;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param resource
 	 * @return
 	 */

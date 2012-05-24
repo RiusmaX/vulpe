@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -48,11 +48,11 @@ import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Framework configuration helper.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @since 1.0
  */
-@SuppressWarnings( { "unchecked", "deprecation" })
+@SuppressWarnings( { "unchecked", "deprecation", "rawtypes" })
 public final class VulpeConfigHelper {
 
 	private static final Logger LOG = Logger.getLogger(VulpeConfigHelper.class);
@@ -74,7 +74,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param classPath
 	 */
 	private static void forceClassloader(final String classPath) {
@@ -92,7 +92,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for audit enabled e false to audit disabled.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -117,7 +117,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for audit enabled e false to audit disabled.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -142,7 +142,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return date pattern.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Date Pattern. Example: MM/dd/yyyy.
 	 */
@@ -155,10 +155,10 @@ public final class VulpeConfigHelper {
 		}
 		return pattern;
 	}
-	
+
 	/**
 	 * Method return date time pattern.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Date Pattern. Example: MM/dd/yyyy HH:mm:ss.
 	 */
@@ -174,7 +174,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method return true for security enabled e false to audit disabled.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Enabled (true|false).
 	 */
@@ -198,7 +198,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -221,7 +221,7 @@ public final class VulpeConfigHelper {
 
 	/**
 	 * Method returns name of theme to application use.
-	 * 
+	 *
 	 * @since 1.0
 	 * @return Name of theme.
 	 */
@@ -241,7 +241,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static VulpeApplication getApplicationConfiguration() {
@@ -259,7 +259,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static VulpeProject getProjectConfiguration() {
@@ -277,7 +277,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getApplicationName() {
@@ -295,7 +295,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getI18n() {
@@ -313,7 +313,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getI18nManager() {
@@ -331,7 +331,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getApplicationPackage() {
@@ -349,7 +349,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Class getConfig() {
@@ -373,7 +373,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	private static Class getDomainsConfig() {
@@ -397,7 +397,7 @@ public final class VulpeConfigHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static Locale getLocale() {

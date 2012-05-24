@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -84,12 +84,12 @@ import com.google.gson.Gson;
 
 /**
  * Utility class to configuration stuff.
- * 
+ *
  * @author <a href="mailto:felipe@org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> {
 
 	protected static final Logger LOG = Logger.getLogger(VulpeUtil.class);
@@ -315,7 +315,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Retrieves Report Collection Data Source.
-		 * 
+		 *
 		 * @return
 		 */
 		public Collection<?> reportCollection() {
@@ -327,7 +327,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Sets Report Collection Data Source.
-		 * 
+		 *
 		 * @return
 		 */
 		public void reportCollection(Collection<?> collection) {
@@ -336,7 +336,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Retrieves Report Parameters.
-		 * 
+		 *
 		 * @return
 		 */
 		public VulpeHashMap<String, Object> reportParameters() {
@@ -370,7 +370,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Method to retrieve download info.
-		 * 
+		 *
 		 * @since 1.0
 		 * @return DownlodInfo object.
 		 */
@@ -380,10 +380,10 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Set download info.
-		 * 
+		 *
 		 * @param downloadInfo
 		 *            Download Info.
-		 * 
+		 *
 		 * @since 1.0
 		 */
 		public void downloadInfo(final DownloadInfo downloadInfo) {
@@ -415,7 +415,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		/**
-		 * 
+		 *
 		 * @param page
 		 */
 		public void resultPage(final String page) {
@@ -632,7 +632,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		public Integer currentPage() {
 			return baseController.ever.<Integer> getAuto(Ever.CURRENT_PAGE);
 		}
-		
+
 		public String detail() {
 			return baseController.now.getAuto(Now.DETAIL);
 		}
@@ -667,7 +667,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Retrieves controller type
-		 * 
+		 *
 		 * @return Controller Type
 		 */
 		public ControllerType type() {
@@ -697,15 +697,15 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 			String base = "";
 			final Component component = baseController.getClass().getAnnotation(Component.class);
 			if (component != null) {
-				base = component.value().replaceAll("\\.", "/").replace(
-						Generator.CONTROLLER_SUFFIX, "");
+				base = component.value().replaceAll("\\.", "/")
+						.replace(Generator.CONTROLLER_SUFFIX, "");
 			}
 			return base;
 		}
 
 		public String currentKey() {
-			return VulpeConfigHelper.getApplicationName().concat(".").concat(
-					currentName().replace("/", "."));
+			return VulpeConfigHelper.getApplicationName().concat(".")
+					.concat(currentName().replace("/", "."));
 		}
 
 		public String key() {
@@ -738,7 +738,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Returns current detail configuration.
-		 * 
+		 *
 		 * @since 1.0
 		 * @return
 		 */
@@ -748,7 +748,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Checks if detail must be despised
-		 * 
+		 *
 		 * @return returns true if despised
 		 */
 		public boolean despiseItem(final Object bean, final String[] fieldNames) {
@@ -794,7 +794,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Checks for duplicated detail
-		 * 
+		 *
 		 * @param beans
 		 * @param bean
 		 * @param fieldName
@@ -813,8 +813,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 						final Object valueRealBean = VulpeReflectUtil.getFieldValue(realBean,
 								fieldName);
 						if (((realBean.getId() != null && realBean.getId().equals(bean.getId())) || (realBean
-								.getId() == null && valueRealBean.equals(value)))
-								&& count == 0) {
+								.getId() == null && valueRealBean.equals(value))) && count == 0) {
 							++count;
 							continue;
 						}
@@ -831,7 +830,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Checks if exists details for despise.
-		 * 
+		 *
 		 * @param ignoreExclud
 		 *            (true = add on list [tabular cases], false = remove of
 		 *            list) indicate if marked items must be removed or ignored
@@ -871,7 +870,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		/**
 		 * Checks if exists duplicated details.
-		 * 
+		 *
 		 * @param beans
 		 * @param despiseFields
 		 * @return Collection of duplicated beans
@@ -898,7 +897,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		/**
-		 * 
+		 *
 		 * @param controller
 		 * @return
 		 */
@@ -1252,19 +1251,19 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				return this;
 			}
 		}
-		
+
 		public String currentLayout() {
 			return baseController.ever.getAuto(View.CURRENT_LAYOUT);
 		}
-		
+
 		public void currentLayout(final String layout) {
 			baseController.ever.put(View.CURRENT_LAYOUT, layout);
 		}
-		
+
 		public boolean frontend() {
 			return "FRONTEND".equals(baseController.ever.getAuto(View.CURRENT_LAYOUT));
 		}
-		
+
 		public boolean backend() {
 			return "BACKEND".equals(baseController.ever.getAuto(View.CURRENT_LAYOUT));
 		}
@@ -1289,7 +1288,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		}
 
 		/**
-		 * 
+		 *
 		 * @param entityClass
 		 * @param id
 		 * @return
