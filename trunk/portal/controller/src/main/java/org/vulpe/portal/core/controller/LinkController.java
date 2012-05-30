@@ -13,7 +13,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Link
  */
 @Component("core.LinkController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class)
 public class LinkController extends PortalBaseController<Link, java.lang.Long> {

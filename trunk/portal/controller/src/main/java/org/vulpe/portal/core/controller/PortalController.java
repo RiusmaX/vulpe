@@ -16,7 +16,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Portal
  */
 @Component("core.PortalController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, select = @Select(pageSize = 1, readOnShow = true))
 public class PortalController extends PortalBaseController<Portal, Long> {

@@ -20,7 +20,7 @@ import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.entity.Section;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("frontend.IndexController")
 @Controller(type = ControllerType.FRONTEND)

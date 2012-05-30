@@ -8,7 +8,7 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.model.entity.impl.VulpeBaseSimpleEntity;
 import org.vulpe.portal.controller.PortalBaseController;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("backend.IndexController")
 @Controller(type = ControllerType.BACKEND)

@@ -13,7 +13,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Social
  */
 @Component("core.SocialController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class)
 public class SocialController extends PortalBaseController<Social, java.lang.Long> {

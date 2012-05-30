@@ -25,7 +25,6 @@
 	<classpathentry kind="var" path="M2_REPO/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-impl/2.2.4-1/jaxb-impl-2.2.4-1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-fileupload/commons-fileupload/1.2/commons-fileupload-1.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/javax/xml/ws/jaxws-api/2.1/jaxws-api-2.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.4/commons-io-1.4.jar"/>
@@ -61,6 +60,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/portal/portal-core/1.0/portal-core-1.0.jar" sourcepath="M2_REPO/org/vulpe/portal/portal-core/1.0/portal-core-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/vulpe/portal/portal-domains/1.0/portal-domains-1.0.jar" sourcepath="M2_REPO/org/vulpe/portal/portal-domains/1.0/portal-domains-1.0-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/db4o/db4o/7.12/db4o-7.12.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/0.10.8/lombok-0.10.8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/0.11.0/lombok-0.11.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

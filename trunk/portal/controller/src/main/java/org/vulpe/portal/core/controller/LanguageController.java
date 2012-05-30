@@ -14,7 +14,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Language
  */
 @Component("core.LanguageController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, tabular = @Tabular(despiseFields = { "localeCode" }, startNewRecords = 3, newRecords = 1))
 public class LanguageController extends PortalBaseController<Language, Long> {

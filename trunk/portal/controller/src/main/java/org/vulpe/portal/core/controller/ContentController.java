@@ -12,7 +12,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Content
  */
 @Component("core.ContentController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class)
 public class ContentController extends PortalBaseController<Content, Long> {

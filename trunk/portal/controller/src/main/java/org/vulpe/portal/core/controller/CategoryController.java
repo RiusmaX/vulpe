@@ -14,7 +14,7 @@ import org.vulpe.portal.core.model.services.CoreService;
  * Controller implementation of Category
  */
 @Component("core.CategoryController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, tabular = @Tabular(despiseFields = { "name.languages.text" }, startNewRecords = 5, newRecords = 1))
 public class CategoryController extends PortalBaseController<Category, Long> {

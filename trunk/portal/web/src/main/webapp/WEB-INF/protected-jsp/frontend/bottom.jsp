@@ -39,8 +39,11 @@
 	<li>
 	<h1><fmt:message key='label.portal.Downloads' /></h1>
 	</li>
-	<c:forEach var="download" items="${ever['vulpePortalDownloads']}">
+	<c:forEach var="download" items="${ever['vulpePortalDownloads']}" begin="0" end="4">
 	<li><a href="${pageContext.request.contextPath}/frontend/Index/download?id=${download.id}">${download.name}</a></li>
 	</c:forEach>
+	<c:if test="${fn:length(ever['vulpePortalDownloads']) > 5}">
+	<a href="javascript:void(0)" onclick="vulpe.view.request.submitAjaxAction({url: 'frontend/Index/search/ajax', layerFields: 'this', layer: 'body', validate: true, queryString: 'querySearch=all-in-one ('});"><fmt:message key='label.portal.more' /></a>
+	</c:if>
 </ul>
 </div>
