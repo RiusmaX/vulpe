@@ -118,12 +118,10 @@
 				<c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
 				<c:forEach var="subDetail" items="${detailConfig.subDetails}">
 					<c:set var="targetConfig" value="${subDetail}" scope="request"/>
-					<c:if test="${!fn:endsWith(targetConfigPropertyName, subDetail.propertyName)}">
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyName}[${status.index}].${subDetail.propertyName}" scope="request"/>
 					<jsp:include page="/WEB-INF/protected-jsp/commons/detail.jsp">
 						<jsp:param name="detailViewPath" value="${subDetail.viewPath}"/>
 					</jsp:include>
-					</c:if>
 					<c:set var="targetConfigPropertyName" value="${targetConfigPropertyNameLocal}" scope="request"/>
 				</c:forEach>
 				<c:set var="targetConfig" value="${detailConfig}" scope="request"/>
