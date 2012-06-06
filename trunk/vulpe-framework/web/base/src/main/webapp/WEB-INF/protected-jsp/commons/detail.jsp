@@ -11,7 +11,7 @@
 	</c:choose>
 	<td colspan="100">
 </c:if>
-<div id="vulpeDetail-${targetConfigLocal.baseName}" class="${not empty targetConfig.parentDetailConfig ? 'vulpeSubDetailBody' : 'vulpeDetailBody'}">
+<div id="vulpeDetail-${targetConfigLocal.baseName}${index}" class="${not empty targetConfig.parentDetailConfig ? 'vulpeSubDetailBody' : 'vulpeDetailBody'}">
 <c:if test="${not empty targetConfig.parentDetailConfig || now['controllerConfig'].showInTabs eq false}">
 	<c:if test="${!showAsAccordion}"><fieldset></c:if>
 	<c:choose>
@@ -21,11 +21,11 @@
 		<div>
 </c:if>
 		<c:if test="${!now['onlyToSee']}">
-		<div id="vulpeDetailActions-${targetConfigLocal.baseName}" class="vulpeActions">
+		<div id="vulpeDetailActions-${targetConfigLocal.baseName}${index}" class="vulpeActions">
 			<%@include file="/WEB-INF/protected-jsp/commons/detailActions.jsp" %>
 		</div>
 		</c:if>
-		<div id="vulpeDetailBody-${targetConfigLocal.baseName}">
+		<div id="vulpeDetailBody-${targetConfigLocal.baseName}${index}">
 			<jsp:include page="${param.detailViewPath}" />
 			<c:remove var="currentDetailConfig" scope="request"/>
 			<c:remove var="currentItem" scope="request"/>
@@ -45,7 +45,7 @@
 <c:if test="${(not empty targetConfig.parentDetailConfig || now['controllerConfig'].showInTabs eq false) && targetConfig.showAsAccordion && showAsAccordion}">
 	<script type="text/javascript">
 		$(document).ready(function() {
-			var id = 'vulpeDetail-${targetConfigLocal.baseName}';
+			var id = 'vulpeDetail-${targetConfigLocal.baseName}${index}';
 			vulpe.util.get(id).accordion({
 				collapsible: true,
 				animated: false,

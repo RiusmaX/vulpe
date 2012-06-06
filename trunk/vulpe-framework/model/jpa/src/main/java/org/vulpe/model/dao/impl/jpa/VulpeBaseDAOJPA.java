@@ -89,7 +89,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 @Repository
 public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		extends AbstractVulpeBaseDAOJPA<ENTITY, ID> {
@@ -172,10 +172,10 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				}
 			}
 			if (delete && notDeleteIf.conditions().value().length > 0) {
-				hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ").append(
-						entity.getClass().getSimpleName()).append(" obj ").append(
-						notDeleteIf.conditions().queryInject()).append(" where obj.id = ").append(
-						entity.getId()).append(" and (");
+				hqlNotDeleteIf = new StringBuilder("select count(obj.id) from ")
+						.append(entity.getClass().getSimpleName()).append(" obj ")
+						.append(notDeleteIf.conditions().queryInject()).append(" where obj.id = ")
+						.append(entity.getId()).append(" and (");
 				int count = 0;
 				for (final String condition : notDeleteIf.conditions().value()) {
 					if (count > 0 && count < notDeleteIf.conditions().value().length) {
@@ -347,8 +347,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 		for (final Field field : fields) {
 			if ((field.isAnnotationPresent(SkipAutoFilter.class)
 					|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
-					.getModifiers()))
-					&& !field.isAnnotationPresent(QueryParameter.class)) {
+					.getModifiers())) && !field.isAnnotationPresent(QueryParameter.class)) {
 				continue;
 			}
 			final OrderBy orderBy = field.getAnnotation(OrderBy.class);
@@ -356,8 +355,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (StringUtils.isNotBlank(order.toString())) {
 					order.append(",");
 				}
-				order.append("obj.").append(field.getName()).append(" ").append(
-						orderBy.type().name());
+				order.append("obj.").append(field.getName()).append(" ")
+						.append(orderBy.type().name());
 			}
 		}
 	}
@@ -388,8 +387,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			for (final Field field : fields) {
 				if ((field.isAnnotationPresent(SkipAutoFilter.class)
 						|| field.isAnnotationPresent(Transient.class) || Modifier.isTransient(field
-						.getModifiers()))
-						&& !field.isAnnotationPresent(QueryParameter.class)) {
+						.getModifiers())) && !field.isAnnotationPresent(QueryParameter.class)) {
 					continue;
 				}
 				try {
@@ -426,10 +424,13 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 								fieldName = "!" + fieldName;
 							} else if (StringUtils.isNotEmpty(queryParameter.value())) {
 								if (queryParameter.type().equals(TypeParameter.DATE)) {
-									final SimpleDateFormat sdf = new SimpleDateFormat(
-											queryParameter.pattern());
-									value = new String(queryParameter.value().replaceAll(" ", "")
-											.replace(":value", sdf.format(value)));
+									value = new String(queryParameter
+											.value()
+											.replaceAll(" ", "")
+											.replace(
+													":value",
+													new SimpleDateFormat(queryParameter.pattern())
+															.format(value)));
 								}
 							}
 						}
@@ -583,9 +584,9 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						if (value instanceof String) {
 							final String valueString = (String) value;
 							final boolean useLike = valueString.startsWith("[like]");
-							hql.append("upper(").append(hqlAttributeName).append(") ").append(
-									useLike ? "like" : "=").append(" upper(:").append(hqlParamName)
-									.append(")");
+							hql.append("upper(").append(hqlAttributeName).append(") ")
+									.append(useLike ? "like" : "=").append(" upper(:")
+									.append(hqlParamName).append(")");
 						} else {
 							hql.append(hqlAttributeName).append(" = :").append(hqlParamName);
 						}
@@ -814,7 +815,12 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (queryParameter.equals().upper()) {
 					hql.append("upper(");
 				}
-				hql.append("obj.").append(queryParameter.equals().name());
+				final String name = queryParameter.equals().name();
+				if (StringUtils.isNotEmpty(queryParameter.equals().expression())) {
+					hql.append(queryParameter.equals().expression());
+				} else {
+					hql.append(queryParameter.equals().alias()).append(".").append(name);
+				}
 				if (queryParameter.equals().upper()) {
 					hql.append(")");
 				}
@@ -822,13 +828,21 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 				if (queryParameter.equals().upper()) {
 					hql.append(" upper(");
 				}
-				hql.append(":").append(queryParameter.equals().name());
+				if (StringUtils.isNotEmpty(queryParameter.equals().value())) {
+					hql.append(queryParameter.equals().value());
+				} else {
+					hql.append(":").append(name);
+				}
 				if (queryParameter.equals().upper()) {
 					hql.append(")");
 				}
 				try {
-					values.put(queryParameter.equals().name(), PropertyUtils.getProperty(entity,
-							queryParameter.equals().name()));
+					Object value = PropertyUtils.getProperty(entity, name);
+					if (queryParameter.type().equals(TypeParameter.DATE)) {
+						value = new String(
+								new SimpleDateFormat(queryParameter.pattern()).format(value));
+					}
+					values.put(name, value);
 				} catch (Exception e) {
 					LOG.error(e);
 				}

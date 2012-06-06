@@ -3,6 +3,8 @@
 <c:if test="${not empty style}"><c:set var="pStyle">style="${style}"</c:set></c:if>
 <c:set var="paragraphId" value="${elementId}-paragraph" scope="request"/>
 <c:if test="${paragraph}"><p id="${paragraphId}"></c:if>
+<c:set var="idAll" value="${elementId}-all" scope="request"/>
+<span id="${idAll}" style="${!show ? 'display:none' : ''}">
 <c:if test="${not empty labelKey}">
 	<fmt:message key="${labelKey}" var="label"/>
 	<c:if test="${empty titleKey}"><c:set var="title" value="${label}"/></c:if>
@@ -11,4 +13,4 @@
 	<c:if test="${breakLabel}"><br/></c:if>
 </c:if>
 <c:set var="fieldId" value="${elementId}-field" scope="request"/>
-<span id="${fieldId}" class="vulpeField${showAsText ? ' vulpeShowAsText' : ''}" style="${!show ? 'display:none' : ''}">
+<span id="${fieldId}" class="vulpeField${showAsText ? ' vulpeShowAsText' : ''}">

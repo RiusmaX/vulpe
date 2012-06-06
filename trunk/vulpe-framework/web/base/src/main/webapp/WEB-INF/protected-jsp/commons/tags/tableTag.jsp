@@ -45,6 +45,9 @@
 		</c:when>
 		<c:otherwise>
 			<c:set var="itemsEL" value="${'${'}${detailConfig.parentDetailConfig.baseName}_item.${detailConfig.propertyName}${'}'}"/>
+			<c:if test="${not empty now['detail']}">
+				<c:set var="itemsEL" value="${'${'}${now['detail']}${'}'}"/>
+			</c:if>
 			<c:set var="items" value="${util:eval(pageContext, itemsEL)}"/>
 		</c:otherwise>
 		</c:choose>

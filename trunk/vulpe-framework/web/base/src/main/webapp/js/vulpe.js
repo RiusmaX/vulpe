@@ -161,7 +161,7 @@ var vulpe = {
 			button: "vulpeButton",
 			detail: "#vulpeDetail-",
 			detailTab: "#vulpeMainBodyTabs",
-			popup: "Popup-"		
+			popup: "Popup-"
 		},
 		popup: {
 			mobile: false,
@@ -206,7 +206,7 @@ var vulpe = {
 	},
 
 	buttons: new Array(),
-	
+
 	controller: {
 		currentName: ""
 	},
@@ -249,7 +249,7 @@ var vulpe = {
 				return null;
 			}
 		},
-		
+
 		getElementType: function(element) {
 			var elementId = $(element).attr("id");
 			var elementType = $(element).attr("type");
@@ -490,6 +490,20 @@ var vulpe = {
 			return field;
 		},
 
+		showField: function(name, element) {
+			var field = vulpe.util.getElementField(name + "-all", element);
+			if (field.length == 1) {
+				field.show();
+			}
+		},
+
+		hideField: function(name, element) {
+			var field = vulpe.util.getElementField(name + "-all", element);
+			if (field.length == 1) {
+				field.hide();
+			}
+		},
+
 		getElementConfig: function(id) {
 			return vulpe.config.elements[id];
 		},
@@ -500,7 +514,7 @@ var vulpe = {
 			}
 			return vulpe.util.get("vulpeButton" + name, "#" + parent);
 		},
-		
+
 		disableButton: function(name, parent) {
 			if (!parent) {
 				parent = vulpe.config.formName;
@@ -513,7 +527,7 @@ var vulpe = {
 			buttonSpan.addClass("vulpeItemOff");
 			vulpe.buttons[name] = {disabled: true};
 		},
-		
+
 		enableButton: function(name, parent) {
 			if (!parent) {
 				parent = vulpe.config.formName;
@@ -753,7 +767,7 @@ var vulpe = {
 				tab.trigger("click");
 			}
 		},
-		
+
 		isVisible: function(element) {
 			if (typeof element == "string") {
 				return vulpe.util.get(element).is(":visible");
@@ -955,7 +969,7 @@ var vulpe = {
 					isValid = false;
 				}
 			}
-			
+
 			var idField = config.field.attr("id");
 			var typeField = vulpe.util.getElementType(config.field);
 			if (typeof typeField == "undefined" && vulpe.util.isEmpty(config.field.val())) {
@@ -1405,7 +1419,7 @@ var vulpe = {
 	// vulpe.view
 	view: {
 		onScroll: function() {},
-		
+
 		selectShowContent: function(id) {
 			var selectId = id + "_" + vulpe.util.get(id).val();
 			var selectShowContentId = id + "_showContent";
@@ -1414,14 +1428,14 @@ var vulpe = {
 			vulpe.util.get(selectId).css('width', vulpe.util.get(id).css('width'));
 			vulpe.util.get(selectId).slideDown('slow');
 		},
-		
+
 		selectHideContent: function(id) {
 			var selectId = id + "_" + vulpe.util.get(id).val();
 			var selectShowContentId = id + "_showContent";
 			vulpe.util.get(selectId).slideUp('slow');
 			vulpe.util.get(selectShowContentId).show();
 		},
-		
+
 		showContent: function(id) {
 			var contentId = id + "_content";
 			var showContentId = id + "_showContent";
@@ -1431,7 +1445,7 @@ var vulpe = {
 			vulpe.util.get(contentId).slideDown('slow');
 			vulpe.view.isSelection = true;
 		},
-		
+
 		hideContent: function(id) {
 			var contentId = id + "_content";
 			var showContentId = id + "_showContent";
@@ -1440,7 +1454,7 @@ var vulpe = {
 			vulpe.util.get(showContentId).show();
 			vulpe.util.get(valueId).show();
 		},
-		
+
 		setRequired: function(names, enabled) {
 			var required = function(name) {
 				var field = vulpe.util.getElementField(name);
@@ -1488,7 +1502,7 @@ var vulpe = {
 			$("tr[id*='-row-']", parent).each(function(index) {
 				var id = $(this).attr("id");
 				if (id.indexOf("header") == -1) {
-					var row = $("#" + id, parent); 
+					var row = $("#" + id, parent);
 					if (row.find(":input[type!='hidden']").length == 1) {
 						row.unbind("mouseenter mouseleave");
 						row.bind("mouseenter mouseleave", function(event){
@@ -1562,29 +1576,29 @@ var vulpe = {
 			}
 			vulpe.view.confirmDialog(message, command);
 		},
-		
+
 		alertDialog: function(message) {
 			$(vulpe.config.layers.alertMessage).html(message);
 			$(vulpe.config.layers.alertDialog).dialog("open");
 		},
-		
+
 		confirmDialog: function(message, command) {
 			vulpe.command = command;
 			$(vulpe.config.layers.confirmationMessage).html(message);
 			$(vulpe.config.layers.confirmationDialog).dialog("open");
 		},
-		
+
 		informationDialog: function(message) {
 			$(vulpe.config.layers.informationMessage).html(message);
 			$(vulpe.config.layers.informationDialog).dialog("open");
 		},
-		
+
 		warningDialog: function(message, command) {
 			vulpe.command = command;
 			$(vulpe.config.layers.warningMessage).html(message);
 			$(vulpe.config.layers.warningDialog).dialog("open");
 		},
-		
+
 		successDialog: function(message) {
 			$(vulpe.config.layers.successMessage).html(message);
 			$(vulpe.config.layers.successDialog).dialog("open");
@@ -1595,7 +1609,7 @@ var vulpe = {
 				return vulpe.view.sliderActionAnimate(this);
 		    });
 		},
-		
+
 		sliderActionAnimate: function(action) {
 			if ($(action).find("span").hasClass("ui-icon-triangle-1-n")) {
 	            $("#slider").animate({
@@ -1613,9 +1627,9 @@ var vulpe = {
 	            });
 	            $(action).find("span").removeClass("ui-icon-triangle-1-s");
 	            $(action).find("span").addClass("ui-icon-triangle-1-n");
-	        }	
+	        }
 		},
-		
+
 		initTimerToSessionExpire: function() {
 			clearInterval(vulpe.config.session.expireTimer);
 			vulpe.config.session.expireTimer = setInterval(function() {
@@ -1624,9 +1638,9 @@ var vulpe = {
 					$.idleTimer("destroy");
 					vulpe.view.sessionExpiredInformation();
 				}
-			}, 1000); 
+			}, 1000);
 		},
-		
+
 		checkTimeToSessionExpire: function(time) {
 			vulpe.config.session.time = time;
 			var secondsLeft = (vulpe.config.session.time--);
@@ -1638,7 +1652,7 @@ var vulpe = {
 			}
 			return secondsLeft;
 		},
-		
+
 		sessionExpirationAlert: function(option) {
 			$(vulpe.config.layers.informationMessage).html(vulpe.config.session.initialSessionTimeoutMessage);
 			$(vulpe.config.layers.informationDialog).dialog({
@@ -1668,7 +1682,7 @@ var vulpe = {
 				$(vulpe.config.layers.informationDialog).dialog("open");
 			}
 		},
-		
+
 		sessionExpiredInformation: function() {
 			$(vulpe.config.layers.informationMessage).html(vulpe.config.session.expiredMessage);
 			$(vulpe.config.layers.informationDialog).dialog({
@@ -1860,7 +1874,7 @@ var vulpe = {
 			}
 			var selectAll = vulpe.util.get("selectAll", parent);
 			if (selectAll.length > 1) {
-				selectAll = $(selectAll[0]);	
+				selectAll = $(selectAll[0]);
 			}
 			var checked = vulpe.util.getElement("selectAll", parent).checked;
 			if (!checked && selectAll.hasClass("vulpeItemOff")) {
@@ -1878,7 +1892,7 @@ var vulpe = {
 			});
 			selectAll.removeClass("vulpeItemOff");
 		},
-		
+
 		controlSelectedRow: function(line) {
 			jQuery("td", $(line).closest("tr")).each(function(index) {
 				if (line.checked) {
@@ -1958,7 +1972,7 @@ var vulpe = {
 				}
 			}
 		},
-		
+
 		showLoading: function() {
 			if (vulpe.config.layout.showLoading && !vulpe.util.isVisible("loading")) {
 				if (vulpe.config.layout.loading.modal) {
