@@ -147,8 +147,17 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 	}
 
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {
+		boolean delete = true;
 		for (final ENTITY entity : entities) {
-			delete(entity);
+			if (!checkIfCanDelete(entity)) {
+				delete = false;
+				break;
+			}
+		}
+		if (delete) {
+			for (final ENTITY entity : entities) {
+				simpleDelete(entity);
+			}
 		}
 	}
 
