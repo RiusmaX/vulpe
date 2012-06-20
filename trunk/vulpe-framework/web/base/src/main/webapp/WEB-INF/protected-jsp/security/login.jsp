@@ -14,7 +14,7 @@
 			<fmt:message key="vulpe.security.error.invalid.password" />
 		</c:when>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'InactiveUser')}">
-			<fmt:message key="vulpe.security.error.invulpe.user">
+			<fmt:message key="vulpe.security.error.invalid.user">
 				<fmt:param value="${SPRING_SECURITY_LAST_USERNAME}" />
 			</fmt:message>
 		</c:when>
