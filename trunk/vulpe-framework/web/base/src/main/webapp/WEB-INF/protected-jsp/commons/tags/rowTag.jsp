@@ -91,15 +91,10 @@
 		<c:if test="${empty deleteLayer}">
 			<c:choose>
 				<c:when test="${deleteType == 'detail'}">
-					<c:set var="index" value=""/>
-					<c:if test="${not empty targetConfig.parentDetailConfig}">
-						<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
-						<c:set var="index" value="-${util:eval(pageContext, indexEL)}"/>
-					</c:if>
 					<c:choose>
 						<c:when test="${targetConfig.baseName == 'entities'}"><c:set var="deleteLayer" value="body"/></c:when>
 						<c:when test="${not empty detailLayer}"><c:set var="deleteLayer" value="${detailLayer}"/></c:when>
-						<c:otherwise><c:set var="deleteLayer" value="vulpeDetailBody-${targetConfig.baseName}${index}"/></c:otherwise>
+						<c:otherwise><c:set var="deleteLayer" value="vulpeDetailBody-${targetConfig.baseName}${now.detailIndex}"/></c:otherwise>
 					</c:choose>
 				</c:when>
 				<c:otherwise><c:set var="deleteLayer" value="${now['controllerType'] == 'TABULAR' ? '' : 'vulpeSelectTable'}"/></c:otherwise>

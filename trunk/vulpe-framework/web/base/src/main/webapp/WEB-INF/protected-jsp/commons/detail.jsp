@@ -1,10 +1,10 @@
 <%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:set var="targetConfigLocal" value="${targetConfig}"/>
 <c:set var="targetConfigPropertyNameLocal" value="${targetConfigPropertyName}"/>
-<c:set var="index" value=""/>
+<c:set var="index" value="" scope="request"/>
 <c:if test="${not empty targetConfig.parentDetailConfig}">
 	<c:set var="indexEL" value="${'${'}${targetConfig.parentDetailConfig.baseName}_status.index${'}'}"/>
-	<c:set var="index" value="-${util:eval(pageContext, indexEL)}"/>
+	<c:set var="index" value="-${util:eval(pageContext, indexEL)}" scope="request"/>
 	<c:choose>
 		<c:when test="${(util:eval(pageContext, indexEL) % 2) == 0}"><tr class="vulpeLineOn"></c:when>
 		<c:otherwise><tr class="vulpeLineOff"></c:otherwise>
@@ -54,3 +54,4 @@
 		});
 	</script>
 </c:if>
+<c:remove var="index" scope="request"/>
