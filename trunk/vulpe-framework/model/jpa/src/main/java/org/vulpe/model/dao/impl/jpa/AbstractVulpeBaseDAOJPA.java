@@ -1067,11 +1067,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 		}
 
 		Hibernate.initialize(entity);
-		if (entity instanceof HibernateProxy) {
-			entity = (T) ((HibernateProxy) entity).getHibernateLazyInitializer()
-					.getImplementation();
-		}
-		return entity;
+		return unproxy(entity);
 	}
 
 	protected <T> T unproxy(T entity) {

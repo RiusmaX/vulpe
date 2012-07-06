@@ -63,13 +63,14 @@ import org.vulpe.commons.VulpeConstants.Model.Entity;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.util.VulpeCloneUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
+import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
-import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.Autocomplete;
 import org.vulpe.model.annotations.Like;
+import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.annotations.NotDeleteIf;
 import org.vulpe.model.annotations.NotExistEquals;
 import org.vulpe.model.annotations.OrderBy;
@@ -77,9 +78,8 @@ import org.vulpe.model.annotations.Parameter;
 import org.vulpe.model.annotations.QueryConfiguration;
 import org.vulpe.model.annotations.QueryConfigurations;
 import org.vulpe.model.annotations.QueryParameter;
-import org.vulpe.model.annotations.SkipAutoFilter;
-import org.vulpe.model.annotations.Like.LikeType;
 import org.vulpe.model.annotations.QueryParameter.TypeParameter;
+import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.VulpeLogicEntity;
 import org.vulpe.model.entity.VulpeLogicEntity.Status;
@@ -132,9 +132,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 
 	private void simpleDelete(final ENTITY entity) throws VulpeApplicationException {
 		// persistent entity
-		final ENTITY entityDeleted = (ENTITY) getEntityManager().getReference(entity.getClass(),
+		final ENTITY entityDeleted = (ENTITY) getEntityManager().find(entity.getClass(),
 				entity.getId());
-		audit(unproxy(entity), AuditOccurrenceType.DELETE, null);
 		if (entity instanceof VulpeLogicEntity) {
 			final VulpeLogicEntity logicEntity = (VulpeLogicEntity) entityDeleted;
 			logicEntity.setStatus(Status.D);
@@ -144,6 +143,8 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 			getEntityManager().remove(entityDeleted);
 			getEntityManager().flush();
 		}
+		entityDeleted.map(entity.map());
+		audit(unproxy(entityDeleted), AuditOccurrenceType.DELETE, null);
 	}
 
 	public void delete(final List<ENTITY> entities) throws VulpeApplicationException {

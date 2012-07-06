@@ -61,7 +61,7 @@ import org.vulpe.model.entity.VulpeEntity;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
-@SuppressWarnings( { "rawtypes" })
+@SuppressWarnings({ "rawtypes" })
 public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
 		implements VulpeDAO<ENTITY, ID> {
 

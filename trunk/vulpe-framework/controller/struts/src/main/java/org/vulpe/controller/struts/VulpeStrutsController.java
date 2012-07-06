@@ -154,6 +154,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					final ENTITY detail = iterator.next();
 					if (detail.isSelected()) {
 						if (detail.getId() != null) {
+							vulpe.updateAuditInfo(detail);
 							removedDetails.add(detail);
 						}
 						iterator.remove();
