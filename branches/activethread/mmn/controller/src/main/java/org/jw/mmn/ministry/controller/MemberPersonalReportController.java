@@ -28,7 +28,7 @@ import org.vulpe.exception.VulpeApplicationException;
  * Controller implementation of MemberPersonalReport
  */
 @Component("ministry.MemberPersonalReportController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = MinistryService.class, detailsConfig = { @DetailConfig(name = "reports", propertyName = "entity.reports", despiseFields = "despise") }, showInTabs = false, report = @Report(subReports = { "Reports" }))
 public class MemberPersonalReportController extends
@@ -150,7 +150,7 @@ public class MemberPersonalReportController extends
 			}
 		}
 	}
-	
+
 	private void mountDate() {
 		if (entity.getYear() != null && entity.getMonth() != null) {
 			int month = entity.getMonth().ordinal() + 1;

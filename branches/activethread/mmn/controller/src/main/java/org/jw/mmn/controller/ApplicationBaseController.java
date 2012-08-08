@@ -21,7 +21,7 @@ import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.security.model.entity.User;
 
 @SuppressWarnings( { "serial", "unchecked" })
-public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends VulpeStrutsController<ENTITY, ID> {
 
 	@Override
@@ -61,15 +61,15 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 //					vulpe.controller().ajax());
 		}
 	}
-	
+
 	public CoreService coreService() {
 		return vulpe.service(CoreService.class);
 	}
-	
+
 	public MinistryService ministryService() {
 		return vulpe.service(MinistryService.class);
 	}
-	
+
 	protected Member retrieveMember() {
 		Member member = new Member(new User(vulpe.securityContext().getUser().getId()));
 		try {

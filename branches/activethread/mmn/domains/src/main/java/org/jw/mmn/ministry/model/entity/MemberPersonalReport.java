@@ -114,7 +114,7 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 			int totalDaysOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
 			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 			this.setTotalAveragePerDay(VulpeDateUtil.getFormatedTime(minutes / currentDay));
-			this.setTotalLeftDays((totalDaysOfMonth - currentDay) + 1);
+			this.setTotalLeftDays((totalDaysOfMonth - currentDay));
 			if (this.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
 				final int totalMinutesAuxiliary = 50 * 60;
 				if (minutes < totalMinutesAuxiliary) {
@@ -122,9 +122,15 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
 				}
 				int totalRemain = (totalMinutesAuxiliary - minutes);
-				int totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				int totalRemainPerDay = 0;
+				if (this.getTotalLeftDays() > 0) {
+					totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				} else {
+					totalRemain = 0;
+				}
 				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
 				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
+
 			} else if (this.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
 				final int totalMinutesRegular = 70 * 60;
 				if (minutes < totalMinutesRegular) {
@@ -132,7 +138,12 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 							+ VulpeDateUtil.getFormatedTime(totalMinutesRegular - minutes) + ")");
 				}
 				int totalRemain = (totalMinutesRegular - minutes);
-				int totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				int totalRemainPerDay = 0;
+				if (this.getTotalLeftDays() > 0) {
+					totalRemainPerDay = totalRemain / this.getTotalLeftDays();
+				} else {
+					totalRemain = 0;
+				}
 				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
 				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
 			}
@@ -142,8 +153,8 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	@Override
 	public int compareTo(VulpeEntity<Long> entity) {
 		final MemberPersonalReport memberPersonalReport = (MemberPersonalReport) entity;
-		// +
-		// Integer.valueOf(this.month.ordinal()).compareTo(Integer.valueOf(memberPersonalReport.getMonth().ordinal()))
-		return this.year.compareTo(memberPersonalReport.getYear());
+		return Integer.valueOf(this.month.ordinal()).compareTo(
+				Integer.valueOf(memberPersonalReport.getMonth().ordinal()))
+				+ this.year.compareTo(memberPersonalReport.getYear());
 	}
 }

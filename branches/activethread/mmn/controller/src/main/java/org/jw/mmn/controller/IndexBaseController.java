@@ -14,7 +14,7 @@ import org.vulpe.controller.annotations.ExecuteAlways;
 import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 import org.vulpe.exception.VulpeApplicationException;
 
-@SuppressWarnings( { "serial" })
+@SuppressWarnings({ "serial", "unchecked" })
 @Controller(type = ControllerType.FRONTEND)
 public class IndexBaseController extends ApplicationBaseController<Index, Long> {
 
