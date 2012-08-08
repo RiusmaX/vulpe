@@ -30,8 +30,8 @@ import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
-@SuppressWarnings( { "serial", "unchecked", "rawtypes" })
-public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+@SuppressWarnings( { "serial", "unchecked" })
+public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends VulpeStrutsController<ENTITY, ID> {
 
 	@Override
