@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -51,7 +51,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Vulpe String Utility class.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
@@ -65,97 +65,97 @@ public class VulpeStringUtil {
 	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
 
 	static {
-		accentMap.put("á".charAt(0), "a");
-		accentMap.put("â".charAt(0), "a");
-		accentMap.put("ã".charAt(0), "a");
-		accentMap.put("à".charAt(0), "a");
-		accentMap.put("ä".charAt(0), "a");
+		accentMap.put('á', "a");
+		accentMap.put('â', "a");
+		accentMap.put('ã', "a");
+		accentMap.put('à', "a");
+		accentMap.put('ä', "a");
 
-		accentMap.put("Á".charAt(0), "A");
-		accentMap.put("Â".charAt(0), "A");
-		accentMap.put("Ã".charAt(0), "A");
-		accentMap.put("À".charAt(0), "A");
-		accentMap.put("Ä".charAt(0), "A");
+		accentMap.put('Á', "A");
+		accentMap.put('Â', "A");
+		accentMap.put('Ã', "A");
+		accentMap.put('À', "A");
+		accentMap.put('Ä', "A");
 
-		accentMap.put("é".charAt(0), "e");
-		accentMap.put("è".charAt(0), "e");
-		accentMap.put("ë".charAt(0), "e");
-		accentMap.put("ê".charAt(0), "e");
+		accentMap.put('é', "e");
+		accentMap.put('è', "e");
+		accentMap.put('ë', "e");
+		accentMap.put('ê', "e");
 
-		accentMap.put("É".charAt(0), "E");
-		accentMap.put("Ê".charAt(0), "E");
-		accentMap.put("È".charAt(0), "E");
-		accentMap.put("Ë".charAt(0), "E");
+		accentMap.put('É', "E");
+		accentMap.put('Ê', "E");
+		accentMap.put('È', "E");
+		accentMap.put('Ë', "E");
 
-		accentMap.put("í".charAt(0), "i");
-		accentMap.put("ì".charAt(0), "i");
-		accentMap.put("î".charAt(0), "i");
-		accentMap.put("ï".charAt(0), "i");
+		accentMap.put('í', "i");
+		accentMap.put('ì', "i");
+		accentMap.put('î', "i");
+		accentMap.put('ï', "i");
 
-		accentMap.put("Í".charAt(0), "I");
-		accentMap.put("Ì".charAt(0), "I");
-		accentMap.put("Î".charAt(0), "I");
-		accentMap.put("Ï".charAt(0), "I");
+		accentMap.put('Í', "I");
+		accentMap.put('Ì', "I");
+		accentMap.put('Î', "I");
+		accentMap.put('Ï', "I");
 
-		accentMap.put("ó".charAt(0), "o");
-		accentMap.put("ò".charAt(0), "o");
-		accentMap.put("õ".charAt(0), "o");
-		accentMap.put("ô".charAt(0), "o");
-		accentMap.put("ö".charAt(0), "o");
+		accentMap.put('ó', "o");
+		accentMap.put('ò', "o");
+		accentMap.put('õ', "o");
+		accentMap.put('ô', "o");
+		accentMap.put('ö', "o");
 
-		accentMap.put("Ó".charAt(0), "O");
-		accentMap.put("Ò".charAt(0), "O");
-		accentMap.put("Õ".charAt(0), "O");
-		accentMap.put("Ô".charAt(0), "O");
-		accentMap.put("Ö".charAt(0), "O");
+		accentMap.put('Ó', "O");
+		accentMap.put('Ò', "O");
+		accentMap.put('Õ', "O");
+		accentMap.put('Ô', "O");
+		accentMap.put('Ö', "O");
 
-		accentMap.put("ú".charAt(0), "u");
-		accentMap.put("ù".charAt(0), "u");
-		accentMap.put("ü".charAt(0), "u");
-		accentMap.put("ü".charAt(0), "u");
+		accentMap.put('ú', "u");
+		accentMap.put('ù', "u");
+		accentMap.put('ü', "u");
+		accentMap.put('ü', "u");
 
-		accentMap.put("Ú".charAt(0), "U");
-		accentMap.put("Ù".charAt(0), "U");
-		accentMap.put("Û".charAt(0), "U");
-		accentMap.put("Ü".charAt(0), "U");
+		accentMap.put('Ú', "U");
+		accentMap.put('Ù', "U");
+		accentMap.put('Û', "U");
+		accentMap.put('Ü', "U");
 
 		// (')
-		specialChars.put("á".charAt(0), "&aacute;");
-		specialChars.put("é".charAt(0), "&eacute;");
-		specialChars.put("í".charAt(0), "&iacute;");
-		specialChars.put("ó".charAt(0), "&oacute;");
-		specialChars.put("ú".charAt(0), "&uacute;");
-		specialChars.put("Á".charAt(0), "&Aacute;");
-		specialChars.put("É".charAt(0), "&Eacute;");
-		specialChars.put("Í".charAt(0), "&Iacute;");
-		specialChars.put("Ó".charAt(0), "&Oacute;");
-		specialChars.put("Ú".charAt(0), "&Uacute;");
+		specialChars.put('á', "&aacute;");
+		specialChars.put('é', "&eacute;");
+		specialChars.put('í', "&iacute;");
+		specialChars.put('ó', "&oacute;");
+		specialChars.put('ú', "&uacute;");
+		specialChars.put('Á', "&Aacute;");
+		specialChars.put('É', "&Eacute;");
+		specialChars.put('Í', "&Iacute;");
+		specialChars.put('Ó', "&Oacute;");
+		specialChars.put('Ú', "&Uacute;");
 		// (~)
-		specialChars.put("ã".charAt(0), "&atilde;");
-		specialChars.put("ñ".charAt(0), "&ntilde;");
-		specialChars.put("õ".charAt(0), "&otilde;");
-		specialChars.put("Ã".charAt(0), "&Atilde;");
-		specialChars.put("Ñ".charAt(0), "&Ntilde;");
-		specialChars.put("Õ".charAt(0), "&Otilde;");
+		specialChars.put('ã', "&atilde;");
+		specialChars.put('ñ', "&ntilde;");
+		specialChars.put('õ', "&otilde;");
+		specialChars.put('Ã', "&Atilde;");
+		specialChars.put('Ñ', "&Ntilde;");
+		specialChars.put('Õ', "&Otilde;");
 		// (^)
-		specialChars.put("â".charAt(0), "&acirc;");
-		specialChars.put("ê".charAt(0), "&ecirc;");
-		specialChars.put("î".charAt(0), "&icirc;");
-		specialChars.put("ô".charAt(0), "&ocirc;");
-		specialChars.put("û".charAt(0), "&ucirc;");
-		specialChars.put("Â".charAt(0), "&Acirc;");
-		specialChars.put("Ê".charAt(0), "&Ecirc;");
-		specialChars.put("Î".charAt(0), "&Icirc;");
-		specialChars.put("Ô".charAt(0), "&Ocirc;");
-		specialChars.put("Û".charAt(0), "&Ucirc;");
+		specialChars.put('â', "&acirc;");
+		specialChars.put('ê', "&ecirc;");
+		specialChars.put('î', "&icirc;");
+		specialChars.put('ô', "&ocirc;");
+		specialChars.put('û', "&ucirc;");
+		specialChars.put('Â', "&Acirc;");
+		specialChars.put('Ê', "&Ecirc;");
+		specialChars.put('Î', "&Icirc;");
+		specialChars.put('Ô', "&Ocirc;");
+		specialChars.put('Û', "&Ucirc;");
 		// (ç Ç)
-		specialChars.put("ç".charAt(0), "&ccedil;");
-		specialChars.put("Ç".charAt(0), "&Ccedil;");
+		specialChars.put('ç', "&ccedil;");
+		specialChars.put('Ç', "&Ccedil;");
 	}
 
 	/**
 	 * String accent normalize
-	 * 
+	 *
 	 * @param term
 	 * @return
 	 */
@@ -169,7 +169,7 @@ public class VulpeStringUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -183,7 +183,7 @@ public class VulpeStringUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -197,7 +197,7 @@ public class VulpeStringUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -221,7 +221,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in upper case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -231,7 +231,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Puts first char in lower case.
-	 * 
+	 *
 	 * @param value
 	 * @return
 	 */
@@ -241,7 +241,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 * 
+	 *
 	 * @param blob
 	 * @return
 	 */
@@ -266,7 +266,7 @@ public class VulpeStringUtil {
 
 	/**
 	 * Convert SQL Blob to String.
-	 * 
+	 *
 	 * @param blob
 	 * @return
 	 */
@@ -347,11 +347,11 @@ public class VulpeStringUtil {
 	public static String getValueFromLast(String value, String token) {
 		return value.substring(value.lastIndexOf(token) + 1);
 	}
-	
+
 	public static List<String> splitHierarchy(String value) {
 		final List<String> parts = new ArrayList<String>();
-		int firstPos = value.indexOf("[");
-		int lastPos = value.lastIndexOf("]");
+		int firstPos = value.indexOf('[');
+		int lastPos = value.lastIndexOf(']');
 		String parent = "";
 		if (firstPos > 0) {
 			parent = value.substring(0, firstPos);
@@ -359,7 +359,7 @@ public class VulpeStringUtil {
 		value = value.substring(firstPos + 1, lastPos);
 		final List<Integer> positions = new ArrayList<Integer>();
 		for (int i = 0; i < value.length(); i++) {
-			if (value.charAt(i) == ",".charAt(0)) {
+			if (value.charAt(i) == ',') {
 				positions.add(i);
 			}
 		}
@@ -395,6 +395,13 @@ public class VulpeStringUtil {
 			}
 		}
 		return parts;
+	}
+
+	public static void main(String[] args) {
+		String expressao = "x[teste1[teste1_1,teste1_2[teste1_2_1,teste1_2_2,teste1_2_3[teste1_2_3_1,teste1_2_3_2],teste1_2_4]],teste2,teste3[teste3_1]]";
+		for (String string : splitHierarchy(expressao)) {
+			System.out.println(string);
+		}
 	}
 
 }

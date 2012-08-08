@@ -67,7 +67,7 @@ import org.vulpe.view.tags.Functions;
  * @since 1.0
  */
 @SuppressWarnings( { "serial", "unchecked", "deprecation", "rawtypes" })
-public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeControllerConfig, Serializable {
 
 	private boolean simple = true;

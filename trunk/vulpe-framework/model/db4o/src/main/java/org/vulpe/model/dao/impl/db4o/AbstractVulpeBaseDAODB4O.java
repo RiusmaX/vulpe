@@ -68,7 +68,7 @@ import com.db4o.ObjectSet;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings( { "unchecked", "rawtypes" })
-public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
 	/*
@@ -297,7 +297,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 	 * @throws Exception
 	 */
 	public <T> void repair(final T entity, final ObjectContainer container) throws VulpeSystemException {
-		for (Field field : VulpeReflectUtil.getFields(entity.getClass())) {
+		for (final Field field : VulpeReflectUtil.getFields(entity.getClass())) {
 			if (VulpeEntity.class.isAssignableFrom(field.getType())) {
 				final VulpeEntity<Long> value = VulpeReflectUtil.getFieldValue(entity, field.getName());
 				if (value != null) {

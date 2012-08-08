@@ -61,8 +61,7 @@ import org.vulpe.model.entity.VulpeEntity;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
-@SuppressWarnings({ "rawtypes" })
-public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeDAO<ENTITY, ID> {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAO.class);

@@ -92,7 +92,7 @@ import org.vulpe.model.entity.VulpeEntity;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseDAO<ENTITY, ID> {
 
 	protected static final String CGLIB_ENHANCER = "EnhancerByCGLIB";
@@ -386,7 +386,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 	private String loadRelationshipsMountReference(final String attribute, final String parent) {
 		final StringBuilder hqlAttribute = new StringBuilder();
 		final List<String> attributeList = new ArrayList<String>();
-		String first = attribute.substring(0, attribute.indexOf("["));
+		String first = attribute.substring(0, attribute.indexOf('['));
 		loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
 		if (StringUtils.isNotBlank(first)) {
 			first += "_";
@@ -428,11 +428,11 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 		} else {
 			String subParent = "";
-			if (value.indexOf("[") > 0) {
+			if (value.indexOf('[') > 0) {
 				if (StringUtils.isEmpty(parent)) {
-					parent = value.substring(0, value.indexOf("["));
+					parent = value.substring(0, value.indexOf('['));
 				} else {
-					final String parentTest = value.substring(0, value.indexOf("["));
+					final String parentTest = value.substring(0, value.indexOf('['));
 					if (!parent.endsWith(parentTest)) {
 						parent += parentTest;
 					}
@@ -451,9 +451,9 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 			}
 			if (value.contains("[")) {
-				value = value.substring(value.indexOf("[") + 1, value.lastIndexOf("]"));
+				value = value.substring(value.indexOf('[') + 1, value.lastIndexOf("]"));
 			}
-			final String text = value.contains("[") ? value.substring(0, value.indexOf("["))
+			final String text = value.contains("[") ? value.substring(0, value.indexOf('['))
 					: value;
 			final String[] textParts = text.split(",");
 			parent = StringUtils.isNotBlank(parent) ? parent + "." : "";
@@ -479,6 +479,55 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					subParent = "";
 				}
 				loadRelationshipsSeparateAttributes(attributeList, value, parent + subParent);
+			}
+		}
+	}
+
+	/**
+	 * "[teste1[teste1_1,teste1_2[teste1_2_1,teste1_2_2,teste1_2_3[teste1_2_3_1,teste1_2_3_2],teste1_2_4]],teste2,teste3[teste3_1]]"
+	 * @param expression
+	 */
+	//TODO
+	public static void build(final String expression) {
+		char currentCharacter, previousCharacter;
+		int open = 0;
+		int initialPosition = 0;
+		int finalPosition = 0;
+		String value = "";
+		List<String> previous = new ArrayList<String>();
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < expression.length(); i++) {
+			currentCharacter = expression.charAt(i);
+			if (i > 0) {
+				previousCharacter = expression.charAt(i - 1);
+				if (previousCharacter == '[' || previousCharacter == ',' || previousCharacter == ']') {
+					initialPosition = i;
+				}
+				if (currentCharacter == '[' || currentCharacter == ',' || currentCharacter == ']') {
+					finalPosition = i;
+				}
+				if (previousCharacter == '[') {
+					++open;
+					if (!value.isEmpty()) {
+						previous.add(value);
+					}
+				}
+				if (currentCharacter == ']') {
+					--open;
+					if (open > -1) {
+						previous.remove(open);
+					}
+				}
+			}
+			if (finalPosition > initialPosition) {
+				value = expression.substring(initialPosition, finalPosition);
+				final StringBuilder hierarchy = new StringBuilder();
+				for (final String parent : previous) {
+					hierarchy.append(parent).append('.');
+				}
+				hierarchy.append(value);
+				list.add(hierarchy.toString());
+				System.out.println(hierarchy.toString());
 			}
 		}
 	}
@@ -617,7 +666,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						if (attribute.contains("[")) {
 							final StringBuilder hqlAttribute = new StringBuilder(
 									"select new map(obj.id as id");
-							String attributeParent = attribute.substring(0, attribute.indexOf("["));
+							String attributeParent = attribute.substring(0, attribute.indexOf('['));
 							hqlAttribute.append(loadRelationshipsMountReference(attribute, null));
 							if (StringUtils.isEmpty(attributeParent)) {
 								attributeParent = relationship.property();
@@ -731,7 +780,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			}
 			for (final String attribute : relationship.attributes()) {
 				if (hqlAttributes.containsKey(attribute)) {
-					final String attributeParent = attribute.substring(0, attribute.indexOf("["));
+					final String attributeParent = attribute.substring(0, attribute.indexOf('['));
 					final String hqlAttribute = hqlAttributes.get(attribute);
 					final List<ID> ids = new ArrayList<ID>();
 					for (final ENTITY child : childs) {
@@ -861,7 +910,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			final VulpeEntity<ID> entity, final String attribute, final String parent) {
 		try {
 			final List<String> attributeList = new ArrayList<String>();
-			String first = attribute.substring(0, attribute.indexOf("["));
+			String first = attribute.substring(0, attribute.indexOf('['));
 			loadRelationshipsSeparateAttributes(attributeList, attribute.replace(first, ""), null);
 			if (StringUtils.isNotBlank(first)) {
 				first += "_";

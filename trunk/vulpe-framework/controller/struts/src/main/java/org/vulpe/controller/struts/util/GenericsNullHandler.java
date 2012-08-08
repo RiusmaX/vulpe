@@ -62,7 +62,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends InstantiatingNullHandler {
 
 	private static final Logger LOG = Logger.getLogger(GenericsNullHandler.class);

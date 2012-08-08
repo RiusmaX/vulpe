@@ -103,7 +103,7 @@ import org.vulpe.model.services.VulpeService;
  * @since 1.0
  */
 @SuppressWarnings({ "unchecked", "serial", "deprecation", "rawtypes" })
-public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeController {
 
 	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseController.class);
@@ -593,8 +593,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			String description = autocompleteEntity.getAutocomplete();
 			if (description.contains(",")) {
 				autocompleteEntity
-						.setAutocomplete(description.substring(description.indexOf(",") + 1));
-				description = description.substring(0, description.indexOf(","));
+						.setAutocomplete(description.substring(description.indexOf(',') + 1));
+				description = description.substring(0, description.indexOf(','));
 			}
 
 			if (VulpeValidationUtil.isEmpty(autocompleteList)) {

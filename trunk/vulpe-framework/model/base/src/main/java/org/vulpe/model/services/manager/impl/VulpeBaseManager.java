@@ -62,8 +62,8 @@ import org.vulpe.model.services.manager.VulpeManager;
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 @TransactionType
-@SuppressWarnings( { "unchecked", "rawtypes" })
-public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable, DAO extends VulpeDAO<ENTITY, ID>>
+@SuppressWarnings( { "unchecked" })
+public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>, DAO extends VulpeDAO<ENTITY, ID>>
 		implements VulpeManager<ENTITY, ID, DAO> {
 
 	protected static final Logger LOG = Logger.getLogger(VulpeBaseManager.class);

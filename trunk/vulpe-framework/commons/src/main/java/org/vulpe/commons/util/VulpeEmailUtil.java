@@ -260,9 +260,7 @@ public final class VulpeEmailUtil {
 	 * @return true if valid
 	 */
 	private static boolean checkEmailFormat(final String email) {
-		final char arroba = "@".charAt(0);
-		final char dot = ".".charAt(0);
-		return email == null || (email.indexOf(arroba) == -1 || email.indexOf(dot) == -1) ? false
+		return email == null || (email.indexOf('@') == -1 || email.indexOf('.') == -1) ? false
 				: true;
 	}
 

@@ -91,7 +91,7 @@ import org.vulpe.model.entity.VulpeLogicEntity.Status;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 @Repository
-public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseDAOJPA<ENTITY, ID> {
 
 	/*

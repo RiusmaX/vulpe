@@ -90,7 +90,7 @@ import com.google.gson.Gson;
  * @since 1.0
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> {
+public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>> {
 
 	protected static final Logger LOG = Logger.getLogger(VulpeUtil.class);
 

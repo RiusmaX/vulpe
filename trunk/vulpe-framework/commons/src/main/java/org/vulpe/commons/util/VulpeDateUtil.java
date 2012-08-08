@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -55,7 +55,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
 
 /**
  * Utility class to date format.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
 public final class VulpeDateUtil {
@@ -93,7 +93,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date.
-	 * 
+	 *
 	 * @author <a href="mailto:smendes@cit.com.br">Silvio Mendes</a>
 	 * @since 12/04/2006
 	 * @return VulpeDate Data corrente
@@ -106,7 +106,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date plus one millisecond more.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getCurrentDatePlusOne() {
@@ -117,7 +117,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves current date decrease one millisecond.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getCurrentDateMinusOne() {
@@ -128,7 +128,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves yesterday date.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getYesterdayDate() {
@@ -146,7 +146,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on TimeStamp format: ddmmaahhmmss.
-	 * 
+	 *
 	 * @param timestamp
 	 * @return
 	 */
@@ -167,7 +167,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with pattern dd/MM/yyyy.
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getDateFormated(final Date data) {
@@ -177,7 +177,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date to pattern ddmmYY.
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getDateFormattedNoBar(final Date data) {
@@ -187,7 +187,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date to pattern dd/MM/yyyy HH:mm:ss.
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getDateTimeFormatted(final Date data) {
@@ -197,7 +197,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with specific pattern.
-	 * 
+	 *
 	 * @return java.util.Date
 	 */
 	public static Date getDate(final String date, final String pattern) {
@@ -214,7 +214,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format date with specific pattern.
-	 * 
+	 *
 	 * @return String
 	 */
 	public static String getDate(final Date date, final String pattern) {
@@ -231,7 +231,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid date.
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -248,7 +248,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -260,7 +260,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param date
 	 * @param field
 	 * @param value
@@ -275,7 +275,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Time in minutes to String.
-	 * 
+	 *
 	 * @param minutes
 	 * @return
 	 */
@@ -296,7 +296,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Time in minutes to String.
-	 * 
+	 *
 	 * @param minutes
 	 * @return
 	 */
@@ -306,14 +306,14 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate minutes of duration.
-	 * 
+	 *
 	 * @param duration
 	 * @return
 	 */
 	public static Integer getTimeInMinutes(final String duration) {
 		Integer totalMinutes = null;
 		if (!"".equals(duration)) {
-			final int index = duration.indexOf(":");
+			final int index = duration.indexOf(':');
 
 			final Integer hours = Integer.valueOf(duration.substring(0, index));
 			final Integer minutes = Integer.valueOf(duration.substring(index + 1));
@@ -325,7 +325,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Format Date to same date with first hour of day.
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -346,7 +346,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid Time.
-	 * 
+	 *
 	 * @param time
 	 * @param lenient
 	 * @return
@@ -356,7 +356,7 @@ public final class VulpeDateUtil {
 		sdf.applyPattern(HHMM);
 		if (lenient) {
 			try {
-				final int index = time.indexOf(":");
+				final int index = time.indexOf(':');
 				// Integer hours = Integer.valueOf(time.substring(0, index));
 				final Integer minutes = Integer.valueOf(time.substring(index + 1));
 				if ((minutes != null) && (minutes.intValue() < 60)) {
@@ -383,7 +383,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if is a valid Date.
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -428,7 +428,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves date on extensive format. Example: 01 of Jully of 2010.
-	 * 
+	 *
 	 * @return
 	 */
 	public String getExtensiveDate() {
@@ -445,7 +445,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in days between dates.
-	 * 
+	 *
 	 * @param begin
 	 * @param end
 	 * @return
@@ -479,7 +479,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Date.
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 * @throws ParseException
@@ -504,7 +504,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Time.
-	 * 
+	 *
 	 * @param time
 	 * @return
 	 * @throws ParseException
@@ -517,7 +517,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert String to Date Time.
-	 * 
+	 *
 	 * @param dateTime
 	 * @return
 	 * @throws ParseException
@@ -529,7 +529,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dateTime
 	 * @return
 	 */
@@ -544,7 +544,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dateTime
 	 * @return
 	 */
@@ -558,7 +558,7 @@ public final class VulpeDateUtil {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dateTime
 	 * @return
 	 */
@@ -574,7 +574,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Convert time to String.
-	 * 
+	 *
 	 * @param time
 	 * @return
 	 */
@@ -590,7 +590,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to String with day of week. Example: Date: 04/10/2005 Value
 	 * returned: Tue
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -602,7 +602,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to same Date with last minute of day. Example: Input:
 	 * 01/01/2005 Output: 01/01/2005 23:59:59
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -619,7 +619,7 @@ public final class VulpeDateUtil {
 	/**
 	 * Convert Date to same Date with first minute of day. Example: Input:
 	 * 01/01/2005 Output: 01/01/2005 00:00:00
-	 * 
+	 *
 	 * @param date
 	 * @return
 	 */
@@ -635,7 +635,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in milliseconds between dates.
-	 * 
+	 *
 	 * @param begin
 	 * @param end
 	 * @return
@@ -664,7 +664,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in minutes between dates.
-	 * 
+	 *
 	 * @param begin
 	 * @param end
 	 * @return
@@ -675,7 +675,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate quantity of minutes of task.
-	 * 
+	 *
 	 * @param dateTimeBegin
 	 * @param dateTimeEnd
 	 * @param begin
@@ -747,7 +747,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks time period.
-	 * 
+	 *
 	 * @param beginHour
 	 * @param endHour
 	 * @param hour
@@ -788,7 +788,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves time of activity on period.
-	 * 
+	 *
 	 * @param dateTimeStart
 	 * @param dateTimeEnd
 	 * @param start
@@ -844,7 +844,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Adds days on Date.
-	 * 
+	 *
 	 * @param date
 	 * @param numberOfDays
 	 * @return
@@ -862,7 +862,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves Time Zone (GTM)
-	 * 
+	 *
 	 * @return
 	 */
 	public static String getOffSetTimeZone() {
@@ -879,7 +879,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Calculate diff in days between dates.
-	 * 
+	 *
 	 * @param minorDate
 	 * @param majorDate
 	 * @return
@@ -916,7 +916,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks whether the dates are on the same day.
-	 * 
+	 *
 	 * @param date1
 	 * @param date2
 	 * @return
@@ -930,7 +930,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Checks if data is between period.
-	 * 
+	 *
 	 * @param date
 	 * @param periodStart
 	 * @param periodEnd
@@ -943,7 +943,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves dates by days of week on month
-	 * 
+	 *
 	 * @param days
 	 * @return
 	 */
@@ -970,7 +970,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves the first date of the month.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getFirstDateOfTheMonth() {
@@ -985,7 +985,7 @@ public final class VulpeDateUtil {
 
 	/**
 	 * Retrieves the last date of the month.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Date getLastDateOfTheMonth() {

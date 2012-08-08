@@ -94,7 +94,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial", "rawtypes" })
-public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseController<ENTITY, ID> implements VulpeController,
 		com.opensymphony.xwork2.Action, Validateable, ValidationAware, LocaleProvider {
 

@@ -51,8 +51,7 @@ import org.vulpe.model.entity.VulpeEntity;
  *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  */
-@SuppressWarnings("rawtypes")
-public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable> {
+public interface VulpeDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>> {
 
 	/**
 	 * Make ENTITY merge.

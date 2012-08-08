@@ -53,10 +53,10 @@ import org.vulpe.model.services.GenericService;
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings( { "unchecked" })
 @Service("GenericService")
 @Transactional
-public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable>
+public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements GenericService {
 
 	private static final Logger LOG = Logger.getLogger(GenericServiceDB4OPOJO.class);

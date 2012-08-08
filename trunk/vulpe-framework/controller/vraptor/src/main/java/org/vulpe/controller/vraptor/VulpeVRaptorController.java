@@ -82,7 +82,7 @@ import br.com.caelum.vraptor.core.RequestInfo;
  * @since 1.0
  */
 @SuppressWarnings( { "unchecked", "serial", "rawtypes" })
-public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable>
+public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseController<ENTITY, ID> implements VulpeController {
 
 	@Autowired
