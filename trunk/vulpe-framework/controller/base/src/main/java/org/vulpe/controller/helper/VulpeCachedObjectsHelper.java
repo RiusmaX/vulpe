@@ -187,14 +187,14 @@ public final class VulpeCachedObjectsHelper {
 							final String enumName = classicClass.getSimpleName();
 							final Object[] values = classicClass.getEnumConstants();
 							final List<ValueBean> list = new ArrayList<ValueBean>();
-							final StringBuilder valuesDescricption = new StringBuilder();
+							final StringBuilder valuesDescription = new StringBuilder();
 							final StringBuilder array = new StringBuilder("#{");
 							for (Object object : values) {
-								if (valuesDescricption.length() > 0) {
-									valuesDescricption.append(", ");
+								if (valuesDescription.length() > 0) {
+									valuesDescription.append(", ");
 									array.append(", ");
 								}
-								valuesDescricption.append(object);
+								valuesDescription.append(object);
 								final ValueBean value = new ValueBean(object.toString(),
 										classicClass.getName().concat(".")
 												.concat(object.toString()));
@@ -207,7 +207,7 @@ public final class VulpeCachedObjectsHelper {
 							array.append("}");
 							mapCachedEnumArray.put(enumName, array.toString());
 							LOG.debug("Reading object: ".concat(enumName).concat(" [")
-									.concat(valuesDescricption.toString()).concat("]"));
+									.concat(valuesDescription.toString()).concat("]"));
 							mapCachedEnum.put(enumName, list);
 						} catch (Exception e) {
 							LOG.error(e);
@@ -257,14 +257,14 @@ public final class VulpeCachedObjectsHelper {
 					final String enumName = clazz.getSimpleName();
 					final Object[] values = clazz.getEnumConstants();
 					final List<ValueBean> list = new ArrayList<ValueBean>();
-					final StringBuilder valuesDescricption = new StringBuilder();
+					final StringBuilder valuesDescription = new StringBuilder();
 					final StringBuilder array = new StringBuilder("#{");
 					for (final Object object : values) {
-						if (valuesDescricption.length() > 0) {
-							valuesDescricption.append(", ");
+						if (valuesDescription.length() > 0) {
+							valuesDescription.append(", ");
 							array.append(", ");
 						}
-						valuesDescricption.append(object);
+						valuesDescription.append(object);
 						final ValueBean value = new ValueBean(object.toString(),
 								VulpeConstants.View.LABEL.concat(projectName)
 										.concat(VulpeConstants.View.ENUM).concat(enumName)
@@ -278,7 +278,7 @@ public final class VulpeCachedObjectsHelper {
 					array.append("}");
 					mapCachedEnumArray.put(enumName, array.toString());
 					LOG.debug("Reading object: ".concat(enumName).concat(" [")
-							.concat(valuesDescricption.toString()).concat("]"));
+							.concat(valuesDescription.toString()).concat("]"));
 					mapCachedEnum.put(enumName, list);
 				} catch (Exception e) {
 					LOG.error(e);
