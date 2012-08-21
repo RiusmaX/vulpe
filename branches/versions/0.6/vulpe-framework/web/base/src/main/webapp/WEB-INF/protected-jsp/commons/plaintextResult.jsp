@@ -1,0 +1,1 @@
+${now['RESULT_TYPE']}${now['PLAIN_TEXT']}

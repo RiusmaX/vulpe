@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+
+	<package name="security" extends="struts-default">
+
+		<result-types>
+			<result-type name="chain" class="org.vulpe.view.struts.result.SessionActionChainResult" />
+			<result-type name="jasper" class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
+		</result-types>
+
+		<interceptors>
+			<!-- file upload interceptor -->
+			<interceptor name="fileUpload" class="org.vulpe.controller.struts.interceptor.VulpeUploadInterceptor" />
+
+			<!-- exception interceptor -->
+			<interceptor name="exception"
+				class="org.vulpe.controller.struts.interceptor.VulpeExceptionMappingInterceptor" />
+
+			<!-- chain interceptor -->
+			<interceptor name="chain" class="org.vulpe.controller.struts.interceptor.VulpeChainingInterceptor" />
+
+			<!-- params interceptor -->
+			<interceptor name="params"
+				class="org.vulpe.controller.struts.interceptor.VulpeParametersInterceptor" />
+		</interceptors>
+
+		<global-results>
+			<result name="upload">/WEB-INF/protected-jsp/commons/upload.jsp</result>
+			<result name="report">/WEB-INF/protected-jsp/commons/reportDownload.jsp
+			</result>
+			<result name="json">/WEB-INF/protected-jsp/commons/json.jsp</result>
+			<result name="download" type="stream">
+				<param name="contentType">${downloadInfo.contentType}</param>
+				<param name="contentLength">${downloadInfo.contentLength}</param>
+				<param name="contentDisposition">${downloadInfo.contentDisposition}</param>
+				<param name="inputName">downloadInfo.inputStream</param>
+			</result>
+			<result name="messages">/WEB-INF/protected-jsp/commons/messages.jsp
+			</result>
+			<result name="errors">layout.vulpe.errors</result>
+		</global-results>
+
+		<action name="authenticator" class="security.authenticator" method="define">
+			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
+		</action>
+
+		<action name="authenticator/ajax" class="security.authenticator" method="define">
+			<result name="success">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="errors">/WEB-INF/protected-jsp/security/login.jsp</result>
+			<result name="accessDenied">/WEB-INF/protected-jsp/security/accessDenied.jsp</result>
+		</action>
+
+	</package>
+</struts>

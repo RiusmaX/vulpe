@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe</artifactId>
+	<version>1.0.1</version>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - POM</name>
+
+	<modules>
+		<module>dependencies</module>
+		<module>parents/base</module>
+		<module>parents/struts</module>
+		<module>parents/vraptor</module>
+		<module>interfaces</module>
+		<module>annotations</module>
+		<module>commons</module>
+		<module>model/base</module>
+		<module>model/db4o</module>
+		<module>model/jpa</module>
+		<module>controller/base</module>
+		<module>controller/struts</module>
+		<module>controller/vraptor</module>
+		<module>audit/base</module>
+		<module>audit/entity</module>
+		<module>audit/dao/db4o</module>
+		<module>audit/dao/jpa</module>
+		<module>audit/struts</module>
+		<module>audit/vraptor</module>
+		<module>security/base</module>
+		<module>security/entity</module>
+		<module>security/dao/db4o</module>
+		<module>security/dao/jpa</module>
+		<module>security/struts</module>
+		<module>security/vraptor</module>
+		<module>parents/struts-base</module>
+		<module>parents/struts-db4o</module>
+		<module>parents/struts-jpa</module>
+		<module>parents/vraptor-base</module>
+		<module>parents/vraptor-db4o</module>
+		<module>fox</module>
+		<module>web/base</module>
+		<module>web/struts</module>
+		<module>web/vraptor</module>
+	</modules>
+	<description>Vulpe Framework ;) Quick and Smart</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<distributionManagement>
+		<repository>
+			<id>ftp-activethread</id>
+			<name>Active Thread Maven2 Repository</name>
+			<url>ftp://activethread.com.br</url>
+		</repository>
+	</distributionManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.zeroturnaround</groupId>
+				<artifactId>jrebel-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<id>generate-rebel-xml</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
