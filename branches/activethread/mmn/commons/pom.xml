@@ -12,8 +12,8 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-struts-db4o</artifactId>
-		<version>1.0.1</version>
+		<artifactId>vulpe-parent-struts2-db4o</artifactId>
+		<version>1.0.2.API3</version>
 	</parent>
 
 </project>

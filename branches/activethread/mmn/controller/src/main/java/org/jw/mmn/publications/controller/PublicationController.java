@@ -14,7 +14,7 @@ import org.jw.mmn.publications.model.services.PublicationsService;
 import org.jw.mmn.controller.ApplicationBaseController;
 import org.jw.mmn.publications.model.entity.Publication;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Component("publications.PublicationController")
 @Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5))

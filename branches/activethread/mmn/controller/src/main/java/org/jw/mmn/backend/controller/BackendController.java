@@ -11,6 +11,6 @@ import org.vulpe.controller.commons.VulpeControllerConfig.ControllerType;
 @Component("backend.IndexController")
 @SuppressWarnings( { "serial" })
 @Controller(type = ControllerType.BACKEND)
-public class IndexController extends IndexBaseController {
+public class BackendController extends IndexBaseController {
 
 }

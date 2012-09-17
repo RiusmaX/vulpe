@@ -11,8 +11,8 @@
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-struts-db4o</artifactId>
-		<version>1.0.1</version>
+		<artifactId>vulpe-parent-struts2-db4o</artifactId>
+		<version>1.0.2.API3</version>
 	</parent>
 
 	<build>
@@ -31,7 +31,7 @@
 							<tasks>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
 								<property name="tools.dir"
-									value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools" />
+									value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${tools.dir}" property="tools.dir.present"
 									type="dir" />
@@ -39,8 +39,8 @@
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
 										<unjar
-											src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1.jar"
-											dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1" />
+											src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3.jar"
+											dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3" />
 									</then>
 								</if>
 								<delete dir="${basedir}/../web/target" />
@@ -73,7 +73,7 @@
 				<configuration>
 					<factory>org.vulpe.fox.view.ViewProcessorFactory</factory>
 					<options>
-						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0.1/vulpe-fox-1.0.1/tools/view/templates/plugin.ftl</param>
+						<param>template=${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools/view/templates/plugin.ftl</param>
 					</options>
 					<sourceOutputDirectory>${basedir}/../web/src/main/webapp/WEB-INF/protected-jsp</sourceOutputDirectory>
 				</configuration>

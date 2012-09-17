@@ -13,8 +13,8 @@ import org.vulpe.commons.util.VulpeDateUtil;
 import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.model.annotations.Parameter;
-import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.annotations.Parameter.OperatorType;
+import org.vulpe.model.annotations.QueryParameter;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.model.entity.impl.VulpeBaseDB4OEntity;
 import org.vulpe.view.annotations.input.VulpeDate;
@@ -97,13 +97,16 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 			int magazines = 0;
 			int revisits = 0;
 			for (final PersonalReport personalReport : this.getReports()) {
-				books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
-				brochures += personalReport.getBrochures() == null ? 0 : personalReport
-						.getBrochures();
-				minutes += personalReport.getTotalMinites();
-				magazines += personalReport.getMagazines() == null ? 0 : personalReport
-						.getMagazines();
-				revisits += personalReport.getRevisits() == null ? 0 : personalReport.getRevisits();
+				if (personalReport != null) {
+					books += personalReport.getBooks() == null ? 0 : personalReport.getBooks();
+					brochures += personalReport.getBrochures() == null ? 0 : personalReport
+							.getBrochures();
+					minutes += personalReport.getTotalMinites();
+					magazines += personalReport.getMagazines() == null ? 0 : personalReport
+							.getMagazines();
+					revisits += personalReport.getRevisits() == null ? 0 : personalReport
+							.getRevisits();
+				}
 			}
 			this.setTotalBooks(books);
 			this.setTotalBrochures(brochures);
@@ -146,6 +149,27 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 				}
 				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
 				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
+			}
+		}
+	}
+
+	public void turnZero() {
+		if (VulpeValidationUtil.isNotEmpty(this.getReports())) {
+			for (final PersonalReport personalReport : this.getReports()) {
+				if (personalReport != null) {
+					if (personalReport.getBooks() == null) {
+						personalReport.setBooks(0);
+					}
+					if (personalReport.getBrochures() == null) {
+						personalReport.setBrochures(0);
+					}
+					if (personalReport.getMagazines() == null) {
+						personalReport.setMagazines(0);
+					}
+					if (personalReport.getRevisits() == null) {
+						personalReport.setRevisits(0);
+					}
+				}
 			}
 		}
 	}

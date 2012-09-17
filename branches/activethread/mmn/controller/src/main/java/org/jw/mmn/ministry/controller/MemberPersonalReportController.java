@@ -101,6 +101,22 @@ public class MemberPersonalReportController extends
 						.readMemberPersonalReport(memberPersonalReport);
 				if (VulpeValidationUtil.isNotEmpty(list)) {
 					id = list.get(0).getId();
+					// MemberPersonalReport mpr = new MemberPersonalReport();
+					// mpr.setId(id);
+					// mpr = ministryService().findMemberPersonalReport(mpr);
+					// boolean remove = false;
+					// for (Iterator<PersonalReport> iterator =
+					// mpr.getReports().iterator(); iterator.hasNext();) {
+					// PersonalReport personalReport = iterator
+					// .next();
+					// if (personalReport == null) {
+					// iterator.remove();
+					// remove = true;
+					// }
+					// }
+					// if (remove) {
+					// ministryService().updateMemberPersonalReport(mpr);
+					// }
 				} else {
 					ever.putWeakRef("memberPersonalReport", memberPersonalReport);
 					create();
@@ -122,12 +138,14 @@ public class MemberPersonalReportController extends
 			entity.setYear(calendar.get(Calendar.YEAR));
 		}
 		vulpe.view().renderButtons(Button.REPORT);
+
 	}
 
 	@Override
 	protected void updatePostBefore() {
 		super.updatePostBefore();
 		mountDate();
+		entity.turnZero();
 	}
 
 	@Override

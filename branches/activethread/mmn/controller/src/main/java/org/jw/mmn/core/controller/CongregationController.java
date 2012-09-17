@@ -22,7 +22,7 @@ import org.vulpe.controller.annotations.Tabular;
  * Controller implementation of Congregation
  */
 @Component("core.CongregationController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, detailsConfig = {
 		@DetailConfig(name = "groups", propertyName = "entity.groups", despiseFields = "name", startNewDetails = 3, newDetails = 1, quantity = @Quantity(type = QuantityType.ONE_OR_MORE)),

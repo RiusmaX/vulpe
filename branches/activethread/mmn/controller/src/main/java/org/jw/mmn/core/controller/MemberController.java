@@ -22,7 +22,7 @@ import org.jw.mmn.controller.ApplicationBaseController;
 import org.jw.mmn.core.model.entity.Member;
 
 @Component("core.MemberController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(type = ControllerType.MAIN, serviceClass = CoreService.class, select = @Select(pageSize = 5), detailsConfig = {
 		@DetailConfig(name = "addresses", propertyName = "entity.addresses", despiseFields = "address", startNewDetails = 1, newDetails = 1),

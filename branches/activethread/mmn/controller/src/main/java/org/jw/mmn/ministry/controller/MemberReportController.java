@@ -29,7 +29,7 @@ import org.vulpe.controller.annotations.Select;
  * Controller implementation of MemberReport
  */
 @Component("ministry.MemberReportController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = MinistryService.class, select = @Select(pageSize = 5, showReport = true), report = @Report(subReports = {
 		"MemberReports", "PendingMemberReports" }), newOnPost = true)

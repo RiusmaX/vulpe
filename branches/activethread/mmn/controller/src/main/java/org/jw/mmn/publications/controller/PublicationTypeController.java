@@ -15,7 +15,7 @@ import org.jw.mmn.controller.ApplicationBaseController;
  * Controller implementation of PublicationType
  */
 @Component("publications.PublicationTypeController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = PublicationsService.class, select = @Select(pageSize = 5), tabular = @Tabular(startNewRecords = 5, newRecords = 1, despiseFields = { "description" }))
 public class PublicationTypeController extends

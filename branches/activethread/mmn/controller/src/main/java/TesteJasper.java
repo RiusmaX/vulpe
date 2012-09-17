@@ -23,7 +23,7 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 
-@SuppressWarnings( { "unchecked", "unused" })
+@SuppressWarnings({ "unchecked", "unused", "rawtypes" })
 public class TesteJasper {
 
 	public void gerar(String layout, List dataSource) throws JRException, SQLException,
@@ -45,8 +45,7 @@ public class TesteJasper {
 		JRBeanCollectionDataSource dsRelatorio = new JRBeanCollectionDataSource(lista);
 		parametros.put("periodo", "01/09/2010 - 30/09/2010");
 		parametros
-				.put(
-						"SUBREPORT_0",
+				.put("SUBREPORT_0",
 						"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\mmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Order\\Publicacoes.jasper");
 		for (SimpleOrder pedidoSimples : (List<SimpleOrder>) dataSource) {
 
@@ -118,8 +117,8 @@ public class TesteJasper {
 			for (OrderPublication pedidoPublicacao : os) {
 				int count = 0;
 				for (OrderPublication pedidoPublicacao2 : os) {
-					if (pedidoPublicacao.getPublication().getId().equals(
-							pedidoPublicacao2.getPublication().getId())) {
+					if (pedidoPublicacao.getPublication().getId()
+							.equals(pedidoPublicacao2.getPublication().getId())) {
 						++count;
 					}
 				}
@@ -132,8 +131,7 @@ public class TesteJasper {
 			// "C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\mmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Order\\SimpleOrder.jrxml",
 			// lista);
 			new TesteJasper()
-					.gerar(
-							"C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\mmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Order\\Pedidos.jrxml",
+					.gerar("C:\\Active Thread\\Vulpe Framework\\1.0\\Workspace\\mmn\\web\\src\\main\\webapp\\WEB-INF\\reports\\publicacoes\\Order\\Pedidos.jrxml",
 							lista);
 		} catch (Exception e) {
 			e.printStackTrace();

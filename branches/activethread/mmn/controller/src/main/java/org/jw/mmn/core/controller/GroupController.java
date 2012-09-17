@@ -16,7 +16,7 @@ import org.jw.mmn.core.model.entity.Group;
  * Controller implementation of Group
  */
 @Component("core.GroupController")
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "unchecked" })
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller(serviceClass = CoreService.class, detailsConfig = { @DetailConfig(name = "members", propertyName = "entity.publicadores", despiseFields = "nome", startNewDetails = 10, newDetails = 1) }, select = @Select(pageSize = 5), tabular = @Tabular(startNewRecords = 5, newRecords = 1, despiseFields = { "nome" }))
 public class GroupController extends ApplicationBaseController<Group, java.lang.Long> {
