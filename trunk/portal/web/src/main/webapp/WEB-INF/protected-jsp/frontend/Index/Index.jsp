@@ -1,1 +1,0 @@
-<%@include file="/WEB-INF/protected-jsp/frontend/Index/section.jsp"%>
