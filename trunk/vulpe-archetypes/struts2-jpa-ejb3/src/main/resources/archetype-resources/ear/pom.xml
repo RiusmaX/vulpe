@@ -1,0 +1,269 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${package}</groupId>
+	<artifactId>${rootArtifactId}-ear</artifactId>
+	<version>${version}</version>
+	<packaging>ear</packaging>
+	<name>${rootArtifactId} - EAR</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-web</artifactId>
+			<version>${version}</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-domains</artifactId>
+			<version>${version}</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-core</artifactId>
+			<version>${version}</version>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${package}</groupId>
+			<artifactId>${rootArtifactId}-commons</artifactId>
+			<version>${version}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<defaultJavaBundleDir>APP-INF/lib/</defaultJavaBundleDir>
+					<earSourceDirectory>${basedir}/src/main/resources</earSourceDirectory>
+					<modules>
+						<webModule>
+							<groupId>${package}</groupId>
+							<artifactId>${rootArtifactId}-web</artifactId>
+							<contextRoot>/${rootArtifactId}</contextRoot>
+							<!-- <unpack>true</unpack> -->
+						</webModule>
+						<jarModule>
+							<groupId>org.vulpe</groupId>
+							<artifactId>vulpe-interfaces</artifactId>
+							<includeInApplicationXml>true</includeInApplicationXml>
+						</jarModule>
+						<jarModule>
+							<groupId>${package}</groupId>
+							<artifactId>${rootArtifactId}-domains</artifactId>
+							<includeInApplicationXml>true</includeInApplicationXml>
+						</jarModule>
+						<ejbModule>
+							<groupId>${package}</groupId>
+							<artifactId>${rootArtifactId}-core</artifactId>
+							<bundleDir>APP-INF/lib/</bundleDir>
+						</ejbModule>
+					</modules>
+					<jboss>
+						<!--
+							<data-sources> 
+								<data-source>${rootArtifactId}-ds.xml</data-source>
+							</data-sources>
+						-->
+						<version>5</version>
+						<unauthenticated-principal>guest</unauthenticated-principal>
+					</jboss>
+					<ejbVersion>3.0</ejbVersion>
+					<!-- <unpackTypes>war</unpackTypes> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jboss-maven-plugin</artifactId>
+				<configuration>
+					<hostName>localhost</hostName>
+					<port>8080</port>
+					<serverName>default</serverName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<macrodef name="trim">
+									<attribute name="input" />
+									<attribute name="property" />
+									<sequential>
+										<tempfile property="temp.file" destDir="target" />
+										<echo file="${symbol_dollar}{temp.file}" message="@{input}" />
+										<move file="${symbol_dollar}{temp.file}" tofile="${symbol_dollar}{temp.file}.2">
+											<filterchain>
+												<deletecharacters chars="\\n\\r" />
+												<trim />
+												<ignoreblank />
+											</filterchain>
+										</move>
+										<loadfile property="@{property}" srcFile="${symbol_dollar}{temp.file}.2" />
+										<delete file="${symbol_dollar}{temp.file}.2" failonerror="false" />
+									</sequential>
+								</macrodef>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property environment="env" />
+								<trim input="${symbol_dollar}{env.JBOSS_HOME}" property="jboss.home" />
+								<trim input="${symbol_dollar}{env.GLASSFISH_HOME}" property="glassfish.home" />
+								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
+								<if>
+									<equals arg1="${symbol_dollar}{deployServer}" arg2="jboss" />
+									<then>
+										<if>
+											<equals arg1="${symbol_dollar}{unpack}" arg2="true" />
+											<then>
+												<delete>
+													<fileset dir="${symbol_dollar}{jboss.home}/server/default/deploy/"
+														includes="${symbol_dollar}{artifactId}.ear" />
+												</delete>
+											</then>
+											<else>
+												<delete
+													dir="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear" />
+											</else>
+										</if>
+									</then>
+									<elseif>
+										<equals arg1="${symbol_dollar}{deployServer}" arg2="glassfish" />
+										<then>
+											<if>
+												<equals arg1="${symbol_dollar}{unpack}" arg2="true" />
+												<then>
+													<delete
+														dir="${symbol_dollar}{glassfish.home}/domains/domain1/autodeploy/${symbol_dollar}{artifactId}.ear" />
+												</then>
+												<else>
+													<delete>
+														<fileset dir="${symbol_dollar}{glassfish.home}/domains/domain1/autodeploy/"
+															includes="${symbol_dollar}{artifactId}.ear" />
+													</delete>
+												</else>
+											</if>
+										</then>
+									</elseif>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<macrodef name="trim">
+									<attribute name="input" />
+									<attribute name="property" />
+									<sequential>
+										<tempfile property="temp.file" destDir="target" />
+										<echo file="${symbol_dollar}{temp.file}" message="@{input}" />
+										<move file="${symbol_dollar}{temp.file}" tofile="${symbol_dollar}{temp.file}.2">
+											<filterchain>
+												<deletecharacters chars="\\n\\r" />
+												<trim />
+												<ignoreblank />
+											</filterchain>
+										</move>
+										<loadfile property="@{property}" srcFile="${symbol_dollar}{temp.file}.2" />
+										<delete file="${symbol_dollar}{temp.file}.2" failonerror="false" />
+									</sequential>
+								</macrodef>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property environment="env" />
+								<trim input="${symbol_dollar}{env.JBOSS_HOME}" property="jboss.home" />
+								<trim input="${symbol_dollar}{env.GLASSFISH_HOME}" property="glassfish.home" />
+								<property name="maven.repo" value="${symbol_dollar}{settings.localRepository}" />
+								<if>
+									<equals arg1="${symbol_dollar}{deployServer}" arg2="jboss" />
+									<then>
+										<if>
+											<equals arg1="${symbol_dollar}{unpack}" arg2="true" />
+											<then>
+												<unzip
+													src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear"
+													dest="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear" />
+											</then>
+											<else>
+												<copy
+													tofile="${symbol_dollar}{jboss.home}/server/default/deploy/${symbol_dollar}{artifactId}.ear"
+													preservelastmodified="true">
+													<fileset dir="${symbol_dollar}{project.build.directory}"
+														includes="${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear" />
+												</copy>
+											</else>
+										</if>
+									</then>
+									<elseif>
+										<equals arg1="${symbol_dollar}{deployServer}" arg2="glassfish" />
+										<then>
+											<if>
+												<equals arg1="${symbol_dollar}{unpack}" arg2="true" />
+												<then>
+													<unzip
+														src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear"
+														dest="${symbol_dollar}{glassfish.home}/domains/domain1/autodeploy/${symbol_dollar}{artifactId}.ear" />
+												</then>
+												<else>
+													<copy
+														tofile="${symbol_dollar}{glassfish.home}/domains/domain1/autodeploy/${symbol_dollar}{artifactId}.ear"
+														preservelastmodified="true">
+														<fileset dir="${symbol_dollar}{project.build.directory}"
+															includes="${symbol_dollar}{artifactId}-${symbol_dollar}{version}.ear" />
+													</copy>
+												</else>
+											</if>
+										</then>
+									</elseif>
+								</if>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

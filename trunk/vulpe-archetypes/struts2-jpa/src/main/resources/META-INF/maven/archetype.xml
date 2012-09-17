@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype>
+	<id>pom</id>
+	<resources>
+		<resource>.classpath</resource>
+		<resource>.project</resource>
+		<resource>.settings\de.loskutov.FileSync.prefs</resource>
+		<resource>commons\pom.xml</resource>
+		<resource>commons\src\main\java\org\vulpe\config\package-info.java</resource>
+		<resource>commons\src\main\resources\.deleteme</resource>
+		<resource>core\pom.xml</resource>
+		<resource>domains\pom-controller.xml</resource>
+		<resource>domains\pom-manager.xml</resource>
+		<resource>domains\pom-view.xml</resource>
+		<resource>domains\pom.xml</resource>
+		<resource>domains\src\main\java\org\vulpe\config\domains\package-info.java</resource>
+		<resource>domains\src\main\resources\META-INF\persistence.xml</resource>
+		<resource>web\pom.xml</resource>
+		<resource>web\src\main\resources\applicationContext.xml</resource>
+		<resource>web\src\main\resources\ApplicationResources.properties</resource>
+		<resource>web\src\main\resources\ApplicationResources_en_US.properties</resource>
+		<resource>web\src\main\resources\log4j.properties</resource>
+		<resource>web\src\main\resources\security.properties</resource>
+		<resource>web\src\main\resources\struts-application.xml</resource>
+		<resource>web\src\main\webapp\index.jsp</resource>
+		<resource>web\src\main\webapp\js\application.js</resource>
+		<resource>web\src\main\webapp\WEB-INF\protected-jsp\common\frontend\header.jsp</resource>
+		<resource>web\src\main\webapp\WEB-INF\protected-jsp\common\frontend\menu.jsp</resource>
+		<resource>web\src\main\webapp\WEB-INF\protected-jsp\common\menu.jsp</resource>
+		<resource>web\src\main\webapp\WEB-INF\protected-jsp\frontend\Index\Index.jsp</resource>
+		<resource>web\src\main\webapp\WEB-INF\web.xml</resource>
+	</resources>
+</archetype>
