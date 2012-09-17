@@ -5,14 +5,13 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-interfaces</artifactId>
-	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - Interfaces</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-dependencies</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2.API3</version>
 	</parent>
 	<description>Vulpe Framework ;) Quick and Smart - Interfaces</description>
 	<url>http://vulpe.org</url>

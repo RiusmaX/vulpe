@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -52,16 +52,14 @@ import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeApplication;
-import org.vulpe.config.annotations.VulpeProject;
 
 /**
  * Class to provide multiple Resource Bundle in application.
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings("deprecation")
 public class MultipleResourceBundle extends ResourceBundle {
 
 	private static final Logger LOG = Logger.getLogger(MultipleResourceBundle.class);
@@ -69,7 +67,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
 
 	/**
-	 * 
+	 *
 	 * @return Instance of MultipleResourceBundle
 	 */
 	public static MultipleResourceBundle getInstance() {
@@ -78,15 +76,14 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Gets all bundles in application
-	 * 
+	 *
 	 * @return list of bundles in application
 	 */
 	protected List<ResourceBundle> getBundles() {
 		final VulpeContext vulpeContext = AbstractVulpeBeanFactory.getInstance().getBean(
 				VulpeConstants.CONTEXT);
-		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
 		final VulpeApplication application = VulpeConfigHelper.getApplicationConfiguration();
-		final String modules[] = vulpeProject != null ? vulpeProject.i18n() : application.i18n();
+		final String modules[] = application.i18n();
 		final List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
 		for (final String module : modules) {
 			ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
@@ -102,7 +99,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.ResourceBundle#getKeys()
 	 */
 	@Override
@@ -123,7 +120,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.util.ResourceBundle#handleGetObject(java.lang.String)
 	 */
 	@Override
@@ -153,7 +150,7 @@ public class MultipleResourceBundle extends ResourceBundle {
 
 	/**
 	 * Method to get key description.
-	 * 
+	 *
 	 * @param servletContext
 	 * @param key
 	 * @return

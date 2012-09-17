@@ -5,7 +5,7 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2.API3</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - POM</name>
 

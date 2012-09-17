@@ -13,7 +13,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="org.vulpe.security" />
 
-	<alias name="filterChainProxy" alias="springSecurityFilterChain" />
+	<alias name="filterChainProxy" alias="vulpeSecurity" />
 
 	<bean id="filterChainProxy" class="org.vulpe.security.web.VulpeFilterChainProxy">
 		<security:filter-chain-map path-type="ant">
@@ -38,7 +38,7 @@
 	<bean id="vulpeSessionExpirationFilter" class="org.vulpe.security.web.authentication.VulpeSessionExpirationFilter">
 		<property name="expiredUrl" value="/authenticator" />
 	</bean>
-	
+
 	<bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
 		<property name="sessionRegistry" ref="sessionRegistry" />
 		<property name="expiredUrl" value="/authenticator" />

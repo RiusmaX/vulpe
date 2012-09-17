@@ -5,14 +5,13 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-audit-dao-jpa</artifactId>
-	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - Audit DAO JPA</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-dependencies</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2.API3</version>
 	</parent>
 
 	<description>Vulpe Framework ;) Quick and Smart - Audit DAO JPA</description>
@@ -26,17 +25,17 @@
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-audit</artifactId>
-			<version>1.0.1</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model</artifactId>
-			<version>1.0.1</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-model-jpa</artifactId>
-			<version>1.0.1</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -5,21 +5,20 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-commons</artifactId>
-	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - Commons</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
 		<artifactId>vulpe-dependencies</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2.API3</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-annotations</artifactId>
-			<version>1.0.1</version>
+			<version>${vulpe.version}</version>
 		</dependency>
 	</dependencies>
 

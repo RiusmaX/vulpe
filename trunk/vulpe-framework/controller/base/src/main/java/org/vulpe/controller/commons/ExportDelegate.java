@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.vulpe.commons.util.Html2PdfUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.controller.ContentResponseWrapper;
+import org.vulpe.controller.filter.ContentResponseWrapper;
 
 /**
  * Export Delegate

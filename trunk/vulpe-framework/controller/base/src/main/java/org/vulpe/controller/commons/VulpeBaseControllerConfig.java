@@ -50,7 +50,6 @@ import org.vulpe.commons.annotations.DetailConfig;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.config.annotations.VulpeProject;
 import org.vulpe.controller.AbstractVulpeBaseController;
 import org.vulpe.controller.VulpeController;
 import org.vulpe.controller.VulpeController.Operation;
@@ -66,7 +65,7 @@ import org.vulpe.view.tags.Functions;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "serial", "unchecked", "deprecation", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeControllerConfig, Serializable {
 
@@ -98,8 +97,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			final List<VulpeBaseDetailConfig> details) {
 		setSimple(false);
 		this.controller = controller;
-		setControllerAnnotation(VulpeReflectUtil.getAnnotationInClass(Controller.class, controller
-				.getClass()));
+		setControllerAnnotation(VulpeReflectUtil.getAnnotationInClass(Controller.class,
+				controller.getClass()));
 		this.entityClass = (Class<ENTITY>) VulpeReflectUtil.getIndexClass(controller.getClass(), 0);
 		this.idClass = (Class<ID>) VulpeReflectUtil.getIndexClass(controller.getClass(), 1);
 		this.details = details;
@@ -239,9 +238,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 */
 	public int getPageSize() {
 		final int pageSize = this.controllerAnnotation.select().pageSize();
-		final VulpeProject vulpeProject = VulpeConfigHelper.getProjectConfiguration();
-		final int globalPageSize = vulpeProject != null ? vulpeProject.view().paging().pageSize()
-				: VulpeConfigHelper.getApplicationConfiguration().view().paging().pageSize();
+		final int globalPageSize = VulpeConfigHelper.getApplicationConfiguration().view().paging()
+				.pageSize();
 		return pageSize > 0 ? pageSize : globalPageSize;
 	}
 
@@ -422,8 +420,8 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		if (StringUtils.isBlank(this.reportFile)) {
 			this.reportFile = this.controllerAnnotation.report().file();
 			if (StringUtils.isBlank(this.reportFile)) {
-				this.reportFile = Report.PATH.concat(getControllerName()).concat("/").concat(
-						this.simpleControllerName).concat(Report.JASPER);
+				this.reportFile = Report.PATH.concat(getControllerName()).concat("/")
+						.concat(this.simpleControllerName).concat(Report.JASPER);
 			}
 		}
 		return this.reportFile;
@@ -571,18 +569,18 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 			this.viewPath += Layout.SUFFIX_JSP;
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
-						+ getModuleName().concat("/").concat(viewBaseName).concat("/").concat(
-								viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
+						+ getModuleName().concat("/").concat(viewBaseName).concat("/")
+								.concat(viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 		} else {
-			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/").concat(
-					viewBaseName);
+			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/")
+					.concat(viewBaseName);
 			if (getControllerType().equals(ControllerType.TWICE)) {
 				this.viewMainPath = this.viewPath + Layout.SUFFIX_JSP_MAIN;
 				this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
 				this.viewSelectItemsPath = this.viewItemsPath
-						+ getModuleName().concat("/").concat(viewBaseName).concat("/").concat(
-								viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
+						+ getModuleName().concat("/").concat(viewBaseName).concat("/")
+								.concat(viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			} else if (getControllerType().equals(ControllerType.MAIN)) {
 				this.viewPath += Layout.SUFFIX_JSP_MAIN;
 			} else if (getControllerType().equals(ControllerType.TABULAR)) {

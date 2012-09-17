@@ -5,13 +5,16 @@
 
 	<groupId>org.vulpe</groupId>
 	<artifactId>vulpe-dependencies</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.2.API3</version>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Dependencies</name>
 
 	<properties>
-		<vulpe.version>1.0.1</vulpe.version>
+		<vulpe.version>1.0.2.API3</vulpe.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
+		<struts.version>2.3.4.1</struts.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
@@ -31,15 +34,22 @@
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.4</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.0</version>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>2.2.2</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -383,7 +393,7 @@
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>2.1.2</version>
+			<version>2.1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -467,10 +477,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.6.1</version>
 				<configuration>
-					<!--
-					<show>private</show>
-					<nohelp>true</nohelp>
-					 -->
+					<!-- <show>private</show> <nohelp>true</nohelp> -->
 				</configuration>
 				<executions>
 					<execution>
@@ -508,9 +515,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.6.1</version>
 				<configuration>
-					<!--
-						<stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile> <show>public</show>
-					-->
+					<!-- <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile> <show>public</show> -->
 				</configuration>
 			</plugin>
 		</plugins>
