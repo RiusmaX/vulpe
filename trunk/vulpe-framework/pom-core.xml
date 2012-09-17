@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.vulpe</groupId>
+	<artifactId>vulpe</artifactId>
+	<version>1.0.2.API3</version>
+	<packaging>pom</packaging>
+	<name>Vulpe Framework - POM</name>
+
+	<modules>
+		<module>dependencies</module>
+		<module>parents/base</module>
+		<module>interfaces</module>
+		<module>annotations</module>
+		<module>commons</module>
+		<module>model/base</module>
+		<module>controller/base</module>
+		<module>audit/base</module>
+		<module>security/base</module>
+		<module>fox</module>
+		<module>web/base</module>
+	</modules>
+	<description>Vulpe Framework ;) Quick and Smart</description>
+	<url>http://vulpe.org</url>
+	<inceptionYear>2010</inceptionYear>
+	<organization>
+		<name>Active Thread</name>
+		<url>http://www.activethread.com.br</url>
+	</organization>
+	<distributionManagement>
+		<repository>
+			<id>ftp-activethread</id>
+			<name>Active Thread Maven2 Repository</name>
+			<url>ftp://activethread.com.br</url>
+		</repository>
+	</distributionManagement>
+</project>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+
+	<description>Util 1.0 functions library</description>
+	<display-name>Util functions</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>util</short-name>
+	<uri>/WEB-INF/util</uri>
+
+	<function>
+		<name>isFieldInValidator</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>boolean isFieldInValidator(java.lang.Object,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>listInField</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.util.List listInField(java.lang.Object, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>enumInField</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object enumInField(java.lang.Object, java.lang.String, java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>enumListInField</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object enumListInField(java.lang.String, java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>eval</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object eval(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>booleanTo</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String booleanTo(java.lang.Boolean, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>fieldsInBean</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.util.List fieldsInBean(java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>urlEncode</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String urlEncode(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>clearChars</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String clearChars(java.lang.String,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>put</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object put(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Object,java.lang.Integer)</function-signature>
+	</function>
+
+	<function>
+		<name>replaceSequence</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String replaceSequence(java.lang.String,java.lang.String,java.lang.String,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>hasRoles</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean hasRoles(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isAuthenticated</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isAuthenticated()</function-signature>
+	</function>
+
+	<function>
+		<name>getProperty</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getProperty(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>buttonConfig</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String buttonConfig(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonRender</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonRender(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonShow</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonShow(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonDisabled</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonDisabled(java.lang.String, java.lang.String)</function-signature>
+	</function>	
+
+</taglib>
