@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>vulpe-web-vraptor</artifactId>
+	<artifactId>vulpe-web-vraptor3</artifactId>
 	<packaging>war</packaging>
 	<name>Vulpe Framework - VRaptor Web Content</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-vraptor</artifactId>
+		<artifactId>vulpe-parent-vraptor3</artifactId>
 		<version>1.0.2.API3</version>
 	</parent>
 

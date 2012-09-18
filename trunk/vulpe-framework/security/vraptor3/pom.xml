@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>vulpe-security-vraptor</artifactId>
+	<artifactId>vulpe-security-vraptor3</artifactId>
 	<packaging>jar</packaging>
 	<name>Vulpe Framework - Security VRaptor</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-vraptor</artifactId>
+		<artifactId>vulpe-parent-vraptor3</artifactId>
 		<version>1.0.2.API3</version>
 	</parent>
 
@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-controller-vraptor</artifactId>
+			<artifactId>vulpe-controller-vraptor3</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>

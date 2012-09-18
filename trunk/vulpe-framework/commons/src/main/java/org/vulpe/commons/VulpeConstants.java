@@ -80,6 +80,7 @@ public class VulpeConstants {
 		public static final String SESSION_SCOPE = "SESSION_SCOPE";
 		public static final String GLOBAL = "global";
 		public static final String STARTUP_EXTEND = "vulpeStartupExtend";
+		public static final String FW_STARTUP_EXTEND = "vulpeFWStartupExtend";
 	}
 
 	public class Request {

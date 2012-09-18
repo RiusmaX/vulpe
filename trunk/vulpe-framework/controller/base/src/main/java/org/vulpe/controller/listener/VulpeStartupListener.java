@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContextEvent;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
@@ -68,12 +69,15 @@ import org.vulpe.security.context.VulpeSecurityContext;
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
+@WebListener
 public class VulpeStartupListener extends ContextLoaderListener {
 
 	private static final Logger LOG = Logger.getLogger(VulpeStartupListener.class);
 
 	private static final VulpeStartupExtend STARTUP_EXTEND = AbstractVulpeBeanFactory.getInstance()
 			.getBean(VulpeConstants.Context.STARTUP_EXTEND);
+	private static final VulpeStartupExtend FW_STARTUP_EXTEND = AbstractVulpeBeanFactory.getInstance()
+			.getBean(VulpeConstants.Context.FW_STARTUP_EXTEND);
 
 	/**
 	 * Global map
@@ -91,6 +95,9 @@ public class VulpeStartupListener extends ContextLoaderListener {
 		LOG.debug("Entering in Context Detroyed");
 		if (VulpeConfigHelper.get(VulpeDomains.class).useDB4O()) {
 			VulpeDB4OUtil.getInstance().shutdown();
+		}
+		if (FW_STARTUP_EXTEND != null) {
+			FW_STARTUP_EXTEND.contextDestroyed(event);
 		}
 		if (STARTUP_EXTEND != null) {
 			STARTUP_EXTEND.contextDestroyed(event);
@@ -237,6 +244,9 @@ public class VulpeStartupListener extends ContextLoaderListener {
 		VulpeCachedObjectsHelper.putAnnotedObjectsInCache(event.getServletContext());
 		VulpeJobSchedulerHelper.schedulerAnnotedJobs(event.getServletContext());
 		loadControllerMethods();
+		if (FW_STARTUP_EXTEND != null) {
+			FW_STARTUP_EXTEND.contextInitialized(event);
+		}
 		if (STARTUP_EXTEND != null) {
 			STARTUP_EXTEND.contextInitialized(event);
 		}

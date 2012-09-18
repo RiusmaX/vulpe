@@ -24,7 +24,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-controller-struts</artifactId>
+			<artifactId>vulpe-controller-struts2</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 	</dependencies>

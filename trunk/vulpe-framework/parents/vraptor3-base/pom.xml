@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>vulpe-parent-vraptor-base</artifactId>
+	<artifactId>vulpe-parent-vraptor3-base</artifactId>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent VRaptor Base</name>
 
 	<parent>
 		<groupId>org.vulpe</groupId>
-		<artifactId>vulpe-parent-vraptor</artifactId>
+		<artifactId>vulpe-parent-vraptor3</artifactId>
 		<version>1.0.2.API3</version>
 	</parent>
 
@@ -36,22 +36,22 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-controller-vraptor</artifactId>
+			<artifactId>vulpe-controller-vraptor3</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-audit-vraptor</artifactId>
+			<artifactId>vulpe-audit-vraptor3</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security-vraptor</artifactId>
+			<artifactId>vulpe-security-vraptor3</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-web-vraptor</artifactId>
+			<artifactId>vulpe-web-vraptor3</artifactId>
 			<version>${vulpe.version}</version>
 			<type>war</type>
 		</dependency>

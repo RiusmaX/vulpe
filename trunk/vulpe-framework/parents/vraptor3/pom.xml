@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.vulpe</groupId>
-	<artifactId>vulpe-parent-vraptor</artifactId>
+	<artifactId>vulpe-parent-vraptor3</artifactId>
 	<packaging>pom</packaging>
 	<name>Vulpe Framework - Parent VRaptor</name>
 

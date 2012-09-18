@@ -36,7 +36,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-controller-struts</artifactId>
+			<artifactId>vulpe-controller-struts2</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
@@ -46,7 +46,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>
-			<artifactId>vulpe-security-struts</artifactId>
+			<artifactId>vulpe-security-struts2</artifactId>
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>

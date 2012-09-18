@@ -41,12 +41,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.servlet.ServletContextEvent;
-import javax.servlet.annotation.WebListener;
 
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
+import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.helper.VulpeConfigHelper;
-import org.vulpe.controller.listener.VulpeStartupListener;
+import org.vulpe.controller.listener.VulpeStartupExtend;
 import org.vulpe.controller.struts.commons.beans.converter.BigDecimalConverter;
 import org.vulpe.controller.struts.commons.beans.converter.DateConverter;
 import org.vulpe.controller.struts.commons.beans.converter.DecimalConverter;
@@ -60,21 +60,11 @@ import com.opensymphony.xwork2.util.LocalizedTextUtil;
  *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
-@WebListener
-public class VulpeStrutsStartupListener extends VulpeStartupListener {
+@Component(Context.FW_STARTUP_EXTEND)
+public class VulpeStrutsStartupExtend implements VulpeStartupExtend {
 
-	@SuppressWarnings("unused")
-	private static final Logger LOG = Logger.getLogger(VulpeStrutsStartupListener.class);
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * javax.servlet.ServletContextListener#contextInitialized(javax.servlet
-	 * .ServletContextEvent)
-	 */
-	public void contextInitialized(final ServletContextEvent evt) {
-		super.contextInitialized(evt);
+	@Override
+	public void contextInitialized(final ServletContextEvent event) {
 		// configuration bundle
 		LocalizedTextUtil.addDefaultResourceBundle(VulpeConfigHelper.getI18nManager());
 
@@ -84,6 +74,11 @@ public class VulpeStrutsStartupListener extends VulpeStartupListener {
 		ConvertUtils.register(new BigDecimalConverter(), BigDecimal.class);
 		ConvertUtils.register(new DecimalConverter(), Double.class);
 		ConvertUtils.register(new EnumConverter(), Enum.class);
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent event) {
+
 	}
 
 }
