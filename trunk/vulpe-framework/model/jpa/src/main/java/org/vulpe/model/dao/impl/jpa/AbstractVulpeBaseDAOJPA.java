@@ -122,7 +122,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						}
 					}
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -154,7 +154,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								VulpeReflectUtil.setFieldValue(entity, field.getName(), newValue);
 							}
 						} catch (Exception e) {
-							LOG.error(e);
+							LOG.error(e.getMessage());
 						}
 						// } else if (oneToMany != null) {
 						// try {
@@ -165,7 +165,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						// repairInstance(childs);
 						// }
 						// } catch (Exception e) {
-						// LOG.error(e);
+						// LOG.error(e.getMessage());
 						// }
 					}
 				}
@@ -193,7 +193,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 					try {
 						details = (List<ENTITY>) PropertyUtils.getProperty(entity, detail);
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 					if (VulpeValidationUtil.isNotEmpty(details)) {
 						for (final ENTITY entity2 : details) {
@@ -627,7 +627,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 								loadRelationshipsMountEntities(relationship, entities, childs,
 										relationshipIds, parentName, oneToMany);
 							} catch (Exception e) {
-								LOG.error(e);
+								LOG.error(e.getMessage());
 							}
 						}
 					}
@@ -710,7 +710,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				hql.append(join);
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return hql.toString();
 	}
@@ -760,7 +760,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				childs.add(entity);
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return childs;
 	}
@@ -860,7 +860,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				loadRelationships(childs, null, false);
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return childs;
 	}
@@ -895,7 +895,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				}
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -920,7 +920,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						map.get(first + attributeName.replaceAll("\\.", "_")));
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -1004,7 +1004,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			query.executeUpdate();
 			entityManager.flush();
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -1056,7 +1056,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 			query.executeUpdate();
 			entityManager.flush();
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 

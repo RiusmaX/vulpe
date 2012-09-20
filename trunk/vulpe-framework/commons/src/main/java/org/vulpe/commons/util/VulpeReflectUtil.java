@@ -53,7 +53,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeEntity;
@@ -61,7 +62,7 @@ import org.vulpe.model.entity.VulpeEntity;
 @SuppressWarnings( { "unchecked", "rawtypes" })
 public class VulpeReflectUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeReflectUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeReflectUtil.class);
 
 	protected VulpeReflectUtil() {
 		// default constructor
@@ -740,7 +741,7 @@ public class VulpeReflectUtil {
 					try {
 						method.invoke(object, value);
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					} finally {
 						if (setted) {
 							method.setAccessible(false);
@@ -830,7 +831,7 @@ public class VulpeReflectUtil {
 					try {
 						return (T) method.invoke(object);
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					} finally {
 						if (setted) {
 							method.setAccessible(false);
@@ -897,9 +898,9 @@ public class VulpeReflectUtil {
 							setFieldValue(object, part, value);
 						}
 					} catch (InstantiationException e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					} catch (IllegalAccessException e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 				} else {
 					object = fieldValue;

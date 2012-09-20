@@ -40,7 +40,8 @@ package org.vulpe.model.services.impl.pojo;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.exception.VulpeApplicationException;
@@ -59,7 +60,7 @@ import org.vulpe.model.services.GenericService;
 public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements GenericService {
 
-	private static final Logger LOG = Logger.getLogger(GenericServiceDB4OPOJO.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GenericServiceDB4OPOJO.class);
 
 	/*
 	 * (non-Javadoc)
@@ -74,7 +75,7 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			list = (List<T>) dao.read((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return list;
 	}
@@ -93,7 +94,7 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			return dao.exists((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return false;
 	}
@@ -112,7 +113,7 @@ public class GenericServiceDB4OPOJO<ENTITY extends AbstractVulpeBaseEntity<ID>, 
 			dao.setEntityClass((Class<ENTITY>) entity.getClass());
 			return dao.notExistEquals((ENTITY) entity);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return false;
 	}

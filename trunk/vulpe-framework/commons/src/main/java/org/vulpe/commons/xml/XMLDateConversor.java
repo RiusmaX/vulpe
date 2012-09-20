@@ -41,7 +41,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -52,7 +53,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 @SuppressWarnings("rawtypes")
 public class XMLDateConversor implements Converter {
 
-	private static final Logger LOG = Logger.getLogger(XMLDateConversor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(XMLDateConversor.class);
 
 	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -74,7 +75,7 @@ public class XMLDateConversor implements Converter {
 		try {
 			return formatter.parse(reader.getValue());
 		} catch (ParseException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return null;
 	}

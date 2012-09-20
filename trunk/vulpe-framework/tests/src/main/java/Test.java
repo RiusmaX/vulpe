@@ -35,18 +35,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Test {
 
-	private static final Logger LOG = Logger.getLogger(Test.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Test.class);
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		String test = "test";
-		LOG.info(test.charAt(test.length()-1) == 't');
+		LOG.info(String.valueOf((test.charAt(test.length()-1) == 't')));
 	}
 
 }

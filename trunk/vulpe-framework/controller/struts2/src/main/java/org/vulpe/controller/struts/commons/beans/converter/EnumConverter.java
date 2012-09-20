@@ -44,7 +44,8 @@ import java.util.List;
 import ognl.TypeConverter;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.util.VulpeCollectionUtil;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
@@ -52,7 +53,7 @@ import com.opensymphony.xwork2.conversion.TypeConversionException;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class EnumConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
-	private static final Logger LOG = Logger.getLogger(EnumConverter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EnumConverter.class);
 
 	public Object convert(final Class type, final Object value) {
 		try {

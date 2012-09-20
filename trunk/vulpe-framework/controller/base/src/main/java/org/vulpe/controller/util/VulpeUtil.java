@@ -45,7 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeServiceLocator;
@@ -92,7 +93,7 @@ import com.google.gson.Gson;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>> {
 
-	protected static final Logger LOG = Logger.getLogger(VulpeUtil.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(VulpeUtil.class);
 
 	private AbstractVulpeBaseController<ENTITY, ID> baseController;
 

@@ -59,7 +59,8 @@ import javax.swing.ImageIcon;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.taglibs.standard.lang.support.ExpressionEvaluatorManager;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Request;
@@ -86,7 +87,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 @SuppressWarnings( { "unchecked", "rawtypes" })
 public class Functions {
 
-	private static final Logger LOG = Logger.getLogger(Functions.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(Functions.class.getName());
 
 	public Functions() {
 		// default constructor

@@ -46,7 +46,8 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
@@ -62,7 +63,7 @@ import org.vulpe.config.annotations.VulpeApplication;
  */
 public class MultipleResourceBundle extends ResourceBundle {
 
-	private static final Logger LOG = Logger.getLogger(MultipleResourceBundle.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MultipleResourceBundle.class);
 
 	private static final MultipleResourceBundle INSTANCE = new MultipleResourceBundle();
 

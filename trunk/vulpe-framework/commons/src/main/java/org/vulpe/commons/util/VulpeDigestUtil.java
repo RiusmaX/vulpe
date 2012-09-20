@@ -40,7 +40,8 @@ package org.vulpe.commons.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -49,7 +50,7 @@ import org.apache.log4j.Logger;
  */
 public final class VulpeDigestUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeDigestUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeDigestUtil.class);
 
 	private VulpeDigestUtil() {
 	}
@@ -115,7 +116,7 @@ public final class VulpeDigestUtil {
 			byte[] bytes = digest(value.getBytes(), algorithm);
 			return byteArrayToHexString(bytes);
 		} catch (NoSuchAlgorithmException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return value;
 	}

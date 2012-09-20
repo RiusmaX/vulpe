@@ -43,7 +43,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.controller.vraptor.VulpeVRaptorController;
@@ -60,7 +61,7 @@ import br.com.caelum.vraptor.resource.ResourceMethod;
 @RequestScoped
 public class VulpeControllerInterceptor implements Interceptor {
 
-	private static final Logger LOG = Logger.getLogger(VulpeControllerInterceptor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeControllerInterceptor.class);
 	private final Result result;
 	private final HttpServletRequest request;
 
@@ -87,7 +88,7 @@ public class VulpeControllerInterceptor implements Interceptor {
 					result.include(field.getName(), VulpeReflectUtil.getFieldValue(controller,
 							field.getName()));
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 			final List<Method> methods = VulpeReflectUtil.getMethods(controller.getClass());
@@ -99,7 +100,7 @@ public class VulpeControllerInterceptor implements Interceptor {
 						methodName = VulpeStringUtil.lowerCaseFirst(methodName.substring(3));
 						result.include(methodName, method2.invoke(controller, new Object[] {}));
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 				}
 			}

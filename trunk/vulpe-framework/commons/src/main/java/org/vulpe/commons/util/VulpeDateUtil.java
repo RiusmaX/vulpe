@@ -48,7 +48,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.enumeration.DaysOfWeek;
 import org.vulpe.commons.helper.VulpeConfigHelper;
@@ -60,7 +61,7 @@ import org.vulpe.commons.helper.VulpeConfigHelper;
  */
 public final class VulpeDateUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeDateUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeDateUtil.class);
 
 	public static final String HHMM = "HH:mm";
 	public static final String HHMMSS = "HH:mm:ss";

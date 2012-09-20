@@ -37,13 +37,14 @@
  */
 package org.vulpe.commons.factory;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 
 public abstract class AbstractVulpeBeanFactory {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBeanFactory.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBeanFactory.class);
 
 	/**
 	 * Returns AbstractVulpeBeanFactory instance

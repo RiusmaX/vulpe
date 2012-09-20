@@ -42,13 +42,14 @@ import java.io.File;
 import ognl.TypeConverter;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
 @SuppressWarnings({ "rawtypes" })
 public class ByteArrayConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
-	private static final Logger LOG = Logger.getLogger(ByteArrayConverter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ByteArrayConverter.class);
 
 	private transient final org.apache.commons.beanutils.converters.ByteArrayConverter converter = new org.apache.commons.beanutils.converters.ByteArrayConverter();
 

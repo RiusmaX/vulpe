@@ -47,7 +47,8 @@ import java.util.List;
 import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Vulpe String Utility class.
@@ -62,7 +63,7 @@ public class VulpeStringUtil {
 	private static final VulpeHashMap<Character, String> utfChars = new VulpeHashMap<Character, String>();
 	private static final VulpeHashMap<Character, String> specialChars = new VulpeHashMap<Character, String>();
 
-	private static final Logger LOG = Logger.getLogger(VulpeStringUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeStringUtil.class);
 
 	static {
 		accentMap.put('á', "a");
@@ -259,7 +260,7 @@ public class VulpeStringUtil {
 			final byte[] bytes = baos.toByteArray();
 			blobString = new String(bytes);
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return blobString;
 	}
@@ -275,7 +276,7 @@ public class VulpeStringUtil {
 		try {
 			blob = new SerialBlob(string.getBytes());
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return blob;
 	}
@@ -330,7 +331,7 @@ public class VulpeStringUtil {
 			byte[] bytes = value.getBytes(encode);
 			encoded = new String(bytes, encode);
 		} catch (UnsupportedEncodingException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return encoded;
 	}

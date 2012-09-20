@@ -44,7 +44,8 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
@@ -62,7 +63,7 @@ import com.opensymphony.xwork2.conversion.impl.XWorkConverter;
 @SuppressWarnings({ "rawtypes" })
 public final class StrutsFunctions extends Functions {
 
-	private static final Logger LOG = Logger.getLogger(StrutsFunctions.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(StrutsFunctions.class.getName());
 
 	private StrutsFunctions() {
 		// default constructor
@@ -188,7 +189,7 @@ public final class StrutsFunctions extends Functions {
 			try {
 				saveInSession(key, resizeImageAsJPG(imageData, width), expire);
 			} catch (IOException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		} else {
 			ever().remove(key);

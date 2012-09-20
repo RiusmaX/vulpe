@@ -39,7 +39,8 @@ package org.vulpe.security.authentication.model.dao.impl.jpa;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.vulpe.exception.VulpeApplicationException;
@@ -67,7 +68,7 @@ import org.vulpe.security.model.entity.User;
 @Transactional
 public class VulpeUserAuthenticationDAOJPA extends VulpeBaseDAOJPA<User, Long> implements
 		VulpeUserAuthenticationDAO {
-	protected static final Logger LOG = Logger.getLogger(VulpeUserAuthenticationDAOJPA.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(VulpeUserAuthenticationDAOJPA.class);
 
 	/*
 	 * (non-Javadoc)
@@ -85,7 +86,7 @@ public class VulpeUserAuthenticationDAOJPA extends VulpeBaseDAOJPA<User, Long> i
 				user = users.get(0);
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		if (user == null || user.getId() == null) {
 			throw new VulpeSecurityUserNotFoundException(username);

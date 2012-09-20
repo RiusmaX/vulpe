@@ -213,9 +213,9 @@ public class AuditOccurrence extends AbstractVulpeBaseEntity<Long> {
 				history.append(aux);
 			}
 		} catch (SQLException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		} catch (IOException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return new XMLReader().reader(history.toString());
 	}

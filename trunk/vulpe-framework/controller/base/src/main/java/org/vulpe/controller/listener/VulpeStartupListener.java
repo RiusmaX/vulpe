@@ -45,7 +45,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Configuration.Global;
@@ -72,7 +73,7 @@ import org.vulpe.security.context.VulpeSecurityContext;
 @WebListener
 public class VulpeStartupListener extends ContextLoaderListener {
 
-	private static final Logger LOG = Logger.getLogger(VulpeStartupListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeStartupListener.class);
 
 	private static final VulpeStartupExtend STARTUP_EXTEND = AbstractVulpeBeanFactory.getInstance()
 			.getBean(VulpeConstants.Context.STARTUP_EXTEND);

@@ -44,7 +44,8 @@ import java.util.List;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Transient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.beans.Paging;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -66,7 +67,7 @@ import org.vulpe.model.services.manager.VulpeManager;
 public class VulpeBaseManager<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>, DAO extends VulpeDAO<ENTITY, ID>>
 		implements VulpeManager<ENTITY, ID, DAO> {
 
-	protected static final Logger LOG = Logger.getLogger(VulpeBaseManager.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(VulpeBaseManager.class);
 
 	@Transient
 	private transient Class<DAO> daoClass;

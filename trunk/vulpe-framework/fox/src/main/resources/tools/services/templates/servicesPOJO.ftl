@@ -2,7 +2,8 @@
 <@source type="service-impl" override="true" name="${basePackageName}.services.impl.pojo.${baseClassName}ServicePOJO">
 package ${basePackageName}.services.impl.pojo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import ${basePackageName}.services.${baseClassName}Service;
 @Transactional
 public class ${baseClassName}ServicePOJO implements ${baseClassName}Service {
 	/** Logger */
-	private static final Logger LOG = Logger.getLogger(${baseClassName}ServicePOJO.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(${baseClassName}ServicePOJO.class.getName());
 
 <@forAllValidClasses ; type, signatureClass>
 	<#assign simpleManagerName = type.simpleName?replace("Manager", "")>

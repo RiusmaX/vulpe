@@ -16,11 +16,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.tuckey</groupId>
-			<artifactId>urlrewritefilter</artifactId>
-			<version>3.2.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-commons</artifactId>
 			<version>${vulpe.version}</version>
@@ -31,10 +26,10 @@
 			<version>${vulpe.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>opensymphony</groupId>
-			<artifactId>sitemesh</artifactId>
-			<version>2.4.2</version>
-			<scope>provided</scope>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>3.2.0</version>
+			<scope>provided</scope><!-- TEST -->
 		</dependency>
 	</dependencies>
 
@@ -73,10 +68,8 @@
 									<equals arg1="${deployServer}" arg2="tomcat" />
 									<then>
 										<property name="tomcat.home" value="${env.TOMCAT_HOME}" />
-										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/"
-											overwrite="true">
-											<fileset
-												file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
+										<copy todir="${tomcat.home}/webapps/${projectName}/WEB-INF/lib/" overwrite="true">
+											<fileset file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
 										</copy>
 									</then>
 								</if>

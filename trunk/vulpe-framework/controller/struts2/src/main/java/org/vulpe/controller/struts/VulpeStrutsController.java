@@ -679,7 +679,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				// onAddDetail(false);
 				// }
 				// } catch (OgnlException e) {
-				// LOG.error(e);
+				// LOG.error(e.getMessage());
 				// }
 				// }
 				// }
@@ -720,9 +720,9 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				vulpe.updateAuditInfo(detail);
 				((ArrayList<ENTITY>) collection).add(0, prepareDetail(detail));
 			} catch (InstantiationException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			} catch (IllegalAccessException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		} else {
 			final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
@@ -748,7 +748,7 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						onAddDetail(true);
 					}
 				} catch (OgnlException e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			} else if (detail.getParentDetailConfig() == null) {
 				vulpe.controller().detail(detail.getPropertyName());

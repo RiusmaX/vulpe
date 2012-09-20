@@ -45,7 +45,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
@@ -90,7 +91,7 @@ import com.opensymphony.xwork2.util.profiling.UtilTimerStack;
 @SuppressWarnings( { "serial", "rawtypes" })
 public class VulpeActionInvocation implements ActionInvocation {
 
-	private static final Logger LOG = Logger.getLogger(VulpeActionInvocation.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeActionInvocation.class);
 
 	private static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
 
@@ -619,7 +620,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				try {
 					method.invoke(controller, new Object[] {});
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -636,7 +637,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				try {
 					method.invoke(controller, new Object[] {});
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -653,7 +654,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				try {
 					method.invoke(controller, new Object[] {});
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -670,7 +671,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				try {
 					method.invoke(controller, new Object[] {});
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}

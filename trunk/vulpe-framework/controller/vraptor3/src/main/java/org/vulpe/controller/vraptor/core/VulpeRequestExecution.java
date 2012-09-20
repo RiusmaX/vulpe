@@ -38,7 +38,8 @@
 package org.vulpe.controller.vraptor.core;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.core.InterceptorStack;
@@ -50,7 +51,7 @@ import br.com.caelum.vraptor.ioc.Component;
 @Component
 public class VulpeRequestExecution implements RequestExecution {
 
-	private static final Logger LOG = Logger.getLogger(VulpeRequestExecution.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeRequestExecution.class);
 
 	private final InterceptorRegistry registry;
 	private final InterceptorStack stack;

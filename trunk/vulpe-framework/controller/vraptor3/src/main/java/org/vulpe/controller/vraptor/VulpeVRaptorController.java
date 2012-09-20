@@ -108,7 +108,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 						onAddDetail(true);
 					}
 				} catch (OgnlException e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			} else if (detail.getParentDetailConfig() == null) {
 				vulpe.controller().detail(detail.getPropertyName());

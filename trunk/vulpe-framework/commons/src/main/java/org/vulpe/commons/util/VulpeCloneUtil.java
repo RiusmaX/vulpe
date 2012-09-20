@@ -41,7 +41,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.mapping.Collection;
 import org.vulpe.model.entity.VulpeEntity;
 
@@ -52,7 +53,7 @@ import org.vulpe.model.entity.VulpeEntity;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeCloneUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeCloneUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeCloneUtil.class);
 
 	public static VulpeEntity<?> clone(final VulpeEntity<?> entity, final Class parent) {
 		LOG.debug("Initiating clone");

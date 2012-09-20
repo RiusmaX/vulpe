@@ -45,7 +45,8 @@ import java.util.Set;
 
 import ognl.Ognl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeReflectUtil.DeclaredType;
 import org.vulpe.model.entity.VulpeEntity;
@@ -65,7 +66,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
 public class GenericsNullHandler<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends InstantiatingNullHandler {
 
-	private static final Logger LOG = Logger.getLogger(GenericsNullHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GenericsNullHandler.class);
 
 	/*
 	 * (non-Javadoc)

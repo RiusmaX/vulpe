@@ -12,6 +12,7 @@
 	<modules>
 		<module>dependencies</module>
 		<module>parents/base</module>
+		<module>parents/security</module>
 		<module>parents/struts2</module>
 		<module>parents/vraptor3</module>
 		<module>parents/vraptor3-base</module>

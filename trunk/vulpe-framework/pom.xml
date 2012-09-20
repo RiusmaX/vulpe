@@ -21,6 +21,7 @@
 		<module>security/base</module>
 		<module>security/entity</module>
 		<module>parents/base</module>
+		<module>parents/security</module>
 		<module>parents/struts2</module>
 		<module>parents/vraptor3</module>
 		<module>parents/struts2-base</module>

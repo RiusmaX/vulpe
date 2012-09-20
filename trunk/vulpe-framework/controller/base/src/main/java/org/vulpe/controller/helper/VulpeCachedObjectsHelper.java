@@ -45,7 +45,8 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.scannotation.AnnotationDB;
 import org.scannotation.WarUrlFinder;
 import org.vulpe.commons.VulpeConstants;
@@ -71,7 +72,7 @@ public final class VulpeCachedObjectsHelper {
 	private VulpeCachedObjectsHelper() {
 	}
 
-	private static final Logger LOG = Logger.getLogger(VulpeCachedObjectsHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeCachedObjectsHelper.class);
 
 	private static AnnotationDB annotationDB;
 
@@ -170,7 +171,7 @@ public final class VulpeCachedObjectsHelper {
 						}
 					}
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -210,11 +211,11 @@ public final class VulpeCachedObjectsHelper {
 									.concat(valuesDescription.toString()).concat("]"));
 							mapCachedEnum.put(enumName, list);
 						} catch (Exception e) {
-							LOG.error(e);
+							LOG.error(e.getMessage());
 						}
 					}
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);
@@ -242,7 +243,7 @@ public final class VulpeCachedObjectsHelper {
 					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
 							.getList(entity));
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}
@@ -281,7 +282,7 @@ public final class VulpeCachedObjectsHelper {
 							.concat(valuesDescription.toString()).concat("]"));
 					mapCachedEnum.put(enumName, list);
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 			VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_ENUMS, mapCachedEnum);

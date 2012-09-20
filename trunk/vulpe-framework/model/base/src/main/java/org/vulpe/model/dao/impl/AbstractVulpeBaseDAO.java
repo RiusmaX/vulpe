@@ -45,7 +45,8 @@ import java.util.List;
 import javax.persistence.OneToMany;
 import javax.sql.rowset.serial.SerialClob;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.audit.model.entity.AuditOccurrence;
 import org.vulpe.audit.model.entity.AuditOccurrenceType;
 import org.vulpe.commons.VulpeConstants.Security;
@@ -64,7 +65,7 @@ import org.vulpe.model.entity.VulpeEntity;
 public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeDAO<ENTITY, ID> {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseDAO.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBaseDAO.class);
 
 	/**
 	 * Make audit.
@@ -105,7 +106,7 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 								.setDataHistory(new SerialClob(entity.toXMLAudit().toCharArray()));
 					}
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 			occurrence = merge(occurrence);
@@ -126,7 +127,7 @@ public abstract class AbstractVulpeBaseDAO<ENTITY extends VulpeEntity<ID>, ID ex
 					}
 				}
 			} catch (Exception e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}

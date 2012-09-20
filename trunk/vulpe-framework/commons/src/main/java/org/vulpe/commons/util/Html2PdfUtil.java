@@ -43,7 +43,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.DocumentException;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
@@ -60,7 +61,7 @@ import com.lowagie.text.pdf.BaseFont;
  */
 public class Html2PdfUtil {
 
-	protected final static Logger LOG = Logger.getLogger(Html2PdfUtil.class);
+	protected final static Logger LOG = LoggerFactory.getLogger(Html2PdfUtil.class);
 
 	public static void convert(String input, OutputStream out) throws DocumentException {
 		convert(new ByteArrayInputStream(input.getBytes()), out);
@@ -95,7 +96,7 @@ public class Html2PdfUtil {
 			renderer.layout();
 			renderer.createPDF(out);
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 

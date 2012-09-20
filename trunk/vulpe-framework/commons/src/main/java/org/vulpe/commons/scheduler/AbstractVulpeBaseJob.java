@@ -37,7 +37,8 @@
  */
 package org.vulpe.commons.scheduler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeBaseUtil;
 
 /**
@@ -46,6 +47,6 @@ import org.vulpe.commons.VulpeBaseUtil;
  */
 public abstract class AbstractVulpeBaseJob extends VulpeBaseUtil implements VulpeJob {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseJob.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBaseJob.class);
 	
 }

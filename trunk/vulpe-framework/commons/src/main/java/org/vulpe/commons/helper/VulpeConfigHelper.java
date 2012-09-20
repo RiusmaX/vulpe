@@ -40,7 +40,8 @@ package org.vulpe.commons.helper;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.config.annotations.VulpeApplication;
 import org.vulpe.config.annotations.VulpeDomains;
@@ -54,7 +55,7 @@ import org.vulpe.config.annotations.VulpeDomains;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VulpeConfigHelper {
 
-	private static final Logger LOG = Logger.getLogger(VulpeConfigHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeConfigHelper.class);
 	private static final String DOMAINS_CONFIG_CLASS = "org.vulpe.config.domains.package-info";
 	private static final String DOMAINS_CONFIG_BASE_CLASS = "org.vulpe.config.base.domains.package-info";
 	private static final String CONFIG_CLASS = "org.vulpe.config.package-info";
@@ -68,7 +69,7 @@ public final class VulpeConfigHelper {
 			VULPE_APPLICATION = ResourceBundle
 					.getBundle(VulpeConstants.APPLICATION, new Locale(""));
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -83,7 +84,7 @@ public final class VulpeConfigHelper {
 			final VulpeApplication application = (VulpeApplication) config
 					.getAnnotation(VulpeApplication.class);
 		} catch (ClassNotFoundException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -196,7 +197,7 @@ public final class VulpeConfigHelper {
 				return (T) config.getAnnotation(annotation);
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return null;
 	}
@@ -230,7 +231,7 @@ public final class VulpeConfigHelper {
 				return application;
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return null;
 	}

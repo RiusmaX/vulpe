@@ -82,7 +82,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			simpleMerge(container, entity);
 		} catch (Exception e) {
 			rollback();
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		} finally {
 			close();
 		}
@@ -142,7 +142,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 			}
 		} catch (Exception e) {
 			rollback();
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return entity;
 	}
@@ -245,7 +245,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 								}
 							}
 						} catch (Exception e) {
-							LOG.error(e);
+							LOG.error(e.getMessage());
 						}
 					} else if (Collection.class.isAssignableFrom(field.getType())) {
 						final Collection details = (Collection) value;
@@ -278,7 +278,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 										}
 									}
 								} catch (Exception e) {
-									LOG.error(e);
+									LOG.error(e.getMessage());
 								}
 							}
 						}

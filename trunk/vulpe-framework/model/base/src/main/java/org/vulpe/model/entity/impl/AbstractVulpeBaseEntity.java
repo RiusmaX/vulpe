@@ -48,7 +48,8 @@ import java.util.Map;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.audit.model.annotations.SkipAudit;
 import org.vulpe.audit.model.annotations.SkipAuditHistory;
 import org.vulpe.commons.VulpeConstants.Model.Entity;
@@ -65,7 +66,7 @@ import com.thoughtworks.xstream.XStream;
 public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements VulpeEntity<ID>,
 		Cloneable {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseEntity.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBaseEntity.class);
 
 	@SkipCompare
 	@SkipEmpty
@@ -167,7 +168,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				}
 			}
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		xstream.registerConverter(new XMLDateConversor(), 1);
 		strXml = xstream.toXML(this);
@@ -193,7 +194,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 		try {
 			return (VulpeEntity<ID>) super.clone();
 		} catch (CloneNotSupportedException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return null;
 	}
@@ -271,7 +272,7 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 			simple = (T) this.getClass().newInstance();
 			((VulpeEntity<ID>) simple).setId(getId());
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return simple;
 	}

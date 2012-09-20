@@ -15,7 +15,8 @@ import org.jboss.ejb3.annotation.RemoteBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ${basePackageName}.services.${baseClassName}Service;
 
@@ -32,7 +33,7 @@ import ${basePackageName}.services.${baseClassName}Service;
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 public class ${baseClassName}ServiceEJB implements ${baseClassName}Service {
 	/** Logger */
-	private static final Logger LOG = Logger.getLogger(${baseClassName}ServiceEJB.class.getName() );
+	private static final Logger LOG = LoggerFactory.getLogger(${baseClassName}ServiceEJB.class.getName() );
 
 <@forAllValidClasses ; type, signatureClass>
 	<#assign simpleManagerName = type.simpleName?replace("Manager", "")>

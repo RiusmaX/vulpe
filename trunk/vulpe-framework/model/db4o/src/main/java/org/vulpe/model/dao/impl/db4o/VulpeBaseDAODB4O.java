@@ -490,7 +490,7 @@ public class VulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, ID extends Seriali
 					query.descend(queryParameter.equals().name()).constrain(
 							PropertyUtils.getProperty(entity, queryParameter.equals().name()));
 				} catch (Exception e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 			// getting total records

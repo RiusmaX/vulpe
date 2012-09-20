@@ -44,7 +44,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.dom4j.DocumentException;
 import org.vulpe.commons.util.Html2PdfUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
@@ -59,7 +60,7 @@ import org.vulpe.controller.filter.ContentResponseWrapper;
  */
 public class ExportDelegate {
 
-	protected static final Logger LOG = Logger.getLogger(ExportDelegate.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(ExportDelegate.class);
 
 	/**
 	 * 
@@ -77,7 +78,7 @@ public class ExportDelegate {
 		try {
 			Html2PdfUtil.convert(VulpeStringUtil.encodeHTMLSpecials(wrapper.toString()), writer);
 		} catch (DocumentException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		writer.flush();
 		writer.close();

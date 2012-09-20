@@ -33,6 +33,7 @@
 			<groupId>org.vulpe</groupId>
 			<artifactId>vulpe-fox</artifactId>
 			<version>${vulpe.version}</version>
+			<scope>provided</scope><!-- TEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.vulpe</groupId>

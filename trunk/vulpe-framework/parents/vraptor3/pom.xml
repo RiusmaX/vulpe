@@ -31,6 +31,12 @@
 			<groupId>br.com.caelum</groupId>
 			<artifactId>vraptor</artifactId>
 			<version>${vraptor.version}</version>
+			<scope>provided</scope><!-- TEST -->
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
 		</dependency>
 	</dependencies>
 	<build>

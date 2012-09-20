@@ -42,7 +42,8 @@ import java.util.Date;
 import ognl.TypeConverter;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.util.VulpeDateUtil;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
@@ -50,7 +51,7 @@ import com.opensymphony.xwork2.conversion.TypeConversionException;
 @SuppressWarnings({ "rawtypes" })
 public class DateConverter extends AbstractVulpeBaseTypeConverter implements TypeConverter {
 
-	private static final Logger LOG = Logger.getLogger(DateConverter.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DateConverter.class);
 
 	public Object convert(final Class type, final Object value) {
 		try {

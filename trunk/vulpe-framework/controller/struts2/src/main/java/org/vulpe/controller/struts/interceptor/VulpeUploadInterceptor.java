@@ -50,7 +50,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
 import org.apache.struts2.interceptor.FileUploadInterceptor;
@@ -74,7 +75,7 @@ import com.opensymphony.xwork2.ValidationAware;
 @SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 public class VulpeUploadInterceptor extends FileUploadInterceptor {
 
-	private static final Logger LOG = Logger.getLogger(VulpeUploadInterceptor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeUploadInterceptor.class);
 
 	/*
 	 * (non-Javadoc)

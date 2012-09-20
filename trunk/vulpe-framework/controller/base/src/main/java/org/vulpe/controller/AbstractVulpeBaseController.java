@@ -53,7 +53,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
 import org.vulpe.commons.VulpeConstants.Configuration.Now;
@@ -105,7 +106,7 @@ import org.vulpe.model.services.VulpeService;
 public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		implements VulpeController {
 
-	protected static final Logger LOG = Logger.getLogger(AbstractVulpeBaseController.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBaseController.class);
 
 	@Autowired
 	public I18NService i18nService;
@@ -620,7 +621,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 							break;
 						}
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 					values.add(map);
 				}
@@ -2137,7 +2138,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 			try {
 				entitySelect = config.getEntityClass().newInstance();
 			} catch (Exception e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 		tabularBefore();
@@ -2301,7 +2302,7 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 					empty = false;
 				}
 			} catch (Exception e) {
-				LOG.debug(e);
+				LOG.debug(e.getMessage());
 			}
 		}
 		return empty;
@@ -2335,11 +2336,11 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 						}
 					}
 				} catch (IllegalAccessException e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				} catch (InvocationTargetException e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				} catch (NoSuchMethodException e) {
-					LOG.error(e);
+					LOG.error(e.getMessage());
 				}
 			}
 		}

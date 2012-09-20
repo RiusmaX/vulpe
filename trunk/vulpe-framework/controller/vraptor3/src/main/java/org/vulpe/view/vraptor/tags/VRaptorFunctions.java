@@ -45,7 +45,8 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.beans.ValueBean;
 import org.vulpe.commons.util.VulpeReflectUtil;
@@ -56,7 +57,7 @@ import org.vulpe.view.tags.Functions;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public final class VRaptorFunctions extends Functions {
 
-	private static final Logger LOG = Logger.getLogger(VRaptorFunctions.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(VRaptorFunctions.class.getName());
 
 	private VRaptorFunctions() {
 		// default constructor
@@ -269,7 +270,7 @@ public final class VRaptorFunctions extends Functions {
 				getFormParams().put(key,
 						new Object[] { expire, resizeImageAsJPG(imageData, width) });
 			} catch (IOException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		} else {
 			getFormParams().remove(key);

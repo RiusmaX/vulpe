@@ -42,7 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -53,7 +54,7 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 @SuppressWarnings( { "unchecked" })
 public class VulpeBaseJdbcEntity {
 
-	protected static final Logger LOG = Logger.getLogger(VulpeBaseJdbcEntity.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(VulpeBaseJdbcEntity.class);
 
 	private static VulpeNamedParameterJdbcTemplate template;
 
@@ -131,7 +132,7 @@ public class VulpeBaseJdbcEntity {
 				}
 				list.add(object);
 			} catch (Exception e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 		return (T) list;

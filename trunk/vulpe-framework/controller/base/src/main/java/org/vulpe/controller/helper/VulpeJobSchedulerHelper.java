@@ -46,7 +46,8 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -67,7 +68,7 @@ import org.vulpe.commons.scheduler.annotations.Job;
  */
 public final class VulpeJobSchedulerHelper {
 
-	private static final Logger LOG = Logger.getLogger(VulpeJobSchedulerHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeJobSchedulerHelper.class);
 
 	private static AnnotationDB annotationDB;
 
@@ -149,12 +150,12 @@ public final class VulpeJobSchedulerHelper {
 							jobScheduler(scheduler, clazz.newInstance());
 						}
 					} catch (Exception e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 				}
 				scheduler.start();
 			} catch (SchedulerException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}
@@ -181,7 +182,7 @@ public final class VulpeJobSchedulerHelper {
 			trigger.setCronExpression(jobAnnotation.value());
 			scheduler.scheduleJob(jobDetail, trigger);
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 }

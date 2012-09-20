@@ -37,7 +37,8 @@
  */
 package org.vulpe.commons.helper;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.vulpe.commons.VulpeServiceLocator;
 import org.vulpe.commons.factory.SpringBeanFactory;
@@ -50,7 +51,7 @@ public final class GenericServicesHelper {
 	private GenericServicesHelper() {
 	}
 
-	private static final Logger LOG = Logger.getLogger(GenericServicesHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GenericServicesHelper.class);
 
 	/**
 	 * Method find generic services and returns POJO or EJB implementation.
@@ -69,7 +70,7 @@ public final class GenericServicesHelper {
 				service = VulpeServiceLocator.getInstance().getEJB(
 						GenericService.class);
 			}
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return service;
 	}
@@ -92,7 +93,7 @@ public final class GenericServicesHelper {
 			if (service == null) {
 				service = VulpeServiceLocator.getInstance().getEJB(serviceClass);
 			}
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return service;
 	}

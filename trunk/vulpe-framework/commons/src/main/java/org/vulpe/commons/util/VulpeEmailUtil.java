@@ -52,7 +52,8 @@ import javax.naming.InitialContext;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.mail.HtmlEmail;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.exception.VulpeSystemException;
 
 /**
@@ -61,7 +62,7 @@ import org.vulpe.exception.VulpeSystemException;
 @SuppressWarnings({ "rawtypes" })
 public final class VulpeEmailUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeEmailUtil.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeEmailUtil.class.getName());
 
 	private static boolean isDebugEnabled = LOG.isDebugEnabled();
 
@@ -224,7 +225,7 @@ public final class VulpeEmailUtil {
 			message.setText(body);
 			Transport.send(message);
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 
 	}

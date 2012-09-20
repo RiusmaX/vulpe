@@ -57,7 +57,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tuckey.web.filters.urlrewrite.Conf;
 import org.tuckey.web.filters.urlrewrite.RewrittenUrl;
 import org.tuckey.web.filters.urlrewrite.Rule;
@@ -78,7 +79,7 @@ import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 @SuppressWarnings("unchecked")
 public class VulpeFilterDispatcher implements Filter {
 
-	private static final Logger LOG = Logger.getLogger(VulpeFilterDispatcher.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeFilterDispatcher.class);
 
 	private static final UrlRewriteFilter URL_REWRITE_FILTER = new UrlRewriteFilter();
 
@@ -148,7 +149,7 @@ public class VulpeFilterDispatcher implements Filter {
 		try {
 			confUrl = context.getResource(confPath);
 		} catch (MalformedURLException e) {
-			LOG.debug(e);
+			LOG.debug(e.getMessage());
 		}
 		String confUrlStr = null;
 		if (confUrl != null) {
@@ -197,7 +198,7 @@ public class VulpeFilterDispatcher implements Filter {
 					break;
 				}
 			} catch (InvocationTargetException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 		return rewrite;

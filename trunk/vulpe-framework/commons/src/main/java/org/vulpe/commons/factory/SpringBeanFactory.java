@@ -66,7 +66,7 @@ public class SpringBeanFactory extends AbstractVulpeBeanFactory {
 		try {
 			bean = (T) factory.getBean(beanName);
 		} catch (Exception e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return bean;
 	}

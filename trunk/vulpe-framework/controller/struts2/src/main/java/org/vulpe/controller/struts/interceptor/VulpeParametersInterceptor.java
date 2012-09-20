@@ -40,7 +40,8 @@ package org.vulpe.controller.struts.interceptor;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.controller.AbstractVulpeBaseController;
@@ -53,7 +54,7 @@ import com.opensymphony.xwork2.util.ValueStack;
 @SuppressWarnings( { "serial", "unchecked", "rawtypes" })
 public class VulpeParametersInterceptor extends ParametersInterceptor {
 
-	private static final Logger LOG = Logger.getLogger(VulpeParametersInterceptor.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeParametersInterceptor.class);
 
 	private ActionInvocation invocation;
 

@@ -43,7 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -77,7 +78,7 @@ import org.vulpe.security.model.services.SecurityService;
 @Component(Security.SECURITY_CONTEXT)
 public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements VulpeSecurityContext {
 
-	private static final Logger LOG = Logger.getLogger(VulpeBaseSecurityContext.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeBaseSecurityContext.class);
 
 	private Map<String, Object> securityMap = new HashMap<String, Object>();
 
@@ -168,7 +169,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 				}
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -191,7 +192,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 					afterUserAuthentication.execute();
 				}
 			} catch (NoSuchBeanDefinitionException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}
@@ -224,7 +225,7 @@ public class VulpeBaseSecurityContext extends VulpeSecurityUtil implements Vulpe
 					user = users.get(0);
 				}
 			} catch (VulpeApplicationException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 			this.user = user;
 		}

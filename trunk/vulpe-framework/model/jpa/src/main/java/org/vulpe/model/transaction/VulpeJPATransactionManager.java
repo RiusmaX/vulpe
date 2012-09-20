@@ -37,7 +37,8 @@
  */
 package org.vulpe.model.transaction;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.TransactionSystemException;
@@ -48,7 +49,7 @@ import org.vulpe.exception.VulpeSystemException;
 @SuppressWarnings("serial")
 public class VulpeJPATransactionManager extends JpaTransactionManager {
 
-	private static final Logger LOG = Logger.getLogger(VulpeJPATransactionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeJPATransactionManager.class);
 
 	@Override
 	protected void doCommit(DefaultTransactionStatus status) {

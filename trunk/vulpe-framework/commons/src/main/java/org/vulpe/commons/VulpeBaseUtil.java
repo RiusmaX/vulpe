@@ -37,7 +37,8 @@
  */
 package org.vulpe.commons;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.util.VulpeHashMap;
@@ -50,7 +51,7 @@ import org.vulpe.model.services.VulpeService;
 @SuppressWarnings("unchecked")
 public class VulpeBaseUtil {
 
-	public static final Logger LOG = Logger.getLogger(VulpeBaseUtil.class);
+	public static final Logger LOG = LoggerFactory.getLogger(VulpeBaseUtil.class);
 	
 	/**
 	 * Method find specific service returns POJO or EJB implementation.

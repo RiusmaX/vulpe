@@ -41,7 +41,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Vulpe Collection Utility class.
@@ -52,7 +53,7 @@ import org.apache.log4j.Logger;
  */
 public class VulpeCollectionUtil {
 
-	protected static final Logger LOG = Logger.getLogger(VulpeCollectionUtil.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(VulpeCollectionUtil.class);
 
 	public static <C extends Collection<?>> boolean exists(final C collection,
 			final String property, final Object value) {

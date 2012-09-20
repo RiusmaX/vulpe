@@ -50,7 +50,8 @@ import javax.persistence.Transient;
 
 import org.apache.commons.lang.IllegalClassException;
 import org.apache.commons.lang.NullArgumentException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.model.annotations.SkipCompare;
 import org.vulpe.model.entity.VulpeEntity;
@@ -61,7 +62,7 @@ import org.vulpe.model.entity.VulpeEntity;
  */
 public class VulpeBeanComparatorUtil {
 
-	private static final Logger LOG = Logger.getLogger(VulpeBeanComparatorUtil.class);
+	private static final Logger LOG = LoggerFactory.getLogger(VulpeBeanComparatorUtil.class);
 
 	/**
 	 * Compare beans and return map with differences by field.
@@ -160,7 +161,7 @@ public class VulpeBeanComparatorUtil {
 					diffMap.put(field.getName(), new Object[] { value1, value2 });
 				}
 			} catch (Exception e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 		return diffMap;
