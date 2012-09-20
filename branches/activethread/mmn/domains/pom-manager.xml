@@ -70,6 +70,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
 				<configuration>
 					<factory>org.vulpe.fox.manager.ManagerProcessorFactory</factory>
 					<options>
@@ -81,23 +82,12 @@
 					<dependency>
 						<groupId>org.vulpe</groupId>
 						<artifactId>vulpe-fox</artifactId>
-						<version>1.0</version>
-						<exclusions>
-							<exclusion>
-								<groupId>com.sun</groupId>
-								<artifactId>tools</artifactId>
-							</exclusion>
-						</exclusions>
+						<version>1.0.2.API3</version>
 					</dependency>
 					<dependency>
 						<groupId>org.jw.mmn</groupId>
 						<artifactId>mmn-commons</artifactId>
 						<version>1.0</version>
-					</dependency>
-					<dependency>
-						<groupId>xml-apis</groupId>
-						<artifactId>xml-apis</artifactId>
-						<version>1.4.01</version>
 					</dependency>
 				</dependencies>
 				<executions>
