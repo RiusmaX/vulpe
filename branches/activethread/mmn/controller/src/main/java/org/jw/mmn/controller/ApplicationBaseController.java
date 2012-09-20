@@ -80,7 +80,7 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 				member = null;
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return member;
 	}

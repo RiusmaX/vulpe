@@ -91,7 +91,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 					}
 				}
 			} catch (VulpeApplicationException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}
@@ -107,7 +107,7 @@ public class AfterUserAuthenticationCallbackPOJO extends VulpeSecurityStrutsCall
 				member = null;
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		return member;
 	}

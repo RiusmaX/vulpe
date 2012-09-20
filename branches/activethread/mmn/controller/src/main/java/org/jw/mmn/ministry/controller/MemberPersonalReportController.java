@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.jw.mmn.controller.ApplicationBaseController;
 import org.jw.mmn.ministry.model.entity.MemberPersonalReport;
 import org.jw.mmn.ministry.model.entity.Month;
@@ -34,7 +36,7 @@ import org.vulpe.exception.VulpeApplicationException;
 public class MemberPersonalReportController extends
 		ApplicationBaseController<MemberPersonalReport, java.lang.Long> {
 
-	private static final Logger LOG = Logger.getLogger(MemberPersonalReportController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MemberPersonalReportController.class);
 
 	private void monthAndYear(final MemberPersonalReport entity) {
 		entity.setMonth(Month.getMonth(calendar.get(Calendar.MONTH)));
@@ -124,7 +126,7 @@ public class MemberPersonalReportController extends
 				}
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		super.update();
 	}
@@ -176,7 +178,7 @@ public class MemberPersonalReportController extends
 				entity.setDate(VulpeDateUtil.convertStringToDateTime("01/"
 						+ (month < 10 ? "0" + month : month) + "/" + entity.getYear() + " 00:00:00"));
 			} catch (ParseException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}

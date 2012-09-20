@@ -56,7 +56,7 @@ public class IndexBaseController extends ApplicationBaseController<Index, Long> 
 						/ (initialYearMinutes + finalYearMinutes));
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 

@@ -49,7 +49,7 @@ public class ChangeCongregationController extends
 								.readGroup(grupo);
 						ever.put(Core.GROUPS_OF_SELECTED_CONGREGATION, grupos);
 					} catch (VulpeApplicationException e) {
-						LOG.error(e);
+						LOG.error(e.getMessage());
 					}
 					final String currentLayout = ever.getAuto(View.CURRENT_LAYOUT);
 					final String url = "FRONTEND".equals(currentLayout) ? "/frontend/Index"
