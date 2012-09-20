@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>${package}</groupId>
 			<artifactId>${rootArtifactId}-domains</artifactId>
-			<version>1.0</version>
+			<version>${version}</version>
 		</dependency>
 	</dependencies>
 
@@ -82,14 +82,9 @@
 				</configuration>
 				<dependencies>
 					<dependency>
-						<groupId>net.sf.apt-jelly</groupId>
-						<artifactId>apt-jelly</artifactId>
-						<version>2.3</version>
-					</dependency>
-					<dependency>
-						<groupId>freemarker</groupId>
-						<artifactId>freemarker</artifactId>
-						<version>2.3.8</version>
+						<groupId>org.vulpe</groupId>
+						<artifactId>vulpe-fox</artifactId>
+						<version>${symbol_dollar}{vulpe.version}</version>
 					</dependency>
 				</dependencies>
 				<executions>
