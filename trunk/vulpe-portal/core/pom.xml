@@ -70,6 +70,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
 				<configuration>
 					<factory>org.vulpe.fox.apt.freemarker.VulpeFreemarkerProcessorFactory</factory>
 					<options>
@@ -106,6 +107,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
 				<configuration>
 					<sources>
 						<source>${basedir}/generated/main/java</source>

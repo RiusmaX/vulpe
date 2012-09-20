@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-        <artifactId>portal</artifactId>
-        <groupId>org.vulpe</groupId>
-        <version>1.0</version>
-    </parent>
+		<artifactId>portal</artifactId>
+		<groupId>org.vulpe</groupId>
+		<version>1.0</version>
+	</parent>
 
 	<groupId>org.vulpe.portal</groupId>
 	<artifactId>portal-domains</artifactId>
@@ -29,17 +30,13 @@
 						<configuration>
 							<tasks>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="tools.dir"
-									value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools" />
+								<property name="tools.dir" value="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools" />
 								<property name="tools.dir.present" value="false" />
-								<available file="${tools.dir}" property="tools.dir.present"
-									type="dir" />
+								<available file="${tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${tools.dir.present}" arg2="false" />
 									<then>
-										<unjar
-											src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3.jar"
-											dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3" />
+										<unjar src="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3.jar" dest="${settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3" />
 									</then>
 								</if>
 								<delete dir="${basedir}/../web/target" />
@@ -69,6 +66,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
 				<configuration>
 					<factory>org.vulpe.fox.manager.ManagerProcessorFactory</factory>
 					<options>
@@ -77,6 +75,11 @@
 					<sourceOutputDirectory>${basedir}/../</sourceOutputDirectory>
 				</configuration>
 				<dependencies>
+					<dependency>
+						<groupId>net.sf.apt-jelly</groupId>
+						<artifactId>apt-jelly</artifactId>
+						<version>2.3</version>
+					</dependency>
 					<dependency>
 						<groupId>org.vulpe</groupId>
 						<artifactId>vulpe-fox</artifactId>
