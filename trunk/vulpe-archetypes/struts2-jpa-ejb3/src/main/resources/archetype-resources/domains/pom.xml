@@ -26,13 +26,13 @@
 						<configuration>
 							<target>
 								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
-								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools" />
+								<property name="tools.dir" value="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/${symbol_dollar}{vulpe.version}/vulpe-fox-${symbol_dollar}{vulpe.version}/tools" />
 								<property name="tools.dir.present" value="false" />
 								<available file="${symbol_dollar}{tools.dir}" property="tools.dir.present" type="dir" />
 								<if>
 									<equals arg1="${symbol_dollar}{tools.dir.present}" arg2="false" />
 									<then>
-										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3" />
+										<unjar src="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/${symbol_dollar}{vulpe.version}/vulpe-fox-${symbol_dollar}{vulpe.version}.jar" dest="${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/${symbol_dollar}{vulpe.version}/vulpe-fox-${symbol_dollar}{vulpe.version}" />
 									</then>
 								</if>
 							</target>
@@ -61,10 +61,11 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
 				<configuration>
 					<factory>org.vulpe.fox.dao.DAOProcessorFactory</factory>
 					<options>
-						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/1.0.2.API3/vulpe-fox-1.0.2.API3/tools/dao/templates/plugin.ftl</param>
+						<param>template=${symbol_dollar}{settings.localRepository}/org/vulpe/vulpe-fox/${symbol_dollar}{vulpe.version}/vulpe-fox-${symbol_dollar}{vulpe.version}/tools/dao/templates/plugin.ftl</param>
 						<param>SGDB=JPA</param>
 					</options>
 					<sourceOutputDirectory>${symbol_dollar}{basedir}/generated/main/java</sourceOutputDirectory>
@@ -93,6 +94,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
 				<configuration>
 					<sources>
 						<source>${symbol_dollar}{basedir}/generated/main/java</source>
