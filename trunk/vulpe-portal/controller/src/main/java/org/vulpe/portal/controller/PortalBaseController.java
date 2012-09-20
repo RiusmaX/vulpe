@@ -74,7 +74,7 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 					ever.put(Core.VULPE_PORTAL_CONTENTS, contents);
 				}
 			} catch (VulpeApplicationException e) {
-				LOG.error(e);
+				LOG.error(e.getMessage());
 			}
 		}
 	}

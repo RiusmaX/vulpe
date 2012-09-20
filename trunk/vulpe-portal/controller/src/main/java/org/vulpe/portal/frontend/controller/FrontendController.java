@@ -44,7 +44,7 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			sort(contents);
 			now.put("contents", contents);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 
 	}
@@ -57,7 +57,7 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			vulpe.view().content().title(content.getTitle().toString()).subtitle(content.getSubtitle().toString());
 			now.put("content", content);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		controlResultForward();
 	}
@@ -69,7 +69,7 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			getCoreService().updateDownload(download);
 			vulpe.controller().redirectTo(download.getUrl(), false);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -80,7 +80,7 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			getCoreService().updateLink(link);
 			vulpe.controller().redirectTo(link.getUrl(), false);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
@@ -119,7 +119,7 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			sort(links);
 			now.put("links", links);
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 		controlResultForward();
 	}

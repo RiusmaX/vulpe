@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.servlet.ServletContextEvent;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Component;
 import org.vulpe.commons.VulpeConstants.Context;
 import org.vulpe.commons.VulpeServiceLocator;
@@ -24,7 +26,7 @@ import org.vulpe.portal.core.model.services.CoreService;
 @Component(Context.STARTUP_EXTEND)
 public class PortalStartupExtend implements VulpeStartupExtend {
 
-	private static final Logger LOG = Logger.getLogger(PortalStartupExtend.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PortalStartupExtend.class);
 
 	@Override
 	public void contextInitialized(ServletContextEvent evt) {
@@ -61,7 +63,7 @@ public class PortalStartupExtend implements VulpeStartupExtend {
 				VulpeCacheHelper.getInstance().put(Portal.class.getSimpleName(), portalList);
 			}
 		} catch (VulpeApplicationException e) {
-			LOG.error(e);
+			LOG.error(e.getMessage());
 		}
 	}
 
