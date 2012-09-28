@@ -181,4 +181,5 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 				Integer.valueOf(memberPersonalReport.getMonth().ordinal()))
 				+ this.year.compareTo(memberPersonalReport.getYear());
 	}
+
 }

@@ -20,7 +20,7 @@ import org.vulpe.exception.VulpeApplicationException;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.security.model.entity.User;
 
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends VulpeStrutsController<ENTITY, ID> {
 
@@ -43,7 +43,8 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 
 	@ExecuteAlways
 	public void validateSelectedCongregation() {
-		if (!vulpe.controller().currentName().contains("frontend/Index")
+		if (!vulpe.controller().currentName().contains("core/ChangeCongregation")
+				&& !vulpe.controller().currentName().contains("frontend/Index")
 				&& !vulpe.controller().currentName().contains("backend/Index")
 				&& !ever.containsKey(Core.SELECTED_CONGREGATION)
 				&& !this.getClass().equals(CongregationController.class)) {
@@ -57,8 +58,8 @@ public class ApplicationBaseController<ENTITY extends VulpeEntity<ID>, ID extend
 		} else if ((vulpe.controller().currentName().contains("frontend/Index") || vulpe
 				.controller().currentName().contains("backend/Index"))
 				&& ever.containsKey(Core.SELECTED_CONGREGATION)) {
-//			vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update",
-//					vulpe.controller().ajax());
+			// vulpe.controller().redirectTo("/ministry/MemberPersonalReport/update",
+			// vulpe.controller().ajax());
 		}
 	}
 

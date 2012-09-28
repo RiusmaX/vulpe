@@ -1,8 +1,11 @@
 package org.jw.mmn.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jw.mmn.commons.ApplicationConstants.Core;
 import org.jw.mmn.core.model.entity.Congregation;
@@ -18,6 +21,7 @@ import org.vulpe.exception.VulpeApplicationException;
 @Controller(type = ControllerType.FRONTEND)
 public class IndexBaseController extends ApplicationBaseController<Index, Long> {
 
+	public static final String MEMBER_PERSONAL_REPORTS_YEARS = "memberPersonalReportsYears";
 	public static final String MEMBER_PERSONAL_REPORTS = "memberPersonalReports";
 
 	@Override
@@ -32,28 +36,26 @@ public class IndexBaseController extends ApplicationBaseController<Index, Long> 
 				--serviceYear;
 			}
 			now.put("serviceYear", serviceYear);
-			now.put("chartYears", "'" + year + "', '" + (year + 1) + "'");
 			final List<MemberPersonalReport> memberPersonalReports = ministryService()
 					.readMemberPersonalReport(memberPersonalReport);
 			if (VulpeValidationUtil.isNotEmpty(memberPersonalReports)) {
 				Collections.sort(memberPersonalReports);
+				final Map<Integer, List<MemberPersonalReport>> years = new HashMap<Integer, List<MemberPersonalReport>>();
 				for (final MemberPersonalReport personalReport : memberPersonalReports) {
 					personalReport.sum();
-				}
-				now.put(MEMBER_PERSONAL_REPORTS, memberPersonalReports);
-				int initialYearMinutes = 0;
-				int finalYearMinutes = 0;
-				for (final MemberPersonalReport personalReport : memberPersonalReports) {
-					if (personalReport.getYear() == serviceYear) {
-						initialYearMinutes += personalReport.getTotalMinutes();
-					} else {
-						finalYearMinutes += personalReport.getTotalMinutes();
+					int currentYear = personalReport.getYear();
+					if (personalReport.getOrdinalMonth() < 8) {
+						--currentYear;
 					}
+					List<MemberPersonalReport> reports = years.get(currentYear);
+					if (reports == null) {
+						reports = new ArrayList<MemberPersonalReport>();
+					}
+					reports.add(personalReport);
+					years.put(currentYear, reports);
 				}
-				now.put("initialYearPercent", (initialYearMinutes * 100d)
-						/ (initialYearMinutes + finalYearMinutes));
-				now.put("finalYearPercent", (finalYearMinutes * 100d)
-						/ (initialYearMinutes + finalYearMinutes));
+				now.put(MEMBER_PERSONAL_REPORTS, years);
+				now.put(MEMBER_PERSONAL_REPORTS_YEARS, years.keySet());
 			}
 		} catch (VulpeApplicationException e) {
 			LOG.error(e.getMessage());
