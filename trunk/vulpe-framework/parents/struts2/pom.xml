@@ -27,25 +27,21 @@
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
 			<version>${struts.version}</version>
-			<scope>provided</scope><!-- TEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-jasperreports-plugin</artifactId>
 			<version>${struts.version}</version>
-			<scope>provided</scope><!-- TEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
 			<version>${struts.version}</version>
-			<scope>provided</scope><!-- TEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-json-plugin</artifactId>
 			<version>${struts.version}</version>
-			<scope>provided</scope><!-- TEST -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
+import org.apache.struts2.views.util.DefaultUrlHelper;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
@@ -248,6 +249,7 @@ public class VulpeActionInvocation implements ActionInvocation {
 				final ServletRedirectResult srr = new ServletRedirectResult("${now.urlToRedirect}");
 				srr.setPrependServletContext(true);
 				srr.setActionMapper(new DefaultActionMapper());
+				srr.setUrlHelper(new DefaultUrlHelper());
 				return srr;
 			}
 		}

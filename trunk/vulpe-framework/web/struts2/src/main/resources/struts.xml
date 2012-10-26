@@ -33,7 +33,7 @@
 			<!-- params interceptor -->
 			<interceptor name="params"
 				class="org.vulpe.controller.struts.interceptor.VulpeParametersInterceptor" />
-				
+
 			<!-- Basic stack -->
             <interceptor-stack name="basicStack">
                 <interceptor-ref name="exception"/>
@@ -178,7 +178,7 @@
 				<param name="clearParams">true</param>
 			</result>
 		</action>
-		
+
 		<action name="*/*" class="{1}.{2}Controller" method="none">
 			<result name="none" type="chain">
 				<param name="actionName">${now.resultForward}</param>
@@ -187,7 +187,7 @@
 				<param name="clearParams">true</param>
 			</result>
 		</action>
-		
+
 		<action name="*/*/ajax" class="{1}.{2}Controller" method="none">
 			<result name="none" type="chain">
 				<param name="actionName">${now.resultForward}</param>
