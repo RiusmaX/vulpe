@@ -55,6 +55,9 @@ public class PersonalReport extends VulpeBaseDB4OEntity<Long> {
 
 	@Override
 	public int compareTo(VulpeEntity<Long> entity) {
+		if (this.date == null || entity == null) {
+			return 0;
+		}
 		return this.date.compareTo(((PersonalReport) entity).getDate());
 	}
 }

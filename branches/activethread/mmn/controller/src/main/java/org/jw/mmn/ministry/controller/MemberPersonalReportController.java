@@ -165,7 +165,7 @@ public class MemberPersonalReportController extends
 
 	private void checksDate() {
 		for (final PersonalReport personalReport : entity.getReports()) {
-			if (personalReport.getDate() == null) {
+			if (personalReport != null && personalReport.getDate() == null) {
 				personalReport.setDate(new Date());
 			}
 		}
