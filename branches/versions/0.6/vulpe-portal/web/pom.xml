@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+    <artifactId>portal</artifactId>
+    <groupId>org.vulpe</groupId>
+    <version>1.0</version>
+  </parent>
+
+	<groupId>org.vulpe.portal</groupId>
+	<artifactId>portal-web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>portal - Web</name>
+	<description>portal</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-web-struts2</artifactId>
+			<version>1.0.2.API3</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe</groupId>
+			<artifactId>vulpe-controller-struts2</artifactId>
+			<version>1.0.2.API3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-commons</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-domains</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.vulpe.portal</groupId>
+			<artifactId>portal-controller</artifactId>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<warName>portal</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+								<property name="tomcat.home" value="${settings.localRepository}/../Servers/tomcat/" />
+								<if>
+									<equals arg1="${deployServer}" arg2="tomcat" />
+									<then>
+										<property name="contextSuffix" value="" />
+										<delete file="${tomcat.home}/conf/Catalina/localhost/portal.xml" />
+										<if>
+											<equals arg1="${unpack}" arg2="false" />
+											<then>
+												<unwar src="${project.build.directory}/portal.war" dest="${project.build.directory}/portal-web-1.0" />
+											</then>
+										</if>
+										<if>
+											<equals arg1="${environment}" arg2="test" />
+											<then>
+												<copy tofile="${project.build.directory}/portal-web-1.0/META-INF/context.xml"
+													overwrite="true">
+													<fileset file="${project.build.directory}/portal-web-1.0/META-INF/context-test.xml" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${environment}" arg2="production" />
+												<then>
+													<copy tofile="${project.build.directory}/portal-web-1.0/META-INF/context.xml"
+														overwrite="true">
+														<fileset file="${project.build.directory}/portal-web-1.0/META-INF/context-production.xml" />
+													</copy>
+												</then>
+											</elseif>
+										</if>
+										<if>
+											<equals arg1="${unpack}" arg2="false" />
+											<then>
+												<war destfile="${project.build.directory}/portal.war" webxml="${project.build.directory}/portal-web-1.0/WEB-INF/web.xml"
+													basedir="${project.build.directory}/portal-web-1.0" />
+											</then>
+										</if>
+										<if>
+											<equals arg1="${deployMode}" arg2="quick" />
+											<then>
+												<copy todir="${tomcat.home}/webapps/portal/" overwrite="true">
+													<fileset dir="${project.build.directory}/portal-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+												</copy>
+											</then>
+											<elseif>
+												<equals arg1="${deployMode}" arg2="quick-restart" />
+												<then>
+													<copy todir="${tomcat.home}/webapps/portal/" overwrite="true">
+														<fileset dir="${project.build.directory}/portal-web-1.0/" excludes="**/*.jar" />
+													</copy>
+												</then>
+											</elseif>
+											<else>
+												<if>
+													<equals arg1="${unpack}" arg2="true" />
+													<then>
+														<delete dir="${tomcat.home}/webapps/portal" />
+														<if>
+															<equals arg1="${deleteWork}" arg2="true" />
+															<then>
+																<delete dir="${tomcat.home}/work/Catalina/localhost/portal" />
+															</then>
+														</if>
+														<unwar src="${project.build.directory}/portal.war" dest="${tomcat.home}/webapps/portal" />
+													</then>
+													<else>
+														<delete file="${tomcat.home}/webapps/portal.war" />
+														<copy todir="${tomcat.home}/webapps/">
+															<fileset dir="${project.build.directory}" includes="portal.war" />
+														</copy>
+													</else>
+												</if>
+											</else>
+										</if>
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

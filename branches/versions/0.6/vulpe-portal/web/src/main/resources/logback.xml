@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>[portal] %date %level [%thread] %logger{10} [%file : %line] %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<!--Daily rolling file appender -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>logs/portal.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>portal.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>[portal] %date %level [%thread] %logger{10} [%file : %line] %msg%n</Pattern>
+		</layout>
+	</appender>
+
+	<logger name="org.vulpe.portal" level="DEBUG">
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="ERROR">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>
