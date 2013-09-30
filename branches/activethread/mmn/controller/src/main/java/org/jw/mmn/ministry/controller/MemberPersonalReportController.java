@@ -164,9 +164,11 @@ public class MemberPersonalReportController extends
 	}
 
 	private void checksDate() {
-		for (final PersonalReport personalReport : entity.getReports()) {
-			if (personalReport != null && personalReport.getDate() == null) {
-				personalReport.setDate(new Date());
+		if (VulpeValidationUtil.isNotEmpty(entity.getReports())) {
+			for (final PersonalReport personalReport : entity.getReports()) {
+				if (personalReport != null && personalReport.getDate() == null) {
+					personalReport.setDate(new Date());
+				}
 			}
 		}
 	}
