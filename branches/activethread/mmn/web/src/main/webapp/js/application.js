@@ -27,7 +27,7 @@ var app = {
 	frontend: {
 
 	},
-	
+
 	ministry: {
 		changePersonalReportData: function(value) {
 			if (vulpe.util.isNotEmpty(value)) {
@@ -35,6 +35,21 @@ var app = {
 				vulpe.util.get("reportId").val(vulpe.util.get("id").val());
 			} else {
 				vulpe.util.get("reportId").val("");
+			}
+		},
+		changeMinistryType: function(value) {
+			if (vulpe.util.isNotEmpty(value) && (value == 'REGULAR_PIONEER' || VALUE == 'AUXILIARY_PIONEER')) {
+				vulpe.util.get("entity_targetHours-all").show();
+				var target = vulpe.util.getElementField("targetHours").val();
+				if (vulpe.util.isEmpty(target)) {
+					if (value == 'REGULAR_PIONEER') {
+						vulpe.util.getElementField("targetHours").val(70);
+					} else if (VALUE == 'AUXILIARY_PIONEER') {
+						vulpe.util.getElementField("targetHours").val(50);
+					}
+				}
+			} else {
+				vulpe.util.get("entity_targetHours-all").hide();
 			}
 		}
 	},

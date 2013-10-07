@@ -52,6 +52,8 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	@VulpeText(mask = "I", size = 8)
 	private Integer studies;
 
+	private Integer targetHours;
+
 	@Detail(target = PersonalReport.class)
 	private List<PersonalReport> reports;
 
@@ -90,6 +92,12 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 	}
 
 	public void sum() {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MONTH, getOrdinalMonth());
+		calendar.set(Calendar.YEAR, getYear());
+		if (calendar.get(Calendar.MONTH) > Calendar.getInstance().get(Calendar.MONTH)) {
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+		}
 		if (VulpeValidationUtil.isNotEmpty(this.getReports())) {
 			int books = 0;
 			int brochures = 0;
@@ -108,20 +116,24 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 							.getRevisits();
 				}
 			}
-			this.setTotalBooks(books);
-			this.setTotalBrochures(brochures);
-			this.setTotalMinutes(minutes);
-			this.setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
-			this.setTotalMagazines(magazines);
-			this.setTotalRevisits(revisits);
-			int totalDaysOfMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-			this.setTotalAveragePerDay(VulpeDateUtil.getFormatedTime(minutes / currentDay));
-			this.setTotalLeftDays((totalDaysOfMonth - currentDay));
+			setTotalBooks(books);
+			setTotalBrochures(brochures);
+			setTotalMinutes(minutes);
+			setTotalHours(VulpeDateUtil.getFormatedTime(minutes));
+			setTotalMagazines(magazines);
+			setTotalRevisits(revisits);
+			int totalDaysOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+			int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+			setTotalAveragePerDay(VulpeDateUtil.getFormatedTime(minutes / currentDay));
+			setTotalLeftDays(totalDaysOfMonth - currentDay);
+			if (calendar.get(Calendar.MONTH) < Calendar.getInstance().get(Calendar.MONTH)) {
+				setTotalLeftDays(0);
+			}
 			if (this.getMinistryType().equals(MinistryType.AUXILIARY_PIONEER)) {
-				final int totalMinutesAuxiliary = 50 * 60;
+				final int totalMinutesAuxiliary = ((this.targetHours != null) ? this.targetHours
+						: 50) * 60;
 				if (minutes < totalMinutesAuxiliary) {
-					this.setTotalPioneer(" (-"
+					setTotalPioneer(" (-"
 							+ VulpeDateUtil.getFormatedTime(totalMinutesAuxiliary - minutes) + ")");
 				}
 				int totalRemain = (totalMinutesAuxiliary - minutes);
@@ -131,13 +143,12 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 				} else {
 					totalRemain = 0;
 				}
-				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
-				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
-
+				setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
+				setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
 			} else if (this.getMinistryType().equals(MinistryType.REGULAR_PIONEER)) {
-				final int totalMinutesRegular = 70 * 60;
+				final int totalMinutesRegular = ((this.targetHours != null) ? this.targetHours : 70) * 60;
 				if (minutes < totalMinutesRegular) {
-					this.setTotalPioneer(" (-"
+					setTotalPioneer(" (-"
 							+ VulpeDateUtil.getFormatedTime(totalMinutesRegular - minutes) + ")");
 				}
 				int totalRemain = (totalMinutesRegular - minutes);
@@ -147,8 +158,8 @@ public class MemberPersonalReport extends VulpeBaseDB4OEntity<Long> {
 				} else {
 					totalRemain = 0;
 				}
-				this.setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
-				this.setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
+				setTotalPioneerRemain(VulpeDateUtil.getFormatedTime(totalRemain));
+				setTotalPioneerRemainPerDay(VulpeDateUtil.getFormatedTime(totalRemainPerDay));
 			}
 		}
 	}

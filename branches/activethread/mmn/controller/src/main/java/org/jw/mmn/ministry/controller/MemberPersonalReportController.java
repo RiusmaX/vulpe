@@ -9,6 +9,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.jw.mmn.commons.model.entity.MinistryType;
 import org.jw.mmn.controller.ApplicationBaseController;
 import org.jw.mmn.ministry.model.entity.MemberPersonalReport;
 import org.jw.mmn.ministry.model.entity.Month;
@@ -103,22 +104,6 @@ public class MemberPersonalReportController extends
 						.readMemberPersonalReport(memberPersonalReport);
 				if (VulpeValidationUtil.isNotEmpty(list)) {
 					id = list.get(0).getId();
-					// MemberPersonalReport mpr = new MemberPersonalReport();
-					// mpr.setId(id);
-					// mpr = ministryService().findMemberPersonalReport(mpr);
-					// boolean remove = false;
-					// for (Iterator<PersonalReport> iterator =
-					// mpr.getReports().iterator(); iterator.hasNext();) {
-					// PersonalReport personalReport = iterator
-					// .next();
-					// if (personalReport == null) {
-					// iterator.remove();
-					// remove = true;
-					// }
-					// }
-					// if (remove) {
-					// ministryService().updateMemberPersonalReport(mpr);
-					// }
 				} else {
 					ever.putWeakRef("memberPersonalReport", memberPersonalReport);
 					create();
@@ -138,6 +123,14 @@ public class MemberPersonalReportController extends
 		entity.sum();
 		if (entity.getYear() == null) {
 			entity.setYear(calendar.get(Calendar.YEAR));
+		}
+		if (entity.getTargetHours() == null) {
+			if (entity.getMinistryType() == MinistryType.AUXILIARY_PIONEER) {
+				entity.setTargetHours(50);
+			}
+			if (entity.getMinistryType() == MinistryType.REGULAR_PIONEER) {
+				entity.setTargetHours(70);
+			}
 		}
 		vulpe.view().renderButtons(Button.REPORT);
 
