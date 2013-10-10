@@ -1,1 +1,1 @@
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js" charset="utf-8"></script>

@@ -1,21 +1,19 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:if test="${not empty now['memberPersonalReports']}">
-<div styel="display: table">
+<div style="display: table">
 <c:forEach var="year" items="${now['memberPersonalReportsYears']}" varStatus="status">
 <c:set var="memberPersonalReports" value="${now['memberPersonalReports'][year]}"/>
 <script type="text/javascript">
-	var pieChart${status.index};
 	$(document).ready(function() {
-		pieChart${status.index} = new Highcharts.Chart({
+		$('#personalReport-pie${status.index}').highcharts({
 			chart: {
-				renderTo: 'personalReport-pie${status.index}',
 				plotBackgroundColor: null,
 				plotBorderWidth: null,
 				plotShadow: false
 			},
 			title: {
-				text: 'Ano de Serviço de ${year}'
+				text: 'Ano de Servi\u00E7o de ${year}'
 			},
 			tooltip: {
 				formatter: function() {
