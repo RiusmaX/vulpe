@@ -50,6 +50,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
 import org.vulpe.commons.VulpeContext;
+import org.vulpe.commons.VulpeUTF8Control;
 import org.vulpe.commons.factory.AbstractVulpeBeanFactory;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.config.annotations.VulpeApplication;
@@ -87,10 +88,11 @@ public class MultipleResourceBundle extends ResourceBundle {
 		final String modules[] = application.i18n();
 		final List<ResourceBundle> list = new ArrayList<ResourceBundle>(modules.length);
 		for (final String module : modules) {
-			ResourceBundle resourceBundle = ResourceBundle.getBundle(module, vulpeContext
-					.getLocale());
+			ResourceBundle resourceBundle = ResourceBundle.getBundle(module,
+					vulpeContext.getLocale(), new VulpeUTF8Control());
 			if (!resourceBundle.getLocale().equals(vulpeContext.getLocale())) {
-				resourceBundle = ResourceBundle.getBundle(module, new Locale(""));
+				resourceBundle = ResourceBundle.getBundle(module, new Locale(""),
+						new VulpeUTF8Control());
 			}
 			list.add(resourceBundle);
 		}
@@ -132,11 +134,9 @@ public class MultipleResourceBundle extends ResourceBundle {
 				try {
 					final Object value = resourceBundle.getObject(key);
 					if (value != null) {
-						if (value instanceof String) {
-							if (!value.toString().startsWith("???")
-									&& !value.toString().endsWith("???")) {
-								return value;
-							}
+						if (value instanceof String && !value.toString().startsWith("???")
+								&& !value.toString().endsWith("???")) {
+							return value;
 						}
 						return value;
 					}

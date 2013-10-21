@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+  <name>vulpe-web-struts2</name>
+  <comment>Vulpe Framework ;) Quick and Smart - Web Content Struts 2. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>vulpe-interfaces</project>
+    <project>vulpe-annotations</project>
+    <project>vulpe-commons</project>
+    <project>vulpe-model</project>
+    <project>vulpe-controller</project>
+    <project>vulpe-audit</project>
+    <project>vulpe-security</project>
+    <project>vulpe-security-entity</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

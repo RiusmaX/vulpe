@@ -93,7 +93,7 @@ import com.opensymphony.xwork2.util.reflection.ReflectionContextState;
  * @version 1.0
  * @since 1.0
  */
-@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
+@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
 public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Serializable & Comparable<?>>
 		extends AbstractVulpeBaseController<ENTITY, ID> implements VulpeController,
 		com.opensymphony.xwork2.Action, Validateable, ValidationAware, LocaleProvider {
@@ -170,8 +170,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				details.remove(detailIndex.intValue());
 				++removed;
 			}
-			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
-					vulpe.controller().detail());
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config()
+					.getDetailConfig(vulpe.controller().detail());
 			if (detailConfig != null) {
 				final Paging paging = ever.getAuto(detailConfig.getName()
 						+ Controller.DETAIL_PAGING_LIST);
@@ -214,8 +214,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 						}
 					}
 					Ognl.setValue(vulpe.controller().detail(), context, this, details);
-					final String parentName = vulpe.controller().config().getParentName(
-							vulpe.controller().detail());
+					final String parentName = vulpe.controller().config()
+							.getParentName(vulpe.controller().detail());
 					final Object parent = Ognl.getValue(parentName, context, this);
 					if (vulpe.controller().detailConfig().getParentDetailConfig() != null) {
 						vulpe.requestAttribute(vulpe.controller().detailConfig()
@@ -517,8 +517,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			if (detailConfig.getParentDetailConfig() == null) {
 				despiseDetail(this, entity, detailConfig);
 				try {
-					final List<ENTITY> beans = (List<ENTITY>) Ognl.getValue(detailConfig
-							.getPropertyName(), context, this);
+					final List<ENTITY> beans = (List<ENTITY>) Ognl.getValue(
+							detailConfig.getPropertyName(), context, this);
 					if (!validateQuantity(beans, detailConfig)) {
 						valid = false;
 					}
@@ -546,8 +546,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 			final VulpeBaseDetailConfig detailConfig) {
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
-					.getPropertyName(), context, parent);
+			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(
+					detailConfig.getPropertyName(), context, parent);
 			final List<VulpeEntity<?>> deleted = despiseDetailItens(beans, detailConfig);
 			if (VulpeValidationUtil.isNotEmpty(deleted)
 					&& VulpeValidationUtil.isNotEmpty(baseEntity)) {
@@ -579,18 +579,16 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 		boolean has = false;
 		final Map context = ActionContext.getContext().getContextMap();
 		try {
-			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(detailConfig
-					.getPropertyName(), context, parent);
+			final Collection<VulpeEntity<?>> beans = (Collection) Ognl.getValue(
+					detailConfig.getPropertyName(), context, parent);
 			if (beans != null && beans.size() > 1) {
 				has = duplicatedDetailItens(beans, detailConfig);
 			}
-			if (!has) {
-				if (beans != null && VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
-					for (final VulpeEntity<?> bean : beans) {
-						for (final VulpeBaseDetailConfig subDetailConfig : detailConfig
-								.getSubDetails()) {
-							has = duplicatedDetail(bean, baseEntity, subDetailConfig);
-						}
+			if (!has && beans != null
+					&& VulpeValidationUtil.isNotEmpty(detailConfig.getSubDetails())) {
+				for (final VulpeEntity<?> bean : beans) {
+					for (final VulpeBaseDetailConfig subDetailConfig : detailConfig.getSubDetails()) {
+						has = duplicatedDetail(bean, baseEntity, subDetailConfig);
 					}
 				}
 			}
@@ -618,8 +616,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 				createNullObjects = true;
 			}
 			int newDetails = 1;
-			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
-					vulpe.controller().detail());
+			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config()
+					.getDetailConfig(vulpe.controller().detail());
 			if (detailConfig != null) {
 				newDetails = start ? detailConfig.getStartNewDetails() : detailConfig
 						.getNewDetails();
@@ -656,8 +654,8 @@ public class VulpeStrutsController<ENTITY extends VulpeEntity<ID>, ID extends Se
 					paging.setList(list);
 				}
 				newDetails = detailConfig.getNewDetails();
-				final String parentName = vulpe.controller().config().getParentName(
-						vulpe.controller().detail());
+				final String parentName = vulpe.controller().config()
+						.getParentName(vulpe.controller().detail());
 				final Object parent = Ognl.getValue(parentName, context, this);
 				if (detailConfig.getParentDetailConfig() != null) {
 					vulpe.requestAttribute(detailConfig.getParentDetailConfig().getBaseName()

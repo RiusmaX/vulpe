@@ -55,10 +55,13 @@ import org.vulpe.commons.helper.GenericServicesHelper;
 import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.commons.helper.VulpeConfigHelper;
 import org.vulpe.commons.util.VulpeHashMap;
+import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.config.annotations.VulpeDomains;
 import org.vulpe.model.annotations.CachedClass;
 import org.vulpe.model.annotations.CachedEnum;
 import org.vulpe.model.entity.VulpeEntity;
+
+import com.google.gson.Gson;
 
 /**
  * Class to control Cached Objects.
@@ -154,6 +157,7 @@ public final class VulpeCachedObjectsHelper {
 	public static void putAnnotedObjectsInCache(final ServletContext servletContext) {
 		final Set<String> cachedClasses = loadCachedClasses(servletContext);
 		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
+		final VulpeHashMap<String, String> mapJsonCachedClass = new VulpeHashMap<String, String>();
 		if (cachedClasses != null && !cachedClasses.isEmpty()) {
 			for (final String cachedClass : cachedClasses) {
 				try {
@@ -166,8 +170,11 @@ public final class VulpeCachedObjectsHelper {
 						if (cachedClassAnnotation != null) {
 							entity.setQueryConfigurationName(cachedClassAnnotation
 									.queryConfigurationName());
-							mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper
-									.getService().getList(entity));
+							final List<?> entities = GenericServicesHelper.getService().getList(
+									entity);
+							mapCachedClass.put(clazz.getSimpleName(), entities);
+							VulpeReflectUtil.fixToJson(entities);
+							mapJsonCachedClass.put(clazz.getSimpleName(), new Gson().toJson(entities));
 						}
 					}
 				} catch (Exception e) {
@@ -176,6 +183,7 @@ public final class VulpeCachedObjectsHelper {
 			}
 		}
 		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASSES, mapCachedClass);
+		VulpeCacheHelper.getInstance().put(VulpeConstants.JSON_CACHED_CLASSES, mapJsonCachedClass);
 		final Set<String> cachedEnums = loadCachedEnums(servletContext);
 		if (cachedEnums != null && !cachedEnums.isEmpty()) {
 			final VulpeHashMap<String, Object> mapCachedEnum = new VulpeHashMap<String, Object>();
@@ -233,6 +241,7 @@ public final class VulpeCachedObjectsHelper {
 		final Class<? extends VulpeEntity<?>>[] cachedClass = VulpeConfigHelper.get(
 				VulpeDomains.class).cachedClass();
 		final VulpeHashMap<String, Object> mapCachedClass = new VulpeHashMap<String, Object>();
+		final VulpeHashMap<String, String> mapJsonCachedClass = new VulpeHashMap<String, String>();
 		if (cachedClass != null) {
 			for (Class<? extends VulpeEntity<?>> clazz : cachedClass) {
 				try {
@@ -240,14 +249,18 @@ public final class VulpeCachedObjectsHelper {
 					final CachedClass cachedClassAnnotation = clazz
 							.getAnnotation(CachedClass.class);
 					entity.setQueryConfigurationName(cachedClassAnnotation.queryConfigurationName());
-					mapCachedClass.put(clazz.getSimpleName(), GenericServicesHelper.getService()
-							.getList(entity));
+					final List<?> entities = GenericServicesHelper.getService().getList(
+							entity);
+					mapCachedClass.put(clazz.getSimpleName(), entities);
+					VulpeReflectUtil.fixToJson(entities);
+					mapJsonCachedClass.put(clazz.getSimpleName(), new Gson().toJson(entities));
 				} catch (Exception e) {
 					LOG.error(e.getMessage());
 				}
 			}
 		}
 		VulpeCacheHelper.getInstance().put(VulpeConstants.CACHED_CLASSES, mapCachedClass);
+		VulpeCacheHelper.getInstance().put(VulpeConstants.JSON_CACHED_CLASSES, mapJsonCachedClass);
 		final Class[] cachedEnum = VulpeConfigHelper.get(VulpeDomains.class).cachedEnum();
 		if (cachedEnum != null) {
 			final String projectName = VulpeConfigHelper.getApplicationName();

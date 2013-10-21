@@ -46,7 +46,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -82,8 +81,7 @@ public class VulpeSecurityAuthenticationProvider implements AuthenticationProvid
 	 * @seeorg.springframework.security.authentication.AuthenticationProvider#
 	 * authenticate(org.springframework.security.core.Authentication)
 	 */
-	public Authentication authenticate(final Authentication authentication)
-			throws AuthenticationException {
+	public Authentication authenticate(final Authentication authentication) {
 		VulpeAuthenticationResponse authResponse = null;
 		try {
 			authResponse = authenticationService.authenticateUser(authentication.getPrincipal()

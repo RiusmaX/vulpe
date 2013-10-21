@@ -12,7 +12,7 @@
 	<properties>
 		<vulpe.version>1.0.2.API3</vulpe.version>
 		<spring.version>3.1.2.RELEASE</spring.version>
-		<struts.version>2.3.4.1</struts.version>
+		<struts.version>2.3.15.2</struts.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
@@ -477,7 +477,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.1</version>
+			<version>2.2.2</version>
 			<scope>provided</scope><!-- TEST -->
 		</dependency>
 

@@ -91,11 +91,11 @@ public class GZIPFilter implements Filter {
  * authors, development of more free code, and the JSP/Servlet/J2EE community.
  */
 class GZIPResponseStream extends ServletOutputStream {
-	protected ByteArrayOutputStream baos = null;
-	protected GZIPOutputStream gzipstream = null;
-	protected boolean closed = false;
-	protected HttpServletResponse response = null;
-	protected ServletOutputStream output = null;
+	private ByteArrayOutputStream baos = null;
+	private GZIPOutputStream gzipstream = null;
+	private boolean closed = false;
+	private HttpServletResponse response = null;
+	private ServletOutputStream output = null;
 
 	public GZIPResponseStream(HttpServletResponse response) throws IOException {
 		super();

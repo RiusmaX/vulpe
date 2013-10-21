@@ -45,15 +45,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import org.apache.struts2.dispatcher.mapper.DefaultActionMapper;
 import org.apache.struts2.views.util.DefaultUrlHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.VulpeConstants;
-import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.VulpeConstants.Configuration.Ever;
+import org.vulpe.commons.VulpeConstants.Controller;
 import org.vulpe.commons.util.VulpeHashMap;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.controller.AbstractVulpeBaseController;
@@ -71,7 +71,6 @@ import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.Result;
 import com.opensymphony.xwork2.UnknownHandlerManager;
 import com.opensymphony.xwork2.XWorkException;
-import com.opensymphony.xwork2.config.Configuration;
 import com.opensymphony.xwork2.config.ConfigurationException;
 import com.opensymphony.xwork2.config.entities.ActionConfig;
 import com.opensymphony.xwork2.config.entities.InterceptorMapping;
@@ -96,25 +95,23 @@ public class VulpeActionInvocation implements ActionInvocation {
 
 	private static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
 
-	protected Object action;
-	protected ActionProxy proxy;
-	protected List<PreResultListener> preResultListeners;
-	protected Map<String, Object> extraContext;
-	protected ActionContext invocationContext;
-	protected Iterator<InterceptorMapping> interceptors;
-	protected ValueStack stack;
-	protected Result result;
-	protected Result explicitResult;
-	protected String resultCode;
-	protected boolean executed = false;
-	protected boolean pushAction = true;
-	protected ObjectFactory objectFactory;
-	protected ActionEventListener actionEventListener;
-	protected ValueStackFactory valueStackFactory;
-	protected Container container;
-	@SuppressWarnings("unused")
-	private Configuration configuration;
-	protected UnknownHandlerManager unknownHandlerManager;
+	private Object action;
+	private ActionProxy proxy;
+	private List<PreResultListener> preResultListeners;
+	private Map<String, Object> extraContext;
+	private ActionContext invocationContext;
+	private Iterator<InterceptorMapping> interceptors;
+	private ValueStack stack;
+	private Result result;
+	private Result explicitResult;
+	private String resultCode;
+	private boolean executed = false;
+	private boolean pushAction = true;
+	private ObjectFactory objectFactory;
+	private ActionEventListener actionEventListener;
+	private ValueStackFactory valueStackFactory;
+	private Container container;
+	private UnknownHandlerManager unknownHandlerManager;
 
 	private final VulpeHashMap<String, Method> methodsToExecuteAlwaysBefore = new VulpeHashMap<String, Method>();
 
@@ -137,11 +134,6 @@ public class VulpeActionInvocation implements ActionInvocation {
 	@Inject
 	public void setValueStackFactory(ValueStackFactory fac) {
 		this.valueStackFactory = fac;
-	}
-
-	@Inject
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
 	}
 
 	@Inject
@@ -723,4 +715,27 @@ public class VulpeActionInvocation implements ActionInvocation {
 				controller.ever);
 		ServletActionContext.getRequest().setAttribute(VulpeConstants.Request.NOW, controller.now);
 	}
+
+	 /**
+     * Version ready to be serialize
+     *
+     * @return instance without reference to {@link Container}
+     */
+    public ActionInvocation serialize() {
+    	final VulpeActionInvocation that = this;
+        that.container = null;
+        return that;
+    }
+
+    /**
+     * Restoring Container
+     *
+     * @param actionContext current {@link ActionContext}
+     * @return instance which can be used to invoke action
+     */
+    public ActionInvocation deserialize(ActionContext actionContext) {
+        final VulpeActionInvocation that = this;
+        that.container = actionContext.getContainer();
+        return that;
+    }
 }

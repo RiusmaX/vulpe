@@ -40,6 +40,8 @@ package org.vulpe.controller.validator;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.model.entity.VulpeEntity;
 import org.vulpe.view.annotations.input.VulpeValidate;
@@ -52,6 +54,7 @@ import org.vulpe.view.annotations.input.VulpeValidate.VulpeValidateType;
  */
 @SuppressWarnings("rawtypes")
 public class EntityValidator {
+	private static final Logger LOG = LoggerFactory.getLogger(EntityValidator.class);
 
 	/**
 	 *
@@ -60,12 +63,10 @@ public class EntityValidator {
 	 */
 	public static boolean validate(VulpeEntity entity) {
 		final List<Field> fields = VulpeReflectUtil.getFields(entity.getClass());
-		for (Field field : fields) {
+		for (final Field field : fields) {
 			final VulpeValidate validate = field.getAnnotation(VulpeValidate.class);
-			if (validate != null) {
-				if (validate.type().equals(VulpeValidateType.STRING)) {
-
-				}
+			if (validate != null && validate.type().equals(VulpeValidateType.STRING)) {
+				LOG.info("");
 			}
 		}
 		return true;

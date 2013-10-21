@@ -183,6 +183,7 @@ public final class VRaptorFunctions extends Functions {
 			// if (formParams == null || !formParams.containsKey(key)) {
 			// saveInSession(key, value, false);
 			// }
+			LOG.info("");
 		}
 
 		return linkKey(key, contentType, contentDisposition);

@@ -47,6 +47,8 @@ import ognl.TypeConverter;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vulpe.commons.helper.VulpeConfigHelper;
+import org.vulpe.config.annotations.VulpeApplication;
 
 import com.opensymphony.xwork2.conversion.TypeConversionException;
 
@@ -56,14 +58,20 @@ public class BigDecimalConverter extends AbstractVulpeBaseTypeConverter implemen
 
 	public Object convert(final Class type, final Object value) {
 		try {
-			final DecimalFormat valueFormat = new DecimalFormat("#,##0.00",
-					new DecimalFormatSymbols(new Locale("pt", "BR")));
+			final VulpeApplication vulpeApplication = VulpeConfigHelper
+					.getApplicationConfiguration();
+			final String currencySymbol = vulpeApplication.view().showCurrencySymbol() ? vulpeApplication
+					.view().currencySymbol() : "";
+			final String locale[] = vulpeApplication.localeCode().split("_");
+			final DecimalFormat valueFormat = new DecimalFormat(currencySymbol + "#,##0.00",
+					new DecimalFormatSymbols(new Locale(locale[0], locale[1])));
 			if (value instanceof String) {
 				if (StringUtils.isNotBlank(value.toString())) {
-					Object newValue = value;
-					newValue = StringUtils.replace(value.toString(), ".", "");
-					newValue = StringUtils.replace(value.toString(), ",", ".");
-					return new BigDecimal(newValue.toString());
+					String newValue = StringUtils.replace(value.toString(), currencySymbol, "");
+					newValue = StringUtils.replace(newValue, " ", "");
+					newValue = StringUtils.replace(newValue, ".", "");
+					newValue = StringUtils.replace(newValue, ",", ".");
+					return new BigDecimal(newValue);
 				}
 			} else if (value instanceof BigDecimal && String.class.equals(type)) {
 				return valueFormat.format(value);

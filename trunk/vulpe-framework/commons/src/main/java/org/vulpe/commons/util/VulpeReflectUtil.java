@@ -59,7 +59,7 @@ import org.vulpe.commons.helper.VulpeCacheHelper;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.entity.VulpeEntity;
 
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class VulpeReflectUtil {
 
 	private static final Logger LOG = LoggerFactory.getLogger(VulpeReflectUtil.class);
@@ -352,8 +352,8 @@ public class VulpeReflectUtil {
 					declaredType = getDeclaredType(clazz, type);
 				}
 			} else {
-				declaredType = getDeclaredType(clazz, info.getFirstClass().getTypeParameters()[info
-						.getIndex()].getBounds()[0]);
+				declaredType = getDeclaredType(clazz,
+						info.getFirstClass().getTypeParameters()[info.getIndex()].getBounds()[0]);
 			}
 			return declaredType;
 		}
@@ -577,8 +577,8 @@ public class VulpeReflectUtil {
 			if (type.getActualTypeArguments().length > index + 1) {
 				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[index]);
 			} else {
-				declaredType = getDeclaredType(clazz, type.getActualTypeArguments()[type
-						.getActualTypeArguments().length - 1]);
+				declaredType = getDeclaredType(clazz,
+						type.getActualTypeArguments()[type.getActualTypeArguments().length - 1]);
 			}
 			return (Class<?>) declaredType.getType();
 		} else if (clazz.getGenericSuperclass() instanceof Class) {
@@ -915,4 +915,64 @@ public class VulpeReflectUtil {
 		}
 	}
 
+	public static void fixToJson(Object object) {
+		if (object instanceof Collection) {
+			final List<?> list = (List<?>) object;
+			for (final Object object2 : list) {
+				fixObjectToJson(object2, null);
+			}
+		} else {
+			fixObjectToJson(object, null);
+		}
+	}
+
+	private static void fixObjectToJson(Object object, String parent) {
+		final List<Field> fields = getFields(object.getClass());
+		final String name = VulpeStringUtil.getAttributeName(object.getClass().getSimpleName());
+		for (final Field field : fields) {
+			final Class<?> type = field.getType();
+			final Object value = getFieldValue(object, field.getName());
+			if (value != null) {
+				if (VulpeEntity.class.isAssignableFrom(type)) {
+					fixEntityToJson(value, parent == null ? name : parent);
+				} else if (value instanceof Collection) {
+					final List<?> list = (List<?>) value;
+					for (final Object object2 : list) {
+						if (object2 != null) {
+							fixObjectToJson(object2, name);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static void fixEntityToJson(Object value, String name) {
+		final List<Field> relationFields = getFields(value.getClass());
+		for (final Field field : relationFields) {
+			final String fieldName = field.getName();
+			final Object fieldValue = getFieldValue(value, fieldName);
+			if (fieldValue != null) {
+				if (fieldName.startsWith(name) && fieldValue instanceof Collection) {
+					final List<?> list = (List<?>) fieldValue;
+					for (final Object object2 : list) {
+						if (object2 != null) {
+							fixEntityToJson(object2, name);
+						}
+					}
+				} else if (fieldName.equals(name)) {
+					final VulpeEntity entity = getFieldValue(value, fieldName);
+					try {
+						final VulpeEntity simple = (VulpeEntity) entity.getClass().newInstance();
+						simple.setId(entity.getId());
+						setFieldValue(value, fieldName, simple);
+					} catch (Exception e) {
+						LOG.error(e.getMessage());
+					}
+					fixObjectToJson(value,
+							VulpeStringUtil.getAttributeName(value.getClass().getSimpleName()));
+				}
+			}
+		}
+	}
 }

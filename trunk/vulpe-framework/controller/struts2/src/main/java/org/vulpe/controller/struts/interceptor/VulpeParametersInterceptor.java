@@ -51,7 +51,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.ParametersInterceptor;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings( { "serial", "unchecked", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 public class VulpeParametersInterceptor extends ParametersInterceptor {
 
 	private static final Logger LOG = LoggerFactory.getLogger(VulpeParametersInterceptor.class);
@@ -66,11 +66,10 @@ public class VulpeParametersInterceptor extends ParametersInterceptor {
 					VulpeConstants.CONTROLLER_METHODS);
 			final AbstractVulpeBaseController baseController = (AbstractVulpeBaseController) invocation
 					.getAction();
-			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())) {
-				if (StringUtils.isEmpty(baseController.vulpe.controller().resultForward())) {
-					baseController.controlResultForward();
-					baseController.manageButtons(baseController.vulpe.controller().operation());
-				}
+			if (!mapControllerMethods.containsKey(invocation.getProxy().getMethod())
+					&& StringUtils.isEmpty(baseController.vulpe.controller().resultForward())) {
+				baseController.controlResultForward();
+				baseController.manageButtons(baseController.vulpe.controller().operation());
 			}
 		}
 	}

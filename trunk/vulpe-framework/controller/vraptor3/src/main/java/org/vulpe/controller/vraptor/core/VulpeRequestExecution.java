@@ -37,11 +37,9 @@
  */
 package org.vulpe.controller.vraptor.core;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.core.RequestExecution;
 import br.com.caelum.vraptor.interceptor.Interceptor;
@@ -61,7 +59,7 @@ public class VulpeRequestExecution implements RequestExecution {
 		this.registry = registry;
 	}
 
-	public void execute() throws InterceptionException {
+	public void execute() {
 		LOG.debug("executing stack  DefaultRequestExecution");
 		for (Class<? extends Interceptor> interceptor : registry.all()) {
 			stack.add(interceptor);

@@ -97,7 +97,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	protected void createDetails(final List<VulpeBaseDetailConfig> details, final boolean subDetail) {
 		for (VulpeBaseDetailConfig detail : details) {
 			if (subDetail) {
-				final Map context = null;// ActionContext.getContext().getContextMap();
+				final Map context = null;
 				try {
 					final Collection collection = (Collection) Ognl.getValue(vulpe.controller()
 							.detail(), context, this);
@@ -128,7 +128,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 */
 	protected int onDeleteDetail() {
 		final ENTITY entity = prepareEntity(Operation.DELETE);
-		final Map context = null;// ActionContext.getContext().getContextMap();
+		final Map context = null;
 		try {
 			final List<VulpeEntity<?>> details = (List<VulpeEntity<?>>) Ognl.getValue(vulpe
 					.controller().detail(), context, this);
@@ -205,13 +205,8 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 */
 	protected VulpeBaseDetailConfig onAddDetail(final boolean start) {
 		boolean createNullObjects = false;
-		final Map context = null;// ActionContext.getContext().getContextMap();
+		final Map context = null;
 		try {
-			// if (!OgnlContextState.isCreatingNullObjects(context)) {
-			// OgnlContextState.setCreatingNullObjects(context, true);
-			// createNullObjects = true;
-			// }
-
 			int newDetails = 1;
 			final VulpeBaseDetailConfig detailConfig = vulpe.controller().config().getDetailConfig(
 					vulpe.controller().detail());
@@ -249,6 +244,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 		} finally {
 			if (createNullObjects) {
 				// OgnlContextState.setCreatingNullObjects(context, false);
+				LOG.info("");
 			}
 		}
 	}
@@ -261,7 +257,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 	 * @throws OgnlException
 	 */
 	protected void doAddDetail(final Collection collection) throws OgnlException {
-		final Map context = null;// ActionContext.getContext().getContextMap();
+		final Map context = null;
 		final PropertyAccessor accessor = OgnlRuntime.getPropertyAccessor(collection.getClass());
 		final Integer index = Integer.valueOf(collection.size());
 		final ENTITY detail = (ENTITY) accessor.getProperty(context, collection, index);
@@ -318,6 +314,7 @@ public class VulpeVRaptorController<ENTITY extends VulpeEntity<ID>, ID extends S
 				// value = ognlUtil.getValue(getDownloadKey(),
 				// ActionContext.getContext()
 				// .getContextMap(), this);
+				LOG.info("");
 			}
 			final DownloadInfo downloadInfo = VulpeFileUtil.getDownloadInfo(value, vulpe
 					.controller().downloadContentType(), vulpe.controller()

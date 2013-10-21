@@ -62,9 +62,9 @@ import org.vulpe.model.entity.VulpeEntity;
 import com.thoughtworks.xstream.XStream;
 
 @MappedSuperclass
-@SuppressWarnings( { "unchecked", "serial", "rawtypes" })
-public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements VulpeEntity<ID>,
-		Cloneable {
+@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparable> implements
+		VulpeEntity<ID>, Cloneable {
 
 	protected static final Logger LOG = LoggerFactory.getLogger(AbstractVulpeBaseEntity.class);
 
@@ -93,7 +93,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public boolean isConditional() {
-		return map().containsKey(Entity.CONDITIONAL) ? (Boolean) map().get(Entity.CONDITIONAL) : false;
+		return map().containsKey(Entity.CONDITIONAL) ? (Boolean) map().get(Entity.CONDITIONAL)
+				: false;
 	}
 
 	public void setConditional(final boolean conditional) {
@@ -119,7 +120,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	@Override
 	public boolean equals(final Object obj) {
 		final AbstractVulpeBaseEntity<ID> entity = (AbstractVulpeBaseEntity<ID>) obj;
-		if ((obj == null || obj.getClass() != this.getClass()) || (entity.getId() == null || getId() == null)) {
+		if ((obj == null || obj.getClass() != this.getClass())
+				|| (entity.getId() == null || getId() == null)) {
 			return false;
 		}
 
@@ -127,8 +129,14 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
 	public String toString() {
-		return getClass().getSimpleName().concat(this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
+		return getClass().getSimpleName().concat(
+				this.getId() == null ? "" : ".id: ".concat(this.getId().toString()));
 	}
 
 	public int compareTo(final VulpeEntity<ID> entity) {
@@ -183,7 +191,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 				|| attribute.getType() == Character.class || attribute.getType() == Integer.class
 				|| attribute.getType() == Short.class || attribute.getType() == Long.class
 				|| attribute.getType() == Double.class || attribute.getType() == Date.class
-				|| attribute.getType() == java.sql.Date.class || attribute.getType() == java.sql.Timestamp.class) {
+				|| attribute.getType() == java.sql.Date.class
+				|| attribute.getType() == java.sql.Timestamp.class) {
 			return true;
 		}
 		return false;
@@ -204,7 +213,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getAutocomplete() {
-		return map().containsKey(Entity.AUTOCOMPLETE) ? (String) map().get(Entity.AUTOCOMPLETE) : null;
+		return map().containsKey(Entity.AUTOCOMPLETE) ? (String) map().get(Entity.AUTOCOMPLETE)
+				: null;
 	}
 
 	public void setAutocompleteTerm(final String autocompleteTerm) {
@@ -212,7 +222,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public String getAutocompleteTerm() {
-		return map().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) map().get(Entity.AUTOCOMPLETE_TERM) : null;
+		return map().containsKey(Entity.AUTOCOMPLETE_TERM) ? (String) map().get(
+				Entity.AUTOCOMPLETE_TERM) : null;
 	}
 
 	public void map(final Map<String, Object> map) {
@@ -236,7 +247,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	}
 
 	public Map<String, String> fieldColumnMap() {
-		Map<String, String> fieldColumnMap = (Map<String, String>) map().get(Entity.FIELD_COLUMN_MAP);
+		Map<String, String> fieldColumnMap = (Map<String, String>) map().get(
+				Entity.FIELD_COLUMN_MAP);
 		if (fieldColumnMap == null) {
 			fieldColumnMap = new HashMap<String, String>();
 		}
@@ -280,7 +292,8 @@ public abstract class AbstractVulpeBaseEntity<ID extends Serializable & Comparab
 	public <T> T simple(final String... properties) {
 		T simple = (T) simple();
 		for (final String property : properties) {
-			VulpeReflectUtil.setFieldValue(simple, property, VulpeReflectUtil.getFieldValue(this, property));
+			VulpeReflectUtil.setFieldValue(simple, property,
+					VulpeReflectUtil.getFieldValue(this, property));
 		}
 		return simple;
 	}

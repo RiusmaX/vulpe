@@ -205,7 +205,7 @@ public final class VulpeEmailUtil {
 	 *             exception
 	 */
 	public static void sendMailByService(final String[] recipients, final String subject,
-			final String body, final String mailerService) throws VulpeSystemException {
+			final String body, final String mailerService) {
 		try {
 			final ResourceBundle bundle = ResourceBundle.getBundle("mail");
 			String mailFrom = "";

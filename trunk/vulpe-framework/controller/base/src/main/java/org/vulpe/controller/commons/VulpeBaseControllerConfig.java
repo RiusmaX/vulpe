@@ -78,7 +78,6 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	private String viewMainPath;
 	private String viewSelectPath;
 	private String viewSelectItemsPath;
-	private String viewPath;
 	private String viewItemsPath;
 	private String reportFile;
 	private String[] subReports;
@@ -548,7 +547,7 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	 * @see org.vulpe.controller.commons.VulpeControllerConfig#getViewPath()
 	 */
 	public String getViewPath() {
-		this.viewPath = Layout.PROTECTED_JSP;
+		String viewPath = Layout.PROTECTED_JSP;
 		this.viewItemsPath = Layout.PROTECTED_JSP;
 		final String viewBaseName = StringUtils
 				.isNotEmpty(getControllerAnnotation().viewBaseName()) ? getControllerAnnotation()
@@ -556,44 +555,44 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 		if (getControllerType().equals(ControllerType.BACKEND)
 				|| getControllerType().equals(ControllerType.FRONTEND)
 				|| getControllerType().equals(ControllerType.NONE)) {
-			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/");
+			viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/");
 			final String method = ((AbstractVulpeBaseController) getController()).vulpe
 					.controller().currentMethodName();
 			if (StringUtils.isNotBlank(method) && !Operation.FRONTEND.getValue().equals(method)
 					&& !Operation.BACKEND.getValue().equals(method)
 					&& !Operation.NONE.getValue().equals(method)) {
-				this.viewPath += method;
+				viewPath += method;
 			} else {
-				this.viewPath += viewBaseName;
+				viewPath += viewBaseName;
 			}
-			this.viewPath += Layout.SUFFIX_JSP;
+			viewPath += Layout.SUFFIX_JSP;
 			if (getControllerType().equals(ControllerType.SELECT)) {
 				this.viewItemsPath += this.viewItemsPath
 						+ getModuleName().concat("/").concat(viewBaseName).concat("/")
 								.concat(viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			}
 		} else {
-			this.viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/")
+			viewPath += getModuleName().concat("/").concat(viewBaseName).concat("/")
 					.concat(viewBaseName);
 			if (getControllerType().equals(ControllerType.TWICE)) {
-				this.viewMainPath = this.viewPath + Layout.SUFFIX_JSP_MAIN;
-				this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
+				this.viewMainPath = viewPath + Layout.SUFFIX_JSP_MAIN;
+				this.viewSelectPath = viewPath + Layout.SUFFIX_JSP_SELECT;
 				this.viewSelectItemsPath = this.viewItemsPath
 						+ getModuleName().concat("/").concat(viewBaseName).concat("/")
 								.concat(viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			} else if (getControllerType().equals(ControllerType.MAIN)) {
-				this.viewPath += Layout.SUFFIX_JSP_MAIN;
+				viewPath += Layout.SUFFIX_JSP_MAIN;
 			} else if (getControllerType().equals(ControllerType.TABULAR)) {
 				if (getControllerAnnotation().tabular().showFilter()) {
-					this.viewSelectPath = this.viewPath + Layout.SUFFIX_JSP_SELECT;
+					this.viewSelectPath = viewPath + Layout.SUFFIX_JSP_SELECT;
 				}
-				this.viewPath += Layout.SUFFIX_JSP_TABULAR;
+				viewPath += Layout.SUFFIX_JSP_TABULAR;
 			} else if (getControllerType().equals(ControllerType.SELECT)) {
-				this.viewPath += Layout.SUFFIX_JSP_SELECT;
+				viewPath += Layout.SUFFIX_JSP_SELECT;
 				this.viewItemsPath += getModuleName().concat("/").concat(viewBaseName).concat("/")
 						.concat(viewBaseName).concat(Layout.SUFFIX_JSP_SELECT_ITEMS);
 			} else if (getControllerType().equals(ControllerType.REPORT)) {
-				this.viewPath += Layout.SUFFIX_JSP_REPORT;
+				viewPath += Layout.SUFFIX_JSP_REPORT;
 				this.viewItemsPath += getModuleName().concat("/").concat(viewBaseName).concat("/")
 						.concat(viewBaseName).concat(Layout.SUFFIX_JSP_REPORT_ITEMS);
 			}

@@ -8,7 +8,7 @@
 }
 
 .vulpeActions p{
-	margin: 3px 20px;	
+	margin: 3px 20px;
 }
 
 .vulpeAlertError {
@@ -49,7 +49,7 @@
 }
 
 .vulpeButton img, .vulpeSubmit img, .vulpeSubmitOff img {
-	vertical-align: middle;	
+	vertical-align: middle;
 }
 
 .vulpeBlockLabel {
@@ -378,7 +378,7 @@
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	z-index: 10000;  
+	z-index: 10000;
 }
 
 #loadingBox {
@@ -398,7 +398,7 @@
 	text-align: center;
 	width: 100px;
 	-moz-border-radius: 0px 0px 7px 7px;
-	-webkit-border-radius: 0px 0px 7px 7px; 
+	-webkit-border-radius: 0px 0px 7px 7px;
 }
 
 #menu {
@@ -605,7 +605,7 @@ thead th {
 	margin: 0;
 }
 
-#vulpeSelectForm .line p {
+#vulpeSelectForm .line p, #vulpeSelectForm .line div, #vulpeMainBody .line p, #vulpeMainBody .line div {
 	display: table-cell;
 	padding: 5px;
 }

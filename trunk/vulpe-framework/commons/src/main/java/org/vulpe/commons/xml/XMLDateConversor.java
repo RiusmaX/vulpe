@@ -55,7 +55,7 @@ public class XMLDateConversor implements Converter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(XMLDateConversor.class);
 
-	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	public static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	public XMLDateConversor() {
 		super();
@@ -67,13 +67,13 @@ public class XMLDateConversor implements Converter {
 
 	public void marshal(final Object value, final HierarchicalStreamWriter writer,
 			final MarshallingContext context) {
-		writer.setValue(formatter.format((Date) value));
+		writer.setValue(FORMATTER.format((Date) value));
 	}
 
 	public Object unmarshal(final HierarchicalStreamReader reader,
 			final UnmarshallingContext context) {
 		try {
-			return formatter.parse(reader.getValue());
+			return FORMATTER.parse(reader.getValue());
 		} catch (ParseException e) {
 			LOG.error(e.getMessage());
 		}

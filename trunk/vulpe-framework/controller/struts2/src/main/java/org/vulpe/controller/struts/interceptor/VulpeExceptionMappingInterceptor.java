@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -48,6 +48,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+
+import ognl.NoSuchPropertyException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -67,17 +69,17 @@ import com.opensymphony.xwork2.util.TextParseUtil;
 
 /**
  * Interceptor class to control exceptions.
- * 
+ *
  * @author <a href="mailto:fabio.viana@vulpe.org">Fábio Viana</a>
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  */
-@SuppressWarnings( { "serial", "unchecked" })
+@SuppressWarnings({ "serial", "unchecked" })
 public class VulpeExceptionMappingInterceptor extends
 		com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.opensymphony.xwork2.interceptor.ExceptionMappingInterceptor#intercept
 	 * (com.opensymphony.xwork2.ActionInvocation)
@@ -100,7 +102,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Method responsible for handling exception.
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -125,26 +127,34 @@ public class VulpeExceptionMappingInterceptor extends
 			} else {
 				String message = action.vulpe.controller().text("vulpe.error.unknown");
 				final String key = vse.getMessage();
-				if (key.startsWith("vulpe.error")) {
-					if (vse.getCause() != null
-							&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
-						if (!key.equals(vse.getCause().getMessage())) {
-							message = vse.getCause().getMessage();
-						}
-						if (message.startsWith("vulpe.error")) {
-							message = action.vulpe.controller().text(message);
-						}
-					}
-					action.addActionError(key, message);
+				final Throwable cause = getCause(vse);
+				if (cause instanceof NoSuchPropertyException) {
+					action.addActionError(
+							key,
+							action.vulpe.controller().text("vulpe.error.property.notFound",
+									cause.getMessage()));
 				} else {
-					if (vse.getCause() != null
-							&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
-						message = vse.getCause().getMessage();
-						if (message.startsWith("vulpe.error")) {
-							message = action.vulpe.controller().text(message);
+					if (key.startsWith("vulpe.error")) {
+						if (vse.getCause() != null
+								&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+							if (!key.equals(vse.getCause().getMessage())) {
+								message = vse.getCause().getMessage();
+							}
+							if (message.startsWith("vulpe.error")) {
+								message = action.vulpe.controller().text(message);
+							}
 						}
+						action.addActionError(key, message);
+					} else {
+						if (vse.getCause() != null
+								&& StringUtils.isNotEmpty(vse.getCause().getMessage())) {
+							message = vse.getCause().getMessage();
+							if (message.startsWith("vulpe.error")) {
+								message = action.vulpe.controller().text(message);
+							}
+						}
+						action.addActionMessage(key, message);
 					}
-					action.addActionMessage(key, message);
 				}
 			}
 		} else if (newException instanceof VulpeApplicationException) {
@@ -155,9 +165,9 @@ public class VulpeExceptionMappingInterceptor extends
 			if (StringUtils.isBlank(value)) {
 				String message = newException.getMessage();
 				if (StringUtils.isNotEmpty(message)) {
-					final MessageFormat messageFormat = buildMessageFormat(TextParseUtil
-							.translateVariables(message, invocation.getStack()), invocation
-							.getInvocationContext().getLocale());
+					final MessageFormat messageFormat = buildMessageFormat(
+							TextParseUtil.translateVariables(message, invocation.getStack()),
+							invocation.getInvocationContext().getLocale());
 					message = messageFormat.format(null);
 					value = action.vulpe.controller().text(message);
 					if (StringUtils.isBlank(value) || value.equals(message)) {
@@ -183,7 +193,7 @@ public class VulpeExceptionMappingInterceptor extends
 
 	/**
 	 * Checks if debug is enabled.
-	 * 
+	 *
 	 * @param action
 	 * @return
 	 */
@@ -201,19 +211,18 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
 	protected Throwable getException(final Throwable exception) {
 		final Throwable newException = exception;
 		return newException.getCause() instanceof InvocationTargetException ? getException(((InvocationTargetException) newException
-				.getCause()).getTargetException())
-				: newException;
+				.getCause()).getTargetException()) : newException;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param exception
 	 * @return
 	 */
@@ -222,7 +231,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param pattern
 	 * @param locale
 	 * @return
@@ -232,7 +241,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 */
@@ -257,7 +266,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @param invocation
 	 * @param exception
 	 * @return
@@ -297,7 +306,7 @@ public class VulpeExceptionMappingInterceptor extends
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public ServletContext getServletContext() {

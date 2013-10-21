@@ -54,7 +54,7 @@ import com.opensymphony.xwork2.ognl.OgnlUtil;
 import com.opensymphony.xwork2.util.CompoundRoot;
 import com.opensymphony.xwork2.util.ValueStack;
 
-@SuppressWarnings( { "serial", "unchecked", "rawtypes" })
+@SuppressWarnings({ "serial", "unchecked", "rawtypes" })
 public class VulpeChainingInterceptor extends ChainingInterceptor {
 
 	/*
@@ -66,25 +66,27 @@ public class VulpeChainingInterceptor extends ChainingInterceptor {
 	 */
 	@Override
 	public String intercept(final ActionInvocation invocation) throws Exception {
-		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeController) {
-			if (Operation.READ.getValue().equals(invocation.getProxy().getMethod())) {
-				if (invocation.getAction() instanceof ValidationAware) {
-					final ValueStack stack = invocation.getStack();
-					final CompoundRoot root = stack.getRoot();
-					if (root.size() > 1) {
-						final List list = new ArrayList(root);
-						list.remove(0);
-						Collections.reverse(list);
-						final Map ctxMap = invocation.getInvocationContext().getContextMap();
-						final Iterator iterator = list.iterator();
-						while (iterator.hasNext()) {
-							final Object obj = iterator.next();
-							if (obj instanceof ValidationAware) {
-								new OgnlUtil().copy(obj, invocation.getAction(), ctxMap, null,
-										Arrays.asList(new String[] { "actionErrors",
-												"actionMessages", "fieldErrors" }));
-							}
-						}
+		if (invocation.getAction() != null && invocation.getAction() instanceof VulpeController
+				&& Operation.READ.getValue().equals(invocation.getProxy().getMethod())
+				&& invocation.getAction() instanceof ValidationAware) {
+			final ValueStack stack = invocation.getStack();
+			final CompoundRoot root = stack.getRoot();
+			if (root.size() > 1) {
+				final List list = new ArrayList(root);
+				list.remove(0);
+				Collections.reverse(list);
+				final Map ctxMap = invocation.getInvocationContext().getContextMap();
+				final Iterator iterator = list.iterator();
+				while (iterator.hasNext()) {
+					final Object obj = iterator.next();
+					if (obj instanceof ValidationAware) {
+						new OgnlUtil().copy(
+								obj,
+								invocation.getAction(),
+								ctxMap,
+								null,
+								Arrays.asList(new String[] { "actionErrors", "actionMessages",
+										"fieldErrors" }));
 					}
 				}
 				return invocation.invoke();

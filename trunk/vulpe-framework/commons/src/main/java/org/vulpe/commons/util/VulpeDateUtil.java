@@ -84,9 +84,9 @@ public final class VulpeDateUtil {
 	/** Date format: dd-MM-yyyy hh:mm:ss . */
 	public static final String DATE_TIME_AMPM = "dd-MM-yyyy hh:mm:ss";
 
-	public static final Locale locale = VulpeConfigHelper.getLocale();
+	public static final Locale LOCALE = VulpeConfigHelper.getLocale();
 
-	public static SimpleDateFormat sdf = new SimpleDateFormat(DDMMYYYY, locale);
+	public static final SimpleDateFormat SDF = new SimpleDateFormat(DDMMYYYY, LOCALE);
 
 	private VulpeDateUtil() {
 
@@ -156,8 +156,8 @@ public final class VulpeDateUtil {
 		final Calendar now = new GregorianCalendar();
 		now.setTimeInMillis(timestamp);
 
-		sdf.applyLocalizedPattern("yyyyMMddHHmmss");
-		final String ddmmaahhmmss = sdf.format(now.getTime());
+		SDF.applyLocalizedPattern("yyyyMMddHHmmss");
+		final String ddmmaahhmmss = SDF.format(now.getTime());
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Data no formato ddmmaahhmmss: " + ddmmaahhmmss);
@@ -172,8 +172,8 @@ public final class VulpeDateUtil {
 	 * @return String
 	 */
 	public static String getDateFormated(final Date data) {
-		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
-		return sdf.format(data);
+		SDF.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
+		return SDF.format(data);
 	}
 
 	/**
@@ -182,8 +182,8 @@ public final class VulpeDateUtil {
 	 * @return String
 	 */
 	public static String getDateFormattedNoBar(final Date data) {
-		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYNB);
-		return sdf.format(data);
+		SDF.applyLocalizedPattern(VulpeDateUtil.DDMMYYNB);
+		return SDF.format(data);
 	}
 
 	/**
@@ -192,8 +192,8 @@ public final class VulpeDateUtil {
 	 * @return String
 	 */
 	public static String getDateTimeFormatted(final Date data) {
-		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYYHHMMSS);
-		return sdf.format(data);
+		SDF.applyLocalizedPattern(VulpeDateUtil.DDMMYYYYHHMMSS);
+		return SDF.format(data);
 	}
 
 	/**
@@ -203,9 +203,9 @@ public final class VulpeDateUtil {
 	 */
 	public static Date getDate(final String date, final String pattern) {
 		Date returnDate = null;
-		sdf.applyLocalizedPattern(pattern);
+		SDF.applyLocalizedPattern(pattern);
 		try {
-			returnDate = sdf.parse(date);
+			returnDate = SDF.parse(date);
 		} catch (Exception e) {
 			LOG.debug("Invalid date pattern: " + pattern);
 		}
@@ -220,9 +220,9 @@ public final class VulpeDateUtil {
 	 */
 	public static String getDate(final Date date, final String pattern) {
 		String returnDate = null;
-		sdf.applyLocalizedPattern(pattern);
+		SDF.applyLocalizedPattern(pattern);
 		try {
-			returnDate = sdf.format(date);
+			returnDate = SDF.format(date);
 		} catch (Exception e) {
 			LOG.debug("Invalid date format: " + pattern);
 		}
@@ -237,10 +237,10 @@ public final class VulpeDateUtil {
 	 * @return
 	 */
 	public static boolean isValidDate(final String date) {
-		sdf.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
+		SDF.applyLocalizedPattern(VulpeDateUtil.DDMMYYYY);
 		if (date != null) {
 			try {
-				return date.equals(sdf.format(sdf.parse(date)));
+				return date.equals(SDF.format(SDF.parse(date)));
 			} catch (Exception e) {
 				return false;
 			}
@@ -354,7 +354,7 @@ public final class VulpeDateUtil {
 	 */
 	public static boolean isValidTime(final String time, final boolean lenient) {
 		boolean valid = false;
-		sdf.applyPattern(HHMM);
+		SDF.applyPattern(HHMM);
 		if (lenient) {
 			try {
 				final int index = time.indexOf(':');
@@ -368,12 +368,12 @@ public final class VulpeDateUtil {
 			}
 
 		} else {
-			sdf.setLenient(lenient);
+			SDF.setLenient(lenient);
 			if (HHMM.length() != time.length()) {
 				return valid;
 			}
 			try {
-				sdf.parse(time);
+				SDF.parse(time);
 				valid = true;
 			} catch (ParseException e) {
 				valid = false;
@@ -413,9 +413,9 @@ public final class VulpeDateUtil {
 				return false;
 			}
 
-			sdf.applyLocalizedPattern(DDMMYYYY);
-			sdf.setLenient(false);
-			sdf.parse(newDate);
+			SDF.applyLocalizedPattern(DDMMYYYY);
+			SDF.setLenient(false);
+			SDF.parse(newDate);
 			valid = true;
 		} catch (ParseException pe) {
 			valid = false;
@@ -434,7 +434,7 @@ public final class VulpeDateUtil {
 	 */
 	public String getExtensiveDate() {
 		final SimpleDateFormat format = (SimpleDateFormat) SimpleDateFormat.getDateInstance(
-				DateFormat.MEDIUM, locale);
+				DateFormat.MEDIUM, LOCALE);
 		format.applyPattern("MMMM");
 		final Calendar calendar = Calendar.getInstance();
 		final String month = format.format(calendar.getTime());
@@ -491,7 +491,7 @@ public final class VulpeDateUtil {
 			LOG.debug("date: " + date);
 		}
 
-		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY, locale);
+		final SimpleDateFormat format = new SimpleDateFormat(DDMMYYYY, LOCALE);
 		format.setLenient(false);
 		final Date formatedDate = format.parse(date);
 
@@ -511,7 +511,7 @@ public final class VulpeDateUtil {
 	 * @throws ParseException
 	 */
 	public static Date convertStringToTime(final String time) throws ParseException {
-		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM, locale);
+		final SimpleDateFormat timeFormat = new SimpleDateFormat(HHMM, LOCALE);
 		timeFormat.setLenient(false);
 		return timeFormat.parse(time);
 	}
@@ -524,7 +524,7 @@ public final class VulpeDateUtil {
 	 * @throws ParseException
 	 */
 	public static Date convertStringToDateTime(final String dateTime) throws ParseException {
-		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY + " " + HHMM, locale);
+		final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DDMMYYYY + " " + HHMM, LOCALE);
 		dateTimeFormat.setLenient(false);
 		return dateTimeFormat.parse(dateTime);
 	}
@@ -538,7 +538,7 @@ public final class VulpeDateUtil {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(formatedDateTime)) {
 			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMM,
-					locale);
+					LOCALE);
 			formatedDateTime = formatDateTime.format(formatedDateTime);
 		}
 		return formatedDateTime;
@@ -552,7 +552,7 @@ public final class VulpeDateUtil {
 	public static String convertDateToString(final Date dateTime) {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(dateTime)) {
-			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY, locale);
+			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY, LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
@@ -567,7 +567,7 @@ public final class VulpeDateUtil {
 		String formatedDateTime = null;
 		if (!VulpeValidationUtil.isEmpty(dateTime)) {
 			final SimpleDateFormat formatDateTime = new SimpleDateFormat(DDMMYYYY + " " + HHMMSS,
-					locale);
+					LOCALE);
 			formatedDateTime = formatDateTime.format(dateTime);
 		}
 		return formatedDateTime;
@@ -582,8 +582,8 @@ public final class VulpeDateUtil {
 	public static String convertTimeToString(final Date time) {
 		String formatedTime = "";
 		if (time != null) {
-			sdf.applyLocalizedPattern(HHMM);
-			formatedTime = sdf.format(time);
+			SDF.applyLocalizedPattern(HHMM);
+			formatedTime = SDF.format(time);
 		}
 		return formatedTime;
 	}
@@ -596,8 +596,8 @@ public final class VulpeDateUtil {
 	 * @return
 	 */
 	public static String getExtensiveAbbreviatedDate(final Date date) {
-		sdf.applyLocalizedPattern(VulpeConstants.SIMPLE_DATE_FORMAT);
-		return sdf.format(date);
+		SDF.applyLocalizedPattern(VulpeConstants.SIMPLE_DATE_FORMAT);
+		return SDF.format(date);
 	}
 
 	/**
@@ -725,22 +725,19 @@ public final class VulpeDateUtil {
 		final int activityTime = getMinutesDifference(dateTimeBegin, dateTimeEnd);
 
 		if (dateTimeBegin.compareTo(start) < 0) {
-			returnedTime = Math.max(Math.min(getMinutesDifference(start, dateTimeEnd), period), 0); // a,
-			// b,
-			// c
+			returnedTime = Math.max(Math.min(getMinutesDifference(start, dateTimeEnd), period), 0);
 		} else if (dateTimeBegin.compareTo(finish) > 0) {
 			periodBegin.add(Calendar.DATE, 1);
 			returnedTime = Math.max(Math.min(getMinutesDifference(periodBegin.getTime(),
-					dateTimeEnd), period), 0); // d,
-			// e
+					dateTimeEnd), period), 0);
 		} else if (dateTimeEnd.compareTo(finish) < 0) {
-			returnedTime = activityTime; // f
+			returnedTime = activityTime;
 		} else {
 			periodBegin.add(Calendar.DATE, 1);
 			if (dateTimeEnd.compareTo(periodBegin.getTime()) > 0) {
-				returnedTime = activityTime - period; // g
+				returnedTime = activityTime - period;
 			} else {
-				returnedTime = getMinutesDifference(dateTimeBegin, finish); // h
+				returnedTime = getMinutesDifference(dateTimeBegin, finish);
 			}
 		}
 		return returnedTime;

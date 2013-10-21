@@ -49,7 +49,6 @@ import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
 import org.vulpe.controller.vraptor.VulpeVRaptorController;
 
-import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
@@ -77,16 +76,15 @@ public class VulpeControllerInterceptor implements Interceptor {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public void intercept(InterceptorStack stack, ResourceMethod method, Object resourceInstance)
-			throws InterceptionException {
+	public void intercept(InterceptorStack stack, ResourceMethod method, Object resourceInstance) {
 		LOG.debug("Intercepting " + request.getRequestURI());
 		if (resourceInstance != null && resourceInstance instanceof VulpeVRaptorController) {
 			VulpeVRaptorController controller = (VulpeVRaptorController) resourceInstance;
 			final List<Field> fields = VulpeReflectUtil.getFields(controller.getClass());
 			for (final Field field : fields) {
 				try {
-					result.include(field.getName(), VulpeReflectUtil.getFieldValue(controller,
-							field.getName()));
+					result.include(field.getName(),
+							VulpeReflectUtil.getFieldValue(controller, field.getName()));
 				} catch (Exception e) {
 					LOG.error(e.getMessage());
 				}

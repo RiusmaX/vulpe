@@ -60,6 +60,7 @@ public class VulpeConstants {
 	public static final String GENERAL_ERROR = "vulpe.error.general";
 	public static final String CLEAR_PARAMS = "vulpe.clearParams";
 	public static final String CACHED_CLASSES = "vulpeCachedClasses";
+	public static final String JSON_CACHED_CLASSES = "vulpeJsonCachedClasses";
 	public static final String CACHED_ENUMS = "vulpeCachedEnums";
 	public static final String CACHED_ENUMS_ARRAY = "vulpeCachedEnumsArray";
 	public static final String CONTROLLER_METHODS = "vulpeControllerMethods";
@@ -107,6 +108,9 @@ public class VulpeConstants {
 
 			//VulpeView
 			public static final String APPLICATION_VIEW_DATE_MASK = "application-view-dateMask";
+			public static final String APPLICATION_VIEW_CURRENCY_SYMBOL = "application-view-currencySymbol";
+			public static final String APPLICATION_VIEW_SHOW_CURRENCY_SYMBOL = "application-view-showCurrencySymbol";
+			public static final String APPLICATION_VIEW_STAY_CURRENCY_SYMBOL = "application-view-stayCurrencySymbol";
 			public static final String APPLICATION_VIEW_JQUERYUI = "application-view-jQueryUI";
 			public static final String APPLICATION_VIEW_FRONTEND_MENU_TYPE = "application-view-frontendMenuType";
 			public static final String APPLICATION_VIEW_BACKEND_MENU_TYPE = "application-view-backendMenuType";
@@ -165,7 +169,9 @@ public class VulpeConstants {
 			public static final String CURRENT_YEAR = "currentYear";
 			public static final String CURRENT_MONTH = "currentMonth";
 			public static final String CURRENT_DAY = "currentDay";
+			public static final String CURRENT_LAST_DAY = "currentLastDay";
 			public static final String CACHED_CLASSES = "cachedClasses";
+			public static final String JSON_CACHED_CLASSES = "jsonCachedClasses";
 			public static final String CACHED_ENUMS = "cachedEnums";
 			public static final String CACHED_ENUMS_ARRAY = "cachedEnumsArray";
 

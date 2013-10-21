@@ -47,7 +47,6 @@ import java.util.Properties;
 
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
@@ -88,7 +87,7 @@ public class EntityType implements UserType, ParameterizedType {
 		return returnedClass;
 	}
 
-	public boolean equals(final Object obj0, final Object obj1) throws HibernateException {
+	public boolean equals(final Object obj0, final Object obj1) {
 		final VulpeEntity<?> entity1 = (VulpeEntity<?>) obj0;
 		final VulpeEntity<?> entity2 = (VulpeEntity<?>) obj1;
 		if (entity1 == null) {
@@ -100,8 +99,7 @@ public class EntityType implements UserType, ParameterizedType {
 		return entity1.equals(entity2);
 	}
 
-	public Object nullSafeGet(final ResultSet resultSet, final String[] names, final Object owner)
-			throws HibernateException, SQLException {
+	public Object nullSafeGet(final ResultSet resultSet, final String[] names, final Object owner) {
 		try {
 			final String value = resultSet.getString(names[0]);
 			if (value == null) {
@@ -116,7 +114,7 @@ public class EntityType implements UserType, ParameterizedType {
 	}
 
 	public void nullSafeSet(final PreparedStatement pstm, final Object value, final int index)
-			throws HibernateException, SQLException {
+			throws SQLException {
 		final VulpeEntity<?> entity = (VulpeEntity<?>) value;
 		if (entity == null || entity.getId() == null) {
 			pstm.setNull(index, type);
@@ -125,7 +123,7 @@ public class EntityType implements UserType, ParameterizedType {
 		}
 	}
 
-	public Object deepCopy(final Object value) throws HibernateException {
+	public Object deepCopy(final Object value) {
 		if (value == null) {
 			return null;
 		} else {
@@ -144,20 +142,19 @@ public class EntityType implements UserType, ParameterizedType {
 		return true;
 	}
 
-	public Serializable disassemble(final Object value) throws HibernateException {
+	public Serializable disassemble(final Object value) {
 		return (VulpeEntity<?>) value;
 	}
 
-	public Object assemble(final Serializable cached, final Object owner) throws HibernateException {
+	public Object assemble(final Serializable cached, final Object owner) {
 		return cached;
 	}
 
-	public Object replace(final Object original, final Object target, final Object owner)
-			throws HibernateException {
+	public Object replace(final Object original, final Object target, final Object owner) {
 		return original;
 	}
 
-	public int hashCode(final Object obj) throws HibernateException {
+	public int hashCode(final Object obj) {
 		return obj.hashCode();
 	}
 
@@ -201,14 +198,12 @@ public class EntityType implements UserType, ParameterizedType {
 	}
 
 	@Override
-	public Object nullSafeGet(ResultSet arg0, String[] arg1, SessionImplementor arg2, Object arg3)
-			throws HibernateException, SQLException {
+	public Object nullSafeGet(ResultSet arg0, String[] arg1, SessionImplementor arg2, Object arg3) {
 		return null;
 	}
 
 	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor arg3)
-			throws HibernateException, SQLException {
+	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor arg3) {
 
 	}
 }

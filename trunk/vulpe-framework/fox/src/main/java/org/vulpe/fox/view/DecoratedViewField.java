@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -45,10 +45,10 @@ public class DecoratedViewField implements Serializable {
 	private String name;
 	private String attribute = "";
 	private String label;
-	private int size;
-	private int maxlength;
-	private int rows;
-	private int cols;
+	private String size;
+	private String maxlength;
+	private String rows;
+	private String cols;
 	private String mask = "";
 	private String items = "";
 	private String itemKey = "";
@@ -61,7 +61,7 @@ public class DecoratedViewField implements Serializable {
 	private String action;
 	private String identifier;
 	private String description;
-	private int popupWidth;
+	private String popupWidth;
 	private String type;
 	private String align = "";
 	private String width = "";
@@ -91,19 +91,19 @@ public class DecoratedViewField implements Serializable {
 		this.name = name;
 	}
 
-	public int getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(final int size) {
+	public void setSize(final String size) {
 		this.size = size;
 	}
 
-	public int getMaxlength() {
+	public String getMaxlength() {
 		return maxlength;
 	}
 
-	public void setMaxlength(final int maxlength) {
+	public void setMaxlength(final String maxlength) {
 		this.maxlength = maxlength;
 	}
 
@@ -195,11 +195,11 @@ public class DecoratedViewField implements Serializable {
 		return showBlank;
 	}
 
-	public void setPopupWidth(final int popupWidth) {
+	public void setPopupWidth(final String popupWidth) {
 		this.popupWidth = popupWidth;
 	}
 
-	public int getPopupWidth() {
+	public String getPopupWidth() {
 		return popupWidth;
 	}
 
@@ -360,7 +360,7 @@ public class DecoratedViewField implements Serializable {
 	}
 
 	public void setValidateRange(int[] validateRange) {
-		this.validateRange = validateRange;
+		this.validateRange = validateRange.clone();
 	}
 
 	public void setValidateDatePattern(String validateDatePattern) {
@@ -387,19 +387,19 @@ public class DecoratedViewField implements Serializable {
 		return validateRequiredScope;
 	}
 
-	public void setRows(int rows) {
+	public void setRows(String rows) {
 		this.rows = rows;
 	}
 
-	public int getRows() {
+	public String getRows() {
 		return rows;
 	}
 
-	public void setCols(int cols) {
+	public void setCols(String cols) {
 		this.cols = cols;
 	}
 
-	public int getCols() {
+	public String getCols() {
 		return cols;
 	}
 

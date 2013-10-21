@@ -47,7 +47,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vulpe.exception.VulpeSystemException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -91,8 +90,7 @@ public class XMLReader {
 		return attributeList;
 	}
 
-	private String getChildTagValue(final Element element, final String tagName)
-			throws VulpeSystemException {
+	private String getChildTagValue(final Element element, final String tagName) {
 		final NodeList children = element.getElementsByTagName(tagName);
 		if (children == null) {
 			return null;

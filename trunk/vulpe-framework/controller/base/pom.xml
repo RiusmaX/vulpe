@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>org.tuckey</groupId>
 			<artifactId>urlrewritefilter</artifactId>
-			<version>3.2.0</version>
+			<version>4.0.3</version>
 			<scope>provided</scope><!-- TEST -->
 		</dependency>
 	</dependencies>

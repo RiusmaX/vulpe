@@ -215,6 +215,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 		this.view = new VulpeViewUtil();
 		this.cache = new VulpeCacheUtil();
 		this.baseController.now.put(Now.CACHED_CLASSES, cache().classes());
+		this.baseController.now.put(Now.JSON_CACHED_CLASSES, cache().jsonClasses());
 		this.baseController.now.put(Now.CACHED_ENUMS, cache().enums());
 		this.baseController.now.put(Now.CACHED_ENUMS_ARRAY, cache().enumsArray());
 		view().onlyToSee(false);
@@ -222,7 +223,7 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 	public class VulpeControllerUtil {
 
-		public VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
+		private VulpeHashMap<Operation, String> defaultMessage = new VulpeHashMap<Operation, String>();
 
 		{
 			defaultMessage.put(Operation.CREATE_POST, "{vulpe.message.create.post}");
@@ -853,12 +854,10 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 				if (bean instanceof VulpeEntity) {
 					final VulpeEntity<?> entity = (VulpeEntity<?>) bean;
 					// if item is selected to be delete, then ignore
-					if (entity.isSelected()) {
-						if (!ignoreExclud || entity.getId() == null) {
-							excluded.add(entity);
-							iterator.remove();
-							continue;
-						}
+					if (entity.isSelected() && (!ignoreExclud || entity.getId() == null)) {
+						excluded.add(entity);
+						iterator.remove();
+						continue;
 					}
 				}
 
@@ -1278,6 +1277,10 @@ public class VulpeUtil<ENTITY extends VulpeEntity<ID>, ID extends Serializable &
 
 		public VulpeHashMap<String, Object> classes() {
 			return VulpeCacheHelper.getInstance().get(VulpeConstants.CACHED_CLASSES);
+		}
+
+		public VulpeHashMap<String, Object> jsonClasses() {
+			return VulpeCacheHelper.getInstance().get(VulpeConstants.JSON_CACHED_CLASSES);
 		}
 
 		public VulpeHashMap<String, Object> enums() {

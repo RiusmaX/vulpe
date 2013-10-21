@@ -59,99 +59,99 @@ import org.slf4j.LoggerFactory;
  */
 public class VulpeStringUtil {
 
-	private static VulpeHashMap<Character, String> accentMap = new VulpeHashMap<Character, String>();
-	private static final VulpeHashMap<Character, String> utfChars = new VulpeHashMap<Character, String>();
-	private static final VulpeHashMap<Character, String> specialChars = new VulpeHashMap<Character, String>();
+	private static VulpeHashMap<Character, String> ACCENT_MAP = new VulpeHashMap<Character, String>();
+	private static final VulpeHashMap<Character, String> UTF_CHARS = new VulpeHashMap<Character, String>();
+	private static final VulpeHashMap<Character, String> SPECIAL_CHARS = new VulpeHashMap<Character, String>();
 
 	private static final Logger LOG = LoggerFactory.getLogger(VulpeStringUtil.class);
 
 	static {
-		accentMap.put('á', "a");
-		accentMap.put('â', "a");
-		accentMap.put('ã', "a");
-		accentMap.put('à', "a");
-		accentMap.put('ä', "a");
+		ACCENT_MAP.put('á', "a");
+		ACCENT_MAP.put('â', "a");
+		ACCENT_MAP.put('ã', "a");
+		ACCENT_MAP.put('à', "a");
+		ACCENT_MAP.put('ä', "a");
 
-		accentMap.put('Á', "A");
-		accentMap.put('Â', "A");
-		accentMap.put('Ã', "A");
-		accentMap.put('À', "A");
-		accentMap.put('Ä', "A");
+		ACCENT_MAP.put('Á', "A");
+		ACCENT_MAP.put('Â', "A");
+		ACCENT_MAP.put('Ã', "A");
+		ACCENT_MAP.put('À', "A");
+		ACCENT_MAP.put('Ä', "A");
 
-		accentMap.put('é', "e");
-		accentMap.put('è', "e");
-		accentMap.put('ë', "e");
-		accentMap.put('ê', "e");
+		ACCENT_MAP.put('é', "e");
+		ACCENT_MAP.put('è', "e");
+		ACCENT_MAP.put('ë', "e");
+		ACCENT_MAP.put('ê', "e");
 
-		accentMap.put('É', "E");
-		accentMap.put('Ê', "E");
-		accentMap.put('È', "E");
-		accentMap.put('Ë', "E");
+		ACCENT_MAP.put('É', "E");
+		ACCENT_MAP.put('Ê', "E");
+		ACCENT_MAP.put('È', "E");
+		ACCENT_MAP.put('Ë', "E");
 
-		accentMap.put('í', "i");
-		accentMap.put('ì', "i");
-		accentMap.put('î', "i");
-		accentMap.put('ï', "i");
+		ACCENT_MAP.put('í', "i");
+		ACCENT_MAP.put('ì', "i");
+		ACCENT_MAP.put('î', "i");
+		ACCENT_MAP.put('ï', "i");
 
-		accentMap.put('Í', "I");
-		accentMap.put('Ì', "I");
-		accentMap.put('Î', "I");
-		accentMap.put('Ï', "I");
+		ACCENT_MAP.put('Í', "I");
+		ACCENT_MAP.put('Ì', "I");
+		ACCENT_MAP.put('Î', "I");
+		ACCENT_MAP.put('Ï', "I");
 
-		accentMap.put('ó', "o");
-		accentMap.put('ò', "o");
-		accentMap.put('õ', "o");
-		accentMap.put('ô', "o");
-		accentMap.put('ö', "o");
+		ACCENT_MAP.put('ó', "o");
+		ACCENT_MAP.put('ò', "o");
+		ACCENT_MAP.put('õ', "o");
+		ACCENT_MAP.put('ô', "o");
+		ACCENT_MAP.put('ö', "o");
 
-		accentMap.put('Ó', "O");
-		accentMap.put('Ò', "O");
-		accentMap.put('Õ', "O");
-		accentMap.put('Ô', "O");
-		accentMap.put('Ö', "O");
+		ACCENT_MAP.put('Ó', "O");
+		ACCENT_MAP.put('Ò', "O");
+		ACCENT_MAP.put('Õ', "O");
+		ACCENT_MAP.put('Ô', "O");
+		ACCENT_MAP.put('Ö', "O");
 
-		accentMap.put('ú', "u");
-		accentMap.put('ù', "u");
-		accentMap.put('ü', "u");
-		accentMap.put('ü', "u");
+		ACCENT_MAP.put('ú', "u");
+		ACCENT_MAP.put('ù', "u");
+		ACCENT_MAP.put('ü', "u");
+		ACCENT_MAP.put('ü', "u");
 
-		accentMap.put('Ú', "U");
-		accentMap.put('Ù', "U");
-		accentMap.put('Û', "U");
-		accentMap.put('Ü', "U");
+		ACCENT_MAP.put('Ú', "U");
+		ACCENT_MAP.put('Ù', "U");
+		ACCENT_MAP.put('Û', "U");
+		ACCENT_MAP.put('Ü', "U");
 
 		// (')
-		specialChars.put('á', "&aacute;");
-		specialChars.put('é', "&eacute;");
-		specialChars.put('í', "&iacute;");
-		specialChars.put('ó', "&oacute;");
-		specialChars.put('ú', "&uacute;");
-		specialChars.put('Á', "&Aacute;");
-		specialChars.put('É', "&Eacute;");
-		specialChars.put('Í', "&Iacute;");
-		specialChars.put('Ó', "&Oacute;");
-		specialChars.put('Ú', "&Uacute;");
+		SPECIAL_CHARS.put('á', "&aacute;");
+		SPECIAL_CHARS.put('é', "&eacute;");
+		SPECIAL_CHARS.put('í', "&iacute;");
+		SPECIAL_CHARS.put('ó', "&oacute;");
+		SPECIAL_CHARS.put('ú', "&uacute;");
+		SPECIAL_CHARS.put('Á', "&Aacute;");
+		SPECIAL_CHARS.put('É', "&Eacute;");
+		SPECIAL_CHARS.put('Í', "&Iacute;");
+		SPECIAL_CHARS.put('Ó', "&Oacute;");
+		SPECIAL_CHARS.put('Ú', "&Uacute;");
 		// (~)
-		specialChars.put('ã', "&atilde;");
-		specialChars.put('ñ', "&ntilde;");
-		specialChars.put('õ', "&otilde;");
-		specialChars.put('Ã', "&Atilde;");
-		specialChars.put('Ñ', "&Ntilde;");
-		specialChars.put('Õ', "&Otilde;");
+		SPECIAL_CHARS.put('ã', "&atilde;");
+		SPECIAL_CHARS.put('ñ', "&ntilde;");
+		SPECIAL_CHARS.put('õ', "&otilde;");
+		SPECIAL_CHARS.put('Ã', "&Atilde;");
+		SPECIAL_CHARS.put('Ñ', "&Ntilde;");
+		SPECIAL_CHARS.put('Õ', "&Otilde;");
 		// (^)
-		specialChars.put('â', "&acirc;");
-		specialChars.put('ê', "&ecirc;");
-		specialChars.put('î', "&icirc;");
-		specialChars.put('ô', "&ocirc;");
-		specialChars.put('û', "&ucirc;");
-		specialChars.put('Â', "&Acirc;");
-		specialChars.put('Ê', "&Ecirc;");
-		specialChars.put('Î', "&Icirc;");
-		specialChars.put('Ô', "&Ocirc;");
-		specialChars.put('Û', "&Ucirc;");
+		SPECIAL_CHARS.put('â', "&acirc;");
+		SPECIAL_CHARS.put('ê', "&ecirc;");
+		SPECIAL_CHARS.put('î', "&icirc;");
+		SPECIAL_CHARS.put('ô', "&ocirc;");
+		SPECIAL_CHARS.put('û', "&ucirc;");
+		SPECIAL_CHARS.put('Â', "&Acirc;");
+		SPECIAL_CHARS.put('Ê', "&Ecirc;");
+		SPECIAL_CHARS.put('Î', "&Icirc;");
+		SPECIAL_CHARS.put('Ô', "&Ocirc;");
+		SPECIAL_CHARS.put('Û', "&Ucirc;");
 		// (ç Ç)
-		specialChars.put('ç', "&ccedil;");
-		specialChars.put('Ç', "&Ccedil;");
+		SPECIAL_CHARS.put('ç', "&ccedil;");
+		SPECIAL_CHARS.put('Ç', "&Ccedil;");
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class VulpeStringUtil {
 	public static String normalize(final String term) {
 		final StringBuilder normalized = new StringBuilder();
 		for (int i = 0; i < term.length(); i++) {
-			normalized.append(accentMap.containsKey(term.charAt(i)) ? accentMap.get(term.charAt(i))
+			normalized.append(ACCENT_MAP.containsKey(term.charAt(i)) ? ACCENT_MAP.get(term.charAt(i))
 					: term.charAt(i));
 		}
 		return normalized.toString();
@@ -177,7 +177,7 @@ public class VulpeStringUtil {
 	public static String encodeUTF(final String value) {
 		final StringBuilder encoded = new StringBuilder();
 		for (int i = 0; i < value.length(); i++) {
-			encoded.append(utfChars.containsKey(value.charAt(i)) ? utfChars.get(value.charAt(i))
+			encoded.append(UTF_CHARS.containsKey(value.charAt(i)) ? UTF_CHARS.get(value.charAt(i))
 					: value.charAt(i));
 		}
 		return encoded.toString();
@@ -191,7 +191,7 @@ public class VulpeStringUtil {
 	public static String encodeHTMLSpecials(final String value) {
 		final StringBuilder encoded = new StringBuilder();
 		for (int i = 0; i < value.length(); i++) {
-			encoded.append(specialChars.containsKey(value.charAt(i)) ? specialChars.get(value
+			encoded.append(SPECIAL_CHARS.containsKey(value.charAt(i)) ? SPECIAL_CHARS.get(value
 					.charAt(i)) : value.charAt(i));
 		}
 		return encoded.toString();

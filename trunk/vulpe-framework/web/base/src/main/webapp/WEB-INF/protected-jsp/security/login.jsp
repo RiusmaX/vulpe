@@ -7,7 +7,7 @@
 	<fmt:message key="vulpe.security.error.login.failed" /> <c:choose>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'UserNotFound')}">
 			<fmt:message key="vulpe.security.error.user.not.found">
-				<fmt:param value="${SPRING_SECURITY_LAST_USERNAME}" />
+				<fmt:param value="${vulpeUserAuthentication}" />
 			</fmt:message>
 		</c:when>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'InvalidPassword')}">
@@ -15,7 +15,7 @@
 		</c:when>
 		<c:when test="${fn:contains(SPRING_SECURITY_LAST_EXCEPTION.cause, 'InactiveUser')}">
 			<fmt:message key="vulpe.security.error.invalid.user">
-				<fmt:param value="${SPRING_SECURITY_LAST_USERNAME}" />
+				<fmt:param value="${vulpeUserAuthentication}" />
 			</fmt:message>
 		</c:when>
 	</c:choose>
@@ -26,7 +26,7 @@
 	});
 	</script>
 	</c:if>
-	<v:text elementId="j_username" name="j_username" targetName="" maxlength="20" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? SPRING_SECURITY_LAST_USERNAME : ''}" style="width: 150px;" />
+	<v:text elementId="j_username" name="j_username" targetName="" maxlength="20" labelKey="label.vulpe.security.login.username" lowerCase="true" value="${not empty param.loginError ? vulpeUserAuthentication : ''}" style="width: 150px;" />
 	<v:password elementId="j_password" name="j_password" targetName="" maxlength="20" labelKey="label.vulpe.security.login.password" style="width: 150px;" />
 	<p>
 		<input name="submit" type="submit" id="buttonSubmitLoginForm" value="<fmt:message key='label.vulpe.security.login'/>" class="vulpeButton" style="width: 75px;"/>&nbsp;<input name="reset"type="reset" value="<fmt:message key='label.vulpe.security.login.clear'/>" class="vulpeButton" style="width: 75px;" />
@@ -34,7 +34,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	vulpe.config.authenticator.url.redirect = "${SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl}";
-	if (vulpe.config.authenticator.url.redirect == "") {
+	if (vulpe.config.authenticator.url.redirect == "" || vulpe.config.authenticator.url.redirect.indexOf("/autenticator") != -1) {
 		vulpe.config.authenticator.url.redirect = "${pageContext.request.contextPath}/index.jsp";
 	}
 	var j_username = vulpe.util.getElement('j_username');

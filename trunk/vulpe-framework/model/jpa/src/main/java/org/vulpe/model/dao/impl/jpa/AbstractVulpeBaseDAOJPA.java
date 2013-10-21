@@ -311,6 +311,7 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 						// nativeConnection, parameter
 						// .getArrayValues());
 						// cstmt.setArray(count, array);
+						LOG.info("");
 					} else {
 						cstmt.setObject(count, parameter.getValue(), parameter.getType());
 					}
@@ -755,7 +756,6 @@ public abstract class AbstractVulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID
 				entity.setQueryConfigurationName(relationship.forceLoadQueryConfiguration());
 				loadEntityRelationships(entity);
 				final ENTITY parent = (ENTITY) PropertyUtils.getProperty(entity, parentName);
-				relationshipIds.put(entity.getId(), parent.getId());
 				relationshipIds.put(entity.getId(), parent.getId());
 				childs.add(entity);
 			}

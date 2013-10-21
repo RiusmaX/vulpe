@@ -100,10 +100,8 @@ public final class VulpeConfigHelper {
 			if ("true".equals(VULPE_APPLICATION.getString("debug"))) {
 				enabled = true;
 			}
-		} else if (VULPE.containsKey("debug")) {
-			if ("true".equals(VULPE.getString("debug"))) {
-				enabled = true;
-			}
+		} else if (VULPE.containsKey("debug") && "true".equals(VULPE.getString("debug"))) {
+			enabled = true;
 		}
 		return enabled;
 	}
@@ -116,14 +114,11 @@ public final class VulpeConfigHelper {
 	 */
 	public static boolean isAuditEnabled() {
 		boolean enabled = false;
-		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("audit")) {
-			if ("true".equals(VULPE_APPLICATION.getString("audit"))) {
-				enabled = true;
-			}
-		} else if (VULPE.containsKey("audit")) {
-			if ("true".equals(VULPE.getString("audit"))) {
-				enabled = true;
-			}
+		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("audit")
+				&& "true".equals(VULPE_APPLICATION.getString("audit"))) {
+			enabled = true;
+		} else if (VULPE.containsKey("audit") && "true".equals(VULPE.getString("audit"))) {
+			enabled = true;
 		}
 		return enabled;
 	}
@@ -168,14 +163,11 @@ public final class VulpeConfigHelper {
 	 */
 	public static boolean isSecurityEnabled() {
 		boolean enabled = false;
-		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("security")) {
-			if ("true".equals(VULPE_APPLICATION.getString("security"))) {
-				enabled = true;
-			}
-		} else if (VULPE.containsKey("security")) {
-			if ("true".equals(VULPE.getString("security"))) {
-				enabled = true;
-			}
+		if (VULPE_APPLICATION != null && VULPE_APPLICATION.containsKey("security")
+				&& "true".equals(VULPE_APPLICATION.getString("security"))) {
+			enabled = true;
+		} else if (VULPE.containsKey("security") && "true".equals(VULPE.getString("security"))) {
+			enabled = true;
 		}
 		return enabled;
 	}

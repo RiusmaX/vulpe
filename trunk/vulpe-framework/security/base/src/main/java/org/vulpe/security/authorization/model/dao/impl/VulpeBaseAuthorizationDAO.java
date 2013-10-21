@@ -57,7 +57,7 @@ import org.vulpe.security.model.entity.SecureResourceRole;
 @Transactional
 public class VulpeBaseAuthorizationDAO implements VulpeAuthorizationDAO {
 
-	private transient final Map<SecureResource, List<Role>> secureObjectToRoles = new HashMap<SecureResource, List<Role>>();
+	private final transient Map<SecureResource, List<Role>> secureObjectToRoles = new HashMap<SecureResource, List<Role>>();
 
 	/*
 	 * (non-Javadoc)

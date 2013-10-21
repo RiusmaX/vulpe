@@ -1,18 +1,18 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * Este programa é software livre; você pode redistribuí-lo e/ou
  * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
  * publicada pela Free Software Foundation; tanto a versão 2 da
  * Licença como (a seu critério) qualquer versão mais nova.
- * 
+ *
  * Este programa é distribuído na expectativa de ser útil, mas SEM
  * QUALQUER GARANTIA; sem mesmo a garantia implícita de
  * COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM
  * PARTICULAR. Consulte a Licença Pública Geral GNU para obter mais
  * detalhes.
- * 
+ *
  * Você deve ter recebido uma cópia da Licença Pública Geral GNU
  * junto com este programa; se não, escreva para a Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
@@ -20,17 +20,17 @@
 /**
  * Vulpe Framework - Quick and Smart ;)
  * Copyright (C) 2011 Active Thread
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -64,7 +64,6 @@ import com.opensymphony.xwork2.ObjectFactory;
 import com.opensymphony.xwork2.TextProvider;
 import com.opensymphony.xwork2.TextProviderSupport;
 import com.opensymphony.xwork2.UnknownHandlerManager;
-import com.opensymphony.xwork2.config.ConfigurationException;
 import com.opensymphony.xwork2.config.providers.XWorkConfigurationProvider;
 import com.opensymphony.xwork2.conversion.NullHandler;
 import com.opensymphony.xwork2.conversion.ObjectTypeDeterminer;
@@ -101,29 +100,30 @@ import com.opensymphony.xwork2.validator.ValidatorFactory;
 import com.opensymphony.xwork2.validator.ValidatorFileParser;
 
 /**
- * 
+ *
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  * @version 1.0
  * @since 1.0
  */
 public class VulpeXWorkConfigurationProvider extends XWorkConfigurationProvider {
 
-	public void register(ContainerBuilder builder, LocatableProperties props)
-			throws ConfigurationException {
+	public void register(ContainerBuilder builder, LocatableProperties props) {
 		builder.setAllowDuplicates(true);
-		builder.factory(ObjectFactory.class, StrutsSpringObjectFactory.class).factory(
-				ActionProxyFactory.class, VulpeActionProxyFactory.class, Scope.SINGLETON).factory(
-				ObjectTypeDeterminer.class, GenericsObjectTypeDeterminer.class, Scope.SINGLETON)
-				.factory(XWorkConverter.class, Scope.SINGLETON).factory(ValueStackFactory.class,
-						OgnlValueStackFactory.class, Scope.SINGLETON).factory(
-						ValidatorFactory.class, DefaultValidatorFactory.class, Scope.SINGLETON)
+		builder.factory(ObjectFactory.class, StrutsSpringObjectFactory.class)
+				.factory(ActionProxyFactory.class, VulpeActionProxyFactory.class, Scope.SINGLETON)
+				.factory(ObjectTypeDeterminer.class, GenericsObjectTypeDeterminer.class,
+						Scope.SINGLETON)
+				.factory(XWorkConverter.class, Scope.SINGLETON)
+				.factory(ValueStackFactory.class, OgnlValueStackFactory.class, Scope.SINGLETON)
+				.factory(ValidatorFactory.class, DefaultValidatorFactory.class, Scope.SINGLETON)
 				.factory(ValidatorFileParser.class, DefaultValidatorFileParser.class,
-						Scope.SINGLETON).factory(PatternMatcher.class, WildcardHelper.class,
-						Scope.SINGLETON).factory(ReflectionProvider.class,
-						OgnlReflectionProvider.class, Scope.SINGLETON).factory(
-						ReflectionContextFactory.class, OgnlReflectionContextFactory.class,
-						Scope.SINGLETON).factory(PropertyAccessor.class,
-						CompoundRoot.class.getName(), CompoundRootAccessor.class, Scope.SINGLETON)
+						Scope.SINGLETON)
+				.factory(PatternMatcher.class, WildcardHelper.class, Scope.SINGLETON)
+				.factory(ReflectionProvider.class, OgnlReflectionProvider.class, Scope.SINGLETON)
+				.factory(ReflectionContextFactory.class, OgnlReflectionContextFactory.class,
+						Scope.SINGLETON)
+				.factory(PropertyAccessor.class, CompoundRoot.class.getName(),
+						CompoundRootAccessor.class, Scope.SINGLETON)
 				.factory(PropertyAccessor.class, Object.class.getName(),
 						GenericsPropertyAccessor.class, Scope.SINGLETON)
 				.factory(PropertyAccessor.class, Iterator.class.getName(),
@@ -136,34 +136,36 @@ public class VulpeXWorkConfigurationProvider extends XWorkConfigurationProvider 
 				// silly workarounds for ognl since there is no way to flush its
 				// caches
 				.factory(PropertyAccessor.class, List.class.getName(),
-						XWorkListPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, ArrayList.class.getName(),
-						XWorkListPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, HashSet.class.getName(),
-						XWorkCollectionPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, Set.class.getName(),
-						XWorkSetPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, HashMap.class.getName(),
-						XWorkMapPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, Map.class.getName(),
+						XWorkListPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, ArrayList.class.getName(),
+						XWorkListPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, HashSet.class.getName(),
+						XWorkCollectionPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, Set.class.getName(),
+						XWorkSetPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, HashMap.class.getName(),
+						XWorkMapPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, Map.class.getName(),
 						XWorkMapPropertyAccessor.class, Scope.SINGLETON)
 
 				.factory(PropertyAccessor.class, Collection.class.getName(),
-						XWorkCollectionPropertyAccessor.class, Scope.SINGLETON).factory(
-						PropertyAccessor.class, ObjectProxy.class.getName(),
-						ObjectProxyPropertyAccessor.class, Scope.SINGLETON).factory(
-						MethodAccessor.class, Object.class.getName(), XWorkMethodAccessor.class,
-						Scope.SINGLETON).factory(MethodAccessor.class,
-						CompoundRoot.class.getName(), CompoundRootAccessor.class, Scope.SINGLETON)
+						XWorkCollectionPropertyAccessor.class, Scope.SINGLETON)
+				.factory(PropertyAccessor.class, ObjectProxy.class.getName(),
+						ObjectProxyPropertyAccessor.class, Scope.SINGLETON)
+				.factory(MethodAccessor.class, Object.class.getName(), XWorkMethodAccessor.class,
+						Scope.SINGLETON)
+				.factory(MethodAccessor.class, CompoundRoot.class.getName(),
+						CompoundRootAccessor.class, Scope.SINGLETON)
 				.factory(NullHandler.class, Object.class.getName(), GenericsNullHandler.class,
-						Scope.SINGLETON).factory(ActionValidatorManager.class,
-						AnnotationActionValidatorManager.class, Scope.SINGLETON).factory(
-						ActionValidatorManager.class, "no-annotations",
-						DefaultActionValidatorManager.class, Scope.SINGLETON).factory(
-						TextProvider.class, "system", DefaultTextProvider.class, Scope.SINGLETON)
-				.factory(TextProvider.class, TextProviderSupport.class, Scope.SINGLETON).factory(
-						OgnlUtil.class, Scope.SINGLETON).factory(XWorkBasicConverter.class,
-						Scope.SINGLETON);
+						Scope.SINGLETON)
+				.factory(ActionValidatorManager.class, AnnotationActionValidatorManager.class,
+						Scope.SINGLETON)
+				.factory(ActionValidatorManager.class, "no-annotations",
+						DefaultActionValidatorManager.class, Scope.SINGLETON)
+				.factory(TextProvider.class, "system", DefaultTextProvider.class, Scope.SINGLETON)
+				.factory(TextProvider.class, TextProviderSupport.class, Scope.SINGLETON)
+				.factory(OgnlUtil.class, Scope.SINGLETON)
+				.factory(XWorkBasicConverter.class, Scope.SINGLETON);
 		props.setProperty("devMode", Boolean.FALSE.toString());
 		props.setProperty("logMissingProperties", Boolean.FALSE.toString());
 		props.setProperty("enableOGNLExpressionCache", Boolean.TRUE.toString());

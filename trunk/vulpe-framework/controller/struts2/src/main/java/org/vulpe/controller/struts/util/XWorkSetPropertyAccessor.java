@@ -141,7 +141,7 @@ public class XWorkSetPropertyAccessor extends XWorkCollectionPropertyAccessor {
 		return super.getProperty(context, target, name);
 	}
 
-	private transient final List<WeakReference<Object[]>> cache = Collections
+	private final transient List<WeakReference<Object[]>> cache = Collections
 			.synchronizedList(new ArrayList<WeakReference<Object[]>>());
 
 	private List getList(final Set set) {

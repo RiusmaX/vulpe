@@ -60,7 +60,7 @@ public final class VulpeCacheHelper {
 	private VulpeCacheHelper() {
 	}
 
-	private transient final Map<Object, Object> cache = Collections
+	private final transient Map<Object, Object> cache = Collections
 			.synchronizedMap(new HashMap<Object, Object>());
 
 	public void put(final Object key, final Object instance) {

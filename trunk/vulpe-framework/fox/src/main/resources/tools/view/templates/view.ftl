@@ -27,10 +27,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 	<#if field.mask?has_content>
 	mask="${field.mask}"
 	</#if>
-	<#if (field.size > 0)>
+	<#if field.size?has_content>
 	size="${field.size}"
 	</#if>
-	<#if (field.maxlength > 0)>
+	<#if field.maxlength?has_content>
 	maxlength="${field.maxlength}"
 	</#if>
 	<#if field.type == 'textarea'>
@@ -38,7 +38,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 	</#if>
 </#if>
 <#if field.type == 'select'>
-	<#if (field.size > 0)>
+	<#if field.size?has_content>
 	size="${field.size}"
 	</#if>
 	<#if field.items?has_content>
@@ -184,10 +184,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 	<#if field.mask?has_content>
 	mask="${field.mask}"
 	</#if>
-	<#if (field.size > 0)>
+	<#if field.size?has_content>
 	size="${field.size}"
 	</#if>
-	<#if (field.maxlength > 0)>
+	<#if field.maxlength?has_content>
 	maxlength="${field.maxlength}"
 	</#if>
 	<#if field.type == 'textarea'>
@@ -195,7 +195,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${f
 	</#if>
 </#if>
 <#if field.type == 'select'>
-	<#if (field.size > 0)>
+	<#if field.size?has_content>
 	size="${field.size}"
 	</#if>
 	<#if field.items?has_content>
@@ -308,10 +308,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${
 					<#if detailField.mask?has_content>
 					mask="${detailField.mask}"
 					</#if>
-					<#if (detailField.size > 0)>
+					<#if (detailField.size?has_content)>
 					size="${detailField.size}"
 					</#if>
-					<#if (detailField.maxlength > 0)>
+					<#if (detailField.maxlength?has_content)>
 					maxlength="${detailField.maxlength}"
 					</#if>
 					<#if detailField.type == 'textarea'>
@@ -319,7 +319,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${
 					</#if>
 				</#if>
 				<#if detailField.type == 'select'>
-					<#if (detailField.size > 0)>
+					<#if (detailField.size?has_content)>
 					size="${detailField.size}"
 					</#if>
 					<#if detailField.items?has_content>
@@ -432,10 +432,10 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					<#if field.mask?has_content>
 					mask="${field.mask}"
 					</#if>
-					<#if (field.size > 0)>
+					<#if field.size?has_content>
 					size="${field.size}"
 					</#if>
-					<#if (field.maxlength > 0)>
+					<#if field.maxlength?has_content>
 					maxlength="${field.maxlength}"
 					</#if>
 					<#if field.type == 'textarea'>
@@ -443,7 +443,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=
 					</#if>
 				</#if>
 				<#if field.type == 'select'>
-					<#if (field.size > 0)>
+					<#if field.size?has_content>
 					size="${field.size}"
 					</#if>
 					<#if field.items?has_content>

@@ -77,13 +77,8 @@ public class VulpeStartupListener extends ContextLoaderListener {
 
 	private static final VulpeStartupExtend STARTUP_EXTEND = AbstractVulpeBeanFactory.getInstance()
 			.getBean(VulpeConstants.Context.STARTUP_EXTEND);
-	private static final VulpeStartupExtend FW_STARTUP_EXTEND = AbstractVulpeBeanFactory.getInstance()
-			.getBean(VulpeConstants.Context.FW_STARTUP_EXTEND);
-
-	/**
-	 * Global map
-	 */
-	public Map<String, Object> global = new HashMap<String, Object>();
+	private static final VulpeStartupExtend FW_STARTUP_EXTEND = AbstractVulpeBeanFactory
+			.getInstance().getBean(VulpeConstants.Context.FW_STARTUP_EXTEND);
 
 	/*
 	 * (non-Javadoc)
@@ -135,6 +130,7 @@ public class VulpeStartupListener extends ContextLoaderListener {
 		event.getServletContext().setAttribute(Context.SESSION_SCOPE,
 				Integer.valueOf(PageContext.SESSION_SCOPE));
 
+		final Map<String, Object> global = new HashMap<String, Object>();
 		// sets attributes to configure application
 		global.put(Global.APPLICATION_DEBUG, VulpeConfigHelper.isDebugEnabled());
 		global.put(Global.APPLICATION_AUDIT, VulpeConfigHelper.isAuditEnabled());
@@ -155,6 +151,9 @@ public class VulpeStartupListener extends ContextLoaderListener {
 			global.put(Global.APPLICATION_VIEW_BREAK_LABEL, vulpeApplication.view().layout()
 					.breakLabel());
 			global.put(Global.APPLICATION_VIEW_DATE_MASK, vulpeApplication.view().dateMask());
+			global.put(Global.APPLICATION_VIEW_CURRENCY_SYMBOL, vulpeApplication.view().currencySymbol());
+			global.put(Global.APPLICATION_VIEW_SHOW_CURRENCY_SYMBOL, vulpeApplication.view().showCurrencySymbol());
+			global.put(Global.APPLICATION_VIEW_STAY_CURRENCY_SYMBOL, vulpeApplication.view().stayCurrencySymbol());
 			global.put(Global.APPLICATION_VIEW_FOCUS_FIRST, vulpeApplication.view().focusFirst());
 			global.put(Global.APPLICATION_VIEW_ICON_HEIGHT, vulpeApplication.view().layout()
 					.iconHeight());

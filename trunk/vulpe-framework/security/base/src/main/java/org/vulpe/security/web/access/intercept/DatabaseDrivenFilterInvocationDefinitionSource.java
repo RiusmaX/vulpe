@@ -78,7 +78,8 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 			newUrl = newUrl.substring(0, firstQuestionMarkIndex);
 		}
 		final SecureResource secureObject = authorizationService.getSecureObject(newUrl);
-		if (secureObject == null) {// if secure object not exist in database
+		// if secure object not exist in database
+		if (secureObject == null) {
 			return null;
 		}
 		// retrieving roles associated with this secure object
@@ -133,7 +134,7 @@ public class DatabaseDrivenFilterInvocationDefinitionSource implements
 	}
 
 	@Override
-	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+	public Collection<ConfigAttribute> getAttributes(Object object) {
 		if ((object == null) || !this.supports(object.getClass())) {
 			throw new IllegalArgumentException("Object must be a FilterInvocation");
 		}

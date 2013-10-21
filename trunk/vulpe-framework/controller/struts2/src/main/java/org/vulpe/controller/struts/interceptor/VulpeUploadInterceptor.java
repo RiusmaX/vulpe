@@ -108,10 +108,9 @@ public class VulpeUploadInterceptor extends FileUploadInterceptor {
 			fileList.clear();
 		}
 
-		if (invocation.getAction() instanceof VulpeController) {
-			if (!"upload".equals(invocation.getProxy().getMethod())) {
-				return super.intercept(invocation);
-			}
+		if (invocation.getAction() instanceof VulpeController
+				&& !"upload".equals(invocation.getProxy().getMethod())) {
+			return super.intercept(invocation);
 		}
 		if (!(request instanceof MultiPartRequestWrapper)) {
 			if (LOG.isDebugEnabled()) {

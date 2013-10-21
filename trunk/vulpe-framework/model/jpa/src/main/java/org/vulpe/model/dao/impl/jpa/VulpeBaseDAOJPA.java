@@ -48,6 +48,7 @@ import java.util.Map;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Query;
 import javax.persistence.Transient;
 
@@ -407,7 +408,7 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 						final ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
 						final QueryParameter queryParameter = field
 								.getAnnotation(QueryParameter.class);
-						String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
+						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
 								+ (queryParameter != null
 										&& StringUtils.isNotEmpty(queryParameter.value()) ? "_"
 										+ queryParameter.value() : field.getName());
@@ -422,6 +423,15 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 								params.put(paramName, value);
 							}
 						}
+					} else if (value instanceof Collection) {
+						final OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+						final String paramName = (StringUtils.isNotEmpty(parent) ? parent + "." : "")
+								+ field.getName();
+						if (oneToMany != null) {
+							for (final ENTITY item : (Collection<ENTITY>) value) {
+								mountParameters(item, params, paramName);
+							}
+						}
 					} else if (isNotEmpty(value)) {
 						final QueryParameter queryParameter = field
 								.getAnnotation(QueryParameter.class);
@@ -432,16 +442,15 @@ public class VulpeBaseDAOJPA<ENTITY extends VulpeEntity<ID>, ID extends Serializ
 							if (queryParameter.fake()
 									&& StringUtils.isNotEmpty(queryParameter.value())) {
 								fieldName = "!" + fieldName;
-							} else if (StringUtils.isNotEmpty(queryParameter.value())) {
-								if (queryParameter.type().equals(TypeParameter.DATE)) {
-									value = new String(queryParameter
-											.value()
-											.replaceAll(" ", "")
-											.replace(
-													":value",
-													new SimpleDateFormat(queryParameter.pattern())
-															.format(value)));
-								}
+							} else if (StringUtils.isNotEmpty(queryParameter.value())
+									&& queryParameter.type().equals(TypeParameter.DATE)) {
+								value = new String(queryParameter
+										.value()
+										.replaceAll(" ", "")
+										.replace(
+												":value",
+												new SimpleDateFormat(queryParameter.pattern())
+														.format(value)));
 							}
 						}
 						paramName.append(fieldName);

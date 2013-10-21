@@ -1,4 +1,4 @@
-<c:set var="layout" value="${ever['vulpeCurrentLayout'] == 'FRONTEND' ? 'frontend/' : ''}"/>
+<c:set var="layout" value="${ever['vulpeCurrentLayout'] == 'FRONTEND' ? 'frontend/' : 'backend/'}"/>
 <style media="all" type="text/css">
 	@import "${pageContext.request.contextPath}/css/vulpe.css";
 	@import "${pageContext.request.contextPath}/themes/${global['application-theme']}/css/${layout}${global['application-theme']}.css";
