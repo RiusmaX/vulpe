@@ -5,7 +5,10 @@ import lombok.Setter;
 
 import org.vulpe.model.annotations.SkipAutoFilter;
 import org.vulpe.model.db4o.annotations.Inheritance;
+import org.vulpe.portal.commons.model.entity.CategoryType;
+import org.vulpe.portal.commons.model.entity.Position;
 import org.vulpe.portal.commons.model.entity.Status;
+import org.vulpe.portal.commons.model.entity.Target;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.view.annotations.input.VulpeCheckbox;
 import org.vulpe.view.annotations.input.VulpeSelect;
@@ -57,6 +60,15 @@ public class Content extends BasePortal {
 
 	private Boolean showComplete;
 
+	private String url;
+
+	private Long clicks;
+
+	@VulpeSelect
+	private Target target;
+
+	private Position position;
+
 	public Content() {
 	}
 
@@ -84,4 +96,31 @@ public class Content extends BasePortal {
 		}
 	}
 
+	public void increaseClicks() {
+		if (clicks == null) {
+			clicks = 1L;
+		} else {
+			++clicks;
+		}
+	}
+
+	public String getDescription() {
+		String description = "";
+		if (CategoryType.CONTENT.equals(getCategory().getCategoryType())) {
+			description = getTitle().getText();
+		} else {
+			description = getUrl();
+		}
+		return description;
+	}
+
+	public Long getViewsClicks() {
+		Long viewsClicks = 0L;
+		if (CategoryType.CONTENT.equals(getCategory().getCategoryType())) {
+			viewsClicks = getViews();
+		} else {
+			viewsClicks = getClicks();
+		}
+		return viewsClicks;
+	}
 }

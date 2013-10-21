@@ -23,11 +23,8 @@ import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.commons.model.entity.TextTranslateLanguage;
 import org.vulpe.portal.core.model.entity.BasePortal;
 import org.vulpe.portal.core.model.entity.Content;
-import org.vulpe.portal.core.model.entity.Download;
-import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Menu;
 import org.vulpe.portal.core.model.entity.Portal;
-import org.vulpe.portal.core.model.entity.Social;
 import org.vulpe.portal.core.model.services.CoreService;
 
 @SuppressWarnings( { "serial", "unchecked" })
@@ -55,18 +52,18 @@ public class PortalBaseController<ENTITY extends VulpeEntity<ID>, ID extends Ser
 				final List<Menu> menus = vulpe.service(CoreService.class).readMenu(
 						new Menu(Status.ACTIVE));
 				ever.put(Core.VULPE_PORTAL_MENUS, menus);
-				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
-						new Download(Status.ACTIVE));
-				sort(downloads);
-				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
-				final List<Link> links = vulpe.service(CoreService.class).readLink(
-						new Link(Status.ACTIVE));
-				sort(links);
-				ever.put(Core.VULPE_PORTAL_LINKS, links);
-				final List<Social> social = vulpe.service(CoreService.class).readSocial(
-						new Social(Status.ACTIVE));
-				sort(social);
-				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
+//				final List<Download> downloads = vulpe.service(CoreService.class).readDownload(
+//						new Download(Status.ACTIVE));
+//				sort(downloads);
+//				ever.put(Core.VULPE_PORTAL_DOWNLOADS, downloads);
+//				final List<Link> links = vulpe.service(CoreService.class).readLink(
+//						new Link(Status.ACTIVE));
+//				sort(links);
+//				ever.put(Core.VULPE_PORTAL_LINKS, links);
+//				final List<Social> social = vulpe.service(CoreService.class).readSocial(
+//						new Social(Status.ACTIVE));
+//				sort(social);
+//				ever.put(Core.VULPE_PORTAL_SOCIAL, social);
 				if (vulpe.controller().type().equals(ControllerType.BACKEND)) {
 					final List<Content> contents = vulpe.service(CoreService.class).readContent(
 							new Content(Status.ACTIVE));

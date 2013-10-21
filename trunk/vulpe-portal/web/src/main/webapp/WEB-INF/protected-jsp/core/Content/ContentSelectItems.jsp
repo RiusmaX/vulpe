@@ -9,8 +9,8 @@
 		<v:row>
 			<v:column labelKey="label.portal.core.Content.select.section" property="section.name" />
 			<v:column labelKey="label.portal.core.Content.select.category" property="category.name" />
-			<v:column labelKey="label.portal.core.Content.select.title" property="title" />
-			<v:column labelKey="label.portal.core.Content.select.views" property="views" />
+			<v:column labelKey="label.portal.core.Content.select.description" property="description" />
+			<v:column labelKey="label.portal.core.Content.select.viewsClicks" property="viewsClicks" />
 			<v:column labelKey="label.portal.core.Content.select.status" property="status" />
 		</v:row>
 	</jsp:attribute>

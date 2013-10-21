@@ -38,12 +38,6 @@
 				action="/core/Category/tabular" />
 			<v:menu elementId="Content" labelKey="label.portal.menu.Index.Content"
 				action="/core/Content/select" />
-			<v:menu elementId="Download" labelKey="label.portal.menu.Index.Download"
-				action="/core/Download/select" />
-			<v:menu elementId="Link" labelKey="label.portal.menu.Index.Link" action="/core/Link/select" />
-			<v:menu elementId="Community" labelKey="label.portal.menu.Index.Community"
-				action="/core/Community/select" />
-			<v:menu elementId="Social" labelKey="label.portal.menu.Index.Social" action="/core/Social/select" />
 		</v:menu>
 	</c:otherwise>
 </c:choose>

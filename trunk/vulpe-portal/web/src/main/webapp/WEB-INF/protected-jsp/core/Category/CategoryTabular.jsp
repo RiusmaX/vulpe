@@ -13,6 +13,9 @@
 			<v:column labelKey="label.portal.core.Category.tabular.description">
 				<v:textTranslate property="description" size="55" />
 			</v:column>
+			<v:column labelKey="label.portal.core.Category.tabular.categoryType">
+				<v:select property="categoryType" />
+			</v:column>
 			<v:column labelKey="label.portal.core.Category.tabular.status">
 				<v:select property="status" />
 			</v:column>

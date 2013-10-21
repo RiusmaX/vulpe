@@ -15,8 +15,6 @@ import org.vulpe.portal.commons.model.entity.Status;
 import org.vulpe.portal.commons.model.entity.TextTranslate;
 import org.vulpe.portal.controller.PortalBaseController;
 import org.vulpe.portal.core.model.entity.Content;
-import org.vulpe.portal.core.model.entity.Download;
-import org.vulpe.portal.core.model.entity.Link;
 import org.vulpe.portal.core.model.entity.Portal;
 import org.vulpe.portal.core.model.entity.Section;
 
@@ -63,25 +61,25 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 	}
 
 	public void download() {
-		try {
-			final Download download = getCoreService().findDownload(new Download(id));
-			download.increaseDownload();
-			getCoreService().updateDownload(download);
-			vulpe.controller().redirectTo(download.getUrl(), false);
-		} catch (VulpeApplicationException e) {
-			LOG.error(e.getMessage());
-		}
+//		try {
+//			final Download download = getCoreService().findDownload(new Download(id));
+//			download.increaseDownload();
+//			getCoreService().updateDownload(download);
+//			vulpe.controller().redirectTo(download.getUrl(), false);
+//		} catch (VulpeApplicationException e) {
+//			LOG.error(e.getMessage());
+//		}
 	}
 
 	public void link() {
-		try {
-			final Link link = getCoreService().findLink(new Link(id));
-			link.increaseClick();
-			getCoreService().updateLink(link);
-			vulpe.controller().redirectTo(link.getUrl(), false);
-		} catch (VulpeApplicationException e) {
-			LOG.error(e.getMessage());
-		}
+//		try {
+//			final Link link = getCoreService().findLink(new Link(id));
+//			link.increaseClick();
+//			getCoreService().updateLink(link);
+//			vulpe.controller().redirectTo(link.getUrl(), false);
+//		} catch (VulpeApplicationException e) {
+//			LOG.error(e.getMessage());
+//		}
 	}
 
 	@Override
@@ -104,20 +102,20 @@ public class FrontendController extends PortalBaseController<VulpeBaseSimpleEnti
 			final List<Content> contents = getCoreService().readContent(content);
 			sort(contents);
 			now.put("contents", contents);
-			final Download download = new Download();
-			download.setStatus(Status.ACTIVE);
-			download.setName(new TextTranslate());
-			download.getName().setText(querySearch);
-			final List<Download> downloads = getCoreService().readDownload(download);
-			sort(downloads);
-			now.put("downloads", downloads);
-			final Link link = new Link();
-			link.setStatus(Status.ACTIVE);
-			link.setName(new TextTranslate());
-			link.getName().setText(querySearch);
-			final List<Link> links = getCoreService().readLink(link);
-			sort(links);
-			now.put("links", links);
+//			final Download download = new Download();
+//			download.setStatus(Status.ACTIVE);
+//			download.setName(new TextTranslate());
+//			download.getName().setText(querySearch);
+//			final List<Download> downloads = getCoreService().readDownload(download);
+//			sort(downloads);
+//			now.put("downloads", downloads);
+//			final Link link = new Link();
+//			link.setStatus(Status.ACTIVE);
+//			link.setName(new TextTranslate());
+//			link.getName().setText(querySearch);
+//			final List<Link> links = getCoreService().readLink(link);
+//			sort(links);
+//			now.put("links", links);
 		} catch (VulpeApplicationException e) {
 			LOG.error(e.getMessage());
 		}

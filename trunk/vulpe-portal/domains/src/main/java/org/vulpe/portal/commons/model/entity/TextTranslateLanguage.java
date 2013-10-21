@@ -7,8 +7,6 @@ import org.vulpe.portal.core.model.entity.Language;
 @SuppressWarnings("serial")
 public class TextTranslateLanguage extends VulpeBaseDB4OAuditEntity<Long> {
 
-	private TextTranslate textTranslate;
-
 	private Language language;
 
 	private String text;
@@ -35,14 +33,6 @@ public class TextTranslateLanguage extends VulpeBaseDB4OAuditEntity<Long> {
 
 	public String getText() {
 		return text;
-	}
-
-	public void setTextTranslate(TextTranslate textTranslate) {
-		this.textTranslate = textTranslate;
-	}
-
-	public TextTranslate getTextTranslate() {
-		return textTranslate;
 	}
 
 	@Override

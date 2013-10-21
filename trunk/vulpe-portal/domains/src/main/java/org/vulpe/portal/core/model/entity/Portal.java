@@ -44,7 +44,7 @@ public class Portal extends BasePortal {
 	private TextTranslate offlineMessage;
 
 	private Section homeSection;
-	
+
 	private String pageTracker;
 
 }

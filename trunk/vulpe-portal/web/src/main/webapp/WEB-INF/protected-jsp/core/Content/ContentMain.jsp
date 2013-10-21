@@ -1,6 +1,11 @@
 <%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		app.arrays.categories = ${now['jsonCachedClasses']['Category']};
+		vulpe.util.getElementField("category.id").trigger("change");
+	});
+</script>
 <v:hidden property="id"/>
 <v:hidden property="views"/>
 <div class="line">
@@ -21,8 +26,10 @@
 	itemLabel="name"
 	showBlank="true" autoLoad="true"
 	required="true"
+	onchange="app.showByCategory($(this).val())"
 />
 </div>
+<div id="contentType" style="display: none" class="type">
 <fmt:message key="label.portal.core.Content.main.addRemoveVideo.message" var="message"/>
 <v:action javascript="app.addRemoveVideo('${message}')" labelKey="label.portal.core.Content.main.addRemoveVideo" showIconOfButton="false"/>
 <fieldset id="video" style="${empty entity.videoURL ? 'display:none' : ''}">
@@ -75,6 +82,20 @@
 	property="escapeXml"
 	fieldValue="true"
 />
+</div>
+<div id="downloadLinkType" style="display: none" class="type">
+<v:text
+	labelKey="label.portal.core.Content.main.url"
+	property="url"
+	size="100"
+/>
+<v:select
+	labelKey="label.portal.core.Content.main.target"
+	property="target"
+	required="true"
+/>
+<v:select property="position" labelKey="label.portal.core.Content.main.positions" showBlank="true" />
+</div>
 <v:select
 	labelKey="label.portal.core.Content.main.status"
 	property="status"
