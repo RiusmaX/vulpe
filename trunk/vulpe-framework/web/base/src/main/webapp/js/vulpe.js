@@ -26,6 +26,7 @@ var vulpe = {
 		browser: {
 			firefox: (BrowserDetect.browser == "Firefox" || BrowserDetect.browser == "Mozilla"),
 			ie: (BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer"),
+			ie8: ((BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer") && BrowserDetect.version == "8"),
 			ie6: ((BrowserDetect.browser == "MSIE" || BrowserDetect.browser == "Explorer") && BrowserDetect.version == "6"),
 			webkit: (BrowserDetect.browser == "Chrome" || BrowserDetect.browser == "Safari")
 		},

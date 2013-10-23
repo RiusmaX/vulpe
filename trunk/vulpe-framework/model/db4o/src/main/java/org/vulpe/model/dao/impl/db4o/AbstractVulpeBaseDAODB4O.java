@@ -51,7 +51,6 @@ import org.apache.commons.lang.StringUtils;
 import org.vulpe.commons.util.VulpeDB4OUtil;
 import org.vulpe.commons.util.VulpeReflectUtil;
 import org.vulpe.commons.util.VulpeStringUtil;
-import org.vulpe.commons.util.VulpeValidationUtil;
 import org.vulpe.exception.VulpeSystemException;
 import org.vulpe.model.annotations.CreateIfNotExist;
 import org.vulpe.model.annotations.QueryParameter;
@@ -259,7 +258,7 @@ public abstract class AbstractVulpeBaseDAODB4O<ENTITY extends VulpeEntity<ID>, I
 					} else if (Collection.class.isAssignableFrom(field.getType())) {
 						final Collection details = (Collection) value;
 						for (final Object object : details) {
-							if (VulpeValidationUtil.isNotEmpty(object)) {
+							if (object != null) {
 								if (VulpeEntity.class.isAssignableFrom(object.getClass())) {
 									try {
 										final String attributeName = VulpeStringUtil

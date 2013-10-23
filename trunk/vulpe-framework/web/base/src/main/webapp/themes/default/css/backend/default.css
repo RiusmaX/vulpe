@@ -653,3 +653,5 @@ thead th {
 	font-size:12px;
 	font-weight:bold;
 }
+
+table { border-collapse: collapse; border-spacing: 0; }
