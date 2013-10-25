@@ -101,14 +101,14 @@
 											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
 											<then>
 												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${deployMode}" arg2="quick-restart" />
 												<then>
 													<copy todir="${tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" excludes="**/*.jar" />
+														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar" />
 													</copy>
 												</then>
 											</elseif>
@@ -124,7 +124,7 @@
 															</then>
 														</if>
 														<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}">
-															<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" includes="**/**" />
+															<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" includes="**/**" />
 														</copy>
 														<!-- <unwar src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" dest="${tomcat.home}/webapps/${rootArtifactId}" />-->
 													</then>

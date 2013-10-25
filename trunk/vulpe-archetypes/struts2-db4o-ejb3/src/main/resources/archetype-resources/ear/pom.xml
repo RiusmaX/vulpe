@@ -110,23 +110,23 @@
 										<if>
 											<equals arg1="${symbol_dollar}{unpack}" arg2="false" />
 											<then>
-												<unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0" />
+												<unwar src="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" dest="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}" />
 											</then>
 										</if>
 										<if>
 											<equals arg1="${symbol_dollar}{environment}" arg2="test" />
 											<then>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml"
+												<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/META-INF/context.xml"
 													overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-test.xml" />
+													<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/META-INF/context-test.xml" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${symbol_dollar}{environment}" arg2="production" />
 												<then>
-													<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml"
+													<copy tofile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/META-INF/context.xml"
 														overwrite="true">
-														<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context-production.xml" />
+														<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/META-INF/context-production.xml" />
 													</copy>
 												</then>
 											</elseif>
@@ -134,25 +134,25 @@
 										<if>
 											<equals arg1="${symbol_dollar}{unpack}" arg2="false" />
 											<then>
-												<war destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/WEB-INF/web.xml"
-													basedir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0" />
+												<war destfile="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/WEB-INF/web.xml"
+													basedir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}" />
 											</then>
 										</if>
 										<copy tofile="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${symbol_dollar}{rootArtifactId}.xml" overwrite="true">
-											<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/META-INF/context.xml" />
+											<fileset file="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/META-INF/context.xml" />
 										</copy>
 										<if>
 											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
 											<then>
 												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
-													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${symbol_dollar}{deployMode}" arg2="quick-restart" />
 												<then>
 													<copy todir="${symbol_dollar}{tomcat.home}/webapps/${symbol_dollar}{rootArtifactId}/" overwrite="true">
-														<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-1.0/" excludes="**/*.jar" />
+														<fileset dir="${symbol_dollar}{project.build.directory}/${symbol_dollar}{rootArtifactId}-web-${version}/" excludes="**/*.jar" />
 													</copy>
 												</then>
 											</elseif>
