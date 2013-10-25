@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>${package}</groupId>
 			<artifactId>${rootArtifactId}-domains</artifactId>
-			<version>1.0</version>
+			<version>${version}</version>
 		</dependency>
 	</dependencies>
 
