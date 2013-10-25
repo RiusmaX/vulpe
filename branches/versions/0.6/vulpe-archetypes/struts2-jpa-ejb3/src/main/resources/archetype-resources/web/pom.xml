@@ -110,38 +110,38 @@
 										<if>
 											<equals arg1="${symbol_dollar}{environmentSetted}" arg2="true" />
 											<then>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context.xml" overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context-${symbol_dollar}{environment}.xml" />
+												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/META-INF/context.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/META-INF/context-${symbol_dollar}{environment}.xml" />
 												</copy>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/mail.properties" overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/mail-${symbol_dollar}{environment}.properties" />
+												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/classes/mail.properties" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/classes/mail-${symbol_dollar}{environment}.properties" />
 												</copy>
-												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/log4j.xml" overwrite="true">
-													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/log4j-${symbol_dollar}{environment}.xml" />
+												<copy tofile="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/classes/log4j.xml" overwrite="true">
+													<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/classes/log4j-${symbol_dollar}{environment}.xml" />
 												</copy>
-												<war destfile="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/web.xml"
-													basedir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0" />
+												<war destfile="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" webxml="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/web.xml"
+													basedir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}" />
 											</then>
 										</if>
 										<delete>
-											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/" includes="**/context-*.xml" />
-											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/WEB-INF/classes/" includes="**/log4j-*.xml,**/mail-*.properties" />
+											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/META-INF/" includes="**/context-*.xml" />
+											<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/WEB-INF/classes/" includes="**/log4j-*.xml,**/mail-*.properties" />
 										</delete>
 										<copy tofile="${symbol_dollar}{tomcat.home}/conf/Catalina/localhost/${rootArtifactId}.xml" overwrite="true">
-											<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/META-INF/context.xml" />
+											<fileset file="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/META-INF/context.xml" />
 										</copy>
 										<if>
 											<equals arg1="${symbol_dollar}{deployMode}" arg2="quick" />
 											<then>
 												<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
+													<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar,**/*.class,**/*.xml,**/*.properties" />
 												</copy>
 											</then>
 											<elseif>
 												<equals arg1="${deployMode}" arg2="quick-restart" />
 												<then>
 													<copy todir="${tomcat.home}/webapps/${rootArtifactId}/" overwrite="true">
-														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" excludes="**/*.jar" />
+														<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" excludes="**/*.jar" />
 													</copy>
 												</then>
 											</elseif>
@@ -157,7 +157,7 @@
 															</then>
 														</if>
 														<copy todir="${symbol_dollar}{tomcat.home}/webapps/${rootArtifactId}">
-															<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-1.0/" includes="**/**" />
+															<fileset dir="${symbol_dollar}{project.build.directory}/${rootArtifactId}-web-${version}/" includes="**/**" />
 														</copy>
 														<!-- <unwar src="${symbol_dollar}{project.build.directory}/${rootArtifactId}.war" dest="${tomcat.home}/webapps/${rootArtifactId}" /> -->
 													</then>

@@ -89,7 +89,7 @@
 					<dependency>
 						<groupId>${package}</groupId>
 						<artifactId>${rootArtifactId}-commons</artifactId>
-						<version>1.0</version>
+						<version>${version}</version>
 					</dependency>
 				</dependencies>
 				<executions>
