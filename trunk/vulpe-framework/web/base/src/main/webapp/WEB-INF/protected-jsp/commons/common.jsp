@@ -241,6 +241,10 @@ $(document).ready(function() {
 		$(window.location).attr('href', '${pageContext.request.contextPath}/j_spring_security_logout');
 	});
 	// vulpe map actions
+	$('#dialog_link, ul#icons li').hover(
+		function() { $(this).addClass('ui-state-hover'); },
+		function() { $(this).removeClass('ui-state-hover'); }
+	);
 <c:choose>
 	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>

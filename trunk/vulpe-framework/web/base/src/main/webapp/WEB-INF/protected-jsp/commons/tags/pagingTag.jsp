@@ -23,7 +23,7 @@
 	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingFirstPage', navigateToFirst, true)}
 	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingPreviousPage', navigateToPrevious, true)}
 	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingNextPage', navigateToNext, true)}
-	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingNextLast', navigateToLast, true)}
+	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingLastPage', navigateToLast, true)}
 	<c:choose>
 	<c:when test="${global['application-view-paging-buttonStyle'] == 'JQUERY_UI'}">
 	<ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -49,9 +49,8 @@
 	<c:if test="${begin < 0}"><c:set var="begin" value="1"/></c:if>
 	<c:if test="${end > list.pages}"><c:set var="end" value="${list.pages}"/></c:if>
 	<c:set var="endless" value="${end - 10}"/>
-	<c:forEach var="page" begin="${(end > begin && endless < begin && endless > 0) ? end - 9 : begin}" end="${end > list.pages ? list.pages : end}">
-		<c:set var="link"
-			value="javascript:vulpe.view.request.submitPaging({url: '${actionName}/ajax/${page}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${beforeJs}'${afterJs}});" />
+	<c:forEach var="page" begin="${(end > begin && endless < begin && endless > 0) ? end - 9 : begin}" end="${end > list.pages ? list.pages : end}" varStatus="status">
+		<c:set var="link" value="javascript:vulpe.view.request.submitPaging({url: '${actionName}/ajax/${page}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${beforeJs}'${afterJs}});" />
 		<c:set var="linkStyle" value="" />
 		<c:choose>
 			<c:when test="${page == list.page}"><c:set var="linkStyle" value="currentPage" /></c:when>
@@ -59,7 +58,11 @@
 		</c:choose>
 		<c:if test="${global['application-view-paging-buttonStyle'] == 'JQUERY_UI'}"><li></c:if>
 		<c:choose>
-			<c:when test="${list.pages > 1}"><a href="javascript:void(0);" onclick="${link}" class="${linkStyle}">${page}</a></c:when>
+			<c:when test="${list.pages > 1}">
+			<c:set var="linkId" value="vulpeButtonPaging${status.count}Page" />
+			<a id="${linkId}" href="javascript:void(0);" class="${linkStyle} vulpeActions">${page}</a>
+			${util:putMap(pageContext, 'vulpeActions', linkId, link, true)}
+			</c:when>
 			<c:otherwise>${page}</c:otherwise>
 		</c:choose>
 		<c:if test="${global['application-view-paging-buttonStyle'] == 'JQUERY_UI'}"></li></c:if>
@@ -72,12 +75,6 @@
 	<li id="vulpeButtonPagingNextPage" class="ui-state-default ui-corner-all${empty list.nextPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.next'/>"><span class="ui-icon ui-icon-seek-next"></span></li>
 	<li id="vulpeButtonPagingLastPage" class="ui-state-default ui-corner-all${empty list.lastPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.last'/>"><span class="ui-icon ui-icon-seek-end"></span></li>
 	</ul>
-	<script type="text/javascript">
-		$('#dialog_link, ul#icons li').hover(
-			function() { $(this).addClass('ui-state-hover'); },
-			function() { $(this).removeClass('ui-state-hover'); }
-		);
-	</script>
 	</c:when>
 	<c:otherwise>
 	&nbsp;
