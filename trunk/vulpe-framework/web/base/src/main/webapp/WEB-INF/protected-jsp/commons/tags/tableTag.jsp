@@ -29,8 +29,8 @@
 	<c:if test="${not empty pagingList || not empty items}">
 		<c:set var="isSelectTableTag" value="${true}" scope="request"/>
 		<c:if test="${!exported}">
-		<c:set var="selectCheckOn" scope="request" value="vulpe.view.setSelectCheckbox(true);"/>
-		<c:set var="selectCheckOff" scope="request" value="vulpe.view.setSelectCheckbox(false);"/>
+		<c:set var="selectCheckOn" scope="request" value="true"/>
+		<c:set var="selectCheckOff" scope="request" value="true"/>
 		</c:if>
 		<c:set var="sortPropertyInfoTableTag" value="${sortPropertyInfo}" scope="request"/>
 	</c:if>
@@ -94,7 +94,7 @@
 		<c:if test="${empty border}"><c:set var="border" value="0"/></c:if>
 		<c:if test="${empty cellspacing}"><c:set var="cellspacing" value="0"/></c:if>
 		<c:set var="currentTableElementId" value="${elementId}" scope="request"/>
-		<table id="${elementId}" width="${width}" border="${border}" cellspacing="${cellspacing}" class="vulpeEntities">
+		<table id="${elementId}" border="${border}" style="border-spacing: ${cellspacing}; width: ${width}" class="vulpeEntities">
 		<thead>
 			<c:set var="isHeaderTableTag" value="${true}" scope="request"/>
 			<c:if test="${not empty tableHeader}"><tr class="vulpeTableHeader">${tableHeader}</tr></c:if>

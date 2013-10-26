@@ -72,6 +72,48 @@
 	</function>
 
 	<function>
+		<name>get</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object get(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Integer)</function-signature>
+	</function>
+
+	<function>
+		<name>putWeakRef</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>void putWeakRef(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>getWeakRef</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getWeakRef(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>putMap</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>void putMap(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String,java.lang.Object,boolean)</function-signature>
+	</function>
+
+	<function>
+		<name>getMap</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMap(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>getMapKey</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMapKey(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>getMapJSON</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMapJSON(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
 		<name>replaceSequence</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.String replaceSequence(java.lang.String,java.lang.String,java.lang.String,java.lang.String)</function-signature>
@@ -80,13 +122,13 @@
 	<function>
 		<name>hasRoles</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean hasRoles(java.lang.String)</function-signature>
+		<function-signature>java.lang.Boolean hasRoles(javax.servlet.jsp.PageContext, java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<name>isAuthenticated</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isAuthenticated()</function-signature>
+		<function-signature>java.lang.Boolean isAuthenticated(javax.servlet.jsp.PageContext)</function-signature>
 	</function>
 
 	<function>
@@ -98,25 +140,25 @@
 	<function>
 		<name>buttonConfig</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.String buttonConfig(java.lang.String, java.lang.String)</function-signature>
+		<function-signature>java.lang.String buttonConfig(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<name>isButtonRender</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonRender(java.lang.String, java.lang.String)</function-signature>
+		<function-signature>java.lang.Boolean isButtonRender(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<name>isButtonShow</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonShow(java.lang.String, java.lang.String)</function-signature>
+		<function-signature>java.lang.Boolean isButtonShow(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<name>isButtonDisabled</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonDisabled(java.lang.String, java.lang.String)</function-signature>
-	</function>	
+		<function-signature>java.lang.Boolean isButtonDisabled(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
+	</function>
 
 </taglib>

@@ -33,7 +33,7 @@
 		<td>
 			<strong><fmt:message key="label.vulpe.audit.child.entities"/></strong><br/>
 			<c:forEach var="child" items="${childOccurrences}" varStatus="statusChildren">
-			<a href="javascript:void(0);" onclick="vulpe.view.showHideElement('child-${statusChildren.count}');"><strong>> <fmt:message key="label.vulpe.audit.child.entity"/>:</strong> ${child.entity}; <strong><fmt:message key="label.vulpe.audit.id"/>:</strong> ${child.primaryKey}</a><br/>
+			<a href="javascript:void(0);" class="vulpeShowHide element[child-${statusChildren.count}]"><strong>> <fmt:message key="label.vulpe.audit.child.entity"/>:</strong> ${child.entity}; <strong><fmt:message key="label.vulpe.audit.id"/>:</strong> ${child.primaryKey}</a><br/>
 			<table width="100%" id="child-${statusChildren.count}">
 				<tr>
 					<td width="1%"><strong><fmt:message key="label.vulpe.audit.attribute"/></strong></td>

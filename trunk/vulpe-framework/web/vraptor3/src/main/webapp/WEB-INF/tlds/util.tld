@@ -42,18 +42,6 @@
 	</function>
 
 	<function>
-		<name>evalString</name>
-		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
-		<function-signature>java.lang.String evalString(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<name>toString</name>
-		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
-		<function-signature>java.lang.String toString(java.lang.Object)</function-signature>
-	</function>
-
-	<function>
 		<name>booleanTo</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.String booleanTo(java.lang.Boolean, java.lang.String)</function-signature>
@@ -84,6 +72,48 @@
 	</function>
 
 	<function>
+		<name>get</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object get(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Integer)</function-signature>
+	</function>
+
+	<function>
+		<name>putWeakRef</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>void putWeakRef(javax.servlet.jsp.PageContext,java.lang.String,java.lang.Object)</function-signature>
+	</function>
+
+	<function>
+		<name>getWeakRef</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getWeakRef(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>putMap</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>void putMap(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String,java.lang.Object,boolean)</function-signature>
+	</function>
+
+	<function>
+		<name>getMap</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMap(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>getMapKey</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMapKey(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>getMapJSON</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Object getMapJSON(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
 		<name>replaceSequence</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.String replaceSequence(java.lang.String,java.lang.String,java.lang.String,java.lang.String)</function-signature>
@@ -102,27 +132,45 @@
 	</function>
 
 	<function>
-		<name>linkKey</name>
-		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
-		<function-signature>java.lang.String linkKey(java.lang.String,java.lang.String,java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<name>linkProperty</name>
-		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
-		<function-signature>java.lang.String linkProperty(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String,java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<name>saveInSession</name>
-		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
-		<function-signature>java.lang.Object saveInSession(java.lang.String,java.lang.Object,java.lang.Boolean)</function-signature>
-	</function>
-
-	<function>
 		<name>getProperty</name>
 		<function-class>org.vulpe.view.tags.Functions</function-class>
 		<function-signature>java.lang.Object getProperty(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>buttonConfig</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.String buttonConfig(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonRender</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonRender(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonShow</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonShow(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>isButtonDisabled</name>
+		<function-class>org.vulpe.view.tags.Functions</function-class>
+		<function-signature>java.lang.Boolean isButtonDisabled(javax.servlet.jsp.PageContext, java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>evalString</name>
+		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
+		<function-signature>java.lang.String evalString(javax.servlet.jsp.PageContext,java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<name>toString</name>
+		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
+		<function-signature>java.lang.String toString(java.lang.Object)</function-signature>
 	</function>
 
 	<function>
@@ -138,27 +186,21 @@
 	</function>
 
 	<function>
-		<name>buttonConfig</name>
-		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.String buttonConfig(javax.servlet.jsp.PageContext,java.lang.String, java.lang.String)</function-signature>
+		<name>linkKey</name>
+		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
+		<function-signature>java.lang.String linkKey(java.lang.String,java.lang.String,java.lang.String)</function-signature>
 	</function>
 
 	<function>
-		<name>isButtonRender</name>
-		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonRender(javax.servlet.jsp.PageContext,java.lang.String, java.lang.String)</function-signature>
+		<name>linkProperty</name>
+		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
+		<function-signature>java.lang.String linkProperty(javax.servlet.jsp.PageContext,java.lang.String,java.lang.String,java.lang.String)</function-signature>
 	</function>
 
 	<function>
-		<name>isButtonShow</name>
-		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonShow(javax.servlet.jsp.PageContext,java.lang.String, java.lang.String)</function-signature>
-	</function>
-
-	<function>
-		<name>isButtonDisabled</name>
-		<function-class>org.vulpe.view.tags.Functions</function-class>
-		<function-signature>java.lang.Boolean isButtonDisabled(javax.servlet.jsp.PageContext,java.lang.String, java.lang.String)</function-signature>
+		<name>saveInSession</name>
+		<function-class>org.vulpe.view.vraptor.tags.VRaptorFunctions</function-class>
+		<function-signature>java.lang.Object saveInSession(java.lang.String,java.lang.Object,java.lang.Boolean)</function-signature>
 	</function>
 
 </taglib>

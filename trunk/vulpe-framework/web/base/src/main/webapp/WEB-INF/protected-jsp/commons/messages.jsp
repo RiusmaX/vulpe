@@ -41,28 +41,28 @@
 					$(messages).removeClass("vulpeMessageInfo");
 					$(messages).removeClass("vulpeMessageValidation");
 					var closeButton = function(name) {
-						return '<div id="closeMessages"><a href="javascript:void(0);" onclick="$(\'' + name + '\').slideUp(\'slow\')"><fmt:message key="vulpe.messages.close"/></a></div>';
+						return '<div id="closeMessages"><a href="javascript:void(0);" class="vulpeShowHide element[' + name + ']"><fmt:message key="vulpe.messages.close"/></a></div>';
 					}
 					<c:if test="${not empty actionErrors}">
 						message += "<div id='errorMessages' class='vulpeMessageError'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionErrors}" var="message">
 						message += '<li class="vulpeAlertError">${message}</li>';
 						</c:forEach>
-						message += "</ul>" + closeButton("#errorMessages") + "</div>";
+						message += "</ul>" + closeButton("errorMessages") + "</div>";
 					</c:if>
 					<c:if test="${not empty actionMessages}">
 						message += "<div id='successMessages' class='vulpeMessageSuccess'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionMessages}" var="message">
 							message += '<li class="vulpeAlertMessage">${message}</li>';
 						</c:forEach>
-						message += "</ul>" + closeButton("#successMessages", messages) + "</div>";
+						message += "</ul>" + closeButton("successMessages", messages) + "</div>";
 					</c:if>
 					<c:if test="${not empty actionInfoMessages}">
 						message += "<div id='infoMessages' class='vulpeMessageInfo'><ul class='vulpeMessageList'>";
 						<c:forEach items="${actionInfoMessages}" var="message">
 						message += '<li class="vulpeAlertMessage">${message}</li>';
 						</c:forEach>
-						message += "</ul>" + closeButton("#infoMessages", messages) + "</div>";
+						message += "</ul>" + closeButton("infoMessages", messages) + "</div>";
 					</c:if>
 					jQuery(document).bind("keydown", "Esc", function(evt) {
 						$(messages).slideUp('slow', function(){ $(this).html(""); });

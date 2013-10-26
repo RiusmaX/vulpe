@@ -76,6 +76,7 @@ import org.vulpe.controller.commons.EverParameter;
 import org.vulpe.controller.commons.MultipleResourceBundle;
 import org.vulpe.controller.commons.VulpeBaseDetailConfig;
 
+import com.google.gson.Gson;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
@@ -84,7 +85,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @author <a href="mailto:felipe@vulpe.org">Geraldo Felipe</a>
  *
  */
-@SuppressWarnings( { "unchecked", "rawtypes" })
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class Functions {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Functions.class.getName());
@@ -188,6 +189,97 @@ public class Functions {
 
 	/**
 	 *
+	 * @param pageContext
+	 * @param key
+	 * @param value
+	 * @param scope
+	 * @return
+	 */
+	public static Object get(final PageContext pageContext, final String key, final Integer scope) {
+		return pageContext.getAttribute(key, scope);
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param key
+	 * @param value
+	 */
+	public static void putWeakRef(final PageContext pageContext, final String key,
+			final Object value) {
+		ever(pageContext).putWeakRef(key, value);
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param key
+	 * @return
+	 */
+	public static Object getWeakRef(final PageContext pageContext, final String key) {
+		return ever(pageContext).get(key);
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param mapName
+	 * @param key
+	 * @param value
+	 */
+	public static void putMap(final PageContext pageContext, final String mapName,
+			final String key, final Object value, final boolean weakRef) {
+		VulpeHashMap<String, Object> map = ever(pageContext).getAuto(mapName);
+		if (map == null) {
+			map = new VulpeHashMap<String, Object>();
+		}
+		map.put(key, value);
+		if (weakRef) {
+			ever(pageContext).putWeakRef(mapName, map);
+		} else {
+			ever(pageContext).put(mapName, map);
+		}
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param mapName
+	 * @param key
+	 * @return
+	 */
+	public static Object getMapJSON(final PageContext pageContext, final String mapName) {
+		final VulpeHashMap<String, Object> map = ever(pageContext).getAuto(mapName);
+		return new Gson().toJson(map);
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param mapName
+	 * @param key
+	 * @return
+	 */
+	public static Object getMap(final PageContext pageContext, final String mapName) {
+		final VulpeHashMap<String, Object> map = ever(pageContext).getAuto(mapName);
+		return map;
+	}
+
+	/**
+	 *
+	 * @param pageContext
+	 * @param mapName
+	 * @param key
+	 * @return
+	 */
+	public static Object getMapKey(final PageContext pageContext, final String mapName,
+			final String key) {
+		final VulpeHashMap<String, Object> map = ever(pageContext).getAuto(mapName);
+		return map.get(key);
+	}
+
+	/**
+	 *
 	 * @param string
 	 * @param begin
 	 * @param end
@@ -221,10 +313,12 @@ public class Functions {
 		if (detailConfig != null) {
 			baseName = eval(pageContext, "${targetConfigPropertyName}").toString().concat("_item");
 		}
-		return eval(pageContext, "${".concat(
-				(property.contains("entity.") || property.contains("entities")
-						|| property.contains("].") ? property : baseName.concat(property))).concat(
-				"}"));
+		return eval(
+				pageContext,
+				"${".concat(
+						(property.contains("entity.") || property.contains("entities")
+								|| property.contains("].") ? property : baseName.concat(property)))
+						.concat("}"));
 	}
 
 	/**
@@ -506,8 +600,8 @@ public class Functions {
 							continue;
 						}
 					}
-					list.add(new ValueBean(item.toString(), findText(fieldClass.getName().concat(
-							".").concat(item.toString()))));
+					list.add(new ValueBean(item.toString(), findText(fieldClass.getName()
+							.concat(".").concat(item.toString()))));
 				}
 			}
 			return list;

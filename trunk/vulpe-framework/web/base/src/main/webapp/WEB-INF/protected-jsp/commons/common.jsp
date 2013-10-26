@@ -1,22 +1,30 @@
-<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
-<c:set var="vulpeFormName" value="${now['controllerConfig'].formName}" scope="request"/>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp"%>
+<c:set var="vulpeFormName" value="${now['controllerConfig'].formName}" scope="request" />
 <c:if test="${now['bodyTwice']}">
 	<c:choose>
-		<c:when test="${now['bodyTwiceType'] == 'MAIN'}"><c:set var="vulpeFormName" value="${now['controllerConfig'].mainFormName}" scope="request"/></c:when>
-		<c:when test="${now['bodyTwiceType'] == 'SELECT'}"><c:set var="vulpeFormName" value="${now['controllerConfig'].selectFormName}" scope="request"/></c:when>
+		<c:when test="${now['bodyTwiceType'] == 'MAIN'}">
+			<c:set var="vulpeFormName" value="${now['controllerConfig'].mainFormName}" scope="request" />
+		</c:when>
+		<c:when test="${now['bodyTwiceType'] == 'SELECT'}">
+			<c:set var="vulpeFormName" value="${now['controllerConfig'].selectFormName}" scope="request" />
+		</c:when>
 	</c:choose>
 </c:if>
 <c:if test="${empty targetName}">
 	<c:choose>
-	<c:when test="${empty targetConfig}"><c:set var="prepareName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}"/></c:when>
-	<c:otherwise><c:set var="prepareName" value="${targetConfigPropertyName}"/></c:otherwise>
+		<c:when test="${empty targetConfig}">
+			<c:set var="prepareName" value="${not empty now['targetName'] ? now['targetName'] : 'entity'}" />
+		</c:when>
+		<c:otherwise>
+			<c:set var="prepareName" value="${targetConfigPropertyName}" />
+		</c:otherwise>
 	</c:choose>
-	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}"/>
-	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}"/>
-	<c:set var="prepareName" value="${fn:replace(prepareName, '.', '_')}"/>
+	<c:set var="prepareName" value="${fn:replace(prepareName, '[', '__')}" />
+	<c:set var="prepareName" value="${fn:replace(prepareName, '].', '__')}" />
+	<c:set var="prepareName" value="${fn:replace(prepareName, '.', '_')}" />
 </c:if>
 <c:if test="${empty vulpeShowActions || !vulpeShowActions || vulpeBodySelect}">
-<c:set var="vulpeShowActions" value="true" scope="request"/>
+	<c:set var="vulpeShowActions" value="true" scope="request" />
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	vulpe.view.checkTimeToSessionExpire(${ever['maxInactiveInterval']});
@@ -128,6 +136,111 @@ $(document).ready(function() {
 	if (selectForm.length == 1 && vulpe.util.trim(selectForm.html()).length == 0) {
 		selectForm.hide();
 	}
+	// vulpe map actions - init
+	$("#selectAll").click(function() {
+		vulpe.view.markUnmarkAll('selected', "#" + vulpe.util.getProperty({className: this.className, name : "parent"}));
+	});
+	$(":checkbox[name$='selected']").click(function() {
+		vulpe.view.controlMarkUnmarkAll('selected', "#" + vulpe.util.getProperty({className: this.className, name : "parent"}));
+	});
+	$(".vulpeContent").click(function(){
+		if (this.indexOf("show[") != -1) {
+			vulpe.view.showContent(vulpe.util.getProperty({className: this.className, name : "show"}));
+		} else {
+			vulpe.view.hideContent(vulpe.util.getProperty({className: this.className, name : "hide"}));
+		}
+	});
+	$(".vulpeSelectContent").click(function(){
+		if (this.indexOf("show[") != -1) {
+			vulpe.view.selectShowContent(vulpe.util.getProperty({className: this.className, name : "show"}));
+		} else {
+			vulpe.view.selectHideContent(vulpe.util.getProperty({className: this.className, name : "hide"}));
+		}
+	});
+	$(".vulpeShowHide").click(function(){
+		vulpe.view.showHideElement(vulpe.util.getProperty({className: this.className, name : "element"}));
+	});
+	$(".unclickable,.clickable").click(function(){
+		vulpe.view.setSelectCheckbox($(this).hasClass("unclickable"));
+	});
+	$("tr.vulpeView").click(function(){
+		vulpe.view.request.submitView({
+			url: "${now['controllerConfig'].ownerController}/update/ajax/" + vulpe.util.getProperty({className: this.className, name : "id"}),
+			formName: ${vulpeFormName},
+			layerFields: 'this',
+			layer: "${now['bodyTwice'] ? 'main' : 'body'}"
+		});
+	});
+	$("tr.vulpeUpdate").click(function(){
+		vulpe.view.request.submitUpdate({
+			url: "${now['controllerConfig'].ownerController}/update/ajax/" + vulpe.util.getProperty({className: this.className, name : "id"}),
+			formName: ${vulpeFormName},
+			layerFields: 'this',
+			layer: "${now['bodyTwice'] ? 'main' : 'body'}",
+			verify: true
+		});
+	});
+	$("td.clickable").mouseover(function(){
+		$(this).css("cursor", "pointer");
+	});
+	$(".vulpeActions").each(function(index){
+		var hotKey = vulpe.util.getProperty({className: this.className, name : "hotKey"});
+		var button = vulpe.util.getProperty({className: this.className, name : "vulpeButton"});
+		$(this).click(function(){
+			$.globalEval(vulpe.config.actions.submit[this.id]);
+		});
+		if (vulpe.util.isNotEmpty(hotKey)) {
+			vulpe.util.addHotKey({
+				hotKey: hotKey,
+				command: function (evt) {
+					$(this).trigger("click");
+					return false;
+				},
+				override: true
+			});
+		}
+		if (this.className.indexOf("vulpeItemOff") != -1) {
+			vulpe.buttons[button] = { disabled: true };
+		}
+	});
+	$("a.vulpeSort").each(function(index){
+		$(this).click(function(){
+			$.globalEval(vulpe.config.actions.sort[this.id]);
+		});
+	});
+	$("a.vulpeMenuLink").each(function(index){
+		var hotKey = vulpe.util.getProperty({className: this.className, name : "hotKey"});
+		$(this).click(function(){
+			$(".vulpeCurrentMenu").removeClass("vulpeCurrentMenu")
+			$(this).addClass("vulpeCurrentMenu");
+			$.globalEval(vulpe.config.actions.menu[this.id]);
+		});
+		if (vulpe.util.isNotEmpty(hotKey)) {
+			vulpe.util.addHotKey({
+				hotKey: hotKey,
+				command: function (evt) {
+					$(this).trigger("click");
+					return false;
+				},
+				override: true
+			});
+		}
+	});
+	$(".vulpeControlActions").each(function(index){
+		$(this).click(function(){
+			$.globalEval(vulpe.config.actions.control[this.id]);
+		});
+	});
+	$(".vulpeFocus").click(function() {
+		vulpe.util.get(vulpe.util.getProperty({className: this.className, name : "element"})).focus();
+	})
+	$(".vulpeChangePassword").click(function() {
+		vulpe.view.request.submitLink('/security/UserPassword/update/ajax');
+	});
+	$(".vulpeLogout").click(function() {
+		$(window.location).attr('href', '${pageContext.request.contextPath}/j_spring_security_logout');
+	});
+	// vulpe map actions
 <c:choose>
 	<c:when test="${now['requireOneFilter'] && now['controllerType'] == 'SELECT'}">vulpe.config.requireOneFilter = true;</c:when>
 	<c:otherwise>vulpe.config.requireOneFilter = false;</c:otherwise>
@@ -139,6 +252,6 @@ $(document).ready(function() {
 </script>
 </c:if>
 <c:if test="${not empty vulpeShowMessages || !vulpeShowMessages}">
-<c:set var="vulpeShowMessages" value="true" scope="request"/>
-<%@include file="/WEB-INF/protected-jsp/commons/messages.jsp" %>
+	<c:set var="vulpeShowMessages" value="true" scope="request" />
+	<%@include file="/WEB-INF/protected-jsp/commons/messages.jsp"%>
 </c:if>

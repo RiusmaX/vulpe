@@ -5,8 +5,8 @@
 		<c:if test="${fn:length(value) > limitContent}">
 			<c:set var="value" value="${fn:substring(value, 0, limitContent)}..."/>
 		</c:if>
-		<span id="${elementId}_value">${util:toString(value)}&nbsp;</span><span id="${elementId}_showContent" class="vulpeShowContent"><a href="javascript:void(0);" onclick="vulpe.view.showContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span>
-		<div id="${elementId}_content" class="vulpeContentOverflow" style="display: none">${fullValue}<div id="${elementId}-closeContent" class="vulpeCloseContentOverflow"><a href="javascript:void(0);" onclick="vulpe.view.hideContent('${elementId}');"><fmt:message key="vulpe.messages.close"/></a></div></div>
+		<span id="${elementId}_value">${util:toString(value)}&nbsp;</span><span id="${elementId}_showContent" class="vulpeShowContent"><a href="javascript:void(0);" class="vulpeContent show[${elementId}]"><fmt:message key="vulpe.messages.showContent"/></a></span>
+		<div id="${elementId}_content" class="vulpeContentOverflow" style="display: none">${fullValue}<div id="${elementId}-closeContent" class="vulpeCloseContentOverflow"><a href="javascript:void(0);" class="vulpeContent hide[${elementId}]"><fmt:message key="vulpe.messages.close"/></a></div></div>
 	</c:when>
 	<c:otherwise>${util:toString(value)}</c:otherwise>
 </c:choose>

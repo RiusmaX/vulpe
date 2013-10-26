@@ -11,7 +11,10 @@
 		<c:set var="contentType" value="${util:eval(pageContext, contentTypeEL)}"/>
 		<c:set var="contentDisposition" value="attachment;filename=${fileName}"/>
 		<c:set var="action" value="${now['controllerConfig'].controllerName}/deleteFile/ajax"/>
-		<span id="${elementId}-fileName" class="vulpeFileName">${fileName}</span>&nbsp;<span id="${elementId}-fileOptions" class="vulpeFileOptions"><a href="${util:linkProperty(pageContext, name, contentType, contentDisposition)}"><fmt:message key="label.vulpe.download"/></a><c:if test="${not empty showDelete && showDelete}"> | <a href="javascript:void(0);" onclick="vulpe.view.confirm('deleteFile', function(){ vulpe.view.request.submitAjaxAction({url: '${action}', layer: 'body', queryString: 'now.propertyName=${property}'});});"><fmt:message key="label.vulpe.delete"/></a></c:if></span>
+		<c:set var="deleteFileId" value="${elementId}-deleteFile"/>
+		<c:set var="javascript" value="vulpe.view.confirm('deleteFile', function(){ vulpe.view.request.submitAjaxAction({url: '${action}', layer: 'body', queryString: 'now.propertyName=${property}'});});"/>
+		${util:putMap(pageContext, 'vulpeControlActions', deleteFileId, javascript, true)}
+		<span id="${elementId}-fileName" class="vulpeFileName">${fileName}</span>&nbsp;<span id="${elementId}-fileOptions" class="vulpeFileOptions"><a href="${util:linkProperty(pageContext, name, contentType, contentDisposition)}"><fmt:message key="label.vulpe.download"/></a><c:if test="${not empty showDelete && showDelete}"> | <a href="javascript:void(0);" id="${deleteFileId}" class="vulpeControlActions"><fmt:message key="label.vulpe.delete"/></a></c:if></span>
 		<v:hidden property="${property}ContentType"/>
 		<v:hidden property="${property}FileName"/>
 	</c:if>

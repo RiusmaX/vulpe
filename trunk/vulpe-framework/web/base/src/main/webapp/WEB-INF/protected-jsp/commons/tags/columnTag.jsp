@@ -12,16 +12,11 @@
 		<c:if test="${not empty labelAlign}"><c:set var="labelStyle" value="text-align: ${labelAlign};${labelStyle}"/></c:if>
 		<c:if test="${sort && not empty sortPropertyInfoTableTag && not empty property && !exported}">
 			<c:if test="${empty alias}"><c:set var="alias" value="obj"/></c:if>
-			<c:choose>
-				<c:when test="${global['application-useDB4O']}">
-					<c:set var="elementId" value="${sortPropertyInfoTableTag}_${sortProperty}"/>
-					<c:set var="label"><a href="javascript:void(0);" onclick="vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${sortProperty}');">${label}</a></c:set>
-				</c:when>
-				<c:otherwise>
-					<c:set var="elementId" value="${sortPropertyInfoTableTag}-${alias}_${sortProperty}"/>
-					<c:set var="label"><a href="javascript:void(0);" onclick="vulpe.view.sortTable('${vulpeFormName}', '${sortPropertyInfoTableTag}', '${alias}.${sortProperty}');">${label}</a></c:set>
-				</c:otherwise>
-			</c:choose>
+			<c:set var="elementId" value="${sortPropertyInfoTableTag}${global['application-useDB4O'] ? '' : '-' + alias}_${sortProperty}"/>
+			<c:set var="label"><a id="link_${elementId}" href="javascript:void(0);" class="vulpeSort">${label}</a></c:set>
+			<c:set var="javascript" value="vulpe.view.sortTable({formName: '${vulpeFormName}', sortPropertyInfo: '${sortPropertyInfoTableTag}', property: '${global['application-useDB4O'] ? '' : alias + '.'}${sortProperty}'});"/>
+			<c:set var="linkId" value="link_${elementId}"/>
+			${util:putMap(pageContext, 'vulpeSortActions', linkId, javascript, true)}
 		</c:if>
 		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}"</c:set></c:if>
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
@@ -42,12 +37,11 @@
 		<c:if test="${not empty onclick}"><c:set var="onclick">onclick="${onclick}" </c:set></c:if>
 		<c:if test="${not empty onmouseover}"><c:set var="onmouseover">onmouseover="${onmouseover}"</c:set></c:if>
 		<c:if test="${not empty onmouseout}"><c:set var="onmouseout">onmouseout="${onmouseout}"</c:set></c:if>
-		<c:if test="${not empty selectCheckOff && empty onclick && (empty limitContent || fn:length(value) < limitContent)}"><c:set var="onclick">onclick="${selectCheckOff}"</c:set></c:if>
 		<c:if test="${not empty colspan}"><c:set var="colspan">colspan="${colspan}"</c:set></c:if>
 		<c:if test="${not empty style}"><c:set var="style">style="${style}"</c:set></c:if>
-		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}"</c:set></c:if>
+		<c:if test="${empty styleClass}"><c:set var="styleClass">class="vulpeColumn ${xstyleClass}${not empty selectCheckOff && empty onclick && (empty limitContent || fn:length(value) < limitContent) ? ' clickable' : ''}"</c:set></c:if>
 		<c:if test="${empty elementId}"><c:set var="elementId" value="${labelKey}_${currentStatus.index}"/></c:if>
-		<td id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${style} ${styleClass}>
+		<td id="${elementId}" ${onclick} ${onmouseover} ${onmouseout} ${colspan} ${styleClass}>
 			<v:hidden property="${property}" targetName="${listName}[${currentStatus.index}]" render="${not empty enableHooks && not empty property && property != 'id'}" targetValue="${currentItem}"/>
 			<c:if test="${not empty value}">
 				<c:choose>
@@ -62,8 +56,8 @@
 									<c:if test="${fn:length(value) > limitContent}">
 										<c:set var="value" value="${fn:substring(value, 0, limitContent)}..."/>
 									</c:if>
-									<span id="${elementId}_value" onclick="vulpe.view.setSelectCheckbox(false);">${util:toString(value)}&nbsp;</span><span id="${elementId}_showContent" class="vulpeShowContent"><a href="javascript:void(0);" onclick="vulpe.view.showContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span>
-									<div id="${elementId}_content" class="vulpeContentOverflow" style="display: none">${fullValue}<div id="${elementId}-closeContent" class="vulpeCloseContentOverflow"><a href="javascript:void(0);" onclick="vulpe.view.hideContent('${elementId}');"><fmt:message key="vulpe.messages.close"/></a></div></div>
+									<span id="${elementId}_value" class="clickable">${util:toString(value)}&nbsp;</span><span id="${elementId}_showContent" class="vulpeShowContent"><a href="javascript:void(0);" class="vulpeContent show[${elementId}]"><fmt:message key="vulpe.messages.showContent"/></a></span>
+									<div id="${elementId}_content" class="vulpeContentOverflow" style="display: none">${fullValue}<div id="${elementId}-closeContent" class="vulpeCloseContentOverflow"><a href="javascript:void(0);" class="vulpeContent hide[${elementId}]"><fmt:message key="vulpe.messages.close"/></a></div></div>
 								</c:when>
 								<c:otherwise>${util:toString(value)}</c:otherwise>
 								</c:choose>

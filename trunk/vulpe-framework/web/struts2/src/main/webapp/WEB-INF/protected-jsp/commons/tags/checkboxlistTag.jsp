@@ -79,7 +79,9 @@
 								<c:set var="itemId" value="${fn:replace(itemName, '[', '__')}"/>
 								<c:set var="itemId" value="${fn:replace(itemId, '].', '__')}"/>
 								<c:set var="itemId" value="${fn:replace(itemId, '.', '_')}"/>
-								<input id="${itemId}" type="checkbox" ${checked} value="${item.id}" name="entity.${property}[${itemStatus.index}].${detailProperty}" onclick="vulpe.view.controlDetailChecked(this.checked, '${itemPrepareId}');${onclick}">&nbsp;<label for="${itemId}" style="${labelStyle}" class="${labelClass}">${itemLabel}</label><c:if test="${breakLabel}"><br/></c:if>
+								<c:set var="javascript" value="vulpe.view.controlDetailChecked(this.checked, '${itemPrepareId}');"/>
+								${util:putMap(pageContext, 'vulpeControlActions', itemId, javascript, true)}
+								<input id="${itemId}" type="checkbox" ${checked} value="${item.id}" name="entity.${property}[${itemStatus.index}].${detailProperty}" class="vulpeControlActions" onclick="${onclick}">&nbsp;<label for="${itemId}" style="${labelStyle}" class="${labelClass}">${itemLabel}</label><c:if test="${breakLabel}"><br/></c:if>
 							</c:forEach>
 						</c:when>
 						<c:otherwise><s:checkboxlist theme="simple" name="${name}" id="${elementId}" accesskey="${accesskey}" disabled="${disabled}" onblur="${onblur}" onchange="${onchange}" onclick="${onclick}" ondblclick="${ondblclick}" onfocus="${onfocus}" onkeydown="${onkeydown}" onkeypress="${onkeypress}" onkeyup="${onkeyup}" onmousedown="${onmousedown}" onmousemove="${onmousemove}" onmouseout="${onmouseout}" onmouseover="${onmouseover}" onmouseup="${onmouseup}" onselect="${onselect}" cssStyle="${style}" cssClass="${styleClass}" tabindex="${tabindex}" title="${title}" listValue="${listValue}" listKey="${listKey}" list="${list}" /></c:otherwise>

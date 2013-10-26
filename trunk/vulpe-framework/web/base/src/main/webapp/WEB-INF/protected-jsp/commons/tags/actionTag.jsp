@@ -18,11 +18,8 @@
 		<c:when test="${!fn:contains(elementId, buttonPrefix)}"><c:set var="elementId" value="${buttonPrefix}${elementId}" /></c:when>
 	</c:choose>
 	<span id="${elementId}-button" style="${!show ? 'display:none;' : ''}" class="${disabled ? 'vulpeItemOff' : ''}">
-	<c:if test="${disabled}">
-		<c:set var="styleClass" value="vulpeItemOff" />
-		<c:set var="buttonDisabled" value="Off" />
-		<c:set var="disabledButton">disabled="disabled"</c:set>
-	</c:if>
+	<c:set var="styleClass" value="vulpeActions vulpeButton[${buttonName}] buttonDisabled[${disabled}]" />
+	<c:if test="${not empty hotKey}"><c:set var="styleClass" value="${styleClass} hotKey[${hotKey}]" /></c:if>
 	<c:if test="${empty showButtonAsImage}"><c:set var="showButtonAsImage" value="${global['application-view-showButtonsAsImage']}" /></c:if>
 	<c:if test="${empty showIconOfButton}"><c:set var="showIconOfButton" value="${global['application-view-showIconOfButton']}" /></c:if>
 	<c:if test="${empty showTextOfButton}"><c:set var="showTextOfButton" value="${global['application-view-showTextOfButton']}" /></c:if>
@@ -73,6 +70,9 @@
 	</c:if>
 	<c:if test="${disabled}">
 		<c:set var="javascript" value="if (!vulpe.buttons['${buttonName}'].disabled) {${javascript}}" />
+		<c:set var="styleClass" value="vulpeItemOff" />
+		<c:set var="buttonDisabled" value="Off" />
+		<c:set var="disabledButton">disabled="disabled"</c:set>
 	</c:if>
 	<c:if test="${not empty icon}">
 		<c:if test="${empty iconWidth}"><c:set var="iconWidth" value="${global['application-mobile-enabled'] ? global['application-mobile-iconWidth'] : global['application-view-iconWidth']}" /></c:if>
@@ -88,13 +88,13 @@
 			<c:choose>
 				<c:when test="${fn:contains(javascript, 'Popup')}">
 					<c:if test="${empty iconClass}"><c:set var="iconClass" value="vulpeImagePopupButton" /></c:if>
-					<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" onclick="${javascript}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
+					<img class="${iconClass}" style="${style}" id="${elementId}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if>
 				</c:when>
 				<c:otherwise>
 					<c:if test="${not empty iconClass}"><c:set var="iconClass" value="${buttonPrefix}${iconClass}" /></c:if>
 					<c:choose>
 						<c:when test="${disabled}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></c:when>
-						<c:otherwise><a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a></c:otherwise>
+						<c:otherwise><a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);"><c:if test="${not empty icon}"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /></c:if><c:if test="${showTextOfButton}">${not empty icon ? '&nbsp;' : ''}<fmt:message key="${labelKey}" /></c:if></a></c:otherwise>
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
@@ -102,35 +102,19 @@
 		<c:when test="${showButtonAsLink}">
 			<c:choose>
 				<c:when test="${disabled}"><fmt:message key="${labelKey}" /></c:when>
-				<c:otherwise><a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);" onclick="${javascript}"><fmt:message key="${labelKey}" /></a></c:otherwise>
+				<c:otherwise><a id="${elementId}" class="${styleClass}" style="${style}" accesskey="${accesskey}" href="javascript:void(0);"><fmt:message key="${labelKey}" /></a></c:otherwise>
 			</c:choose>
 		</c:when>
 		<c:otherwise>
 			<c:set var="styleClass" value="vulpeSubmit${buttonDisabled}" />
 			<c:choose>
-				<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
+				<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
 				<c:otherwise>
-					<input style="${style}" ${disabledButton} id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" onclick="${javascript}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
+					<input style="${style}" ${disabledButton} id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" />
 				</c:otherwise>
 			</c:choose>
 		</c:otherwise>
 	</c:choose>
-	<c:if test="${not empty hotKey}">
-	<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		vulpe.util.addHotKey({
-			hotKey: "${hotKey}",
-			command: function (evt) {
-				vulpe.util.get("${elementId}").click();
-				return false;
-			},
-			override: true
-		});
-		<c:if test="${disabled}">
-		vulpe.buttons["${buttonName}"] = { disabled: true };
-		</c:if>
-	});
-	</script>
-	</c:if>
+	${util:putMap(pageContext, 'vulpeActions', elementId, javascript, true)}
 	</span>
 </c:if>

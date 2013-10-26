@@ -49,7 +49,7 @@
 			</c:choose>
 		</c:forEach>
 	</select>
-	<c:if test="${not empty limitContent}"><span id="${elementId}_showContent" class="vulpeShowContent" style="display: none"><a href="javascript:void(0);" onclick="vulpe.view.selectShowContent('${elementId}');"><fmt:message key="vulpe.messages.showContent"/></a></span></c:if>
+	<c:if test="${not empty limitContent}"><span id="${elementId}_showContent" class="vulpeShowContent" style="display: none"><a href="javascript:void(0);" class="vulpeSelectContent show[${elementId}]"><fmt:message key="vulpe.messages.showContent"/></a></span></c:if>
 	</c:otherwise>
 	</c:choose>
 	<jsp:doBody/>
@@ -63,7 +63,7 @@
 		<c:set var="labelValue" value="${util:eval(pageContext, labelValueEL)}"/>
 		<c:set var="fullLabelValue" value="${labelValue}"/>
 		<c:if test="${fn:length(labelValue) > 100}">
-			<div id="${elementId}_${keyValue}" class="vulpeSelectContentOverflow" style="display: none">${fullLabelValue}<div id="${elementId}-${keyValue}-closeContent" class="vulpeSelectCloseContentOverflow"><a href="javascript:void(0);" onclick="vulpe.view.selectHideContent('${elementId}');"><fmt:message key="vulpe.messages.close"/></a></div></div>
+			<div id="${elementId}_${keyValue}" class="vulpeSelectContentOverflow" style="display: none">${fullLabelValue}<div id="${elementId}-${keyValue}-closeContent" class="vulpeSelectCloseContentOverflow"><a href="javascript:void(0);" class="vulpeSelectContent hide[${elementId}]"><fmt:message key="vulpe.messages.close"/></a></div></div>
 		</c:if>
 	</c:forEach>
 	</span>

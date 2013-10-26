@@ -7,7 +7,7 @@
 			<c:if test="${now['showContentSubtitle'] && empty now['bodyTwice']}">
 				<c:if test="${not empty now['subtitleKey']}"><fmt:message var="contentSubtitle">${now['subtitleKey']}</fmt:message></c:if>
 				<div id="subtitle">${not empty now['contentSubtitle'] ? now['contentSubtitle'] : contentSubtitle}</div>
-			</c:if>		
+			</c:if>
 		</div>
 	</c:if>
 	<%@include file="/WEB-INF/protected-jsp/commons/contentPrepend.jsp" %>
@@ -28,3 +28,13 @@
 	</c:choose>
 	<%@include file="/WEB-INF/protected-jsp/commons/contentAppend.jsp" %>
 </div>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+	vulpe.config.actions = {
+			submit : ${util:getMapJSON(pageContext, 'vulpeActions')},
+			menu : ${util:getMapJSON(pageContext, 'vulpeMenuActions')},
+			sort : ${util:getMapJSON(pageContext, 'vulpeSortActions')},
+			control : ${util:getMapJSON(pageContext, 'vulpeControlActions')}
+	}
+});
+</script>
