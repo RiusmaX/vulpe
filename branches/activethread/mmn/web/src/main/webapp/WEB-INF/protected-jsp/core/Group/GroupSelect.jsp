@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="v" %>
 <v:select
 	labelKey="label.mmn.core.Group.select.congregation"

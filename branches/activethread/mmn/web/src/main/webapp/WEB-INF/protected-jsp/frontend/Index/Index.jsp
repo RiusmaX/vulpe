@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <c:if test="${not empty now['memberPersonalReports']}">
 <div style="display: table">
