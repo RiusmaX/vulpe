@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <div id="portalContent">
 	<c:forEach var="content" items="${now['contents']}" varStatus="status">
