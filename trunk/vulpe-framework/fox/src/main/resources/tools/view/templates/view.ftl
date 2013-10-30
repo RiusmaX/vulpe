@@ -12,7 +12,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.header=${view.p
 label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view.labels[label]}
 </#list>
 <@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Select.jsp">
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <#list view.arguments as field>
@@ -122,7 +122,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.select.${label}=${view
 </#list>
 </@JSP>
 <@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}SelectItems.jsp">
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
@@ -168,7 +168,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.view=${view.prefi
 label.${view.projectName}.${view.moduleName}.${view.name}.main.${field.name}=${field.label}
 </#list>
 <@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Main.jsp">
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:hidden property="id"/>
@@ -288,7 +288,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}=${
 label.${view.projectName}.${view.moduleName}.${view.name}.main.${detail.name}.${detailField.name}=${detailField.label}
 </#list>
 <@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${detail.name}Detail.jsp">
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>
@@ -411,7 +411,7 @@ label.${view.projectName}.${view.moduleName}.${view.name}.tabular.header=${view.
 label.${view.projectName}.${view.moduleName}.${view.name}.tabular.${field.name}=${field.label}
 </#list>
 <@JSP override="${view.override}" name="${view.moduleName}/${view.name}/${view.name}Tabular.jsp">
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp" %>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="v"%>
 
 <v:table>

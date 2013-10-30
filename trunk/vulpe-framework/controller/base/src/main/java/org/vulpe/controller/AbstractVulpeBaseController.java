@@ -1714,7 +1714,8 @@ public abstract class AbstractVulpeBaseController<ENTITY extends VulpeEntity<ID>
 				controlResultForward();
 				vulpe.controller().back(false);
 			} else if (vulpe.controller().ajax() || vulpe.controller().exported()) {
-				vulpe.controller().resultForward(config.getViewItemsPath());
+				//vulpe.controller().resultForward(config.getViewItemsPath());
+				vulpe.controller().resultForward(config.getAjaxViewPath());
 			} else {
 				controlResultForward();
 			}

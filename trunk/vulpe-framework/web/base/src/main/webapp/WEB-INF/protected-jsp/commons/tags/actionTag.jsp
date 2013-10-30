@@ -106,7 +106,7 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<c:set var="styleClass" value="vulpeSubmit${buttonDisabled}" />
+			<c:set var="styleClass" value="${styleClass} vulpeSubmit${buttonDisabled}" />
 			<c:choose>
 				<c:when test="${showIconOfButton}"><button style="${style}" id="${elementId}" type="button" accesskey="${accesskey}" value="<fmt:message key="${labelKey}"/>" class="${styleClass}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>"><img class="${iconClass}" src="${icon}" title="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" alt="<fmt:message key="${not empty helpKey ? helpKey : labelKey}"/>" width="${iconWidth}" height="${iconHeight}" /><c:if test="${showTextOfButton}">&nbsp;<fmt:message key="${labelKey}" /></c:if></button></c:when>
 				<c:otherwise>

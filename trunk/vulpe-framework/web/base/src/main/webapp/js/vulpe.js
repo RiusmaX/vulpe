@@ -44,6 +44,9 @@ var vulpe = {
 			no : "label.vulpe.button.no"
 		},
 		contextPath : "",
+		controller : {
+			owner : ""
+		},
 		css : {
 			fieldError : "vulpeFieldError"
 		},
@@ -66,6 +69,7 @@ var vulpe = {
 		},
 		javascript : false,
 		layers : {
+			layer : "",
 			alertDialog : "#alertDialog",
 			alertMessage : "#alertMessage",
 			confirmationDialog : "#confirmationDialog",
@@ -566,8 +570,11 @@ var vulpe = {
 		getProperty : function(options) {
 			var token = options.name + "[";
 			var position = options.className.indexOf(token);
-			var parent = options.className.substring(position + token.length, options.className.indexOf("]", position));
-			return vulpe.util.isNotEmpty(parent) ? parent : "";
+			var parent = "";
+			if (position != -1) {
+				parent = options.className.substring(position + token.length, options.className.indexOf("]", position));
+			}
+			return parent;
 		},
 
 		completeURL : function(url) {
@@ -1435,6 +1442,112 @@ var vulpe = {
 	},
 	// vulpe.view
 	view : {
+		init : function() {
+			$("#selectAll,:checkbox[name$='selected'],.vulpeContent,.vulpeSelectContent,.vulpeShowHide,.unclickable,.clickable,tr.vulpeUpdate,tr.vulpeView,.vulpeActions,.vulpeSort,vulpeMenuLink,.vulpeChangePassword,.vulpeLogout,.vulpeFocus,.vulpeControlActions").unbind("click");
+			$("#selectAll").click(function() {
+				vulpe.view.markUnmarkAll('selected', "#" + vulpe.util.getProperty({className: this.className, name : "parent"}));
+			});
+			$(":checkbox[name$='selected']").click(function() {
+				vulpe.view.controlMarkUnmarkAll('selected', "#" + vulpe.util.getProperty({className: this.className, name : "parent"}));
+			});
+			$(".vulpeContent").click(function(){
+				if (this.indexOf("show[") != -1) {
+					vulpe.view.showContent(vulpe.util.getProperty({className: this.className, name : "show"}));
+				} else {
+					vulpe.view.hideContent(vulpe.util.getProperty({className: this.className, name : "hide"}));
+				}
+			});
+			$(".vulpeSelectContent").click(function(){
+				if (this.indexOf("show[") != -1) {
+					vulpe.view.selectShowContent(vulpe.util.getProperty({className: this.className, name : "show"}));
+				} else {
+					vulpe.view.selectHideContent(vulpe.util.getProperty({className: this.className, name : "hide"}));
+				}
+			});
+			$(".vulpeShowHide").click(function(){
+				vulpe.view.showHideElement(vulpe.util.getProperty({className: this.className, name : "element"}));
+			});
+			$(".unclickable,.clickable").click(function(){
+				vulpe.view.setSelectCheckbox($(this).hasClass("unclickable"));
+			});
+			$("tr.vulpeView").click(function(){
+				vulpe.view.request.submitView({
+					url: vulpe.config.controller.owner + "/update/ajax/" + vulpe.util.getProperty({className: this.className, name : "id"}),
+					formName: vulpe.config.formName,
+					layerFields: 'this',
+					layer: vulpe.config.layers.layer
+				});
+			});
+			$("tr.vulpeUpdate").click(function(){
+				vulpe.view.request.submitUpdate({
+					url: vulpe.config.controller.owner + "/update/ajax/" + vulpe.util.getProperty({className: this.className, name : "id"}),
+					formName: vulpe.config.formName,
+					layerFields: 'this',
+					layer: vulpe.config.layers.layer,
+					verify: true
+				});
+			});
+			$("td.clickable").mouseover(function(){
+				$(this).css("cursor", "pointer");
+			});
+			$(".vulpeActions").each(function(index){
+				var hotKey = vulpe.util.getProperty({className: this.className, name : "hotKey"});
+				var button = vulpe.util.getProperty({className: this.className, name : "vulpeButton"});
+				console.log(this.id)
+				$(this).click(function(){
+					$.globalEval(vulpe.config.actions.submit[this.id]);
+				});
+				if (vulpe.util.isNotEmpty(hotKey)) {
+					vulpe.util.addHotKey({
+						hotKey: hotKey,
+						command: function (evt) {
+							$(this).trigger("click");
+							return false;
+						},
+						override: true
+					});
+				}
+				vulpe.buttons[button] = { disabled: this.className.indexOf("vulpeItemOff") != -1 };
+			});
+			$(".vulpeSort").each(function(index){
+				$(this).click(function(){
+					$.globalEval(vulpe.config.actions.sort[this.id]);
+				});
+			});
+			$(".vulpeMenuLink").each(function(index){
+				var hotKey = vulpe.util.getProperty({className: this.className, name : "hotKey"});
+				$(this).click(function(){
+					$(".vulpeCurrentMenu").removeClass("vulpeCurrentMenu")
+					$(this).addClass("vulpeCurrentMenu");
+					$.globalEval(vulpe.config.actions.menu[this.id]);
+				});
+				if (vulpe.util.isNotEmpty(hotKey)) {
+					vulpe.util.addHotKey({
+						hotKey: hotKey,
+						command: function (evt) {
+							$(this).trigger("click");
+							return false;
+						},
+						override: true
+					});
+				}
+			});
+			$(".vulpeControlActions").each(function(index){
+				$(this).click(function(){
+					$.globalEval(vulpe.config.actions.control[this.id]);
+				});
+			});
+			$(".vulpeFocus").click(function() {
+				vulpe.util.get(vulpe.util.getProperty({className: this.className, name : "element"})).focus();
+			})
+			$(".vulpeChangePassword").click(function() {
+				vulpe.view.request.submitLink('/security/UserPassword/update/ajax');
+			});
+			$(".vulpeLogout").click(function() {
+				$(window.location).attr('href', vulpe.config.contextPath + '/j_spring_security_logout');
+			});
+		},
+
 		onScroll : function() {
 		},
 
@@ -3119,3 +3232,15 @@ var vulpe = {
 		}
 	}
 };
+/*
+var VulpeView = (function() {
+	var teste : function() {
+
+	}
+	return {
+		init: function() {
+
+		}
+	};
+}());
+*/

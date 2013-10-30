@@ -20,15 +20,13 @@
 	<c:set var="navigateToPrevious" value="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.previousPage ? 0 : list.previousPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.previousPage ? beforeJs : 'false'}'${afterJs}});"/>
 	<c:set var="navigateToNext" value="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.nextPage ? 0 : list.nextPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.nextPage ? beforeJs : 'false'}'${afterJs}});"/>
 	<c:set var="navigateToLast" value="vulpe.view.request.submitPaging({url: '${actionName}/ajax/${empty list.lastPage ? 0 : list.lastPage}'${formName}, layerFields: '${layerFields}'${layer}, beforeJs: '${not empty list.lastPage ? beforeJs : 'false'}'${afterJs}});"/>
-	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingFirstPage', navigateToFirst, true)}
-	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingPreviousPage', navigateToPrevious, true)}
-	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingNextPage', navigateToNext, true)}
-	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingLastPage', navigateToLast, true)}
 	<c:choose>
 	<c:when test="${global['application-view-paging-buttonStyle'] == 'JQUERY_UI'}">
 	<ul id="icons" class="ui-widget ui-helper-clearfix">
 	<li id="vulpeButtonPagingFirstPage" class="ui-state-default ui-corner-all${empty list.firstPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.first'/>"><span class="ui-icon ui-icon-seek-first"></span></li>
 	<li id="vulpeButtonPagingPreviousPage" class="ui-state-default ui-corner-all${empty list.previousPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.previous'/>"><span class="ui-icon ui-icon-seek-prev"></span></li>
+	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingFirstPage', navigateToFirst, true)}
+	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingPreviousPage', navigateToPrevious, true)}
 	</c:when>
 	<c:otherwise>
 	<v:action elementId="vulpeButtonPagingFirstPage"
@@ -74,6 +72,8 @@
 	<c:when test="${global['application-view-paging-buttonStyle'] == 'JQUERY_UI'}">
 	<li id="vulpeButtonPagingNextPage" class="ui-state-default ui-corner-all${empty list.nextPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.next'/>"><span class="ui-icon ui-icon-seek-next"></span></li>
 	<li id="vulpeButtonPagingLastPage" class="ui-state-default ui-corner-all${empty list.lastPage ? ' vulpeItemOff' : ''} vulpeActions" title="<fmt:message key='label.vulpe.last'/>"><span class="ui-icon ui-icon-seek-end"></span></li>
+	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingNextPage', navigateToNext, true)}
+	${util:putMap(pageContext, 'vulpeActions', 'vulpeButtonPagingLastPage', navigateToLast, true)}
 	</ul>
 	</c:when>
 	<c:otherwise>

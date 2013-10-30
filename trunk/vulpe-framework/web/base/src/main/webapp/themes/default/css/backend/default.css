@@ -307,6 +307,10 @@
 	height: 100%;
 }
 
+#error #home {
+	margin: 20px;
+}
+
 #error #message {
 	padding: 3px 20px 20px;
 	color: #000;

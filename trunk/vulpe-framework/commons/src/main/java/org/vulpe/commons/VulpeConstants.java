@@ -392,6 +392,7 @@ public class VulpeConstants {
 			public static final String SUFFIX_JSP_REPORT_ITEMS = "ReportItems.jsp";
 			public static final String SUFFIX_JSP_MAIN = "Main.jsp";
 
+			public static final String AJAX_RESPONSE_JSP = "ajax/response.jsp";
 			public static final String BODY_TWICE_JSP = "bodyTwice.jsp";
 			public static final String BODY_JSP = "body.jsp";
 			public static final String BODY_MAIN_JSP = "main.jsp";

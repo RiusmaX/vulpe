@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="v"%>
 <v:hidden property="id" />
 <v:text labelKey="label.vulpe.security.User.main.username" property="username" required="true" lowerCase="true" validateType="STRING" validateMinLength="3" showAsText="${not empty entity.id}" />

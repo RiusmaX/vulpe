@@ -1,4 +1,4 @@
-<%@include file="/WEB-INF/protected-jsp/commons/common.jsp"%>
+<%@include file="/WEB-INF/protected-jsp/commons/taglibs.jsp" %>
 <c:if test="${not empty now['reportFormat']}"><jsp:include page="${now['controllerConfig'].viewItemsPath}" /></c:if>
 <c:if test="${not empty now['downloadInfo']}">
 	<v:hidden name="downloadInfo" value="${now['downloadInfo']}" saveInSession="true" expireInSession="true"

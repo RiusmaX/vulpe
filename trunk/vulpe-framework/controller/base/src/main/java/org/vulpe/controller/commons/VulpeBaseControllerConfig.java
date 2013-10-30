@@ -725,4 +725,9 @@ public class VulpeBaseControllerConfig<ENTITY extends VulpeEntity<ID>, ID extend
 	public VulpeController getController() {
 		return controller;
 	}
+
+	@Override
+	public String getAjaxViewPath() {
+		return Layout.PROTECTED_JSP_COMMONS + Layout.AJAX_RESPONSE_JSP;
+	}
 }
